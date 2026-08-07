@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#0a3542">
+    <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
+    <link rel="manifest" href="./manifest.webmanifest">
+    <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="./styles.css?v=0.0.1-b8">
+    <title>RLM Research Planner PWA</title>
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Lords Mobile unofficial tool</p>
+        <h1>RLM Research Planner</h1>
+      </div>
+      <span id="connection-status" class="status-pill" aria-live="polite">オンライン</span>
+    </header>
+
+    <nav class="tab-bar" aria-label="メインメニュー">
+      <button class="tab-button is-active" data-tab="tree" type="button">研究ツリー</button>
+      <button class="tab-button" data-tab="plan" type="button">研究計画</button>
+      <button class="tab-button" data-tab="settings" type="button">プレイヤー</button>
+      <button class="tab-button" data-tab="help" type="button">ヘルプ</button>
+    </nav>
+
+    <div id="startup-error" class="startup-error" role="alert" hidden>
+      <span id="startup-error-message"></span>
+      <button id="startup-retry" type="button">再読み込み</button>
+    </div>
+
+    <main>
+      <section id="tab-tree" class="tab-panel is-active" aria-labelledby="tree-title">
+        <h2 id="tree-title" class="sr-only">研究ツリー</h2>
+        <div class="tree-primary-actions">
+          <button id="category-drawer-open" class="category-trigger" type="button">
+            <span>研究分野</span>
+            <strong id="category-current">経済</strong>
+            <span aria-hidden="true">›</span>
+          </button>
+          <details id="tree-options" class="tree-options">
+            <summary>検索・表示設定</summary>
+            <div class="toolbar tree-toolbar">
+              <label class="field grow">
+                <span>検索</span>
+                <input id="tree-search" type="search" placeholder="研究名を検索">
+              </label>
+              <label class="check-field">
+                <input id="instant-only" type="checkbox">
+                <span>即時終了のみ</span>
+              </label>
+              <div class="zoom-controls" aria-label="ツリーの拡大縮小">
+                <button id="zoom-out" type="button" aria-label="縮小">−</button>
+                <output id="zoom-output">100%</output>
+                <button id="zoom-in" type="button" aria-label="拡大">＋</button>
+              </div>
+            </div>
+          </details>
+          <select id="category-select" class="sr-only" aria-hidden="true" tabindex="-1">
+              <option value="economy">経済</option>
+              <option value="defense">城壁防御</option>
+              <option value="military">軍事</option>
+              <option value="monster_hunt">魔獣討伐</option>
+              <option value="upgrade_defenses">上級防城</option>
+              <option value="upgrade_military">上級軍事</option>
+              <option value="army_leadership">軍隊戦術</option>
+              <option value="military_command">軍事司令</option>
+              <option value="familiars">召喚獣</option>
+              <option value="familiar_battles">召喚獣の出陣</option>
+              <option value="sigils">シギル</option>
+              <option value="wonder_battles">ワンダー戦争</option>
+              <option value="gear">部隊武装</option>
+              <option value="advanced_wonder_battles">上級ワンダー軍事</option>
+              <option value="mana_awakening">マナ覚醒</option>
+              <option value="guild_duel">ギルド決闘</option>
+          </select>
+        </div>
+        <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="研究ツリー。ドラッグで移動できます">
+          <div id="tree-stage" class="tree-stage">
+            <svg id="tree-lines" class="tree-lines" aria-hidden="true"></svg>
+            <div id="tree-cards"></div>
+          </div>
+        </div>
+        <p id="tree-empty" class="empty-state" hidden>条件に合う研究はありません。</p>
+      </section>
+
+      <section id="tab-plan" class="tab-panel" aria-labelledby="plan-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">必要時間と資源</p>
+            <h2 id="plan-title">研究計画</h2>
+          </div>
+          <div class="segmented" role="group" aria-label="計画方法">
+            <button class="is-active" id="plan-target-mode" type="button">目標研究</button>
+            <button id="plan-shortest-mode" type="button">短時間順</button>
+          </div>
+        </div>
+        <div id="target-plan-view">
+          <div id="plan-placeholder" class="callout">研究ツリーでカードを開き、「この研究を計画」を選択してください。</div>
+          <div id="plan-result" hidden>
+            <article class="summary-card">
+              <div>
+                <p class="eyebrow">目標</p>
+                <h3 id="plan-target-name"></h3>
+              </div>
+              <strong id="plan-total-time"></strong>
+            </article>
+            <div id="resource-summary" class="resource-grid"></div>
+            <h3>必要な研究</h3>
+            <div id="plan-steps" class="plan-list"></div>
+            <p id="plan-issues" class="muted"></p>
+          </div>
+        </div>
+        <div id="shortest-plan-view" hidden>
+          <div class="list-toolbar">
+            <p>現在の前提条件を満たす次レベルを、完了までの時間が短い順に表示します。</p>
+            <label class="field compact"><span>表示数</span><select id="shortest-limit"><option>20</option><option>50</option><option>100</option></select></label>
+          </div>
+          <div id="shortest-list" class="plan-list"></div>
+        </div>
+      </section>
+
+      <section id="tab-settings" class="tab-panel" aria-labelledby="settings-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">端末内に自動保存</p>
+            <h2 id="settings-title">プレイヤー設定</h2>
+          </div>
+          <span id="save-indicator" class="muted" aria-live="polite">保存済み</span>
+        </div>
+        <div class="settings-grid">
+          <details class="settings-card">
+            <summary>研究時間</summary>
+            <div class="settings-card-body">
+            <div class="form-grid">
+              <label class="field"><span>VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
+              <label class="field"><span>城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
+              <label class="field"><span>アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
+              <label class="field"><span>研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span>研究速度アップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
+              <label class="field"><span>ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="40"></label>
+            </div>
+            <p id="vip-free-time" class="hint"></p>
+            </div>
+          </details>
+          <details class="settings-card">
+            <summary>所持資源</summary>
+            <div class="settings-card-body">
+            <div id="resource-inputs" class="form-grid"></div>
+            </div>
+          </details>
+          <details class="settings-card level-list-card">
+            <summary>
+              <span>研究レベル一括入力</span>
+              <span id="bulk-level-progress" class="status-pill"></span>
+            </summary>
+            <div class="settings-card-body">
+            <p class="settings-description">研究分野を選び、現在レベルだけを連続して入力できます。</p>
+            <div class="toolbar bulk-toolbar">
+              <label class="field grow"><span>研究分野</span><select id="bulk-category-select"></select></label>
+              <label class="field grow"><span>絞り込み</span><input id="bulk-level-search" type="search" placeholder="研究名を検索"></label>
+            </div>
+            <div id="bulk-level-list" class="bulk-level-list"></div>
+            </div>
+          </details>
+          <details class="settings-card backup-card">
+            <summary>バックアップ</summary>
+            <div class="settings-card-body">
+            <p>デスクトップ版と同じJSON形式で、プレイヤー設定と研究レベルを移動できます。</p>
+            <div class="button-row">
+              <button id="export-backup" class="primary" type="button">書き出す</button>
+              <label class="file-button">読み込む<input id="import-backup" type="file" accept="application/json,.json"></label>
+              <button id="reset-player" class="danger" type="button">設定をクリア</button>
+            </div>
+            </div>
+          </details>
+        </div>
+      </section>
+
+      <section id="tab-help" class="tab-panel" aria-labelledby="help-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">使い方</p>
+            <h2 id="help-title">ヘルプ</h2>
+          </div>
+          <label class="field compact"><span>表示言語</span><select id="language-select"><option value="ja-JP">日本語</option><option value="en-US">English</option></select></label>
+        </div>
+        <div class="help-content">
+          <article class="callout important">
+            <h3>最初に必ず設定してください</h3>
+            <p>プレイヤー設定で、VIPレベル、研究速度、使用中の研究速度アップを入力してください。研究速度は研究向け装備を装着した状態でゲーム内表示を確認します。</p>
+          </article>
+          <article>
+            <h3>研究レベルの入力</h3>
+            <p>研究ツリーのカードをタップすると、現在レベルを数値またはスライダーで変更できます。入力はこの端末内に自動保存されます。</p>
+          </article>
+          <article>
+            <h3>研究計画</h3>
+            <p>研究カードから目標レベルを指定すると、未達の前提研究をすべて遡り、必要な時間と資源を合計します。「短時間順」では、今すぐ開始できる次レベルだけを時間順に確認できます。</p>
+          </article>
+          <article>
+            <h3>PWA版の範囲</h3>
+            <p>モバイル版はOCRとゲーム画面の取り込みを行いません。数値は手動入力し、データはブラウザー内に保存されます。端末変更やブラウザーデータ削除に備えてバックアップしてください。</p>
+          </article>
+          <article>
+            <h3>収録データ</h3>
+            <p id="catalog-data-status"></p>
+            <p id="catalog-data-notes" class="hint"></p>
+          </article>
+          <article>
+            <h3>インストール</h3>
+            <p>対応ブラウザーの「ホーム画面に追加」または「アプリをインストール」から追加できます。一度読み込んだ後はオフラインでも利用できます。</p>
+          </article>
+          <p class="version-line">バージョン <span id="app-version"></span></p>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="category-drawer" class="category-drawer">
+      <form method="dialog">
+        <header>
+          <h2>研究分野</h2>
+          <button value="cancel" aria-label="研究分野を閉じる">×</button>
+        </header>
+        <nav id="category-drawer-list" aria-label="研究分野一覧"></nav>
+      </form>
+    </dialog>
+
+    <dialog id="node-dialog" class="node-dialog">
+      <form method="dialog">
+        <header class="node-dialog-header">
+          <div>
+            <p id="node-dialog-category" class="eyebrow"></p>
+            <h2 id="node-dialog-name"></h2>
+          </div>
+          <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+        </header>
+        <div class="node-dialog-body">
+          <div class="level-editor">
+            <label class="field"><span>現在レベル</span><input id="node-level-number" type="number" inputmode="numeric" min="0"></label>
+            <span id="node-level-max" class="max-label"></span>
+            <input id="node-level-range" type="range" min="0" step="1" aria-label="現在レベルのスライダー">
+          </div>
+          <div id="node-effects" class="effect-box"></div>
+          <section id="node-next-detail" class="node-next-detail" aria-label="次レベルの詳細"></section>
+          <label class="field"><span>目標レベル</span><select id="node-target-level"></select></label>
+          <div class="button-row dialog-actions">
+            <button id="open-plan" class="primary" type="button">この研究を計画</button>
+            <button value="cancel" type="submit">閉じる</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script>
+      if (location.protocol === "file:") {
+        const target = document.getElementById("startup-error");
+        const message = document.getElementById("startup-error-message");
+        const retry = document.getElementById("startup-retry");
+        message.textContent = "HTMLを直接開いたため研究データを読み込めません。StartRLMResearchPlannerPWA.bat、またはリポジトリのランチャーから起動してください。";
+        retry.hidden = true;
+        target.hidden = false;
+      } else if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("./sw.js").catch(() => {});
+      }
+    </script>
+    <script type="module" src="./src/app.js?v=0.0.1-b8"></script>
+  </body>
+</html>
