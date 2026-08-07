@@ -12569,14 +12569,9 @@
               "gold": 1868041
             },
             "costs_verified": true,
-            "requirements": [
-              {
-                "research": "Monster Hunter III",
-                "level": 8
-              }
-            ],
+            "requirements": [],
             "buildings": {},
-            "verification_status": "sourced"
+            "verification_status": "sourced_conflict_omitted"
           },
           "9": {
             "academy_level": 23,
@@ -53870,12 +53865,12 @@
             "costs_verified": true,
             "requirements": [
               {
-                "research": "Infantry Offense (Wonder) II",
+                "research": "Infantry Defense (Wonder) II",
                 "level": 1
               }
             ],
             "buildings": {},
-            "verification_status": "sourced"
+            "verification_status": "sourced_conflict_corrected"
           },
           "2": {
             "academy_level": 25,
@@ -53892,12 +53887,12 @@
             "costs_verified": true,
             "requirements": [
               {
-                "research": "Infantry Offense (Wonder) II",
+                "research": "Infantry Defense (Wonder) II",
                 "level": 2
               }
             ],
             "buildings": {},
-            "verification_status": "sourced"
+            "verification_status": "sourced_conflict_corrected"
           },
           "3": {
             "academy_level": 25,
@@ -53914,12 +53909,12 @@
             "costs_verified": true,
             "requirements": [
               {
-                "research": "Infantry Offense (Wonder) II",
+                "research": "Infantry Defense (Wonder) II",
                 "level": 3
               }
             ],
             "buildings": {},
-            "verification_status": "sourced"
+            "verification_status": "sourced_conflict_corrected"
           },
           "4": {
             "academy_level": 25,
@@ -53936,12 +53931,12 @@
             "costs_verified": true,
             "requirements": [
               {
-                "research": "Infantry Offense (Wonder) II",
+                "research": "Infantry Defense (Wonder) II",
                 "level": 4
               }
             ],
             "buildings": {},
-            "verification_status": "sourced"
+            "verification_status": "sourced_conflict_corrected"
           },
           "5": {
             "academy_level": 25,

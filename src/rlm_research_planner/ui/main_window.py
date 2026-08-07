@@ -7,7 +7,9 @@ from pathlib import Path
 
 from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt
 from PySide6.QtGui import (
+    QBrush,
     QCloseEvent,
+    QColor,
     QFont,
     QFontMetrics,
     QImage,
@@ -63,6 +65,7 @@ from rlm_research_planner.services.calculation import (
 )
 from rlm_research_planner.services.catalog_planning import (
     CatalogPlanResult,
+    CatalogPlanStep,
     CatalogResearchPlanner,
 )
 from rlm_research_planner.services.localization import Translator
@@ -232,6 +235,7 @@ class MainWindow(QMainWindow):
         self._selected_research_id = master.research[0].id if master.research else ""
         self._selected_tree_node_id = self._selected_research_id
         self._plan_target_research_id = ""
+        self._plan_mode = "target"
         self._capturable_windows: list[CapturableWindow] = []
         self._ocr_profiles = load_ocr_profiles(paths.ocr_profiles)
         self._ocr_engine = PreferredOcrEngine(
@@ -590,29 +594,100 @@ class MainWindow(QMainWindow):
         current_level = max(0, self._tree_level_draft.get(research_id, 0))
         if current_level >= max_level:
             return False
-        next_level = current_level + 1
-        base_time_seconds: int | None = None
-        observed = self._observed_nodes.get(research_id)
-        if observed is not None:
-            level_data = observed.level_data(next_level)
-            if level_data is not None:
-                base_time_seconds = level_data.base_time_seconds
-        if base_time_seconds is None and research_id in self._research:
-            try:
-                base_time_seconds = self.master.level(
-                    research_id, next_level
-                ).base_time_seconds
-            except KeyError:
-                base_time_seconds = None
-        if base_time_seconds is None or base_time_seconds <= 0:
-            return False
-        adjusted_seconds = apply_research_speed(
-            base_time_seconds,
-            self.player_state.settings.effective_research_speed_percent,
-        )
-        return adjusted_seconds <= free_speedup_seconds_for_vip(
+        free_seconds = free_speedup_seconds_for_vip(
             self.player_state.settings.vip_level
         )
+        memo: dict[tuple[str, int], bool] = {}
+        visiting: set[tuple[str, int]] = set()
+
+        def can_finish_through(target_id: str, target_level: int) -> bool:
+            current = max(0, self._tree_level_draft.get(target_id, 0))
+            if current >= target_level:
+                return True
+            key = (target_id, target_level)
+            if key in memo:
+                return memo[key]
+            if key in visiting:
+                return False
+            visiting.add(key)
+            result = True
+            observed = self._observed_nodes.get(target_id)
+            if observed is not None:
+                if observed.max_level is None or target_level > observed.max_level:
+                    result = False
+                else:
+                    for level_number in range(current + 1, target_level + 1):
+                        level_data = observed.level_data(level_number)
+                        if (
+                            level_data is None
+                            or level_data.base_time_seconds is None
+                            or level_data.base_time_seconds <= 0
+                            or (
+                                level_data.academy_level is not None
+                                and level_data.academy_level
+                                > self.player_state.settings.academy_level
+                            )
+                        ):
+                            result = False
+                            break
+                        if any(
+                            not can_finish_through(
+                                requirement.research_id, requirement.level
+                            )
+                            for requirement in level_data.requirements
+                        ):
+                            result = False
+                            break
+                        adjusted_seconds = apply_research_speed(
+                            level_data.base_time_seconds,
+                            self.player_state.settings.effective_research_speed_percent,
+                        )
+                        if adjusted_seconds > free_seconds:
+                            result = False
+                            break
+            else:
+                research = self._research.get(target_id)
+                if research is None or target_level > research.max_level:
+                    result = False
+                else:
+                    for level_number in range(current + 1, target_level + 1):
+                        try:
+                            level_data = self.master.level(target_id, level_number)
+                        except KeyError:
+                            result = False
+                            break
+                        if (
+                            level_data.academy_level
+                            > self.player_state.settings.academy_level
+                            or apply_research_speed(
+                                level_data.base_time_seconds,
+                                self.player_state.settings.effective_research_speed_percent,
+                            )
+                            > free_seconds
+                        ):
+                            result = False
+                            break
+                        requirements = (
+                            requirement
+                            for requirement in self.master.prerequisites
+                            if requirement.research_id == target_id
+                            and requirement.target_level <= level_number
+                            and requirement.prerequisite_research_id
+                        )
+                        if any(
+                            not can_finish_through(
+                                str(requirement.prerequisite_research_id),
+                                requirement.prerequisite_level,
+                            )
+                            for requirement in requirements
+                        ):
+                            result = False
+                            break
+            visiting.remove(key)
+            memo[key] = result
+            return result
+
+        return can_finish_through(research_id, current_level + 1)
 
     def _refresh_tree_filter_results(self) -> None:
         if not hasattr(self, "tree_instant_finish_check"):
@@ -1305,11 +1380,22 @@ class MainWindow(QMainWindow):
         page = QWidget()
         layout = QVBoxLayout(page)
         controls = QHBoxLayout()
-        controls.addWidget(QLabel(self.t("plan.target")))
+        controls.addWidget(QLabel(self.t("plan.mode")))
+        self.plan_mode_combo = QComboBox()
+        self.plan_mode_combo.addItem(self.t("plan.mode.target"), "target")
+        self.plan_mode_combo.addItem(self.t("plan.mode.shortest"), "shortest")
+        initial_mode = self._plan_mode
+        mode_index = self.plan_mode_combo.findData(initial_mode)
+        self.plan_mode_combo.setCurrentIndex(max(0, mode_index))
+        self.plan_mode_combo.setToolTip(self.t("plan.mode.tooltip"))
+        controls.addWidget(self.plan_mode_combo)
+        self.plan_target_caption = QLabel(self.t("plan.target"))
+        controls.addWidget(self.plan_target_caption)
         self.plan_target_name_label = QLabel(self.t("plan.no_target"))
         self.plan_target_name_label.setStyleSheet("font-weight:700;font-size:15px;")
         controls.addWidget(self.plan_target_name_label, 1)
-        controls.addWidget(QLabel(self.t("plan.target_level")))
+        self.plan_level_caption = QLabel(self.t("plan.target_level"))
+        controls.addWidget(self.plan_level_caption)
         self.plan_level_spin = QSpinBox()
         self.plan_level_spin.setMinimum(1)
         self.plan_level_spin.valueChanged.connect(self._calculate_plan)
@@ -1321,11 +1407,11 @@ class MainWindow(QMainWindow):
         controls.addWidget(self.plan_reset_zoom_button)
         layout.addLayout(controls)
 
-        splitter = QSplitter(Qt.Vertical)
+        self.plan_splitter = QSplitter(Qt.Vertical)
         self.plan_tree_view = ResearchTreeView()
         self.plan_fit_button.clicked.connect(self.plan_tree_view.fit_all)
         self.plan_reset_zoom_button.clicked.connect(self.plan_tree_view.reset_zoom)
-        splitter.addWidget(self.plan_tree_view)
+        self.plan_splitter.addWidget(self.plan_tree_view)
 
         details = QWidget()
         details_layout = QVBoxLayout(details)
@@ -1351,17 +1437,18 @@ class MainWindow(QMainWindow):
         )
         self.plan_table.verticalHeader().setVisible(False)
         self.plan_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.plan_table.itemClicked.connect(self._plan_table_item_clicked)
         self.plan_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
         for column in range(1, self.plan_table.columnCount()):
             self.plan_table.horizontalHeader().setSectionResizeMode(
                 column, QHeaderView.ResizeToContents
             )
         details_layout.addWidget(self.plan_table, 1)
-        splitter.addWidget(details)
-        splitter.setStretchFactor(0, 3)
-        splitter.setStretchFactor(1, 2)
-        splitter.setSizes([480, 300])
-        layout.addWidget(splitter, 1)
+        self.plan_splitter.addWidget(details)
+        self.plan_splitter.setStretchFactor(0, 3)
+        self.plan_splitter.setStretchFactor(1, 2)
+        self.plan_splitter.setSizes([480, 300])
+        layout.addWidget(self.plan_splitter, 1)
 
         if self._plan_target_research_id in self._observed_nodes:
             self._set_plan_target(self._plan_target_research_id)
@@ -1371,6 +1458,12 @@ class MainWindow(QMainWindow):
                 [],
                 empty_message=self.t("plan.no_target"),
             )
+        self.plan_mode_combo.currentIndexChanged.connect(self._plan_mode_changed)
+        requested_index = self.plan_mode_combo.findData(initial_mode)
+        self.plan_mode_combo.blockSignals(True)
+        self.plan_mode_combo.setCurrentIndex(max(0, requested_index))
+        self.plan_mode_combo.blockSignals(False)
+        self._plan_mode_changed()
         return page
 
     def _set_plan_target(self, research_id: str) -> None:
@@ -1380,6 +1473,14 @@ class MainWindow(QMainWindow):
         self._plan_target_research_id = research_id
         if not hasattr(self, "plan_target_name_label"):
             return
+        self._plan_mode = "target"
+        if hasattr(self, "plan_mode_combo"):
+            self.plan_mode_combo.blockSignals(True)
+            self.plan_mode_combo.setCurrentIndex(
+                self.plan_mode_combo.findData("target")
+            )
+            self.plan_mode_combo.blockSignals(False)
+            self._update_plan_mode_visibility()
         observation = self._node_observation[research_id]
         self.plan_target_name_label.setText(
             f"{observation.localized_title(self.translator.locale)} / "
@@ -1393,11 +1494,44 @@ class MainWindow(QMainWindow):
         self.plan_level_spin.blockSignals(False)
         self._calculate_plan()
 
+    def _plan_mode_changed(self, *_args: object) -> None:
+        if not hasattr(self, "plan_mode_combo"):
+            return
+        self._plan_mode = str(self.plan_mode_combo.currentData() or "target")
+        self._update_plan_mode_visibility()
+        self._calculate_plan()
+
+    def _update_plan_mode_visibility(self) -> None:
+        if not hasattr(self, "plan_tree_view"):
+            return
+        target_mode = self._plan_mode == "target"
+        for widget in (
+            self.plan_target_caption,
+            self.plan_target_name_label,
+            self.plan_level_caption,
+            self.plan_level_spin,
+            self.plan_fit_button,
+            self.plan_reset_zoom_button,
+            self.plan_tree_view,
+        ):
+            widget.setVisible(target_mode)
+        self.plan_splitter.setSizes([480, 300] if target_mode else [0, 780])
+
     def _calculate_plan(self, *_args: object) -> None:
         if not hasattr(self, "plan_level_spin"):
             return
+        if self._plan_mode == "shortest":
+            planning_state = PlayerState(
+                settings=self.player_state.settings,
+                research_levels=dict(self._tree_level_draft),
+            )
+            self._render_shortest_plan(
+                self.catalog_planner.shortest_available_steps(planning_state)
+            )
+            return
         research_id = self._plan_target_research_id
         if not research_id:
+            self.plan_table.setRowCount(0)
             return
         target_level = self._normalized_plan_target_level(research_id)
         planning_state = PlayerState(
@@ -1487,29 +1621,11 @@ class MainWindow(QMainWindow):
         total_row = len(result.steps)
         self.plan_table.setRowCount(total_row + (1 if result.steps else 0))
         for row, step in enumerate(result.steps):
-            values = [
+            self._set_plan_step_row(
+                row,
+                step,
                 self._catalog_research_name(step.research_id),
-                str(step.level),
-                self._known_duration(step.base_time_seconds),
-                self._known_duration(step.adjusted_time_seconds),
-                self._known_duration(step.after_help_seconds),
-            ]
-            values.extend(
-                self._material_amount(step.costs.get(key, 0))
-                for key in PLAN_RESOURCE_KEYS
             )
-            values.extend(
-                [
-                    self._step_building_requirements(step.research_id, step.level),
-                    (
-                        f"{step.power:,}"
-                        if step.power is not None
-                        else self.t("common.unknown")
-                    ),
-                ]
-            )
-            for column, value in enumerate(values):
-                self.plan_table.setItem(row, column, QTableWidgetItem(value))
 
         if result.steps:
             total_values = [
@@ -1542,6 +1658,84 @@ class MainWindow(QMainWindow):
                 font.setBold(True)
                 item.setFont(font)
                 self.plan_table.setItem(total_row, column, item)
+
+    def _render_shortest_plan(self, steps: list[CatalogPlanStep]) -> None:
+        self.plan_table.setRowCount(len(steps))
+        for row, step in enumerate(steps):
+            observation = self._node_observation[step.research_id]
+            name = (
+                f"{observation.localized_title(self.translator.locale)} / "
+                f"{self._catalog_research_name(step.research_id)}"
+            )
+            self._set_plan_step_row(row, step, name, link_to_tree=True)
+
+    def _set_plan_step_row(
+        self,
+        row: int,
+        step: CatalogPlanStep,
+        name: str,
+        *,
+        link_to_tree: bool = False,
+    ) -> None:
+        values = [
+            name,
+            str(step.level),
+            self._known_duration(step.base_time_seconds),
+            self._known_duration(step.adjusted_time_seconds),
+            self._known_duration(step.after_help_seconds),
+        ]
+        values.extend(
+            self._material_amount(step.costs.get(key, 0))
+            for key in PLAN_RESOURCE_KEYS
+        )
+        values.extend(
+            [
+                self._step_building_requirements(step.research_id, step.level),
+                (
+                    f"{step.power:,}"
+                    if step.power is not None
+                    else self.t("common.unknown")
+                ),
+            ]
+        )
+        for column, value in enumerate(values):
+            item = QTableWidgetItem(value)
+            if column == 0:
+                item.setData(Qt.UserRole, step.research_id)
+                if link_to_tree:
+                    font = item.font()
+                    font.setUnderline(True)
+                    item.setFont(font)
+                    item.setForeground(QBrush(QColor("#1565C0")))
+                    item.setToolTip(self.t("plan.open_in_tree"))
+            elif column == 3:
+                item.setData(Qt.UserRole, step.adjusted_time_seconds)
+            self.plan_table.setItem(row, column, item)
+
+    def _plan_table_item_clicked(self, item: QTableWidgetItem) -> None:
+        if self._plan_mode != "shortest" or item.column() != 0:
+            return
+        research_id = str(item.data(Qt.UserRole) or "")
+        self._jump_to_tree_research(research_id)
+
+    def _jump_to_tree_research(self, research_id: str) -> None:
+        observation = self._node_observation.get(research_id)
+        if observation is None:
+            return
+        dataset_value = f"observation:{observation.observation_id}"
+        self._selected_tree_node_id = research_id
+        self._selected_research_id = research_id
+        self.search_edit.blockSignals(True)
+        self.search_edit.clear()
+        self.search_edit.blockSignals(False)
+        self.tree_instant_finish_check.blockSignals(True)
+        self.tree_instant_finish_check.setChecked(False)
+        self.tree_instant_finish_check.blockSignals(False)
+        self._tree_dataset_search_active = False
+        self._tree_dataset_search_restore = dataset_value
+        self._filter_tree_datasets("", dataset_value)
+        self.tabs.setCurrentIndex(0)
+        self.tree_view.focus_research(research_id)
 
     def _known_duration(self, seconds: int | None) -> str:
         return (
@@ -1930,30 +2124,31 @@ class MainWindow(QMainWindow):
         self.help_font_spin.valueChanged.connect(self._change_help_font_size)
         settings.addWidget(self.help_font_spin)
         settings.addStretch(1)
-        settings.addWidget(QLabel(self.t("app.version", version=version_string())))
-        layout.addLayout(settings)
-
-        update_group = QGroupBox(self.t("update.title"))
-        update_layout = QVBoxLayout(update_group)
-        update_actions = QHBoxLayout()
+        self.help_version_label = QLabel(
+            self.t("app.version", version=version_string())
+        )
+        settings.addWidget(self.help_version_label)
+        settings.addSpacing(12)
         self.update_check_button = QPushButton(self.t("update.check"))
-        update_actions.addWidget(self.update_check_button)
-        self.update_status_label = QLabel()
-        update_actions.addWidget(self.update_status_label, 1)
+        settings.addWidget(self.update_check_button)
+        self.update_startup_checkbox = QCheckBox(
+            self.t("update.check_on_startup_short")
+        )
+        settings.addWidget(self.update_startup_checkbox)
         self.update_releases_button = QPushButton(self.t("update.open_releases"))
         self.update_releases_button.clicked.connect(
             lambda: self.update_controller.open_releases_page()
         )
-        update_actions.addWidget(self.update_releases_button)
-        update_layout.addLayout(update_actions)
-        self.update_startup_checkbox = QCheckBox(self.t("update.check_on_startup"))
-        update_layout.addWidget(self.update_startup_checkbox)
+        settings.addWidget(self.update_releases_button)
+        self.update_status_label = QLabel()
+        self.update_status_label.setMinimumWidth(0)
+        settings.addWidget(self.update_status_label, 1)
         self.update_controller.bind_help_controls(
             self.update_check_button,
             self.update_status_label,
             self.update_startup_checkbox,
         )
-        layout.addWidget(update_group)
+        layout.addLayout(settings)
 
         self.help_browser = QTextBrowser()
         self.help_browser.setOpenExternalLinks(True)

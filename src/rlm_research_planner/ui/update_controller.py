@@ -40,10 +40,12 @@ class UpdateController(QObject):
         startup_checkbox.toggled.connect(self._set_startup_check)
         if updater.update_checks_enabled():
             check_button.setEnabled(True)
+            status_label.setVisible(True)
             status_label.setText(self.t("update.status.ready"))
         else:
             check_button.setEnabled(False)
-            status_label.setText(self.t("update.status.development"))
+            status_label.clear()
+            status_label.setVisible(False)
 
     def schedule_startup_check(self) -> None:
         if (

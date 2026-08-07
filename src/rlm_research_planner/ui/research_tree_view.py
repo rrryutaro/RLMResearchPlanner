@@ -526,6 +526,20 @@ class ResearchTreeView(QGraphicsView):
         self.fitInView(self._scene.sceneRect(), Qt.KeepAspectRatio)
         self._zoom_factor = self.transform().m11()
 
+    def focus_research(self, research_id: str) -> bool:
+        """Select and center a research card already rendered in the scene."""
+
+        for item in self._scene.items():
+            if (
+                isinstance(item, _ResearchNodeItem)
+                and item.research_id == research_id
+            ):
+                self._scene.clearSelection()
+                item.setSelected(True)
+                self.centerOn(item)
+                return True
+        return False
+
     def set_research(
         self,
         nodes: Iterable[ResearchTreeNode],

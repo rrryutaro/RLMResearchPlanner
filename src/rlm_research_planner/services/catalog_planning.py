@@ -154,6 +154,63 @@ class CatalogResearchPlanner:
                 result.resource_shortfalls[resource] = required_amount - available
         return result
 
+    def shortest_available_steps(
+        self,
+        state: PlayerState,
+        *,
+        rounding: RoundingMode = RoundingMode.CEILING,
+        help_policy: GuildHelpPolicy | None = None,
+    ) -> list[CatalogPlanStep]:
+        """Return next levels that can be started now, shortest first.
+
+        This is intentionally a separate planning strategy from ``create_plan``.
+        Recommended-build and saved-target comparison strategies can therefore be
+        added later without changing the target-plan calculation.
+        """
+
+        steps: list[CatalogPlanStep] = []
+        current_levels = state.research_levels
+        academy_level = max(0, int(state.settings.academy_level))
+        for research_id, node in self.nodes.items():
+            if node.max_level is None:
+                continue
+            next_level = max(0, int(current_levels.get(research_id, 0))) + 1
+            if next_level > node.max_level:
+                continue
+            level_data = node.level_data(next_level)
+            if level_data is None or level_data.base_time_seconds is None:
+                continue
+            required_academy = max(
+                int(level_data.academy_level or 0),
+                int(level_data.building_requirements.get("academy", 0)),
+            )
+            if required_academy > academy_level:
+                continue
+            if any(
+                current_levels.get(requirement.research_id, 0) < requirement.level
+                for requirement in level_data.requirements
+            ):
+                continue
+            step = self._create_step(
+                research_id,
+                next_level,
+                level_data,
+                state,
+                rounding,
+                help_policy,
+            )
+            if step.adjusted_time_seconds is not None:
+                steps.append(step)
+
+        return sorted(
+            steps,
+            key=lambda step: (
+                int(step.adjusted_time_seconds or 0),
+                int(step.base_time_seconds or 0),
+                step.research_id,
+            ),
+        )
+
     def _topological_step_order(
         self,
         required: dict[str, int],
