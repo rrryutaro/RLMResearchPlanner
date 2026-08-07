@@ -1,9 +1,11 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.1-b11";
-import { adjustedTime, createPlan, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.1-b11";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.1-b11";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.2-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.2-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.2-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.2-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.2-b1";
 
-const RELEASE_VERSION = "0.0.1";
-const DEVELOPMENT_BUILD = 11;
+const RELEASE_VERSION = "0.0.2";
+const DEVELOPMENT_BUILD = 1;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
@@ -30,6 +32,7 @@ let currentPlan = null;
 let toastTimer;
 let saveTimer;
 let suppressCardClick = false;
+const categoryLayouts = new Map();
 
 const byId = (id) => document.getElementById(id);
 const create = (tag, className = "", text = "") => {
@@ -103,19 +106,74 @@ function bindTreeControls() {
   byId("instant-only").addEventListener("change", () => { renderCategoryOptions(); renderTree(true); });
   byId("zoom-out").addEventListener("click", () => setZoom(zoom - 0.1));
   byId("zoom-in").addEventListener("click", () => setZoom(zoom + 0.1));
+  byId("zoom-fit").addEventListener("click", fitWholeTree);
   byId("tree-viewport").addEventListener("wheel", (event) => {
     if (!event.ctrlKey) return;
     event.preventDefault();
-    setZoom(zoom + (event.deltaY < 0 ? 0.1 : -0.1));
+    setZoom(zoom + (event.deltaY < 0 ? 0.1 : -0.1), { clientX: event.clientX, clientY: event.clientY });
   }, { passive: false });
 
   const viewport = byId("tree-viewport");
   let drag = null;
+  const touches = new Map();
+  let touchPan = null;
+  let pinch = null;
   viewport.addEventListener("pointerdown", (event) => {
-    if (event.pointerType !== "mouse" || event.button !== 0 || !event.isPrimary) return;
-    drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop, moved: false };
+    if (event.pointerType === "touch") {
+      touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (touches.size === 1) {
+        touchPan = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop, moved: false };
+      } else if (touches.size === 2) {
+        const [first, second] = [...touches.values()];
+        const rect = viewport.getBoundingClientRect();
+        const midpoint = { x: (first.x + second.x) / 2, y: (first.y + second.y) / 2 };
+        pinch = {
+          distance: Math.max(1, Math.hypot(second.x - first.x, second.y - first.y)),
+          zoom,
+          contentX: (viewport.scrollLeft + midpoint.x - rect.left) / zoom,
+          contentY: (viewport.scrollTop + midpoint.y - rect.top) / zoom,
+        };
+        touchPan = null;
+        suppressCardClick = true;
+        viewport.classList.add("is-dragging");
+        for (const pointerId of touches.keys()) viewport.setPointerCapture(pointerId);
+      }
+      return;
+    }
+    if (event.pointerType === "mouse" && event.button === 0 && event.isPrimary) {
+      drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop, moved: false };
+    }
   });
   viewport.addEventListener("pointermove", (event) => {
+    if (event.pointerType === "touch" && touches.has(event.pointerId)) {
+      touches.set(event.pointerId, { x: event.clientX, y: event.clientY });
+      if (pinch && touches.size >= 2) {
+        event.preventDefault();
+        const [first, second] = [...touches.values()];
+        const distance = Math.max(1, Math.hypot(second.x - first.x, second.y - first.y));
+        setZoom(pinch.zoom * distance / pinch.distance, {
+          clientX: (first.x + second.x) / 2,
+          clientY: (first.y + second.y) / 2,
+          contentX: pinch.contentX,
+          contentY: pinch.contentY,
+        });
+        return;
+      }
+      if (!touchPan || touchPan.pointerId !== event.pointerId) return;
+      const dx = event.clientX - touchPan.x;
+      const dy = event.clientY - touchPan.y;
+      if (!touchPan.moved && Math.hypot(dx, dy) > 6) {
+        touchPan.moved = true;
+        suppressCardClick = true;
+        viewport.classList.add("is-dragging");
+        viewport.setPointerCapture(event.pointerId);
+      }
+      if (!touchPan.moved) return;
+      event.preventDefault();
+      viewport.scrollLeft = touchPan.left - dx;
+      viewport.scrollTop = touchPan.top - dy;
+      return;
+    }
     if (!drag || event.pointerId !== drag.pointerId) return;
     const dx = event.clientX - drag.x;
     const dy = event.clientY - drag.y;
@@ -131,6 +189,20 @@ function bindTreeControls() {
     viewport.scrollTop = drag.top - dy;
   });
   const endDrag = (event) => {
+    if (event.pointerType === "touch" && touches.has(event.pointerId)) {
+      const moved = Boolean(pinch || touchPan?.moved);
+      touches.delete(event.pointerId);
+      pinch = null;
+      if (touches.size === 1) {
+        const [pointerId, point] = [...touches.entries()][0];
+        touchPan = { pointerId, x: point.x, y: point.y, left: viewport.scrollLeft, top: viewport.scrollTop, moved: true };
+      } else {
+        touchPan = null;
+        viewport.classList.remove("is-dragging");
+        if (moved) window.setTimeout(() => { suppressCardClick = false; }, 0);
+      }
+      return;
+    }
     if (!drag || event.pointerId !== drag.pointerId) return;
     const moved = drag?.moved;
     drag = null;
@@ -142,10 +214,46 @@ function bindTreeControls() {
   window.addEventListener("resize", debounce(() => renderTree(), 120));
 }
 
-function setZoom(value) {
-  zoom = Math.min(1.5, Math.max(0.5, Math.round(value * 10) / 10));
-  byId("zoom-output").textContent = `${Math.round(zoom * 100)}%`;
+function layoutForCategory(category) {
+  if (!categoryLayouts.has(category.id)) categoryLayouts.set(category.id, explicitTreeLayout(category.nodes));
+  return categoryLayouts.get(category.id);
+}
+
+function treeContentSize(category) {
+  const layout = layoutForCategory(category);
+  return {
+    width: PADDING * 2 + layout.columnCount * CARD_WIDTH + Math.max(0, layout.columnCount - 1) * GAP_X,
+    height: PADDING * 2 + layout.rowCount * CARD_HEIGHT + Math.max(0, layout.rowCount - 1) * GAP_Y,
+  };
+}
+
+function fittedZoom(category) {
+  const viewport = byId("tree-viewport");
+  const size = treeContentSize(category);
+  const bounds = viewport.getBoundingClientRect();
+  return fitTreeZoom(bounds.width, bounds.height, size.width, size.height);
+}
+
+function setZoom(value, anchor = null) {
+  const category = catalog?.categories.find((item) => item.id === selectedCategoryId) || catalog?.categories[0];
+  if (!category) return;
+  const viewport = byId("tree-viewport");
+  const rect = viewport.getBoundingClientRect();
+  const localX = anchor?.clientX == null ? viewport.clientWidth / 2 : anchor.clientX - rect.left;
+  const localY = anchor?.clientY == null ? viewport.clientHeight / 2 : anchor.clientY - rect.top;
+  const contentX = anchor?.contentX ?? (viewport.scrollLeft + localX) / zoom;
+  const contentY = anchor?.contentY ?? (viewport.scrollTop + localY) / zoom;
+  zoom = clampTreeZoom(value, fittedZoom(category));
   renderTree();
+  viewport.scrollLeft = contentX * zoom - localX;
+  viewport.scrollTop = contentY * zoom - localY;
+}
+
+function fitWholeTree() {
+  const category = catalog?.categories.find((item) => item.id === selectedCategoryId) || catalog?.categories[0];
+  if (!category) return;
+  zoom = fittedZoom(category);
+  renderTree(true);
 }
 
 function matchingNodes(category) {
@@ -199,17 +307,21 @@ function renderTree(resetScroll = false) {
   const category = catalog.categories.find((item) => item.id === selectedCategoryId) || catalog.categories[0];
   if (!category) return;
   selectedCategoryId = category.id;
+  zoom = clampTreeZoom(zoom, fittedZoom(category));
   const nodes = matchingNodes(category);
   const visibleIds = new Set(nodes.map((node) => node.id));
-  const width = Math.max(byId("tree-viewport").clientWidth - 2, (PADDING * 2 + category.columnCount * CARD_WIDTH + (category.columnCount - 1) * GAP_X) * zoom);
-  const height = Math.max(byId("tree-viewport").clientHeight - 2, (PADDING * 2 + category.rowCount * CARD_HEIGHT + (category.rowCount - 1) * GAP_Y) * zoom);
+  const layout = layoutForCategory(category);
+  const contentSize = treeContentSize(category);
+  const width = Math.max(byId("tree-viewport").clientWidth - 2, contentSize.width * zoom);
+  const height = Math.max(byId("tree-viewport").clientHeight - 2, contentSize.height * zoom);
   const stage = byId("tree-stage");
   stage.style.width = `${width}px`;
   stage.style.height = `${height}px`;
   const positions = new Map();
   for (const node of nodes) {
+    const slot = layout.slots.get(node.id) ?? node.column;
     positions.set(node.id, {
-      x: (PADDING + node.column * (CARD_WIDTH + GAP_X)) * zoom,
+      x: (PADDING + slot * (CARD_WIDTH + GAP_X)) * zoom,
       y: (PADDING + node.row * (CARD_HEIGHT + GAP_Y)) * zoom,
       width: CARD_WIDTH * zoom,
       height: CARD_HEIGHT * zoom,
@@ -338,14 +450,14 @@ function openNodeDialog(nodeId) {
 
 function populateTargetLevels(node, level) {
   const target = byId("node-target-level");
-  const previous = Number(target.value || 0);
+  const defaultLevel = defaultTargetLevel(level, node.maxLevel);
   const levels = level < node.maxLevel
     ? Array.from({ length: node.maxLevel - level }, (_, index) => level + index + 1)
     : [node.maxLevel];
   target.replaceChildren(...levels.map((targetLevel) => {
     const option = create("option", "", `Lv.${targetLevel}`);
     option.value = targetLevel;
-    option.selected = targetLevel === previous;
+    option.selected = targetLevel === defaultLevel;
     return option;
   }));
   byId("open-plan").disabled = level >= node.maxLevel;

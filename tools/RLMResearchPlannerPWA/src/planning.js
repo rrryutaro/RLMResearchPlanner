@@ -1,4 +1,10 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.1-b11";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.2-b1";
+
+export function defaultTargetLevel(currentLevel, maxLevel) {
+  const maximum = Math.max(0, Math.trunc(Number(maxLevel) || 0));
+  const current = Math.max(0, Math.min(maximum, Math.trunc(Number(currentLevel) || 0)));
+  return Math.min(maximum, current + 1);
+}
 
 export function adjustedTime(baseSeconds, settings) {
   const speed = Math.max(0, Number(settings.researchSpeedPercent) || 0) + Math.max(0, Number(settings.researchSpeedBoostPercent) || 0);

@@ -7,7 +7,7 @@
     <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.1-b11">
+    <link rel="stylesheet" href="./styles.css?v=0.0.2-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -55,6 +55,7 @@
                 <button id="zoom-out" type="button" aria-label="縮小">−</button>
                 <output id="zoom-output">100%</output>
                 <button id="zoom-in" type="button" aria-label="拡大">＋</button>
+                <button id="zoom-fit" type="button" aria-label="ツリー全体を表示">全体</button>
               </div>
             </div>
           </details>
@@ -77,7 +78,7 @@
               <option value="guild_duel">ギルド決闘</option>
           </select>
         </div>
-        <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="研究ツリー。ドラッグで移動できます">
+        <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="研究ツリー。ドラッグで移動、ピンチ操作で拡大縮小できます">
           <div id="tree-stage" class="tree-stage">
             <svg id="tree-lines" class="tree-lines" aria-hidden="true"></svg>
             <div id="tree-cards"></div>
@@ -197,7 +198,7 @@
           </article>
           <article>
             <h3>研究レベルの入力</h3>
-            <p>研究ツリーのカードをタップすると、現在レベルを数値またはスライダーで変更できます。入力はこの端末内に自動保存されます。</p>
+            <p>研究ツリーのカードをタップすると、現在レベルを数値またはスライダーで変更できます。ツリー上ではドラッグで移動し、2本指のピンチ操作で拡大・縮小できます。「検索・表示設定」の「全体」でツリー全体が収まる倍率にできます。入力はこの端末内に自動保存されます。</p>
           </article>
           <article>
             <h3>研究計画</h3>
@@ -274,6 +275,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.1-b11"></script>
+    <script type="module" src="./src/app.js?v=0.0.2-b1"></script>
   </body>
 </html>

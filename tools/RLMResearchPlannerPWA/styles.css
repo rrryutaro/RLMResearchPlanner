@@ -57,10 +57,11 @@ h1 { margin-bottom: 0; overflow: hidden; font-size: clamp(1.25rem, 4vw, 1.75rem)
 .field.compact { width: min(160px, 44vw); }
 .check-field { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 .7rem; border: 1px solid var(--line); border-radius: 8px; color: var(--text); background: #081b24; white-space: nowrap; }
 .check-field input { width: 20px; min-height: 20px; accent-color: var(--accent); }
-.zoom-controls { display: grid; grid-template-columns: 44px 64px 44px; align-items: center; gap: 4px; }
+.zoom-controls { display: grid; grid-template-columns: 44px 54px 44px 58px; align-items: center; gap: 4px; }
 .zoom-controls output { text-align: center; color: var(--muted); font-size: .8rem; }
+.zoom-controls #zoom-fit { padding-inline: 6px; font-size: .78rem; }
 
-.tree-viewport { position: relative; width: 100%; max-width: 100%; height: calc(100dvh - 228px); min-height: 420px; overflow: auto; border: 1px solid #274b58; border-radius: 14px; background-color: #07141c; background-image: linear-gradient(#102631 1px, transparent 1px), linear-gradient(90deg, #102631 1px, transparent 1px); background-size: 24px 24px; overscroll-behavior: contain; touch-action: pan-x pan-y; cursor: grab; }
+.tree-viewport { position: relative; width: 100%; max-width: 100%; height: calc(100dvh - 228px); min-height: 420px; overflow: auto; border: 1px solid #274b58; border-radius: 14px; background-color: #07141c; background-image: linear-gradient(#102631 1px, transparent 1px), linear-gradient(90deg, #102631 1px, transparent 1px); background-size: 24px 24px; overscroll-behavior: contain; touch-action: none; cursor: grab; }
 .tree-viewport.is-dragging { cursor: grabbing; user-select: none; }
 .tree-stage { position: relative; min-width: 100%; min-height: 100%; }
 .tree-lines { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
