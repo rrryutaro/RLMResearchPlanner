@@ -192,6 +192,7 @@ def _embedded_numeric_value(text: str) -> int | None:
 
 
 def _quantity_to_right(label: OcrLine, lines: Iterable[OcrLine]) -> int | None:
+    lines = tuple(lines)
     label_center_y = label.y + label.height / 2.0
     candidates: list[tuple[float, float, float, int]] = []
     partial_candidates: list[tuple[float, float, str]] = []
@@ -239,7 +240,22 @@ def _quantity_to_right(label: OcrLine, lines: Iterable[OcrLine]) -> int | None:
     )
     if selected_value < 10:
         for _distance, partial_x, prefix in sorted(partial_candidates):
-            if abs(partial_x - selected[2]) > 80.0 or prefix == str(selected_value):
+            glyph_distance = max(
+                label.height,
+                next(
+                    (
+                        line.height
+                        for line in lines
+                        if line.x == selected[2]
+                        and _numeric_line_value(line.text) == selected_value
+                    ),
+                    label.height,
+                ),
+            )
+            if (
+                abs(partial_x - selected[2]) > glyph_distance * 2.75
+                or prefix == str(selected_value)
+            ):
                 continue
             combined = int(f"{prefix}{selected_value}")
             if 10 <= combined <= 500:
@@ -250,7 +266,7 @@ def _quantity_to_right(label: OcrLine, lines: Iterable[OcrLine]) -> int | None:
 def parse_speedup_ocr(
     text: str, line_groups: Iterable[Iterable[OcrLine]]
 ) -> tuple[SpeedupEntry, ...]:
-    candidates: list[tuple[float, SpeedupEntry, int, float]] = []
+    candidates: list[tuple[float, SpeedupEntry, int, float, float]] = []
     groups = tuple(tuple(group) for group in line_groups)
     all_lines = tuple(line for group in groups for line in group)
     for group in groups:
@@ -264,7 +280,9 @@ def parse_speedup_ocr(
                 quantity_override=quantity,
             )
             if direct_entry is not None:
-                candidates.append((line_center_y, direct_entry, 1, 0.0))
+                candidates.append(
+                    (line_center_y, direct_entry, 1, 0.0, float(line.height))
+                )
 
             # Windows OCR often recognizes the small icon duration (30m, 3h)
             # in a different input variant from the item label.  Match every
@@ -274,9 +292,12 @@ def parse_speedup_ocr(
                 if duration_line is line or _speedup_kind(duration_line.text) is not None:
                     continue
                 duration_center_y = duration_line.y + duration_line.height / 2.0
-                if abs(duration_center_y - line_center_y) > 48.0:
+                row_tolerance = max(line.height, duration_line.height) * 1.7
+                if abs(duration_center_y - line_center_y) > row_tolerance:
                     continue
-                if duration_line.x > line.x + max(80.0, line.width * 0.25):
+                if duration_line.x > line.x + max(
+                    line.height * 2.85, line.width * 0.25
+                ):
                     continue
                 icon_entry = _parse_speedup_line(
                     f"{duration_line.text} {line.text}",
@@ -289,17 +310,21 @@ def parse_speedup_ocr(
                             icon_entry,
                             2,
                             abs(duration_center_y - line_center_y),
+                            float(max(line.height, duration_line.height)),
                         )
                     )
     entries = list(parse_speedup_text(text))
-    row_clusters: list[list[tuple[float, SpeedupEntry, int, float]]] = []
+    row_clusters: list[
+        list[tuple[float, SpeedupEntry, int, float, float]]
+    ] = []
     for candidate in sorted(candidates, key=lambda item: item[0]):
         row = next(
             (
                 cluster
                 for cluster in row_clusters
                 if cluster[0][1].kind == candidate[1].kind
-                and abs(cluster[0][0] - candidate[0]) <= 24.0
+                and abs(cluster[0][0] - candidate[0])
+                <= max(cluster[0][4], candidate[4]) * 0.9
             ),
             None,
         )
@@ -335,11 +360,17 @@ def parse_speedup_ocr(
         )
         for cluster in row_clusters
     ]
-    for y, entry, _confidence, _duration_distance in selected_rows:
+    for y, entry, _confidence, _duration_distance, row_height in selected_rows:
         if entry.kind == "general" and any(
             other.kind in {"research", "training"}
-            and abs(other_y - y) <= 24.0
-            for other_y, other, _other_confidence, _other_distance in selected_rows
+            and abs(other_y - y) <= max(row_height, other_height) * 0.9
+            for (
+                other_y,
+                other,
+                _other_confidence,
+                _other_distance,
+                other_height,
+            ) in selected_rows
         ):
             continue
         entries.append(entry)

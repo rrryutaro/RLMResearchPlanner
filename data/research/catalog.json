@@ -16801,7 +16801,91 @@
             "verification_status": "sourced"
           }
         }
-      }
+      },
+      "connection_groups": [
+        {
+          "prerequisites": [
+            "Trap Retrieval I"
+          ],
+          "research": [
+            "Wall Repair I"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Wall Repair I"
+          ],
+          "research": [
+            "Wall Defense I",
+            "Wall Durability I"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Wall Defense I",
+            "Wall Repair I",
+            "Wall Durability I"
+          ],
+          "research": [
+            "Trap Retrieval II"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Trap Retrieval II"
+          ],
+          "research": [
+            "Trap Strength II"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Trap Strength II"
+          ],
+          "research": [
+            "Trap Defense II",
+            "Trap Durability II"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Trap Defense II",
+            "Trap Strength II",
+            "Trap Durability II"
+          ],
+          "research": [
+            "Trap Retrieval III"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Trap Retrieval III"
+          ],
+          "research": [
+            "Wall Defense II",
+            "Wall Repair II",
+            "Wall Durability II"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Wall Repair II"
+          ],
+          "research": [
+            "Trap Crafting II"
+          ]
+        },
+        {
+          "prerequisites": [
+            "Wall Defense II",
+            "Trap Crafting II",
+            "Wall Durability II"
+          ],
+          "research": [
+            "Trap Retrieval IV"
+          ]
+        }
+      ]
     },
     {
       "id": "upgrade_military",
@@ -37564,6 +37648,10 @@
         [
           "Gym Training III",
           "Familiarity (Cavalry ATK) I"
+        ],
+        [
+          "Gym Training III",
+          "Familiarity (Infantry ATK) I"
         ],
         [
           "Gym Training III",

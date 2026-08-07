@@ -647,10 +647,31 @@ class ResearchTreeView(QGraphicsView):
                 )
                 for research_id in research
             ]
-            middle_y = (max(point[1] for point in start_points) + min(
-                point[1] for point in end_points
-            )) / 2.0
+            connection_rows = {
+                coordinates[research_id][1]
+                for research_id in (*prerequisites, *research)
+            }
             path = QPainterPath()
+            if len(connection_rows) == 1:
+                center_y = coordinates[prerequisites[0]][1] + NODE_HEIGHT / 2.0
+                horizontal_points = sorted({
+                    coordinates[research_id][0] + NODE_WIDTH / 2.0
+                    for research_id in (*prerequisites, *research)
+                })
+                path.moveTo(horizontal_points[0], center_y)
+                for point in horizontal_points[1:]:
+                    path.lineTo(point, center_y)
+                edge = QGraphicsPathItem(path)
+                edge.setPen(QPen(QColor("#D2A51B"), 2.5))
+                edge.setZValue(-1.0)
+                edge.setData(0, prerequisites)
+                edge.setData(1, research)
+                self._scene.addItem(edge)
+                continue
+            # Route the bus through the final gap before the destination row.
+            # For adjacent rows this is their midpoint.  For a long branch it
+            # avoids drawing the horizontal bus through an intermediate card.
+            middle_y = min(point[1] for point in end_points) - VERTICAL_GAP / 2.0
             for start_x, start_y in start_points:
                 path.moveTo(start_x, start_y)
                 path.lineTo(start_x, middle_y)
@@ -663,6 +684,8 @@ class ResearchTreeView(QGraphicsView):
             edge = QGraphicsPathItem(path)
             edge.setPen(QPen(QColor("#D2A51B"), 2.5))
             edge.setZValue(-1.0)
+            edge.setData(0, prerequisites)
+            edge.setData(1, research)
             self._scene.addItem(edge)
 
         by_id = {node.research_id: node for node in node_list}

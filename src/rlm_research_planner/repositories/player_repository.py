@@ -6,6 +6,10 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from rlm_research_planner.domain.models import PlayerSettings, PlayerState, RESOURCE_KEYS
+from rlm_research_planner.services.calculation import (
+    free_speedup_seconds_for_vip,
+    vip_level_for_free_speedup_seconds,
+)
 
 
 SCHEMA_VERSION = 1
@@ -48,11 +52,19 @@ class PlayerRepository:
         resources = {
             key: int(values.get(f"resource.{key}", 0)) for key in RESOURCE_KEYS
         }
+        vip_level = int(
+            values.get(
+                "vip_level",
+                vip_level_for_free_speedup_seconds(
+                    int(values.get("free_speedup_seconds", 0))
+                ),
+            )
+        )
         settings = PlayerSettings(
+            vip_level=max(1, min(15, vip_level)),
             castle_level=int(values.get("castle_level", 1)),
             academy_level=int(values.get("academy_level", 1)),
             research_speed_percent=float(values.get("research_speed_percent", 0.0)),
-            free_speedup_seconds=int(values.get("free_speedup_seconds", 0)),
             max_guild_helps=int(values.get("max_guild_helps", 0)),
             speedup_seconds=int(values.get("speedup_seconds", 0)),
             resources=resources,
@@ -76,10 +88,13 @@ class PlayerRepository:
     def save(self, state: PlayerState) -> None:
         updated_at = datetime.now(timezone.utc).isoformat()
         values: dict[str, object] = {
+            "vip_level": state.settings.vip_level,
             "castle_level": state.settings.castle_level,
             "academy_level": state.settings.academy_level,
             "research_speed_percent": state.settings.research_speed_percent,
-            "free_speedup_seconds": state.settings.free_speedup_seconds,
+            "free_speedup_seconds": free_speedup_seconds_for_vip(
+                state.settings.vip_level
+            ),
             "max_guild_helps": state.settings.max_guild_helps,
             "speedup_seconds": state.settings.speedup_seconds,
             "observed_stats": state.observed_stats,
@@ -113,10 +128,13 @@ class PlayerRepository:
             "exported_at": datetime.now(timezone.utc).isoformat(),
             "player": {
                 "settings": {
+                    "vip_level": state.settings.vip_level,
                     "castle_level": state.settings.castle_level,
                     "academy_level": state.settings.academy_level,
                     "research_speed_percent": state.settings.research_speed_percent,
-                    "free_speedup_seconds": state.settings.free_speedup_seconds,
+                    "free_speedup_seconds": free_speedup_seconds_for_vip(
+                        state.settings.vip_level
+                    ),
                     "max_guild_helps": state.settings.max_guild_helps,
                     "speedup_seconds": state.settings.speedup_seconds,
                     "resources": state.settings.resources,
@@ -136,11 +154,19 @@ class PlayerRepository:
             raise ValueError("Unsupported backup schema version")
         player = raw["player"]  # type: ignore[index]
         raw_settings = player["settings"]  # type: ignore[index]
+        vip_level = int(
+            raw_settings.get(  # type: ignore[union-attr]
+                "vip_level",
+                vip_level_for_free_speedup_seconds(
+                    int(raw_settings.get("free_speedup_seconds", 0))  # type: ignore[union-attr]
+                ),
+            )
+        )
         settings = PlayerSettings(
+            vip_level=max(1, min(15, vip_level)),
             castle_level=int(raw_settings["castle_level"]),  # type: ignore[index]
             academy_level=int(raw_settings["academy_level"]),  # type: ignore[index]
             research_speed_percent=float(raw_settings["research_speed_percent"]),  # type: ignore[index]
-            free_speedup_seconds=int(raw_settings.get("free_speedup_seconds", 0)),  # type: ignore[union-attr]
             max_guild_helps=int(raw_settings["max_guild_helps"]),  # type: ignore[index]
             speedup_seconds=int(raw_settings["speedup_seconds"]),  # type: ignore[index]
             resources={

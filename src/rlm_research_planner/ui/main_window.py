@@ -2,9 +2,10 @@ from __future__ import annotations
 
 import re
 import subprocess
+from difflib import SequenceMatcher
 from pathlib import Path
 
-from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt, QTimer
+from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt
 from PySide6.QtGui import (
     QCloseEvent,
     QFont,
@@ -57,6 +58,7 @@ from rlm_research_planner.services.calculation import (
     apply_free_speedup_time,
     apply_guild_helps,
     apply_research_speed,
+    free_speedup_seconds_for_vip,
     format_duration,
 )
 from rlm_research_planner.services.catalog_planning import (
@@ -75,6 +77,7 @@ from rlm_research_planner.services.ocr import (
     load_ocr_profiles,
     map_ocr_card_levels_by_layout,
     match_ocr_card_label,
+    normalize_ocr_label,
     pair_ocr_label_values,
     pair_ocr_research_card_levels,
     parse_ocr_percentage,
@@ -95,6 +98,7 @@ from rlm_research_planner.services.window_capture import (
     capture_visible_window,
     list_capturable_windows,
     preferred_window_index,
+    reveal_window_for_capture,
     should_refresh_window_before_ocr,
 )
 from rlm_research_planner.settings import AppSettings, SettingsRepository
@@ -244,10 +248,7 @@ class MainWindow(QMainWindow):
         self._ocr_paid_gem_line_groups: list[tuple[OcrLine, ...]] = []
         self._ocr_card_groups: list[tuple[QRect, tuple[OcrLine, ...]]] = []
         self._tree_levels_dirty = False
-        self._autosave_timer = QTimer(self)
-        self._autosave_timer.setSingleShot(True)
-        self._autosave_timer.setInterval(700)
-        self._autosave_timer.timeout.connect(self._save_player_silently)
+        self._player_settings_dirty = False
         self.update_controller = UpdateController(
             self, self.settings_repository, self.app_settings
         )
@@ -420,6 +421,19 @@ class MainWindow(QMainWindow):
         dataset_heading.setStyleSheet("font-weight:700;")
         dataset_layout.addWidget(dataset_heading)
         self.tree_dataset_list = _AutoFitListWidget()
+        self.tree_dataset_list.setStyleSheet(
+            "QListWidget::item { border: 2px solid transparent; }"
+            "QListWidget::item:selected {"
+            " background-color: #176B87; color: #FFFFFF;"
+            " border: 2px solid #59C9F1; font-weight: 700;"
+            "}"
+            "QListWidget::item:selected:!active {"
+            " background-color: #176B87; color: #FFFFFF;"
+            " border: 2px solid #59C9F1;"
+            "}"
+        )
+        self._tree_dataset_search_active = False
+        self._tree_dataset_search_restore = ""
         for observation in self.observations:
             item = QListWidgetItem(
                 observation.localized_title(self.translator.locale)
@@ -442,7 +456,7 @@ class MainWindow(QMainWindow):
         filters.addWidget(QLabel(self.t("tree.search")))
         self.search_edit = QLineEdit()
         self.search_edit.setPlaceholderText(self.t("tree.search_placeholder"))
-        self.search_edit.textChanged.connect(self._refresh_tree)
+        self.search_edit.textChanged.connect(self._tree_search_changed)
         filters.addWidget(self.search_edit, 1)
         self.tree_capture_button = QPushButton(self.t("tree.capture_levels"))
         self.tree_capture_button.clicked.connect(self._capture_tree_levels)
@@ -485,6 +499,61 @@ class MainWindow(QMainWindow):
         self._refresh_tree()
         return page
 
+    def _tree_search_changed(self, text: str) -> None:
+        query = text.strip().casefold()
+        current = self.tree_dataset_list.currentItem()
+        current_value = (
+            str(current.data(Qt.UserRole) or "") if current is not None else ""
+        )
+        if query and not self._tree_dataset_search_active:
+            self._tree_dataset_search_restore = current_value
+        preferred_value = (
+            self._tree_dataset_search_restore
+            if not query and self._tree_dataset_search_active
+            else current_value
+        )
+        self._tree_dataset_search_active = bool(query)
+        self._filter_tree_datasets(query, preferred_value)
+
+    def _filter_tree_datasets(self, query: str, preferred_value: str) -> None:
+        self.tree_dataset_list.blockSignals(True)
+        self.tree_dataset_list.clear()
+        for observation in self.observations:
+            title = observation.localized_title(self.translator.locale)
+            if query and not any(
+                self._tree_node_matches_query(node, query)
+                for node in observation.nodes
+            ):
+                continue
+            item = QListWidgetItem(title)
+            item.setData(
+                Qt.UserRole, f"observation:{observation.observation_id}"
+            )
+            item.setToolTip(
+                f"{observation.verification_status}\n{observation.notes}"
+            )
+            self.tree_dataset_list.addItem(item)
+        preferred_row = self._dataset_list_row(preferred_value)
+        if preferred_row >= 0:
+            self.tree_dataset_list.setCurrentRow(preferred_row)
+        elif self.tree_dataset_list.count() > 0:
+            self.tree_dataset_list.setCurrentRow(0)
+        self.tree_dataset_list.fit_items()
+        self.tree_dataset_list.blockSignals(False)
+        self._tree_dataset_changed()
+
+    def _tree_node_matches_query(
+        self, node: ObservedResearchNode, query: str
+    ) -> bool:
+        if not query:
+            return True
+        research = self._research.get(node.id)
+        tags = research.tags if research is not None else ()
+        search_text = " ".join(
+            (node.localized_name(self.translator.locale), node.id, *tags)
+        )
+        return query in search_text.casefold()
+
     def _dataset_list_row(self, value: str) -> int:
         if not hasattr(self, "tree_dataset_list"):
             return -1
@@ -526,7 +595,7 @@ class MainWindow(QMainWindow):
                 observation.nodes, key=lambda item: (item.row, item.column)
             ):
                 name = node.localized_name(self.translator.locale)
-                if query and query not in f"{name} {node.id}".casefold():
+                if not self._tree_node_matches_query(node, query):
                     continue
                 current = self._tree_level_draft.get(node.id, 0)
                 if current <= 0:
@@ -569,6 +638,14 @@ class MainWindow(QMainWindow):
                     (group.prerequisite_ids, group.research_ids)
                     for group in observation.connection_groups
                 ),
+            )
+            return
+        if self.observations and self.tree_dataset_list.count() == 0:
+            self.tree_view.set_research(
+                [],
+                set(),
+                "",
+                self.t("tree.empty_dataset"),
             )
             return
         category = self.category_combo.currentData() if hasattr(self, "category_combo") else ""
@@ -653,7 +730,7 @@ class MainWindow(QMainWindow):
         self._selected_tree_node_id = research_id
         self._tree_level_draft[research_id] = max(0, min(int(level), maximum))
         self._tree_levels_dirty = True
-        self.tree_save_levels_button.setEnabled(True)
+        self._update_player_save_button()
         self._refresh_tree_preserving_view()
         self._sync_progress_editor(research_id)
         self._calculate_plan()
@@ -667,18 +744,20 @@ class MainWindow(QMainWindow):
         self.tree_view.centerOn(scene_center)
 
     def _clear_tree_levels(self) -> None:
+        changed_ids = set(self._tree_level_draft) | set(
+            self.player_state.research_levels
+        )
         self._tree_level_draft.clear()
         self._tree_levels_dirty = True
-        self.tree_save_levels_button.setEnabled(True)
+        self._update_player_save_button()
+        for research_id in changed_ids:
+            self._sync_progress_editor(research_id)
         self._refresh_tree_preserving_view()
+        self._refresh_detail()
         self._calculate_plan()
 
     def _save_tree_levels(self) -> None:
-        changed_ids = self._commit_tree_level_draft()
-        self.player_repository.save(self.player_state)
-        for research_id in changed_ids:
-            self._sync_progress_editor(research_id)
-        self._calculate_plan()
+        self._save_player()
 
     def _commit_tree_level_draft(self) -> set[str]:
         changed_ids = set(self.player_state.research_levels) | set(
@@ -687,7 +766,7 @@ class MainWindow(QMainWindow):
         self.player_state.research_levels.clear()
         self.player_state.research_levels.update(self._tree_level_draft)
         self._tree_levels_dirty = False
-        self.tree_save_levels_button.setEnabled(False)
+        self._update_player_save_button()
         return changed_ids
 
     def _capture_tree_levels(self) -> None:
@@ -714,7 +793,7 @@ class MainWindow(QMainWindow):
         for candidate in candidates_by_id.values():
             self._tree_level_draft[candidate.research_id] = candidate.level
         self._tree_levels_dirty = True
-        self.tree_save_levels_button.setEnabled(True)
+        self._update_player_save_button()
         self._refresh_tree_preserving_view()
         for candidate in candidates_by_id.values():
             self._sync_progress_editor(candidate.research_id)
@@ -767,7 +846,7 @@ class MainWindow(QMainWindow):
         self._selected_research_id = str(research_id)
         research = self._research[self._selected_research_id]
         localized = self.master.localized_research(research.id, self.translator.locale)
-        current = self.player_state.research_levels.get(research.id, 0)
+        current = self._tree_level_draft.get(research.id, 0)
         self.detail_description.setText(
             f"{localized.description}\n{localized.recommendation_reason}"
         )
@@ -795,7 +874,9 @@ class MainWindow(QMainWindow):
         )
         adjusted = apply_free_speedup_time(
             adjusted,
-            self.player_state.settings.free_speedup_seconds,
+            free_speedup_seconds_for_vip(
+                self.player_state.settings.vip_level
+            ),
         )
         after_help = apply_guild_helps(adjusted, self.player_state.settings.max_guild_helps)
         resources = ", ".join(
@@ -841,26 +922,28 @@ class MainWindow(QMainWindow):
 
         settings_panel = QWidget()
         settings_form = QFormLayout(settings_panel)
+        self.player_settings_form = settings_form
+        self.vip_level_spin = self._integer_spin(
+            1, 15, self.player_state.settings.vip_level
+        )
+        vip_row = QWidget()
+        vip_layout = QHBoxLayout(vip_row)
+        vip_layout.setContentsMargins(0, 0, 0, 0)
+        vip_layout.addWidget(self.vip_level_spin)
+        self.vip_free_speedup_label = QLabel()
+        vip_layout.addWidget(self.vip_free_speedup_label, 1)
         self.castle_spin = self._integer_spin(1, 99, self.player_state.settings.castle_level)
         self.academy_spin = self._integer_spin(1, 99, self.player_state.settings.academy_level)
         self.research_speed_spin = QDoubleSpinBox()
         self.research_speed_spin.setRange(0.0, 10000.0)
         self.research_speed_spin.setDecimals(2)
         self.research_speed_spin.setValue(self.player_state.settings.research_speed_percent)
-        self.free_speedup_minutes_spin = self._integer_spin(
-            0,
-            24 * 60,
-            self.player_state.settings.free_speedup_seconds // 60,
-        )
         self.guild_help_spin = self._integer_spin(0, 1000, self.player_state.settings.max_guild_helps)
         self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
+        settings_form.addRow(self.t("player.vip_level"), vip_row)
         settings_form.addRow(self.t("player.castle_level"), self.castle_spin)
         settings_form.addRow(self.t("player.academy_level"), self.academy_spin)
         settings_form.addRow(self.t("player.research_speed"), self.research_speed_spin)
-        settings_form.addRow(
-            self.t("player.free_speedup_minutes"),
-            self.free_speedup_minutes_spin,
-        )
         settings_form.addRow(self.t("player.guild_helps"), self.guild_help_spin)
         settings_form.addRow(self.t("player.speedups"), self.speedup_spin)
 
@@ -906,7 +989,7 @@ class MainWindow(QMainWindow):
                     )
                 )
 
-        self._progress_editors: dict[str, QSpinBox | QComboBox] = {}
+        self._progress_editors: dict[str, QSpinBox] = {}
         self.progress_table = QTableWidget(len(progress_entries), 2)
         self.progress_table.setHorizontalHeaderLabels(
             [self.t("tree.name"), self.t("tree.level")]
@@ -918,34 +1001,17 @@ class MainWindow(QMainWindow):
                 f"{name} [{self.t('tree.observed')}]" if observed else name
             )
             self.progress_table.setItem(row, 0, QTableWidgetItem(display_name))
-            if observed:
-                editor = QComboBox()
-                maximum_for_input = max_level if max_level is not None else 99
-                for level in range(maximum_for_input + 1):
-                    label = (
-                        f"{level} / {max_level}"
-                        if max_level is not None
-                        else f"Lv.{level}"
-                    )
-                    editor.addItem(label, level)
-                current = self.player_state.research_levels.get(research_id, 0)
-                editor.setCurrentIndex(max(0, editor.findData(current)))
-                editor.currentIndexChanged.connect(
-                    lambda _index, selected_id=research_id, selected=editor: (
-                        self._observed_progress_changed(selected_id, selected)
-                    )
+            editor = self._integer_spin(
+                0,
+                max_level if max_level is not None else 99,
+                self._tree_level_draft.get(research_id, 0),
+            )
+            editor.setAccelerated(True)
+            editor.valueChanged.connect(
+                lambda value, selected_id=research_id: self._progress_changed(
+                    selected_id, value
                 )
-            else:
-                editor = self._integer_spin(
-                    0,
-                    max_level,
-                    self.player_state.research_levels.get(research_id, 0),
-                )
-                editor.valueChanged.connect(
-                    lambda value, selected_id=research_id: self._progress_changed(
-                        selected_id, value
-                    )
-                )
+            )
             self._progress_editors[research_id] = editor
             self.progress_table.setCellWidget(row, 1, editor)
         progress_layout.addWidget(self.progress_table)
@@ -954,13 +1020,13 @@ class MainWindow(QMainWindow):
         layout.addWidget(splitter, 1)
 
         actions = QHBoxLayout()
+        self.player_save_status_label = QLabel()
+        actions.addWidget(self.player_save_status_label, 1)
         self.tree_clear_levels_button = QPushButton(self.t("tree.clear_levels"))
         self.tree_clear_levels_button.clicked.connect(self._clear_tree_levels)
-        self.tree_save_levels_button = QPushButton(self.t("tree.save_levels"))
-        self.tree_save_levels_button.clicked.connect(self._save_tree_levels)
-        self.tree_save_levels_button.setEnabled(self._tree_levels_dirty)
-        save_button = QPushButton(self.t("common.save"))
-        save_button.clicked.connect(self._save_player)
+        self.tree_save_levels_button = QPushButton(self.t("player.save_all"))
+        self.tree_save_levels_button.clicked.connect(self._save_player)
+        self._update_player_save_button()
         export_button = QPushButton(self.t("common.export"))
         export_button.clicked.connect(self._export_backup)
         import_button = QPushButton(self.t("common.import"))
@@ -970,13 +1036,13 @@ class MainWindow(QMainWindow):
         actions.addWidget(self.tree_save_levels_button)
         actions.addWidget(import_button)
         actions.addWidget(export_button)
-        actions.addWidget(save_button)
         layout.addLayout(actions)
 
+        self.vip_level_spin.valueChanged.connect(self._vip_level_changed)
+        self._update_vip_free_speedup_label()
         self.castle_spin.valueChanged.connect(self._settings_changed)
         self.academy_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_spin.valueChanged.connect(self._settings_changed)
-        self.free_speedup_minutes_spin.valueChanged.connect(self._settings_changed)
         self.guild_help_spin.valueChanged.connect(self._settings_changed)
         self.speedup_spin.valueChanged.connect(self._settings_changed)
         for spin in self.resource_spins.values():
@@ -994,37 +1060,38 @@ class MainWindow(QMainWindow):
         if not hasattr(self, "castle_spin"):
             return
         settings = self.player_state.settings
+        settings.vip_level = self.vip_level_spin.value()
         settings.castle_level = self.castle_spin.value()
         settings.academy_level = self.academy_spin.value()
         settings.research_speed_percent = self.research_speed_spin.value()
-        settings.free_speedup_seconds = self.free_speedup_minutes_spin.value() * 60
         settings.max_guild_helps = self.guild_help_spin.value()
         settings.speedup_seconds = self.speedup_spin.value()
         settings.resources = {key: spin.value() for key, spin in self.resource_spins.items()}
-        self._schedule_autosave()
+        self._player_settings_dirty = True
+        self._update_player_save_button()
         self._refresh_detail()
         self._calculate_plan()
+
+    def _vip_level_changed(self, *_args) -> None:
+        self._update_vip_free_speedup_label()
+        self._settings_changed()
+
+    def _update_vip_free_speedup_label(self) -> None:
+        if not hasattr(self, "vip_free_speedup_label"):
+            return
+        minutes = free_speedup_seconds_for_vip(
+            self.vip_level_spin.value()
+        ) // 60
+        self.vip_free_speedup_label.setText(
+            self.t("player.vip_free_speedup", minutes=minutes)
+        )
 
     def _progress_changed(self, research_id: str, value: int) -> None:
-        self.player_state.research_levels[research_id] = value
         self._tree_level_draft[research_id] = value
-        self._schedule_autosave()
+        self._tree_levels_dirty = True
+        self._update_player_save_button()
         self._refresh_tree()
         self._refresh_detail()
-        self._calculate_plan()
-
-    def _observed_progress_changed(
-        self, research_id: str, editor: QComboBox
-    ) -> None:
-        level = editor.currentData()
-        if level is None:
-            self.player_state.research_levels.pop(research_id, None)
-            self._tree_level_draft.pop(research_id, None)
-        else:
-            self.player_state.research_levels[research_id] = int(level)
-            self._tree_level_draft[research_id] = int(level)
-        self._schedule_autosave()
-        self._refresh_tree()
         self._calculate_plan()
 
     def _sync_progress_editor(self, research_id: str) -> None:
@@ -1034,27 +1101,27 @@ class MainWindow(QMainWindow):
         if editor is None:
             return
         editor.blockSignals(True)
-        if isinstance(editor, QComboBox):
-            current = self._tree_level_draft.get(research_id)
-            editor.setCurrentIndex(max(0, editor.findData(current)))
-        elif isinstance(editor, QSpinBox):
-            editor.setValue(self._tree_level_draft.get(research_id, 0))
+        editor.setValue(self._tree_level_draft.get(research_id, 0))
         editor.blockSignals(False)
 
-    def _schedule_autosave(self) -> None:
-        self._autosave_timer.start()
-
-    def _save_player_silently(self) -> None:
-        self.player_repository.save(self.player_state)
+    def _update_player_save_button(self) -> None:
+        if hasattr(self, "tree_save_levels_button"):
+            dirty = self._tree_levels_dirty or self._player_settings_dirty
+            self.tree_save_levels_button.setEnabled(dirty)
+            if dirty and hasattr(self, "player_save_status_label"):
+                self.player_save_status_label.clear()
 
     def _save_player(self) -> None:
         self._settings_changed()
         changed_ids = self._commit_tree_level_draft()
         self.player_repository.save(self.player_state)
+        self._player_settings_dirty = False
+        self._update_player_save_button()
         for research_id in changed_ids:
             self._sync_progress_editor(research_id)
         self._calculate_plan()
-        QMessageBox.information(self, self.t("info.title"), self.t("player.saved"))
+        if hasattr(self, "player_save_status_label"):
+            self.player_save_status_label.setText(self.t("player.saved"))
 
     def _export_backup(self) -> None:
         path, _ = QFileDialog.getSaveFileName(
@@ -1086,6 +1153,7 @@ class MainWindow(QMainWindow):
             self.player_state = self.player_repository.import_json(Path(path))
             self._tree_level_draft = dict(self.player_state.research_levels)
             self._tree_levels_dirty = False
+            self._player_settings_dirty = False
             self._build_ui()
             QMessageBox.information(
                 self, self.t("info.title"), self.t("player.backup_restored")
@@ -1714,6 +1782,13 @@ class MainWindow(QMainWindow):
         self.language_combo.setCurrentIndex(max(0, index))
         self.language_combo.currentIndexChanged.connect(self._change_language)
         settings.addWidget(self.language_combo)
+        settings.addWidget(QLabel(self.t("help.font_size")))
+        self.help_font_spin = QSpinBox()
+        self.help_font_spin.setRange(9, 24)
+        self.help_font_spin.setSuffix(" pt")
+        self.help_font_spin.setValue(self.app_settings.help_font_size)
+        self.help_font_spin.valueChanged.connect(self._change_help_font_size)
+        settings.addWidget(self.help_font_spin)
         settings.addStretch(1)
         settings.addWidget(QLabel(self.t("app.version", version=version_string())))
         layout.addLayout(settings)
@@ -1742,12 +1817,15 @@ class MainWindow(QMainWindow):
 
         self.help_browser = QTextBrowser()
         self.help_browser.setOpenExternalLinks(True)
+        self.help_browser.setStyleSheet(
+            f"font-size:{self.app_settings.help_font_size}pt;"
+        )
         sections = (
             ("help.tree.title", "help.tree.body"),
-            ("help.levels.title", "help.levels.body"),
+            ("help.levels.title", "help.levels.body_v002"),
             ("help.plan.title", "help.plan.body"),
-            ("help.player.title", "help.player.body"),
-            ("help.ocr.title", "help.ocr.body"),
+            ("help.player.title", "help.player.body_v002"),
+            ("help.ocr.title", "help.ocr.body_v002"),
             ("help.paid.title", "help.paid.body"),
             ("help.data.title", "help.data.body"),
             ("help.update.title", "help.update.body"),
@@ -1757,37 +1835,19 @@ class MainWindow(QMainWindow):
         for title_key, body_key in sections:
             body.append(f"<h2>{self.t(title_key)}</h2>")
             body.append(f"<p>{self.t(body_key)}</p>")
-        license_files = (
-            (self.paths.application_license, self.t("help.licenses.application")),
-            (
-                self.paths.licenses / "THIRD_PARTY_NOTICES.md",
-                self.t("help.licenses.third_party"),
-            ),
-            (self.paths.licenses / "LGPL-3.0.txt", "GNU LGPL v3"),
-            (self.paths.licenses / "GPL-3.0.txt", "GNU GPL v3"),
-            (
-                self.paths.licenses / "Python-3.12-LICENSE.txt",
-                "Python 3.12 License",
-            ),
-            (
-                self.paths.licenses / "PyInstaller-COPYING.txt",
-                "PyInstaller License",
-            ),
-        )
-        available_licenses = [
-            f'<li><a href="{path.as_uri()}">{label}</a></li>'
-            for path, label in license_files
-            if path.is_file()
-        ]
-        if available_licenses:
-            body.append(f"<h2>{self.t('help.licenses.title')}</h2>")
-            body.append(f"<p>{self.t('help.licenses.body')}</p>")
-            body.append(f"<ul>{''.join(available_licenses)}</ul>")
         body.append("<hr>")
         body.append(f"<p>{self.t('app.disclaimer')}</p>")
         self.help_browser.setHtml("".join(body))
         layout.addWidget(self.help_browser)
         return page
+
+    def _change_help_font_size(self, value: int) -> None:
+        self.app_settings.help_font_size = max(9, min(24, int(value)))
+        if hasattr(self, "help_browser"):
+            self.help_browser.setStyleSheet(
+                f"font-size:{self.app_settings.help_font_size}pt;"
+            )
+        self.settings_repository.save(self.app_settings)
 
     def _build_ocr_tab(self) -> QWidget:
         page = QWidget()
@@ -1853,9 +1913,9 @@ class MainWindow(QMainWindow):
         )
         field_layout.addWidget(self.ocr_field_table, 1)
         field_actions = QHBoxLayout()
-        apply_field_button = QPushButton(self.t("ocr.apply_field"))
+        apply_field_button = QPushButton(self.t("ocr.apply_selected_mapped"))
         apply_field_button.clicked.connect(self._apply_selected_ocr_field)
-        apply_all_fields_button = QPushButton(self.t("ocr.apply_all_fields"))
+        apply_all_fields_button = QPushButton(self.t("ocr.apply_all_mapped"))
         apply_all_fields_button.clicked.connect(self._apply_all_ocr_fields)
         field_actions.addStretch(1)
         field_actions.addWidget(apply_field_button)
@@ -1937,7 +1997,38 @@ class MainWindow(QMainWindow):
             )
             return False
         window = live_windows[preferred_index]
-        image = capture_visible_window(window)
+        capture_bounds = QRect(
+            window.left,
+            window.top,
+            window.width,
+            window.height,
+        )
+        hide_for_capture = self.isVisible() and (
+            window.is_minimized
+            or window.is_fullscreen
+            or self.frameGeometry().intersects(capture_bounds)
+        )
+        was_maximized = self.isMaximized()
+        if hide_for_capture:
+            self.hide()
+            QApplication.processEvents()
+            reveal_window_for_capture(window)
+            refreshed_windows = list_capturable_windows()
+            refreshed_index = preferred_window_index(
+                refreshed_windows, self.app_settings.ocr_window_title
+            )
+            if refreshed_index >= 0:
+                window = refreshed_windows[refreshed_index]
+        try:
+            image = capture_visible_window(window)
+        finally:
+            if hide_for_capture:
+                if was_maximized:
+                    self.showMaximized()
+                else:
+                    self.show()
+                self.raise_()
+                self.activateWindow()
         if image.isNull():
             self._show_error(self.t("ocr.capture_failed"))
             return False
@@ -2010,6 +2101,87 @@ class MainWindow(QMainWindow):
         return converted
 
     @staticmethod
+    def _ocr_content_rect(image: QImage) -> QRect:
+        """Return game content bounds, excluding an imported Windows title bar."""
+
+        bounds = image.rect()
+        if image.isNull() or image.width() < 100 or image.height() < 100:
+            return bounds
+        converted = image.convertToFormat(QImage.Format_RGB32)
+        sample_step = max(1, converted.width() // 96)
+        sample_xs = tuple(range(0, converted.width(), sample_step))
+
+        def light_neutral_ratio(y: int) -> float:
+            matches = 0
+            for x in sample_xs:
+                pixel = converted.pixel(x, y)
+                red = qRed(pixel)
+                green = qGreen(pixel)
+                blue = qBlue(pixel)
+                if min(red, green, blue) >= 175 and max(red, green, blue) - min(
+                    red, green, blue
+                ) <= 32:
+                    matches += 1
+            return matches / max(1, len(sample_xs))
+
+        if light_neutral_ratio(0) < 0.62:
+            return bounds
+        last_title_row = 0
+        misses = 0
+        for y in range(1, max(2, round(converted.height() * 0.09))):
+            if light_neutral_ratio(y) >= 0.50:
+                last_title_row = y
+                misses = 0
+            else:
+                misses += 1
+                if misses >= 3:
+                    break
+        content_top = last_title_row + 1
+        if not (
+            converted.height() * 0.015
+            <= content_top
+            <= converted.height() * 0.08
+        ):
+            return bounds
+        return QRect(
+            bounds.left(),
+            content_top,
+            bounds.width(),
+            bounds.height() - content_top,
+        )
+
+    @staticmethod
+    def _relative_ocr_region(
+        content: QRect,
+        left: float,
+        top: float,
+        width: float,
+        height: float,
+    ) -> QRect:
+        """Build a clipped OCR region from ratios of the detected game content."""
+
+        region = QRect(
+            content.x() + round(content.width() * left),
+            content.y() + round(content.height() * top),
+            round(content.width() * width),
+            round(content.height() * height),
+        )
+        return region.intersected(content)
+
+    @staticmethod
+    def _ocr_detail_scale(
+        region: QRect,
+        *,
+        target_height: int,
+        maximum: float = 4.0,
+    ) -> float:
+        """Enlarge only small OCR crops; never reduce native image detail."""
+
+        if region.height() <= 0:
+            return 1.0
+        return max(1.0, min(maximum, target_height / region.height()))
+
+    @staticmethod
     def _research_card_meter_regions(image: QImage) -> list[tuple[QRect, float]]:
         """Find card panels and return their visually filled meter ratio."""
         converted = image.convertToFormat(QImage.Format_RGB32)
@@ -2030,7 +2202,8 @@ class MainWindow(QMainWindow):
                 and red >= green + 20
             )
 
-        minimum_run = max(28, width // 40)
+        minimum_run = max(3, round(width * 0.006))
+        horizontal_join = max(1, round(width * 0.0025))
         components: list[dict[str, int]] = []
         for y in range(height):
             x = 0
@@ -2050,8 +2223,8 @@ class MainWindow(QMainWindow):
                         component
                         for component in components
                         if component["bottom"] == y - 1
-                        and start <= component["right"] + 3
-                        and end >= component["left"] - 3
+                        and start <= component["right"] + horizontal_join
+                        and end >= component["left"] - horizontal_join
                     ),
                     None,
                 )
@@ -2073,7 +2246,11 @@ class MainWindow(QMainWindow):
         for component in components:
             orange_width = component["right"] - component["left"] + 1
             orange_height = component["bottom"] - component["top"] + 1
-            if orange_width < minimum_run or not 5 <= orange_height <= height * 0.06:
+            minimum_meter_height = max(2, round(height * 0.004))
+            if (
+                orange_width < minimum_run
+                or not minimum_meter_height <= orange_height <= height * 0.06
+            ):
                 continue
             inset = max(1, orange_height // 5)
             meter_sample_ys = tuple(
@@ -2139,8 +2316,7 @@ class MainWindow(QMainWindow):
                 expected_height,
             ).intersected(converted.rect())
             if (
-                region.width() < 80
-                or region.height() < 35
+                region.width() < meter_width * 0.40
                 or region.height() < expected_height * 0.85
             ):
                 continue
@@ -2205,47 +2381,28 @@ class MainWindow(QMainWindow):
             paid_input_indexes: set[int] = set()
             gem_input_indexes: set[int] = set()
             detected_card_regions = self._research_card_ocr_regions(self._ocr_image)
-            longest_side = max(self._ocr_image.width(), self._ocr_image.height())
-            scale = min(2.0, 2400.0 / max(1, longest_side))
-            if scale >= 1.25:
-                image_inputs.append(
-                    (
-                        self._ocr_image.scaled(
-                            round(self._ocr_image.width() * scale),
-                            round(self._ocr_image.height() * scale),
-                            Qt.KeepAspectRatio,
-                            Qt.SmoothTransformation,
-                        ),
-                        scale,
-                        0.0,
-                        0.0,
-                        None,
-                    )
+            image_inputs.append(
+                (
+                    self._high_contrast_ocr_image(self._ocr_image),
+                    1.0,
+                    0.0,
+                    0.0,
+                    None,
                 )
-                high_contrast = self._high_contrast_ocr_image(self._ocr_image)
-                image_inputs.append(
-                    (
-                        high_contrast.scaled(
-                            round(high_contrast.width() * scale),
-                            round(high_contrast.height() * scale),
-                            Qt.KeepAspectRatio,
-                            Qt.FastTransformation,
-                        ),
-                        scale,
-                        0.0,
-                        0.0,
-                        None,
-                    )
-                )
+            )
             if paid_pack:
-                gem_region = QRect(
-                    round(self._ocr_image.width() * 0.164),
-                    round(self._ocr_image.height() * 0.243),
-                    round(self._ocr_image.width() * 0.508),
-                    round(self._ocr_image.height() * 0.222),
+                content = self._ocr_content_rect(self._ocr_image)
+                gem_region = self._relative_ocr_region(
+                    content,
+                    0.164,
+                    0.209,
+                    0.508,
+                    0.232,
                 )
                 gem_image = self._ocr_image.copy(gem_region)
-                gem_scale = 4.0
+                gem_scale = self._ocr_detail_scale(
+                    gem_region, target_height=610
+                )
                 gem_variants = [(gem_image, Qt.SmoothTransformation)]
                 gem_variants.extend(
                     (
@@ -2274,15 +2431,18 @@ class MainWindow(QMainWindow):
                     input_index = len(image_inputs) - 1
                     paid_input_indexes.add(input_index)
                     gem_input_indexes.add(input_index)
-                panel_region = QRect(
-                    round(self._ocr_image.width() * 0.16),
-                    round(self._ocr_image.height() * 0.24),
-                    round(self._ocr_image.width() * 0.68),
-                    round(self._ocr_image.height() * 0.67),
+                panel_region = self._relative_ocr_region(
+                    content,
+                    0.16,
+                    0.206,
+                    0.68,
+                    0.70,
                 )
                 panel_image = self._ocr_image.copy(panel_region)
-                panel_scale = min(
-                    3.0, 2400.0 / max(1, panel_image.width())
+                panel_scale = self._ocr_detail_scale(
+                    panel_region,
+                    target_height=1400,
+                    maximum=3.0,
                 )
                 image_inputs.append(
                     (
@@ -2299,20 +2459,18 @@ class MainWindow(QMainWindow):
                     )
                 )
                 paid_input_indexes.add(len(image_inputs) - 1)
-                row_x = round(self._ocr_image.width() * 0.17)
-                row_width = round(self._ocr_image.width() * 0.67)
-                row_height = round(self._ocr_image.height() * 0.097)
-                row_start_y = round(self._ocr_image.height() * 0.444)
-                row_step = round(self._ocr_image.height() * 0.086)
                 for row_index in range(5):
-                    paid_region = QRect(
-                        row_x,
-                        row_start_y + row_index * row_step,
-                        row_width,
-                        row_height,
+                    paid_region = self._relative_ocr_region(
+                        content,
+                        0.17,
+                        0.419 + row_index * 0.090,
+                        0.67,
+                        0.102,
                     )
                     paid_image = self._ocr_image.copy(paid_region)
-                    paid_scale = 3.0
+                    paid_scale = self._ocr_detail_scale(
+                        paid_region, target_height=220
+                    )
                     image_inputs.append(
                         (
                             paid_image.scaled(
@@ -2347,14 +2505,17 @@ class MainWindow(QMainWindow):
                             )
                         )
                         paid_input_indexes.add(len(image_inputs) - 1)
-                price_region = QRect(
-                    round(self._ocr_image.width() * 0.35),
-                    round(self._ocr_image.height() * 0.86),
-                    round(self._ocr_image.width() * 0.32),
-                    round(self._ocr_image.height() * 0.14),
+                price_region = self._relative_ocr_region(
+                    content,
+                    0.35,
+                    0.853,
+                    0.32,
+                    0.147,
                 )
                 price_image = self._ocr_image.copy(price_region)
-                price_scale = 4.0
+                price_scale = self._ocr_detail_scale(
+                    price_region, target_height=400
+                )
                 for price_variant, transformation in (
                     (price_image, Qt.SmoothTransformation),
                     (
@@ -2381,7 +2542,9 @@ class MainWindow(QMainWindow):
                     paid_input_indexes.add(len(image_inputs) - 1)
             for region in detected_card_regions:
                 card = self._ocr_image.copy(region)
-                card_scale = min(4.0, 1200.0 / max(1, card.width()))
+                card_scale = self._ocr_detail_scale(
+                    region, target_height=340
+                )
                 for card_image, transformation in (
                     (card, Qt.SmoothTransformation),
                     (
@@ -2509,6 +2672,7 @@ class MainWindow(QMainWindow):
             for candidate in candidates:
                 fields_by_label.setdefault(candidate.label.casefold(), candidate)
         self._ocr_fields = sorted(fields_by_label.values(), key=lambda item: item.y)
+        self._ocr_field_mapping_combos: dict[int, QComboBox] = {}
         self.ocr_field_table.setRowCount(len(self._ocr_fields))
         for row, candidate in enumerate(self._ocr_fields):
             mapping = self._ocr_field_mapping(candidate.label)
@@ -2517,19 +2681,50 @@ class MainWindow(QMainWindow):
             label_item.setToolTip(candidate.evidence)
             value_item = QTableWidgetItem(candidate.value)
             value_item.setToolTip(self.t("ocr.edit_value_hint"))
-            mapping_item = QTableWidgetItem(mapping)
-            mapping_item.setFlags(mapping_item.flags() & ~Qt.ItemIsEditable)
+            mapping_combo = QComboBox()
+            mapping_combo.addItem(self.t("ocr.mapping_none"), "")
+            mapping_combo.addItem(
+                self.t("player.research_speed"), "research_speed"
+            )
+            mapping_combo.setCurrentIndex(
+                max(0, mapping_combo.findData(mapping))
+            )
+            mapping_combo.setToolTip(self.t("ocr.mapping_hint"))
             self.ocr_field_table.setItem(row, 0, label_item)
             self.ocr_field_table.setItem(row, 1, value_item)
-            self.ocr_field_table.setItem(row, 2, mapping_item)
+            self.ocr_field_table.setCellWidget(row, 2, mapping_combo)
+            self._ocr_field_mapping_combos[row] = mapping_combo
         if self._ocr_fields:
             self.ocr_field_table.selectRow(0)
 
     def _ocr_field_mapping(self, label: str) -> str:
-        key = "".join(label.split()).casefold()
-        if key in {"研究速度", "researchspeed"}:
-            return self.t("player.research_speed")
-        return self.t("ocr.observed_stat")
+        profile = self._selected_ocr_profile()
+
+        def compact(value: str) -> str:
+            normalized = normalize_ocr_label(value, profile).casefold()
+            return re.sub(
+                r"[^\w\u3040-\u30ff\u3400-\u9fff]+", "", normalized
+            )
+
+        source = compact(label)
+        if len(source) < 3:
+            return ""
+        aliases = {
+            compact("研究速度"),
+            compact("Research Speed"),
+            compact(self.t("player.research_speed")),
+        }
+        aliases.discard("")
+        if source in aliases or any(
+            len(alias) >= 4 and (source in alias or alias in source)
+            for alias in aliases
+        ):
+            return "research_speed"
+        best = max(
+            (SequenceMatcher(None, source, alias).ratio() for alias in aliases),
+            default=0.0,
+        )
+        return "research_speed" if best >= 0.68 else ""
 
     def _selected_ocr_field_rows(self) -> list[int]:
         return [index.row() for index in self.ocr_field_table.selectionModel().selectedRows()]
@@ -2548,35 +2743,56 @@ class MainWindow(QMainWindow):
         )
 
     def _confirm_and_store_ocr_fields(self, rows: list[int]) -> None:
+        mapped_rows: list[tuple[str, str, str]] = []
+        for row in rows:
+            label_item = self.ocr_field_table.item(row, 0)
+            value_item = self.ocr_field_table.item(row, 1)
+            mapping_combo = getattr(
+                self, "_ocr_field_mapping_combos", {}
+            ).get(row)
+            if (
+                label_item is None
+                or value_item is None
+                or mapping_combo is None
+            ):
+                continue
+            mapping = str(mapping_combo.currentData() or "")
+            label = label_item.text().strip()
+            value = value_item.text().strip()
+            if mapping and label and value:
+                mapped_rows.append((mapping, label, value))
+        if not mapped_rows:
+            self._show_info(self.t("ocr.no_mapped_fields"))
+            return
         answer = QMessageBox.question(
             self,
             self.t("info.title"),
-            self.t("ocr.confirm_fields", count=len(rows)),
+            self.t("ocr.confirm_fields", count=len(mapped_rows)),
         )
         if answer != QMessageBox.Yes:
             return
         research_speed: float | None = None
-        for row in rows:
-            label_item = self.ocr_field_table.item(row, 0)
-            value_item = self.ocr_field_table.item(row, 1)
-            if label_item is None or value_item is None:
-                continue
-            label = label_item.text().strip()
-            value = value_item.text().strip()
-            if not label or not value:
-                continue
+        applied = 0
+        for mapping, label, value in mapped_rows:
             self.player_state.observed_stats[label] = value
-            if "".join(label.split()).casefold() in {"研究速度", "researchspeed"}:
+            if mapping == "research_speed":
                 research_speed = parse_ocr_percentage(value)
+                if research_speed is not None:
+                    applied += 1
+        if applied <= 0:
+            self._show_info(self.t("ocr.no_applicable_values"))
+            return
         if research_speed is not None:
             self.player_state.settings.research_speed_percent = research_speed
             if hasattr(self, "research_speed_spin"):
                 self.research_speed_spin.blockSignals(True)
                 self.research_speed_spin.setValue(research_speed)
                 self.research_speed_spin.blockSignals(False)
-        self.player_repository.save(self.player_state)
+        self._player_settings_dirty = True
+        self._update_player_save_button()
         self._refresh_detail()
-        self._show_info(self.t("ocr.fields_applied", count=len(rows)))
+        self._calculate_plan()
+        self._show_info(self.t("ocr.mapped_fields_applied", count=applied))
 
     def _parse_ocr_text(self) -> None:
         profile = self._selected_ocr_profile()
@@ -2714,10 +2930,17 @@ class MainWindow(QMainWindow):
             for node in observation.nodes
             if node.max_level is not None
         ]
-        mapped = map_ocr_card_levels_by_layout(
-            card_levels,
-            entries,
-            self._ocr_image.width(),
+        # A matching label in the active research category is required before
+        # layout can fill in neighboring cards.  Shape and position alone are
+        # not category evidence because multiple game trees reuse both.
+        mapped = (
+            map_ocr_card_levels_by_layout(
+                card_levels,
+                entries,
+                self._ocr_image.width(),
+            )
+            if direct_candidates
+            else []
         )
         informative_regions = {
             (region.x(), region.y(), region.width(), region.height())
@@ -2777,15 +3000,16 @@ class MainWindow(QMainWindow):
         )
         if answer != QMessageBox.Yes:
             return
-        self.player_state.research_levels[candidate.research_id] = candidate.level
         self._tree_level_draft[candidate.research_id] = candidate.level
-        self.player_repository.save(self.player_state)
+        self._tree_levels_dirty = True
+        self._update_player_save_button()
         self._refresh_tree()
         self._refresh_detail()
+        self._calculate_plan()
         self._sync_progress_editor(candidate.research_id)
         if candidate.research_id in self._observed_nodes:
             self._selected_tree_node_id = candidate.research_id
-        self._show_info(self.t("ocr.applied"))
+        self._show_info(self.t("ocr.applied_pending"))
 
     def _apply_all_ocr_candidates(self) -> None:
         candidates = [
@@ -2802,14 +3026,17 @@ class MainWindow(QMainWindow):
         if answer != QMessageBox.Yes:
             return
         for candidate in candidates:
-            self.player_state.research_levels[candidate.research_id] = candidate.level
             self._tree_level_draft[candidate.research_id] = candidate.level
-        self.player_repository.save(self.player_state)
+        self._tree_levels_dirty = True
+        self._update_player_save_button()
         self._refresh_tree()
         self._refresh_detail()
+        self._calculate_plan()
         for candidate in candidates:
             self._sync_progress_editor(candidate.research_id)
-        self._show_info(self.t("ocr.applied_all", count=len(candidates)))
+        self._show_info(
+            self.t("ocr.applied_all_pending", count=len(candidates))
+        )
 
     def _research_combo(self) -> QComboBox:
         combo = QComboBox()
@@ -2870,10 +3097,7 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event: QCloseEvent) -> None:
         if not event.isAccepted():
             return
-        if self._autosave_timer.isActive():
-            self._autosave_timer.stop()
         self.update_controller.shutdown()
-        self.player_repository.save(self.player_state)
         geometry = self.normalGeometry()
         if geometry.width() >= self.minimumWidth() and geometry.height() >= self.minimumHeight():
             self.app_settings.window.x = geometry.x()

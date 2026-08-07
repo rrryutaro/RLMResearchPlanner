@@ -333,7 +333,10 @@ def pair_ocr_label_values(
                 continue
             label_center = label_line.y + label_line.height / 2.0
             vertical_distance = abs(label_center - value_center)
-            tolerance = max(12.0, min(24.0, (label_line.height + value_line.height) * 0.7))
+            tolerance = max(
+                8.0,
+                (label_line.height + value_line.height) * 0.7,
+            )
             if vertical_distance > tolerance:
                 continue
             horizontal_gap = max(
@@ -381,12 +384,14 @@ def pair_ocr_research_card_levels(
         matches: list[tuple[float, float, OcrLine, str]] = []
         for label_line, label in labels:
             vertical_gap = value_line.y - (label_line.y + label_line.height)
-            if vertical_gap < -4.0 or vertical_gap > 80.0:
+            maximum_gap = max(label_line.height, value_line.height) * 3.4
+            if vertical_gap < -value_line.height * 0.25 or vertical_gap > maximum_gap:
                 continue
             label_center_x = label_line.x + label_line.width / 2.0
             center_distance = abs(label_center_x - value_center_x)
             horizontal_tolerance = max(
-                36.0, (label_line.width + value_line.width) * 0.45
+                label_line.height * 1.5,
+                (label_line.width + value_line.width) * 0.45,
             )
             if center_distance > horizontal_tolerance:
                 continue

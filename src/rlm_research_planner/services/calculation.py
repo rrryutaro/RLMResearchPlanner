@@ -17,6 +17,24 @@ ROUNDING_MAP = {
     RoundingMode.NEAREST: ROUND_HALF_UP,
 }
 
+VIP_FREE_SPEEDUP_MINUTES = {
+    1: 10,
+    2: 24,
+    3: 26,
+    4: 30,
+    5: 40,
+    6: 50,
+    7: 60,
+    8: 70,
+    9: 80,
+    10: 90,
+    11: 100,
+    12: 110,
+    13: 120,
+    14: 130,
+    15: 150,
+}
+
 
 @dataclass(frozen=True)
 class GuildHelpPolicy:
@@ -52,6 +70,22 @@ def apply_free_speedup_time(
     if free_speedup_seconds < 0:
         raise ValueError("free_speedup_seconds must be non-negative")
     return max(0, initial_seconds - free_speedup_seconds)
+
+
+def free_speedup_seconds_for_vip(vip_level: int) -> int:
+    normalized = max(1, min(15, int(vip_level)))
+    return VIP_FREE_SPEEDUP_MINUTES[normalized] * 60
+
+
+def vip_level_for_free_speedup_seconds(free_speedup_seconds: int) -> int:
+    seconds = max(0, int(free_speedup_seconds))
+    return min(
+        VIP_FREE_SPEEDUP_MINUTES,
+        key=lambda level: (
+            abs(VIP_FREE_SPEEDUP_MINUTES[level] * 60 - seconds),
+            level,
+        ),
+    )
 
 
 def apply_guild_helps(

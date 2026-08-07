@@ -31,14 +31,6 @@ class AppPaths:
         return self.bundled_root / "resources" / "i18n"
 
     @property
-    def licenses(self) -> Path:
-        return self.bundled_root / "licenses"
-
-    @property
-    def application_license(self) -> Path:
-        return self.bundled_root / "LICENSE"
-
-    @property
     def windows_ocr_script(self) -> Path:
         return self.bundled_root / "resources" / "scripts" / "windows_ocr.ps1"
 

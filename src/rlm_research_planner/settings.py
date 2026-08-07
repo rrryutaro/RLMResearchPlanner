@@ -20,6 +20,7 @@ class WindowGeometry:
 class AppSettings:
     locale: str = "ja-JP"
     ocr_window_title: str = DEFAULT_OCR_WINDOW_TITLE
+    help_font_size: int = 12
     update_check_on_startup: bool = True
     update_skipped_version: str = ""
     window: WindowGeometry = field(default_factory=WindowGeometry)
@@ -40,6 +41,7 @@ class SettingsRepository:
                 ocr_window_title=str(
                     raw.get("ocr_window_title", DEFAULT_OCR_WINDOW_TITLE)
                 ),
+                help_font_size=max(9, min(24, int(raw.get("help_font_size", 12)))),
                 update_check_on_startup=bool(
                     raw.get("update_check_on_startup", True)
                 ),

@@ -15,6 +15,7 @@ from rlm_research_planner.services.calculation import (
     apply_free_speedup_time,
     apply_guild_helps,
     apply_research_speed,
+    free_speedup_seconds_for_vip,
 )
 
 
@@ -228,7 +229,7 @@ class CatalogResearchPlanner:
             )
             adjusted = apply_free_speedup_time(
                 adjusted,
-                state.settings.free_speedup_seconds,
+                free_speedup_seconds_for_vip(state.settings.vip_level),
             )
             after_help = apply_guild_helps(
                 adjusted,

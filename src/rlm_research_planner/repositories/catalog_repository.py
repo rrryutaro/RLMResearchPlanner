@@ -218,7 +218,9 @@ class JsonResearchCatalogRepository:
                 )
             )
         if not connection_groups:
-            connection_groups.extend(self._level_one_connection_groups(nodes))
+            connection_groups.extend(
+                self._level_one_connection_groups(nodes, edges)
+            )
 
         titles = raw.get("titles")
         if not isinstance(titles, dict) or not titles:
@@ -246,31 +248,171 @@ class JsonResearchCatalogRepository:
     @staticmethod
     def _level_one_connection_groups(
         nodes: list[ObservedResearchNode],
+        edges: list[ObservedResearchEdge],
     ) -> tuple[ObservedResearchConnectionGroup, ...]:
-        """Build the visible unlock tree without later-level cross requirements.
+        """Build clean connections that follow the visible research tree.
 
         The catalog ``edges`` contain every prerequisite encountered at every
-        level and are needed by the planner.  The game tree, however, draws the
-        prerequisites that unlock level 1.  Group children on the same row that
-        share those prerequisites so the scene draws the same shared bus.
+        level and level-one data can also contain transitive or cross-category
+        requirements.  The game tree only draws the nearest visible tier.  Use
+        both sources, discard external and later-row references, then retain
+        the nearest row for each child.  A level-one prerequisite on an earlier
+        row is also retained when its source column is unobstructed, matching
+        the longer vertical branches used by the game.  Same-row requirements
+        are kept so center cards can connect horizontally to their side cards.
         """
 
-        grouped: dict[tuple[int, tuple[str, ...]], list[str]] = {}
-        for node in sorted(nodes, key=lambda item: (item.row, item.column)):
+        by_id = {node.id: node for node in nodes}
+        incoming: dict[str, set[str]] = {}
+        level_one_incoming: dict[str, set[str]] = {}
+        for edge in edges:
+            if edge.prerequisite_id in by_id and edge.research_id in by_id:
+                incoming.setdefault(edge.research_id, set()).add(
+                    edge.prerequisite_id
+                )
+        for node in nodes:
             level_one = node.level_data(1)
-            if level_one is None or not level_one.requirements:
+            if level_one is None:
                 continue
-            prerequisite_ids = tuple(
-                requirement.research_id for requirement in level_one.requirements
-            )
-            grouped.setdefault((node.row, prerequisite_ids), []).append(node.id)
-        return tuple(
-            ObservedResearchConnectionGroup(
-                prerequisite_ids=prerequisite_ids,
-                research_ids=tuple(research_ids),
-            )
-            for (_row, prerequisite_ids), research_ids in grouped.items()
-        )
+            direct_prerequisites = {
+                requirement.research_id
+                for requirement in level_one.requirements
+                if requirement.research_id in by_id
+                and by_id[requirement.research_id].row <= node.row
+            }
+            if direct_prerequisites:
+                level_one_incoming[node.id] = direct_prerequisites
+                incoming.setdefault(node.id, set()).update(direct_prerequisites)
+
+        occupied_positions = {(node.row, node.column) for node in nodes}
+        grouped: dict[tuple[int, int, tuple[str, ...]], list[str]] = {}
+        for node in sorted(nodes, key=lambda item: (item.row, item.column)):
+            candidates = [
+                by_id[research_id]
+                for research_id in incoming.get(node.id, set())
+                if research_id != node.id
+                and by_id[research_id].row <= node.row
+            ]
+            if not candidates:
+                continue
+            nearest_row = max(item.row for item in candidates)
+            direct_on_nearest_row = {
+                research_id
+                for research_id in level_one_incoming.get(node.id, set())
+                if by_id[research_id].row == nearest_row
+            }
+            selected_ids = direct_on_nearest_row or {
+                candidate.id
+                for candidate in candidates
+                if candidate.row == nearest_row
+            }
+            for research_id in level_one_incoming.get(node.id, set()):
+                prerequisite = by_id[research_id]
+                if (
+                    prerequisite.row < nearest_row
+                    and all(
+                        (row, prerequisite.column) not in occupied_positions
+                        for row in range(
+                            prerequisite.row + 1, node.row
+                        )
+                    )
+                ):
+                    selected_ids.add(prerequisite.id)
+            selected_by_row: dict[int, list[ObservedResearchNode]] = {}
+            for research_id in selected_ids:
+                prerequisite = by_id[research_id]
+                selected_by_row.setdefault(prerequisite.row, []).append(
+                    prerequisite
+                )
+            for prerequisite_row, selected in selected_by_row.items():
+                prerequisite_ids = tuple(
+                    item.id
+                    for item in sorted(
+                        selected,
+                        key=lambda item: (item.column, item.id),
+                    )
+                )
+                grouped.setdefault(
+                    (prerequisite_row, node.row, prerequisite_ids), []
+                ).append(node.id)
+        selected_pairs = {
+            (prerequisite_id, research_id)
+            for (
+                _prerequisite_row,
+                _research_row,
+                prerequisite_ids,
+            ), research_ids in grouped.items()
+            for prerequisite_id in prerequisite_ids
+            for research_id in research_ids
+        }
+        branches_by_rows: dict[
+            tuple[int, int], list[tuple[set[str], set[str]]]
+        ] = {}
+        for (
+            prerequisite_row,
+            research_row,
+            prerequisite_ids,
+        ), research_ids in grouped.items():
+            branches_by_rows.setdefault(
+                (prerequisite_row, research_row), []
+            ).append((set(prerequisite_ids), set(research_ids)))
+
+        # A shared prerequisite must produce one visual bus for a row pair.
+        # Keeping each child set as a separate group draws the same vertical
+        # stem and horizontal bus repeatedly, which looks like unrelated or
+        # disconnected lines even though the underlying dependency is valid.
+        merged_groups: list[ObservedResearchConnectionGroup] = []
+        for row_pair in sorted(branches_by_rows):
+            remaining = list(branches_by_rows[row_pair])
+            while remaining:
+                prerequisite_set, research_set = remaining.pop(0)
+                merged = True
+                while merged:
+                    merged = False
+                    for index in range(len(remaining) - 1, -1, -1):
+                        other_prerequisites, other_research = remaining[index]
+                        if not (
+                            prerequisite_set & other_prerequisites
+                            or research_set & other_research
+                        ):
+                            continue
+                        combined_prerequisites = (
+                            prerequisite_set | other_prerequisites
+                        )
+                        combined_research = research_set | other_research
+                        if any(
+                            (prerequisite_id, research_id) not in selected_pairs
+                            for prerequisite_id in combined_prerequisites
+                            for research_id in combined_research
+                        ):
+                            continue
+                        prerequisite_set = combined_prerequisites
+                        research_set = combined_research
+                        remaining.pop(index)
+                        merged = True
+                merged_groups.append(
+                    ObservedResearchConnectionGroup(
+                        prerequisite_ids=tuple(
+                            sorted(
+                                prerequisite_set,
+                                key=lambda research_id: (
+                                    by_id[research_id].column,
+                                    research_id,
+                                ),
+                            )
+                        ),
+                        research_ids=tuple(
+                            sorted(
+                                research_set,
+                                key=lambda research_id: (
+                                    by_id[research_id].column,
+                                    research_id,
+                                ),
+                            )
+                        ),
+                    )
+                )
+        return tuple(merged_groups)
 
     @staticmethod
     def _string_mapping(value: object) -> dict[str, str]:

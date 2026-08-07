@@ -57,7 +57,7 @@ class ObservedResearchEdge:
 
 @dataclass(frozen=True)
 class ObservedResearchConnectionGroup:
-    """One visual bus joining one or more tree cards on adjacent rows."""
+    """One visual bus joining one or more tree cards on visible rows."""
 
     prerequisite_ids: tuple[str, ...]
     research_ids: tuple[str, ...]

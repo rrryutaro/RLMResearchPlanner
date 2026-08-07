@@ -134,10 +134,10 @@ def locale_fallbacks(locale: str) -> tuple[str, ...]:
 
 @dataclass
 class PlayerSettings:
+    vip_level: int = 1
     castle_level: int = 1
     academy_level: int = 1
     research_speed_percent: float = 0.0
-    free_speedup_seconds: int = 0
     max_guild_helps: int = 0
     speedup_seconds: int = 0
     resources: dict[str, int] = field(
