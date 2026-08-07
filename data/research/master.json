@@ -1,0 +1,12 @@
+{
+  "metadata": {
+    "dataset_id": "rlm-research-planning-values-0001",
+    "dataset_status": "not_collected",
+    "game_version": "unknown",
+    "notice": "旧形式の計画マスターは未使用。研究計画はcatalog.jsonの公開元確認済みレベル別データを使用し、未収録値は補完しない。"
+  },
+  "categories": [],
+  "research": [],
+  "levels": [],
+  "prerequisites": []
+}

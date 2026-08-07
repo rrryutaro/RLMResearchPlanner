@@ -1,0 +1,8 @@
+{
+  "locale": "en-US",
+  "status": "experimental",
+  "engine_languages": "eng",
+  "level_patterns": ["Lv\\.?\\s*(\\d+)", "Level\\s*(\\d+)", "(\\d+)\\s*/\\s*(\\d+)"],
+  "normalization_replacements": {},
+  "notes": "English game-screen recognition has not been validated. Always review the result."
+}
