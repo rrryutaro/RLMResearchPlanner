@@ -20,8 +20,10 @@ from PySide6.QtWidgets import (
     QGraphicsScene,
     QGraphicsTextItem,
     QGraphicsView,
+    QHBoxLayout,
     QSlider,
     QSpinBox,
+    QToolButton,
     QWidget,
 )
 
@@ -279,6 +281,7 @@ class ResearchTreeView(QGraphicsView):
         self._level_edit_timer.setSingleShot(True)
         self._level_edit_timer.timeout.connect(self._open_pending_level_editor)
         self._level_editor: QWidget | None = None
+        self._level_value_editor: QSlider | QSpinBox | None = None
         self._level_editor_commit = None
 
     @property
@@ -377,6 +380,7 @@ class ResearchTreeView(QGraphicsView):
     def _cancel_level_editor(self) -> None:
         editor = self._level_editor
         self._level_editor = None
+        self._level_value_editor = None
         self._level_editor_commit = None
         if editor is not None:
             editor.blockSignals(True)
@@ -418,31 +422,71 @@ class ResearchTreeView(QGraphicsView):
             return
         self._cancel_level_editor()
         if editor_kind == "slider":
-            editor = QSlider(Qt.Horizontal, self.viewport())
-            editor.setRange(0, item._max_level)
-            editor.setValue(item._current_level)
-            editor.setSingleStep(1)
-            editor.setPageStep(1)
+            editor = QWidget(self.viewport())
             editor.setStyleSheet(
+                "QWidget{background:#101A20;border:2px solid #E0A72B;}"
+                "QToolButton{min-width:32px;max-width:32px;border:0;"
+                "color:#FFFFFF;background:#263942;font-size:18px;font-weight:700;}"
+                "QToolButton:hover{background:#3A525E;}"
+            )
+            editor_layout = QHBoxLayout(editor)
+            editor_layout.setContentsMargins(2, 2, 2, 2)
+            editor_layout.setSpacing(3)
+            decrease_button = QToolButton(editor)
+            decrease_button.setObjectName("levelDecreaseButton")
+            decrease_button.setText("◀")
+            decrease_button.setToolTip("Decrease level")
+            decrease_button.setFocusPolicy(Qt.NoFocus)
+            decrease_button.setAutoRepeat(True)
+            value_editor = QSlider(Qt.Horizontal, editor)
+            value_editor.setObjectName("levelSlider")
+            value_editor.setRange(0, item._max_level)
+            value_editor.setValue(item._current_level)
+            value_editor.setSingleStep(1)
+            value_editor.setPageStep(1)
+            value_editor.setStyleSheet(
                 "QSlider{background:#101A20;border:2px solid #E0A72B;}"
                 "QSlider::groove:horizontal{height:8px;background:#34434C;}"
                 "QSlider::sub-page:horizontal{background:#E0A72B;}"
                 "QSlider::handle:horizontal{width:18px;margin:-6px 0;"
                 "background:#FFFFFF;border:1px solid #8B6B19;}"
             )
+            increase_button = QToolButton(editor)
+            increase_button.setObjectName("levelIncreaseButton")
+            increase_button.setText("▶")
+            increase_button.setToolTip("Increase level")
+            increase_button.setFocusPolicy(Qt.NoFocus)
+            increase_button.setAutoRepeat(True)
+            editor_layout.addWidget(decrease_button)
+            editor_layout.addWidget(value_editor, 1)
+            editor_layout.addWidget(increase_button)
+
+            def update_step_buttons(value: int) -> None:
+                decrease_button.setEnabled(value > value_editor.minimum())
+                increase_button.setEnabled(value < value_editor.maximum())
+
+            decrease_button.clicked.connect(
+                lambda: value_editor.setValue(value_editor.value() - 1)
+            )
+            increase_button.clicked.connect(
+                lambda: value_editor.setValue(value_editor.value() + 1)
+            )
+            value_editor.valueChanged.connect(update_step_buttons)
+            update_step_buttons(value_editor.value())
             top_left = self.mapFromScene(item.mapToScene(QPointF(12.0, 62.0)))
             bottom_right = self.mapFromScene(
                 item.mapToScene(QPointF(NODE_WIDTH - 12.0, 88.0))
             )
-            minimum_width = 150
-            minimum_height = 28
+            minimum_width = 210
+            minimum_height = 34
         else:
             editor = QSpinBox(self.viewport())
-            editor.setRange(0, item._max_level)
-            editor.setValue(item._current_level)
-            editor.setAlignment(Qt.AlignCenter)
-            editor.setKeyboardTracking(False)
-            editor.setStyleSheet(
+            value_editor = editor
+            value_editor.setRange(0, item._max_level)
+            value_editor.setValue(item._current_level)
+            value_editor.setAlignment(Qt.AlignCenter)
+            value_editor.setKeyboardTracking(False)
+            value_editor.setStyleSheet(
                 "QSpinBox{background:#101A20;color:#FFFFFF;"
                 "border:2px solid #E0A72B;font-size:18px;font-weight:700;}"
             )
@@ -458,6 +502,7 @@ class ResearchTreeView(QGraphicsView):
         y = max(0, min(top_left.y(), self.viewport().height() - height))
         editor.setGeometry(x, y, width, height)
         self._level_editor = editor
+        self._level_value_editor = value_editor
         committed = False
 
         def commit() -> None:
@@ -465,9 +510,10 @@ class ResearchTreeView(QGraphicsView):
             if committed or self._level_editor is not editor:
                 return
             committed = True
-            level = editor.value()
+            level = value_editor.value()
             research_id = item.research_id
             self._level_editor = None
+            self._level_value_editor = None
             self._level_editor_commit = None
             editor.hide()
             editor.setParent(None)
@@ -475,18 +521,22 @@ class ResearchTreeView(QGraphicsView):
             self.researchLevelChanged.emit(research_id, level)
 
         self._level_editor_commit = commit
-        if isinstance(editor, QSpinBox):
-            editor.editingFinished.connect(commit)
+        if isinstance(value_editor, QSpinBox):
+            value_editor.editingFinished.connect(commit)
         else:
-            editor.sliderReleased.connect(commit)
-            editor.valueChanged.connect(
+            value_editor.sliderReleased.connect(commit)
+            value_editor.valueChanged.connect(
                 lambda value: self._preview_slider_level(item, value)
             )
         editor.show()
         editor.raise_()
-        editor.setFocus(Qt.MouseFocusReason)
-        if isinstance(editor, QSpinBox):
-            editor.selectAll()
+        value_editor.setFocus(Qt.MouseFocusReason)
+        if isinstance(value_editor, QSpinBox):
+            value_editor.selectAll()
+
+    def hideEvent(self, event) -> None:
+        self._finish_level_edit()
+        super().hideEvent(event)
 
     @staticmethod
     def _preview_slider_level(item: _ResearchNodeItem, value: int) -> None:

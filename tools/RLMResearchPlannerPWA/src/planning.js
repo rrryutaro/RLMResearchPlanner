@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.1-b10";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.1-b11";
 
 export function adjustedTime(baseSeconds, settings) {
   const speed = Math.max(0, Number(settings.researchSpeedPercent) || 0) + Math.max(0, Number(settings.researchSpeedBoostPercent) || 0);
@@ -116,6 +116,17 @@ export function createPlan(catalog, state, targetId, targetLevel) {
     return step;
   });
   return { targetId, targetLevel: normalizedTarget, steps, totals, issues };
+}
+
+export function researchLevelsAfterPlan(plan, currentLevels) {
+  const levels = { ...currentLevels };
+  for (const step of plan?.steps || []) {
+    levels[step.researchId] = Math.max(
+      Number(levels[step.researchId] || 0),
+      Number(step.level || 0),
+    );
+  }
+  return levels;
 }
 
 function stepFrom(node, level, data, settings) {

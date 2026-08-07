@@ -96,6 +96,7 @@ h1 { margin-bottom: 0; overflow: hidden; font-size: clamp(1.25rem, 4vw, 1.75rem)
 .resource-chip span { display: block; color: var(--muted); font-size: .75rem; }
 .resource-chip strong { font-size: 1.05rem; }
 .resource-chip.is-short strong { color: #ff9d91; }
+.plan-actions { justify-content: flex-end; margin: -8px 0 18px; }
 .plan-list { display: grid; gap: 8px; }
 .plan-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 12px 14px; border: 1px solid #284b57; border-radius: 10px; background: #0b202a; }
 .plan-row button { height: auto; min-height: 0; padding: 0; border: 0; color: var(--accent-2); background: transparent; text-align: left; font-weight: 700; }
@@ -149,8 +150,9 @@ h1 { margin-bottom: 0; overflow: hidden; font-size: clamp(1.25rem, 4vw, 1.75rem)
 .node-dialog-body { display: grid; gap: 16px; min-height: 0; padding: 18px 20px max(20px, env(safe-area-inset-bottom)); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; }
 .node-dialog-body > * { min-width: 0; max-width: 100%; }
 .level-editor { display: grid; grid-template-columns: minmax(110px, 1fr) auto; align-items: end; gap: 8px 12px; }
-.level-editor input[type="range"] { grid-column: 1 / -1; padding: 0; border: 0; accent-color: var(--accent); }
-.level-editor input[type="range"] { width: 100%; min-width: 0; }
+.level-slider-row { display: grid; grid-column: 1 / -1; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 8px; width: 100%; }
+.level-slider-row button { width: 44px; min-width: 44px; padding: 0; font-size: 1.1rem; font-weight: 800; }
+.level-slider-row input[type="range"] { width: 100%; min-width: 0; padding: 0; border: 0; accent-color: var(--accent); }
 .max-label { min-width: 62px; padding-bottom: .7rem; color: var(--muted); font-weight: 700; }
 .effect-box { display: grid; gap: 8px; padding: 12px; border-radius: 10px; background: #081b24; }
 .effect-box p { margin: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }

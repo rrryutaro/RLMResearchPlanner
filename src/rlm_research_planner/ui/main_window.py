@@ -236,6 +236,8 @@ class MainWindow(QMainWindow):
         self._selected_tree_node_id = self._selected_research_id
         self._plan_target_research_id = ""
         self._plan_mode = "target"
+        self._current_catalog_plan: CatalogPlanResult | None = None
+        self._preserve_completed_plan_target = False
         self._capturable_windows: list[CapturableWindow] = []
         self._ocr_profiles = load_ocr_profiles(paths.ocr_profiles)
         self._ocr_engine = PreferredOcrEngine(
@@ -1401,6 +1403,10 @@ class MainWindow(QMainWindow):
         self.plan_level_spin.valueChanged.connect(self._calculate_plan)
         self.plan_level_spin.setEnabled(False)
         controls.addWidget(self.plan_level_spin)
+        self.plan_complete_button = QPushButton(self.t("plan.mark_complete"))
+        self.plan_complete_button.setEnabled(False)
+        self.plan_complete_button.clicked.connect(self._complete_current_plan)
+        controls.addWidget(self.plan_complete_button)
         self.plan_fit_button = QPushButton(self.t("tree.fit_all"))
         self.plan_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"))
         controls.addWidget(self.plan_fit_button)
@@ -1510,6 +1516,7 @@ class MainWindow(QMainWindow):
             self.plan_target_name_label,
             self.plan_level_caption,
             self.plan_level_spin,
+            self.plan_complete_button,
             self.plan_fit_button,
             self.plan_reset_zoom_button,
             self.plan_tree_view,
@@ -1521,6 +1528,8 @@ class MainWindow(QMainWindow):
         if not hasattr(self, "plan_level_spin"):
             return
         if self._plan_mode == "shortest":
+            self._current_catalog_plan = None
+            self.plan_complete_button.setEnabled(False)
             planning_state = PlayerState(
                 settings=self.player_state.settings,
                 research_levels=dict(self._tree_level_draft),
@@ -1531,6 +1540,8 @@ class MainWindow(QMainWindow):
             return
         research_id = self._plan_target_research_id
         if not research_id:
+            self._current_catalog_plan = None
+            self.plan_complete_button.setEnabled(False)
             self.plan_table.setRowCount(0)
             return
         target_level = self._normalized_plan_target_level(research_id)
@@ -1545,8 +1556,11 @@ class MainWindow(QMainWindow):
                 target_level,
             )
         except (KeyError, ValueError) as exc:
+            self._current_catalog_plan = None
+            self.plan_complete_button.setEnabled(False)
             self._show_error(str(exc))
             return
+        self._current_catalog_plan = result
         self._render_catalog_plan(result)
 
     def _normalized_plan_target_level(self, research_id: str) -> int:
@@ -1556,7 +1570,11 @@ class MainWindow(QMainWindow):
             return self.plan_level_spin.value()
         current = max(0, self._tree_level_draft.get(research_id, 0))
         target = self.plan_level_spin.value()
-        if current < node.max_level and target <= current:
+        if (
+            not self._preserve_completed_plan_target
+            and current < node.max_level
+            and target <= current
+        ):
             target = current + 1
             self.plan_level_spin.blockSignals(True)
             self.plan_level_spin.setValue(target)
@@ -1564,6 +1582,7 @@ class MainWindow(QMainWindow):
         return target
 
     def _render_catalog_plan(self, result: CatalogPlanResult) -> None:
+        self.plan_complete_button.setEnabled(bool(result.steps))
         plan_nodes: list[ResearchTreeNode] = []
         observation_order = {
             observation.observation_id: index
@@ -1658,6 +1677,34 @@ class MainWindow(QMainWindow):
                 font.setBold(True)
                 item.setFont(font)
                 self.plan_table.setItem(total_row, column, item)
+
+    def _complete_current_plan(self) -> None:
+        result = self._current_catalog_plan
+        if self._plan_mode != "target" or result is None or not result.steps:
+            return
+        changed_ids: set[str] = set()
+        for research_id, required_level in result.required_levels.items():
+            node = self._observed_nodes.get(research_id)
+            if node is None or node.max_level is None:
+                continue
+            level = max(0, min(int(required_level), node.max_level))
+            if level <= self._tree_level_draft.get(research_id, 0):
+                continue
+            self._tree_level_draft[research_id] = level
+            changed_ids.add(research_id)
+        if not changed_ids:
+            self._calculate_plan()
+            return
+        self._tree_levels_dirty = True
+        for research_id in changed_ids:
+            self._sync_progress_editor(research_id)
+        self._refresh_tree_after_level_change(preserve_view=True)
+        self._refresh_detail()
+        self._preserve_completed_plan_target = True
+        try:
+            self._save_player()
+        finally:
+            self._preserve_completed_plan_target = False
 
     def _render_shortest_plan(self, steps: list[CatalogPlanStep]) -> None:
         self.plan_table.setRowCount(len(steps))

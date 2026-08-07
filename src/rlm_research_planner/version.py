@@ -1,5 +1,5 @@
-__version__ = "0.0.4"
-__build__ = 4
+__version__ = "0.0.5"
+__build__ = 2
 __dev__ = False
 
 

@@ -1,9 +1,9 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.1-b10";
-import { adjustedTime, createPlan, formatDuration, isInstantNextLevel, shortestAvailable } from "./planning.js?v=0.0.1-b10";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.1-b10";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.1-b11";
+import { adjustedTime, createPlan, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.1-b11";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.1-b11";
 
 const RELEASE_VERSION = "0.0.1";
-const DEVELOPMENT_BUILD = 10;
+const DEVELOPMENT_BUILD = 11;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
@@ -292,14 +292,22 @@ function nodeAvailableIgnoringTime(node) {
 
 function bindDialog() {
   const number = byId("node-level-number"); const range = byId("node-level-range");
+  const decrease = byId("node-level-down"); const increase = byId("node-level-up");
+  const updateStepButtons = (level) => {
+    decrease.disabled = level <= Number(range.min || 0);
+    increase.disabled = level >= Number(range.max || 0);
+  };
   const update = (value) => {
     const node = catalog.nodes.get(selectedNodeId); if (!node) return;
     const level = Math.max(0, Math.min(node.maxLevel, Math.trunc(Number(value) || 0)));
     number.value = level; range.value = level; state.researchLevels[node.id] = level;
+    updateStepButtons(level);
     renderDialogEffects(node, level); populateTargetLevels(node, level); scheduleSave(); renderTree(); renderBulkLevels(); refreshCurrentPlan();
   };
   number.addEventListener("input", (event) => update(event.target.value));
   range.addEventListener("input", (event) => update(event.target.value));
+  decrease.addEventListener("click", () => update(Number(range.value) - 1));
+  increase.addEventListener("click", () => update(Number(range.value) + 1));
   byId("open-plan").addEventListener("click", () => {
     const target = Number(byId("node-target-level").value);
     byId("node-dialog").close();
@@ -319,6 +327,8 @@ function openNodeDialog(nodeId) {
   byId("node-level-number").value = level;
   byId("node-level-range").max = node.maxLevel;
   byId("node-level-range").value = level;
+  byId("node-level-down").disabled = level <= 0;
+  byId("node-level-up").disabled = level >= node.maxLevel;
   byId("node-level-max").textContent = `/ ${node.maxLevel}`;
   renderDialogEffects(node, level);
   populateTargetLevels(node, level);
@@ -500,6 +510,7 @@ async function importBackup(event) {
 function bindPlans() {
   byId("plan-target-mode").addEventListener("click", () => setPlanMode("target"));
   byId("plan-shortest-mode").addEventListener("click", () => setPlanMode("shortest"));
+  byId("complete-plan").addEventListener("click", completeCurrentPlan);
   byId("shortest-limit").addEventListener("change", renderShortest);
 }
 
@@ -525,6 +536,23 @@ function refreshCurrentPlan() {
   renderPlan();
 }
 
+function completeCurrentPlan() {
+  if (!currentPlan?.steps.length) return;
+  const previous = state.researchLevels;
+  const completed = researchLevelsAfterPlan(currentPlan, previous);
+  const changed = Object.keys(completed).filter(
+    (researchId) => Number(completed[researchId] || 0) > Number(previous[researchId] || 0),
+  );
+  state.researchLevels = completed;
+  saveNow();
+  populateSettings();
+  renderCategoryOptions();
+  renderTree();
+  refreshCurrentPlan();
+  renderShortest();
+  toast(`目標研究と前提研究を含む${changed.length}件のレベルを反映しました`);
+}
+
 function renderPlan() {
   byId("plan-placeholder").hidden = Boolean(currentPlan);
   byId("plan-result").hidden = !currentPlan;
@@ -539,6 +567,7 @@ function renderPlan() {
     chip.append(create("span", "", resources[key]), create("strong", "", needed.toLocaleString(state.locale)), create("span", "", needed > available ? `不足 ${(needed - available).toLocaleString(state.locale)}` : "所持数以内")); return chip;
   }));
   byId("plan-steps").replaceChildren(...currentPlan.steps.map((step) => planRow(step)));
+  byId("complete-plan").disabled = currentPlan.steps.length === 0;
   const issueParts = [];
   if (currentPlan.totals.unknownTime) issueParts.push(`時間未確認 ${currentPlan.totals.unknownTime}件`);
   if (currentPlan.totals.unknownCosts) issueParts.push(`資源未確認 ${currentPlan.totals.unknownCosts}件`);
