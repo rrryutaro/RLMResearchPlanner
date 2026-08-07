@@ -1,8 +1,13 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.1-b9";
-import { adjustedTime, createPlan, formatDuration, isInstantNextLevel, shortestAvailable } from "./planning.js?v=0.0.1-b9";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.1-b9";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.1-b10";
+import { adjustedTime, createPlan, formatDuration, isInstantNextLevel, shortestAvailable } from "./planning.js?v=0.0.1-b10";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.1-b10";
 
-const APP_VERSION = "0.0.1+b9";
+const RELEASE_VERSION = "0.0.1";
+const DEVELOPMENT_BUILD = 10;
+const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
+const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
+  ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
+  : RELEASE_VERSION;
 const RESOURCE_NAMES = {
   "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", special: "特殊資材" },
   "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", special: "Special" },
@@ -107,23 +112,26 @@ function bindTreeControls() {
   const viewport = byId("tree-viewport");
   let drag = null;
   viewport.addEventListener("pointerdown", (event) => {
-    if (event.pointerType !== "mouse" || event.button !== 0) return;
-    drag = { x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop, moved: false };
-    viewport.setPointerCapture(event.pointerId);
+    if (event.pointerType !== "mouse" || event.button !== 0 || !event.isPrimary) return;
+    drag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop, moved: false };
   });
   viewport.addEventListener("pointermove", (event) => {
-    if (!drag) return;
+    if (!drag || event.pointerId !== drag.pointerId) return;
     const dx = event.clientX - drag.x;
     const dy = event.clientY - drag.y;
-    if (Math.hypot(dx, dy) > 4) {
+    if (!drag.moved && Math.hypot(dx, dy) > 6) {
       drag.moved = true;
       suppressCardClick = true;
       viewport.classList.add("is-dragging");
-      viewport.scrollLeft = drag.left - dx;
-      viewport.scrollTop = drag.top - dy;
+      viewport.setPointerCapture(event.pointerId);
     }
+    if (!drag.moved) return;
+    event.preventDefault();
+    viewport.scrollLeft = drag.left - dx;
+    viewport.scrollTop = drag.top - dy;
   });
-  const endDrag = () => {
+  const endDrag = (event) => {
+    if (!drag || event.pointerId !== drag.pointerId) return;
     const moved = drag?.moved;
     drag = null;
     viewport.classList.remove("is-dragging");

@@ -1,7 +1,7 @@
-const CACHE_NAME = "rlm-research-planner-pwa-v0.0.1-b9";
+const CACHE_NAME = "rlm-research-planner-pwa-v0.0.1-b10";
 const APP_SHELL = [
-  "./", "./index.html", "./styles.css?v=0.0.1-b9", "./manifest.webmanifest", "./icons/app-icon.svg",
-  "./src/app.js?v=0.0.1-b9", "./src/catalog.js?v=0.0.1-b9", "./src/planning.js?v=0.0.1-b9", "./src/state.js?v=0.0.1-b9", "./data/research/catalog.json", "./data/i18n/ja-JP.json",
+  "./", "./index.html", "./styles.css?v=0.0.1-b10", "./manifest.webmanifest", "./icons/app-icon.svg",
+  "./src/app.js?v=0.0.1-b10", "./src/catalog.js?v=0.0.1-b10", "./src/planning.js?v=0.0.1-b10", "./src/state.js?v=0.0.1-b10", "./data/research/catalog.json", "./data/i18n/ja-JP.json",
 ];
 
 self.addEventListener("install", (event) => {
