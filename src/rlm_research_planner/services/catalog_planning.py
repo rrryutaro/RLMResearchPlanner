@@ -224,7 +224,7 @@ class CatalogResearchPlanner:
         if level_data.base_time_seconds is not None:
             adjusted = apply_research_speed(
                 level_data.base_time_seconds,
-                state.settings.research_speed_percent,
+                state.settings.effective_research_speed_percent,
                 rounding,
             )
             adjusted = apply_free_speedup_time(

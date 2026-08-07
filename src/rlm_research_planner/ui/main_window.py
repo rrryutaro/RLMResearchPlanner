@@ -458,6 +458,16 @@ class MainWindow(QMainWindow):
         self.search_edit.setPlaceholderText(self.t("tree.search_placeholder"))
         self.search_edit.textChanged.connect(self._tree_search_changed)
         filters.addWidget(self.search_edit, 1)
+        self.tree_instant_finish_check = QCheckBox(
+            self.t("tree.instant_finish_only")
+        )
+        self.tree_instant_finish_check.setToolTip(
+            self.t("tree.instant_finish_hint")
+        )
+        self.tree_instant_finish_check.toggled.connect(
+            self._tree_instant_finish_changed
+        )
+        filters.addWidget(self.tree_instant_finish_check)
         self.tree_capture_button = QPushButton(self.t("tree.capture_levels"))
         self.tree_capture_button.clicked.connect(self._capture_tree_levels)
         filters.addWidget(self.tree_capture_button)
@@ -500,28 +510,41 @@ class MainWindow(QMainWindow):
         return page
 
     def _tree_search_changed(self, text: str) -> None:
-        query = text.strip().casefold()
+        self._tree_filters_changed()
+
+    def _tree_instant_finish_changed(self, _checked: bool) -> None:
+        self._tree_filters_changed()
+
+    def _tree_filters_changed(self) -> None:
+        query = self.search_edit.text().strip().casefold()
+        instant_only = self.tree_instant_finish_check.isChecked()
         current = self.tree_dataset_list.currentItem()
         current_value = (
             str(current.data(Qt.UserRole) or "") if current is not None else ""
         )
-        if query and not self._tree_dataset_search_active:
+        filter_active = bool(query) or instant_only
+        if filter_active and not self._tree_dataset_search_active:
             self._tree_dataset_search_restore = current_value
         preferred_value = (
             self._tree_dataset_search_restore
-            if not query and self._tree_dataset_search_active
+            if not filter_active and self._tree_dataset_search_active
             else current_value
         )
-        self._tree_dataset_search_active = bool(query)
+        self._tree_dataset_search_active = filter_active
         self._filter_tree_datasets(query, preferred_value)
 
     def _filter_tree_datasets(self, query: str, preferred_value: str) -> None:
         self.tree_dataset_list.blockSignals(True)
         self.tree_dataset_list.clear()
+        instant_only = self.tree_instant_finish_check.isChecked()
         for observation in self.observations:
             title = observation.localized_title(self.translator.locale)
-            if query and not any(
+            if (query or instant_only) and not any(
                 self._tree_node_matches_query(node, query)
+                and (
+                    not instant_only
+                    or self._tree_node_is_instant_finish(node)
+                )
                 for node in observation.nodes
             ):
                 continue
@@ -553,6 +576,54 @@ class MainWindow(QMainWindow):
             (node.localized_name(self.translator.locale), node.id, *tags)
         )
         return query in search_text.casefold()
+
+    def _tree_node_is_instant_finish(
+        self, node: ObservedResearchNode
+    ) -> bool:
+        return self._research_is_instant_finish(node.id, node.max_level)
+
+    def _research_is_instant_finish(
+        self, research_id: str, max_level: int | None
+    ) -> bool:
+        if max_level is None or max_level <= 0:
+            return False
+        current_level = max(0, self._tree_level_draft.get(research_id, 0))
+        if current_level >= max_level:
+            return False
+        next_level = current_level + 1
+        base_time_seconds: int | None = None
+        observed = self._observed_nodes.get(research_id)
+        if observed is not None:
+            level_data = observed.level_data(next_level)
+            if level_data is not None:
+                base_time_seconds = level_data.base_time_seconds
+        if base_time_seconds is None and research_id in self._research:
+            try:
+                base_time_seconds = self.master.level(
+                    research_id, next_level
+                ).base_time_seconds
+            except KeyError:
+                base_time_seconds = None
+        if base_time_seconds is None or base_time_seconds <= 0:
+            return False
+        adjusted_seconds = apply_research_speed(
+            base_time_seconds,
+            self.player_state.settings.effective_research_speed_percent,
+        )
+        return adjusted_seconds <= free_speedup_seconds_for_vip(
+            self.player_state.settings.vip_level
+        )
+
+    def _refresh_tree_filter_results(self) -> None:
+        if not hasattr(self, "tree_instant_finish_check"):
+            return
+        current = self.tree_dataset_list.currentItem()
+        current_value = (
+            str(current.data(Qt.UserRole) or "") if current is not None else ""
+        )
+        self._filter_tree_datasets(
+            self.search_edit.text().strip().casefold(), current_value
+        )
 
     def _dataset_list_row(self, value: str) -> int:
         if not hasattr(self, "tree_dataset_list"):
@@ -590,12 +661,15 @@ class MainWindow(QMainWindow):
         observation = self._active_observation()
         if observation is not None:
             query = self.search_edit.text().strip().casefold()
+            instant_only = self.tree_instant_finish_check.isChecked()
             visible = []
             for node in sorted(
                 observation.nodes, key=lambda item: (item.row, item.column)
             ):
                 name = node.localized_name(self.translator.locale)
                 if not self._tree_node_matches_query(node, query):
+                    continue
+                if instant_only and not self._tree_node_is_instant_finish(node):
                     continue
                 current = self._tree_level_draft.get(node.id, 0)
                 if current <= 0:
@@ -651,6 +725,11 @@ class MainWindow(QMainWindow):
         category = self.category_combo.currentData() if hasattr(self, "category_combo") else ""
         tag = self.tag_combo.currentData() if hasattr(self, "tag_combo") else ""
         query = self.search_edit.text().strip().casefold() if hasattr(self, "search_edit") else ""
+        instant_only = (
+            self.tree_instant_finish_check.isChecked()
+            if hasattr(self, "tree_instant_finish_check")
+            else False
+        )
         visible: list[ResearchTreeNode] = []
         category_order = {
             item.id: item.display_order for item in self.master.categories
@@ -666,6 +745,10 @@ class MainWindow(QMainWindow):
             if tag and tag not in research.tags:
                 continue
             if query and query not in haystack:
+                continue
+            if instant_only and not self._research_is_instant_finish(
+                research.id, research.max_level
+            ):
                 continue
             current = self._tree_level_draft.get(research.id, 0)
             if current <= 0:
@@ -731,7 +814,7 @@ class MainWindow(QMainWindow):
         self._tree_level_draft[research_id] = max(0, min(int(level), maximum))
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree_preserving_view()
+        self._refresh_tree_after_level_change(preserve_view=True)
         self._sync_progress_editor(research_id)
         self._calculate_plan()
 
@@ -743,6 +826,19 @@ class MainWindow(QMainWindow):
         self._refresh_tree()
         self.tree_view.centerOn(scene_center)
 
+    def _refresh_tree_after_level_change(
+        self, *, preserve_view: bool = False
+    ) -> None:
+        if (
+            hasattr(self, "tree_instant_finish_check")
+            and self.tree_instant_finish_check.isChecked()
+        ):
+            self._refresh_tree_filter_results()
+        elif preserve_view:
+            self._refresh_tree_preserving_view()
+        else:
+            self._refresh_tree()
+
     def _clear_tree_levels(self) -> None:
         changed_ids = set(self._tree_level_draft) | set(
             self.player_state.research_levels
@@ -752,7 +848,7 @@ class MainWindow(QMainWindow):
         self._update_player_save_button()
         for research_id in changed_ids:
             self._sync_progress_editor(research_id)
-        self._refresh_tree_preserving_view()
+        self._refresh_tree_after_level_change(preserve_view=True)
         self._refresh_detail()
         self._calculate_plan()
 
@@ -794,7 +890,7 @@ class MainWindow(QMainWindow):
             self._tree_level_draft[candidate.research_id] = candidate.level
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree_preserving_view()
+        self._refresh_tree_after_level_change(preserve_view=True)
         for candidate in candidates_by_id.values():
             self._sync_progress_editor(candidate.research_id)
         self._calculate_plan()
@@ -870,7 +966,7 @@ class MainWindow(QMainWindow):
         level = self.master.level(research.id, next_level)
         adjusted = apply_research_speed(
             level.base_time_seconds,
-            self.player_state.settings.research_speed_percent,
+            self.player_state.settings.effective_research_speed_percent,
         )
         adjusted = apply_free_speedup_time(
             adjusted,
@@ -938,12 +1034,25 @@ class MainWindow(QMainWindow):
         self.research_speed_spin.setRange(0.0, 10000.0)
         self.research_speed_spin.setDecimals(2)
         self.research_speed_spin.setValue(self.player_state.settings.research_speed_percent)
+        self.research_speed_boost_spin = QDoubleSpinBox()
+        self.research_speed_boost_spin.setRange(0.0, 10000.0)
+        self.research_speed_boost_spin.setDecimals(2)
+        self.research_speed_boost_spin.setValue(
+            self.player_state.settings.research_speed_boost_percent
+        )
+        self.research_speed_boost_spin.setToolTip(
+            self.t("player.research_speed_boost_hint")
+        )
         self.guild_help_spin = self._integer_spin(0, 1000, self.player_state.settings.max_guild_helps)
         self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
         settings_form.addRow(self.t("player.vip_level"), vip_row)
         settings_form.addRow(self.t("player.castle_level"), self.castle_spin)
         settings_form.addRow(self.t("player.academy_level"), self.academy_spin)
         settings_form.addRow(self.t("player.research_speed"), self.research_speed_spin)
+        settings_form.addRow(
+            self.t("player.research_speed_boost"),
+            self.research_speed_boost_spin,
+        )
         settings_form.addRow(self.t("player.guild_helps"), self.guild_help_spin)
         settings_form.addRow(self.t("player.speedups"), self.speedup_spin)
 
@@ -990,12 +1099,22 @@ class MainWindow(QMainWindow):
                 )
 
         self._progress_editors: dict[str, QSpinBox] = {}
-        self.progress_table = QTableWidget(len(progress_entries), 2)
+        self._progress_maximum_items: dict[str, QTableWidgetItem] = {}
+        self.progress_table = QTableWidget(len(progress_entries), 3)
         self.progress_table.setHorizontalHeaderLabels(
-            [self.t("tree.name"), self.t("tree.level")]
+            [
+                self.t("tree.name"),
+                self.t("player.current_level"),
+                self.t("player.maximum_level"),
+            ]
         )
         self.progress_table.verticalHeader().setVisible(False)
-        self.progress_table.horizontalHeader().setSectionResizeMode(0, QHeaderView.Stretch)
+        progress_header = self.progress_table.horizontalHeader()
+        progress_header.setSectionResizeMode(0, QHeaderView.Stretch)
+        progress_header.setSectionResizeMode(1, QHeaderView.Fixed)
+        progress_header.setSectionResizeMode(2, QHeaderView.Fixed)
+        self.progress_table.setColumnWidth(1, 100)
+        self.progress_table.setColumnWidth(2, 72)
         for row, (research_id, name, max_level, observed) in enumerate(progress_entries):
             display_name = (
                 f"{name} [{self.t('tree.observed')}]" if observed else name
@@ -1014,9 +1133,19 @@ class MainWindow(QMainWindow):
             )
             self._progress_editors[research_id] = editor
             self.progress_table.setCellWidget(row, 1, editor)
+            maximum_item = QTableWidgetItem(
+                str(max_level) if max_level is not None else "?"
+            )
+            maximum_item.setTextAlignment(Qt.AlignCenter)
+            maximum_item.setFlags(maximum_item.flags() & ~Qt.ItemIsEditable)
+            self._progress_maximum_items[research_id] = maximum_item
+            self.progress_table.setItem(row, 2, maximum_item)
         progress_layout.addWidget(self.progress_table)
+        progress_panel.setMinimumWidth(420)
         splitter.addWidget(progress_panel)
+        splitter.setStretchFactor(0, 1)
         splitter.setStretchFactor(1, 1)
+        splitter.setSizes([480, 480])
         layout.addWidget(splitter, 1)
 
         actions = QHBoxLayout()
@@ -1043,6 +1172,9 @@ class MainWindow(QMainWindow):
         self.castle_spin.valueChanged.connect(self._settings_changed)
         self.academy_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_spin.valueChanged.connect(self._settings_changed)
+        self.research_speed_boost_spin.valueChanged.connect(
+            self._settings_changed
+        )
         self.guild_help_spin.valueChanged.connect(self._settings_changed)
         self.speedup_spin.valueChanged.connect(self._settings_changed)
         for spin in self.resource_spins.values():
@@ -1064,6 +1196,9 @@ class MainWindow(QMainWindow):
         settings.castle_level = self.castle_spin.value()
         settings.academy_level = self.academy_spin.value()
         settings.research_speed_percent = self.research_speed_spin.value()
+        settings.research_speed_boost_percent = (
+            self.research_speed_boost_spin.value()
+        )
         settings.max_guild_helps = self.guild_help_spin.value()
         settings.speedup_seconds = self.speedup_spin.value()
         settings.resources = {key: spin.value() for key, spin in self.resource_spins.items()}
@@ -1071,6 +1206,11 @@ class MainWindow(QMainWindow):
         self._update_player_save_button()
         self._refresh_detail()
         self._calculate_plan()
+        if (
+            hasattr(self, "tree_instant_finish_check")
+            and self.tree_instant_finish_check.isChecked()
+        ):
+            self._refresh_tree_filter_results()
 
     def _vip_level_changed(self, *_args) -> None:
         self._update_vip_free_speedup_label()
@@ -1090,7 +1230,7 @@ class MainWindow(QMainWindow):
         self._tree_level_draft[research_id] = value
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree()
+        self._refresh_tree_after_level_change()
         self._refresh_detail()
         self._calculate_plan()
 
@@ -1821,11 +1961,12 @@ class MainWindow(QMainWindow):
             f"font-size:{self.app_settings.help_font_size}pt;"
         )
         sections = (
+            ("help.required_setup.title", "help.required_setup.body_v003"),
             ("help.tree.title", "help.tree.body"),
-            ("help.levels.title", "help.levels.body_v002"),
+            ("help.levels.title", "help.levels.body_v003"),
             ("help.plan.title", "help.plan.body"),
-            ("help.player.title", "help.player.body_v002"),
-            ("help.ocr.title", "help.ocr.body_v002"),
+            ("help.player.title", "help.player.body_v003"),
+            ("help.ocr.title", "help.ocr.body_v003"),
             ("help.paid.title", "help.paid.body"),
             ("help.data.title", "help.data.body"),
             ("help.update.title", "help.update.body"),
@@ -3003,7 +3144,7 @@ class MainWindow(QMainWindow):
         self._tree_level_draft[candidate.research_id] = candidate.level
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree()
+        self._refresh_tree_after_level_change()
         self._refresh_detail()
         self._calculate_plan()
         self._sync_progress_editor(candidate.research_id)
@@ -3029,7 +3170,7 @@ class MainWindow(QMainWindow):
             self._tree_level_draft[candidate.research_id] = candidate.level
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree()
+        self._refresh_tree_after_level_change()
         self._refresh_detail()
         self._calculate_plan()
         for candidate in candidates:

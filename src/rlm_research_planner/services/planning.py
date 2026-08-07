@@ -100,7 +100,7 @@ class ResearchPlanner:
                 level = self.master.level(research_id, level_number)
                 adjusted = apply_research_speed(
                     level.base_time_seconds,
-                    state.settings.research_speed_percent,
+                    state.settings.effective_research_speed_percent,
                     rounding,
                 )
                 adjusted = apply_free_speedup_time(

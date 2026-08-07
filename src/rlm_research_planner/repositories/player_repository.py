@@ -65,6 +65,9 @@ class PlayerRepository:
             castle_level=int(values.get("castle_level", 1)),
             academy_level=int(values.get("academy_level", 1)),
             research_speed_percent=float(values.get("research_speed_percent", 0.0)),
+            research_speed_boost_percent=float(
+                values.get("research_speed_boost_percent", 0.0)
+            ),
             max_guild_helps=int(values.get("max_guild_helps", 0)),
             speedup_seconds=int(values.get("speedup_seconds", 0)),
             resources=resources,
@@ -92,6 +95,9 @@ class PlayerRepository:
             "castle_level": state.settings.castle_level,
             "academy_level": state.settings.academy_level,
             "research_speed_percent": state.settings.research_speed_percent,
+            "research_speed_boost_percent": (
+                state.settings.research_speed_boost_percent
+            ),
             "free_speedup_seconds": free_speedup_seconds_for_vip(
                 state.settings.vip_level
             ),
@@ -132,6 +138,9 @@ class PlayerRepository:
                     "castle_level": state.settings.castle_level,
                     "academy_level": state.settings.academy_level,
                     "research_speed_percent": state.settings.research_speed_percent,
+                    "research_speed_boost_percent": (
+                        state.settings.research_speed_boost_percent
+                    ),
                     "free_speedup_seconds": free_speedup_seconds_for_vip(
                         state.settings.vip_level
                     ),
@@ -167,6 +176,9 @@ class PlayerRepository:
             castle_level=int(raw_settings["castle_level"]),  # type: ignore[index]
             academy_level=int(raw_settings["academy_level"]),  # type: ignore[index]
             research_speed_percent=float(raw_settings["research_speed_percent"]),  # type: ignore[index]
+            research_speed_boost_percent=float(
+                raw_settings.get("research_speed_boost_percent", 0.0)  # type: ignore[union-attr]
+            ),
             max_guild_helps=int(raw_settings["max_guild_helps"]),  # type: ignore[index]
             speedup_seconds=int(raw_settings["speedup_seconds"]),  # type: ignore[index]
             resources={
