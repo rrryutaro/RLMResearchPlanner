@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.1-b8";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.1-b9";
 
 export function adjustedTime(baseSeconds, settings) {
   const speed = Math.max(0, Number(settings.researchSpeedPercent) || 0) + Math.max(0, Number(settings.researchSpeedBoostPercent) || 0);

@@ -27,6 +27,14 @@ WindowsのSmartScreenが未署名アプリとして警告する場合があり�
 
 [RLM Research Planner PWA](https://rrryutaro.github.io/RLMResearchPlanner/) は、スマートフォンやタブレットのブラウザーから利用できます。ブラウザーのホーム画面への追加機能を使うと、通常のアプリに近い形で起動できます。
 
+下記の公開URLまたはQRコードからアクセスしてください。
+
+**公開URL:** https://rrryutaro.github.io/RLMResearchPlanner/
+
+<p align="center">
+  <img src="tools/RLMResearchPlannerPWA/docs/qr.png" alt="QR code to RLM Research Planner PWA" width="200" />
+</p>
+
 モバイル版はOCRやゲーム画面の取得を行わず、研究レベル、VIPレベル、研究速度などを手動で入力します。入力内容は端末のブラウザー内に保存されるため、必要に応じてプレイヤータブからバックアップしてください。
 
 ## OCRと安全性
