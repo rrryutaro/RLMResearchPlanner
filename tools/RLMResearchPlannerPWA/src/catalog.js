@@ -61,6 +61,7 @@ export function normalizeCatalog(raw) {
             level: Number(levelText),
             academyLevel: levelSource.academy_level == null ? null : Number(levelSource.academy_level),
             baseTimeSeconds: levelSource.base_time_seconds == null ? null : Number(levelSource.base_time_seconds),
+            technolabeCount: levelSource.technolabe_count == null ? null : Number(levelSource.technolabe_count),
             costs: { ...(levelSource.costs || {}) },
             power: levelSource.power == null ? null : Number(levelSource.power),
             requirements,

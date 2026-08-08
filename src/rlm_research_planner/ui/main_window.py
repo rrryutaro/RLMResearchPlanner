@@ -73,6 +73,11 @@ from rlm_research_planner.services.catalog_planning import (
     CatalogPlanStep,
     CatalogResearchPlanner,
 )
+from rlm_research_planner.services.castle_planning import (
+    CASTLE_RESOURCE_KEYS,
+    CastleCatalog,
+    CastlePlanStep,
+)
 from rlm_research_planner.services.localization import Translator
 from rlm_research_planner.services.ocr import (
     OcrCandidate,
@@ -228,6 +233,8 @@ class MainWindow(QMainWindow):
         self.app_settings = app_settings
         self.translator = translator
         self.catalog_planner = CatalogResearchPlanner(observations)
+        self.castle_catalog = CastleCatalog.load(paths.castle_catalog)
+        self._building_level_draft = dict(player_state.building_levels)
         self._research = master.research_by_id()
         self._observation_by_id = {
             observation.observation_id: observation for observation in observations
@@ -412,6 +419,7 @@ class MainWindow(QMainWindow):
         self.tabs = QTabWidget()
         self.tabs.addTab(self._build_tree_tab(), self.t("tab.tree"))
         self.tabs.addTab(self._build_plan_tab(), self.t("tab.plan"))
+        self.tabs.addTab(self._build_castle_tab(), self.t("tab.castle"))
         self.tabs.addTab(self._build_player_tab(), self.t("tab.player"))
         self.tabs.addTab(self._build_ocr_tab(), self.t("tab.ocr"))
         self.tabs.addTab(self._build_paid_tab(), self.t("tab.paid"))
@@ -1094,6 +1102,324 @@ class MainWindow(QMainWindow):
         )
         self.detail_values["verification"].setText(level.verification_status)
 
+    def _build_castle_tab(self) -> QWidget:
+        page = QWidget()
+        layout = QVBoxLayout(page)
+
+        controls = QHBoxLayout()
+        controls.addWidget(QLabel(self.t("castle.current_level")))
+        self.castle_plan_current_spin = self._integer_spin(
+            1, 25, self.player_state.settings.castle_level
+        )
+        controls.addWidget(self.castle_plan_current_spin)
+        controls.addSpacing(16)
+        controls.addWidget(QLabel(self.t("castle.target_level")))
+        self.castle_plan_target_spin = self._integer_spin(
+            1,
+            25,
+            max(
+                self.player_state.settings.castle_level,
+                min(
+                    25,
+                    self.player_state.settings.castle_target_level
+                    or self.player_state.settings.castle_level + 1,
+                ),
+            ),
+        )
+        self.player_state.settings.castle_target_level = (
+            self.castle_plan_target_spin.value()
+        )
+        controls.addWidget(self.castle_plan_target_spin)
+        controls.addStretch(1)
+        self.castle_plan_speed_label = QLabel()
+        controls.addWidget(self.castle_plan_speed_label)
+        layout.addLayout(controls)
+
+        splitter = QSplitter(Qt.Horizontal)
+        levels_panel = QWidget()
+        levels_layout = QVBoxLayout(levels_panel)
+        levels_layout.setContentsMargins(0, 0, 6, 0)
+        levels_heading = QLabel(self.t("castle.facility_levels"))
+        levels_heading.setStyleSheet("font-weight:700;font-size:15px;")
+        levels_layout.addWidget(levels_heading)
+        hint = QLabel(self.t("castle.facility_levels_hint"))
+        hint.setWordWrap(True)
+        levels_layout.addWidget(hint)
+
+        facility_ids = [
+            building_id
+            for building_id in self.castle_catalog.buildings
+            if building_id != "castle"
+        ]
+        self.castle_level_table = QTableWidget(len(facility_ids), 3)
+        self.castle_level_table.setHorizontalHeaderLabels(
+            [
+                self.t("castle.facility"),
+                self.t("castle.current"),
+                self.t("castle.required"),
+            ]
+        )
+        self.castle_level_table.verticalHeader().setVisible(False)
+        level_header = self.castle_level_table.horizontalHeader()
+        level_header.setSectionResizeMode(0, QHeaderView.Stretch)
+        level_header.setSectionResizeMode(1, QHeaderView.Fixed)
+        level_header.setSectionResizeMode(2, QHeaderView.Fixed)
+        self.castle_level_table.setColumnWidth(1, 92)
+        self.castle_level_table.setColumnWidth(2, 72)
+        self._building_level_spins: dict[str, QSpinBox] = {}
+        self._building_required_items: dict[str, QTableWidgetItem] = {}
+        minimums = self.castle_catalog.minimum_levels_for_castle(
+            self.player_state.settings.castle_level
+        )
+        for row, building_id in enumerate(facility_ids):
+            building = self.castle_catalog.buildings[building_id]
+            name_item = QTableWidgetItem(
+                building.localized_name(self.translator.locale)
+            )
+            name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
+            self.castle_level_table.setItem(row, 0, name_item)
+            value = max(
+                minimums.get(building_id, 0),
+                self._building_level_draft.get(building_id, 0),
+            )
+            spin = self._integer_spin(
+                minimums.get(building_id, 0), building.max_level, value
+            )
+            spin.valueChanged.connect(
+                lambda changed, selected_id=building_id: self._building_level_changed(
+                    selected_id, changed
+                )
+            )
+            self._building_level_spins[building_id] = spin
+            self.castle_level_table.setCellWidget(row, 1, spin)
+            required_item = QTableWidgetItem(str(value))
+            required_item.setTextAlignment(Qt.AlignCenter)
+            required_item.setFlags(required_item.flags() & ~Qt.ItemIsEditable)
+            self._building_required_items[building_id] = required_item
+            self.castle_level_table.setItem(row, 2, required_item)
+        levels_layout.addWidget(self.castle_level_table, 1)
+        splitter.addWidget(levels_panel)
+
+        plan_panel = QWidget()
+        plan_layout = QVBoxLayout(plan_panel)
+        plan_layout.setContentsMargins(6, 0, 0, 0)
+        plan_heading = QLabel(self.t("castle.plan"))
+        plan_heading.setStyleSheet("font-weight:700;font-size:15px;")
+        plan_layout.addWidget(plan_heading)
+        self.castle_plan_summary_label = QLabel()
+        self.castle_plan_summary_label.setWordWrap(True)
+        plan_layout.addWidget(self.castle_plan_summary_label)
+        self.castle_plan_table = QTableWidget(0, 9)
+        self.castle_plan_table.setHorizontalHeaderLabels(
+            [
+                self.t("castle.facility"),
+                self.t("castle.level_range"),
+                self.t("castle.adjusted_time"),
+                self.t("resource.food"),
+                self.t("resource.stone"),
+                self.t("resource.timber"),
+                self.t("resource.ore"),
+                self.t("resource.gold_hammer"),
+                self.t("plan.action"),
+            ]
+        )
+        self.castle_plan_table.verticalHeader().setVisible(False)
+        plan_header = self.castle_plan_table.horizontalHeader()
+        plan_header.setSectionResizeMode(0, QHeaderView.Stretch)
+        for column in range(1, 9):
+            plan_header.setSectionResizeMode(column, QHeaderView.ResizeToContents)
+        plan_layout.addWidget(self.castle_plan_table, 1)
+        splitter.addWidget(plan_panel)
+        splitter.setStretchFactor(0, 2)
+        splitter.setStretchFactor(1, 5)
+        splitter.setSizes([360, 760])
+        layout.addWidget(splitter, 1)
+
+        self.castle_plan_current_spin.valueChanged.connect(
+            self._castle_current_level_changed
+        )
+        self.castle_plan_target_spin.valueChanged.connect(
+            self._castle_target_level_changed
+        )
+        self._calculate_castle_plan()
+        return page
+
+    def _castle_current_level_changed(self, value: int) -> None:
+        normalized = max(1, min(25, int(value)))
+        self.player_state.settings.castle_level = normalized
+        if hasattr(self, "castle_spin") and self.castle_spin.value() != normalized:
+            self.castle_spin.blockSignals(True)
+            self.castle_spin.setValue(normalized)
+            self.castle_spin.blockSignals(False)
+        if self.castle_plan_target_spin.value() <= normalized:
+            self.castle_plan_target_spin.setValue(min(25, normalized + 1))
+        self.player_state.settings.castle_target_level = (
+            self.castle_plan_target_spin.value()
+        )
+        self._refresh_castle_level_inputs()
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_castle_plan()
+
+    def _castle_target_level_changed(self, value: int) -> None:
+        self.player_state.settings.castle_target_level = max(
+            self.castle_plan_current_spin.value(),
+            min(25, int(value)),
+        )
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_castle_plan()
+
+    def _refresh_castle_level_inputs(self) -> None:
+        if not hasattr(self, "_building_level_spins"):
+            return
+        minimums = self.castle_catalog.minimum_levels_for_castle(
+            self.player_state.settings.castle_level
+        )
+        for building_id, spin in self._building_level_spins.items():
+            minimum = minimums.get(building_id, 0)
+            spin.blockSignals(True)
+            spin.setMinimum(minimum)
+            spin.setValue(
+                max(minimum, self._building_level_draft.get(building_id, 0))
+            )
+            spin.blockSignals(False)
+            self._building_level_draft[building_id] = spin.value()
+
+    def _building_level_changed(self, building_id: str, value: int) -> None:
+        self._building_level_draft[building_id] = max(0, int(value))
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_castle_plan()
+
+    def _calculate_castle_plan(self, *_args: object) -> None:
+        if not hasattr(self, "castle_plan_table"):
+            return
+        result = self.castle_catalog.create_plan(
+            castle_level=self.castle_plan_current_spin.value(),
+            target_castle_level=self.castle_plan_target_spin.value(),
+            saved_levels=self._building_level_draft,
+            construction_speed_percent=(
+                self.player_state.settings.construction_speed_percent
+            ),
+            vip_level=self.player_state.settings.vip_level,
+            guild_helps=self.player_state.settings.max_guild_helps,
+        )
+        self._current_castle_plan = result
+        self.castle_plan_speed_label.setText(
+            self.t("player.construction_speed")
+            + f": {self.player_state.settings.construction_speed_percent:g}%"
+        )
+        for building_id, item in self._building_required_items.items():
+            item.setText(str(result.effective_levels.get(building_id, 0)))
+        for summary in result.buildings:
+            item = self._building_required_items.get(summary.building_id)
+            if item is not None:
+                item.setText(str(summary.target_level))
+
+        if not result.steps:
+            self.castle_plan_summary_label.setText(self.t("castle.no_work"))
+        else:
+            resource_summary = " / ".join(
+                f"{self._resource_label(key)} "
+                f"{format_resource_amount(result.total_costs[key], self.player_state.settings.resource_display_mode)}"
+                for key in CASTLE_RESOURCE_KEYS
+                if result.total_costs[key] > 0
+            )
+            self.castle_plan_summary_label.setText(
+                f"{self.t('castle.total')}: "
+                f"{format_duration(result.total_adjusted_seconds)}  |  "
+                f"{resource_summary}"
+            )
+
+        self.castle_plan_table.setRowCount(
+            len(result.steps) + (1 if result.steps else 0)
+        )
+        for row, step in enumerate(result.steps):
+            building = self.castle_catalog.buildings[step.building_id]
+            values = [
+                building.localized_name(self.translator.locale),
+                f"Lv.{step.level}",
+                format_duration(step.adjusted_seconds),
+                *(
+                    format_resource_amount(
+                        step.costs[key],
+                        self.player_state.settings.resource_display_mode,
+                    )
+                    for key in CASTLE_RESOURCE_KEYS
+                ),
+            ]
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(str(value))
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                if column >= 1:
+                    item.setTextAlignment(Qt.AlignCenter)
+                if column == 2:
+                    item.setToolTip(
+                        f"{self.t('castle.base_time')}: "
+                        f"{format_duration(step.base_seconds)}"
+                    )
+                self.castle_plan_table.setItem(row, column, item)
+            complete_button = QPushButton(self.t("plan.complete_step"))
+            complete_button.clicked.connect(
+                lambda _checked=False, saved=step: self._complete_castle_plan_step(
+                    saved
+                )
+            )
+            self.castle_plan_table.setCellWidget(
+                row,
+                self.castle_plan_table.columnCount() - 1,
+                complete_button,
+            )
+        if result.steps:
+            row = len(result.steps)
+            total_values = [
+                self.t("castle.total"),
+                "",
+                format_duration(result.total_adjusted_seconds),
+                *(
+                    format_resource_amount(
+                        result.total_costs[key],
+                        self.player_state.settings.resource_display_mode,
+                    )
+                    for key in CASTLE_RESOURCE_KEYS
+                ),
+            ]
+            for column, value in enumerate(total_values):
+                item = QTableWidgetItem(str(value))
+                item.setFlags(item.flags() & ~Qt.ItemIsEditable)
+                font = item.font()
+                font.setBold(True)
+                item.setFont(font)
+                if column >= 1:
+                    item.setTextAlignment(Qt.AlignCenter)
+                self.castle_plan_table.setItem(row, column, item)
+
+    def _complete_castle_plan_step(self, step: CastlePlanStep) -> None:
+        result = getattr(self, "_current_castle_plan", None)
+        if result is None or step not in result.steps:
+            return
+        step_index = result.steps.index(step)
+        for completed in result.steps[: step_index + 1]:
+            if completed.building_id == "castle":
+                self.player_state.settings.castle_level = max(
+                    self.player_state.settings.castle_level,
+                    completed.level,
+                )
+            else:
+                self._building_level_draft[completed.building_id] = max(
+                    self._building_level_draft.get(completed.building_id, 0),
+                    completed.level,
+                )
+        castle_level = self.player_state.settings.castle_level
+        for spin in (self.castle_plan_current_spin, self.castle_spin):
+            spin.blockSignals(True)
+            spin.setValue(castle_level)
+            spin.blockSignals(False)
+        self._refresh_castle_level_inputs()
+        self._player_settings_dirty = True
+        self._save_player()
+
     def _build_player_tab(self) -> QWidget:
         page = QWidget()
         layout = QVBoxLayout(page)
@@ -1111,8 +1437,14 @@ class MainWindow(QMainWindow):
         vip_layout.addWidget(self.vip_level_spin)
         self.vip_free_speedup_label = QLabel()
         vip_layout.addWidget(self.vip_free_speedup_label, 1)
-        self.castle_spin = self._integer_spin(1, 99, self.player_state.settings.castle_level)
-        self.academy_spin = self._integer_spin(1, 99, self.player_state.settings.academy_level)
+        self.castle_spin = self._integer_spin(1, 25, self.player_state.settings.castle_level)
+        self.academy_spin = self._integer_spin(1, 25, self.player_state.settings.academy_level)
+        self.construction_speed_spin = QDoubleSpinBox()
+        self.construction_speed_spin.setRange(0.0, 10000.0)
+        self.construction_speed_spin.setDecimals(2)
+        self.construction_speed_spin.setValue(
+            self.player_state.settings.construction_speed_percent
+        )
         self.research_speed_spin = QDoubleSpinBox()
         self.research_speed_spin.setRange(0.0, 10000.0)
         self.research_speed_spin.setDecimals(2)
@@ -1130,6 +1462,9 @@ class MainWindow(QMainWindow):
         self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
         settings_form.addRow(self.t("player.vip_level"), vip_row)
         settings_form.addRow(self.t("player.castle_level"), self.castle_spin)
+        settings_form.addRow(
+            self.t("player.construction_speed"), self.construction_speed_spin
+        )
         settings_form.addRow(self.t("player.academy_level"), self.academy_spin)
         settings_form.addRow(self.t("player.research_speed"), self.research_speed_spin)
         settings_form.addRow(
@@ -1253,6 +1588,7 @@ class MainWindow(QMainWindow):
         self.vip_level_spin.valueChanged.connect(self._vip_level_changed)
         self._update_vip_free_speedup_label()
         self.castle_spin.valueChanged.connect(self._settings_changed)
+        self.construction_speed_spin.valueChanged.connect(self._settings_changed)
         self.academy_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_boost_spin.valueChanged.connect(
@@ -1278,6 +1614,7 @@ class MainWindow(QMainWindow):
         settings.vip_level = self.vip_level_spin.value()
         settings.castle_level = self.castle_spin.value()
         settings.academy_level = self.academy_spin.value()
+        settings.construction_speed_percent = self.construction_speed_spin.value()
         settings.research_speed_percent = self.research_speed_spin.value()
         settings.research_speed_boost_percent = (
             self.research_speed_boost_spin.value()
@@ -1289,6 +1626,17 @@ class MainWindow(QMainWindow):
         self._update_player_save_button()
         self._refresh_detail()
         self._calculate_plan()
+        if hasattr(self, "castle_plan_current_spin"):
+            if self.castle_plan_current_spin.value() != settings.castle_level:
+                self.castle_plan_current_spin.blockSignals(True)
+                self.castle_plan_current_spin.setValue(settings.castle_level)
+                self.castle_plan_current_spin.blockSignals(False)
+                if self.castle_plan_target_spin.value() <= settings.castle_level:
+                    self.castle_plan_target_spin.setValue(
+                        min(25, settings.castle_level + 1)
+                    )
+                self._refresh_castle_level_inputs()
+            self._calculate_castle_plan()
         if (
             hasattr(self, "tree_instant_finish_check")
             and self.tree_instant_finish_check.isChecked()
@@ -1337,6 +1685,7 @@ class MainWindow(QMainWindow):
     def _save_player(self) -> None:
         self._settings_changed()
         changed_ids = self._commit_tree_level_draft()
+        self.player_state.building_levels = dict(self._building_level_draft)
         self.player_repository.save(self.player_state)
         self._player_settings_dirty = False
         self._update_player_save_button()
@@ -1375,6 +1724,7 @@ class MainWindow(QMainWindow):
         try:
             self.player_state = self.player_repository.import_json(Path(path))
             self._tree_level_draft = dict(self.player_state.research_levels)
+            self._building_level_draft = dict(self.player_state.building_levels)
             self._tree_levels_dirty = False
             self._player_settings_dirty = False
             self._build_ui()
@@ -1460,6 +1810,7 @@ class MainWindow(QMainWindow):
             self.t("plan.base_time"),
             self.t("plan.time"),
             self.t("plan.after_help"),
+            self.t("plan.technolabe"),
         ]
         resource_columns = [
             self._resource_label(key) for key in PLAN_RESOURCE_KEYS
@@ -1711,6 +2062,10 @@ class MainWindow(QMainWindow):
                 + self._partial_note(result.unknown_time_steps),
                 format_duration(result.total_after_help_seconds)
                 + self._partial_note(result.unknown_time_steps),
+                self._technolabe_text(
+                    result.total_technolabes,
+                    result.technolabe_efficiency_percent,
+                ),
             ]
             total_values.extend(
                 self._material_amount(result.total_costs.get(key, 0))
@@ -1819,6 +2174,10 @@ class MainWindow(QMainWindow):
                 self._known_duration(result.total_base_seconds),
                 self._known_duration(result.total_adjusted_seconds),
                 self._known_duration(result.total_after_help_seconds),
+                self._technolabe_text(
+                    result.total_technolabes,
+                    result.technolabe_efficiency_percent,
+                ),
             ]
             values.extend(
                 self._material_amount(result.total_costs.get(key, 0))
@@ -1891,6 +2250,10 @@ class MainWindow(QMainWindow):
             self._known_duration(step.base_time_seconds),
             self._known_duration(step.adjusted_time_seconds),
             self._known_duration(step.after_help_seconds),
+            self._technolabe_text(
+                step.technolabe_count,
+                step.technolabe_efficiency_percent,
+            ),
         ]
         values.extend(
             self._material_amount(step.costs.get(key, 0))
@@ -1980,6 +2343,23 @@ class MainWindow(QMainWindow):
             format_duration(seconds)
             if seconds is not None
             else self.t("common.unknown")
+        )
+
+    def _technolabe_text(
+        self,
+        count: int | None,
+        efficiency_percent: float | None,
+    ) -> str:
+        if count is None:
+            return self.t("common.unknown")
+        if count <= 0:
+            return "-"
+        if efficiency_percent is None:
+            return self.t("plan.technolabe_count", count=count)
+        return self.t(
+            "plan.technolabe_efficiency",
+            count=count,
+            efficiency=efficiency_percent,
         )
 
     def _material_amount(self, amount: int) -> str:
@@ -2401,6 +2781,7 @@ class MainWindow(QMainWindow):
             ("help.tree.title", "help.tree.body"),
             ("help.levels.title", "help.levels.body_v003"),
             ("help.plan.title", "help.plan.body"),
+            ("help.castle.title", "help.castle.body"),
             ("help.player.title", "help.player.body_v003"),
             ("help.ocr.title", "help.ocr.body_v003"),
             ("help.paid.title", "help.paid.body"),

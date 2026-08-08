@@ -5,7 +5,14 @@ from datetime import datetime, timezone
 from typing import Mapping
 
 
-RESOURCE_KEYS = ("food", "stone", "timber", "ore", "gold", "special")
+RESOURCE_KEYS = (
+    "food",
+    "stone",
+    "timber",
+    "ore",
+    "gold",
+    "special",
+)
 
 
 @dataclass(frozen=True)
@@ -136,7 +143,9 @@ def locale_fallbacks(locale: str) -> tuple[str, ...]:
 class PlayerSettings:
     vip_level: int = 1
     castle_level: int = 1
+    castle_target_level: int = 0
     academy_level: int = 1
+    construction_speed_percent: float = 0.0
     research_speed_percent: float = 0.0
     research_speed_boost_percent: float = 0.0
     max_guild_helps: int = 0
@@ -166,6 +175,7 @@ class ResearchPlanTask:
 class PlayerState:
     settings: PlayerSettings = field(default_factory=PlayerSettings)
     research_levels: dict[str, int] = field(default_factory=dict)
+    building_levels: dict[str, int] = field(default_factory=dict)
     plan_tasks: list[ResearchPlanTask] = field(default_factory=list)
     observed_stats: dict[str, str] = field(default_factory=dict)
     updated_at: str = field(

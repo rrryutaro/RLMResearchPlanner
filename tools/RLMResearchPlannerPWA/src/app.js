@@ -1,19 +1,20 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.4-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.4-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.4-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.4-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.4-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.4-b1";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.5-b3";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.5-b3";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.5-b3";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.5-b3";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.5-b3";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.5-b3";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.5-b3";
 
-const RELEASE_VERSION = "0.0.4";
-const DEVELOPMENT_BUILD = 1;
+const RELEASE_VERSION = "0.0.5";
+const DEVELOPMENT_BUILD = 3;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
   : RELEASE_VERSION;
 const RESOURCE_NAMES = {
-  "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", special: "特殊資材" },
-  "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", special: "Special" },
+  "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", gold_hammer: "ゴールドハンマー", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", special: "特殊資材" },
+  "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", gold_hammer: "Gold Hammer", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", special: "Special" },
 };
 const CARD_WIDTH = 250;
 const CARD_HEIGHT = 174;
@@ -22,6 +23,7 @@ const GAP_Y = 62;
 const PADDING = 36;
 
 let catalog;
+let castleCatalog;
 let effectLabels = {};
 let state = loadState();
 let selectedCategoryId = "";
@@ -30,6 +32,7 @@ let selectedNodeId = "";
 let zoom = window.innerWidth < 650 ? 0.72 : 1;
 let planMode = "target";
 let currentPlan = null;
+let castleTargetLevel = 0;
 let toastTimer;
 let saveTimer;
 let suppressCardClick = false;
@@ -45,7 +48,7 @@ const create = (tag, className = "", text = "") => {
 
 async function start() {
   try {
-    [catalog, effectLabels] = await Promise.all([loadCatalog(), loadEffectLabels()]);
+    [catalog, castleCatalog, effectLabels] = await Promise.all([loadCatalog(), loadCastleCatalog(), loadEffectLabels()]);
     selectedCategoryId = catalog.categories[0]?.id || "";
     selectedBulkCategoryId = selectedCategoryId;
     bindNavigation();
@@ -53,12 +56,14 @@ async function start() {
     bindDialog();
     bindSettings();
     bindPlans();
+    bindCastle();
     bindConnectivity();
     populateSettings();
     renderCategoryOptions();
     renderTree();
     renderShortest();
     renderTasks();
+    renderCastle();
     renderCatalogStatus();
     byId("app-version").textContent = APP_VERSION;
     byId("language-select").value = state.locale;
@@ -97,6 +102,7 @@ function showTab(tab) {
   if (tab === "tree") requestAnimationFrame(renderTree);
   if (tab === "plan" && planMode === "shortest") renderShortest();
   if (tab === "plan" && planMode === "tasks") renderTasks();
+  if (tab === "castle") renderCastle();
 }
 
 function bindTreeControls() {
@@ -526,6 +532,7 @@ function renderNodeNextDetails(node, level) {
 function bindSettings() {
   const inputs = {
     "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-academy": ["academyLevel", true],
+    "setting-construction-speed": ["constructionSpeedPercent", false],
     "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-helps": ["maxGuildHelps", true],
   };
   for (const [id, [key, integer]] of Object.entries(inputs)) {
@@ -533,7 +540,8 @@ function bindSettings() {
       state.settings[key] = Math.max(0, integer ? Math.trunc(Number(event.target.value) || 0) : Number(event.target.value) || 0);
       if (key === "vipLevel") state.settings[key] = Math.max(1, Math.min(15, state.settings[key]));
       if (key === "castleLevel" || key === "academyLevel") state.settings[key] = Math.max(1, Math.min(25, state.settings[key]));
-      updateVipHint(); scheduleSave(); renderTree(); refreshCurrentPlan(); if (planMode === "shortest") renderShortest();
+      if (key === "castleLevel") castleTargetLevel = Math.min(25, state.settings.castleLevel + 1);
+      updateVipHint(); scheduleSave(); renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
     });
   }
   const resourceInputs = byId("resource-inputs");
@@ -545,18 +553,19 @@ function bindSettings() {
   }
   byId("bulk-category-select")?.addEventListener("change", (event) => { selectedBulkCategoryId = event.target.value; renderBulkLevels(); });
   byId("bulk-level-search")?.addEventListener("input", renderBulkLevels);
-  byId("language-select").addEventListener("change", (event) => { state.locale = event.target.value; scheduleSave(); populateSettings(); renderCategoryOptions(); renderTree(); renderPlan(); renderShortest(); renderTasks(); renderCatalogStatus(); });
+  byId("language-select").addEventListener("change", (event) => { state.locale = event.target.value; scheduleSave(); populateSettings(); renderCategoryOptions(); renderTree(); renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderCatalogStatus(); });
   byId("export-backup").addEventListener("click", exportBackup);
   byId("import-backup").addEventListener("change", importBackup);
   byId("reset-player").addEventListener("click", () => {
     if (!window.confirm("プレイヤー設定と全研究レベルをクリアしますか？")) return;
-    const locale = state.locale; state = defaultState(); state.locale = locale; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); toast("設定をクリアしました");
+    const locale = state.locale; state = defaultState(); state.locale = locale; castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); toast("設定をクリアしました");
   });
 }
 
 function populateSettings() {
   byId("setting-vip").value = state.settings.vipLevel;
   byId("setting-castle").value = state.settings.castleLevel;
+  byId("setting-construction-speed").value = state.settings.constructionSpeedPercent;
   byId("setting-academy").value = state.settings.academyLevel;
   byId("setting-speed").value = state.settings.researchSpeedPercent;
   byId("setting-boost").value = state.settings.researchSpeedBoostPercent;
@@ -567,6 +576,7 @@ function populateSettings() {
   updateVipHint();
   populateBulkCategoryOptions();
   renderBulkLevels();
+  renderCastle();
 }
 
 function populateBulkCategoryOptions() {
@@ -615,6 +625,118 @@ function updateBulkProgress(category) {
 }
 
 function updateVipHint() { byId("vip-free-time").textContent = `VIP ${state.settings.vipLevel} の無料スピードアップ: ${Math.round(freeSecondsForVip(state.settings.vipLevel) / 60)}分`; }
+
+function bindCastle() {
+  byId("castle-current").addEventListener("input", (event) => {
+    state.settings.castleLevel = Math.max(1, Math.min(25, Math.trunc(Number(event.target.value) || 1)));
+    byId("setting-castle").value = state.settings.castleLevel;
+    castleTargetLevel = Math.min(25, state.settings.castleLevel + 1);
+    state.settings.castleTargetLevel = castleTargetLevel;
+    scheduleSave();
+    renderCastle();
+  });
+  byId("castle-target").addEventListener("input", (event) => {
+    castleTargetLevel = Math.max(state.settings.castleLevel, Math.min(25, Math.trunc(Number(event.target.value) || state.settings.castleLevel)));
+    state.settings.castleTargetLevel = castleTargetLevel;
+    scheduleSave();
+    renderCastle();
+  });
+}
+
+function renderCastle() {
+  if (!castleCatalog) return;
+  const current = Math.max(1, Math.min(25, Number(state.settings.castleLevel) || 1));
+  if (!castleTargetLevel) castleTargetLevel = Number(state.settings.castleTargetLevel || 0) || Math.min(25, current + 1);
+  if (castleTargetLevel < current) castleTargetLevel = current;
+  state.settings.castleTargetLevel = castleTargetLevel;
+  byId("castle-current").value = String(current);
+  byId("castle-target").min = String(current);
+  byId("castle-target").value = String(castleTargetLevel);
+  const plan = createCastlePlan(castleCatalog, state, castleTargetLevel);
+  const summary = byId("castle-summary");
+  const summaryItems = [
+    ["城レベル", `${plan.currentCastleLevel} → ${plan.targetCastleLevel}`],
+    ["建設速度", `+${Number(state.settings.constructionSpeedPercent || 0).toLocaleString(state.locale)}%`],
+    ["合計時間", formatDuration(plan.totals.adjustedSeconds)],
+  ];
+  for (const key of CASTLE_RESOURCE_KEYS.filter((key) => Number(plan.totals.costs[key] || 0) > 0)) {
+    summaryItems.push([RESOURCE_NAMES[state.locale][key], formatResource(plan.totals.costs[key])]);
+  }
+  summary.replaceChildren(...summaryItems.map(([label, value]) => {
+    const card = create("div", "castle-summary-card");
+    card.append(create("span", "", label), create("strong", "", value));
+    return card;
+  }));
+
+  const minimums = minimumBuildingLevels(castleCatalog, current);
+  const requiredById = new Map(plan.buildings.map((item) => [item.buildingId, item.targetLevel]));
+  const levelList = byId("castle-level-list");
+  levelList.replaceChildren(...castleCatalog.order.filter((buildingId) => buildingId !== "castle").map((buildingId) => {
+    const building = castleCatalog.buildings.get(buildingId);
+    const minimum = Number(minimums[buildingId] || 0);
+    const value = Math.max(minimum, Number(state.buildingLevels[buildingId] || 0));
+    const row = create("label", "castle-level-row");
+    row.append(create("strong", "", castleCatalog.buildingName(buildingId, state.locale)));
+    const input = create("input");
+    input.type = "number";
+    input.inputMode = "numeric";
+    input.min = String(minimum);
+    input.max = String(building.maxLevel);
+    input.value = String(value);
+    input.setAttribute("aria-label", `${castleCatalog.buildingName(buildingId, state.locale)}の現在レベル`);
+    input.addEventListener("change", () => {
+      state.buildingLevels[buildingId] = Math.max(minimum, Math.min(building.maxLevel, Math.trunc(Number(input.value) || 0)));
+      scheduleSave();
+      renderCastle();
+    });
+    const required = Math.max(value, Number(requiredById.get(buildingId) || value));
+    row.append(input, create("small", "", `必要 ${required}`));
+    return row;
+  }));
+
+  const list = byId("castle-plan-list");
+  if (!plan.steps.length) {
+    list.replaceChildren(create("div", "castle-empty", "目標城レベルまでの建設は完了しています。"));
+  } else {
+    list.replaceChildren(...plan.steps.map((step) => {
+      const card = create("article", "castle-step-row");
+      const main = create("div", "castle-step-main");
+      main.append(
+        create("strong", "castle-step-name", `${castleCatalog.buildingName(step.buildingId, state.locale)} Lv.${step.level}`),
+        resourceDetails(step.costs, CASTLE_RESOURCE_KEYS),
+      );
+      const footer = create("div", "castle-step-footer");
+      const time = create("strong", "plan-row-time", formatDuration(step.adjustedSeconds));
+      time.title = `基礎時間 ${formatDuration(step.baseSeconds)}`;
+      const complete = create("button", "step-complete", "完了");
+      complete.type = "button";
+      complete.addEventListener("click", () => completeCastleStep(step));
+      footer.append(time, complete);
+      card.append(main, footer);
+      return card;
+    }));
+  }
+  byId("castle-issues").textContent = plan.issues.join(" / ");
+}
+
+function completeCastleStep(step) {
+  const plan = createCastlePlan(castleCatalog, state, castleTargetLevel);
+  if (!plan.steps.some((item) => item.buildingId === step.buildingId && item.level === step.level)) return;
+  const completed = buildingLevelsAfterCastleStep(
+    plan,
+    step,
+    state.settings.castleLevel,
+    state.buildingLevels,
+  );
+  state.settings.castleLevel = completed.castleLevel;
+  state.buildingLevels = completed.buildingLevels;
+  state.settings.castleTargetLevel = castleTargetLevel;
+  byId("setting-castle").value = state.settings.castleLevel;
+  saveNow();
+  renderCastle();
+  toast(`${castleCatalog.buildingName(step.buildingId, state.locale)} Lv.${step.level}まで反映しました`);
+}
+
 function scheduleSave() { byId("save-indicator").textContent = "保存中…"; clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 250); }
 function saveNow() { saveState(state); byId("save-indicator").textContent = "保存済み"; }
 
@@ -628,7 +750,7 @@ function exportBackup() {
 async function importBackup(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try {
-    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); toast("バックアップを読み込みました");
+    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); toast("バックアップを読み込みました");
   } catch (error) { toast(error.message); }
   finally { event.target.value = ""; }
 }
@@ -642,7 +764,7 @@ function bindPlans() {
   byId("shortest-limit").addEventListener("change", renderShortest);
   byId("resource-display-mode").addEventListener("change", (event) => {
     state.settings.resourceDisplayMode = event.target.value === "short" ? "short" : "exact";
-    saveNow(); renderPlan(); renderShortest(); renderTasks();
+    saveNow(); renderPlan(); renderShortest(); renderTasks(); renderCastle();
   });
   byId("resource-display-mode").value = state.settings.resourceDisplayMode;
 }
@@ -704,8 +826,11 @@ function renderPlan() {
   byId("plan-result").hidden = !currentPlan;
   if (!currentPlan) return;
   const target = catalog.nodes.get(currentPlan.targetId);
+  const targetCategory = catalog.categories.find((item) => item.id === target.categoryId);
   byId("plan-target-name").textContent = `${catalog.nodeName(target, state.locale)} Lv.${currentPlan.targetLevel}`;
+  byId("plan-steps-title").textContent = `必要な研究（${catalog.categoryTitle(targetCategory, state.locale)}）`;
   byId("plan-total-time").textContent = currentPlan.totals.unknownTime ? `${formatDuration(currentPlan.totals.adjustedSeconds)} + 未確認` : formatDuration(currentPlan.totals.adjustedSeconds);
+  byId("plan-wisdom-summary").textContent = wisdomText(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent);
   const resources = RESOURCE_NAMES[state.locale];
   const usedResources = RESOURCE_KEYS.filter((key) => Number(currentPlan.totals.costs[key] || 0) > 0);
   byId("resource-summary").replaceChildren(...usedResources.map((key) => {
@@ -714,7 +839,7 @@ function renderPlan() {
     chip.append(create("span", "", resources[key]), create("strong", "", formatResource(needed)), create("span", "", needed > available ? `不足 ${formatResource(needed - available)}` : "所持数以内")); return chip;
   }));
   if (!usedResources.length) byId("resource-summary").append(create("div", "callout", "必要資源なし"));
-  byId("plan-steps").replaceChildren(...currentPlan.steps.map((step) => planRow(step)));
+  byId("plan-steps").replaceChildren(...currentPlan.steps.map((step) => planRow(step, { showCategory: false })));
   byId("complete-plan").disabled = currentPlan.steps.length === 0;
   byId("register-plan").disabled = currentPlan.steps.length === 0;
   const issueParts = [];
@@ -748,7 +873,7 @@ function renderTasks() {
     const title = create("h3", "", `${catalog.nodeName(node, state.locale)} Lv.${task.targetLevel}`);
     const remaining = create("strong", "", plan.steps.length ? formatDuration(plan.totals.adjustedSeconds) : "完了済み");
     heading.append(title, remaining);
-    const meta = create("p", "muted", `残り ${plan.steps.length}手順`);
+    const meta = create("p", "muted", `残り ${plan.steps.length}手順 / ${wisdomText(plan.totals.technolabeCount, plan.totals.technolabeEfficiencyPercent)}`);
     const resources = create("div", "task-resources");
     const used = RESOURCE_KEYS.filter((key) => Number(plan.totals.costs[key] || 0) > 0);
     for (const key of used) resources.append(create("span", "", `${RESOURCE_NAMES[state.locale][key]} ${formatResource(plan.totals.costs[key])}`));
@@ -761,32 +886,51 @@ function renderTasks() {
   if (!list.children.length) list.append(create("div", "callout", "登録した研究計画はありません。目標研究の計画からタスクに登録できます。"));
 }
 
-function planRow(step) {
+function planRow(step, { showCategory = true } = {}) {
   const node = catalog.nodes.get(step.researchId);
   const row = create("article", "plan-row");
   const nameButton = create("button", "", `${catalog.nodeName(node, state.locale)} Lv.${step.level}`); nameButton.type = "button";
   nameButton.addEventListener("click", () => jumpToNode(node));
-  const details = create("div", "plan-step-details");
   const categoryName = catalog.categoryTitle(catalog.categories.find((item) => item.id === node.categoryId), state.locale);
-  const costs = RESOURCE_KEYS.filter((key) => Number(step.costs[key] || 0) > 0);
+  const effect = effectFor(node, step.level) || "効果未収録";
+  const main = create("div", "plan-step-main");
+  main.append(nameButton);
+  if (showCategory) main.append(create("span", "plan-row-category", categoryName));
+  else main.classList.add("is-single-category");
+  main.append(
+    create("span", "plan-row-effect", `効果 ${effect}`),
+    resourceDetails(step.costs, RESOURCE_KEYS),
+  );
+  const footer = create("div", "plan-step-footer");
+  const timing = create("div", "plan-step-timing");
+  timing.append(
+    create("strong", "plan-row-time", step.adjustedSeconds == null ? "未確認" : formatDuration(step.adjustedSeconds)),
+    create("span", "plan-row-wisdom", wisdomText(step.technolabeCount, step.technolabeEfficiencyPercent)),
+  );
+  const complete = create("button", "step-complete", "研究完了"); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step));
+  footer.append(timing, complete);
+  row.append(main, footer); return row;
+}
+
+function resourceDetails(costs, keys) {
+  const details = create("details", "plan-resource-details");
+  const used = keys.filter((key) => Number(costs[key] || 0) > 0);
+  const summary = create("summary", "", used.length ? `資材 ${used.length}` : "資材なし");
   const resources = create("div", "plan-row-resources");
-  for (const key of costs) {
+  for (const key of used) {
     const item = create("div", "plan-resource-item");
-    item.append(create("span", "", RESOURCE_NAMES[state.locale][key]), create("strong", "", formatResource(step.costs[key])));
+    item.append(create("span", "", RESOURCE_NAMES[state.locale][key]), create("strong", "", formatResource(costs[key])));
     resources.append(item);
   }
-  if (!costs.length) resources.append(create("div", "plan-resource-item", "資源データ未収録"));
-  const effect = effectFor(node, step.level) || "効果未収録";
-  details.append(
-    nameButton,
-    create("small", "plan-row-category", categoryName),
-    create("div", "plan-row-effect", `効果 ${effect}`),
-    resources,
-  );
-  const actions = create("div", "plan-step-actions");
-  actions.append(create("strong", "plan-row-time", step.adjustedSeconds == null ? "未確認" : formatDuration(step.adjustedSeconds)));
-  const complete = create("button", "step-complete", "研究完了"); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step)); actions.append(complete);
-  row.append(details, actions); return row;
+  if (!used.length) resources.append(create("div", "plan-resource-item", "必要資材なし"));
+  details.append(summary, resources);
+  return details;
+}
+
+function wisdomText(count, efficiencyPercent) {
+  if (count == null) return "叡智の輪 未確認";
+  if (!count) return "叡智の輪 -";
+  return `叡智の輪 ${count}個 / 効率${Number(efficiencyPercent || 0).toFixed(1)}%`;
 }
 
 function completePlanStep(step) {

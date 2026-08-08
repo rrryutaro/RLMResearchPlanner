@@ -17,6 +17,7 @@ class ObservedResearchLevel:
     level: int
     academy_level: int | None = None
     base_time_seconds: int | None = None
+    technolabe_count: int | None = None
     costs: Mapping[str, int] = field(default_factory=dict)
     power: int | None = None
     requirements: tuple[ObservedResearchRequirement, ...] = ()

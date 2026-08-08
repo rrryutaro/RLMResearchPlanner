@@ -68,7 +68,11 @@ class PlayerRepository:
         settings = PlayerSettings(
             vip_level=max(1, min(15, vip_level)),
             castle_level=int(values.get("castle_level", 1)),
+            castle_target_level=max(0, int(values.get("castle_target_level", 0))),
             academy_level=int(values.get("academy_level", 1)),
+            construction_speed_percent=float(
+                values.get("construction_speed_percent", 0.0)
+            ),
             research_speed_percent=float(values.get("research_speed_percent", 0.0)),
             research_speed_boost_percent=float(
                 values.get("research_speed_boost_percent", 0.0)
@@ -91,6 +95,10 @@ class PlayerRepository:
         return PlayerState(
             settings=settings,
             research_levels=research_levels,
+            building_levels={
+                str(key): max(0, int(value))
+                for key, value in values.get("building_levels", {}).items()
+            },
             plan_tasks=[
                 ResearchPlanTask(
                     research_id=str(item.get("research_id", "")),
@@ -112,7 +120,11 @@ class PlayerRepository:
         values: dict[str, object] = {
             "vip_level": state.settings.vip_level,
             "castle_level": state.settings.castle_level,
+            "castle_target_level": state.settings.castle_target_level,
             "academy_level": state.settings.academy_level,
+            "construction_speed_percent": (
+                state.settings.construction_speed_percent
+            ),
             "research_speed_percent": state.settings.research_speed_percent,
             "research_speed_boost_percent": (
                 state.settings.research_speed_boost_percent
@@ -123,6 +135,7 @@ class PlayerRepository:
             "max_guild_helps": state.settings.max_guild_helps,
             "speedup_seconds": state.settings.speedup_seconds,
             "resource_display_mode": state.settings.resource_display_mode,
+            "building_levels": state.building_levels,
             "plan_tasks": [
                 {
                     "research_id": task.research_id,
@@ -164,7 +177,11 @@ class PlayerRepository:
                 "settings": {
                     "vip_level": state.settings.vip_level,
                     "castle_level": state.settings.castle_level,
+                    "castle_target_level": state.settings.castle_target_level,
                     "academy_level": state.settings.academy_level,
+                    "construction_speed_percent": (
+                        state.settings.construction_speed_percent
+                    ),
                     "research_speed_percent": state.settings.research_speed_percent,
                     "research_speed_boost_percent": (
                         state.settings.research_speed_boost_percent
@@ -179,6 +196,7 @@ class PlayerRepository:
                     "observed_stats": state.observed_stats,
                 },
                 "research_levels": state.research_levels,
+                "building_levels": state.building_levels,
                 "plan_tasks": [
                     {
                         "research_id": task.research_id,
@@ -211,7 +229,14 @@ class PlayerRepository:
         settings = PlayerSettings(
             vip_level=max(1, min(15, vip_level)),
             castle_level=int(raw_settings["castle_level"]),  # type: ignore[index]
+            castle_target_level=max(
+                0,
+                int(raw_settings.get("castle_target_level", 0)),  # type: ignore[union-attr]
+            ),
             academy_level=int(raw_settings["academy_level"]),  # type: ignore[index]
+            construction_speed_percent=float(
+                raw_settings.get("construction_speed_percent", 0.0)  # type: ignore[union-attr]
+            ),
             research_speed_percent=float(raw_settings["research_speed_percent"]),  # type: ignore[index]
             research_speed_boost_percent=float(
                 raw_settings.get("research_speed_boost_percent", 0.0)  # type: ignore[union-attr]
@@ -224,8 +249,8 @@ class PlayerRepository:
                 else "exact"
             ),
             resources={
-                key: int(value)
-                for key, value in raw_settings["resources"].items()  # type: ignore[index,union-attr]
+                key: int(raw_settings.get("resources", {}).get(key, 0))  # type: ignore[union-attr]
+                for key in RESOURCE_KEYS
             },
         )
         state = PlayerState(
@@ -233,6 +258,10 @@ class PlayerRepository:
             research_levels={
                 str(key): int(value)
                 for key, value in player["research_levels"].items()  # type: ignore[index,union-attr]
+            },
+            building_levels={
+                str(key): max(0, int(value))
+                for key, value in player.get("building_levels", {}).items()  # type: ignore[union-attr]
             },
             plan_tasks=[
                 ResearchPlanTask(

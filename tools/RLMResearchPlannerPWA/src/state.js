@@ -8,7 +8,9 @@ export function defaultState() {
     settings: {
       vipLevel: 1,
       castleLevel: 1,
+      castleTargetLevel: 0,
       academyLevel: 1,
+      constructionSpeedPercent: 0,
       researchSpeedPercent: 0,
       researchSpeedBoostPercent: 0,
       maxGuildHelps: 0,
@@ -17,6 +19,7 @@ export function defaultState() {
       resources: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])),
     },
     researchLevels: {},
+    buildingLevels: {},
     planTasks: [],
     observedStats: {},
     updatedAt: new Date().toISOString(),
@@ -35,7 +38,9 @@ export function sanitizeState(value) {
   base.locale = source.locale === "en-US" ? "en-US" : "ja-JP";
   base.settings.vipLevel = Math.min(15, Math.max(1, Math.trunc(number(settings.vipLevel ?? settings.vip_level, 1))));
   base.settings.castleLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.castleLevel ?? settings.castle_level, 1))));
+  base.settings.castleTargetLevel = Math.min(25, Math.max(0, Math.trunc(number(settings.castleTargetLevel ?? settings.castle_target_level, 0))));
   base.settings.academyLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.academyLevel ?? settings.academy_level, 1))));
+  base.settings.constructionSpeedPercent = Math.max(0, number(settings.constructionSpeedPercent ?? settings.construction_speed_percent));
   base.settings.researchSpeedPercent = Math.max(0, number(settings.researchSpeedPercent ?? settings.research_speed_percent));
   base.settings.researchSpeedBoostPercent = Math.max(0, number(settings.researchSpeedBoostPercent ?? settings.research_speed_boost_percent));
   base.settings.maxGuildHelps = Math.max(0, Math.trunc(number(settings.maxGuildHelps ?? settings.max_guild_helps)));
@@ -45,6 +50,8 @@ export function sanitizeState(value) {
   for (const key of RESOURCE_KEYS) base.settings.resources[key] = Math.max(0, Math.trunc(number(resources[key])));
   const levels = source.researchLevels || source.research_levels || {};
   base.researchLevels = Object.fromEntries(Object.entries(levels).map(([key, level]) => [key, Math.max(0, Math.trunc(number(level)))]));
+  const buildingLevels = source.buildingLevels || source.building_levels || {};
+  base.buildingLevels = Object.fromEntries(Object.entries(buildingLevels).map(([key, level]) => [key, Math.max(0, Math.min(25, Math.trunc(number(level))))]));
   const tasks = source.planTasks || source.plan_tasks || [];
   base.planTasks = tasks.filter((task) => task && (task.researchId || task.research_id)).map((task) => ({
     researchId: String(task.researchId || task.research_id),
@@ -74,7 +81,9 @@ export function backupPayload(state) {
       settings: {
         vip_level: state.settings.vipLevel,
         castle_level: state.settings.castleLevel,
+        castle_target_level: state.settings.castleTargetLevel,
         academy_level: state.settings.academyLevel,
+        construction_speed_percent: state.settings.constructionSpeedPercent,
         research_speed_percent: state.settings.researchSpeedPercent,
         research_speed_boost_percent: state.settings.researchSpeedBoostPercent,
         free_speedup_seconds: freeSecondsForVip(state.settings.vipLevel),
@@ -85,6 +94,7 @@ export function backupPayload(state) {
         observed_stats: { ...state.observedStats },
       },
       research_levels: { ...state.researchLevels },
+      building_levels: { ...state.buildingLevels },
       plan_tasks: state.planTasks.map((task) => ({
         research_id: task.researchId,
         target_level: task.targetLevel,
@@ -97,7 +107,7 @@ export function backupPayload(state) {
 
 export function stateFromBackup(raw) {
   if (Number(raw?.schema_version) !== 1 || !raw?.player?.settings || !raw?.player?.research_levels) throw new Error("対応していないバックアップ形式です");
-  return sanitizeState({ settings: raw.player.settings, research_levels: raw.player.research_levels, plan_tasks: raw.player.plan_tasks, observed_stats: raw.player.settings.observed_stats, updated_at: raw.player.updated_at });
+  return sanitizeState({ settings: raw.player.settings, research_levels: raw.player.research_levels, building_levels: raw.player.building_levels, plan_tasks: raw.player.plan_tasks, observed_stats: raw.player.settings.observed_stats, updated_at: raw.player.updated_at });
 }
 
 const VIP_MINUTES = { 1: 10, 2: 24, 3: 26, 4: 30, 5: 40, 6: 50, 7: 60, 8: 70, 9: 80, 10: 90, 11: 100, 12: 110, 13: 120, 14: 130, 15: 150 };

@@ -136,11 +136,17 @@ class JsonResearchCatalogRepository:
                     academy = raw_level.get("academy_level")
                     base_time = raw_level.get("base_time_seconds")
                     power = raw_level.get("power")
+                    technolabe_count = raw_level.get("technolabe_count")
                     level_data[level_number] = ObservedResearchLevel(
                         level=level_number,
                         academy_level=int(academy) if academy is not None else None,
                         base_time_seconds=(
                             int(base_time) if base_time is not None else None
+                        ),
+                        technolabe_count=(
+                            int(technolabe_count)
+                            if technolabe_count is not None
+                            else None
                         ),
                         costs={str(key): int(value) for key, value in costs.items()},
                         power=int(power) if power is not None else None,

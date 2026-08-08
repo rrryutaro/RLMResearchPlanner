@@ -1,4 +1,19 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.4-b1";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.5-b3";
+
+export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
+
+export function technolabeUsage(baseSeconds, sourcedCount = null) {
+  if (baseSeconds == null) return { count: null, efficiencyPercent: null };
+  const base = Math.max(0, Number(baseSeconds) || 0);
+  if (!base) return { count: 0, efficiencyPercent: null };
+  const count = sourcedCount != null && Number(sourcedCount) > 0
+    ? Math.max(1, Math.trunc(Number(sourcedCount)))
+    : Math.max(1, Math.ceil(base / TECHNOLABE_CAPACITY_SECONDS));
+  return {
+    count,
+    efficiencyPercent: Math.min(100, base / (count * TECHNOLABE_CAPACITY_SECONDS) * 100),
+  };
+}
 
 export function defaultTargetLevel(currentLevel, maxLevel) {
   const maximum = Math.max(0, Math.trunc(Number(maxLevel) || 0));
@@ -101,26 +116,37 @@ export function createPlan(catalog, state, targetId, targetLevel) {
     }
   }
   const ordered = [];
-  const remaining = new Map(dependencies);
-  while (remaining.size) {
-    const ready = [...remaining].filter(([, deps]) => [...deps].every((key) => !remaining.has(key))).map(([key]) => key).sort();
-    if (!ready.length) {
-      issues.push("研究データに循環する前提条件があるため、該当部分をデータ順で表示しました");
-      ready.push([...remaining.keys()].sort()[0]);
+  const visited = new Set();
+  const visiting = new Set();
+  const visit = (key) => {
+    if (!stepMap.has(key) || visited.has(key)) return;
+    if (visiting.has(key)) {
+      issues.push("研究データに循環する前提条件があるため、循環部分を除いて表示しました");
+      return;
     }
-    for (const key of ready) { ordered.push(stepMap.get(key)); remaining.delete(key); }
-  }
+    visiting.add(key);
+    for (const dependency of dependencies.get(key) || []) visit(dependency);
+    visiting.delete(key);
+    visited.add(key);
+    ordered.push(stepMap.get(key));
+  };
+  visit(`${targetId}\0${normalizedTarget}`);
+  for (const key of stepMap.keys()) visit(key);
 
-  const totals = { baseSeconds: 0, adjustedSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0 };
+  const totals = { baseSeconds: 0, adjustedSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0, technolabeCount: 0, technolabeEfficiencyPercent: null };
   const steps = ordered.map(({ node, level, data }) => {
     if (!data || data.baseTimeSeconds == null) totals.unknownTime += 1;
     else totals.baseSeconds += data.baseTimeSeconds;
     if (!data?.costsVerified) totals.unknownCosts += 1;
     const step = stepFrom(node, level, data, state.settings);
     totals.adjustedSeconds += step.adjustedSeconds || 0;
+    totals.technolabeCount += Number(step.technolabeCount || 0);
     for (const key of RESOURCE_KEYS) totals.costs[key] += Number(step.costs[key] || 0);
     return step;
   });
+  if (totals.baseSeconds > 0 && totals.technolabeCount > 0) {
+    totals.technolabeEfficiencyPercent = Math.min(100, totals.baseSeconds / (totals.technolabeCount * TECHNOLABE_CAPACITY_SECONDS) * 100);
+  }
   return { targetId, targetLevel: normalizedTarget, steps, totals, issues };
 }
 
@@ -137,12 +163,15 @@ export function researchLevelsAfterPlan(plan, currentLevels) {
 
 function stepFrom(node, level, data, settings) {
   const baseSeconds = data?.baseTimeSeconds == null ? null : Number(data.baseTimeSeconds);
+  const technolabe = technolabeUsage(baseSeconds, data?.technolabeCount);
   return {
     researchId: node.id,
     categoryId: node.categoryId,
     level,
     baseSeconds,
     adjustedSeconds: baseSeconds == null ? null : adjustedTime(baseSeconds, settings),
+    technolabeCount: technolabe.count,
+    technolabeEfficiencyPercent: technolabe.efficiencyPercent,
     costs: { ...(data?.costs || {}) },
   };
 }

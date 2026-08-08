@@ -7,7 +7,7 @@
     <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.4-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.5-b3">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -22,6 +22,7 @@
     <nav class="tab-bar" aria-label="メインメニュー">
       <button class="tab-button is-active" data-tab="tree" type="button">研究ツリー</button>
       <button class="tab-button" data-tab="plan" type="button">研究計画</button>
+      <button class="tab-button" data-tab="castle" type="button">城</button>
       <button class="tab-button" data-tab="settings" type="button">プレイヤー</button>
       <button class="tab-button" data-tab="help" type="button">ヘルプ</button>
     </nav>
@@ -116,14 +117,17 @@
                 <p class="eyebrow">目標</p>
                 <h3 id="plan-target-name"></h3>
               </div>
-              <strong id="plan-total-time"></strong>
+              <div class="plan-summary-time">
+                <strong id="plan-total-time"></strong>
+                <span id="plan-wisdom-summary" class="muted"></span>
+              </div>
             </article>
             <div id="resource-summary" class="resource-grid"></div>
             <div class="button-row plan-actions">
               <button id="register-plan" type="button">タスクに登録</button>
               <button id="complete-plan" class="primary" type="button">研究完了として反映</button>
             </div>
-            <h3>必要な研究</h3>
+            <h3 id="plan-steps-title">必要な研究</h3>
             <div id="plan-steps" class="plan-list"></div>
             <p id="plan-issues" class="muted"></p>
           </div>
@@ -138,6 +142,31 @@
         <div id="task-plan-view" hidden>
           <div id="task-list" class="task-list"></div>
         </div>
+      </section>
+
+      <section id="tab-castle" class="tab-panel" aria-labelledby="castle-title">
+        <div class="section-heading castle-heading">
+          <div>
+            <p class="eyebrow">現在の城タスク</p>
+            <h2 id="castle-title">城レベル計画</h2>
+          </div>
+          <div class="castle-target-controls">
+            <label class="field compact"><span>現在</span><input id="castle-current" type="number" inputmode="numeric" min="1" max="25"></label>
+            <span aria-hidden="true">→</span>
+            <label class="field compact"><span>目標</span><input id="castle-target" type="number" inputmode="numeric" min="1" max="25"></label>
+          </div>
+        </div>
+        <div id="castle-summary" class="castle-summary"></div>
+        <details class="settings-card castle-level-card">
+          <summary>現在の施設レベル</summary>
+          <div class="settings-card-body">
+            <p class="settings-description">現在の城レベルで保証される最低値より進んでいる施設だけ修正してください。</p>
+            <div id="castle-level-list" class="castle-level-list"></div>
+          </div>
+        </details>
+        <h3>必要な施設・資材・時間</h3>
+        <div id="castle-plan-list" class="castle-plan-list"></div>
+        <p id="castle-issues" class="muted"></p>
       </section>
 
       <section id="tab-settings" class="tab-panel" aria-labelledby="settings-title">
@@ -155,6 +184,7 @@
             <div class="form-grid">
               <label class="field"><span>VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
               <label class="field"><span>城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
+              <label class="field"><span>建設速度 +%</span><input id="setting-construction-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
               <label class="field"><span>アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
               <label class="field"><span>研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
               <label class="field"><span>研究速度アップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
@@ -216,7 +246,11 @@
           </article>
           <article>
             <h3>研究計画</h3>
-            <p>研究カードから目標レベルを指定すると、未達の前提研究をすべて遡り、必要な時間・資源・効果を表示します。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「研究完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。研究計画の見出し横にある「資源」で通常表記とK/M/B/Tの短縮表記を切り替えられます。</p>
+            <p>研究カードから目標レベルを指定すると、未達の前提研究を最も下位の前提から実行可能な順番で表示します。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「研究完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。叡智の輪は研究速度適用前の元時間と公開データの必要個数を使い、1個33d 03:59:00相当に対する時間効率を表示します。研究計画の見出し横にある「資源」で通常表記とK/M/B/Tの短縮表記を切り替えられます。</p>
+          </article>
+          <article>
+            <h3>城レベル計画</h3>
+            <p>城タブの目標城レベルは現在の城タスクとして保存されます。不足する前提施設をすべて遡り、各建設ステップと合計の資材・時間を表示します。各ステップの「完了」は、その建設までに必須となる直前のステップも含めて施設レベルへ反映します。現在の城レベルで必ず建設済みとなる最低施設レベルは自動で補います。それより進めている施設は「現在の施設レベル」から入力してください。建設時間にはプレイヤー設定の建設速度、VIP無料時間、ギルドヘルプ回数を適用します。</p>
           </article>
           <article>
             <h3>PWA版の範囲</h3>
@@ -289,6 +323,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.4-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.5-b3"></script>
   </body>
 </html>

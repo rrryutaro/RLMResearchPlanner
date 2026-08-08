@@ -43,4 +43,11 @@ Guild Duel tree facts were transcribed from public gameplay. No video frames or 
 
 - BigSoneca Guild Duel gameplay: https://www.youtube.com/watch?v=QKP5dGy1IHs
 
+## Building data attribution
+
+The castle planning catalog contains independently structured building requirements, costs, and construction times adapted from public reference pages. No article text, tables, screenshots, or game artwork are bundled.
+
+- Lords Mobile Wiki Castle page: https://lordsmobile.fandom.com/wiki/Castle
+- Games Guide Info building overview: https://www.gamesguideinfo.com/lords-mobile/overview/buildings
+
 No game artwork, game fonts, audio, screenshots, or extracted client assets are bundled.

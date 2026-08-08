@@ -17,6 +17,10 @@ from rlm_research_planner.services.calculation import (
     apply_research_speed,
     free_speedup_seconds_for_vip,
 )
+from rlm_research_planner.services.technolabe import (
+    technolabe_efficiency,
+    technolabe_usage,
+)
 
 
 @dataclass(frozen=True)
@@ -29,6 +33,8 @@ class CatalogPlanStep:
     costs: dict[str, int]
     power: int | None
     verification_status: str
+    technolabe_count: int | None = None
+    technolabe_efficiency_percent: float | None = None
 
 
 @dataclass(frozen=True)
@@ -58,6 +64,14 @@ class CatalogPlanResult:
     unknown_time_steps: int = 0
     unknown_cost_steps: int = 0
     unknown_power_steps: int = 0
+    total_technolabes: int = 0
+
+    @property
+    def technolabe_efficiency_percent(self) -> float | None:
+        return technolabe_efficiency(
+            self.total_base_seconds,
+            self.total_technolabes,
+        )
 
     @property
     def complete_time_total(self) -> bool:
@@ -74,6 +88,11 @@ class CatalogResearchPlanner:
     def __init__(self, observations: tuple[ResearchTreeObservation, ...]) -> None:
         self.nodes: dict[str, ObservedResearchNode] = {
             node.id: node for observation in observations for node in observation.nodes
+        }
+        self._node_order = {
+            node.id: (observation_index, node.row, node.column)
+            for observation_index, observation in enumerate(observations)
+            for node in observation.nodes
         }
 
     def create_plan(
@@ -127,7 +146,12 @@ class CatalogResearchPlanner:
             for edge in dependency_edges
             if edge[0] in required and edge[1] in required
         }
-        step_order = self._topological_step_order(required, current_levels)
+        step_order = self._topological_step_order(
+            required,
+            current_levels,
+            target_research_id,
+            target_level,
+        )
 
         for research_id, level_number in sorted(missing_level_data):
             result.issues.append(
@@ -215,24 +239,31 @@ class CatalogResearchPlanner:
         self,
         required: dict[str, int],
         current_levels: dict[str, int],
+        target_research_id: str | None = None,
+        target_level: int | None = None,
     ) -> list[tuple[str, int]]:
         steps = {
             (research_id, level)
             for research_id, target_level in required.items()
             for level in range(current_levels.get(research_id, 0) + 1, target_level + 1)
         }
-        prerequisites: dict[tuple[str, int], set[tuple[str, int]]] = defaultdict(set)
+        prerequisites: dict[
+            tuple[str, int], list[tuple[str, int]]
+        ] = defaultdict(list)
         for research_id, level in steps:
             previous = (research_id, level - 1)
             if previous in steps:
-                prerequisites[(research_id, level)].add(previous)
+                prerequisites[(research_id, level)].append(previous)
             level_data = self.nodes[research_id].level_data(level)
             if level_data is None:
                 continue
             for requirement in level_data.requirements:
                 dependency = (requirement.research_id, requirement.level)
-                if dependency in steps:
-                    prerequisites[(research_id, level)].add(dependency)
+                if (
+                    dependency in steps
+                    and dependency not in prerequisites[(research_id, level)]
+                ):
+                    prerequisites[(research_id, level)].append(dependency)
 
         visiting: set[tuple[str, int]] = set()
         visited: set[tuple[str, int]] = set()
@@ -246,13 +277,24 @@ class CatalogResearchPlanner:
             if step in visited:
                 return
             visiting.add(step)
-            for prerequisite in sorted(prerequisites.get(step, ())):
+            for prerequisite in prerequisites.get(step, ()):
                 visit(prerequisite)
             visiting.remove(step)
             visited.add(step)
             order.append(step)
 
-        for step in sorted(steps):
+        if target_research_id is not None and target_level is not None:
+            target_step = (target_research_id, target_level)
+            if target_step in steps:
+                visit(target_step)
+        for step in sorted(
+            steps,
+            key=lambda item: (
+                self._node_order.get(item[0], (999, 999, 999)),
+                item[1],
+                item[0],
+            ),
+        ):
             visit(step)
         return order
 
@@ -293,6 +335,10 @@ class CatalogResearchPlanner:
                 state.settings.max_guild_helps,
                 help_policy,
             )
+        technolabe_count, efficiency = technolabe_usage(
+            level_data.base_time_seconds,
+            level_data.technolabe_count,
+        )
         return CatalogPlanStep(
             research_id,
             level_number,
@@ -302,6 +348,8 @@ class CatalogResearchPlanner:
             dict(level_data.costs),
             level_data.power,
             level_data.verification_status,
+            technolabe_count,
+            efficiency,
         )
 
     @staticmethod
@@ -324,6 +372,7 @@ class CatalogResearchPlanner:
             result.unknown_power_steps += 1
         else:
             result.total_power += step.power
+        result.total_technolabes += int(step.technolabe_count or 0)
         if level_data is None:
             return
         if level_data.academy_level is not None:
