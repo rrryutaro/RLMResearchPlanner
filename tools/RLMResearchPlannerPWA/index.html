@@ -7,7 +7,7 @@
     <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.2-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.3-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -16,7 +16,7 @@
         <p class="eyebrow">Lords Mobile unofficial tool</p>
         <h1>RLM Research Planner</h1>
       </div>
-      <span id="connection-status" class="status-pill" aria-live="polite">オンライン</span>
+      <span id="connection-status" class="status-pill" aria-live="polite" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
     </header>
 
     <nav class="tab-bar" aria-label="メインメニュー">
@@ -96,7 +96,12 @@
           <div class="segmented" role="group" aria-label="計画方法">
             <button class="is-active" id="plan-target-mode" type="button">目標研究</button>
             <button id="plan-shortest-mode" type="button">短時間順</button>
+            <button id="plan-tasks-mode" type="button">登録タスク</button>
           </div>
+        </div>
+        <div class="list-toolbar plan-display-toolbar">
+          <span class="muted">複数の候補を登録し、残り時間と資源を比較できます。</span>
+          <label class="field compact"><span>資源表示</span><select id="resource-display-mode"><option value="exact">通常</option><option value="short">短縮</option></select></label>
         </div>
         <div id="target-plan-view">
           <div id="plan-placeholder" class="callout">研究ツリーでカードを開き、「この研究を計画」を選択してください。</div>
@@ -110,6 +115,7 @@
             </article>
             <div id="resource-summary" class="resource-grid"></div>
             <div class="button-row plan-actions">
+              <button id="register-plan" type="button">タスクに登録</button>
               <button id="complete-plan" class="primary" type="button">研究完了として反映</button>
             </div>
             <h3>必要な研究</h3>
@@ -123,6 +129,9 @@
             <label class="field compact"><span>表示数</span><select id="shortest-limit"><option>20</option><option>50</option><option>100</option></select></label>
           </div>
           <div id="shortest-list" class="plan-list"></div>
+        </div>
+        <div id="task-plan-view" hidden>
+          <div id="task-list" class="task-list"></div>
         </div>
       </section>
 
@@ -202,11 +211,11 @@
           </article>
           <article>
             <h3>研究計画</h3>
-            <p>研究カードから目標レベルを指定すると、未達の前提研究をすべて遡り、必要な時間と資源を合計します。「研究完了として反映」を押すと、目標研究と計画内の未達の前提研究を必要レベルへまとめて更新します。「短時間順」では、今すぐ開始できる次レベルだけを時間順に確認できます。</p>
+            <p>研究カードから目標レベルを指定すると、未達の前提研究をすべて遡り、必要な時間と資源を合計します。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。資源表示は通常表記とK/M/B/Tの短縮表記を切り替えられます。</p>
           </article>
           <article>
             <h3>PWA版の範囲</h3>
-            <p>モバイル版はOCRとゲーム画面の取り込みを行いません。数値は手動入力し、データはブラウザー内に保存されます。端末変更やブラウザーデータ削除に備えてバックアップしてください。</p>
+            <p>モバイル版はOCRとゲーム画面の取り込みを行いません。数値は手動入力し、データはブラウザー内に保存されます。タイトル横の「オンライン／オフライン」はブラウザーの通信可否だけを表し、ゲームへの接続、ログイン、クラウド同期の状態ではありません。端末変更やブラウザーデータ削除に備えてバックアップしてください。</p>
           </article>
           <article>
             <h3>収録データ</h3>
@@ -275,6 +284,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.2-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.3-b1"></script>
   </body>
 </html>

@@ -1,10 +1,11 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.2-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.2-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.2-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.2-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.2-b1";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.3-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.3-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.3-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.3-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.3-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.3-b1";
 
-const RELEASE_VERSION = "0.0.2";
+const RELEASE_VERSION = "0.0.3";
 const DEVELOPMENT_BUILD = 1;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
@@ -57,6 +58,7 @@ async function start() {
     renderCategoryOptions();
     renderTree();
     renderShortest();
+    renderTasks();
     renderCatalogStatus();
     byId("app-version").textContent = APP_VERSION;
     byId("language-select").value = state.locale;
@@ -94,6 +96,7 @@ function showTab(tab) {
   document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.toggle("is-active", panel.id === `tab-${tab}`));
   if (tab === "tree") requestAnimationFrame(renderTree);
   if (tab === "plan" && planMode === "shortest") renderShortest();
+  if (tab === "plan" && planMode === "tasks") renderTasks();
 }
 
 function bindTreeControls() {
@@ -532,12 +535,12 @@ function bindSettings() {
   }
   byId("bulk-category-select")?.addEventListener("change", (event) => { selectedBulkCategoryId = event.target.value; renderBulkLevels(); });
   byId("bulk-level-search")?.addEventListener("input", renderBulkLevels);
-  byId("language-select").addEventListener("change", (event) => { state.locale = event.target.value; scheduleSave(); populateSettings(); renderCategoryOptions(); renderTree(); renderPlan(); renderShortest(); renderCatalogStatus(); });
+  byId("language-select").addEventListener("change", (event) => { state.locale = event.target.value; scheduleSave(); populateSettings(); renderCategoryOptions(); renderTree(); renderPlan(); renderShortest(); renderTasks(); renderCatalogStatus(); });
   byId("export-backup").addEventListener("click", exportBackup);
   byId("import-backup").addEventListener("change", importBackup);
   byId("reset-player").addEventListener("click", () => {
     if (!window.confirm("プレイヤー設定と全研究レベルをクリアしますか？")) return;
-    const locale = state.locale; state = defaultState(); state.locale = locale; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); toast("設定をクリアしました");
+    const locale = state.locale; state = defaultState(); state.locale = locale; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); toast("設定をクリアしました");
   });
 }
 
@@ -549,6 +552,7 @@ function populateSettings() {
   byId("setting-boost").value = state.settings.researchSpeedBoostPercent;
   byId("setting-helps").value = state.settings.maxGuildHelps;
   byId("language-select").value = state.locale;
+  byId("resource-display-mode").value = state.settings.resourceDisplayMode;
   document.querySelectorAll("[data-resource]").forEach((input) => { input.value = state.settings.resources[input.dataset.resource] || 0; input.previousElementSibling.textContent = RESOURCE_NAMES[state.locale][input.dataset.resource]; });
   updateVipHint();
   populateBulkCategoryOptions();
@@ -614,7 +618,7 @@ function exportBackup() {
 async function importBackup(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try {
-    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); toast("バックアップを読み込みました");
+    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); toast("バックアップを読み込みました");
   } catch (error) { toast(error.message); }
   finally { event.target.value = ""; }
 }
@@ -622,30 +626,49 @@ async function importBackup(event) {
 function bindPlans() {
   byId("plan-target-mode").addEventListener("click", () => setPlanMode("target"));
   byId("plan-shortest-mode").addEventListener("click", () => setPlanMode("shortest"));
+  byId("plan-tasks-mode").addEventListener("click", () => setPlanMode("tasks"));
+  byId("register-plan").addEventListener("click", registerCurrentPlan);
   byId("complete-plan").addEventListener("click", completeCurrentPlan);
   byId("shortest-limit").addEventListener("change", renderShortest);
+  byId("resource-display-mode").addEventListener("change", (event) => {
+    state.settings.resourceDisplayMode = event.target.value === "short" ? "short" : "exact";
+    saveNow(); renderPlan(); renderShortest(); renderTasks();
+  });
+  byId("resource-display-mode").value = state.settings.resourceDisplayMode;
 }
 
 function setPlanMode(mode) {
   planMode = mode;
   byId("plan-target-mode").classList.toggle("is-active", mode === "target");
   byId("plan-shortest-mode").classList.toggle("is-active", mode === "shortest");
+  byId("plan-tasks-mode").classList.toggle("is-active", mode === "tasks");
   byId("target-plan-view").hidden = mode !== "target";
   byId("shortest-plan-view").hidden = mode !== "shortest";
+  byId("task-plan-view").hidden = mode !== "tasks";
   if (mode === "shortest") renderShortest();
+  if (mode === "tasks") renderTasks();
 }
 
 function buildTargetPlan(researchId, level) {
-  try { currentPlan = createPlan(catalog, state, researchId, level); renderPlan(); }
+  try { currentPlan = createPlan(catalog, state, researchId, level); setPlanMode("target"); renderPlan(); }
   catch (error) { toast(error.message); }
 }
 
 function refreshCurrentPlan() {
-  if (!currentPlan) return;
+  if (!currentPlan) { renderTasks(); return; }
   const { targetId, targetLevel } = currentPlan;
   try { currentPlan = createPlan(catalog, state, targetId, targetLevel); }
   catch (error) { currentPlan = null; toast(error.message); }
   renderPlan();
+  renderTasks();
+}
+
+function registerCurrentPlan() {
+  if (!currentPlan?.steps.length) return;
+  const exists = state.planTasks.some((task) => task.researchId === currentPlan.targetId && task.targetLevel === currentPlan.targetLevel);
+  if (exists) { toast("同じ目標レベルのタスクは登録済みです"); return; }
+  state.planTasks.push({ researchId: currentPlan.targetId, targetLevel: currentPlan.targetLevel, createdAt: new Date().toISOString() });
+  saveNow(); renderTasks(); toast("研究計画をタスクに登録しました");
 }
 
 function completeCurrentPlan() {
@@ -662,6 +685,7 @@ function completeCurrentPlan() {
   renderTree();
   refreshCurrentPlan();
   renderShortest();
+  renderTasks();
   toast(`目標研究と前提研究を含む${changed.length}件のレベルを反映しました`);
 }
 
@@ -673,13 +697,16 @@ function renderPlan() {
   byId("plan-target-name").textContent = `${catalog.nodeName(target, state.locale)} Lv.${currentPlan.targetLevel}`;
   byId("plan-total-time").textContent = currentPlan.totals.unknownTime ? `${formatDuration(currentPlan.totals.adjustedSeconds)} + 未確認` : formatDuration(currentPlan.totals.adjustedSeconds);
   const resources = RESOURCE_NAMES[state.locale];
-  byId("resource-summary").replaceChildren(...RESOURCE_KEYS.map((key) => {
+  const usedResources = RESOURCE_KEYS.filter((key) => Number(currentPlan.totals.costs[key] || 0) > 0);
+  byId("resource-summary").replaceChildren(...usedResources.map((key) => {
     const chip = create("div", "resource-chip"); const needed = currentPlan.totals.costs[key] || 0; const available = state.settings.resources[key] || 0;
     if (needed > available) chip.classList.add("is-short");
-    chip.append(create("span", "", resources[key]), create("strong", "", needed.toLocaleString(state.locale)), create("span", "", needed > available ? `不足 ${(needed - available).toLocaleString(state.locale)}` : "所持数以内")); return chip;
+    chip.append(create("span", "", resources[key]), create("strong", "", formatResource(needed)), create("span", "", needed > available ? `不足 ${formatResource(needed - available)}` : "所持数以内")); return chip;
   }));
+  if (!usedResources.length) byId("resource-summary").append(create("div", "callout", "必要資源なし"));
   byId("plan-steps").replaceChildren(...currentPlan.steps.map((step) => planRow(step)));
   byId("complete-plan").disabled = currentPlan.steps.length === 0;
+  byId("register-plan").disabled = currentPlan.steps.length === 0;
   const issueParts = [];
   if (currentPlan.totals.unknownTime) issueParts.push(`時間未確認 ${currentPlan.totals.unknownTime}件`);
   if (currentPlan.totals.unknownCosts) issueParts.push(`資源未確認 ${currentPlan.totals.unknownCosts}件`);
@@ -696,6 +723,34 @@ function renderShortest() {
   if (!steps.length) list.append(create("div", "callout", "現在の条件で開始でき、時間データが確認済みの研究はありません。"));
 }
 
+function renderTasks() {
+  if (!catalog) return;
+  const list = byId("task-list");
+  list.replaceChildren();
+  for (const task of state.planTasks) {
+    const node = catalog.nodes.get(task.researchId);
+    if (!node || task.targetLevel > node.maxLevel) continue;
+    let plan;
+    try { plan = createPlan(catalog, state, task.researchId, task.targetLevel); }
+    catch { continue; }
+    const card = create("article", "task-card");
+    const heading = create("div", "task-card-heading");
+    const title = create("h3", "", `${catalog.nodeName(node, state.locale)} Lv.${task.targetLevel}`);
+    const remaining = create("strong", "", plan.steps.length ? formatDuration(plan.totals.adjustedSeconds) : "完了済み");
+    heading.append(title, remaining);
+    const meta = create("p", "muted", `残り ${plan.steps.length}手順`);
+    const resources = create("div", "task-resources");
+    const used = RESOURCE_KEYS.filter((key) => Number(plan.totals.costs[key] || 0) > 0);
+    for (const key of used) resources.append(create("span", "", `${RESOURCE_NAMES[state.locale][key]} ${formatResource(plan.totals.costs[key])}`));
+    if (!used.length) resources.append(create("span", "", "必要資源なし"));
+    const actions = create("div", "button-row task-actions");
+    const show = create("button", "primary", "計画を表示"); show.type = "button"; show.addEventListener("click", () => { buildTargetPlan(task.researchId, task.targetLevel); showTab("plan"); });
+    const remove = create("button", "danger", "削除"); remove.type = "button"; remove.addEventListener("click", () => { state.planTasks = state.planTasks.filter((saved) => saved !== task); saveNow(); renderTasks(); });
+    actions.append(show, remove); card.append(heading, meta, resources, actions); list.append(card);
+  }
+  if (!list.children.length) list.append(create("div", "callout", "登録した研究計画はありません。目標研究の計画からタスクに登録できます。"));
+}
+
 function planRow(step) {
   const node = catalog.nodes.get(step.researchId);
   const row = create("article", "plan-row");
@@ -703,9 +758,24 @@ function planRow(step) {
   nameButton.addEventListener("click", () => jumpToNode(node));
   const details = create("div");
   const categoryName = catalog.categoryTitle(catalog.categories.find((item) => item.id === node.categoryId), state.locale);
-  const costs = RESOURCE_KEYS.filter((key) => Number(step.costs[key] || 0) > 0).map((key) => `${RESOURCE_NAMES[state.locale][key]} ${Number(step.costs[key]).toLocaleString(state.locale)}`);
+  const costs = RESOURCE_KEYS.filter((key) => Number(step.costs[key] || 0) > 0).map((key) => `${RESOURCE_NAMES[state.locale][key]} ${formatResource(step.costs[key])}`);
   details.append(nameButton, create("small", "plan-row-meta", costs.length ? `${categoryName} · ${costs.join(" / ")}` : `${categoryName} · 資源データ未収録`));
-  row.append(details, create("strong", "plan-row-time", step.adjustedSeconds == null ? "未確認" : formatDuration(step.adjustedSeconds))); return row;
+  const actions = create("div", "plan-step-actions");
+  actions.append(create("strong", "plan-row-time", step.adjustedSeconds == null ? "未確認" : formatDuration(step.adjustedSeconds)));
+  const complete = create("button", "step-complete", "完了"); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step)); actions.append(complete);
+  row.append(details, actions); return row;
+}
+
+function completePlanStep(step) {
+  const current = Number(state.researchLevels[step.researchId] || 0);
+  if (step.level <= current) return;
+  state.researchLevels[step.researchId] = step.level;
+  saveNow(); populateSettings(); renderCategoryOptions(); renderTree(); refreshCurrentPlan(); renderShortest(); renderTasks();
+  toast(`${catalog.nodeName(catalog.nodes.get(step.researchId), state.locale)} Lv.${step.level}を反映しました`);
+}
+
+function formatResource(value) {
+  return formatResourceAmount(value, state.settings.resourceDisplayMode, state.locale);
 }
 
 function jumpToNode(node) {

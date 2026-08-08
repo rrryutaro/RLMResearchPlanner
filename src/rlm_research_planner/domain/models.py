@@ -141,6 +141,7 @@ class PlayerSettings:
     research_speed_boost_percent: float = 0.0
     max_guild_helps: int = 0
     speedup_seconds: int = 0
+    resource_display_mode: str = "exact"
     resources: dict[str, int] = field(
         default_factory=lambda: {key: 0 for key in RESOURCE_KEYS}
     )
@@ -152,10 +153,20 @@ class PlayerSettings:
         )
 
 
+@dataclass(frozen=True)
+class ResearchPlanTask:
+    research_id: str
+    target_level: int
+    created_at: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+
+
 @dataclass
 class PlayerState:
     settings: PlayerSettings = field(default_factory=PlayerSettings)
     research_levels: dict[str, int] = field(default_factory=dict)
+    plan_tasks: list[ResearchPlanTask] = field(default_factory=list)
     observed_stats: dict[str, str] = field(default_factory=dict)
     updated_at: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()

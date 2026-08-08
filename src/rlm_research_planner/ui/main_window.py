@@ -49,7 +49,12 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from rlm_research_planner.domain.models import MasterData, PlayerState, RESOURCE_KEYS
+from rlm_research_planner.domain.models import (
+    MasterData,
+    PlayerState,
+    ResearchPlanTask,
+    RESOURCE_KEYS,
+)
 from rlm_research_planner.domain.observations import (
     ObservedResearchNode,
     ResearchTreeObservation,
@@ -96,6 +101,7 @@ from rlm_research_planner.services.paid_pack import (
     parse_speedup_ocr,
     summarize_speedups,
 )
+from rlm_research_planner.services.resource_format import format_resource_amount
 from rlm_research_planner.services.window_capture import (
     CapturableWindow,
     capture_visible_window,
@@ -1381,36 +1387,62 @@ class MainWindow(QMainWindow):
     def _build_plan_tab(self) -> QWidget:
         page = QWidget()
         layout = QVBoxLayout(page)
-        controls = QHBoxLayout()
-        controls.addWidget(QLabel(self.t("plan.mode")))
+        controls = QVBoxLayout()
+        selection_controls = QHBoxLayout()
+        action_controls = QHBoxLayout()
+        selection_controls.addWidget(QLabel(self.t("plan.mode")))
         self.plan_mode_combo = QComboBox()
         self.plan_mode_combo.addItem(self.t("plan.mode.target"), "target")
         self.plan_mode_combo.addItem(self.t("plan.mode.shortest"), "shortest")
+        self.plan_mode_combo.addItem(self.t("plan.mode.tasks"), "tasks")
         initial_mode = self._plan_mode
         mode_index = self.plan_mode_combo.findData(initial_mode)
         self.plan_mode_combo.setCurrentIndex(max(0, mode_index))
         self.plan_mode_combo.setToolTip(self.t("plan.mode.tooltip"))
-        controls.addWidget(self.plan_mode_combo)
+        selection_controls.addWidget(self.plan_mode_combo)
         self.plan_target_caption = QLabel(self.t("plan.target"))
-        controls.addWidget(self.plan_target_caption)
+        selection_controls.addWidget(self.plan_target_caption)
         self.plan_target_name_label = QLabel(self.t("plan.no_target"))
         self.plan_target_name_label.setStyleSheet("font-weight:700;font-size:15px;")
-        controls.addWidget(self.plan_target_name_label, 1)
+        selection_controls.addWidget(self.plan_target_name_label, 1)
         self.plan_level_caption = QLabel(self.t("plan.target_level"))
-        controls.addWidget(self.plan_level_caption)
+        selection_controls.addWidget(self.plan_level_caption)
         self.plan_level_spin = QSpinBox()
         self.plan_level_spin.setMinimum(1)
         self.plan_level_spin.valueChanged.connect(self._calculate_plan)
         self.plan_level_spin.setEnabled(False)
-        controls.addWidget(self.plan_level_spin)
+        selection_controls.addWidget(self.plan_level_spin)
         self.plan_complete_button = QPushButton(self.t("plan.mark_complete"))
         self.plan_complete_button.setEnabled(False)
         self.plan_complete_button.clicked.connect(self._complete_current_plan)
-        controls.addWidget(self.plan_complete_button)
+        action_controls.addStretch(1)
+        self.plan_register_button = QPushButton(self.t("plan.register_task"))
+        self.plan_register_button.setEnabled(False)
+        self.plan_register_button.clicked.connect(self._register_current_plan)
+        action_controls.addWidget(QLabel(self.t("plan.resource_display")))
+        self.plan_resource_mode_combo = QComboBox()
+        self.plan_resource_mode_combo.addItem(self.t("plan.resource_exact"), "exact")
+        self.plan_resource_mode_combo.addItem(self.t("plan.resource_short"), "short")
+        self.plan_resource_mode_combo.setCurrentIndex(
+            max(
+                0,
+                self.plan_resource_mode_combo.findData(
+                    self.player_state.settings.resource_display_mode
+                ),
+            )
+        )
+        self.plan_resource_mode_combo.currentIndexChanged.connect(
+            self._resource_display_mode_changed
+        )
+        action_controls.addWidget(self.plan_resource_mode_combo)
+        action_controls.addWidget(self.plan_register_button)
+        action_controls.addWidget(self.plan_complete_button)
         self.plan_fit_button = QPushButton(self.t("tree.fit_all"))
         self.plan_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"))
-        controls.addWidget(self.plan_fit_button)
-        controls.addWidget(self.plan_reset_zoom_button)
+        action_controls.addWidget(self.plan_fit_button)
+        action_controls.addWidget(self.plan_reset_zoom_button)
+        controls.addLayout(selection_controls)
+        controls.addLayout(action_controls)
         layout.addLayout(controls)
 
         self.plan_splitter = QSplitter(Qt.Vertical)
@@ -1434,12 +1466,16 @@ class MainWindow(QMainWindow):
         ]
         self.plan_table = QTableWidget(
             0,
-            len(fixed_columns) + len(resource_columns) + 2,
+            len(fixed_columns) + len(resource_columns) + 3,
         )
         self.plan_table.setHorizontalHeaderLabels(
             fixed_columns
             + resource_columns
-            + [self.t("plan.building_requirements"), self.t("plan.power")]
+            + [
+                self.t("plan.building_requirements"),
+                self.t("plan.power"),
+                self.t("plan.action"),
+            ]
         )
         self.plan_table.verticalHeader().setVisible(False)
         self.plan_table.setEditTriggers(QTableWidget.NoEditTriggers)
@@ -1517,6 +1553,7 @@ class MainWindow(QMainWindow):
             self.plan_level_caption,
             self.plan_level_spin,
             self.plan_complete_button,
+            self.plan_register_button,
             self.plan_fit_button,
             self.plan_reset_zoom_button,
             self.plan_tree_view,
@@ -1537,6 +1574,12 @@ class MainWindow(QMainWindow):
             self._render_shortest_plan(
                 self.catalog_planner.shortest_available_steps(planning_state)
             )
+            return
+        if self._plan_mode == "tasks":
+            self._current_catalog_plan = None
+            self.plan_complete_button.setEnabled(False)
+            self.plan_register_button.setEnabled(False)
+            self._render_registered_tasks()
             return
         research_id = self._plan_target_research_id
         if not research_id:
@@ -1583,6 +1626,17 @@ class MainWindow(QMainWindow):
 
     def _render_catalog_plan(self, result: CatalogPlanResult) -> None:
         self.plan_complete_button.setEnabled(bool(result.steps))
+        registered = any(
+            task.research_id == result.target_research_id
+            and task.target_level == result.target_level
+            for task in self.player_state.plan_tasks
+        )
+        self.plan_register_button.setText(
+            self.t("plan.task_registered_button")
+            if registered
+            else self.t("plan.register_task")
+        )
+        self.plan_register_button.setEnabled(bool(result.steps) and not registered)
         plan_nodes: list[ResearchTreeNode] = []
         observation_order = {
             observation.observation_id: index
@@ -1638,6 +1692,7 @@ class MainWindow(QMainWindow):
             for research_id, required in result.required_levels.items()
         )
         total_row = len(result.steps)
+        self.plan_table.clearContents()
         self.plan_table.setRowCount(total_row + (1 if result.steps else 0))
         for row, step in enumerate(result.steps):
             self._set_plan_step_row(
@@ -1678,6 +1733,31 @@ class MainWindow(QMainWindow):
                 item.setFont(font)
                 self.plan_table.setItem(total_row, column, item)
 
+    def _register_current_plan(self) -> None:
+        result = self._current_catalog_plan
+        if self._plan_mode != "target" or result is None or not result.steps:
+            return
+        task_key = (result.target_research_id, result.target_level)
+        if any(
+            (task.research_id, task.target_level) == task_key
+            for task in self.player_state.plan_tasks
+        ):
+            return
+        self.player_state.plan_tasks.append(
+            ResearchPlanTask(result.target_research_id, result.target_level)
+        )
+        self.player_repository.save(self.player_state)
+        self._render_catalog_plan(result)
+
+    def _resource_display_mode_changed(self, *_args: object) -> None:
+        if not hasattr(self, "plan_resource_mode_combo"):
+            return
+        self.player_state.settings.resource_display_mode = str(
+            self.plan_resource_mode_combo.currentData() or "exact"
+        )
+        self.player_repository.save(self.player_state)
+        self._calculate_plan()
+
     def _complete_current_plan(self) -> None:
         result = self._current_catalog_plan
         if self._plan_mode != "target" or result is None or not result.steps:
@@ -1707,6 +1787,7 @@ class MainWindow(QMainWindow):
             self._preserve_completed_plan_target = False
 
     def _render_shortest_plan(self, steps: list[CatalogPlanStep]) -> None:
+        self.plan_table.clearContents()
         self.plan_table.setRowCount(len(steps))
         for row, step in enumerate(steps):
             observation = self._node_observation[step.research_id]
@@ -1715,6 +1796,86 @@ class MainWindow(QMainWindow):
                 f"{self._catalog_research_name(step.research_id)}"
             )
             self._set_plan_step_row(row, step, name, link_to_tree=True)
+
+    def _render_registered_tasks(self) -> None:
+        tasks = [
+            task
+            for task in self.player_state.plan_tasks
+            if task.research_id in self._observed_nodes
+        ]
+        self.plan_table.clearContents()
+        self.plan_table.setRowCount(len(tasks))
+        planning_state = PlayerState(
+            settings=self.player_state.settings,
+            research_levels=dict(self._tree_level_draft),
+        )
+        for row, task in enumerate(tasks):
+            result = self.catalog_planner.create_plan(
+                planning_state, task.research_id, task.target_level
+            )
+            values = [
+                self._catalog_research_name(task.research_id),
+                f"Lv.{task.target_level}",
+                self._known_duration(result.total_base_seconds),
+                self._known_duration(result.total_adjusted_seconds),
+                self._known_duration(result.total_after_help_seconds),
+            ]
+            values.extend(
+                self._material_amount(result.total_costs.get(key, 0))
+                for key in PLAN_RESOURCE_KEYS
+            )
+            values.extend(
+                [
+                    self._format_building_requirements(
+                        result.building_requirements
+                    )
+                    or "-",
+                    f"{result.total_power:,}",
+                ]
+            )
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(value)
+                if column == 0:
+                    item.setData(Qt.UserRole, task.research_id)
+                    item.setData(Qt.UserRole + 1, task.target_level)
+                    font = item.font()
+                    font.setUnderline(True)
+                    item.setFont(font)
+                    item.setForeground(QBrush(QColor("#1565C0")))
+                    item.setToolTip(self.t("plan.open_task"))
+                self.plan_table.setItem(row, column, item)
+            actions = QWidget()
+            action_layout = QHBoxLayout(actions)
+            action_layout.setContentsMargins(2, 0, 2, 0)
+            show_button = QPushButton(self.t("plan.show_task"))
+            show_button.clicked.connect(
+                lambda _checked=False, saved=task: self._show_registered_task(saved)
+            )
+            remove_button = QPushButton(self.t("plan.remove_task"))
+            remove_button.clicked.connect(
+                lambda _checked=False, saved=task: self._remove_registered_task(saved)
+            )
+            action_layout.addWidget(show_button)
+            action_layout.addWidget(remove_button)
+            self.plan_table.setCellWidget(
+                row, self.plan_table.columnCount() - 1, actions
+            )
+
+    def _show_registered_task(self, task: ResearchPlanTask) -> None:
+        self._set_plan_target(task.research_id)
+        self.plan_level_spin.blockSignals(True)
+        self.plan_level_spin.setValue(task.target_level)
+        self.plan_level_spin.blockSignals(False)
+        self._calculate_plan()
+
+    def _remove_registered_task(self, task: ResearchPlanTask) -> None:
+        self.player_state.plan_tasks = [
+            saved
+            for saved in self.player_state.plan_tasks
+            if saved != task
+        ]
+        self.player_repository.save(self.player_state)
+        self._render_registered_tasks()
 
     def _set_plan_step_row(
         self,
@@ -1758,12 +1919,42 @@ class MainWindow(QMainWindow):
             elif column == 3:
                 item.setData(Qt.UserRole, step.adjusted_time_seconds)
             self.plan_table.setItem(row, column, item)
+        complete_button = QPushButton(self.t("plan.complete_step"))
+        complete_button.clicked.connect(
+            lambda _checked=False, saved=step: self._complete_plan_step(saved)
+        )
+        self.plan_table.setCellWidget(
+            row, self.plan_table.columnCount() - 1, complete_button
+        )
+
+    def _complete_plan_step(self, step: CatalogPlanStep) -> None:
+        node = self._observed_nodes.get(step.research_id)
+        if node is None or node.max_level is None:
+            return
+        current = self._tree_level_draft.get(step.research_id, 0)
+        level = max(current, min(step.level, node.max_level))
+        if level == current:
+            return
+        self._tree_level_draft[step.research_id] = level
+        self._tree_levels_dirty = True
+        self._sync_progress_editor(step.research_id)
+        self._refresh_tree_after_level_change(preserve_view=True)
+        self._refresh_detail()
+        self._save_player()
 
     def _plan_table_item_clicked(self, item: QTableWidgetItem) -> None:
-        if self._plan_mode != "shortest" or item.column() != 0:
+        if item.column() != 0:
             return
         research_id = str(item.data(Qt.UserRole) or "")
-        self._jump_to_tree_research(research_id)
+        if self._plan_mode == "shortest":
+            self._jump_to_tree_research(research_id)
+        elif self._plan_mode == "tasks":
+            self._show_registered_task(
+                ResearchPlanTask(
+                    research_id,
+                    int(item.data(Qt.UserRole + 1) or 1),
+                )
+            )
 
     def _jump_to_tree_research(self, research_id: str) -> None:
         observation = self._node_observation.get(research_id)
@@ -1791,9 +1982,12 @@ class MainWindow(QMainWindow):
             else self.t("common.unknown")
         )
 
-    @staticmethod
-    def _material_amount(amount: int) -> str:
-        return f"{amount:,}" if amount else "-"
+    def _material_amount(self, amount: int) -> str:
+        if not amount:
+            return "-"
+        return format_resource_amount(
+            amount, self.player_state.settings.resource_display_mode
+        )
 
     def _step_building_requirements(
         self,

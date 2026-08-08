@@ -5,7 +5,12 @@ import sqlite3
 from datetime import datetime, timezone
 from pathlib import Path
 
-from rlm_research_planner.domain.models import PlayerSettings, PlayerState, RESOURCE_KEYS
+from rlm_research_planner.domain.models import (
+    PlayerSettings,
+    PlayerState,
+    ResearchPlanTask,
+    RESOURCE_KEYS,
+)
 from rlm_research_planner.services.calculation import (
     free_speedup_seconds_for_vip,
     vip_level_for_free_speedup_seconds,
@@ -70,6 +75,11 @@ class PlayerRepository:
             ),
             max_guild_helps=int(values.get("max_guild_helps", 0)),
             speedup_seconds=int(values.get("speedup_seconds", 0)),
+            resource_display_mode=(
+                "short"
+                if values.get("resource_display_mode") == "short"
+                else "exact"
+            ),
             resources=resources,
         )
         progress_rows = self._connection.execute(
@@ -81,6 +91,15 @@ class PlayerRepository:
         return PlayerState(
             settings=settings,
             research_levels=research_levels,
+            plan_tasks=[
+                ResearchPlanTask(
+                    research_id=str(item.get("research_id", "")),
+                    target_level=max(1, int(item.get("target_level", 1))),
+                    created_at=str(item.get("created_at", "")),
+                )
+                for item in values.get("plan_tasks", [])
+                if isinstance(item, dict) and item.get("research_id")
+            ],
             observed_stats={
                 str(key): str(value)
                 for key, value in values.get("observed_stats", {}).items()
@@ -103,6 +122,15 @@ class PlayerRepository:
             ),
             "max_guild_helps": state.settings.max_guild_helps,
             "speedup_seconds": state.settings.speedup_seconds,
+            "resource_display_mode": state.settings.resource_display_mode,
+            "plan_tasks": [
+                {
+                    "research_id": task.research_id,
+                    "target_level": task.target_level,
+                    "created_at": task.created_at,
+                }
+                for task in state.plan_tasks
+            ],
             "observed_stats": state.observed_stats,
             "updated_at": updated_at,
         }
@@ -146,10 +174,19 @@ class PlayerRepository:
                     ),
                     "max_guild_helps": state.settings.max_guild_helps,
                     "speedup_seconds": state.settings.speedup_seconds,
+                    "resource_display_mode": state.settings.resource_display_mode,
                     "resources": state.settings.resources,
                     "observed_stats": state.observed_stats,
                 },
                 "research_levels": state.research_levels,
+                "plan_tasks": [
+                    {
+                        "research_id": task.research_id,
+                        "target_level": task.target_level,
+                        "created_at": task.created_at,
+                    }
+                    for task in state.plan_tasks
+                ],
                 "updated_at": state.updated_at,
             },
         }
@@ -181,6 +218,11 @@ class PlayerRepository:
             ),
             max_guild_helps=int(raw_settings["max_guild_helps"]),  # type: ignore[index]
             speedup_seconds=int(raw_settings["speedup_seconds"]),  # type: ignore[index]
+            resource_display_mode=(
+                "short"
+                if raw_settings.get("resource_display_mode") == "short"  # type: ignore[union-attr]
+                else "exact"
+            ),
             resources={
                 key: int(value)
                 for key, value in raw_settings["resources"].items()  # type: ignore[index,union-attr]
@@ -192,6 +234,15 @@ class PlayerRepository:
                 str(key): int(value)
                 for key, value in player["research_levels"].items()  # type: ignore[index,union-attr]
             },
+            plan_tasks=[
+                ResearchPlanTask(
+                    research_id=str(item.get("research_id", "")),
+                    target_level=max(1, int(item.get("target_level", 1))),
+                    created_at=str(item.get("created_at", "")),
+                )
+                for item in player.get("plan_tasks", [])  # type: ignore[union-attr]
+                if isinstance(item, dict) and item.get("research_id")
+            ],
             observed_stats={
                 str(key): str(value)
                 for key, value in raw_settings.get("observed_stats", {}).items()  # type: ignore[union-attr]

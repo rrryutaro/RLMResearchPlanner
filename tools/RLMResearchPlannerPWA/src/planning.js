@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.2-b1";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.3-b1";
 
 export function defaultTargetLevel(currentLevel, maxLevel) {
   const maximum = Math.max(0, Math.trunc(Number(maxLevel) || 0));
