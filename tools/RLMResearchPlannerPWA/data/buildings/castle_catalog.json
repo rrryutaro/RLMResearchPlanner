@@ -1,12 +1,90 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "dataset_id": "lords-mobile-castle-plan",
   "checked_on": "2026-08-08",
-  "notes": "城Lv.1-25と到達経路上の施設について、公開WikiのUpgrade Resultsを収録。建設速度適用前の時間。",
+  "notes": "城Lv.1-25と到達経路上の施設、および城Lv.25後のマナ強化第1レベル（5段階）について、公開WikiのUpgrade Resultsを収録。建設速度適用前の時間。",
   "sources": [
     "https://lordsmobile.fandom.com/wiki/Castle",
-    "https://www.gamesguideinfo.com/lords-mobile/overview/buildings"
+    "https://www.gamesguideinfo.com/lords-mobile/overview/buildings",
+    "https://lm-harus.com/mana/"
   ],
+  "castle_mana_progression": {
+    "base_castle_level": 25,
+    "stage_count": 5,
+    "names": {
+      "ja-JP": "城（マナ強化）",
+      "en-US": "Castle (Mana Upgrade)"
+    },
+    "notes": "マナレベル1は同一の資材・時間で5段階建設する。画面上では城Lv.25-1～Lv.25-5として表示する。",
+    "source_url": "https://lordsmobile.fandom.com/wiki/Castle",
+    "stages": {
+      "1": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "2": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "3": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "4": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "5": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      }
+    }
+  },
   "buildings": [
     {
       "id": "castle",

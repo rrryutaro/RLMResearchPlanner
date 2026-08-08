@@ -1,20 +1,20 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.6-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.6-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.6-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.6-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.6-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.6-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.6-b1";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.7-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.7-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.7-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.7-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.7-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.7-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.7-b1";
 
-const RELEASE_VERSION = "0.0.6";
+const RELEASE_VERSION = "0.0.7";
 const DEVELOPMENT_BUILD = 1;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
   : RELEASE_VERSION;
 const RESOURCE_NAMES = {
-  "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", gold_hammer: "ゴールドハンマー", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", special: "特殊資材" },
-  "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", gold_hammer: "Gold Hammer", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", special: "Special" },
+  "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", gold_hammer: "ゴールドハンマー", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", mana_crystal: "マナクリスタル", mana_steel: "マナスチール", special: "特殊資材" },
+  "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", gold_hammer: "Gold Hammer", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", mana_crystal: "Mana Crystal", mana_steel: "Manasteel", special: "Special" },
 };
 const CARD_WIDTH = 250;
 const CARD_HEIGHT = 174;
@@ -33,6 +33,7 @@ let zoom = window.innerWidth < 650 ? 0.72 : 1;
 let planMode = "target";
 let currentPlan = null;
 let castleTargetLevel = 0;
+let castleTargetManaStage = 0;
 let toastTimer;
 let saveTimer;
 let suppressCardClick = false;
@@ -531,7 +532,7 @@ function renderNodeNextDetails(node, level) {
 
 function bindSettings() {
   const inputs = {
-    "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-academy": ["academyLevel", true],
+    "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-castle-mana": ["castleManaStage", true], "setting-academy": ["academyLevel", true],
     "setting-construction-speed": ["constructionSpeedPercent", false],
     "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-helps": ["maxGuildHelps", true],
   };
@@ -540,7 +541,17 @@ function bindSettings() {
       state.settings[key] = Math.max(0, integer ? Math.trunc(Number(event.target.value) || 0) : Number(event.target.value) || 0);
       if (key === "vipLevel") state.settings[key] = Math.max(1, Math.min(15, state.settings[key]));
       if (key === "castleLevel" || key === "academyLevel") state.settings[key] = Math.max(1, Math.min(25, state.settings[key]));
-      if (key === "castleLevel") castleTargetLevel = Math.min(25, state.settings.castleLevel + 1);
+      if (key === "castleManaStage") state.settings[key] = state.settings.castleLevel === 25 ? Math.max(0, Math.min(5, state.settings[key])) : 0;
+      if (key === "castleLevel") {
+        if (state.settings.castleLevel < 25) state.settings.castleManaStage = 0;
+        castleTargetLevel = Math.min(25, state.settings.castleLevel + 1);
+      }
+      if (key === "castleLevel" || key === "castleManaStage") {
+        castleTargetManaStage = state.settings.castleLevel === 25 && state.settings.castleManaStage < 5
+          ? state.settings.castleManaStage + 1
+          : state.settings.castleManaStage;
+        state.settings.castleTargetManaStage = castleTargetManaStage;
+      }
       updateVipHint(); scheduleSave(); renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
     });
   }
@@ -558,13 +569,15 @@ function bindSettings() {
   byId("import-backup").addEventListener("change", importBackup);
   byId("reset-player").addEventListener("click", () => {
     if (!window.confirm("プレイヤー設定と全研究レベルをクリアしますか？")) return;
-    const locale = state.locale; state = defaultState(); state.locale = locale; castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); toast("設定をクリアしました");
+    const locale = state.locale; state = defaultState(); state.locale = locale; castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); toast("設定をクリアしました");
   });
 }
 
 function populateSettings() {
   byId("setting-vip").value = state.settings.vipLevel;
   byId("setting-castle").value = state.settings.castleLevel;
+  byId("setting-castle-mana").value = state.settings.castleManaStage;
+  byId("setting-castle-mana").disabled = state.settings.castleLevel !== 25;
   byId("setting-construction-speed").value = state.settings.constructionSpeedPercent;
   byId("setting-academy").value = state.settings.academyLevel;
   byId("setting-speed").value = state.settings.researchSpeedPercent;
@@ -629,15 +642,43 @@ function updateVipHint() { byId("vip-free-time").textContent = `VIP ${state.sett
 function bindCastle() {
   byId("castle-current").addEventListener("input", (event) => {
     state.settings.castleLevel = Math.max(1, Math.min(25, Math.trunc(Number(event.target.value) || 1)));
+    if (state.settings.castleLevel < 25) state.settings.castleManaStage = 0;
     byId("setting-castle").value = state.settings.castleLevel;
     castleTargetLevel = Math.min(25, state.settings.castleLevel + 1);
+    castleTargetManaStage = state.settings.castleLevel === 25 && state.settings.castleManaStage < castleCatalog.maxManaStage
+      ? state.settings.castleManaStage + 1
+      : 0;
     state.settings.castleTargetLevel = castleTargetLevel;
+    state.settings.castleTargetManaStage = castleTargetManaStage;
+    scheduleSave();
+    renderCastle();
+  });
+  byId("castle-current-mana").addEventListener("input", (event) => {
+    state.settings.castleManaStage = state.settings.castleLevel === 25
+      ? Math.max(0, Math.min(castleCatalog.maxManaStage, Math.trunc(Number(event.target.value) || 0)))
+      : 0;
+    byId("setting-castle-mana").value = state.settings.castleManaStage;
+    castleTargetManaStage = state.settings.castleManaStage < castleCatalog.maxManaStage
+      ? state.settings.castleManaStage + 1
+      : state.settings.castleManaStage;
+    state.settings.castleTargetManaStage = castleTargetManaStage;
     scheduleSave();
     renderCastle();
   });
   byId("castle-target").addEventListener("input", (event) => {
     castleTargetLevel = Math.max(state.settings.castleLevel, Math.min(25, Math.trunc(Number(event.target.value) || state.settings.castleLevel)));
+    if (castleTargetLevel < 25) castleTargetManaStage = 0;
     state.settings.castleTargetLevel = castleTargetLevel;
+    state.settings.castleTargetManaStage = castleTargetManaStage;
+    scheduleSave();
+    renderCastle();
+  });
+  byId("castle-target-mana").addEventListener("input", (event) => {
+    const minimum = state.settings.castleLevel === 25 ? state.settings.castleManaStage : 0;
+    castleTargetManaStage = castleTargetLevel === 25
+      ? Math.max(minimum, Math.min(castleCatalog.maxManaStage, Math.trunc(Number(event.target.value) || 0)))
+      : 0;
+    state.settings.castleTargetManaStage = castleTargetManaStage;
     scheduleSave();
     renderCastle();
   });
@@ -646,16 +687,34 @@ function bindCastle() {
 function renderCastle() {
   if (!castleCatalog) return;
   const current = Math.max(1, Math.min(25, Number(state.settings.castleLevel) || 1));
+  const currentManaStage = current === 25 ? Math.max(0, Math.min(castleCatalog.maxManaStage, Number(state.settings.castleManaStage) || 0)) : 0;
+  state.settings.castleManaStage = currentManaStage;
   if (!castleTargetLevel) castleTargetLevel = Number(state.settings.castleTargetLevel || 0) || Math.min(25, current + 1);
   if (castleTargetLevel < current) castleTargetLevel = current;
+  if (castleTargetLevel === 25) {
+    if (!castleTargetManaStage) {
+      castleTargetManaStage = Number(state.settings.castleTargetManaStage || 0);
+      if (current === 25 && castleTargetManaStage <= currentManaStage && currentManaStage < castleCatalog.maxManaStage) castleTargetManaStage = currentManaStage + 1;
+    }
+    const minimum = current === 25 ? currentManaStage : 0;
+    castleTargetManaStage = Math.max(minimum, Math.min(castleCatalog.maxManaStage, castleTargetManaStage));
+  } else castleTargetManaStage = 0;
   state.settings.castleTargetLevel = castleTargetLevel;
+  state.settings.castleTargetManaStage = castleTargetManaStage;
   byId("castle-current").value = String(current);
+  byId("castle-current-mana").value = String(currentManaStage);
+  byId("castle-current-mana").disabled = current !== 25;
   byId("castle-target").min = String(current);
   byId("castle-target").value = String(castleTargetLevel);
-  const plan = createCastlePlan(castleCatalog, state, castleTargetLevel);
+  byId("castle-target-mana").min = String(current === 25 ? currentManaStage : 0);
+  byId("castle-target-mana").value = String(castleTargetManaStage);
+  byId("castle-target-mana").disabled = castleTargetLevel !== 25;
+  byId("setting-castle-mana").value = String(currentManaStage);
+  byId("setting-castle-mana").disabled = current !== 25;
+  const plan = createCastlePlan(castleCatalog, state, castleTargetLevel, castleTargetManaStage);
   const summary = byId("castle-summary");
   const summaryItems = [
-    ["城レベル", `${plan.currentCastleLevel} → ${plan.targetCastleLevel}`],
+    ["城レベル", `${castleProgressLabel(plan.currentCastleLevel, plan.currentManaStage)} → ${castleProgressLabel(plan.targetCastleLevel, plan.targetManaStage)}`],
     ["建設速度", `+${Number(state.settings.constructionSpeedPercent || 0).toLocaleString(state.locale)}%`],
     ["合計時間", formatDuration(plan.totals.adjustedSeconds)],
   ];
@@ -702,7 +761,7 @@ function renderCastle() {
       const card = create("article", "castle-step-row");
       const main = create("div", "castle-step-main");
       main.append(
-        create("strong", "castle-step-name", `${castleCatalog.buildingName(step.buildingId, state.locale)} Lv.${step.level}`),
+        create("strong", "castle-step-name", `${step.manaStage ? castleCatalog.manaName(state.locale) : castleCatalog.buildingName(step.buildingId, state.locale)} ${castleProgressLabel(step.level, step.manaStage)}`),
         resourceDetails(step.costs, CASTLE_RESOURCE_KEYS),
       );
       const footer = create("div", "castle-step-footer");
@@ -720,21 +779,25 @@ function renderCastle() {
 }
 
 function completeCastleStep(step) {
-  const plan = createCastlePlan(castleCatalog, state, castleTargetLevel);
-  if (!plan.steps.some((item) => item.buildingId === step.buildingId && item.level === step.level)) return;
+  const plan = createCastlePlan(castleCatalog, state, castleTargetLevel, castleTargetManaStage);
+  if (!plan.steps.some((item) => item.buildingId === step.buildingId && item.level === step.level && Number(item.manaStage || 0) === Number(step.manaStage || 0))) return;
   const completed = buildingLevelsAfterCastleStep(
     plan,
     step,
     state.settings.castleLevel,
+    state.settings.castleManaStage,
     state.buildingLevels,
   );
   state.settings.castleLevel = completed.castleLevel;
+  state.settings.castleManaStage = completed.castleManaStage;
   state.buildingLevels = completed.buildingLevels;
   state.settings.castleTargetLevel = castleTargetLevel;
+  state.settings.castleTargetManaStage = castleTargetManaStage;
   byId("setting-castle").value = state.settings.castleLevel;
+  byId("setting-castle-mana").value = state.settings.castleManaStage;
   saveNow();
   renderCastle();
-  toast(`${castleCatalog.buildingName(step.buildingId, state.locale)} Lv.${step.level}まで反映しました`);
+  toast(`${step.manaStage ? castleCatalog.manaName(state.locale) : castleCatalog.buildingName(step.buildingId, state.locale)} ${castleProgressLabel(step.level, step.manaStage)}まで反映しました`);
 }
 
 function scheduleSave() { byId("save-indicator").textContent = "保存中…"; clearTimeout(saveTimer); saveTimer = setTimeout(saveNow, 250); }

@@ -1112,6 +1112,13 @@ class MainWindow(QMainWindow):
             1, 25, self.player_state.settings.castle_level
         )
         controls.addWidget(self.castle_plan_current_spin)
+        controls.addWidget(QLabel(self.t("castle.mana_stage")))
+        self.castle_plan_current_mana_spin = self._integer_spin(
+            0,
+            self.castle_catalog.max_mana_stage,
+            self.player_state.settings.castle_mana_stage,
+        )
+        controls.addWidget(self.castle_plan_current_mana_spin)
         controls.addSpacing(16)
         controls.addWidget(QLabel(self.t("castle.target_level")))
         self.castle_plan_target_spin = self._integer_spin(
@@ -1130,6 +1137,24 @@ class MainWindow(QMainWindow):
             self.castle_plan_target_spin.value()
         )
         controls.addWidget(self.castle_plan_target_spin)
+        controls.addWidget(QLabel(self.t("castle.target_mana_stage")))
+        initial_target_mana = self.player_state.settings.castle_target_mana_stage
+        if (
+            self.player_state.settings.castle_level == 25
+            and self.castle_plan_target_spin.value() == 25
+            and initial_target_mana <= self.player_state.settings.castle_mana_stage
+        ):
+            initial_target_mana = min(
+                self.castle_catalog.max_mana_stage,
+                self.player_state.settings.castle_mana_stage + 1,
+            )
+        self.castle_plan_target_mana_spin = self._integer_spin(
+            0,
+            self.castle_catalog.max_mana_stage,
+            initial_target_mana,
+        )
+        self.player_state.settings.castle_target_mana_stage = initial_target_mana
+        controls.addWidget(self.castle_plan_target_mana_spin)
         controls.addStretch(1)
         self.castle_plan_speed_label = QLabel()
         controls.addWidget(self.castle_plan_speed_label)
@@ -1209,24 +1234,22 @@ class MainWindow(QMainWindow):
         self.castle_plan_summary_label = QLabel()
         self.castle_plan_summary_label.setWordWrap(True)
         plan_layout.addWidget(self.castle_plan_summary_label)
-        self.castle_plan_table = QTableWidget(0, 9)
+        self.castle_plan_table = QTableWidget(
+            0, 3 + len(CASTLE_RESOURCE_KEYS) + 1
+        )
         self.castle_plan_table.setHorizontalHeaderLabels(
             [
                 self.t("castle.facility"),
                 self.t("castle.level_range"),
                 self.t("castle.adjusted_time"),
-                self.t("resource.food"),
-                self.t("resource.stone"),
-                self.t("resource.timber"),
-                self.t("resource.ore"),
-                self.t("resource.gold_hammer"),
+                *(self._resource_label(key) for key in CASTLE_RESOURCE_KEYS),
                 self.t("plan.action"),
             ]
         )
         self.castle_plan_table.verticalHeader().setVisible(False)
         plan_header = self.castle_plan_table.horizontalHeader()
         plan_header.setSectionResizeMode(0, QHeaderView.Stretch)
-        for column in range(1, 9):
+        for column in range(1, self.castle_plan_table.columnCount()):
             plan_header.setSectionResizeMode(column, QHeaderView.ResizeToContents)
         plan_layout.addWidget(self.castle_plan_table, 1)
         splitter.addWidget(plan_panel)
@@ -1241,6 +1264,13 @@ class MainWindow(QMainWindow):
         self.castle_plan_target_spin.valueChanged.connect(
             self._castle_target_level_changed
         )
+        self.castle_plan_current_mana_spin.valueChanged.connect(
+            self._castle_current_mana_stage_changed
+        )
+        self.castle_plan_target_mana_spin.valueChanged.connect(
+            self._castle_target_mana_stage_changed
+        )
+        self._sync_castle_mana_controls()
         self._calculate_castle_plan()
         return page
 
@@ -1256,6 +1286,18 @@ class MainWindow(QMainWindow):
         self.player_state.settings.castle_target_level = (
             self.castle_plan_target_spin.value()
         )
+        if (
+            normalized == 25
+            and self.castle_plan_target_spin.value() == 25
+            and self.castle_plan_target_mana_spin.value()
+            <= self.castle_plan_current_mana_spin.value()
+            and self.castle_plan_current_mana_spin.value()
+            < self.castle_catalog.max_mana_stage
+        ):
+            self.castle_plan_target_mana_spin.setValue(
+                self.castle_plan_current_mana_spin.value() + 1
+            )
+        self._sync_castle_mana_controls()
         self._refresh_castle_level_inputs()
         self._player_settings_dirty = True
         self._update_player_save_button()
@@ -1265,6 +1307,72 @@ class MainWindow(QMainWindow):
         self.player_state.settings.castle_target_level = max(
             self.castle_plan_current_spin.value(),
             min(25, int(value)),
+        )
+        self._sync_castle_mana_controls()
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_castle_plan()
+
+    def _sync_castle_mana_controls(self) -> None:
+        if not hasattr(self, "castle_plan_current_mana_spin"):
+            return
+        current_enabled = self.castle_plan_current_spin.value() == 25
+        target_enabled = self.castle_plan_target_spin.value() == 25
+        current_stage = (
+            self.castle_plan_current_mana_spin.value() if current_enabled else 0
+        )
+        if not current_enabled:
+            self.castle_plan_current_mana_spin.blockSignals(True)
+            self.castle_plan_current_mana_spin.setValue(0)
+            self.castle_plan_current_mana_spin.blockSignals(False)
+        minimum_target = current_stage if current_enabled and target_enabled else 0
+        self.castle_plan_target_mana_spin.blockSignals(True)
+        self.castle_plan_target_mana_spin.setMinimum(minimum_target)
+        if not target_enabled:
+            self.castle_plan_target_mana_spin.setValue(0)
+        elif self.castle_plan_target_mana_spin.value() < minimum_target:
+            self.castle_plan_target_mana_spin.setValue(minimum_target)
+        self.castle_plan_target_mana_spin.blockSignals(False)
+        self.castle_plan_current_mana_spin.setEnabled(current_enabled)
+        self.castle_plan_target_mana_spin.setEnabled(target_enabled)
+        self.player_state.settings.castle_mana_stage = current_stage
+        self.player_state.settings.castle_target_mana_stage = (
+            self.castle_plan_target_mana_spin.value() if target_enabled else 0
+        )
+        if hasattr(self, "castle_mana_stage_spin"):
+            self.castle_mana_stage_spin.blockSignals(True)
+            self.castle_mana_stage_spin.setEnabled(current_enabled)
+            self.castle_mana_stage_spin.setValue(current_stage)
+            self.castle_mana_stage_spin.blockSignals(False)
+
+    def _castle_current_mana_stage_changed(self, value: int) -> None:
+        normalized = (
+            max(0, min(self.castle_catalog.max_mana_stage, int(value)))
+            if self.castle_plan_current_spin.value() == 25
+            else 0
+        )
+        self.player_state.settings.castle_mana_stage = normalized
+        if (
+            self.castle_plan_target_spin.value() == 25
+            and self.castle_plan_target_mana_spin.value() <= normalized
+            and normalized < self.castle_catalog.max_mana_stage
+        ):
+            self.castle_plan_target_mana_spin.setValue(normalized + 1)
+        self._sync_castle_mana_controls()
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_castle_plan()
+
+    def _castle_target_mana_stage_changed(self, value: int) -> None:
+        minimum = (
+            self.castle_plan_current_mana_spin.value()
+            if self.castle_plan_current_spin.value() == 25
+            else 0
+        )
+        self.player_state.settings.castle_target_mana_stage = (
+            max(minimum, min(self.castle_catalog.max_mana_stage, int(value)))
+            if self.castle_plan_target_spin.value() == 25
+            else 0
         )
         self._player_settings_dirty = True
         self._update_player_save_button()
@@ -1298,6 +1406,8 @@ class MainWindow(QMainWindow):
         result = self.castle_catalog.create_plan(
             castle_level=self.castle_plan_current_spin.value(),
             target_castle_level=self.castle_plan_target_spin.value(),
+            current_mana_stage=self.castle_plan_current_mana_spin.value(),
+            target_mana_stage=self.castle_plan_target_mana_spin.value(),
             saved_levels=self._building_level_draft,
             construction_speed_percent=(
                 self.player_state.settings.construction_speed_percent
@@ -1337,9 +1447,14 @@ class MainWindow(QMainWindow):
         )
         for row, step in enumerate(result.steps):
             building = self.castle_catalog.buildings[step.building_id]
+            building_name = (
+                self.t("castle.mana_upgrade")
+                if step.mana_stage > 0
+                else building.localized_name(self.translator.locale)
+            )
             values = [
-                building.localized_name(self.translator.locale),
-                f"Lv.{step.level}",
+                building_name,
+                self._castle_progress_text(step.level, step.mana_stage),
                 format_duration(step.adjusted_seconds),
                 *(
                     format_resource_amount(
@@ -1406,6 +1521,11 @@ class MainWindow(QMainWindow):
                     self.player_state.settings.castle_level,
                     completed.level,
                 )
+                if completed.mana_stage > 0:
+                    self.player_state.settings.castle_mana_stage = max(
+                        self.player_state.settings.castle_mana_stage,
+                        completed.mana_stage,
+                    )
             else:
                 self._building_level_draft[completed.building_id] = max(
                     self._building_level_draft.get(completed.building_id, 0),
@@ -1416,9 +1536,22 @@ class MainWindow(QMainWindow):
             spin.blockSignals(True)
             spin.setValue(castle_level)
             spin.blockSignals(False)
+        for spin in (
+            self.castle_plan_current_mana_spin,
+            self.castle_mana_stage_spin,
+        ):
+            spin.blockSignals(True)
+            spin.setValue(self.player_state.settings.castle_mana_stage)
+            spin.blockSignals(False)
+        self._sync_castle_mana_controls()
         self._refresh_castle_level_inputs()
         self._player_settings_dirty = True
         self._save_player()
+
+    @staticmethod
+    def _castle_progress_text(level: int, mana_stage: int = 0) -> str:
+        suffix = f"-{mana_stage}" if level >= 25 and mana_stage > 0 else ""
+        return f"Lv.{level}{suffix}"
 
     def _build_player_tab(self) -> QWidget:
         page = QWidget()
@@ -1438,6 +1571,14 @@ class MainWindow(QMainWindow):
         self.vip_free_speedup_label = QLabel()
         vip_layout.addWidget(self.vip_free_speedup_label, 1)
         self.castle_spin = self._integer_spin(1, 25, self.player_state.settings.castle_level)
+        self.castle_mana_stage_spin = self._integer_spin(
+            0,
+            self.castle_catalog.max_mana_stage,
+            self.player_state.settings.castle_mana_stage,
+        )
+        self.castle_mana_stage_spin.setEnabled(
+            self.player_state.settings.castle_level == 25
+        )
         self.academy_spin = self._integer_spin(1, 25, self.player_state.settings.academy_level)
         self.construction_speed_spin = QDoubleSpinBox()
         self.construction_speed_spin.setRange(0.0, 10000.0)
@@ -1462,6 +1603,9 @@ class MainWindow(QMainWindow):
         self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
         settings_form.addRow(self.t("player.vip_level"), vip_row)
         settings_form.addRow(self.t("player.castle_level"), self.castle_spin)
+        settings_form.addRow(
+            self.t("player.castle_mana_stage"), self.castle_mana_stage_spin
+        )
         settings_form.addRow(
             self.t("player.construction_speed"), self.construction_speed_spin
         )
@@ -1588,6 +1732,7 @@ class MainWindow(QMainWindow):
         self.vip_level_spin.valueChanged.connect(self._vip_level_changed)
         self._update_vip_free_speedup_label()
         self.castle_spin.valueChanged.connect(self._settings_changed)
+        self.castle_mana_stage_spin.valueChanged.connect(self._settings_changed)
         self.construction_speed_spin.valueChanged.connect(self._settings_changed)
         self.academy_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_spin.valueChanged.connect(self._settings_changed)
@@ -1611,8 +1756,19 @@ class MainWindow(QMainWindow):
         if not hasattr(self, "castle_spin"):
             return
         settings = self.player_state.settings
+        previous_castle_level = settings.castle_level
+        previous_mana_stage = settings.castle_mana_stage
         settings.vip_level = self.vip_level_spin.value()
         settings.castle_level = self.castle_spin.value()
+        settings.castle_mana_stage = (
+            self.castle_mana_stage_spin.value()
+            if settings.castle_level == 25
+            else 0
+        )
+        self.castle_mana_stage_spin.blockSignals(True)
+        self.castle_mana_stage_spin.setEnabled(settings.castle_level == 25)
+        self.castle_mana_stage_spin.setValue(settings.castle_mana_stage)
+        self.castle_mana_stage_spin.blockSignals(False)
         settings.academy_level = self.academy_spin.value()
         settings.construction_speed_percent = self.construction_speed_spin.value()
         settings.research_speed_percent = self.research_speed_spin.value()
@@ -1636,6 +1792,32 @@ class MainWindow(QMainWindow):
                         min(25, settings.castle_level + 1)
                     )
                 self._refresh_castle_level_inputs()
+            if (
+                self.castle_plan_current_mana_spin.value()
+                != settings.castle_mana_stage
+            ):
+                self.castle_plan_current_mana_spin.blockSignals(True)
+                self.castle_plan_current_mana_spin.setValue(
+                    settings.castle_mana_stage
+                )
+                self.castle_plan_current_mana_spin.blockSignals(False)
+                self._sync_castle_mana_controls()
+            castle_progress_changed = (
+                previous_castle_level != settings.castle_level
+                or previous_mana_stage != settings.castle_mana_stage
+            )
+            if (
+                castle_progress_changed
+                and settings.castle_level == 25
+                and self.castle_plan_target_spin.value() == 25
+                and self.castle_plan_target_mana_spin.value()
+                <= settings.castle_mana_stage
+                and settings.castle_mana_stage
+                < self.castle_catalog.max_mana_stage
+            ):
+                self.castle_plan_target_mana_spin.setValue(
+                    settings.castle_mana_stage + 1
+                )
             self._calculate_castle_plan()
         if (
             hasattr(self, "tree_instant_finish_check")

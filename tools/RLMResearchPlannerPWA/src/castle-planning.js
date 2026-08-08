@@ -1,6 +1,6 @@
-import { freeSecondsForVip } from "./state.js?v=0.0.6-b1";
+import { freeSecondsForVip } from "./state.js?v=0.0.7-b1";
 
-export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer"];
+export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "mana_ore", "mana_crystal", "mana_steel"];
 
 function localText(values, locale) {
   return values?.[locale] || values?.[locale?.split("-")[0]] || values?.["en-US"] || Object.values(values || {})[0] || "";
@@ -27,10 +27,23 @@ export function normalizeCastleCatalog(raw) {
     buildings.set(source.id, { id: source.id, names: { ...(source.names || {}) }, maxLevel: Number(source.max_level || 25), levels });
   }
   if (!buildings.has("castle")) throw new Error("城データがありません");
+  const manaSource = raw.castle_mana_progression || {};
+  const manaStages = new Map(Object.entries(manaSource.stages || {}).map(([stageText, source]) => {
+    const stage = Number(stageText);
+    return [stage, {
+      stage,
+      baseTimeSeconds: Math.max(0, Number(source.base_time_seconds) || 0),
+      costs: Object.fromEntries(CASTLE_RESOURCE_KEYS.map((key) => [key, Math.max(0, Number(source.costs?.[key]) || 0)])),
+    }];
+  }));
   return {
     buildings,
+    manaStages,
+    maxManaStage: Math.max(0, ...manaStages.keys()),
+    manaNames: { ...(manaSource.names || {}) },
     order: [...buildings.keys()],
     buildingName(buildingId, locale) { const building = buildings.get(buildingId); return building ? localText(building.names, locale) : buildingId; },
+    manaName(locale) { return localText(this.manaNames, locale) || this.buildingName("castle", locale); },
   };
 }
 
@@ -77,10 +90,16 @@ function adjustedConstructionTime(baseSeconds, settings) {
   return remaining;
 }
 
-export function createCastlePlan(catalog, state, targetCastleLevel) {
+export function createCastlePlan(catalog, state, targetCastleLevel, targetManaStage = state.settings.castleTargetManaStage) {
   const castle = catalog.buildings.get("castle");
   const current = Math.min(castle.maxLevel, Math.max(1, Math.trunc(Number(state.settings.castleLevel) || 1)));
   const target = Math.min(castle.maxLevel, Math.max(current, Math.trunc(Number(targetCastleLevel) || current)));
+  const currentManaStage = current >= castle.maxLevel
+    ? Math.min(catalog.maxManaStage, Math.max(0, Math.trunc(Number(state.settings.castleManaStage) || 0)))
+    : 0;
+  const normalizedTargetManaStage = target >= castle.maxLevel
+    ? Math.min(catalog.maxManaStage, Math.max(currentManaStage, Math.trunc(Number(targetManaStage) || 0)))
+    : 0;
   const effectiveLevels = effectiveBuildingLevels(catalog, current, state.buildingLevels);
   const steps = [];
   const completed = new Set();
@@ -104,6 +123,18 @@ export function createCastlePlan(catalog, state, targetCastleLevel) {
     }
   };
   addBuilding("castle", target);
+  for (let stage = currentManaStage + 1; stage <= normalizedTargetManaStage; stage += 1) {
+    const data = catalog.manaStages.get(stage);
+    if (!data) { issues.push(`城マナ強化データ未収録: ${stage}`); continue; }
+    steps.push({
+      buildingId: "castle",
+      level: castle.maxLevel,
+      manaStage: stage,
+      baseSeconds: data.baseTimeSeconds,
+      adjustedSeconds: adjustedConstructionTime(data.baseTimeSeconds, state.settings),
+      costs: { ...data.costs },
+    });
+  }
   const grouped = new Map();
   const totalCosts = Object.fromEntries(CASTLE_RESOURCE_KEYS.map((key) => [key, 0]));
   for (const step of steps) {
@@ -117,6 +148,8 @@ export function createCastlePlan(catalog, state, targetCastleLevel) {
   return {
     currentCastleLevel: current,
     targetCastleLevel: target,
+    currentManaStage,
+    targetManaStage: normalizedTargetManaStage,
     effectiveLevels,
     steps,
     buildings: [...grouped.values()],
@@ -125,21 +158,26 @@ export function createCastlePlan(catalog, state, targetCastleLevel) {
   };
 }
 
-export function buildingLevelsAfterCastleStep(plan, selectedStep, currentCastleLevel, currentBuildingLevels = {}) {
+export function buildingLevelsAfterCastleStep(plan, selectedStep, currentCastleLevel, currentManaStage = 0, currentBuildingLevels = {}) {
   const selectedIndex = plan.steps.findIndex(
-    (step) => step.buildingId === selectedStep.buildingId && step.level === selectedStep.level,
+    (step) => step.buildingId === selectedStep.buildingId
+      && step.level === selectedStep.level
+      && Number(step.manaStage || 0) === Number(selectedStep.manaStage || 0),
   );
   if (selectedIndex < 0) {
     return {
       castleLevel: Math.max(1, Number(currentCastleLevel) || 1),
+      castleManaStage: Math.max(0, Number(currentManaStage) || 0),
       buildingLevels: { ...currentBuildingLevels },
     };
   }
   let castleLevel = Math.max(1, Number(currentCastleLevel) || 1);
+  let castleManaStage = castleLevel >= 25 ? Math.max(0, Number(currentManaStage) || 0) : 0;
   const buildingLevels = { ...currentBuildingLevels };
   for (const completed of plan.steps.slice(0, selectedIndex + 1)) {
     if (completed.buildingId === "castle") {
       castleLevel = Math.max(castleLevel, completed.level);
+      castleManaStage = Math.max(castleManaStage, Number(completed.manaStage || 0));
     } else {
       buildingLevels[completed.buildingId] = Math.max(
         Number(buildingLevels[completed.buildingId] || 0),
@@ -147,5 +185,10 @@ export function buildingLevelsAfterCastleStep(plan, selectedStep, currentCastleL
       );
     }
   }
-  return { castleLevel, buildingLevels };
+  return { castleLevel, castleManaStage, buildingLevels };
+}
+
+export function castleProgressLabel(level, manaStage = 0) {
+  const suffix = Number(level) >= 25 && Number(manaStage) > 0 ? `-${Number(manaStage)}` : "";
+  return `Lv.${Number(level)}${suffix}`;
 }

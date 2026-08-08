@@ -13,7 +13,16 @@ from rlm_research_planner.services.calculation import (
 )
 
 
-CASTLE_RESOURCE_KEYS = ("food", "stone", "timber", "ore", "gold_hammer")
+CASTLE_RESOURCE_KEYS = (
+    "food",
+    "stone",
+    "timber",
+    "ore",
+    "gold_hammer",
+    "mana_ore",
+    "mana_crystal",
+    "mana_steel",
+)
 
 
 @dataclass(frozen=True)
@@ -42,12 +51,20 @@ class BuildingData:
 
 
 @dataclass(frozen=True)
+class CastleManaStageData:
+    stage: int
+    base_time_seconds: int
+    costs: Mapping[str, int]
+
+
+@dataclass(frozen=True)
 class CastlePlanStep:
     building_id: str
     level: int
     base_seconds: int
     adjusted_seconds: int
     costs: Mapping[str, int]
+    mana_stage: int = 0
 
 
 @dataclass(frozen=True)
@@ -64,6 +81,8 @@ class CastleBuildingSummary:
 class CastlePlanResult:
     current_castle_level: int
     target_castle_level: int
+    current_mana_stage: int
+    target_mana_stage: int
     effective_levels: Mapping[str, int]
     steps: tuple[CastlePlanStep, ...]
     buildings: tuple[CastleBuildingSummary, ...]
@@ -74,8 +93,17 @@ class CastlePlanResult:
 
 
 class CastleCatalog:
-    def __init__(self, buildings: Mapping[str, BuildingData]) -> None:
+    def __init__(
+        self,
+        buildings: Mapping[str, BuildingData],
+        mana_stages: Mapping[int, CastleManaStageData] | None = None,
+    ) -> None:
         self.buildings = dict(buildings)
+        self.mana_stages = dict(mana_stages or {})
+
+    @property
+    def max_mana_stage(self) -> int:
+        return max(self.mana_stages, default=0)
 
     @classmethod
     def load(cls, path: Path) -> "CastleCatalog":
@@ -110,9 +138,23 @@ class CastleCatalog:
                 max_level=max(1, int(source.get("max_level", 25))),
                 levels=levels,
             )
+        mana_stages: dict[int, CastleManaStageData] = {}
+        mana_source = raw.get("castle_mana_progression", {})
+        for stage_text, stage_source in mana_source.get("stages", {}).items():
+            stage = int(stage_text)
+            mana_stages[stage] = CastleManaStageData(
+                stage=stage,
+                base_time_seconds=max(
+                    0, int(stage_source.get("base_time_seconds") or 0)
+                ),
+                costs={
+                    key: max(0, int(stage_source.get("costs", {}).get(key, 0)))
+                    for key in CASTLE_RESOURCE_KEYS
+                },
+            )
         if "castle" not in buildings:
             raise ValueError("Castle data is missing")
-        return cls(buildings)
+        return cls(buildings, mana_stages)
 
     def minimum_levels_for_castle(self, castle_level: int) -> dict[str, int]:
         levels: dict[str, int] = {building_id: 0 for building_id in self.buildings}
@@ -163,6 +205,8 @@ class CastleCatalog:
         *,
         castle_level: int,
         target_castle_level: int,
+        current_mana_stage: int = 0,
+        target_mana_stage: int = 0,
         saved_levels: Mapping[str, int] | None = None,
         construction_speed_percent: float = 0.0,
         vip_level: int = 1,
@@ -171,6 +215,19 @@ class CastleCatalog:
         castle = self.buildings["castle"]
         current = min(castle.max_level, max(1, int(castle_level)))
         target = min(castle.max_level, max(current, int(target_castle_level)))
+        current_mana = (
+            min(self.max_mana_stage, max(0, int(current_mana_stage)))
+            if current >= castle.max_level
+            else 0
+        )
+        target_mana = (
+            min(
+                self.max_mana_stage,
+                max(current_mana, int(target_mana_stage)),
+            )
+            if target >= castle.max_level
+            else 0
+        )
         effective = self.effective_levels(current, saved_levels)
         steps: list[CastlePlanStep] = []
         completed: set[tuple[str, int]] = set()
@@ -220,6 +277,28 @@ class CastleCatalog:
                 visiting.remove(key)
 
         add_building("castle", target)
+        for stage in range(current_mana + 1, target_mana + 1):
+            data = self.mana_stages.get(stage)
+            if data is None:
+                issues.append(f"Missing Castle Mana stage data: {stage}")
+                continue
+            adjusted = apply_research_speed(
+                data.base_time_seconds, construction_speed_percent
+            )
+            adjusted = apply_free_speedup_time(
+                adjusted, free_speedup_seconds_for_vip(vip_level)
+            )
+            adjusted = apply_guild_helps(adjusted, max(0, int(guild_helps)))
+            steps.append(
+                CastlePlanStep(
+                    building_id="castle",
+                    level=castle.max_level,
+                    base_seconds=data.base_time_seconds,
+                    adjusted_seconds=adjusted,
+                    costs=data.costs,
+                    mana_stage=stage,
+                )
+            )
         summary_by_id: dict[str, dict[str, object]] = {}
         total_costs = {key: 0 for key in CASTLE_RESOURCE_KEYS}
         for step in steps:
@@ -257,6 +336,8 @@ class CastleCatalog:
         return CastlePlanResult(
             current_castle_level=current,
             target_castle_level=target,
+            current_mana_stage=current_mana,
+            target_mana_stage=target_mana,
             effective_levels=effective,
             steps=tuple(steps),
             buildings=summaries,

@@ -9,6 +9,8 @@ export function defaultState() {
       vipLevel: 1,
       castleLevel: 1,
       castleTargetLevel: 0,
+      castleManaStage: 0,
+      castleTargetManaStage: 0,
       academyLevel: 1,
       constructionSpeedPercent: 0,
       researchSpeedPercent: 0,
@@ -39,6 +41,10 @@ export function sanitizeState(value) {
   base.settings.vipLevel = Math.min(15, Math.max(1, Math.trunc(number(settings.vipLevel ?? settings.vip_level, 1))));
   base.settings.castleLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.castleLevel ?? settings.castle_level, 1))));
   base.settings.castleTargetLevel = Math.min(25, Math.max(0, Math.trunc(number(settings.castleTargetLevel ?? settings.castle_target_level, 0))));
+  base.settings.castleManaStage = base.settings.castleLevel === 25
+    ? Math.min(5, Math.max(0, Math.trunc(number(settings.castleManaStage ?? settings.castle_mana_stage, 0))))
+    : 0;
+  base.settings.castleTargetManaStage = Math.min(5, Math.max(0, Math.trunc(number(settings.castleTargetManaStage ?? settings.castle_target_mana_stage, 0))));
   base.settings.academyLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.academyLevel ?? settings.academy_level, 1))));
   base.settings.constructionSpeedPercent = Math.max(0, number(settings.constructionSpeedPercent ?? settings.construction_speed_percent));
   base.settings.researchSpeedPercent = Math.max(0, number(settings.researchSpeedPercent ?? settings.research_speed_percent));
@@ -82,6 +88,8 @@ export function backupPayload(state) {
         vip_level: state.settings.vipLevel,
         castle_level: state.settings.castleLevel,
         castle_target_level: state.settings.castleTargetLevel,
+        castle_mana_stage: state.settings.castleManaStage,
+        castle_target_mana_stage: state.settings.castleTargetManaStage,
         academy_level: state.settings.academyLevel,
         construction_speed_percent: state.settings.constructionSpeedPercent,
         research_speed_percent: state.settings.researchSpeedPercent,

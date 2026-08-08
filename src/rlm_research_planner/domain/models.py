@@ -144,6 +144,8 @@ class PlayerSettings:
     vip_level: int = 1
     castle_level: int = 1
     castle_target_level: int = 0
+    castle_mana_stage: int = 0
+    castle_target_mana_stage: int = 0
     academy_level: int = 1
     construction_speed_percent: float = 0.0
     research_speed_percent: float = 0.0

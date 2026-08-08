@@ -69,6 +69,12 @@ class PlayerRepository:
             vip_level=max(1, min(15, vip_level)),
             castle_level=int(values.get("castle_level", 1)),
             castle_target_level=max(0, int(values.get("castle_target_level", 0))),
+            castle_mana_stage=max(
+                0, min(5, int(values.get("castle_mana_stage", 0)))
+            ),
+            castle_target_mana_stage=max(
+                0, min(5, int(values.get("castle_target_mana_stage", 0)))
+            ),
             academy_level=int(values.get("academy_level", 1)),
             construction_speed_percent=float(
                 values.get("construction_speed_percent", 0.0)
@@ -121,6 +127,8 @@ class PlayerRepository:
             "vip_level": state.settings.vip_level,
             "castle_level": state.settings.castle_level,
             "castle_target_level": state.settings.castle_target_level,
+            "castle_mana_stage": state.settings.castle_mana_stage,
+            "castle_target_mana_stage": state.settings.castle_target_mana_stage,
             "academy_level": state.settings.academy_level,
             "construction_speed_percent": (
                 state.settings.construction_speed_percent
@@ -178,6 +186,10 @@ class PlayerRepository:
                     "vip_level": state.settings.vip_level,
                     "castle_level": state.settings.castle_level,
                     "castle_target_level": state.settings.castle_target_level,
+                    "castle_mana_stage": state.settings.castle_mana_stage,
+                    "castle_target_mana_stage": (
+                        state.settings.castle_target_mana_stage
+                    ),
                     "academy_level": state.settings.academy_level,
                     "construction_speed_percent": (
                         state.settings.construction_speed_percent
@@ -232,6 +244,20 @@ class PlayerRepository:
             castle_target_level=max(
                 0,
                 int(raw_settings.get("castle_target_level", 0)),  # type: ignore[union-attr]
+            ),
+            castle_mana_stage=max(
+                0,
+                min(
+                    5,
+                    int(raw_settings.get("castle_mana_stage", 0)),  # type: ignore[union-attr]
+                ),
+            ),
+            castle_target_mana_stage=max(
+                0,
+                min(
+                    5,
+                    int(raw_settings.get("castle_target_mana_stage", 0)),  # type: ignore[union-attr]
+                ),
             ),
             academy_level=int(raw_settings["academy_level"]),  # type: ignore[index]
             construction_speed_percent=float(

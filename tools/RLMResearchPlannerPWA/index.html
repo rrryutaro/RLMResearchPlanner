@@ -7,7 +7,7 @@
     <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.6-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.7-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -152,8 +152,10 @@
           </div>
           <div class="castle-target-controls">
             <label class="field compact"><span>現在</span><input id="castle-current" type="number" inputmode="numeric" min="1" max="25"></label>
+            <label class="field compact"><span>25後段階</span><input id="castle-current-mana" type="number" inputmode="numeric" min="0" max="5"></label>
             <span aria-hidden="true">→</span>
             <label class="field compact"><span>目標</span><input id="castle-target" type="number" inputmode="numeric" min="1" max="25"></label>
+            <label class="field compact"><span>25後段階</span><input id="castle-target-mana" type="number" inputmode="numeric" min="0" max="5"></label>
           </div>
         </div>
         <div id="castle-summary" class="castle-summary"></div>
@@ -184,6 +186,7 @@
             <div class="form-grid">
               <label class="field"><span>VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
               <label class="field"><span>城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
+              <label class="field"><span>城Lv.25後のマナ強化段階</span><input id="setting-castle-mana" type="number" inputmode="numeric" min="0" max="5"></label>
               <label class="field"><span>建設速度 +%</span><input id="setting-construction-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
               <label class="field"><span>アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
               <label class="field"><span>研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
@@ -250,7 +253,7 @@
           </article>
           <article>
             <h3>城レベル計画</h3>
-            <p>城タブの目標城レベルは現在の城タスクとして保存されます。不足する前提施設をすべて遡り、各建設ステップと合計の資材・時間を表示します。各ステップの「完了」は、その建設までに必須となる直前のステップも含めて施設レベルへ反映します。現在の城レベルで必ず建設済みとなる最低施設レベルは自動で補います。それより進めている施設は「現在の施設レベル」から入力してください。建設時間にはプレイヤー設定の建設速度、VIP無料時間、ギルドヘルプ回数を適用します。</p>
+            <p>城タブの目標城レベルは現在の城タスクとして保存されます。不足する前提施設をすべて遡り、各建設ステップと合計の資材・時間を表示します。城Lv.25到達後は、通常の城レベルとは別にマナ強化段階0～5を設定し、Lv.25-1～Lv.25-5として計画できます。各ステップの「完了」は、その建設までに必須となる直前のステップも含めて施設レベルとマナ強化段階へ反映します。現在の城レベルで必ず建設済みとなる最低施設レベルは自動で補います。それより進めている施設は「現在の施設レベル」から入力してください。建設時間にはプレイヤー設定の建設速度、VIP無料時間、ギルドヘルプ回数を適用します。</p>
           </article>
           <article>
             <h3>PWA版の範囲</h3>
@@ -323,6 +326,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.6-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.7-b1"></script>
   </body>
 </html>
