@@ -1,11 +1,11 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.3-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.3-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.3-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.3-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.3-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.3-b1";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.4-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.4-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.4-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.4-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.4-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.4-b1";
 
-const RELEASE_VERSION = "0.0.3";
+const RELEASE_VERSION = "0.0.4";
 const DEVELOPMENT_BUILD = 1;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
@@ -497,12 +497,22 @@ function renderNodeNextDetails(node, level) {
   if (academy) facilityParts.push(`アカデミー Lv.${academy}`);
   if (data.buildings.mana_academy) facilityParts.push(`マナアカデミー Lv.${data.buildings.mana_academy}`);
   facility.append(create("span", "", "必要施設"), create("strong", "", facilityParts.join(" / ") || "なし"));
-  grid.append(time, facility);
+  const effect = create("div", "detail-item detail-effect");
+  effect.append(create("span", "", "効果"), create("strong", "", effectFor(node, nextLevel) || "未収録"));
+  grid.append(time, facility, effect);
   const resourceBox = create("div", "detail-resources");
   const costs = RESOURCE_KEYS.filter((key) => Number(data.costs[key] || 0) > 0);
   if (costs.length) {
-    for (const key of costs) resourceBox.append(create("span", "", `${RESOURCE_NAMES[state.locale][key]} ${Number(data.costs[key]).toLocaleString(state.locale)}`));
-  } else resourceBox.append(create("span", "", data.costsVerified ? "資源なし" : "資源データ未収録"));
+    for (const key of costs) {
+      const item = create("div", "detail-resource");
+      item.append(create("span", "", RESOURCE_NAMES[state.locale][key]), create("strong", "", formatResource(data.costs[key])));
+      resourceBox.append(item);
+    }
+  } else {
+    const item = create("div", "detail-resource");
+    item.append(create("span", "", data.costsVerified ? "資源なし" : "資源データ未収録"));
+    resourceBox.append(item);
+  }
   const requirements = create("ul", "detail-requirements");
   if (data.requirements.length) {
     for (const requirement of data.requirements) {
@@ -756,13 +766,26 @@ function planRow(step) {
   const row = create("article", "plan-row");
   const nameButton = create("button", "", `${catalog.nodeName(node, state.locale)} Lv.${step.level}`); nameButton.type = "button";
   nameButton.addEventListener("click", () => jumpToNode(node));
-  const details = create("div");
+  const details = create("div", "plan-step-details");
   const categoryName = catalog.categoryTitle(catalog.categories.find((item) => item.id === node.categoryId), state.locale);
-  const costs = RESOURCE_KEYS.filter((key) => Number(step.costs[key] || 0) > 0).map((key) => `${RESOURCE_NAMES[state.locale][key]} ${formatResource(step.costs[key])}`);
-  details.append(nameButton, create("small", "plan-row-meta", costs.length ? `${categoryName} · ${costs.join(" / ")}` : `${categoryName} · 資源データ未収録`));
+  const costs = RESOURCE_KEYS.filter((key) => Number(step.costs[key] || 0) > 0);
+  const resources = create("div", "plan-row-resources");
+  for (const key of costs) {
+    const item = create("div", "plan-resource-item");
+    item.append(create("span", "", RESOURCE_NAMES[state.locale][key]), create("strong", "", formatResource(step.costs[key])));
+    resources.append(item);
+  }
+  if (!costs.length) resources.append(create("div", "plan-resource-item", "資源データ未収録"));
+  const effect = effectFor(node, step.level) || "効果未収録";
+  details.append(
+    nameButton,
+    create("small", "plan-row-category", categoryName),
+    create("div", "plan-row-effect", `効果 ${effect}`),
+    resources,
+  );
   const actions = create("div", "plan-step-actions");
   actions.append(create("strong", "plan-row-time", step.adjustedSeconds == null ? "未確認" : formatDuration(step.adjustedSeconds)));
-  const complete = create("button", "step-complete", "完了"); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step)); actions.append(complete);
+  const complete = create("button", "step-complete", "研究完了"); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step)); actions.append(complete);
   row.append(details, actions); return row;
 }
 

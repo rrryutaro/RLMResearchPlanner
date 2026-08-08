@@ -7,7 +7,7 @@
     <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.3-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.4-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -89,19 +89,24 @@
 
       <section id="tab-plan" class="tab-panel" aria-labelledby="plan-title">
         <div class="section-heading">
-          <div>
+          <div class="plan-title-block">
             <p class="eyebrow">必要時間と資源</p>
-            <h2 id="plan-title">研究計画</h2>
+            <div class="plan-title-row">
+              <h2 id="plan-title">研究計画</h2>
+              <label class="resource-mode-compact">
+                <span>資源</span>
+                <select id="resource-display-mode" aria-label="資源の表示形式">
+                  <option value="exact">通常</option>
+                  <option value="short">短縮</option>
+                </select>
+              </label>
+            </div>
           </div>
           <div class="segmented" role="group" aria-label="計画方法">
             <button class="is-active" id="plan-target-mode" type="button">目標研究</button>
             <button id="plan-shortest-mode" type="button">短時間順</button>
             <button id="plan-tasks-mode" type="button">登録タスク</button>
           </div>
-        </div>
-        <div class="list-toolbar plan-display-toolbar">
-          <span class="muted">複数の候補を登録し、残り時間と資源を比較できます。</span>
-          <label class="field compact"><span>資源表示</span><select id="resource-display-mode"><option value="exact">通常</option><option value="short">短縮</option></select></label>
         </div>
         <div id="target-plan-view">
           <div id="plan-placeholder" class="callout">研究ツリーでカードを開き、「この研究を計画」を選択してください。</div>
@@ -211,7 +216,7 @@
           </article>
           <article>
             <h3>研究計画</h3>
-            <p>研究カードから目標レベルを指定すると、未達の前提研究をすべて遡り、必要な時間と資源を合計します。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。資源表示は通常表記とK/M/B/Tの短縮表記を切り替えられます。</p>
+            <p>研究カードから目標レベルを指定すると、未達の前提研究をすべて遡り、必要な時間・資源・効果を表示します。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「研究完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。研究計画の見出し横にある「資源」で通常表記とK/M/B/Tの短縮表記を切り替えられます。</p>
           </article>
           <article>
             <h3>PWA版の範囲</h3>
@@ -284,6 +289,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.3-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.4-b1"></script>
   </body>
 </html>
