@@ -6,8 +6,8 @@
 
 ## バージョン
 
-- Windows版: `v0.0.9`
-- モバイルPWA版: `v0.0.7`
+- Windows版: `v0.0.10`
+- モバイルPWA版: `v0.0.8`
 
 ## 主な機能
 
@@ -53,7 +53,7 @@ WindowsのSmartScreenが未署名アプリとして警告する場合があり�
 
 モバイル版はOCRやゲーム画面の取得を行わず、研究レベル、VIPレベル、研究速度などを手動で入力します。入力内容は端末のブラウザー内に保存されるため、必要に応じてプレイヤータブからバックアップしてください。
 
-モバイルPWA版v0.0.7では、城Lv.25後のマナ強化段階を設定し、Lv.25-1～Lv.25-5までの必要資材・時間・工程を計画できます。
+モバイルPWA版v0.0.8では、城Lv.25後のマナ強化段階を設定し、Lv.25-1～Lv.25-5までの必要資材・時間・工程を計画できます。
 
 ## OCRと安全性
 
@@ -90,4 +90,4 @@ exeを作成する場合は、開発依存関係を追加します。
 
 ## ライセンス
 
-アプリケーションのソースコードは [MIT License](LICENSE) で公開しています。研究データの出典、Qt/PySide6、PyInstallerなど配布物の第三者ライセンスは [THIRD_PARTY_NOTICES.md](licenses/THIRD_PARTY_NOTICES.md) を参照してください。
+アプリケーションのソースコードは [MIT License](LICENSE) で公開しています。研究・施設データのライセンスと出典は [DATA_LICENSE.md](DATA_LICENSE.md)、Qt/PySide6、PyInstallerなど配布物の第三者ライセンスは [THIRD_PARTY_NOTICES.md](licenses/THIRD_PARTY_NOTICES.md) を参照してください。

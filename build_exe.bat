@@ -9,6 +9,9 @@ if not exist "%PYTHON_EXE%" (
   exit /b 1
 )
 
+"%PYTHON_EXE%" -B "%~dp0scripts\check_release_licenses.py"
+if errorlevel 1 exit /b %ERRORLEVEL%
+
 "%PYTHON_EXE%" -B -m PyInstaller --noconfirm --clean ^
   --name RLMResearchPlanner ^
   --onefile ^
@@ -22,5 +25,6 @@ if not exist "%PYTHON_EXE%" (
   --add-data "%~dp0resources;resources" ^
   --add-data "%~dp0licenses;licenses" ^
   --add-data "%~dp0LICENSE;." ^
+  --add-data "%~dp0DATA_LICENSE.md;." ^
   "%~dp0main.py"
 exit /b %ERRORLEVEL%

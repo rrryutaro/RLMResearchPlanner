@@ -5,9 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0a3542">
     <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
+    <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/LICENSE" title="Application source license">
+    <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.7-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.8-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -268,6 +270,10 @@
             <h3>インストール</h3>
             <p>対応ブラウザーの「ホーム画面に追加」または「アプリをインストール」から追加できます。一度読み込んだ後はオフラインでも利用できます。</p>
           </article>
+          <article>
+            <h3>ライセンス・出典</h3>
+            <p><a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/LICENSE">MIT License</a>／<a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md">データのライセンスと出典</a>／<a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/licenses/THIRD_PARTY_NOTICES.md">第三者ライセンス</a></p>
+          </article>
           <p class="version-line">バージョン <span id="app-version"></span></p>
         </div>
       </section>
@@ -326,6 +332,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.7-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.8-b1"></script>
   </body>
 </html>

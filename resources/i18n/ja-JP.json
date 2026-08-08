@@ -102,6 +102,8 @@
     "help.ocr.body": "既定では「Lords Mobile PC」の表示中ウィンドウを画像として取得します。取得画像は固定解像度へ変換せず、ゲームの実解像度と画面内の比率を使って認識します。1024×576から1920×1080までのゲーム設定とフルスクリーン表示を想定しています。ゲームプロセスへのアタッチ、メモリ読み取り、メモリ走査は行いません。OCR結果は誤認識する場合があるため、反映前に研究名とレベルを確認してください。",
     "help.data.title": "データと表示",
     "help.data.body": "研究名・配置・依存関係・効果・時間・資源は収録カタログを使用します。分野名はゲーム内表記の「ワンダー戦争」「ギルド決闘」を使用します。「部隊武装」「上級ワンダー軍事」「マナ覚醒」はアカデミーLv.25以降の研究を含む後半分野です。「ギルド決闘」はゲーム版・イベント提供状況によって表示されない場合があります。未収録値は一覧で「未確認」と表示します。表示言語とバージョンはヘルプタブで確認できます。",
+    "help.license.title": "ライセンス・出典",
+    "help.license.body": "アプリケーションコードは<a href=\"https://github.com/rrryutaro/RLMResearchPlanner/blob/main/LICENSE\">MIT License</a>です。研究・城データのライセンスと出典は<a href=\"https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md\">Data licensing and attribution</a>、使用ライブラリの条件は<a href=\"https://github.com/rrryutaro/RLMResearchPlanner/blob/main/licenses/THIRD_PARTY_NOTICES.md\">Third-party notices</a>で確認できます。",
     "help.update.title": "アップデート",
     "help.update.body": "公開版では起動時または「更新を確認」ボタンから新しいバージョンを確認できます。更新ファイルはSHA-256を検証してから準備し、確認後にアプリを再起動して差し替えます。",
     "common.all": "すべて",

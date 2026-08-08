@@ -74373,8 +74373,10 @@
     {
       "name": "Lords Mobile Wiki (Fandom)",
       "url": "https://lordsmobile.fandom.com/wiki/Research",
-      "license": "CC BY-SA",
-      "license_url": "https://www.fandom.com/licensing"
+      "license": "CC BY-SA 3.0 Unported",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "licensing_terms_url": "https://www.fandom.com/licensing",
+      "changes": "Normalized and adapted into project-specific structured records."
     },
     {
       "name": "Gamerch ロードモバイル攻略Wiki 研究一覧",
@@ -74396,5 +74398,9 @@
       "url": "https://www.youtube.com/watch?v=QKP5dGy1IHs",
       "scope": "Guild Duel tree layout, levels, and effects"
     }
-  ]
+  ],
+  "data_license": {
+    "document": "DATA_LICENSE.md",
+    "fandom_adapted_portions": "CC BY-SA 3.0 Unported"
+  }
 }

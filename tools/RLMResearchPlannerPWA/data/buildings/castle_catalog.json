@@ -8,6 +8,23 @@
     "https://www.gamesguideinfo.com/lords-mobile/overview/buildings",
     "https://lm-harus.com/mana/"
   ],
+  "source_licenses": [
+    {
+      "url": "https://lordsmobile.fandom.com/wiki/Castle",
+      "license": "CC BY-SA 3.0 Unported",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "licensing_terms_url": "https://www.fandom.com/licensing",
+      "changes": "Normalized and adapted into project-specific structured records."
+    },
+    {
+      "url": "https://www.gamesguideinfo.com/lords-mobile/overview/buildings",
+      "scope": "Factual verification reference; no redistribution license asserted."
+    },
+    {
+      "url": "https://lm-harus.com/mana/",
+      "scope": "Factual verification reference; no redistribution license asserted."
+    }
+  ],
   "castle_mana_progression": {
     "base_castle_level": 25,
     "stage_count": 5,

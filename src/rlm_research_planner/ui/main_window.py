@@ -2968,6 +2968,7 @@ class MainWindow(QMainWindow):
             ("help.ocr.title", "help.ocr.body_v003"),
             ("help.paid.title", "help.paid.body"),
             ("help.data.title", "help.data.body"),
+            ("help.license.title", "help.license.body"),
             ("help.update.title", "help.update.body"),
         )
         body = [f"<h1>{self.t('help.title')}</h1>"]
