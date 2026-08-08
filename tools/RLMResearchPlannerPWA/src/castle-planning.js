@@ -1,4 +1,4 @@
-import { freeSecondsForVip } from "./state.js?v=0.0.5-b3";
+import { freeSecondsForVip } from "./state.js?v=0.0.6-b1";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer"];
 

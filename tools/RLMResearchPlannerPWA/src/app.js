@@ -1,13 +1,13 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.5-b3";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.5-b3";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.5-b3";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.5-b3";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.5-b3";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.5-b3";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.5-b3";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.6-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.6-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.6-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.6-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.6-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.6-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.6-b1";
 
-const RELEASE_VERSION = "0.0.5";
-const DEVELOPMENT_BUILD = 3;
+const RELEASE_VERSION = "0.0.6";
+const DEVELOPMENT_BUILD = 1;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`

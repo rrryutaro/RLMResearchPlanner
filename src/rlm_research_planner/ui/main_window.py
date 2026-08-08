@@ -4037,6 +4037,36 @@ class MainWindow(QMainWindow):
     def _show_info(self, message: str) -> None:
         QMessageBox.information(self, self.t("info.title"), message)
 
+    def _has_unsaved_player_changes(self) -> bool:
+        return self._tree_levels_dirty or self._player_settings_dirty
+
+    def _ask_unsaved_close_action(self) -> str:
+        dialog = QMessageBox(self)
+        dialog.setIcon(QMessageBox.Icon.Warning)
+        dialog.setWindowTitle(self.t("player.unsaved_close.title"))
+        dialog.setText(self.t("player.unsaved_close.body"))
+        save_button = dialog.addButton(
+            self.t("player.unsaved_close.save"),
+            QMessageBox.ButtonRole.AcceptRole,
+        )
+        discard_button = dialog.addButton(
+            self.t("player.unsaved_close.discard"),
+            QMessageBox.ButtonRole.DestructiveRole,
+        )
+        cancel_button = dialog.addButton(
+            self.t("common.cancel"),
+            QMessageBox.ButtonRole.RejectRole,
+        )
+        dialog.setDefaultButton(save_button)
+        dialog.setEscapeButton(cancel_button)
+        dialog.exec()
+        clicked_button = dialog.clickedButton()
+        if clicked_button is save_button:
+            return "save"
+        if clicked_button is discard_button:
+            return "discard"
+        return "cancel"
+
     def _restore_geometry(self) -> None:
         geometry = self.app_settings.window
         rectangle = QRect(geometry.x, geometry.y, geometry.width, geometry.height)
@@ -4055,6 +4085,13 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event: QCloseEvent) -> None:
         if not event.isAccepted():
             return
+        if self.isVisible() and self._has_unsaved_player_changes():
+            action = self._ask_unsaved_close_action()
+            if action == "cancel":
+                event.ignore()
+                return
+            if action == "save":
+                self._save_player()
         self.update_controller.shutdown()
         geometry = self.normalGeometry()
         if geometry.width() >= self.minimumWidth() and geometry.height() >= self.minimumHeight():

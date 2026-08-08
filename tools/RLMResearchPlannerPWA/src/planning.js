@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.5-b3";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.6-b1";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 
@@ -115,23 +115,57 @@ export function createPlan(catalog, state, targetId, targetLevel) {
       if (stepMap.has(dependency) && dependency !== key) dependencies.get(key).add(dependency);
     }
   }
-  const ordered = [];
-  const visited = new Set();
-  const visiting = new Set();
-  const visit = (key) => {
-    if (!stepMap.has(key) || visited.has(key)) return;
-    if (visiting.has(key)) {
-      issues.push("研究データに循環する前提条件があるため、循環部分を除いて表示しました");
-      return;
+  const categoryOrder = new Map((catalog.categories || []).map((category, index) => [category.id, index]));
+  const nodeOrder = new Map([...catalog.nodes.keys()].map((researchId, index) => [researchId, index]));
+  const compareStepKeys = (leftKey, rightKey) => {
+    const left = stepMap.get(leftKey);
+    const right = stepMap.get(rightKey);
+    const leftOrder = [
+      Number(categoryOrder.get(left.node.categoryId) ?? 999),
+      Number(left.node.row ?? 999),
+      Number(left.node.column ?? 999),
+      Number(nodeOrder.get(left.node.id) ?? 999999),
+      Number(left.level),
+    ];
+    const rightOrder = [
+      Number(categoryOrder.get(right.node.categoryId) ?? 999),
+      Number(right.node.row ?? 999),
+      Number(right.node.column ?? 999),
+      Number(nodeOrder.get(right.node.id) ?? 999999),
+      Number(right.level),
+    ];
+    for (let index = 0; index < leftOrder.length; index += 1) {
+      if (leftOrder[index] !== rightOrder[index]) return leftOrder[index] - rightOrder[index];
     }
-    visiting.add(key);
-    for (const dependency of dependencies.get(key) || []) visit(dependency);
-    visiting.delete(key);
-    visited.add(key);
-    ordered.push(stepMap.get(key));
+    return left.node.id.localeCompare(right.node.id);
   };
-  visit(`${targetId}\0${normalizedTarget}`);
-  for (const key of stepMap.keys()) visit(key);
+  const dependents = new Map([...stepMap.keys()].map((key) => [key, new Set()]));
+  const remainingPrerequisites = new Map();
+  for (const [key, requiredKeys] of dependencies) {
+    remainingPrerequisites.set(key, requiredKeys.size);
+    for (const requiredKey of requiredKeys) dependents.get(requiredKey)?.add(key);
+  }
+  const ordered = [];
+  let ready = [...stepMap.keys()].filter((key) => remainingPrerequisites.get(key) === 0).sort(compareStepKeys);
+  while (ready.length) {
+    const currentLayer = ready;
+    const nextLayer = [];
+    for (const key of currentLayer) {
+      ordered.push(stepMap.get(key));
+      for (const dependent of dependents.get(key) || []) {
+        const remaining = Number(remainingPrerequisites.get(dependent) || 0) - 1;
+        remainingPrerequisites.set(dependent, remaining);
+        if (remaining === 0) nextLayer.push(dependent);
+      }
+    }
+    ready = nextLayer.sort(compareStepKeys);
+  }
+  if (ordered.length !== stepMap.size) {
+    issues.push("研究データに循環する前提条件があるため、循環部分は依存順を確定できません");
+    const orderedKeys = new Set(ordered.map((item) => `${item.node.id}\0${item.level}`));
+    const unresolved = [...stepMap.keys()].filter((key) => !orderedKeys.has(key)).sort(compareStepKeys);
+    ordered.push(...unresolved.map((key) => stepMap.get(key)));
+  }
 
   const totals = { baseSeconds: 0, adjustedSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0, technolabeCount: 0, technolabeEfficiencyPercent: null };
   const steps = ordered.map(({ node, level, data }) => {

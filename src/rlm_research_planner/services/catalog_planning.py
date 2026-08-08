@@ -149,8 +149,6 @@ class CatalogResearchPlanner:
         step_order = self._topological_step_order(
             required,
             current_levels,
-            target_research_id,
-            target_level,
         )
 
         for research_id, level_number in sorted(missing_level_data):
@@ -239,8 +237,6 @@ class CatalogResearchPlanner:
         self,
         required: dict[str, int],
         current_levels: dict[str, int],
-        target_research_id: str | None = None,
-        target_level: int | None = None,
     ) -> list[tuple[str, int]]:
         steps = {
             (research_id, level)
@@ -248,54 +244,63 @@ class CatalogResearchPlanner:
             for level in range(current_levels.get(research_id, 0) + 1, target_level + 1)
         }
         prerequisites: dict[
-            tuple[str, int], list[tuple[str, int]]
-        ] = defaultdict(list)
+            tuple[str, int], set[tuple[str, int]]
+        ] = defaultdict(set)
         for research_id, level in steps:
             previous = (research_id, level - 1)
             if previous in steps:
-                prerequisites[(research_id, level)].append(previous)
+                prerequisites[(research_id, level)].add(previous)
             level_data = self.nodes[research_id].level_data(level)
             if level_data is None:
                 continue
             for requirement in level_data.requirements:
                 dependency = (requirement.research_id, requirement.level)
-                if (
-                    dependency in steps
-                    and dependency not in prerequisites[(research_id, level)]
-                ):
-                    prerequisites[(research_id, level)].append(dependency)
+                if dependency in steps and dependency != (research_id, level):
+                    prerequisites[(research_id, level)].add(dependency)
 
-        visiting: set[tuple[str, int]] = set()
-        visited: set[tuple[str, int]] = set()
+        dependents: dict[
+            tuple[str, int], set[tuple[str, int]]
+        ] = defaultdict(set)
+        remaining_prerequisites = {
+            step: len(prerequisites.get(step, ())) for step in steps
+        }
+        for step, dependencies in prerequisites.items():
+            for dependency in dependencies:
+                dependents[dependency].add(step)
+
+        def source_order(
+            step: tuple[str, int],
+        ) -> tuple[tuple[int, int, int], int, str]:
+            return (
+                self._node_order.get(step[0], (999, 999, 999)),
+                step[1],
+                step[0],
+            )
+
+        ready = sorted(
+            (step for step, count in remaining_prerequisites.items() if count == 0),
+            key=source_order,
+        )
         order: list[tuple[str, int]] = []
+        while ready:
+            current_layer = ready
+            next_layer: list[tuple[str, int]] = []
+            for step in current_layer:
+                order.append(step)
+                for dependent in dependents.get(step, ()):
+                    remaining_prerequisites[dependent] -= 1
+                    if remaining_prerequisites[dependent] == 0:
+                        next_layer.append(dependent)
+            ready = sorted(next_layer, key=source_order)
 
-        def visit(step: tuple[str, int]) -> None:
-            if step in visiting:
-                raise ValueError(
-                    f"Cyclic prerequisite detected at {step[0]}:{step[1]}"
-                )
-            if step in visited:
-                return
-            visiting.add(step)
-            for prerequisite in prerequisites.get(step, ()):
-                visit(prerequisite)
-            visiting.remove(step)
-            visited.add(step)
-            order.append(step)
-
-        if target_research_id is not None and target_level is not None:
-            target_step = (target_research_id, target_level)
-            if target_step in steps:
-                visit(target_step)
-        for step in sorted(
-            steps,
-            key=lambda item: (
-                self._node_order.get(item[0], (999, 999, 999)),
-                item[1],
-                item[0],
-            ),
-        ):
-            visit(step)
+        if len(order) != len(steps):
+            cyclic = min(
+                (step for step in steps if remaining_prerequisites[step] > 0),
+                key=source_order,
+            )
+            raise ValueError(
+                f"Cyclic prerequisite detected at {cyclic[0]}:{cyclic[1]}"
+            )
         return order
 
     @staticmethod
