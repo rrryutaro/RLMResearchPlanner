@@ -139,9 +139,9 @@ from rlm_research_planner.ui.table_cell_widgets import (
 )
 from rlm_research_planner.ui.update_controller import UpdateController
 from rlm_research_planner.ui.visual_styles import (
+    apply_window_visual_surface,
     dataset_style_sheet,
     table_link_color,
-    window_style_sheet,
 )
 from rlm_research_planner.version import version_string
 
@@ -249,6 +249,12 @@ class MainWindow(QMainWindow):
         translator: Translator,
     ) -> None:
         super().__init__()
+        self.app_settings = app_settings
+        self.app_settings.visual_style = normalize_visual_style(
+            self.app_settings.visual_style
+        )
+        self.setProperty("visualStyle", self.app_settings.visual_style)
+        apply_window_visual_surface(self, self.app_settings.visual_style)
         self.paths = paths
         self.master = master
         self.observations = observations
@@ -256,11 +262,6 @@ class MainWindow(QMainWindow):
         self.player_state = player_state
         self._tree_level_draft = dict(player_state.research_levels)
         self.settings_repository = settings_repository
-        self.app_settings = app_settings
-        self.setProperty(
-            "visualStyle",
-            normalize_visual_style(self.app_settings.visual_style),
-        )
         self.translator = translator
         self.catalog_planner = CatalogResearchPlanner(observations)
         self.castle_catalog = CastleCatalog.load(paths.castle_catalog)
@@ -3404,7 +3405,7 @@ class MainWindow(QMainWindow):
         visual_style = normalize_visual_style(self.app_settings.visual_style)
         self.app_settings.visual_style = visual_style
         self.setProperty("visualStyle", visual_style)
-        self.setStyleSheet(window_style_sheet(visual_style))
+        apply_window_visual_surface(self, visual_style)
         update_step_button_visual_styles(self, visual_style)
         update_table_cell_widget_visual_styles(self, visual_style)
         if hasattr(self, "tree_dataset_list"):

@@ -1,7 +1,8 @@
 from __future__ import annotations
 
+from PySide6.QtCore import Qt
 from PySide6.QtGui import QColor, QPalette
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QApplication, QMainWindow, QWidget
 
 
 MOBILE_STYLE_SHEET = """
@@ -242,6 +243,40 @@ MOBILE_DATASET_STYLE = (
 
 def window_style_sheet(visual_style: str) -> str:
     return MOBILE_STYLE_SHEET if visual_style == "mobile" else ""
+
+
+def apply_window_visual_surface(
+    window: QMainWindow, visual_style: str
+) -> None:
+    """Prepare the native client surface before the first Windows paint.
+
+    Windows can erase a newly created native window with the default light
+    brush before Qt completes its first styled paint.  That single frame is
+    conspicuous when the saved visual style is dark.  Suppress the native
+    background erase and give both the main window and its central widget an
+    opaque palette matching the selected style before ``show()``.
+    """
+
+    window.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground, True)
+    palette = QPalette(QApplication.palette())
+    if visual_style == "mobile":
+        palette.setColor(QPalette.ColorRole.Window, QColor("#07151D"))
+        palette.setColor(QPalette.ColorRole.WindowText, QColor("#F4F8F8"))
+        palette.setColor(QPalette.ColorRole.Base, QColor("#081B24"))
+        palette.setColor(QPalette.ColorRole.AlternateBase, QColor("#0D2530"))
+        palette.setColor(QPalette.ColorRole.Text, QColor("#F4F8F8"))
+        palette.setColor(QPalette.ColorRole.Button, QColor("#15333E"))
+        palette.setColor(QPalette.ColorRole.ButtonText, QColor("#F4F8F8"))
+        palette.setColor(QPalette.ColorRole.Highlight, QColor("#F2B632"))
+        palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#07151D"))
+
+    window.setPalette(palette)
+    window.setAutoFillBackground(True)
+    window.setStyleSheet(window_style_sheet(visual_style))
+    central = window.centralWidget()
+    if central is not None:
+        central.setPalette(palette)
+        central.setAutoFillBackground(True)
 
 
 def apply_dialog_visual_style(dialog: QWidget, visual_style: str) -> None:
