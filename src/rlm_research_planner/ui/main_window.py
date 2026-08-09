@@ -115,12 +115,21 @@ from rlm_research_planner.services.window_capture import (
     reveal_window_for_capture,
     should_refresh_window_before_ocr,
 )
-from rlm_research_planner.settings import AppSettings, SettingsRepository
+from rlm_research_planner.settings import (
+    AppSettings,
+    SettingsRepository,
+    normalize_visual_style,
+)
 from rlm_research_planner.ui.research_tree_view import (
     ResearchTreeNode,
     ResearchTreeView,
 )
 from rlm_research_planner.ui.update_controller import UpdateController
+from rlm_research_planner.ui.visual_styles import (
+    dataset_style_sheet,
+    table_link_color,
+    window_style_sheet,
+)
 from rlm_research_planner.version import version_string
 
 
@@ -273,6 +282,7 @@ class MainWindow(QMainWindow):
         )
         self.setMinimumSize(980, 640)
         self._build_ui()
+        self._apply_visual_style()
         self._restore_geometry()
         self.update_controller.schedule_startup_check()
 
@@ -413,6 +423,7 @@ class MainWindow(QMainWindow):
     def _build_ui(self) -> None:
         self.setWindowTitle(self.t("app.title"))
         root = QWidget(self)
+        root.setObjectName("RlmRoot")
         layout = QVBoxLayout(root)
         layout.setContentsMargins(8, 8, 8, 8)
 
@@ -442,15 +453,7 @@ class MainWindow(QMainWindow):
         dataset_layout.addWidget(dataset_heading)
         self.tree_dataset_list = _AutoFitListWidget()
         self.tree_dataset_list.setStyleSheet(
-            "QListWidget::item { border: 2px solid transparent; }"
-            "QListWidget::item:selected {"
-            " background-color: #176B87; color: #FFFFFF;"
-            " border: 2px solid #59C9F1; font-weight: 700;"
-            "}"
-            "QListWidget::item:selected:!active {"
-            " background-color: #176B87; color: #FFFFFF;"
-            " border: 2px solid #59C9F1;"
-            "}"
+            dataset_style_sheet(self.app_settings.visual_style)
         )
         self._tree_dataset_search_active = False
         self._tree_dataset_search_restore = ""
@@ -2382,7 +2385,13 @@ class MainWindow(QMainWindow):
                     font = item.font()
                     font.setUnderline(True)
                     item.setFont(font)
-                    item.setForeground(QBrush(QColor("#1565C0")))
+                    item.setForeground(
+                        QBrush(
+                            QColor(
+                                table_link_color(self.app_settings.visual_style)
+                            )
+                        )
+                    )
                     item.setToolTip(self.t("plan.open_task"))
                 self.plan_table.setItem(row, column, item)
             actions = QWidget()
@@ -2459,7 +2468,13 @@ class MainWindow(QMainWindow):
                     font = item.font()
                     font.setUnderline(True)
                     item.setFont(font)
-                    item.setForeground(QBrush(QColor("#1565C0")))
+                    item.setForeground(
+                        QBrush(
+                            QColor(
+                                table_link_color(self.app_settings.visual_style)
+                            )
+                        )
+                    )
                     item.setToolTip(self.t("plan.open_in_tree"))
             elif column == 3:
                 item.setData(Qt.UserRole, step.adjusted_time_seconds)
@@ -2919,6 +2934,22 @@ class MainWindow(QMainWindow):
         self.language_combo.setCurrentIndex(max(0, index))
         self.language_combo.currentIndexChanged.connect(self._change_language)
         settings.addWidget(self.language_combo)
+        settings.addWidget(QLabel(self.t("appearance.label")))
+        self.visual_style_combo = QComboBox()
+        self.visual_style_combo.addItem(
+            self.t("appearance.desktop"), "desktop"
+        )
+        self.visual_style_combo.addItem(
+            self.t("appearance.mobile"), "mobile"
+        )
+        visual_style_index = self.visual_style_combo.findData(
+            normalize_visual_style(self.app_settings.visual_style)
+        )
+        self.visual_style_combo.setCurrentIndex(max(0, visual_style_index))
+        self.visual_style_combo.currentIndexChanged.connect(
+            self._change_visual_style
+        )
+        settings.addWidget(self.visual_style_combo)
         settings.addWidget(QLabel(self.t("help.font_size")))
         self.help_font_spin = QSpinBox()
         self.help_font_spin.setRange(9, 24)
@@ -2967,6 +2998,7 @@ class MainWindow(QMainWindow):
             ("help.player.title", "help.player.body_v003"),
             ("help.ocr.title", "help.ocr.body_v003"),
             ("help.paid.title", "help.paid.body"),
+            ("help.appearance.title", "help.appearance.body"),
             ("help.data.title", "help.data.body"),
             ("help.license.title", "help.license.body"),
             ("help.update.title", "help.update.body"),
@@ -2981,6 +3013,35 @@ class MainWindow(QMainWindow):
         self.help_browser.setHtml("".join(body))
         layout.addWidget(self.help_browser)
         return page
+
+    def _apply_visual_style(self) -> None:
+        visual_style = normalize_visual_style(self.app_settings.visual_style)
+        self.app_settings.visual_style = visual_style
+        self.setStyleSheet(window_style_sheet(visual_style))
+        if hasattr(self, "tree_dataset_list"):
+            self.tree_dataset_list.setStyleSheet(
+                dataset_style_sheet(visual_style)
+            )
+        for tree_view_name in ("tree_view", "plan_tree_view"):
+            tree_view = getattr(self, tree_view_name, None)
+            if tree_view is not None:
+                tree_view.set_visual_style(visual_style)
+        if hasattr(self, "plan_table"):
+            link_brush = QBrush(QColor(table_link_color(visual_style)))
+            for row in range(self.plan_table.rowCount()):
+                item = self.plan_table.item(row, 0)
+                if item is not None and item.font().underline():
+                    item.setForeground(link_brush)
+
+    def _change_visual_style(self) -> None:
+        visual_style = normalize_visual_style(
+            self.visual_style_combo.currentData()
+        )
+        if visual_style == self.app_settings.visual_style:
+            return
+        self.app_settings.visual_style = visual_style
+        self._apply_visual_style()
+        self.settings_repository.save(self.app_settings)
 
     def _change_help_font_size(self, value: int) -> None:
         self.app_settings.help_font_size = max(9, min(24, int(value)))
@@ -4212,6 +4273,7 @@ class MainWindow(QMainWindow):
         self.translator.set_locale(locale)
         current_tab = self.tabs.currentIndex()
         self._build_ui()
+        self._apply_visual_style()
         self.tabs.setCurrentIndex(min(current_tab, self.tabs.count() - 1))
 
     def _show_error(self, message: str) -> None:

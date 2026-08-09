@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.8-b1";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.9-b1";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 

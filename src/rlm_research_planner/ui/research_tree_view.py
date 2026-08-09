@@ -64,8 +64,11 @@ class _ResearchNodeItem(QGraphicsRectItem):
         selected_callback,
         activated_callback,
         level_editing_enabled: bool = False,
+        visual_style: str = "desktop",
     ) -> None:
         super().__init__(0.0, 0.0, NODE_WIDTH, NODE_HEIGHT)
+        self._node = node
+        self._visual_style = "desktop"
         self.research_id = node.research_id
         self._selected_callback = selected_callback
         self._activated_callback = activated_callback
@@ -107,10 +110,12 @@ class _ResearchNodeItem(QGraphicsRectItem):
             height=43.0,
         )
 
-        divider = QGraphicsRectItem(12.0, 57.0, NODE_WIDTH - 24.0, 1.0, self)
-        divider.setPen(Qt.NoPen)
-        divider.setBrush(QColor("#496170"))
-        divider.setZValue(1.0)
+        self.divider = QGraphicsRectItem(
+            12.0, 57.0, NODE_WIDTH - 24.0, 1.0, self
+        )
+        self.divider.setPen(Qt.NoPen)
+        self.divider.setBrush(QColor("#496170"))
+        self.divider.setZValue(1.0)
 
         meter_x = 16.0
         meter_y = 68.0
@@ -129,6 +134,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
             and node.max_level > 0
         ):
             progress = max(0.0, min(1.0, node.current_level / node.max_level))
+        self._progress = progress
         fill_color = QColor("#45B88A") if progress >= 1.0 else QColor("#E0A72B")
         self.meter_fill = QGraphicsRectItem(
             meter_x + 1.0,
@@ -176,6 +182,71 @@ class _ResearchNodeItem(QGraphicsRectItem):
             width=NODE_WIDTH - 24.0,
             height=48.0,
         )
+        self.set_visual_style(visual_style)
+
+    def set_visual_style(self, visual_style: str) -> None:
+        self._visual_style = "mobile" if visual_style == "mobile" else "desktop"
+        mobile = self._visual_style == "mobile"
+        node = self._node
+        if node.shortage_levels > 0:
+            background = QColor("#4B2423" if mobile else "#48271D")
+            border = QColor("#F1756B" if mobile else "#F07845")
+        elif node.current_level is None:
+            background = QColor("#0D202A" if mobile else "#1B3040")
+            border = QColor("#496A75" if mobile else "#4D91B8")
+        elif node.max_level is not None and node.current_level >= node.max_level:
+            background = QColor("#16493E" if mobile else "#183E34")
+            border = QColor("#45C7A3" if mobile else "#45B88A")
+        elif node.current_level > 0:
+            background = QColor("#4B3910" if mobile else "#493716")
+            border = QColor("#F2B632" if mobile else "#E0A72B")
+        else:
+            background = QColor("#0D202A" if mobile else "#222D35")
+            border = QColor("#496A75" if mobile else "#607481")
+        self.setBrush(background)
+        self.setPen(QPen(border, 2.0))
+        self.title_item.setDefaultTextColor(
+            QColor("#F4F8F8" if mobile else "#FFFFFF")
+        )
+        self.divider.setBrush(QColor("#2F5F6C" if mobile else "#496170"))
+        self.meter_track.setPen(
+            QPen(QColor("#5B7580" if mobile else "#71828C"), 1.0)
+        )
+        self.meter_track.setBrush(QColor("#061117" if mobile else "#0C1419"))
+        self.meter_fill.setBrush(
+            QColor(
+                "#45C7A3"
+                if mobile and self._progress >= 1.0
+                else "#F2B632"
+                if mobile
+                else "#45B88A"
+                if self._progress >= 1.0
+                else "#E0A72B"
+            )
+        )
+        self.level_item.setDefaultTextColor(
+            QColor("#F4F8F8" if mobile else "#E7EEF2")
+        )
+        self.current_effect_item.setDefaultTextColor(
+            QColor("#D7E4E7" if mobile else "#D5E3EA")
+        )
+        self.next_effect_item.setDefaultTextColor(
+            QColor("#9EDFF2" if mobile else "#9FD2EC")
+        )
+        self.update()
+
+    def paint(self, painter, option, widget=None) -> None:
+        if self._visual_style != "mobile":
+            super().paint(painter, option, widget)
+            return
+        painter.save()
+        if self.isSelected():
+            painter.setPen(QPen(QColor("#66D8C2"), 3.0))
+        else:
+            painter.setPen(self.pen())
+        painter.setBrush(self.brush())
+        painter.drawRoundedRect(self.rect(), 8.0, 8.0)
+        painter.restore()
 
     def _text_item(
         self,
@@ -228,6 +299,8 @@ class _ResearchNodeItem(QGraphicsRectItem):
     def itemChange(self, change, value):
         if change == QGraphicsRectItem.ItemSelectedHasChanged and bool(value):
             self._selected_callback(self.research_id)
+        if change == QGraphicsRectItem.ItemSelectedHasChanged:
+            self.update()
         return super().itemChange(change, value)
 
     def level_control_kind_at(self, scene_position) -> str:
@@ -270,6 +343,7 @@ class ResearchTreeView(QGraphicsView):
         self.setFrameShape(QGraphicsView.NoFrame)
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.AnchorViewCenter)
+        self._visual_style = "desktop"
         self._zoom_factor = 1.0
         self._pointer_origin: QPoint | None = None
         self._pointer_last: QPoint | None = None
@@ -287,6 +361,28 @@ class ResearchTreeView(QGraphicsView):
     @property
     def zoom_factor(self) -> float:
         return self._zoom_factor
+
+    @property
+    def visual_style(self) -> str:
+        return self._visual_style
+
+    def set_visual_style(self, visual_style: str) -> None:
+        self._visual_style = "mobile" if visual_style == "mobile" else "desktop"
+        self.setBackgroundBrush(
+            QColor("#07141C" if self._visual_style == "mobile" else "#111820")
+        )
+        for item in self._scene.items():
+            if isinstance(item, _ResearchNodeItem):
+                item.set_visual_style(self._visual_style)
+            elif isinstance(item, QGraphicsTextItem) and item.parentItem() is None:
+                item.setDefaultTextColor(
+                    QColor(
+                        "#A9C0C7"
+                        if self._visual_style == "mobile"
+                        else "#C9D4DA"
+                    )
+                )
+        self.viewport().update()
 
     def wheelEvent(self, event: QWheelEvent) -> None:
         if event.modifiers() & Qt.ControlModifier:
@@ -612,7 +708,13 @@ class ResearchTreeView(QGraphicsView):
         self._scene.clear()
         if not node_list:
             message = QGraphicsTextItem(empty_message)
-            message.setDefaultTextColor(QColor("#C9D4DA"))
+            message.setDefaultTextColor(
+                QColor(
+                    "#A9C0C7"
+                    if self._visual_style == "mobile"
+                    else "#C9D4DA"
+                )
+            )
             message_font = QFont()
             message_font.setPointSizeF(12.0)
             message.setFont(message_font)
@@ -759,6 +861,7 @@ class ResearchTreeView(QGraphicsView):
                 selected_callback=self.researchSelected.emit,
                 activated_callback=self.researchActivated.emit,
                 level_editing_enabled=self._level_editing_enabled,
+                visual_style=self._visual_style,
             )
             item.setPos(x, y)
             self._scene.addItem(item)

@@ -9,7 +9,7 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.8-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.9-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -265,6 +265,7 @@
             <h3>収録データ</h3>
             <p id="catalog-data-status"></p>
             <p id="catalog-data-notes" class="hint"></p>
+            <p>動作確認済みゲームバージョンはv2.200.309です。これは必須バージョンではなく、以降のゲーム更新では研究データや画面表示が変わる可能性があります。</p>
           </article>
           <article>
             <h3>インストール</h3>
@@ -332,6 +333,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.8-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.9-b1"></script>
   </body>
 </html>

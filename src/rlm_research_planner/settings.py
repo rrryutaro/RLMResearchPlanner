@@ -6,6 +6,13 @@ from pathlib import Path
 
 
 DEFAULT_OCR_WINDOW_TITLE = "Lords Mobile PC"
+DEFAULT_VISUAL_STYLE = "desktop"
+VISUAL_STYLES = frozenset(("desktop", "mobile"))
+
+
+def normalize_visual_style(value: object) -> str:
+    normalized = str(value).strip().lower()
+    return normalized if normalized in VISUAL_STYLES else DEFAULT_VISUAL_STYLE
 
 
 @dataclass
@@ -19,6 +26,7 @@ class WindowGeometry:
 @dataclass
 class AppSettings:
     locale: str = "ja-JP"
+    visual_style: str = DEFAULT_VISUAL_STYLE
     ocr_window_title: str = DEFAULT_OCR_WINDOW_TITLE
     help_font_size: int = 12
     update_check_on_startup: bool = True
@@ -38,6 +46,9 @@ class SettingsRepository:
             window = raw.get("window", {})
             return AppSettings(
                 locale=str(raw.get("locale", "ja-JP")),
+                visual_style=normalize_visual_style(
+                    raw.get("visual_style", DEFAULT_VISUAL_STYLE)
+                ),
                 ocr_window_title=str(
                     raw.get("ocr_window_title", DEFAULT_OCR_WINDOW_TITLE)
                 ),
