@@ -13,6 +13,7 @@ export function defaultState() {
       castleTargetManaStage: 0,
       academyLevel: 1,
       constructionSpeedPercent: 0,
+      constructionSpeedBoostPercent: 0,
       researchSpeedPercent: 0,
       researchSpeedBoostPercent: 0,
       maxGuildHelps: 0,
@@ -47,6 +48,7 @@ export function sanitizeState(value) {
   base.settings.castleTargetManaStage = Math.min(5, Math.max(0, Math.trunc(number(settings.castleTargetManaStage ?? settings.castle_target_mana_stage, 0))));
   base.settings.academyLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.academyLevel ?? settings.academy_level, 1))));
   base.settings.constructionSpeedPercent = Math.max(0, number(settings.constructionSpeedPercent ?? settings.construction_speed_percent));
+  base.settings.constructionSpeedBoostPercent = Math.max(0, number(settings.constructionSpeedBoostPercent ?? settings.construction_speed_boost_percent));
   base.settings.researchSpeedPercent = Math.max(0, number(settings.researchSpeedPercent ?? settings.research_speed_percent));
   base.settings.researchSpeedBoostPercent = Math.max(0, number(settings.researchSpeedBoostPercent ?? settings.research_speed_boost_percent));
   base.settings.maxGuildHelps = Math.max(0, Math.trunc(number(settings.maxGuildHelps ?? settings.max_guild_helps)));
@@ -92,6 +94,7 @@ export function backupPayload(state) {
         castle_target_mana_stage: state.settings.castleTargetManaStage,
         academy_level: state.settings.academyLevel,
         construction_speed_percent: state.settings.constructionSpeedPercent,
+        construction_speed_boost_percent: state.settings.constructionSpeedBoostPercent,
         research_speed_percent: state.settings.researchSpeedPercent,
         research_speed_boost_percent: state.settings.researchSpeedBoostPercent,
         free_speedup_seconds: freeSecondsForVip(state.settings.vipLevel),

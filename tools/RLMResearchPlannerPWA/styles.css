@@ -65,7 +65,9 @@ h1 { margin-bottom: 0; overflow: hidden; font-size: clamp(1.25rem, 4vw, 1.75rem)
 .tree-viewport.is-dragging { cursor: grabbing; user-select: none; }
 .tree-stage { position: relative; min-width: 100%; min-height: 100%; }
 .tree-lines { position: absolute; inset: 0; overflow: visible; pointer-events: none; }
-.tree-lines path { fill: none; stroke: #dca51e; stroke-width: 3; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.tree-lines path { fill: none; stroke: #35505a; stroke-width: 3; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.tree-lines path.is-active { stroke: #dca51e; }
+.tree-lines path.is-inactive { stroke: #35505a; }
 .research-card { position: absolute; display: grid; grid-template-rows: 1fr auto auto auto; gap: calc(8px * var(--node-scale)); padding: calc(12px * var(--node-scale)); border: calc(2px * var(--node-scale)) solid #496a75; border-radius: calc(8px * var(--node-scale)); color: var(--text); background: linear-gradient(155deg, #173442, #0d202a); box-shadow: 0 calc(8px * var(--node-scale)) calc(20px * var(--node-scale)) rgba(0, 0, 0, .25); text-align: center; overflow: hidden; }
 .research-card:hover, .research-card:focus-visible { border-color: var(--accent-2); }
 .research-card.is-progress { border-color: var(--accent); background: linear-gradient(155deg, #4b3910, #1e261f); }

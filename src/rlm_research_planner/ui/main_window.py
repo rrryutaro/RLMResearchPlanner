@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import subprocess
+from collections.abc import Iterable
 from difflib import SequenceMatcher
 from pathlib import Path
 
@@ -749,6 +750,34 @@ class MainWindow(QMainWindow):
             self._selected_tree_node_id = self._selected_research_id
         self._refresh_tree()
 
+    def _observed_connection_unlocked(self, node: ObservedResearchNode) -> bool:
+        if self._tree_level_draft.get(node.id, 0) > 0:
+            return True
+        level_one = node.level_data(1)
+        if level_one is None:
+            return False
+        return all(
+            self._tree_level_draft.get(requirement.research_id, 0)
+            >= requirement.level
+            for requirement in level_one.requirements
+        )
+
+    def _master_connection_unlocked(self, research_id: str) -> bool:
+        if self._tree_level_draft.get(research_id, 0) > 0:
+            return True
+        requirements = (
+            item
+            for item in self.master.prerequisites
+            if item.research_id == research_id
+            and item.target_level <= 1
+            and item.prerequisite_research_id
+        )
+        return all(
+            self._tree_level_draft.get(str(item.prerequisite_research_id), 0)
+            >= item.prerequisite_level
+            for item in requirements
+        )
+
     def _refresh_tree(self) -> None:
         if not hasattr(self, "tree_view"):
             return
@@ -797,6 +826,12 @@ class MainWindow(QMainWindow):
                 if edge.prerequisite_id in visible_ids
                 and edge.research_id in visible_ids
             }
+            node_by_id = observation.node_by_id()
+            active_edges = {
+                edge
+                for edge in edges
+                if self._observed_connection_unlocked(node_by_id[edge[1]])
+            }
             self.tree_view.set_research(
                 visible,
                 edges,
@@ -806,6 +841,7 @@ class MainWindow(QMainWindow):
                     (group.prerequisite_ids, group.research_ids)
                     for group in observation.connection_groups
                 ),
+                active_edges=active_edges,
             )
             return
         if self.observations and self.tree_dataset_list.count() == 0:
@@ -879,7 +915,17 @@ class MainWindow(QMainWindow):
             if item.prerequisite_research_id in visible_ids
             and item.research_id in visible_ids
         }
-        self.tree_view.set_research(visible, edges, self._selected_tree_node_id)
+        active_edges = {
+            edge
+            for edge in edges
+            if self._master_connection_unlocked(edge[1])
+        }
+        self.tree_view.set_research(
+            visible,
+            edges,
+            self._selected_tree_node_id,
+            active_edges=active_edges,
+        )
 
     def _tree_selection_changed(self, research_id: str) -> None:
         self._selected_tree_node_id = research_id
@@ -1413,15 +1459,16 @@ class MainWindow(QMainWindow):
             target_mana_stage=self.castle_plan_target_mana_spin.value(),
             saved_levels=self._building_level_draft,
             construction_speed_percent=(
-                self.player_state.settings.construction_speed_percent
+                self.player_state.settings.effective_construction_speed_percent
             ),
             vip_level=self.player_state.settings.vip_level,
             guild_helps=self.player_state.settings.max_guild_helps,
         )
         self._current_castle_plan = result
         self.castle_plan_speed_label.setText(
-            self.t("player.construction_speed")
-            + f": {self.player_state.settings.construction_speed_percent:g}%"
+            self.t("player.effective_construction_speed")
+            + ": "
+            + f"{self.player_state.settings.effective_construction_speed_percent:g}%"
         )
         for building_id, item in self._building_required_items.items():
             item.setText(str(result.effective_levels.get(building_id, 0)))
@@ -1589,6 +1636,15 @@ class MainWindow(QMainWindow):
         self.construction_speed_spin.setValue(
             self.player_state.settings.construction_speed_percent
         )
+        self.construction_speed_boost_spin = QDoubleSpinBox()
+        self.construction_speed_boost_spin.setRange(0.0, 10000.0)
+        self.construction_speed_boost_spin.setDecimals(2)
+        self.construction_speed_boost_spin.setValue(
+            self.player_state.settings.construction_speed_boost_percent
+        )
+        self.construction_speed_boost_spin.setToolTip(
+            self.t("player.construction_speed_boost_hint")
+        )
         self.research_speed_spin = QDoubleSpinBox()
         self.research_speed_spin.setRange(0.0, 10000.0)
         self.research_speed_spin.setDecimals(2)
@@ -1604,22 +1660,38 @@ class MainWindow(QMainWindow):
         )
         self.guild_help_spin = self._integer_spin(0, 1000, self.player_state.settings.max_guild_helps)
         self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
-        settings_form.addRow(self.t("player.vip_level"), vip_row)
-        settings_form.addRow(self.t("player.castle_level"), self.castle_spin)
-        settings_form.addRow(
+        common_group = QGroupBox(self.t("player.common_settings"))
+        common_form = QFormLayout(common_group)
+        self.player_settings_form = common_form
+        common_form.addRow(self.t("player.vip_level"), vip_row)
+        common_form.addRow(self.t("player.castle_level"), self.castle_spin)
+        common_form.addRow(
             self.t("player.castle_mana_stage"), self.castle_mana_stage_spin
         )
-        settings_form.addRow(
+        common_form.addRow(self.t("player.academy_level"), self.academy_spin)
+        common_form.addRow(self.t("player.guild_helps"), self.guild_help_spin)
+        common_form.addRow(self.t("player.speedups"), self.speedup_spin)
+        settings_form.addRow(common_group)
+
+        construction_group = QGroupBox(self.t("player.construction_time_settings"))
+        construction_form = QFormLayout(construction_group)
+        construction_form.addRow(
             self.t("player.construction_speed"), self.construction_speed_spin
         )
-        settings_form.addRow(self.t("player.academy_level"), self.academy_spin)
-        settings_form.addRow(self.t("player.research_speed"), self.research_speed_spin)
-        settings_form.addRow(
+        construction_form.addRow(
+            self.t("player.construction_speed_boost"),
+            self.construction_speed_boost_spin,
+        )
+        settings_form.addRow(construction_group)
+
+        research_group = QGroupBox(self.t("player.research_time_settings"))
+        research_form = QFormLayout(research_group)
+        research_form.addRow(self.t("player.research_speed"), self.research_speed_spin)
+        research_form.addRow(
             self.t("player.research_speed_boost"),
             self.research_speed_boost_spin,
         )
-        settings_form.addRow(self.t("player.guild_helps"), self.guild_help_spin)
-        settings_form.addRow(self.t("player.speedups"), self.speedup_spin)
+        settings_form.addRow(research_group)
 
         resources_group = QGroupBox(self.t("player.resources"))
         resources_form = QFormLayout(resources_group)
@@ -1737,6 +1809,9 @@ class MainWindow(QMainWindow):
         self.castle_spin.valueChanged.connect(self._settings_changed)
         self.castle_mana_stage_spin.valueChanged.connect(self._settings_changed)
         self.construction_speed_spin.valueChanged.connect(self._settings_changed)
+        self.construction_speed_boost_spin.valueChanged.connect(
+            self._settings_changed
+        )
         self.academy_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_boost_spin.valueChanged.connect(
@@ -1774,6 +1849,9 @@ class MainWindow(QMainWindow):
         self.castle_mana_stage_spin.blockSignals(False)
         settings.academy_level = self.academy_spin.value()
         settings.construction_speed_percent = self.construction_speed_spin.value()
+        settings.construction_speed_boost_percent = (
+            self.construction_speed_boost_spin.value()
+        )
         settings.research_speed_percent = self.research_speed_spin.value()
         settings.research_speed_boost_percent = (
             self.research_speed_boost_spin.value()
@@ -1991,7 +2069,7 @@ class MainWindow(QMainWindow):
         details_layout.setContentsMargins(0, 6, 0, 0)
         fixed_columns = [
             self.t("tree.name"),
-            self.t("tree.level"),
+            self.t("plan.level"),
             self.t("plan.base_time"),
             self.t("plan.time"),
             self.t("plan.after_help"),
@@ -2000,6 +2078,10 @@ class MainWindow(QMainWindow):
         resource_columns = [
             self._resource_label(key) for key in PLAN_RESOURCE_KEYS
         ]
+        self._plan_resource_columns = {
+            key: len(fixed_columns) + index
+            for index, key in enumerate(PLAN_RESOURCE_KEYS)
+        }
         self.plan_table = QTableWidget(
             0,
             len(fixed_columns) + len(resource_columns) + 3,
@@ -2013,6 +2095,15 @@ class MainWindow(QMainWindow):
                 self.t("plan.action"),
             ]
         )
+        for column, message_key in {
+            1: "plan.level_hint",
+            3: "plan.time_hint",
+            4: "plan.after_help_hint",
+            5: "plan.technolabe_hint",
+        }.items():
+            self.plan_table.horizontalHeaderItem(column).setToolTip(
+                self.t(message_key)
+            )
         self.plan_table.verticalHeader().setVisible(False)
         self.plan_table.setEditTriggers(QTableWidget.NoEditTriggers)
         self.plan_table.itemClicked.connect(self._plan_table_item_clicked)
@@ -2021,6 +2112,7 @@ class MainWindow(QMainWindow):
             self.plan_table.horizontalHeader().setSectionResizeMode(
                 column, QHeaderView.ResizeToContents
             )
+        self._set_visible_plan_resources(())
         details_layout.addWidget(self.plan_table, 1)
         self.plan_splitter.addWidget(details)
         self.plan_splitter.setStretchFactor(0, 3)
@@ -2161,6 +2253,11 @@ class MainWindow(QMainWindow):
         return target
 
     def _render_catalog_plan(self, result: CatalogPlanResult) -> None:
+        self._set_visible_plan_resources(
+            key
+            for key in PLAN_RESOURCE_KEYS
+            if result.total_costs.get(key, 0) > 0
+        )
         self.plan_complete_button.setEnabled(bool(result.steps))
         registered = any(
             task.research_id == result.target_research_id
@@ -2327,6 +2424,11 @@ class MainWindow(QMainWindow):
             self._preserve_completed_plan_target = False
 
     def _render_shortest_plan(self, steps: list[CatalogPlanStep]) -> None:
+        self._set_visible_plan_resources(
+            key
+            for key in PLAN_RESOURCE_KEYS
+            if any(step.costs.get(key, 0) > 0 for step in steps)
+        )
         self.plan_table.clearContents()
         self.plan_table.setRowCount(len(steps))
         for row, step in enumerate(steps):
@@ -2343,16 +2445,30 @@ class MainWindow(QMainWindow):
             for task in self.player_state.plan_tasks
             if task.research_id in self._observed_nodes
         ]
-        self.plan_table.clearContents()
-        self.plan_table.setRowCount(len(tasks))
         planning_state = PlayerState(
             settings=self.player_state.settings,
             research_levels=dict(self._tree_level_draft),
         )
-        for row, task in enumerate(tasks):
-            result = self.catalog_planner.create_plan(
-                planning_state, task.research_id, task.target_level
+        task_results = [
+            (
+                task,
+                self.catalog_planner.create_plan(
+                    planning_state, task.research_id, task.target_level
+                ),
             )
+            for task in tasks
+        ]
+        self._set_visible_plan_resources(
+            key
+            for key in PLAN_RESOURCE_KEYS
+            if any(
+                result.total_costs.get(key, 0) > 0
+                for _task, result in task_results
+            )
+        )
+        self.plan_table.clearContents()
+        self.plan_table.setRowCount(len(task_results))
+        for row, (task, result) in enumerate(task_results):
             values = [
                 self._catalog_research_name(task.research_id),
                 f"Lv.{task.target_level}",
@@ -2410,6 +2526,11 @@ class MainWindow(QMainWindow):
             self.plan_table.setCellWidget(
                 row, self.plan_table.columnCount() - 1, actions
             )
+
+    def _set_visible_plan_resources(self, resource_keys: Iterable[str]) -> None:
+        visible = set(resource_keys)
+        for key, column in self._plan_resource_columns.items():
+            self.plan_table.setColumnHidden(column, key not in visible)
 
     def _show_registered_task(self, task: ResearchPlanTask) -> None:
         self._set_plan_target(task.research_id)

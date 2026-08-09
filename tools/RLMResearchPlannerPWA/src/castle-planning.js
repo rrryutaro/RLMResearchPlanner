@@ -1,4 +1,4 @@
-import { freeSecondsForVip } from "./state.js?v=0.0.9-b1";
+import { freeSecondsForVip } from "./state.js?v=0.0.10-b2";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "mana_ore", "mana_crystal", "mana_steel"];
 
@@ -81,7 +81,8 @@ function effectiveBuildingLevels(catalog, castleLevel, savedLevels = {}) {
 }
 
 function adjustedConstructionTime(baseSeconds, settings) {
-  const speed = Math.max(0, Number(settings.constructionSpeedPercent) || 0);
+  const speed = Math.max(0, Number(settings.constructionSpeedPercent) || 0)
+    + Math.max(0, Number(settings.constructionSpeedBoostPercent) || 0);
   let remaining = Math.ceil(Math.max(0, Number(baseSeconds) || 0) / (1 + speed / 100));
   remaining = Math.max(0, remaining - freeSecondsForVip(settings.vipLevel));
   for (let count = 0; count < Math.max(0, Number(settings.maxGuildHelps) || 0) && remaining > 0; count += 1) {

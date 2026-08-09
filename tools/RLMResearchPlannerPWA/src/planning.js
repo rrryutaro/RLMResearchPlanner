@@ -1,6 +1,6 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.9-b1";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.10-b2";
 
-export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
+export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 4 * 3600;
 
 export function technolabeUsage(baseSeconds, sourcedCount = null) {
   if (baseSeconds == null) return { count: null, efficiencyPercent: null };
@@ -42,6 +42,14 @@ export function formatDuration(seconds) {
 
 function isRequirementMet(requirement, levels) {
   return Number(levels[requirement.researchId] || 0) >= requirement.level;
+}
+
+export function isResearchConnectionUnlocked(node, state) {
+  if (!node) return false;
+  if (Number(state.researchLevels[node.id] || 0) > 0) return true;
+  const levelOne = node.levels.get(1);
+  if (!levelOne) return false;
+  return levelOne.requirements.every((requirement) => isRequirementMet(requirement, state.researchLevels));
 }
 
 export function isNextLevelAvailable(node, state) {

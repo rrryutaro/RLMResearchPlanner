@@ -374,6 +374,18 @@ class ResearchTreeView(QGraphicsView):
         for item in self._scene.items():
             if isinstance(item, _ResearchNodeItem):
                 item.set_visual_style(self._visual_style)
+            elif isinstance(item, QGraphicsPathItem):
+                active = bool(item.data(2))
+                color = (
+                    "#F2B632"
+                    if active and self._visual_style == "mobile"
+                    else "#D2A51B"
+                    if active
+                    else "#35505A"
+                    if self._visual_style == "mobile"
+                    else "#46545D"
+                )
+                item.setPen(QPen(QColor(color), 2.5))
             elif isinstance(item, QGraphicsTextItem) and item.parentItem() is None:
                 item.setDefaultTextColor(
                     QColor(
@@ -695,12 +707,14 @@ class ResearchTreeView(QGraphicsView):
         connection_groups: Iterable[
             tuple[Iterable[str], Iterable[str]]
         ] = (),
+        active_edges: Iterable[tuple[str, str]] | None = None,
     ) -> None:
         self._cancel_pending_level_edit()
         self._cancel_level_editor()
         self._reset_pointer_state()
         node_list = list(nodes)
         edge_list = list(prerequisite_edges)
+        active_edge_set = set(edge_list if active_edges is None else active_edges)
         connection_group_list = [
             (tuple(prerequisites), tuple(research))
             for prerequisites, research in connection_groups
@@ -798,6 +812,30 @@ class ResearchTreeView(QGraphicsView):
                 if prerequisite_id in coordinates and research_id in coordinates
             ]
 
+        active_color = QColor(
+            "#F2B632" if self._visual_style == "mobile" else "#D2A51B"
+        )
+        inactive_color = QColor(
+            "#35505A" if self._visual_style == "mobile" else "#46545D"
+        )
+
+        def add_edge_item(
+            path: QPainterPath,
+            *,
+            active: bool,
+            prerequisites: tuple[str, ...],
+            research: tuple[str, ...],
+            z_value: float = -1.0,
+        ) -> None:
+            edge = QGraphicsPathItem(path)
+            edge.setPen(QPen(active_color if active else inactive_color, 2.5))
+            edge.setZValue(z_value)
+            edge.setData(0, prerequisites)
+            edge.setData(1, research)
+            edge.setData(2, active)
+            self._scene.addItem(edge)
+
+        edge_pair_set = set(edge_list)
         for prerequisites, research in visible_connection_groups:
             start_points = [
                 (
@@ -817,6 +855,19 @@ class ResearchTreeView(QGraphicsView):
                 coordinates[research_id][1]
                 for research_id in (*prerequisites, *research)
             }
+            group_pairs = {
+                (prerequisite_id, research_id)
+                for prerequisite_id in prerequisites
+                for research_id in research
+                if (prerequisite_id, research_id) in edge_pair_set
+            }
+            if not group_pairs:
+                group_pairs = {
+                    (prerequisite_id, research_id)
+                    for prerequisite_id in prerequisites
+                    for research_id in research
+                }
+            active_pairs = group_pairs & active_edge_set
             path = QPainterPath()
             if len(connection_rows) == 1:
                 center_y = coordinates[prerequisites[0]][1] + NODE_HEIGHT / 2.0
@@ -827,12 +878,31 @@ class ResearchTreeView(QGraphicsView):
                 path.moveTo(horizontal_points[0], center_y)
                 for point in horizontal_points[1:]:
                     path.lineTo(point, center_y)
-                edge = QGraphicsPathItem(path)
-                edge.setPen(QPen(QColor("#D2A51B"), 2.5))
-                edge.setZValue(-1.0)
-                edge.setData(0, prerequisites)
-                edge.setData(1, research)
-                self._scene.addItem(edge)
+                all_active = active_pairs == group_pairs
+                add_edge_item(
+                    path,
+                    active=all_active,
+                    prerequisites=prerequisites,
+                    research=research,
+                )
+                if active_pairs and not all_active:
+                    for prerequisite_id, research_id in sorted(active_pairs):
+                        active_path = QPainterPath()
+                        active_path.moveTo(
+                            coordinates[prerequisite_id][0] + NODE_WIDTH / 2.0,
+                            center_y,
+                        )
+                        active_path.lineTo(
+                            coordinates[research_id][0] + NODE_WIDTH / 2.0,
+                            center_y,
+                        )
+                        add_edge_item(
+                            active_path,
+                            active=True,
+                            prerequisites=(prerequisite_id,),
+                            research=(research_id,),
+                            z_value=-0.9,
+                        )
                 continue
             # Route the bus through the final gap before the destination row.
             # For adjacent rows this is their midpoint.  For a long branch it
@@ -847,12 +917,31 @@ class ResearchTreeView(QGraphicsView):
             for end_x, end_y in end_points:
                 path.moveTo(end_x, middle_y)
                 path.lineTo(end_x, end_y)
-            edge = QGraphicsPathItem(path)
-            edge.setPen(QPen(QColor("#D2A51B"), 2.5))
-            edge.setZValue(-1.0)
-            edge.setData(0, prerequisites)
-            edge.setData(1, research)
-            self._scene.addItem(edge)
+            all_active = active_pairs == group_pairs
+            add_edge_item(
+                path,
+                active=all_active,
+                prerequisites=prerequisites,
+                research=research,
+            )
+            if active_pairs and not all_active:
+                for prerequisite_id, research_id in sorted(active_pairs):
+                    start_x = coordinates[prerequisite_id][0] + NODE_WIDTH / 2.0
+                    start_y = coordinates[prerequisite_id][1] + NODE_HEIGHT
+                    end_x = coordinates[research_id][0] + NODE_WIDTH / 2.0
+                    end_y = coordinates[research_id][1]
+                    active_path = QPainterPath()
+                    active_path.moveTo(start_x, start_y)
+                    active_path.lineTo(start_x, middle_y)
+                    active_path.lineTo(end_x, middle_y)
+                    active_path.lineTo(end_x, end_y)
+                    add_edge_item(
+                        active_path,
+                        active=True,
+                        prerequisites=(prerequisite_id,),
+                        research=(research_id,),
+                        z_value=-0.9,
+                    )
 
         by_id = {node.research_id: node for node in node_list}
         for research_id, (x, y) in coordinates.items():

@@ -9,7 +9,7 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.9-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.10-b2">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -183,19 +183,36 @@
         </div>
         <div class="settings-grid">
           <details class="settings-card">
-            <summary>研究時間</summary>
+            <summary>共通設定</summary>
             <div class="settings-card-body">
             <div class="form-grid">
               <label class="field"><span>VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
               <label class="field"><span>城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
               <label class="field"><span>城Lv.25後のマナ強化段階</span><input id="setting-castle-mana" type="number" inputmode="numeric" min="0" max="5"></label>
-              <label class="field"><span>建設速度 +%</span><input id="setting-construction-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
               <label class="field"><span>アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
-              <label class="field"><span>研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
-              <label class="field"><span>研究速度アップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
               <label class="field"><span>ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="40"></label>
             </div>
             <p id="vip-free-time" class="hint"></p>
+            </div>
+          </details>
+          <details class="settings-card">
+            <summary>建設時間</summary>
+            <div class="settings-card-body">
+            <div class="form-grid">
+              <label class="field"><span>建設速度 +%</span><input id="setting-construction-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span>建設スピードアップ +%</span><input id="setting-construction-boost" type="number" inputmode="decimal" min="0" step="1"></label>
+            </div>
+            <p class="hint">建設スピードアップ x%を追加で使用する場合だけ入力します。建設速度に含めた場合は0にしてください。</p>
+            </div>
+          </details>
+          <details class="settings-card">
+            <summary>研究時間</summary>
+            <div class="settings-card-body">
+            <div class="form-grid">
+              <label class="field"><span>研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span>研究スピードアップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
+            </div>
+            <p class="hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
             </div>
           </details>
           <details class="settings-card">
@@ -243,19 +260,19 @@
         <div class="help-content">
           <article class="callout important">
             <h3>最初に必ず設定してください</h3>
-            <p>プレイヤー設定で、VIPレベル、研究速度、使用中の研究速度アップを入力してください。研究速度は研究向け装備を装着した状態でゲーム内表示を確認します。</p>
+            <p>プレイヤー設定で、VIPレベル、研究速度、使用中の研究スピードアップを入力してください。研究速度は研究向け装備を装着した状態でゲーム内表示を確認します。城計画を使う場合は、建設速度と使用中の建設スピードアップも入力してください。</p>
           </article>
           <article>
             <h3>研究レベルの入力</h3>
-            <p>研究ツリーのカードをタップすると、現在レベルを数値またはスライダーで変更できます。ツリー上ではドラッグで移動し、2本指のピンチ操作で拡大・縮小できます。「検索・表示設定」の「全体」でツリー全体が収まる倍率にできます。入力はこの端末内に自動保存されます。</p>
+            <p>研究ツリーのカードをタップすると、現在レベルを数値またはスライダーで変更できます。ツリー上ではドラッグで移動し、2本指のピンチ操作で拡大・縮小できます。「検索・表示設定」の「全体」でツリー全体が収まる倍率にできます。前提研究が未達の接続線は低彩度、到達済みの接続線は黄色で表示します。入力はこの端末内に自動保存されます。</p>
           </article>
           <article>
             <h3>研究計画</h3>
-            <p>研究カードから目標レベルを指定すると、未達の前提研究を依存階層へ分け、前提を持たない下位階層をすべて表示してから次の階層へ進みます。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「研究完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。叡智の輪は研究速度適用前の元時間と公開データの必要個数を使い、1個33d 03:59:00相当に対する時間効率を表示します。研究計画の見出し横にある「資源」で通常表記とK/M/B/Tの短縮表記を切り替えられます。</p>
+            <p>研究カードから目標レベルを指定すると、未達の前提研究を依存階層へ分け、前提を持たない下位階層をすべて表示してから次の階層へ進みます。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「研究完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。叡智の輪は研究速度適用前の元時間と研究ごとの必要個数を使います。時間効率は1個あたり33d 04:00:00を100%として、必要個数をどれだけ有効に使えるかを表示します。研究計画の見出し横にある「資源」で通常表記とK/M/B/Tの短縮表記を切り替えられ、短縮時はゲーム画面と同様に小数第2位までを切り捨てます。</p>
           </article>
           <article>
             <h3>城レベル計画</h3>
-            <p>城タブの目標城レベルは現在の城タスクとして保存されます。不足する前提施設をすべて遡り、各建設ステップと合計の資材・時間を表示します。城Lv.25到達後は、通常の城レベルとは別にマナ強化段階0～5を設定し、Lv.25-1～Lv.25-5として計画できます。各ステップの「完了」は、その建設までに必須となる直前のステップも含めて施設レベルとマナ強化段階へ反映します。現在の城レベルで必ず建設済みとなる最低施設レベルは自動で補います。それより進めている施設は「現在の施設レベル」から入力してください。建設時間にはプレイヤー設定の建設速度、VIP無料時間、ギルドヘルプ回数を適用します。</p>
+            <p>城タブの目標城レベルは現在の城タスクとして保存されます。不足する前提施設をすべて遡り、各建設ステップと合計の資材・時間を表示します。城Lv.25到達後は、通常の城レベルとは別にマナ強化段階0～5を設定し、Lv.25-1～Lv.25-5として計画できます。各ステップの「完了」は、その建設までに必須となる直前のステップも含めて施設レベルとマナ強化段階へ反映します。現在の城レベルで必ず建設済みとなる最低施設レベルは自動で補います。それより進めている施設は「現在の施設レベル」から入力してください。建設時間にはプレイヤー設定の建設速度と追加の建設スピードアップ、VIP無料時間、ギルドヘルプ回数を適用します。</p>
           </article>
           <article>
             <h3>PWA版の範囲</h3>
@@ -333,6 +350,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.9-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.10-b2"></script>
   </body>
 </html>

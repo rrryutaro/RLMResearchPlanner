@@ -79,6 +79,9 @@ class PlayerRepository:
             construction_speed_percent=float(
                 values.get("construction_speed_percent", 0.0)
             ),
+            construction_speed_boost_percent=float(
+                values.get("construction_speed_boost_percent", 0.0)
+            ),
             research_speed_percent=float(values.get("research_speed_percent", 0.0)),
             research_speed_boost_percent=float(
                 values.get("research_speed_boost_percent", 0.0)
@@ -132,6 +135,9 @@ class PlayerRepository:
             "academy_level": state.settings.academy_level,
             "construction_speed_percent": (
                 state.settings.construction_speed_percent
+            ),
+            "construction_speed_boost_percent": (
+                state.settings.construction_speed_boost_percent
             ),
             "research_speed_percent": state.settings.research_speed_percent,
             "research_speed_boost_percent": (
@@ -193,6 +199,9 @@ class PlayerRepository:
                     "academy_level": state.settings.academy_level,
                     "construction_speed_percent": (
                         state.settings.construction_speed_percent
+                    ),
+                    "construction_speed_boost_percent": (
+                        state.settings.construction_speed_boost_percent
                     ),
                     "research_speed_percent": state.settings.research_speed_percent,
                     "research_speed_boost_percent": (
@@ -262,6 +271,9 @@ class PlayerRepository:
             academy_level=int(raw_settings["academy_level"]),  # type: ignore[index]
             construction_speed_percent=float(
                 raw_settings.get("construction_speed_percent", 0.0)  # type: ignore[union-attr]
+            ),
+            construction_speed_boost_percent=float(
+                raw_settings.get("construction_speed_boost_percent", 0.0)  # type: ignore[union-attr]
             ),
             research_speed_percent=float(raw_settings["research_speed_percent"]),  # type: ignore[index]
             research_speed_boost_percent=float(

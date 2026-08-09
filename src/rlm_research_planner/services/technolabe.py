@@ -3,11 +3,10 @@ from __future__ import annotations
 import math
 
 
-# Community catalog measurements place one normal Technolabe boundary at
-# 33d 03:59:00 of original (pre-research-speed) time.  Sourced per-level counts
-# take precedence because Monster Hunt and a small number of other entries do
-# not follow the normal boundary.
-TECHNOLABE_CAPACITY_SECONDS = 33 * 86_400 + 3 * 3_600 + 59 * 60
+# Use 33d 04:00:00 of original (pre-research-speed) time as the 100% efficiency
+# benchmark. Sourced per-level counts always take precedence because the game
+# assigns item counts per research rather than exposing a universal formula.
+TECHNOLABE_CAPACITY_SECONDS = 33 * 86_400 + 4 * 3_600
 
 
 def technolabe_usage(

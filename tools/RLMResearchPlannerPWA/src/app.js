@@ -1,13 +1,13 @@
-import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.9-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.9-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.9-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.9-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.9-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.9-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.9-b1";
+import { currentEffect, loadCatalog, loadEffectLabels } from "./catalog.js?v=0.0.10-b2";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.10-b2";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.10-b2";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.10-b2";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.10-b2";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.10-b2";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.10-b2";
 
-const RELEASE_VERSION = "0.0.9";
-const DEVELOPMENT_BUILD = 1;
+const RELEASE_VERSION = "0.0.10";
+const DEVELOPMENT_BUILD = 2;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
@@ -351,12 +351,15 @@ function renderLines(category, visibleIds, positions, width, height) {
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.setAttribute("width", width);
   svg.setAttribute("height", height);
-  const paths = [];
+  const inactivePaths = [];
+  const activePaths = [];
   for (const [fromId, toId] of category.edges) {
     if (!visibleIds.has(fromId) || !visibleIds.has(toId)) continue;
     const from = positions.get(fromId); const to = positions.get(toId);
     if (!from || !to) continue;
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const unlocked = isResearchConnectionUnlocked(catalog.nodes.get(toId), state);
+    path.classList.add(unlocked ? "is-active" : "is-inactive");
     if (Math.abs(from.y - to.y) < 2) {
       const fromRight = from.x < to.x;
       const x1 = fromRight ? from.x + from.width : from.x;
@@ -369,9 +372,9 @@ function renderLines(category, visibleIds, positions, width, height) {
       const mid = y1 + Math.max(12 * zoom, (y2 - y1) / 2);
       path.setAttribute("d", `M ${x1} ${y1} V ${mid} H ${x2} V ${y2}`);
     }
-    paths.push(path);
+    (unlocked ? activePaths : inactivePaths).push(path);
   }
-  svg.replaceChildren(...paths);
+  svg.replaceChildren(...inactivePaths, ...activePaths);
 }
 
 function renderCard(node, position) {
@@ -533,7 +536,7 @@ function renderNodeNextDetails(node, level) {
 function bindSettings() {
   const inputs = {
     "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-castle-mana": ["castleManaStage", true], "setting-academy": ["academyLevel", true],
-    "setting-construction-speed": ["constructionSpeedPercent", false],
+    "setting-construction-speed": ["constructionSpeedPercent", false], "setting-construction-boost": ["constructionSpeedBoostPercent", false],
     "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-helps": ["maxGuildHelps", true],
   };
   for (const [id, [key, integer]] of Object.entries(inputs)) {
@@ -579,6 +582,7 @@ function populateSettings() {
   byId("setting-castle-mana").value = state.settings.castleManaStage;
   byId("setting-castle-mana").disabled = state.settings.castleLevel !== 25;
   byId("setting-construction-speed").value = state.settings.constructionSpeedPercent;
+  byId("setting-construction-boost").value = state.settings.constructionSpeedBoostPercent;
   byId("setting-academy").value = state.settings.academyLevel;
   byId("setting-speed").value = state.settings.researchSpeedPercent;
   byId("setting-boost").value = state.settings.researchSpeedBoostPercent;
@@ -715,7 +719,7 @@ function renderCastle() {
   const summary = byId("castle-summary");
   const summaryItems = [
     ["城レベル", `${castleProgressLabel(plan.currentCastleLevel, plan.currentManaStage)} → ${castleProgressLabel(plan.targetCastleLevel, plan.targetManaStage)}`],
-    ["建設速度", `+${Number(state.settings.constructionSpeedPercent || 0).toLocaleString(state.locale)}%`],
+    ["有効建設速度", `+${(Number(state.settings.constructionSpeedPercent || 0) + Number(state.settings.constructionSpeedBoostPercent || 0)).toLocaleString(state.locale)}%`],
     ["合計時間", formatDuration(plan.totals.adjustedSeconds)],
   ];
   for (const key of CASTLE_RESOURCE_KEYS.filter((key) => Number(plan.totals.costs[key] || 0) > 0)) {

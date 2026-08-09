@@ -148,6 +148,7 @@ class PlayerSettings:
     castle_target_mana_stage: int = 0
     academy_level: int = 1
     construction_speed_percent: float = 0.0
+    construction_speed_boost_percent: float = 0.0
     research_speed_percent: float = 0.0
     research_speed_boost_percent: float = 0.0
     max_guild_helps: int = 0
@@ -156,6 +157,12 @@ class PlayerSettings:
     resources: dict[str, int] = field(
         default_factory=lambda: {key: 0 for key in RESOURCE_KEYS}
     )
+
+    @property
+    def effective_construction_speed_percent(self) -> float:
+        return max(0.0, float(self.construction_speed_percent)) + max(
+            0.0, float(self.construction_speed_boost_percent)
+        )
 
     @property
     def effective_research_speed_percent(self) -> float:
