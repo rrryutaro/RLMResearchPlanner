@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import ctypes
 import re
 import subprocess
+import sys
+from ctypes import wintypes
 from collections.abc import Iterable
 from difflib import SequenceMatcher
 from pathlib import Path
 
-from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt
+from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt, QTimer
 from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
@@ -162,6 +165,7 @@ RESOURCE_LABELS = {
     "lunite": "Lunite",
 }
 PLAN_RESOURCE_KEYS = tuple(RESOURCE_LABELS)
+_DWMWA_CLOAK = 13
 
 
 class _OcrImagePreview(QLabel):
@@ -249,6 +253,9 @@ class MainWindow(QMainWindow):
         translator: Translator,
     ) -> None:
         super().__init__()
+        self._startup_reveal_pending = False
+        self._startup_reveal_scheduled = False
+        self._startup_window_cloaked = False
         self.app_settings = app_settings
         self.app_settings.visual_style = normalize_visual_style(
             self.app_settings.visual_style
@@ -306,7 +313,50 @@ class MainWindow(QMainWindow):
         self._build_ui()
         self._apply_visual_style()
         self._restore_geometry()
+        self._startup_window_cloaked = self._set_native_window_cloaked(True)
+        self._startup_reveal_pending = self._startup_window_cloaked
         self.update_controller.schedule_startup_check()
+
+    def showEvent(self, event) -> None:
+        super().showEvent(event)
+        if (
+            self._startup_reveal_pending
+            and not self._startup_reveal_scheduled
+        ):
+            self._startup_reveal_scheduled = True
+            QTimer.singleShot(0, self._reveal_after_startup_paint)
+
+    def _set_native_window_cloaked(self, cloaked: bool) -> bool:
+        if sys.platform != "win32":
+            return False
+        try:
+            value = ctypes.c_int(1 if cloaked else 0)
+            set_window_attribute = ctypes.windll.dwmapi.DwmSetWindowAttribute
+            set_window_attribute.argtypes = (
+                wintypes.HWND,
+                wintypes.DWORD,
+                ctypes.c_void_p,
+                wintypes.DWORD,
+            )
+            set_window_attribute.restype = ctypes.c_long
+            result = set_window_attribute(
+                wintypes.HWND(int(self.winId())),
+                _DWMWA_CLOAK,
+                ctypes.byref(value),
+                ctypes.sizeof(value),
+            )
+        except (AttributeError, OSError):
+            return False
+        return result == 0
+
+    def _reveal_after_startup_paint(self) -> None:
+        if not self._startup_reveal_pending:
+            return
+        self.repaint()
+        QApplication.processEvents()
+        self._set_native_window_cloaked(False)
+        self._startup_window_cloaked = False
+        self._startup_reveal_pending = False
 
     def t(self, key: str, **values: object) -> str:
         return self.translator.text(key, **values)
