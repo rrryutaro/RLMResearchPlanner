@@ -9,7 +9,7 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.11-b3">
+    <link rel="stylesheet" href="./styles.css?v=0.0.12-b2">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -121,6 +121,7 @@
               </div>
               <div class="plan-summary-time">
                 <strong id="plan-total-time"></strong>
+                <span id="plan-total-help-time" class="plan-help-time" hidden></span>
                 <span id="plan-wisdom-summary" class="muted"></span>
               </div>
             </article>
@@ -196,7 +197,7 @@
               <label class="field"><span>城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
               <label class="field"><span>城Lv.25後のマナ強化段階</span><input id="setting-castle-mana" type="number" inputmode="numeric" min="0" max="5"></label>
               <label class="field"><span>アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
-              <label class="field"><span>ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="40"></label>
+              <label class="field"><span>ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="6"><small id="guild-help-limit" class="field-hint"></small></label>
             </div>
             <p id="vip-free-time" class="hint"></p>
             </div>
@@ -356,6 +357,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.11-b3"></script>
+    <script type="module" src="./src/app.js?v=0.0.12-b2"></script>
   </body>
 </html>

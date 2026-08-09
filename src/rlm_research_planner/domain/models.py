@@ -175,6 +175,16 @@ class PlayerSettings:
         )
 
 
+MAX_GUILD_HELPS = 30
+
+
+def max_guild_helps_for_castle(castle_level: int) -> int:
+    """Return the in-game guild-help limit for a normal Castle level."""
+
+    normalized_level = max(1, min(25, int(castle_level)))
+    return min(MAX_GUILD_HELPS, normalized_level + 5)
+
+
 @dataclass(frozen=True)
 class ResearchPlanTask:
     research_id: str

@@ -93,6 +93,13 @@ def apply_guild_helps(
     help_count: int,
     policy: GuildHelpPolicy | None = None,
 ) -> int:
+    """Estimate the shortest remaining timer after consecutive guild helps.
+
+    Each help is applied to the remaining timer after the previous help.  Calling
+    this with the timer shown when a project starts therefore models receiving
+    every configured help immediately, before ordinary elapsed time can reduce
+    the value on which the percentage is calculated.
+    """
     if initial_seconds < 0:
         raise ValueError("initial_seconds must be non-negative")
     if help_count < 0:

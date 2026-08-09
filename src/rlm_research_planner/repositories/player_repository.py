@@ -10,6 +10,7 @@ from rlm_research_planner.domain.models import (
     PlayerState,
     ResearchPlanTask,
     RESOURCE_KEYS,
+    max_guild_helps_for_castle,
 )
 from rlm_research_planner.services.calculation import (
     free_speedup_seconds_for_vip,
@@ -65,9 +66,10 @@ class PlayerRepository:
                 ),
             )
         )
+        castle_level = max(1, min(25, int(values.get("castle_level", 1))))
         settings = PlayerSettings(
             vip_level=max(1, min(15, vip_level)),
-            castle_level=int(values.get("castle_level", 1)),
+            castle_level=castle_level,
             castle_target_level=max(0, int(values.get("castle_target_level", 0))),
             castle_mana_stage=max(
                 0, min(5, int(values.get("castle_mana_stage", 0)))
@@ -86,7 +88,13 @@ class PlayerRepository:
             research_speed_boost_percent=float(
                 values.get("research_speed_boost_percent", 0.0)
             ),
-            max_guild_helps=int(values.get("max_guild_helps", 0)),
+            max_guild_helps=max(
+                0,
+                min(
+                    max_guild_helps_for_castle(castle_level),
+                    int(values.get("max_guild_helps", 0)),
+                ),
+            ),
             speedup_seconds=int(values.get("speedup_seconds", 0)),
             resource_display_mode=(
                 "short"
@@ -126,6 +134,13 @@ class PlayerRepository:
 
     def save(self, state: PlayerState) -> None:
         updated_at = datetime.now(timezone.utc).isoformat()
+        state.settings.max_guild_helps = max(
+            0,
+            min(
+                max_guild_helps_for_castle(state.settings.castle_level),
+                int(state.settings.max_guild_helps),
+            ),
+        )
         values: dict[str, object] = {
             "vip_level": state.settings.vip_level,
             "castle_level": state.settings.castle_level,
@@ -210,7 +225,15 @@ class PlayerRepository:
                     "free_speedup_seconds": free_speedup_seconds_for_vip(
                         state.settings.vip_level
                     ),
-                    "max_guild_helps": state.settings.max_guild_helps,
+                    "max_guild_helps": max(
+                        0,
+                        min(
+                            max_guild_helps_for_castle(
+                                state.settings.castle_level
+                            ),
+                            int(state.settings.max_guild_helps),
+                        ),
+                    ),
                     "speedup_seconds": state.settings.speedup_seconds,
                     "resource_display_mode": state.settings.resource_display_mode,
                     "resources": state.settings.resources,
@@ -247,9 +270,13 @@ class PlayerRepository:
                 ),
             )
         )
+        castle_level = max(
+            1,
+            min(25, int(raw_settings["castle_level"])),  # type: ignore[index]
+        )
         settings = PlayerSettings(
             vip_level=max(1, min(15, vip_level)),
-            castle_level=int(raw_settings["castle_level"]),  # type: ignore[index]
+            castle_level=castle_level,
             castle_target_level=max(
                 0,
                 int(raw_settings.get("castle_target_level", 0)),  # type: ignore[union-attr]
@@ -279,7 +306,13 @@ class PlayerRepository:
             research_speed_boost_percent=float(
                 raw_settings.get("research_speed_boost_percent", 0.0)  # type: ignore[union-attr]
             ),
-            max_guild_helps=int(raw_settings["max_guild_helps"]),  # type: ignore[index]
+            max_guild_helps=max(
+                0,
+                min(
+                    max_guild_helps_for_castle(castle_level),
+                    int(raw_settings["max_guild_helps"]),  # type: ignore[index]
+                ),
+            ),
             speedup_seconds=int(raw_settings["speedup_seconds"]),  # type: ignore[index]
             resource_display_mode=(
                 "short"

@@ -1,13 +1,13 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.11-b3";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.11-b3";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, loadState, saveState, stateFromBackup } from "./state.js?v=0.0.11-b3";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.11-b3";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.11-b3";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.11-b3";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.11-b3";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.12-b2";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.12-b2";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, loadState, maxGuildHelpsForCastle, saveState, stateFromBackup } from "./state.js?v=0.0.12-b2";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.12-b2";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.12-b2";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.12-b2";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.12-b2";
 
-const RELEASE_VERSION = "0.0.11";
-const DEVELOPMENT_BUILD = 3;
+const RELEASE_VERSION = "0.0.12";
+const DEVELOPMENT_BUILD = 2;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
@@ -565,14 +565,16 @@ function bindSettings() {
       if (key === "castleLevel") {
         if (state.settings.castleLevel < 25) state.settings.castleManaStage = 0;
         castleTargetLevel = Math.min(25, state.settings.castleLevel + 1);
+        state.settings.maxGuildHelps = guildHelpCount(state.settings);
       }
+      if (key === "maxGuildHelps") state.settings.maxGuildHelps = guildHelpCount(state.settings);
       if (key === "castleLevel" || key === "castleManaStage") {
         castleTargetManaStage = state.settings.castleLevel === 25 && state.settings.castleManaStage < 5
           ? state.settings.castleManaStage + 1
           : state.settings.castleManaStage;
         state.settings.castleTargetManaStage = castleTargetManaStage;
       }
-      updateVipHint(); scheduleSave(); renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
+      updateGuildHelpLimit(); updateVipHint(); scheduleSave(); renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
     });
   }
   const resourceInputs = byId("resource-inputs");
@@ -603,7 +605,7 @@ function populateSettings() {
   byId("setting-academy").value = state.settings.academyLevel;
   byId("setting-speed").value = state.settings.researchSpeedPercent;
   byId("setting-boost").value = state.settings.researchSpeedBoostPercent;
-  byId("setting-helps").value = state.settings.maxGuildHelps;
+  updateGuildHelpLimit();
   byId("language-select").value = state.locale;
   byId("resource-display-mode").value = state.settings.resourceDisplayMode;
   document.querySelectorAll("[data-resource]").forEach((input) => { input.value = state.settings.resources[input.dataset.resource] || 0; input.previousElementSibling.textContent = RESOURCE_NAMES[state.locale][input.dataset.resource]; });
@@ -611,6 +613,18 @@ function populateSettings() {
   populateBulkCategoryOptions();
   renderBulkLevels();
   renderCastle();
+}
+
+function updateGuildHelpLimit() {
+  const input = byId("setting-helps");
+  if (!input) return;
+  const limit = maxGuildHelpsForCastle(state.settings.castleLevel);
+  state.settings.maxGuildHelps = guildHelpCount(state.settings);
+  input.max = String(limit);
+  input.value = String(state.settings.maxGuildHelps);
+  input.title = `城Lv.${state.settings.castleLevel}では最大${limit}回です。`;
+  const hint = byId("guild-help-limit");
+  if (hint) hint.textContent = `上限 ${limit}回`;
 }
 
 function populateBulkCategoryOptions() {
@@ -978,7 +992,14 @@ function renderPlan() {
   const targetCategory = catalog.categories.find((item) => item.id === target.categoryId);
   byId("plan-target-name").textContent = `${catalog.nodeName(target, state.locale)} Lv.${currentPlan.targetLevel}`;
   byId("plan-steps-title").textContent = `必要な研究（${catalog.categoryTitle(targetCategory, state.locale)}）`;
-  byId("plan-total-time").textContent = currentPlan.totals.unknownTime ? `${formatDuration(currentPlan.totals.adjustedSeconds)} + 未確認` : formatDuration(currentPlan.totals.adjustedSeconds);
+  const partialTime = currentPlan.totals.unknownTime ? " + 未確認" : "";
+  byId("plan-total-time").textContent = `開始時 ${formatDuration(currentPlan.totals.adjustedSeconds)}${partialTime}`;
+  const totalHelpTime = byId("plan-total-help-time");
+  const helpCount = guildHelpCount(state.settings);
+  totalHelpTime.hidden = helpCount === 0;
+  totalHelpTime.textContent = helpCount > 0
+    ? `ヘルプ後 ${formatDuration(currentPlan.totals.afterHelpSeconds)}${partialTime}`
+    : "";
   byId("plan-wisdom-summary").textContent = wisdomText(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe);
   const resources = RESOURCE_NAMES[state.locale];
   const usedResources = RESOURCE_KEYS.filter((key) => Number(currentPlan.totals.costs[key] || 0) > 0);
@@ -1024,9 +1045,13 @@ function renderTasks() {
     const card = create("article", "task-card");
     const heading = create("div", "task-card-heading");
     const title = create("h3", "", `${catalog.nodeName(node, state.locale)} Lv.${task.targetLevel}`);
-    const remaining = create("strong", "", plan.steps.length ? formatDuration(plan.totals.adjustedSeconds) : "完了済み");
+    const remaining = create("strong", "", plan.steps.length ? `開始時 ${formatDuration(plan.totals.adjustedSeconds)}` : "完了済み");
     heading.append(title, remaining);
-    const meta = create("p", "muted", `残り ${plan.steps.length}手順 / ${wisdomText(plan.totals.technolabeCount, plan.totals.technolabeEfficiencyPercent, plan.totals.unknownTechnolabe)}`);
+    const helpCount = guildHelpCount(state.settings);
+    const helpSummary = helpCount > 0 && plan.steps.length
+      ? ` / ヘルプ後 ${formatDuration(plan.totals.afterHelpSeconds)}`
+      : "";
+    const meta = create("p", "muted", `残り ${plan.steps.length}手順${helpSummary} / ${wisdomText(plan.totals.technolabeCount, plan.totals.technolabeEfficiencyPercent, plan.totals.unknownTechnolabe)}`);
     const resources = create("div", "task-resources");
     const used = RESOURCE_KEYS.filter((key) => Number(plan.totals.costs[key] || 0) > 0);
     for (const key of used) resources.append(create("span", "", `${RESOURCE_NAMES[state.locale][key]} ${formatResource(plan.totals.costs[key])}`));
@@ -1057,10 +1082,12 @@ function planRow(step, { showCategory = true, selected = false } = {}) {
   );
   const footer = create("div", "plan-step-footer");
   const timing = create("div", "plan-step-timing");
-  timing.append(
-    create("strong", "plan-row-time", step.adjustedSeconds == null ? "未確認" : formatDuration(step.adjustedSeconds)),
-    create("span", "plan-row-wisdom", wisdomText(step.technolabeCount, step.technolabeEfficiencyPercent)),
-  );
+  timing.append(create("strong", "plan-row-time", step.adjustedSeconds == null ? "開始時 未確認" : `開始時 ${formatDuration(step.adjustedSeconds)}`));
+  const helpCount = guildHelpCount(state.settings);
+  if (helpCount > 0) {
+    timing.append(create("span", "plan-row-help", step.afterHelpSeconds == null ? "ヘルプ後 未確認" : `ヘルプ後 ${formatDuration(step.afterHelpSeconds)}`));
+  }
+  timing.append(create("span", "plan-row-wisdom", wisdomText(step.technolabeCount, step.technolabeEfficiencyPercent)));
   const complete = create("button", "step-complete", "研究完了"); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step));
   footer.append(timing, complete);
   row.append(main, footer); return row;

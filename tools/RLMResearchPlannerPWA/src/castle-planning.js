@@ -1,4 +1,4 @@
-import { freeSecondsForVip } from "./state.js?v=0.0.11-b3";
+import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.12-b2";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "mana_ore", "mana_crystal", "mana_steel"];
 
@@ -118,7 +118,7 @@ function adjustedConstructionTime(baseSeconds, settings) {
     + Math.max(0, Number(settings.constructionSpeedBoostPercent) || 0);
   let remaining = Math.ceil(Math.max(0, Number(baseSeconds) || 0) / (1 + speed / 100));
   remaining = Math.max(0, remaining - freeSecondsForVip(settings.vipLevel));
-  for (let count = 0; count < Math.max(0, Number(settings.maxGuildHelps) || 0) && remaining > 0; count += 1) {
+  for (let count = 0; count < guildHelpCount(settings) && remaining > 0; count += 1) {
     remaining = Math.max(0, Math.ceil(remaining - Math.max(60, remaining * 0.01)));
   }
   return remaining;

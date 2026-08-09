@@ -1,5 +1,18 @@
 export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "ancient_tomes", "lunite", "mana_ore", "special"];
+export const MAX_GUILD_HELPS = 30;
 const STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
+
+export function maxGuildHelpsForCastle(castleLevel) {
+  const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
+  return Math.min(MAX_GUILD_HELPS, normalizedLevel + 5);
+}
+
+export function guildHelpCount(settings) {
+  return Math.min(
+    maxGuildHelpsForCastle(settings?.castleLevel),
+    Math.max(0, Math.trunc(number(settings?.maxGuildHelps))),
+  );
+}
 
 export function defaultState() {
   return {
@@ -51,7 +64,10 @@ export function sanitizeState(value) {
   base.settings.constructionSpeedBoostPercent = Math.max(0, number(settings.constructionSpeedBoostPercent ?? settings.construction_speed_boost_percent));
   base.settings.researchSpeedPercent = Math.max(0, number(settings.researchSpeedPercent ?? settings.research_speed_percent));
   base.settings.researchSpeedBoostPercent = Math.max(0, number(settings.researchSpeedBoostPercent ?? settings.research_speed_boost_percent));
-  base.settings.maxGuildHelps = Math.max(0, Math.trunc(number(settings.maxGuildHelps ?? settings.max_guild_helps)));
+  base.settings.maxGuildHelps = Math.min(
+    maxGuildHelpsForCastle(base.settings.castleLevel),
+    Math.max(0, Math.trunc(number(settings.maxGuildHelps ?? settings.max_guild_helps))),
+  );
   base.settings.speedupSeconds = Math.max(0, Math.trunc(number(settings.speedupSeconds ?? settings.speedup_seconds)));
   base.settings.resourceDisplayMode = (settings.resourceDisplayMode ?? settings.resource_display_mode) === "short" ? "short" : "exact";
   const resources = settings.resources || {};
@@ -98,7 +114,7 @@ export function backupPayload(state) {
         research_speed_percent: state.settings.researchSpeedPercent,
         research_speed_boost_percent: state.settings.researchSpeedBoostPercent,
         free_speedup_seconds: freeSecondsForVip(state.settings.vipLevel),
-        max_guild_helps: state.settings.maxGuildHelps,
+        max_guild_helps: guildHelpCount(state.settings),
         speedup_seconds: state.settings.speedupSeconds,
         resource_display_mode: state.settings.resourceDisplayMode,
         resources: { ...state.settings.resources },

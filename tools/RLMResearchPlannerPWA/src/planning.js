@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.11-b3";
+import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.12-b2";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 
@@ -24,7 +24,12 @@ export function adjustedTime(baseSeconds, settings) {
   const speed = Math.max(0, Number(settings.researchSpeedPercent) || 0) + Math.max(0, Number(settings.researchSpeedBoostPercent) || 0);
   let remaining = Math.ceil(Math.max(0, Number(baseSeconds) || 0) / (1 + speed / 100));
   remaining = Math.max(0, remaining - freeSecondsForVip(settings.vipLevel));
-  for (let count = 0; count < Math.max(0, Number(settings.maxGuildHelps) || 0) && remaining > 0; count += 1) {
+  return remaining;
+}
+
+export function afterGuildHelps(initialSeconds, helpCount) {
+  let remaining = Math.max(0, Math.ceil(Number(initialSeconds) || 0));
+  for (let count = 0; count < Math.max(0, Math.trunc(Number(helpCount) || 0)) && remaining > 0; count += 1) {
     remaining = Math.max(0, Math.ceil(remaining - Math.max(60, remaining * 0.01)));
   }
   return remaining;
@@ -174,13 +179,14 @@ export function createPlan(catalog, state, targetId, targetLevel) {
     ordered.push(...unresolved.map((key) => stepMap.get(key)));
   }
 
-  const totals = { baseSeconds: 0, adjustedSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0, technolabeCount: 0, technolabeBaseSeconds: 0, unknownTechnolabe: 0, technolabeEfficiencyPercent: null };
+  const totals = { baseSeconds: 0, adjustedSeconds: 0, afterHelpSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0, technolabeCount: 0, technolabeBaseSeconds: 0, unknownTechnolabe: 0, technolabeEfficiencyPercent: null };
   const steps = ordered.map(({ node, level, data }) => {
     if (!data || data.baseTimeSeconds == null) totals.unknownTime += 1;
     else totals.baseSeconds += data.baseTimeSeconds;
     if (!data?.costsVerified) totals.unknownCosts += 1;
     const step = stepFrom(node, level, data, state.settings);
     totals.adjustedSeconds += step.adjustedSeconds || 0;
+    totals.afterHelpSeconds += step.afterHelpSeconds || 0;
     if (step.baseSeconds > 0 && step.technolabeCount == null) totals.unknownTechnolabe += 1;
     else if (step.technolabeCount > 0) {
       totals.technolabeCount += Number(step.technolabeCount);
@@ -209,12 +215,14 @@ export function researchLevelsAfterPlan(plan, currentLevels) {
 function stepFrom(node, level, data, settings) {
   const baseSeconds = data?.baseTimeSeconds == null ? null : Number(data.baseTimeSeconds);
   const technolabe = technolabeUsage(baseSeconds, data?.technolabeCount);
+  const adjustedSeconds = baseSeconds == null ? null : adjustedTime(baseSeconds, settings);
   return {
     researchId: node.id,
     categoryId: node.categoryId,
     level,
     baseSeconds,
-    adjustedSeconds: baseSeconds == null ? null : adjustedTime(baseSeconds, settings),
+    adjustedSeconds,
+    afterHelpSeconds: adjustedSeconds == null ? null : afterGuildHelps(adjustedSeconds, guildHelpCount(settings)),
     technolabeCount: technolabe.count,
     technolabeEfficiencyPercent: technolabe.efficiencyPercent,
     costs: { ...(data?.costs || {}) },

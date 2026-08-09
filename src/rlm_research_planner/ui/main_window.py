@@ -57,6 +57,7 @@ from rlm_research_planner.domain.models import (
     PlayerState,
     ResearchPlanTask,
     RESOURCE_KEYS,
+    max_guild_helps_for_castle,
 )
 from rlm_research_planner.domain.observations import (
     ObservedResearchNode,
@@ -132,7 +133,10 @@ from rlm_research_planner.ui.step_spin_box import (
     VisibleSpinBox,
     update_step_button_visual_styles,
 )
-from rlm_research_planner.ui.table_cell_widgets import set_table_cell_widget
+from rlm_research_planner.ui.table_cell_widgets import (
+    set_table_cell_widget,
+    update_table_cell_widget_visual_styles,
+)
 from rlm_research_planner.ui.update_controller import UpdateController
 from rlm_research_planner.ui.visual_styles import (
     dataset_style_sheet,
@@ -1847,7 +1851,21 @@ class MainWindow(QMainWindow):
         self.research_speed_boost_spin.setToolTip(
             self.t("player.research_speed_boost_hint")
         )
-        self.guild_help_spin = self._integer_spin(0, 1000, self.player_state.settings.max_guild_helps)
+        guild_help_limit = max_guild_helps_for_castle(
+            self.player_state.settings.castle_level
+        )
+        self.guild_help_spin = self._integer_spin(
+            0,
+            guild_help_limit,
+            min(self.player_state.settings.max_guild_helps, guild_help_limit),
+        )
+        self.guild_help_spin.setToolTip(
+            self.t(
+                "player.guild_helps_hint",
+                level=self.player_state.settings.castle_level,
+                count=guild_help_limit,
+            )
+        )
         self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
         common_group = QGroupBox(self.t("player.common_settings"))
         common_form = QFormLayout(common_group)
@@ -2042,6 +2060,20 @@ class MainWindow(QMainWindow):
         previous_mana_stage = settings.castle_mana_stage
         settings.vip_level = self.vip_level_spin.value()
         settings.castle_level = self.castle_spin.value()
+        guild_help_limit = max_guild_helps_for_castle(settings.castle_level)
+        self.guild_help_spin.blockSignals(True)
+        self.guild_help_spin.setMaximum(guild_help_limit)
+        self.guild_help_spin.setValue(
+            min(self.guild_help_spin.value(), guild_help_limit)
+        )
+        self.guild_help_spin.setToolTip(
+            self.t(
+                "player.guild_helps_hint",
+                level=settings.castle_level,
+                count=guild_help_limit,
+            )
+        )
+        self.guild_help_spin.blockSignals(False)
         settings.castle_mana_stage = (
             self.castle_mana_stage_spin.value()
             if settings.castle_level == 25
@@ -2060,7 +2092,9 @@ class MainWindow(QMainWindow):
         settings.research_speed_boost_percent = (
             self.research_speed_boost_spin.value()
         )
-        settings.max_guild_helps = self.guild_help_spin.value()
+        settings.max_guild_helps = min(
+            self.guild_help_spin.value(), guild_help_limit
+        )
         settings.speedup_seconds = self.speedup_spin.value()
         settings.resources = {key: spin.value() for key, spin in self.resource_spins.items()}
         self._player_settings_dirty = True
@@ -2740,9 +2774,20 @@ class MainWindow(QMainWindow):
             )
 
     def _set_visible_plan_resources(self, resource_keys: Iterable[str]) -> None:
+        self._update_plan_help_column()
         visible = set(resource_keys)
         for key, column in self._plan_resource_columns.items():
             self.plan_table.setColumnHidden(column, key not in visible)
+
+    def _update_plan_help_column(self) -> None:
+        if not hasattr(self, "plan_table"):
+            return
+        help_count = max(0, int(self.player_state.settings.max_guild_helps))
+        header = self.plan_table.horizontalHeaderItem(4)
+        if header is not None:
+            header.setText(self.t("plan.after_help"))
+            header.setToolTip(self.t("plan.after_help_hint", count=help_count))
+        self.plan_table.setColumnHidden(4, help_count == 0)
 
     def _show_registered_task(self, task: ResearchPlanTask) -> None:
         self._set_plan_target(task.research_id)
@@ -3361,6 +3406,7 @@ class MainWindow(QMainWindow):
         self.setProperty("visualStyle", visual_style)
         self.setStyleSheet(window_style_sheet(visual_style))
         update_step_button_visual_styles(self, visual_style)
+        update_table_cell_widget_visual_styles(self, visual_style)
         if hasattr(self, "tree_dataset_list"):
             self.tree_dataset_list.setStyleSheet(
                 dataset_style_sheet(visual_style)
