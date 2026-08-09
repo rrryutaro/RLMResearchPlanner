@@ -398,12 +398,10 @@ class ResearchTreeView(QGraphicsView):
         self.viewport().update()
 
     def drawBackground(self, painter, rect) -> None:
-        if self._visual_style != "mobile":
-            super().drawBackground(painter, rect)
-            return
-        painter.fillRect(rect, QColor("#07141C"))
+        mobile = self._visual_style == "mobile"
+        painter.fillRect(rect, QColor("#07141C" if mobile else "#111820"))
         grid_size = 24.0
-        grid_pen = QPen(QColor("#102631"), 1.0)
+        grid_pen = QPen(QColor("#102631" if mobile else "#26323B"), 1.0)
         grid_pen.setCosmetic(True)
         painter.setPen(grid_pen)
         left = math.floor(rect.left() / grid_size) * grid_size

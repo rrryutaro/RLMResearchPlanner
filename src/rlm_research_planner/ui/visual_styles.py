@@ -1,5 +1,8 @@
 from __future__ import annotations
 
+from PySide6.QtGui import QColor, QPalette
+from PySide6.QtWidgets import QWidget
+
 
 MOBILE_STYLE_SHEET = """
 QMainWindow {
@@ -239,6 +242,34 @@ MOBILE_DATASET_STYLE = (
 
 def window_style_sheet(visual_style: str) -> str:
     return MOBILE_STYLE_SHEET if visual_style == "mobile" else ""
+
+
+def apply_dialog_visual_style(dialog: QWidget, visual_style: str) -> None:
+    """Apply the selected appearance directly to a top-level dialog.
+
+    Top-level native dialogs do not reliably inherit a style sheet from their
+    parent window on Windows.  Set both the palette and the style sheet on the
+    dialog itself so its panel and child text always use the same theme.
+    """
+    dialog.setProperty("visualStyle", visual_style)
+    if visual_style != "mobile":
+        dialog.setStyleSheet("")
+        dialog.setAutoFillBackground(False)
+        return
+
+    palette = dialog.palette()
+    palette.setColor(QPalette.ColorRole.Window, QColor("#0D2530"))
+    palette.setColor(QPalette.ColorRole.WindowText, QColor("#F4F8F8"))
+    palette.setColor(QPalette.ColorRole.Base, QColor("#081B24"))
+    palette.setColor(QPalette.ColorRole.AlternateBase, QColor("#0D2530"))
+    palette.setColor(QPalette.ColorRole.Text, QColor("#F4F8F8"))
+    palette.setColor(QPalette.ColorRole.Button, QColor("#15333E"))
+    palette.setColor(QPalette.ColorRole.ButtonText, QColor("#F4F8F8"))
+    palette.setColor(QPalette.ColorRole.Highlight, QColor("#F2B632"))
+    palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#07151D"))
+    dialog.setPalette(palette)
+    dialog.setAutoFillBackground(True)
+    dialog.setStyleSheet(MOBILE_STYLE_SHEET)
 
 
 def dataset_style_sheet(visual_style: str) -> str:

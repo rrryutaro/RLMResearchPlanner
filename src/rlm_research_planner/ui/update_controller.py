@@ -11,6 +11,7 @@ from rlm_research_planner.ui.update_worker import (
     UpdateCheckWorker,
     UpdateDownloadWorker,
 )
+from rlm_research_planner.ui.visual_styles import apply_dialog_visual_style
 
 
 class UpdateController(QObject):
@@ -30,6 +31,33 @@ class UpdateController(QObject):
 
     def t(self, key: str, **values: object) -> str:
         return self.window.t(key, **values)
+
+    def _style_dialog(self, dialog):
+        apply_dialog_visual_style(dialog, self.app_settings.visual_style)
+        return dialog
+
+    def _message_box(
+        self,
+        icon: QMessageBox.Icon,
+        message: str,
+        *,
+        buttons: QMessageBox.StandardButton = QMessageBox.StandardButton.Ok,
+        default_button: QMessageBox.StandardButton | None = None,
+    ) -> QMessageBox:
+        box = QMessageBox(self.window)
+        box.setWindowTitle(self.t("update.dialog.title"))
+        box.setIcon(icon)
+        box.setText(message)
+        box.setStandardButtons(buttons)
+        if default_button is not None:
+            box.setDefaultButton(default_button)
+        return self._style_dialog(box)
+
+    def _show_information(self, message: str) -> None:
+        self._message_box(QMessageBox.Icon.Information, message).exec()
+
+    def _show_warning(self, message: str) -> None:
+        self._message_box(QMessageBox.Icon.Warning, message).exec()
 
     def bind_help_controls(self, check_button, status_label, startup_checkbox) -> None:
         self._check_button = check_button
@@ -94,11 +122,7 @@ class UpdateController(QObject):
             if self._status_label is not None:
                 self._status_label.setText(self.t("update.status.latest"))
             if manual:
-                QMessageBox.information(
-                    self.window,
-                    self.t("update.dialog.title"),
-                    self.t("update.latest"),
-                )
+                self._show_information(self.t("update.latest"))
             return
         if self._status_label is not None:
             self._status_label.setText(
@@ -115,11 +139,7 @@ class UpdateController(QObject):
         if self._status_label is not None:
             self._status_label.setText(self.t("update.status.error"))
         if manual:
-            QMessageBox.warning(
-                self.window,
-                self.t("update.dialog.title"),
-                self.t("update.check_failed", error=message),
-            )
+            self._show_warning(self.t("update.check_failed", error=message))
 
     @staticmethod
     def _plain_release_notes(markdown: str, maximum: int = 500) -> str:
@@ -163,6 +183,7 @@ class UpdateController(QObject):
         )
         box.addButton(self.t("update.later"), QMessageBox.ButtonRole.RejectRole)
         box.setDefaultButton(primary)
+        self._style_dialog(box)
         box.exec()
         clicked = box.clickedButton()
         if clicked is primary:
@@ -181,10 +202,8 @@ class UpdateController(QObject):
     def _start_download(self, release) -> None:
         directory = updater.install_directory()
         if not updater.has_write_permission(directory):
-            QMessageBox.warning(
-                self.window,
-                self.t("update.dialog.title"),
-                self.t("update.no_write_permission", path=str(directory)),
+            self._show_warning(
+                self.t("update.no_write_permission", path=str(directory))
             )
             return
         if self._download_worker is not None and self._download_worker.isRunning():
@@ -203,6 +222,7 @@ class UpdateController(QObject):
         progress.setAutoClose(False)
         progress.setAutoReset(False)
         progress.setValue(0)
+        self._style_dialog(progress)
         worker = UpdateDownloadWorker(release, directory, self)
         worker.progress.connect(self._download_progress)
         worker.succeeded.connect(
@@ -242,12 +262,20 @@ class UpdateController(QObject):
 
     def _download_finished(self, release) -> None:
         self._close_progress()
-        result = QMessageBox.question(
-            self.window,
-            self.t("update.dialog.title"),
+        box = self._message_box(
+            QMessageBox.Icon.Question,
             self.t("update.restart_confirm", version=release.version),
-            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-            QMessageBox.StandardButton.Yes,
+            buttons=(
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            ),
+            default_button=QMessageBox.StandardButton.Yes,
+        )
+        box.exec()
+        clicked_button = box.clickedButton()
+        result = (
+            box.standardButton(clicked_button)
+            if clicked_button is not None
+            else QMessageBox.StandardButton.NoButton
         )
         if result != QMessageBox.StandardButton.Yes:
             (updater.install_directory() / updater.STAGED_EXECUTABLE_NAME).unlink(
@@ -257,10 +285,11 @@ class UpdateController(QObject):
         try:
             updater.launch_update_helper(updater.install_directory())
         except Exception as error:
-            QMessageBox.warning(
-                self.window,
-                self.t("update.dialog.title"),
-                self.t("update.apply_failed", error=f"{type(error).__name__}: {error}"),
+            self._show_warning(
+                self.t(
+                    "update.apply_failed",
+                    error=f"{type(error).__name__}: {error}",
+                )
             )
             return
         application = QApplication.instance()
@@ -269,11 +298,7 @@ class UpdateController(QObject):
 
     def _download_failed(self, message: str) -> None:
         self._close_progress()
-        QMessageBox.warning(
-            self.window,
-            self.t("update.dialog.title"),
-            self.t("update.download_failed", error=message),
-        )
+        self._show_warning(self.t("update.download_failed", error=message))
 
     def _download_cancelled(self) -> None:
         self._close_progress()
