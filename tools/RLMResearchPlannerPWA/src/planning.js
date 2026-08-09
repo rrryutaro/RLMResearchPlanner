@@ -1,14 +1,13 @@
-import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.10-b2";
+import { RESOURCE_KEYS, freeSecondsForVip } from "./state.js?v=0.0.11-b3";
 
-export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 4 * 3600;
+export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 
 export function technolabeUsage(baseSeconds, sourcedCount = null) {
   if (baseSeconds == null) return { count: null, efficiencyPercent: null };
   const base = Math.max(0, Number(baseSeconds) || 0);
   if (!base) return { count: 0, efficiencyPercent: null };
-  const count = sourcedCount != null && Number(sourcedCount) > 0
-    ? Math.max(1, Math.trunc(Number(sourcedCount)))
-    : Math.max(1, Math.ceil(base / TECHNOLABE_CAPACITY_SECONDS));
+  if (sourcedCount == null || Number(sourcedCount) <= 0) return { count: null, efficiencyPercent: null };
+  const count = Math.max(1, Math.trunc(Number(sourcedCount)));
   return {
     count,
     efficiencyPercent: Math.min(100, base / (count * TECHNOLABE_CAPACITY_SECONDS) * 100),
@@ -175,19 +174,23 @@ export function createPlan(catalog, state, targetId, targetLevel) {
     ordered.push(...unresolved.map((key) => stepMap.get(key)));
   }
 
-  const totals = { baseSeconds: 0, adjustedSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0, technolabeCount: 0, technolabeEfficiencyPercent: null };
+  const totals = { baseSeconds: 0, adjustedSeconds: 0, costs: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])), unknownTime: 0, unknownCosts: 0, technolabeCount: 0, technolabeBaseSeconds: 0, unknownTechnolabe: 0, technolabeEfficiencyPercent: null };
   const steps = ordered.map(({ node, level, data }) => {
     if (!data || data.baseTimeSeconds == null) totals.unknownTime += 1;
     else totals.baseSeconds += data.baseTimeSeconds;
     if (!data?.costsVerified) totals.unknownCosts += 1;
     const step = stepFrom(node, level, data, state.settings);
     totals.adjustedSeconds += step.adjustedSeconds || 0;
-    totals.technolabeCount += Number(step.technolabeCount || 0);
+    if (step.baseSeconds > 0 && step.technolabeCount == null) totals.unknownTechnolabe += 1;
+    else if (step.technolabeCount > 0) {
+      totals.technolabeCount += Number(step.technolabeCount);
+      totals.technolabeBaseSeconds += Number(step.baseSeconds || 0);
+    }
     for (const key of RESOURCE_KEYS) totals.costs[key] += Number(step.costs[key] || 0);
     return step;
   });
   if (totals.baseSeconds > 0 && totals.technolabeCount > 0) {
-    totals.technolabeEfficiencyPercent = Math.min(100, totals.baseSeconds / (totals.technolabeCount * TECHNOLABE_CAPACITY_SECONDS) * 100);
+    totals.technolabeEfficiencyPercent = Math.min(100, totals.technolabeBaseSeconds / (totals.technolabeCount * TECHNOLABE_CAPACITY_SECONDS) * 100);
   }
   return { targetId, targetLevel: normalizedTarget, steps, totals, issues };
 }

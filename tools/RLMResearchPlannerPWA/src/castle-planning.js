@@ -1,6 +1,6 @@
-import { freeSecondsForVip } from "./state.js?v=0.0.10-b2";
+import { freeSecondsForVip } from "./state.js?v=0.0.11-b3";
 
-export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "mana_ore", "mana_crystal", "mana_steel"];
+export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "mana_ore", "mana_crystal", "mana_steel"];
 
 function localText(values, locale) {
   return values?.[locale] || values?.[locale?.split("-")[0]] || values?.["en-US"] || Object.values(values || {})[0] || "";
@@ -36,15 +36,48 @@ export function normalizeCastleCatalog(raw) {
       costs: Object.fromEntries(CASTLE_RESOURCE_KEYS.map((key) => [key, Math.max(0, Number(source.costs?.[key]) || 0)])),
     }];
   }));
+  const gemShopPacks = Object.fromEntries(Object.entries(raw.gem_shop_packs || {}).map(([key, packs]) => [key, (packs || []).map((pack) => ({
+    quantity: Math.max(1, Math.trunc(Number(pack.quantity) || 1)),
+    gems: Math.max(0, Math.trunc(Number(pack.gems) || 0)),
+  }))]));
   return {
     buildings,
     manaStages,
     maxManaStage: Math.max(0, ...manaStages.keys()),
     manaNames: { ...(manaSource.names || {}) },
+    gemShopPacks,
     order: [...buildings.keys()],
     buildingName(buildingId, locale) { const building = buildings.get(buildingId); return building ? localText(building.names, locale) : buildingId; },
     manaName(locale) { return localText(this.manaNames, locale) || this.buildingName("castle", locale); },
   };
+}
+
+export function minimumGemsForAmount(amount, packs) {
+  const required = Math.max(0, Math.trunc(Number(amount) || 0));
+  const normalized = (packs || []).map((pack) => ({
+    quantity: Math.max(1, Math.trunc(Number(pack.quantity) || 1)),
+    gems: Math.max(0, Math.trunc(Number(pack.gems) || 0)),
+  })).filter((pack) => pack.quantity > 0);
+  if (!required) return 0;
+  if (!normalized.length) throw new Error("ジェムショップの購入単位がありません");
+  const limit = required + Math.max(...normalized.map((pack) => pack.quantity)) - 1;
+  const costs = Array(limit + 1).fill(Number.POSITIVE_INFINITY);
+  costs[0] = 0;
+  for (let owned = 0; owned <= limit; owned += 1) {
+    if (!Number.isFinite(costs[owned])) continue;
+    for (const pack of normalized) {
+      const next = Math.min(limit, owned + pack.quantity);
+      costs[next] = Math.min(costs[next], costs[owned] + pack.gems);
+    }
+  }
+  return Math.min(...costs.slice(required));
+}
+
+export function gemCostsFor(catalog, costs, ownedResources = {}) {
+  return Object.fromEntries(Object.entries(catalog.gemShopPacks || {}).flatMap(([key, packs]) => {
+    const missing = Math.max(0, Number(costs?.[key] || 0) - Number(ownedResources?.[key] || 0));
+    return missing > 0 ? [[key, minimumGemsForAmount(missing, packs)]] : [];
+  }));
 }
 
 export function minimumBuildingLevels(catalog, castleLevel) {
@@ -91,14 +124,19 @@ function adjustedConstructionTime(baseSeconds, settings) {
   return remaining;
 }
 
-export function createCastlePlan(catalog, state, targetCastleLevel, targetManaStage = state.settings.castleTargetManaStage) {
+export function createCastlePlan(catalog, state, targetCastleLevel, targetManaStage = state.settings.castleTargetManaStage, options = {}) {
   const castle = catalog.buildings.get("castle");
   const current = Math.min(castle.maxLevel, Math.max(1, Math.trunc(Number(state.settings.castleLevel) || 1)));
-  const target = Math.min(castle.maxLevel, Math.max(current, Math.trunc(Number(targetCastleLevel) || current)));
+  const targetBuildingId = options.targetBuildingId || "castle";
+  const selectedBuilding = catalog.buildings.get(targetBuildingId);
+  if (!selectedBuilding) throw new Error(`不明な施設: ${targetBuildingId}`);
+  const target = targetBuildingId === "castle"
+    ? Math.min(castle.maxLevel, Math.max(current, Math.trunc(Number(targetCastleLevel) || current)))
+    : current;
   const currentManaStage = current >= castle.maxLevel
     ? Math.min(catalog.maxManaStage, Math.max(0, Math.trunc(Number(state.settings.castleManaStage) || 0)))
     : 0;
-  const normalizedTargetManaStage = target >= castle.maxLevel
+  const normalizedTargetManaStage = targetBuildingId === "castle" && target >= castle.maxLevel
     ? Math.min(catalog.maxManaStage, Math.max(currentManaStage, Math.trunc(Number(targetManaStage) || 0)))
     : 0;
   const effectiveLevels = effectiveBuildingLevels(catalog, current, state.buildingLevels);
@@ -106,6 +144,9 @@ export function createCastlePlan(catalog, state, targetCastleLevel, targetManaSt
   const completed = new Set();
   const visiting = new Set();
   const issues = [];
+  const selectedTarget = targetBuildingId === "castle"
+    ? target
+    : Math.min(selectedBuilding.maxLevel, Math.max(Number(effectiveLevels[targetBuildingId] || 0), Math.trunc(Number(options.targetBuildingLevel) || 0)));
   const addBuilding = (buildingId, targetLevel) => {
     const building = catalog.buildings.get(buildingId);
     if (!building) { issues.push(`不明な施設: ${buildingId}`); return; }
@@ -123,7 +164,7 @@ export function createCastlePlan(catalog, state, targetCastleLevel, targetManaSt
       visiting.delete(key);
     }
   };
-  addBuilding("castle", target);
+  addBuilding(targetBuildingId, selectedTarget);
   for (let stage = currentManaStage + 1; stage <= normalizedTargetManaStage; stage += 1) {
     const data = catalog.manaStages.get(stage);
     if (!data) { issues.push(`城マナ強化データ未収録: ${stage}`); continue; }
@@ -146,15 +187,18 @@ export function createCastlePlan(catalog, state, targetCastleLevel, targetManaSt
     row.adjustedSeconds += step.adjustedSeconds;
     for (const key of CASTLE_RESOURCE_KEYS) { row.costs[key] += Number(step.costs[key] || 0); totalCosts[key] += Number(step.costs[key] || 0); }
   }
+  const gemCosts = gemCostsFor(catalog, totalCosts, state.settings.resources || {});
   return {
     currentCastleLevel: current,
     targetCastleLevel: target,
     currentManaStage,
     targetManaStage: normalizedTargetManaStage,
+    targetBuildingId,
+    targetBuildingLevel: selectedTarget,
     effectiveLevels,
     steps,
     buildings: [...grouped.values()],
-    totals: { baseSeconds: steps.reduce((sum, step) => sum + step.baseSeconds, 0), adjustedSeconds: steps.reduce((sum, step) => sum + step.adjustedSeconds, 0), costs: totalCosts },
+    totals: { baseSeconds: steps.reduce((sum, step) => sum + step.baseSeconds, 0), adjustedSeconds: steps.reduce((sum, step) => sum + step.adjustedSeconds, 0), costs: totalCosts, gemCosts, totalGems: Object.values(gemCosts).reduce((sum, value) => sum + Number(value || 0), 0) },
     issues: [...new Set(issues)],
   };
 }

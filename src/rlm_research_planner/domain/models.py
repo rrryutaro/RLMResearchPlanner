@@ -12,6 +12,10 @@ RESOURCE_KEYS = (
     "ore",
     "gold",
     "special",
+    "gold_hammer",
+    "war_tome",
+    "steel_cuffs",
+    "soul_crystal",
 )
 
 

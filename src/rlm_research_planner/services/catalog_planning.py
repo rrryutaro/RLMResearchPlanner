@@ -64,12 +64,14 @@ class CatalogPlanResult:
     unknown_time_steps: int = 0
     unknown_cost_steps: int = 0
     unknown_power_steps: int = 0
+    unknown_technolabe_steps: int = 0
     total_technolabes: int = 0
+    technolabe_base_seconds: int = 0
 
     @property
     def technolabe_efficiency_percent(self) -> float | None:
         return technolabe_efficiency(
-            self.total_base_seconds,
+            self.technolabe_base_seconds,
             self.total_technolabes,
         )
 
@@ -377,7 +379,11 @@ class CatalogResearchPlanner:
             result.unknown_power_steps += 1
         else:
             result.total_power += step.power
-        result.total_technolabes += int(step.technolabe_count or 0)
+        if step.base_time_seconds and step.technolabe_count is None:
+            result.unknown_technolabe_steps += 1
+        elif step.technolabe_count:
+            result.total_technolabes += int(step.technolabe_count)
+            result.technolabe_base_seconds += int(step.base_time_seconds or 0)
         if level_data is None:
             return
         if level_data.academy_level is not None:

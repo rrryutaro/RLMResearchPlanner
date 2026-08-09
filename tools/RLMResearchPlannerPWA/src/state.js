@@ -1,4 +1,4 @@
-export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "ancient_tomes", "lunite", "mana_ore", "special"];
+export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "ancient_tomes", "lunite", "mana_ore", "special"];
 const STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
 
 export function defaultState() {

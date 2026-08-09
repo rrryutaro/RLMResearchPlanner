@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -22,7 +23,6 @@ from PySide6.QtWidgets import (
     QGraphicsView,
     QHBoxLayout,
     QSlider,
-    QSpinBox,
     QToolButton,
     QWidget,
 )
@@ -30,6 +30,10 @@ from PySide6.QtWidgets import (
 from rlm_research_planner.services.tree_layout import (
     calculate_tree_positions,
     compact_explicit_row_slots,
+)
+from rlm_research_planner.ui.step_spin_box import (
+    VisibleSpinBox,
+    configure_step_button,
 )
 
 
@@ -236,12 +240,9 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self.update()
 
     def paint(self, painter, option, widget=None) -> None:
-        if self._visual_style != "mobile":
-            super().paint(painter, option, widget)
-            return
         painter.save()
         if self.isSelected():
-            painter.setPen(QPen(QColor("#66D8C2"), 3.0))
+            painter.setPen(QPen(QColor("#C58BFF"), 6.0))
         else:
             painter.setPen(self.pen())
         painter.setBrush(self.brush())
@@ -355,7 +356,7 @@ class ResearchTreeView(QGraphicsView):
         self._level_edit_timer.setSingleShot(True)
         self._level_edit_timer.timeout.connect(self._open_pending_level_editor)
         self._level_editor: QWidget | None = None
-        self._level_value_editor: QSlider | QSpinBox | None = None
+        self._level_value_editor: QSlider | VisibleSpinBox | None = None
         self._level_editor_commit = None
 
     @property
@@ -395,6 +396,26 @@ class ResearchTreeView(QGraphicsView):
                     )
                 )
         self.viewport().update()
+
+    def drawBackground(self, painter, rect) -> None:
+        if self._visual_style != "mobile":
+            super().drawBackground(painter, rect)
+            return
+        painter.fillRect(rect, QColor("#07141C"))
+        grid_size = 24.0
+        grid_pen = QPen(QColor("#102631"), 1.0)
+        grid_pen.setCosmetic(True)
+        painter.setPen(grid_pen)
+        left = math.floor(rect.left() / grid_size) * grid_size
+        top = math.floor(rect.top() / grid_size) * grid_size
+        x = left
+        while x <= rect.right():
+            painter.drawLine(QPointF(x, rect.top()), QPointF(x, rect.bottom()))
+            x += grid_size
+        y = top
+        while y <= rect.bottom():
+            painter.drawLine(QPointF(rect.left(), y), QPointF(rect.right(), y))
+            y += grid_size
 
     def wheelEvent(self, event: QWheelEvent) -> None:
         if event.modifiers() & Qt.ControlModifier:
@@ -541,11 +562,14 @@ class ResearchTreeView(QGraphicsView):
             editor_layout.setContentsMargins(2, 2, 2, 2)
             editor_layout.setSpacing(3)
             decrease_button = QToolButton(editor)
+            configure_step_button(
+                decrease_button,
+                decrease=True,
+                visual_style=self._visual_style,
+            )
             decrease_button.setObjectName("levelDecreaseButton")
-            decrease_button.setText("◀")
+            decrease_button.setFixedWidth(32)
             decrease_button.setToolTip("Decrease level")
-            decrease_button.setFocusPolicy(Qt.NoFocus)
-            decrease_button.setAutoRepeat(True)
             value_editor = QSlider(Qt.Horizontal, editor)
             value_editor.setObjectName("levelSlider")
             value_editor.setRange(0, item._max_level)
@@ -560,11 +584,14 @@ class ResearchTreeView(QGraphicsView):
                 "background:#FFFFFF;border:1px solid #8B6B19;}"
             )
             increase_button = QToolButton(editor)
+            configure_step_button(
+                increase_button,
+                decrease=False,
+                visual_style=self._visual_style,
+            )
             increase_button.setObjectName("levelIncreaseButton")
-            increase_button.setText("▶")
+            increase_button.setFixedWidth(32)
             increase_button.setToolTip("Increase level")
-            increase_button.setFocusPolicy(Qt.NoFocus)
-            increase_button.setAutoRepeat(True)
             editor_layout.addWidget(decrease_button)
             editor_layout.addWidget(value_editor, 1)
             editor_layout.addWidget(increase_button)
@@ -588,7 +615,8 @@ class ResearchTreeView(QGraphicsView):
             minimum_width = 210
             minimum_height = 34
         else:
-            editor = QSpinBox(self.viewport())
+            editor = VisibleSpinBox(self.viewport())
+            editor.set_visual_style(self._visual_style)
             value_editor = editor
             value_editor.setRange(0, item._max_level)
             value_editor.setValue(item._current_level)
@@ -629,7 +657,7 @@ class ResearchTreeView(QGraphicsView):
             self.researchLevelChanged.emit(research_id, level)
 
         self._level_editor_commit = commit
-        if isinstance(value_editor, QSpinBox):
+        if isinstance(value_editor, VisibleSpinBox):
             value_editor.editingFinished.connect(commit)
         else:
             value_editor.sliderReleased.connect(commit)
@@ -639,7 +667,7 @@ class ResearchTreeView(QGraphicsView):
         editor.show()
         editor.raise_()
         value_editor.setFocus(Qt.MouseFocusReason)
-        if isinstance(value_editor, QSpinBox):
+        if isinstance(value_editor, VisibleSpinBox):
             value_editor.selectAll()
 
     def hideEvent(self, event) -> None:

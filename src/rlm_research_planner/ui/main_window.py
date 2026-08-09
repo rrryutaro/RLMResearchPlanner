@@ -25,8 +25,8 @@ from PySide6.QtWidgets import (
     QApplication,
     QCheckBox,
     QComboBox,
-    QDoubleSpinBox,
     QFileDialog,
+    QFrame,
     QFormLayout,
     QGridLayout,
     QGroupBox,
@@ -36,10 +36,12 @@ from PySide6.QtWidgets import (
     QLineEdit,
     QListWidget,
     QListWidgetItem,
+    QLayout,
     QMainWindow,
     QMessageBox,
     QProgressBar,
     QPushButton,
+    QScrollArea,
     QSpinBox,
     QSplitter,
     QTabWidget,
@@ -125,6 +127,12 @@ from rlm_research_planner.ui.research_tree_view import (
     ResearchTreeNode,
     ResearchTreeView,
 )
+from rlm_research_planner.ui.step_spin_box import (
+    VisibleDoubleSpinBox,
+    VisibleSpinBox,
+    update_step_button_visual_styles,
+)
+from rlm_research_planner.ui.table_cell_widgets import set_table_cell_widget
 from rlm_research_planner.ui.update_controller import UpdateController
 from rlm_research_planner.ui.visual_styles import (
     dataset_style_sheet,
@@ -141,6 +149,10 @@ RESOURCE_LABELS = {
     "ore": "Ore",
     "gold": "Gold",
     "special": "Special",
+    "gold_hammer": "Gold Hammer",
+    "war_tome": "War Tome",
+    "steel_cuffs": "Steel Cuffs",
+    "soul_crystal": "Soul Crystal",
     "ancient_tomes": "Ancient Tomes",
     "mana_ore": "Mana Ore",
     "lunite": "Lunite",
@@ -241,6 +253,10 @@ class MainWindow(QMainWindow):
         self._tree_level_draft = dict(player_state.research_levels)
         self.settings_repository = settings_repository
         self.app_settings = app_settings
+        self.setProperty(
+            "visualStyle",
+            normalize_visual_style(self.app_settings.visual_style),
+        )
         self.translator = translator
         self.catalog_planner = CatalogResearchPlanner(observations)
         self.castle_catalog = CastleCatalog.load(paths.castle_catalog)
@@ -1155,21 +1171,27 @@ class MainWindow(QMainWindow):
         page = QWidget()
         layout = QVBoxLayout(page)
 
-        controls = QHBoxLayout()
-        controls.addWidget(QLabel(self.t("castle.current_level")))
+        selection_group = QGroupBox(self.t("castle.selection_title"))
+        controls = QGridLayout(selection_group)
+        controls.addWidget(QLabel(self.t("castle.target_facility")), 0, 0)
+        self.construction_target_combo = QComboBox()
+        self.construction_target_combo.setMinimumWidth(190)
+        for building_id, building in self.castle_catalog.buildings.items():
+            self.construction_target_combo.addItem(
+                building.localized_name(self.translator.locale), building_id
+            )
+        controls.addWidget(self.construction_target_combo, 0, 1)
+        self.castle_plan_current_label = QLabel(self.t("castle.current_level"))
+        controls.addWidget(self.castle_plan_current_label, 0, 2)
         self.castle_plan_current_spin = self._integer_spin(
             1, 25, self.player_state.settings.castle_level
         )
-        controls.addWidget(self.castle_plan_current_spin)
-        controls.addWidget(QLabel(self.t("castle.mana_stage")))
-        self.castle_plan_current_mana_spin = self._integer_spin(
-            0,
-            self.castle_catalog.max_mana_stage,
-            self.player_state.settings.castle_mana_stage,
-        )
-        controls.addWidget(self.castle_plan_current_mana_spin)
-        controls.addSpacing(16)
-        controls.addWidget(QLabel(self.t("castle.target_level")))
+        controls.addWidget(self.castle_plan_current_spin, 0, 3)
+        self.castle_plan_arrow_label = QLabel("→")
+        self.castle_plan_arrow_label.setAlignment(Qt.AlignCenter)
+        controls.addWidget(self.castle_plan_arrow_label, 0, 4)
+        self.castle_plan_target_label = QLabel(self.t("castle.target_level"))
+        controls.addWidget(self.castle_plan_target_label, 0, 5)
         self.castle_plan_target_spin = self._integer_spin(
             1,
             25,
@@ -1185,8 +1207,25 @@ class MainWindow(QMainWindow):
         self.player_state.settings.castle_target_level = (
             self.castle_plan_target_spin.value()
         )
-        controls.addWidget(self.castle_plan_target_spin)
-        controls.addWidget(QLabel(self.t("castle.target_mana_stage")))
+        controls.addWidget(self.castle_plan_target_spin, 0, 6)
+        self.castle_selection_summary_label = QLabel()
+        self.castle_selection_summary_label.setObjectName("ConstructionSelection")
+        self.castle_selection_summary_label.setAlignment(Qt.AlignCenter)
+        controls.addWidget(self.castle_selection_summary_label, 0, 7)
+        controls.setColumnStretch(7, 1)
+
+        self.castle_plan_current_mana_label = QLabel(self.t("castle.mana_stage"))
+        controls.addWidget(self.castle_plan_current_mana_label, 1, 2)
+        self.castle_plan_current_mana_spin = self._integer_spin(
+            0,
+            self.castle_catalog.max_mana_stage,
+            self.player_state.settings.castle_mana_stage,
+        )
+        controls.addWidget(self.castle_plan_current_mana_spin, 1, 3)
+        self.castle_plan_target_mana_label = QLabel(
+            self.t("castle.target_mana_stage")
+        )
+        controls.addWidget(self.castle_plan_target_mana_label, 1, 5)
         initial_target_mana = self.player_state.settings.castle_target_mana_stage
         if (
             self.player_state.settings.castle_level == 25
@@ -1203,11 +1242,10 @@ class MainWindow(QMainWindow):
             initial_target_mana,
         )
         self.player_state.settings.castle_target_mana_stage = initial_target_mana
-        controls.addWidget(self.castle_plan_target_mana_spin)
-        controls.addStretch(1)
+        controls.addWidget(self.castle_plan_target_mana_spin, 1, 6)
         self.castle_plan_speed_label = QLabel()
-        controls.addWidget(self.castle_plan_speed_label)
-        layout.addLayout(controls)
+        controls.addWidget(self.castle_plan_speed_label, 1, 7)
+        layout.addWidget(selection_group)
 
         splitter = QSplitter(Qt.Horizontal)
         levels_panel = QWidget()
@@ -1238,7 +1276,7 @@ class MainWindow(QMainWindow):
         level_header.setSectionResizeMode(0, QHeaderView.Stretch)
         level_header.setSectionResizeMode(1, QHeaderView.Fixed)
         level_header.setSectionResizeMode(2, QHeaderView.Fixed)
-        self.castle_level_table.setColumnWidth(1, 92)
+        self.castle_level_table.setColumnWidth(1, 112)
         self.castle_level_table.setColumnWidth(2, 72)
         self._building_level_spins: dict[str, QSpinBox] = {}
         self._building_required_items: dict[str, QTableWidgetItem] = {}
@@ -1265,7 +1303,7 @@ class MainWindow(QMainWindow):
                 )
             )
             self._building_level_spins[building_id] = spin
-            self.castle_level_table.setCellWidget(row, 1, spin)
+            set_table_cell_widget(self.castle_level_table, row, 1, spin)
             required_item = QTableWidgetItem(str(value))
             required_item.setTextAlignment(Qt.AlignCenter)
             required_item.setFlags(required_item.flags() & ~Qt.ItemIsEditable)
@@ -1284,7 +1322,7 @@ class MainWindow(QMainWindow):
         self.castle_plan_summary_label.setWordWrap(True)
         plan_layout.addWidget(self.castle_plan_summary_label)
         self.castle_plan_table = QTableWidget(
-            0, 3 + len(CASTLE_RESOURCE_KEYS) + 1
+            0, 3 + len(CASTLE_RESOURCE_KEYS) + 2
         )
         self.castle_plan_table.setHorizontalHeaderLabels(
             [
@@ -1292,6 +1330,7 @@ class MainWindow(QMainWindow):
                 self.t("castle.level_range"),
                 self.t("castle.adjusted_time"),
                 *(self._resource_label(key) for key in CASTLE_RESOURCE_KEYS),
+                self.t("castle.gem_estimate"),
                 self.t("plan.action"),
             ]
         )
@@ -1319,11 +1358,97 @@ class MainWindow(QMainWindow):
         self.castle_plan_target_mana_spin.valueChanged.connect(
             self._castle_target_mana_stage_changed
         )
+        self.construction_target_combo.currentIndexChanged.connect(
+            self._construction_target_changed
+        )
+        self._construction_target_changed()
         self._sync_castle_mana_controls()
         self._calculate_castle_plan()
         return page
 
+    def _construction_target_id(self) -> str:
+        if not hasattr(self, "construction_target_combo"):
+            return "castle"
+        return str(self.construction_target_combo.currentData() or "castle")
+
+    def _construction_target_changed(self, *_args: object) -> None:
+        if not hasattr(self, "castle_plan_current_spin"):
+            return
+        building_id = self._construction_target_id()
+        building = self.castle_catalog.buildings[building_id]
+        is_castle = building_id == "castle"
+        if is_castle:
+            current = self.player_state.settings.castle_level
+            target = max(
+                current,
+                min(
+                    building.max_level,
+                    self.player_state.settings.castle_target_level
+                    or current + 1,
+                ),
+            )
+            minimum = 1
+        else:
+            minimums = self.castle_catalog.minimum_levels_for_castle(
+                self.player_state.settings.castle_level
+            )
+            minimum = minimums.get(building_id, 0)
+            current = max(
+                minimum, self._building_level_draft.get(building_id, 0)
+            )
+            target = min(building.max_level, current + 1)
+        for spin, value in (
+            (self.castle_plan_current_spin, current),
+            (self.castle_plan_target_spin, target),
+        ):
+            spin.blockSignals(True)
+            spin.setRange(minimum, building.max_level)
+            spin.setValue(value)
+            spin.blockSignals(False)
+        self._sync_castle_mana_controls()
+        self._update_construction_selection_summary()
+        self._calculate_castle_plan()
+
+    def _update_construction_selection_summary(self) -> None:
+        if not hasattr(self, "castle_selection_summary_label"):
+            return
+        building = self.castle_catalog.buildings[self._construction_target_id()]
+        summary = self.t(
+            "castle.selection_summary",
+            facility=building.localized_name(self.translator.locale),
+            current=self.castle_plan_current_spin.value(),
+            target=self.castle_plan_target_spin.value(),
+        )
+        self.castle_selection_summary_label.setText(summary)
+        self.castle_selection_summary_label.setMinimumWidth(
+            self.castle_selection_summary_label.fontMetrics().horizontalAdvance(
+                summary
+            )
+            + 28
+        )
+
     def _castle_current_level_changed(self, value: int) -> None:
+        building_id = self._construction_target_id()
+        if building_id != "castle":
+            building = self.castle_catalog.buildings[building_id]
+            normalized = max(
+                self.castle_plan_current_spin.minimum(),
+                min(building.max_level, int(value)),
+            )
+            self._building_level_draft[building_id] = normalized
+            table_spin = self._building_level_spins.get(building_id)
+            if table_spin is not None and table_spin.value() != normalized:
+                table_spin.blockSignals(True)
+                table_spin.setValue(normalized)
+                table_spin.blockSignals(False)
+            if self.castle_plan_target_spin.value() <= normalized:
+                self.castle_plan_target_spin.setValue(
+                    min(building.max_level, normalized + 1)
+                )
+            self._player_settings_dirty = True
+            self._update_player_save_button()
+            self._calculate_castle_plan()
+            return
         normalized = max(1, min(25, int(value)))
         self.player_state.settings.castle_level = normalized
         if hasattr(self, "castle_spin") and self.castle_spin.value() != normalized:
@@ -1353,6 +1478,9 @@ class MainWindow(QMainWindow):
         self._calculate_castle_plan()
 
     def _castle_target_level_changed(self, value: int) -> None:
+        if self._construction_target_id() != "castle":
+            self._calculate_castle_plan()
+            return
         self.player_state.settings.castle_target_level = max(
             self.castle_plan_current_spin.value(),
             min(25, int(value)),
@@ -1364,6 +1492,16 @@ class MainWindow(QMainWindow):
 
     def _sync_castle_mana_controls(self) -> None:
         if not hasattr(self, "castle_plan_current_mana_spin"):
+            return
+        is_castle = self._construction_target_id() == "castle"
+        for widget in (
+            self.castle_plan_current_mana_label,
+            self.castle_plan_current_mana_spin,
+            self.castle_plan_target_mana_label,
+            self.castle_plan_target_mana_spin,
+        ):
+            widget.setVisible(is_castle)
+        if not is_castle:
             return
         current_enabled = self.castle_plan_current_spin.value() == 25
         target_enabled = self.castle_plan_target_spin.value() == 25
@@ -1445,6 +1583,18 @@ class MainWindow(QMainWindow):
 
     def _building_level_changed(self, building_id: str, value: int) -> None:
         self._building_level_draft[building_id] = max(0, int(value))
+        if (
+            hasattr(self, "construction_target_combo")
+            and self._construction_target_id() == building_id
+        ):
+            building = self.castle_catalog.buildings[building_id]
+            self.castle_plan_current_spin.blockSignals(True)
+            self.castle_plan_current_spin.setValue(self._building_level_draft[building_id])
+            self.castle_plan_current_spin.blockSignals(False)
+            if self.castle_plan_target_spin.value() <= value:
+                self.castle_plan_target_spin.setValue(
+                    min(building.max_level, value + 1)
+                )
         self._player_settings_dirty = True
         self._update_player_save_button()
         self._calculate_castle_plan()
@@ -1452,17 +1602,31 @@ class MainWindow(QMainWindow):
     def _calculate_castle_plan(self, *_args: object) -> None:
         if not hasattr(self, "castle_plan_table"):
             return
+        self._update_construction_selection_summary()
+        target_building_id = self._construction_target_id()
+        is_castle = target_building_id == "castle"
         result = self.castle_catalog.create_plan(
-            castle_level=self.castle_plan_current_spin.value(),
-            target_castle_level=self.castle_plan_target_spin.value(),
-            current_mana_stage=self.castle_plan_current_mana_spin.value(),
-            target_mana_stage=self.castle_plan_target_mana_spin.value(),
+            castle_level=self.player_state.settings.castle_level,
+            target_castle_level=(
+                self.castle_plan_target_spin.value()
+                if is_castle
+                else self.player_state.settings.castle_level
+            ),
+            current_mana_stage=self.player_state.settings.castle_mana_stage,
+            target_mana_stage=(
+                self.castle_plan_target_mana_spin.value()
+                if is_castle
+                else self.player_state.settings.castle_mana_stage
+            ),
             saved_levels=self._building_level_draft,
             construction_speed_percent=(
                 self.player_state.settings.effective_construction_speed_percent
             ),
             vip_level=self.player_state.settings.vip_level,
             guild_helps=self.player_state.settings.max_guild_helps,
+            target_building_id=target_building_id,
+            target_building_level=self.castle_plan_target_spin.value(),
+            owned_resources=self.player_state.settings.resources,
         )
         self._current_castle_plan = result
         self.castle_plan_speed_label.setText(
@@ -1490,6 +1654,12 @@ class MainWindow(QMainWindow):
                 f"{self.t('castle.total')}: "
                 f"{format_duration(result.total_adjusted_seconds)}  |  "
                 f"{resource_summary}"
+                + (
+                    f"  |  {self.t('castle.gem_estimate')} "
+                    f"{result.total_gems:,}"
+                    if result.total_gems > 0
+                    else ""
+                )
             )
 
         self.castle_plan_table.setRowCount(
@@ -1513,6 +1683,9 @@ class MainWindow(QMainWindow):
                     )
                     for key in CASTLE_RESOURCE_KEYS
                 ),
+                f"{sum(self.castle_catalog.gem_costs_for(step.costs).values()):,}"
+                if self.castle_catalog.gem_costs_for(step.costs)
+                else "-",
             ]
             for column, value in enumerate(values):
                 item = QTableWidgetItem(str(value))
@@ -1531,7 +1704,8 @@ class MainWindow(QMainWindow):
                     saved
                 )
             )
-            self.castle_plan_table.setCellWidget(
+            set_table_cell_widget(
+                self.castle_plan_table,
                 row,
                 self.castle_plan_table.columnCount() - 1,
                 complete_button,
@@ -1549,6 +1723,7 @@ class MainWindow(QMainWindow):
                     )
                     for key in CASTLE_RESOURCE_KEYS
                 ),
+                f"{result.total_gems:,}" if result.total_gems else "-",
             ]
             for column, value in enumerate(total_values):
                 item = QTableWidgetItem(str(value))
@@ -1582,10 +1757,22 @@ class MainWindow(QMainWindow):
                     completed.level,
                 )
         castle_level = self.player_state.settings.castle_level
-        for spin in (self.castle_plan_current_spin, self.castle_spin):
-            spin.blockSignals(True)
-            spin.setValue(castle_level)
-            spin.blockSignals(False)
+        self.castle_spin.blockSignals(True)
+        self.castle_spin.setValue(castle_level)
+        self.castle_spin.blockSignals(False)
+        selected_id = self._construction_target_id()
+        selected_level = (
+            castle_level
+            if selected_id == "castle"
+            else self._building_level_draft.get(selected_id, 0)
+        )
+        self.castle_plan_current_spin.blockSignals(True)
+        self.castle_plan_current_spin.setValue(selected_level)
+        self.castle_plan_current_spin.blockSignals(False)
+        selected_building = self.castle_catalog.buildings[selected_id]
+        self.castle_plan_target_spin.setValue(
+            min(selected_building.max_level, selected_level + 1)
+        )
         for spin in (
             self.castle_plan_current_mana_spin,
             self.castle_mana_stage_spin,
@@ -1610,6 +1797,8 @@ class MainWindow(QMainWindow):
 
         settings_panel = QWidget()
         settings_form = QFormLayout(settings_panel)
+        settings_form.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
+        self.player_settings_panel = settings_panel
         self.player_settings_form = settings_form
         self.vip_level_spin = self._integer_spin(
             1, 15, self.player_state.settings.vip_level
@@ -1630,13 +1819,13 @@ class MainWindow(QMainWindow):
             self.player_state.settings.castle_level == 25
         )
         self.academy_spin = self._integer_spin(1, 25, self.player_state.settings.academy_level)
-        self.construction_speed_spin = QDoubleSpinBox()
+        self.construction_speed_spin = VisibleDoubleSpinBox()
         self.construction_speed_spin.setRange(0.0, 10000.0)
         self.construction_speed_spin.setDecimals(2)
         self.construction_speed_spin.setValue(
             self.player_state.settings.construction_speed_percent
         )
-        self.construction_speed_boost_spin = QDoubleSpinBox()
+        self.construction_speed_boost_spin = VisibleDoubleSpinBox()
         self.construction_speed_boost_spin.setRange(0.0, 10000.0)
         self.construction_speed_boost_spin.setDecimals(2)
         self.construction_speed_boost_spin.setValue(
@@ -1645,11 +1834,11 @@ class MainWindow(QMainWindow):
         self.construction_speed_boost_spin.setToolTip(
             self.t("player.construction_speed_boost_hint")
         )
-        self.research_speed_spin = QDoubleSpinBox()
+        self.research_speed_spin = VisibleDoubleSpinBox()
         self.research_speed_spin.setRange(0.0, 10000.0)
         self.research_speed_spin.setDecimals(2)
         self.research_speed_spin.setValue(self.player_state.settings.research_speed_percent)
-        self.research_speed_boost_spin = QDoubleSpinBox()
+        self.research_speed_boost_spin = VisibleDoubleSpinBox()
         self.research_speed_boost_spin.setRange(0.0, 10000.0)
         self.research_speed_boost_spin.setDecimals(2)
         self.research_speed_boost_spin.setValue(
@@ -1703,7 +1892,18 @@ class MainWindow(QMainWindow):
             self.resource_spins[key] = spin
             resources_form.addRow(self._resource_label(key), spin)
         settings_form.addRow(resources_group)
-        splitter.addWidget(settings_panel)
+        settings_scroll = QScrollArea()
+        settings_scroll.setObjectName("PlayerSettingsScroll")
+        settings_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        settings_scroll.setWidgetResizable(True)
+        settings_scroll.setWidget(settings_panel)
+        settings_scroll.setStyleSheet(
+            "QScrollArea#PlayerSettingsScroll{border:0;background:transparent;}"
+            "QScrollArea#PlayerSettingsScroll > QWidget > QWidget{"
+            "background:transparent;}"
+        )
+        self.player_settings_scroll = settings_scroll
+        splitter.addWidget(settings_scroll)
 
         progress_panel = QWidget()
         progress_layout = QVBoxLayout(progress_panel)
@@ -1750,7 +1950,7 @@ class MainWindow(QMainWindow):
         progress_header.setSectionResizeMode(0, QHeaderView.Stretch)
         progress_header.setSectionResizeMode(1, QHeaderView.Fixed)
         progress_header.setSectionResizeMode(2, QHeaderView.Fixed)
-        self.progress_table.setColumnWidth(1, 100)
+        self.progress_table.setColumnWidth(1, 120)
         self.progress_table.setColumnWidth(2, 72)
         for row, (research_id, name, max_level, observed) in enumerate(progress_entries):
             display_name = (
@@ -1763,13 +1963,14 @@ class MainWindow(QMainWindow):
                 self._tree_level_draft.get(research_id, 0),
             )
             editor.setAccelerated(True)
+            editor.setMinimumWidth(112)
             editor.valueChanged.connect(
                 lambda value, selected_id=research_id: self._progress_changed(
                     selected_id, value
                 )
             )
             self._progress_editors[research_id] = editor
-            self.progress_table.setCellWidget(row, 1, editor)
+            set_table_cell_widget(self.progress_table, row, 1, editor)
             maximum_item = QTableWidgetItem(
                 str(max_level) if max_level is not None else "?"
             )
@@ -1823,11 +2024,14 @@ class MainWindow(QMainWindow):
             spin.valueChanged.connect(self._settings_changed)
         return page
 
-    def _integer_spin(self, minimum: int, maximum: int, value: int) -> QSpinBox:
-        spin = QSpinBox()
+    def _integer_spin(
+        self, minimum: int, maximum: int, value: int
+    ) -> VisibleSpinBox:
+        spin = VisibleSpinBox()
         spin.setRange(minimum, maximum)
         spin.setValue(value)
         spin.setGroupSeparatorShown(True)
+        spin.setMinimumWidth(104)
         return spin
 
     def _settings_changed(self, *_args) -> None:
@@ -1863,7 +2067,7 @@ class MainWindow(QMainWindow):
         self._update_player_save_button()
         self._refresh_detail()
         self._calculate_plan()
-        if hasattr(self, "castle_plan_current_spin"):
+        if hasattr(self, "castle_plan_current_spin") and self._construction_target_id() == "castle":
             if self.castle_plan_current_spin.value() != settings.castle_level:
                 self.castle_plan_current_spin.blockSignals(True)
                 self.castle_plan_current_spin.setValue(settings.castle_level)
@@ -1900,6 +2104,9 @@ class MainWindow(QMainWindow):
                     settings.castle_mana_stage + 1
                 )
             self._calculate_castle_plan()
+        elif hasattr(self, "castle_plan_current_spin"):
+            self._refresh_castle_level_inputs()
+            self._construction_target_changed()
         if (
             hasattr(self, "tree_instant_finish_check")
             and self.tree_instant_finish_check.isChecked()
@@ -2016,11 +2223,11 @@ class MainWindow(QMainWindow):
         self.plan_target_caption = QLabel(self.t("plan.target"))
         selection_controls.addWidget(self.plan_target_caption)
         self.plan_target_name_label = QLabel(self.t("plan.no_target"))
-        self.plan_target_name_label.setStyleSheet("font-weight:700;font-size:15px;")
+        self.plan_target_name_label.setObjectName("PlanTargetSelection")
         selection_controls.addWidget(self.plan_target_name_label, 1)
         self.plan_level_caption = QLabel(self.t("plan.target_level"))
         selection_controls.addWidget(self.plan_level_caption)
-        self.plan_level_spin = QSpinBox()
+        self.plan_level_spin = VisibleSpinBox()
         self.plan_level_spin.setMinimum(1)
         self.plan_level_spin.valueChanged.connect(self._calculate_plan)
         self.plan_level_spin.setEnabled(False)
@@ -2347,7 +2554,8 @@ class MainWindow(QMainWindow):
                 self._technolabe_text(
                     result.total_technolabes,
                     result.technolabe_efficiency_percent,
-                ),
+                )
+                + self._partial_note(result.unknown_technolabe_steps),
             ]
             total_values.extend(
                 self._material_amount(result.total_costs.get(key, 0))
@@ -2478,7 +2686,8 @@ class MainWindow(QMainWindow):
                 self._technolabe_text(
                     result.total_technolabes,
                     result.technolabe_efficiency_percent,
-                ),
+                )
+                + self._partial_note(result.unknown_technolabe_steps),
             ]
             values.extend(
                 self._material_amount(result.total_costs.get(key, 0))
@@ -2523,8 +2732,11 @@ class MainWindow(QMainWindow):
             )
             action_layout.addWidget(show_button)
             action_layout.addWidget(remove_button)
-            self.plan_table.setCellWidget(
-                row, self.plan_table.columnCount() - 1, actions
+            set_table_cell_widget(
+                self.plan_table,
+                row,
+                self.plan_table.columnCount() - 1,
+                actions,
             )
 
     def _set_visible_plan_resources(self, resource_keys: Iterable[str]) -> None:
@@ -2604,8 +2816,11 @@ class MainWindow(QMainWindow):
         complete_button.clicked.connect(
             lambda _checked=False, saved=step: self._complete_plan_step(saved)
         )
-        self.plan_table.setCellWidget(
-            row, self.plan_table.columnCount() - 1, complete_button
+        set_table_cell_widget(
+            self.plan_table,
+            row,
+            self.plan_table.columnCount() - 1,
+            complete_button,
         )
 
     def _complete_plan_step(self, step: CatalogPlanStep) -> None:
@@ -2726,7 +2941,7 @@ class MainWindow(QMainWindow):
 
         controls = QHBoxLayout()
         controls.addWidget(QLabel(self.t("paid.price")))
-        self.paid_diamond_spin = QSpinBox()
+        self.paid_diamond_spin = VisibleSpinBox()
         self.paid_diamond_spin.setRange(0, 99_999_999)
         self.paid_diamond_spin.setGroupSeparatorShown(True)
         self.paid_diamond_spin.setSpecialValueText("-")
@@ -2757,7 +2972,7 @@ class MainWindow(QMainWindow):
         gem_group = QGroupBox(self.t("paid.gems"))
         gem_layout = QHBoxLayout(gem_group)
         gem_layout.addWidget(QLabel(self.t("paid.gems.included")))
-        self.paid_included_gems_spin = QSpinBox()
+        self.paid_included_gems_spin = VisibleSpinBox()
         self.paid_included_gems_spin.setRange(0, 99_999_999)
         self.paid_included_gems_spin.setGroupSeparatorShown(True)
         self.paid_included_gems_spin.valueChanged.connect(
@@ -2765,7 +2980,7 @@ class MainWindow(QMainWindow):
         )
         gem_layout.addWidget(self.paid_included_gems_spin)
         gem_layout.addWidget(QLabel(self.t("paid.gems.bonus")))
-        self.paid_bonus_gems_spin = QSpinBox()
+        self.paid_bonus_gems_spin = VisibleSpinBox()
         self.paid_bonus_gems_spin.setRange(0, 99_999_999)
         self.paid_bonus_gems_spin.setGroupSeparatorShown(True)
         self.paid_bonus_gems_spin.valueChanged.connect(self._update_paid_summary)
@@ -2878,20 +3093,25 @@ class MainWindow(QMainWindow):
         quantity = entry.quantity if entry is not None else 0
 
         kind_combo = self._paid_kind_combo(kind)
-        self.paid_item_table.setCellWidget(row, 0, kind_combo)
-        duration_spin = QSpinBox()
+        set_table_cell_widget(self.paid_item_table, row, 0, kind_combo)
+        duration_spin = VisibleSpinBox()
         duration_spin.setRange(0, 99_999_999)
         duration_spin.setGroupSeparatorShown(True)
         duration_spin.setValue(duration)
         duration_spin.valueChanged.connect(self._update_paid_summary)
-        self.paid_item_table.setCellWidget(row, 1, duration_spin)
-        self.paid_item_table.setCellWidget(row, 2, self._paid_unit_combo(unit))
-        quantity_spin = QSpinBox()
+        set_table_cell_widget(self.paid_item_table, row, 1, duration_spin)
+        set_table_cell_widget(
+            self.paid_item_table,
+            row,
+            2,
+            self._paid_unit_combo(unit),
+        )
+        quantity_spin = VisibleSpinBox()
         quantity_spin.setRange(0, 99_999_999)
         quantity_spin.setGroupSeparatorShown(True)
         quantity_spin.setValue(quantity)
         quantity_spin.valueChanged.connect(self._update_paid_summary)
-        self.paid_item_table.setCellWidget(row, 3, quantity_spin)
+        set_table_cell_widget(self.paid_item_table, row, 3, quantity_spin)
         subtotal = QTableWidgetItem("-")
         subtotal.setTextAlignment(Qt.AlignCenter)
         subtotal.setFlags(subtotal.flags() & ~Qt.ItemIsEditable)
@@ -3072,7 +3292,7 @@ class MainWindow(QMainWindow):
         )
         settings.addWidget(self.visual_style_combo)
         settings.addWidget(QLabel(self.t("help.font_size")))
-        self.help_font_spin = QSpinBox()
+        self.help_font_spin = VisibleSpinBox()
         self.help_font_spin.setRange(9, 24)
         self.help_font_spin.setSuffix(" pt")
         self.help_font_spin.setValue(self.app_settings.help_font_size)
@@ -3138,7 +3358,9 @@ class MainWindow(QMainWindow):
     def _apply_visual_style(self) -> None:
         visual_style = normalize_visual_style(self.app_settings.visual_style)
         self.app_settings.visual_style = visual_style
+        self.setProperty("visualStyle", visual_style)
         self.setStyleSheet(window_style_sheet(visual_style))
+        update_step_button_visual_styles(self, visual_style)
         if hasattr(self, "tree_dataset_list"):
             self.tree_dataset_list.setStyleSheet(
                 dataset_style_sheet(visual_style)
@@ -3153,6 +3375,28 @@ class MainWindow(QMainWindow):
                 item = self.plan_table.item(row, 0)
                 if item is not None and item.font().underline():
                     item.setForeground(link_brush)
+        selection_background = (
+            "#2B183D" if visual_style == "mobile" else "#F3E8FF"
+        )
+        selection_foreground = (
+            "#F4E8FF" if visual_style == "mobile" else "#4C1D6F"
+        )
+        selection_border = (
+            "#C58BFF" if visual_style == "mobile" else "#8B3DCC"
+        )
+        selection_style = (
+            f"padding:5px 12px;border:2px solid {selection_border};"
+            f"border-radius:7px;color:{selection_foreground};"
+            f"background-color:{selection_background};"
+            "font-weight:800;font-size:15px;"
+        )
+        for label_name in (
+            "plan_target_name_label",
+            "castle_selection_summary_label",
+        ):
+            label = getattr(self, label_name, None)
+            if label is not None:
+                label.setStyleSheet(selection_style)
 
     def _change_visual_style(self) -> None:
         visual_style = normalize_visual_style(
@@ -4015,7 +4259,12 @@ class MainWindow(QMainWindow):
             mapping_combo.setToolTip(self.t("ocr.mapping_hint"))
             self.ocr_field_table.setItem(row, 0, label_item)
             self.ocr_field_table.setItem(row, 1, value_item)
-            self.ocr_field_table.setCellWidget(row, 2, mapping_combo)
+            set_table_cell_widget(
+                self.ocr_field_table,
+                row,
+                2,
+                mapping_combo,
+            )
             self._ocr_field_mapping_combos[row] = mapping_combo
         if self._ocr_fields:
             self.ocr_field_table.selectRow(0)

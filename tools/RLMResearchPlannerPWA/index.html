@@ -9,7 +9,7 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.10-b2">
+    <link rel="stylesheet" href="./styles.css?v=0.0.11-b3">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -24,7 +24,7 @@
     <nav class="tab-bar" aria-label="メインメニュー">
       <button class="tab-button is-active" data-tab="tree" type="button">研究ツリー</button>
       <button class="tab-button" data-tab="plan" type="button">研究計画</button>
-      <button class="tab-button" data-tab="castle" type="button">城</button>
+      <button class="tab-button" data-tab="castle" type="button">建設</button>
       <button class="tab-button" data-tab="settings" type="button">プレイヤー</button>
       <button class="tab-button" data-tab="help" type="button">ヘルプ</button>
     </nav>
@@ -139,6 +139,7 @@
             <p>現在の前提条件を満たす次レベルを、完了までの時間が短い順に表示します。</p>
             <label class="field compact"><span>表示数</span><select id="shortest-limit"><option>20</option><option>50</option><option>100</option></select></label>
           </div>
+          <div id="shortest-selected" class="selected-research-banner" hidden></div>
           <div id="shortest-list" class="plan-list"></div>
         </div>
         <div id="task-plan-view" hidden>
@@ -149,17 +150,22 @@
       <section id="tab-castle" class="tab-panel" aria-labelledby="castle-title">
         <div class="section-heading castle-heading">
           <div>
-            <p class="eyebrow">現在の城タスク</p>
-            <h2 id="castle-title">城レベル計画</h2>
-          </div>
-          <div class="castle-target-controls">
-            <label class="field compact"><span>現在</span><input id="castle-current" type="number" inputmode="numeric" min="1" max="25"></label>
-            <label class="field compact"><span>25後段階</span><input id="castle-current-mana" type="number" inputmode="numeric" min="0" max="5"></label>
-            <span aria-hidden="true">→</span>
-            <label class="field compact"><span>目標</span><input id="castle-target" type="number" inputmode="numeric" min="1" max="25"></label>
-            <label class="field compact"><span>25後段階</span><input id="castle-target-mana" type="number" inputmode="numeric" min="0" max="5"></label>
+            <p class="eyebrow">現在の建設タスク</p>
+            <h2 id="castle-title">建設計画</h2>
           </div>
         </div>
+        <section class="construction-selector" aria-labelledby="construction-selector-title">
+          <h3 id="construction-selector-title">計算する施設</h3>
+          <div class="castle-target-controls">
+            <label class="field construction-facility"><span>施設</span><select id="construction-target"></select></label>
+            <label class="field compact construction-current"><span>現在Lv.</span><input id="castle-current" type="number" inputmode="numeric" min="1" max="25"></label>
+            <label id="castle-current-mana-field" class="field compact"><span>25後段階</span><input id="castle-current-mana" type="number" inputmode="numeric" min="0" max="5"></label>
+            <span class="construction-arrow" aria-hidden="true">→</span>
+            <label class="field compact construction-target"><span>目標Lv.</span><input id="castle-target" type="number" inputmode="numeric" min="1" max="25"></label>
+            <label id="castle-target-mana-field" class="field compact"><span>25後段階</span><input id="castle-target-mana" type="number" inputmode="numeric" min="0" max="5"></label>
+          </div>
+          <strong id="construction-selection" class="construction-selection"></strong>
+        </section>
         <div id="castle-summary" class="castle-summary"></div>
         <details class="settings-card castle-level-card">
           <summary>現在の施設レベル</summary>
@@ -260,23 +266,23 @@
         <div class="help-content">
           <article class="callout important">
             <h3>最初に必ず設定してください</h3>
-            <p>プレイヤー設定で、VIPレベル、研究速度、使用中の研究スピードアップを入力してください。研究速度は研究向け装備を装着した状態でゲーム内表示を確認します。城計画を使う場合は、建設速度と使用中の建設スピードアップも入力してください。</p>
+            <p><b>1.</b> VIPレベル<br><b>2.</b> 研究装備を着けた状態の研究速度<br><b>3.</b> 使用中の研究スピードアップ<br>建設を使う場合だけ、建設速度も入力します。</p>
           </article>
           <article>
             <h3>研究レベルの入力</h3>
-            <p>研究ツリーのカードをタップすると、現在レベルを数値またはスライダーで変更できます。ツリー上ではドラッグで移動し、2本指のピンチ操作で拡大・縮小できます。「検索・表示設定」の「全体」でツリー全体が収まる倍率にできます。前提研究が未達の接続線は低彩度、到達済みの接続線は黄色で表示します。入力はこの端末内に自動保存されます。</p>
+            <p>カードをタップして現在レベルを変更します。ドラッグで移動、2本指のピンチ操作で拡大・縮小、「全体」でツリー全体を表示します。入力は端末内に自動保存されます。</p>
           </article>
           <article>
             <h3>研究計画</h3>
-            <p>研究カードから目標レベルを指定すると、未達の前提研究を依存階層へ分け、前提を持たない下位階層をすべて表示してから次の階層へ進みます。「タスクに登録」で複数の候補を保存し、現在の進行状況を基準に残り時間と使用する資源だけを比較できます。各研究の「研究完了」はそのレベルだけを反映し、「研究完了として反映」は目標研究と前提研究をまとめて更新します。叡智の輪は研究速度適用前の元時間と研究ごとの必要個数を使います。時間効率は1個あたり33d 04:00:00を100%として、必要個数をどれだけ有効に使えるかを表示します。研究計画の見出し横にある「資源」で通常表記とK/M/B/Tの短縮表記を切り替えられ、短縮時はゲーム画面と同様に小数第2位までを切り捨てます。</p>
+            <p id="help-plan-body"></p>
           </article>
           <article>
-            <h3>城レベル計画</h3>
-            <p>城タブの目標城レベルは現在の城タスクとして保存されます。不足する前提施設をすべて遡り、各建設ステップと合計の資材・時間を表示します。城Lv.25到達後は、通常の城レベルとは別にマナ強化段階0～5を設定し、Lv.25-1～Lv.25-5として計画できます。各ステップの「完了」は、その建設までに必須となる直前のステップも含めて施設レベルとマナ強化段階へ反映します。現在の城レベルで必ず建設済みとなる最低施設レベルは自動で補います。それより進めている施設は「現在の施設レベル」から入力してください。建設時間にはプレイヤー設定の建設速度と追加の建設スピードアップ、VIP無料時間、ギルドヘルプ回数を適用します。</p>
+            <h3>建設計画</h3>
+            <p id="help-construction-body"></p>
           </article>
           <article>
             <h3>PWA版の範囲</h3>
-            <p>モバイル版はOCRとゲーム画面の取り込みを行いません。数値は手動入力し、データはブラウザー内に保存されます。タイトル横の「オンライン／オフライン」はブラウザーの通信可否だけを表し、ゲームへの接続、ログイン、クラウド同期の状態ではありません。端末変更やブラウザーデータ削除に備えてバックアップしてください。</p>
+            <p>OCRはありません。数値は手入力し、ブラウザー内へ保存します。「オンライン」は通信可否だけで、ゲーム接続や同期状態ではありません。端末変更前はバックアップしてください。</p>
           </article>
           <article>
             <h3>収録データ</h3>
@@ -286,7 +292,7 @@
           </article>
           <article>
             <h3>インストール</h3>
-            <p>対応ブラウザーの「ホーム画面に追加」または「アプリをインストール」から追加できます。一度読み込んだ後はオフラインでも利用できます。</p>
+            <p>ブラウザーの「ホーム画面に追加」または「アプリをインストール」を選びます。読み込み後はオフラインでも使えます。</p>
           </article>
           <article>
             <h3>ライセンス・出典</h3>
@@ -321,9 +327,9 @@
             <label class="field"><span>現在レベル</span><input id="node-level-number" type="number" inputmode="numeric" min="0"></label>
             <span id="node-level-max" class="max-label"></span>
             <div class="level-slider-row">
-              <button id="node-level-down" type="button" aria-label="現在レベルを1下げる">◀</button>
+              <button id="node-level-down" type="button" aria-label="現在レベルを1下げる">−</button>
               <input id="node-level-range" type="range" min="0" step="1" aria-label="現在レベルのスライダー">
-              <button id="node-level-up" type="button" aria-label="現在レベルを1上げる">▶</button>
+              <button id="node-level-up" type="button" aria-label="現在レベルを1上げる">＋</button>
             </div>
           </div>
           <div id="node-effects" class="effect-box"></div>
@@ -350,6 +356,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.10-b2"></script>
+    <script type="module" src="./src/app.js?v=0.0.11-b3"></script>
   </body>
 </html>

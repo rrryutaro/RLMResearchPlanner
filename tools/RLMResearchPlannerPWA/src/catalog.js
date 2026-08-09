@@ -18,6 +18,12 @@ export async function loadEffectLabels(url = "./data/i18n/ja-JP.json") {
   return (await response.json()).effect_labels || {};
 }
 
+export async function loadLocaleData(url = "./data/i18n/ja-JP.json") {
+  const response = await fetch(url);
+  if (!response.ok) return { messages: {}, effect_labels: {} };
+  return response.json();
+}
+
 export function normalizeCatalog(raw) {
   const nameToId = new Map();
   for (const category of raw.categories) {

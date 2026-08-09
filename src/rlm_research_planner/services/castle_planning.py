@@ -19,10 +19,43 @@ CASTLE_RESOURCE_KEYS = (
     "timber",
     "ore",
     "gold_hammer",
+    "war_tome",
+    "steel_cuffs",
+    "soul_crystal",
     "mana_ore",
     "mana_crystal",
     "mana_steel",
 )
+
+
+def minimum_gems_for_amount(
+    amount: int,
+    packs: tuple[tuple[int, int], ...],
+) -> int:
+    """Return the cheapest gem cost for buying at least ``amount`` items."""
+
+    required = max(0, int(amount))
+    normalized = tuple(
+        (max(1, int(quantity)), max(0, int(gems)))
+        for quantity, gems in packs
+        if int(quantity) > 0 and int(gems) >= 0
+    )
+    if required == 0:
+        return 0
+    if not normalized:
+        raise ValueError("Gem-shop pack data is missing")
+    maximum_quantity = max(quantity for quantity, _gems in normalized)
+    limit = required + maximum_quantity - 1
+    unreachable = 10**30
+    costs = [unreachable] * (limit + 1)
+    costs[0] = 0
+    for owned in range(limit + 1):
+        if costs[owned] == unreachable:
+            continue
+        for quantity, gems in normalized:
+            next_amount = min(limit, owned + quantity)
+            costs[next_amount] = min(costs[next_amount], costs[owned] + gems)
+    return min(costs[required:])
 
 
 @dataclass(frozen=True)
@@ -83,12 +116,16 @@ class CastlePlanResult:
     target_castle_level: int
     current_mana_stage: int
     target_mana_stage: int
+    target_building_id: str
+    target_building_level: int
     effective_levels: Mapping[str, int]
     steps: tuple[CastlePlanStep, ...]
     buildings: tuple[CastleBuildingSummary, ...]
     total_base_seconds: int
     total_adjusted_seconds: int
     total_costs: Mapping[str, int]
+    gem_costs: Mapping[str, int]
+    total_gems: int
     issues: tuple[str, ...] = ()
 
 
@@ -97,9 +134,11 @@ class CastleCatalog:
         self,
         buildings: Mapping[str, BuildingData],
         mana_stages: Mapping[int, CastleManaStageData] | None = None,
+        gem_shop_packs: Mapping[str, tuple[tuple[int, int], ...]] | None = None,
     ) -> None:
         self.buildings = dict(buildings)
         self.mana_stages = dict(mana_stages or {})
+        self.gem_shop_packs = dict(gem_shop_packs or {})
 
     @property
     def max_mana_stage(self) -> int:
@@ -152,9 +191,19 @@ class CastleCatalog:
                     for key in CASTLE_RESOURCE_KEYS
                 },
             )
+        gem_shop_packs = {
+            str(key): tuple(
+                (
+                    max(1, int(pack.get("quantity") or 1)),
+                    max(0, int(pack.get("gems") or 0)),
+                )
+                for pack in packs
+            )
+            for key, packs in raw.get("gem_shop_packs", {}).items()
+        }
         if "castle" not in buildings:
             raise ValueError("Castle data is missing")
-        return cls(buildings, mana_stages)
+        return cls(buildings, mana_stages, gem_shop_packs)
 
     def minimum_levels_for_castle(self, castle_level: int) -> dict[str, int]:
         levels: dict[str, int] = {building_id: 0 for building_id in self.buildings}
@@ -200,6 +249,22 @@ class CastleCatalog:
         result["castle"] = max(result.get("castle", 0), int(castle_level))
         return result
 
+    def gem_costs_for(
+        self,
+        costs: Mapping[str, int],
+        owned_resources: Mapping[str, int] | None = None,
+    ) -> dict[str, int]:
+        available = owned_resources or {}
+        result: dict[str, int] = {}
+        for key, packs in self.gem_shop_packs.items():
+            missing = max(
+                0,
+                int(costs.get(key, 0)) - max(0, int(available.get(key, 0))),
+            )
+            if missing:
+                result[key] = minimum_gems_for_amount(missing, packs)
+        return result
+
     def create_plan(
         self,
         *,
@@ -211,10 +276,31 @@ class CastleCatalog:
         construction_speed_percent: float = 0.0,
         vip_level: int = 1,
         guild_helps: int = 0,
+        target_building_id: str = "castle",
+        target_building_level: int | None = None,
+        owned_resources: Mapping[str, int] | None = None,
     ) -> CastlePlanResult:
         castle = self.buildings["castle"]
         current = min(castle.max_level, max(1, int(castle_level)))
+        selected_building = self.buildings.get(target_building_id)
+        if selected_building is None:
+            raise KeyError(target_building_id)
         target = min(castle.max_level, max(current, int(target_castle_level)))
+        selected_target = (
+            target
+            if target_building_id == "castle"
+            else min(
+                selected_building.max_level,
+                max(
+                    self.effective_levels(current, saved_levels).get(
+                        target_building_id, 0
+                    ),
+                    int(target_building_level or 0),
+                ),
+            )
+        )
+        if target_building_id != "castle":
+            target = current
         current_mana = (
             min(self.max_mana_stage, max(0, int(current_mana_stage)))
             if current >= castle.max_level
@@ -276,8 +362,11 @@ class CastleCatalog:
                 completed.add(key)
                 visiting.remove(key)
 
-        add_building("castle", target)
-        for stage in range(current_mana + 1, target_mana + 1):
+        add_building(target_building_id, selected_target)
+        for stage in range(
+            current_mana + 1,
+            target_mana + 1 if target_building_id == "castle" else current_mana + 1,
+        ):
             data = self.mana_stages.get(stage)
             if data is None:
                 issues.append(f"Missing Castle Mana stage data: {stage}")
@@ -333,16 +422,23 @@ class CastleCatalog:
             )
             for building_id, summary in summary_by_id.items()
         )
+        gem_costs = self.gem_costs_for(total_costs, owned_resources)
         return CastlePlanResult(
             current_castle_level=current,
             target_castle_level=target,
             current_mana_stage=current_mana,
-            target_mana_stage=target_mana,
+            target_mana_stage=(
+                target_mana if target_building_id == "castle" else current_mana
+            ),
+            target_building_id=target_building_id,
+            target_building_level=selected_target,
             effective_levels=effective,
             steps=tuple(steps),
             buildings=summaries,
             total_base_seconds=sum(step.base_seconds for step in steps),
             total_adjusted_seconds=sum(step.adjusted_seconds for step in steps),
             total_costs=total_costs,
+            gem_costs=gem_costs,
+            total_gems=sum(gem_costs.values()),
             issues=tuple(dict.fromkeys(issues)),
         )

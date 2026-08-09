@@ -76,6 +76,10 @@ Credit belongs to the contributors of the Lords Mobile Wiki pages below.
 - Barrack: https://lordsmobile.fandom.com/wiki/Barrack
 - Quarry: https://lordsmobile.fandom.com/wiki/Quarry
 - Academy: https://lordsmobile.fandom.com/wiki/Academy
+- Embassy: https://lordsmobile.fandom.com/wiki/Embassy
+- Battle Hall: https://lordsmobile.fandom.com/wiki/Battle_Hall
+- Prison: https://lordsmobile.fandom.com/wiki/Prison
+- Altar: https://lordsmobile.fandom.com/wiki/Altar
 - Trading Post: https://lordsmobile.fandom.com/wiki/Trading_Post
 - Manor: https://lordsmobile.fandom.com/wiki/Manor
 - Farm: https://lordsmobile.fandom.com/wiki/Farm
@@ -99,6 +103,10 @@ redistributed.
   https://www.youtube.com/watch?v=QKP5dGy1IHs
 - Games Guide Info building overview:
   https://www.gamesguideinfo.com/lords-mobile/overview/buildings
+- Official IGG building/material level table:
+  https://lordsmobile.igg.com/project/game_tool/index.php?action=play_content&cate=7&lang=tha
+- Lords Gems shop-pack calculator reference:
+  https://lordsgems.com/gem-calculator/
 - LM Harus mana-upgrade reference:
   https://lm-harus.com/mana/
 

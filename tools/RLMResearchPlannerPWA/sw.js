@@ -1,7 +1,7 @@
-const CACHE_NAME = "rlm-research-planner-pwa-v0.0.10-b2";
+const CACHE_NAME = "rlm-research-planner-pwa-v0.0.11-b3";
 const APP_SHELL = [
-  "./", "./index.html", "./styles.css?v=0.0.10-b2", "./manifest.webmanifest", "./icons/app-icon.svg",
-  "./src/app.js?v=0.0.10-b2", "./src/catalog.js?v=0.0.10-b2", "./src/planning.js?v=0.0.10-b2", "./src/castle-planning.js?v=0.0.10-b2", "./src/state.js?v=0.0.10-b2", "./src/resource-format.js?v=0.0.10-b2", "./src/tree-layout.js?v=0.0.10-b2", "./src/tree-zoom.js?v=0.0.10-b2", "./data/research/catalog.json", "./data/buildings/castle_catalog.json", "./data/i18n/ja-JP.json",
+  "./", "./index.html", "./styles.css?v=0.0.11-b3", "./manifest.webmanifest", "./icons/app-icon.svg",
+  "./src/app.js?v=0.0.11-b3", "./src/catalog.js?v=0.0.11-b3", "./src/planning.js?v=0.0.11-b3", "./src/castle-planning.js?v=0.0.11-b3", "./src/state.js?v=0.0.11-b3", "./src/resource-format.js?v=0.0.11-b3", "./src/tree-layout.js?v=0.0.11-b3", "./src/tree-zoom.js?v=0.0.11-b3", "./data/research/catalog.json", "./data/buildings/castle_catalog.json", "./data/i18n/ja-JP.json",
 ];
 
 self.addEventListener("install", (event) => {

@@ -6,6 +6,14 @@ QMainWindow {
     color: #F4F8F8;
     background-color: #07151D;
 }
+QDialog, QMessageBox, QProgressDialog, QFileDialog {
+    color: #F4F8F8;
+    background-color: #0D2530;
+}
+QDialog QLabel, QMessageBox QLabel, QProgressDialog QLabel, QFileDialog QLabel {
+    color: #F4F8F8;
+    background-color: transparent;
+}
 QWidget {
     color: #F4F8F8;
 }
@@ -94,7 +102,8 @@ QComboBox QAbstractItemView {
     background-color: #0D2530;
     border: 1px solid #2F5F6C;
 }
-QListWidget, QTableWidget, QTextBrowser {
+QListWidget, QTableWidget, QTextBrowser,
+QFileDialog QListView, QFileDialog QTreeView {
     color: #F4F8F8;
     alternate-background-color: #102D38;
     background-color: #0B202A;
@@ -136,6 +145,15 @@ QGroupBox::title {
     padding: 0 5px;
     color: #66D8C2;
     background-color: #07151D;
+}
+QLabel#ConstructionSelection {
+    min-height: 28px;
+    padding: 4px 12px;
+    border: 2px solid #C58BFF;
+    border-radius: 8px;
+    color: #F4E8FF;
+    background-color: #2B183D;
+    font-weight: 800;
 }
 QProgressBar {
     min-height: 12px;

@@ -1,12 +1,14 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "dataset_id": "lords-mobile-castle-plan",
-  "checked_on": "2026-08-08",
-  "notes": "城Lv.1-25と到達経路上の施設、および城Lv.25後のマナ強化第1レベル（5段階）について、公開WikiのUpgrade Resultsを収録。建設速度適用前の時間。",
+  "checked_on": "2026-08-09",
+  "notes": "城Lv.1-25、個別施設Lv.1-25、特殊施設・特殊素材、および城Lv.25後のマナ強化について、公開資料の値を収録。建設時間は建設速度適用前。",
   "sources": [
     "https://lordsmobile.fandom.com/wiki/Castle",
     "https://www.gamesguideinfo.com/lords-mobile/overview/buildings",
-    "https://lm-harus.com/mana/"
+    "https://lm-harus.com/mana/",
+    "https://lordsmobile.igg.com/project/game_tool/index.php?action=play_content&cate=7&lang=tha",
+    "https://lordsgems.com/gem-calculator/"
   ],
   "source_licenses": [
     {
@@ -23,84 +25,77 @@
     {
       "url": "https://lm-harus.com/mana/",
       "scope": "Factual verification reference; no redistribution license asserted."
+    },
+    {
+      "url": "https://lordsmobile.igg.com/project/game_tool/index.php?action=play_content&cate=7&lang=tha",
+      "scope": "Official factual verification reference for advanced-building item quantities."
+    },
+    {
+      "url": "https://lordsgems.com/gem-calculator/",
+      "scope": "Factual verification reference for in-game gem-shop item prices; no redistribution license asserted."
     }
   ],
-  "castle_mana_progression": {
-    "base_castle_level": 25,
-    "stage_count": 5,
-    "names": {
-      "ja-JP": "城（マナ強化）",
-      "en-US": "Castle (Mana Upgrade)"
-    },
-    "notes": "マナレベル1は同一の資材・時間で5段階建設する。画面上では城Lv.25-1～Lv.25-5として表示する。",
-    "source_url": "https://lordsmobile.fandom.com/wiki/Castle",
-    "stages": {
-      "1": {
-        "base_time_seconds": 2649349,
-        "costs": {
-          "food": 5333046,
-          "stone": 7272336,
-          "timber": 7272336,
-          "ore": 4363401,
-          "gold_hammer": 0,
-          "mana_ore": 23029,
-          "mana_crystal": 242,
-          "mana_steel": 0
-        }
-      },
-      "2": {
-        "base_time_seconds": 2649349,
-        "costs": {
-          "food": 5333046,
-          "stone": 7272336,
-          "timber": 7272336,
-          "ore": 4363401,
-          "gold_hammer": 0,
-          "mana_ore": 23029,
-          "mana_crystal": 242,
-          "mana_steel": 0
-        }
-      },
-      "3": {
-        "base_time_seconds": 2649349,
-        "costs": {
-          "food": 5333046,
-          "stone": 7272336,
-          "timber": 7272336,
-          "ore": 4363401,
-          "gold_hammer": 0,
-          "mana_ore": 23029,
-          "mana_crystal": 242,
-          "mana_steel": 0
-        }
-      },
-      "4": {
-        "base_time_seconds": 2649349,
-        "costs": {
-          "food": 5333046,
-          "stone": 7272336,
-          "timber": 7272336,
-          "ore": 4363401,
-          "gold_hammer": 0,
-          "mana_ore": 23029,
-          "mana_crystal": 242,
-          "mana_steel": 0
-        }
-      },
-      "5": {
-        "base_time_seconds": 2649349,
-        "costs": {
-          "food": 5333046,
-          "stone": 7272336,
-          "timber": 7272336,
-          "ore": 4363401,
-          "gold_hammer": 0,
-          "mana_ore": 23029,
-          "mana_crystal": 242,
-          "mana_steel": 0
-        }
+  "gem_shop_packs": {
+    "gold_hammer": [
+      {
+        "quantity": 1,
+        "gems": 2000
       }
-    }
+    ],
+    "war_tome": [
+      {
+        "quantity": 1,
+        "gems": 15
+      },
+      {
+        "quantity": 10,
+        "gems": 120
+      },
+      {
+        "quantity": 100,
+        "gems": 1100
+      },
+      {
+        "quantity": 1000,
+        "gems": 10000
+      }
+    ],
+    "steel_cuffs": [
+      {
+        "quantity": 1,
+        "gems": 15
+      },
+      {
+        "quantity": 10,
+        "gems": 120
+      },
+      {
+        "quantity": 100,
+        "gems": 1100
+      },
+      {
+        "quantity": 1000,
+        "gems": 10000
+      }
+    ],
+    "soul_crystal": [
+      {
+        "quantity": 1,
+        "gems": 15
+      },
+      {
+        "quantity": 10,
+        "gems": 120
+      },
+      {
+        "quantity": 100,
+        "gems": 1100
+      },
+      {
+        "quantity": 1000,
+        "gems": 10000
+      }
+    ]
   },
   "buildings": [
     {
@@ -1772,7 +1767,7 @@
             "stone": 3160180,
             "timber": 3160180,
             "ore": 1725300,
-            "gold_hammer": 0
+            "gold_hammer": 1
           },
           "requirements": [
             {
@@ -2574,7 +2569,7 @@
             "stone": 10978480,
             "timber": 17565568,
             "ore": 6587088,
-            "gold_hammer": 0
+            "gold_hammer": 1
           },
           "requirements": [
             {
@@ -3366,7 +3361,7 @@
             "stone": 2300100,
             "timber": 3160180,
             "ore": 3160180,
-            "gold_hammer": 0
+            "gold_hammer": 1
           },
           "requirements": [
             {
@@ -3797,6 +3792,14 @@
               "level": 25
             },
             {
+              "building_id": "battle_hall",
+              "level": 25
+            },
+            {
+              "building_id": "altar",
+              "level": 25
+            },
+            {
               "building_id": "trading_post",
               "level": 25
             },
@@ -3808,6 +3811,1719 @@
         }
       },
       "source_url": "https://lordsmobile.fandom.com/wiki/Academy"
+    },
+    {
+      "id": "embassy",
+      "names": {
+        "ja-JP": "大使館",
+        "en-US": "Embassy"
+      },
+      "max_level": 25,
+      "levels": {
+        "1": {
+          "base_time_seconds": 72,
+          "costs": {
+            "food": 418,
+            "stone": 570,
+            "timber": 570,
+            "ore": 342,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 6
+            }
+          ]
+        },
+        "2": {
+          "base_time_seconds": 180,
+          "costs": {
+            "food": 627,
+            "stone": 855,
+            "timber": 855,
+            "ore": 513,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 6
+            }
+          ]
+        },
+        "3": {
+          "base_time_seconds": 360,
+          "costs": {
+            "food": 940,
+            "stone": 1282,
+            "timber": 1282,
+            "ore": 1154,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 6
+            }
+          ]
+        },
+        "4": {
+          "base_time_seconds": 720,
+          "costs": {
+            "food": 1410,
+            "stone": 1923,
+            "timber": 1923,
+            "ore": 1154,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 7
+            }
+          ]
+        },
+        "5": {
+          "base_time_seconds": 1440,
+          "costs": {
+            "food": 2116,
+            "stone": 2885,
+            "timber": 2885,
+            "ore": 1731,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 7
+            }
+          ]
+        },
+        "6": {
+          "base_time_seconds": 2880,
+          "costs": {
+            "food": 3174,
+            "stone": 3328,
+            "timber": 3328,
+            "ore": 2597,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 8
+            }
+          ]
+        },
+        "7": {
+          "base_time_seconds": 4761,
+          "costs": {
+            "food": 4761,
+            "stone": 6492,
+            "timber": 6492,
+            "ore": 3895,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 8
+            }
+          ]
+        },
+        "8": {
+          "base_time_seconds": 11520,
+          "costs": {
+            "food": 7141,
+            "stone": 9738,
+            "timber": 9738,
+            "ore": 5843,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 9
+            }
+          ]
+        },
+        "9": {
+          "base_time_seconds": 20736,
+          "costs": {
+            "food": 10712,
+            "stone": 14608,
+            "timber": 14608,
+            "ore": 8765,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 9
+            }
+          ]
+        },
+        "10": {
+          "base_time_seconds": 33178,
+          "costs": {
+            "food": 16069,
+            "stone": 21912,
+            "timber": 21912,
+            "ore": 13147,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 10
+            }
+          ]
+        },
+        "11": {
+          "base_time_seconds": 43131,
+          "costs": {
+            "food": 24103,
+            "stone": 32869,
+            "timber": 32869,
+            "ore": 19721,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 11
+            }
+          ]
+        },
+        "12": {
+          "base_time_seconds": 49601,
+          "costs": {
+            "food": 36155,
+            "stone": 49303,
+            "timber": 49303,
+            "ore": 29582,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 12
+            }
+          ]
+        },
+        "13": {
+          "base_time_seconds": 57041,
+          "costs": {
+            "food": 54233,
+            "stone": 73955,
+            "timber": 73955,
+            "ore": 44373,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 13
+            }
+          ]
+        },
+        "14": {
+          "base_time_seconds": 65597,
+          "costs": {
+            "food": 81350,
+            "stone": 110933,
+            "timber": 110933,
+            "ore": 66559,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 14
+            }
+          ]
+        },
+        "15": {
+          "base_time_seconds": 75437,
+          "costs": {
+            "food": 122026,
+            "stone": 166399,
+            "timber": 166399,
+            "ore": 99839,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 15
+            }
+          ]
+        },
+        "16": {
+          "base_time_seconds": 86752,
+          "costs": {
+            "food": 183039,
+            "stone": 249599,
+            "timber": 249599,
+            "ore": 149759,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 16
+            }
+          ]
+        },
+        "17": {
+          "base_time_seconds": 99765,
+          "costs": {
+            "food": 274559,
+            "stone": 374399,
+            "timber": 374399,
+            "ore": 224639,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 17
+            }
+          ]
+        },
+        "18": {
+          "base_time_seconds": 114729,
+          "costs": {
+            "food": 411839,
+            "stone": 561598,
+            "timber": 561598,
+            "ore": 336959,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 18
+            }
+          ]
+        },
+        "19": {
+          "base_time_seconds": 131939,
+          "costs": {
+            "food": 617758,
+            "stone": 842398,
+            "timber": 842398,
+            "ore": 505439,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 19
+            }
+          ]
+        },
+        "20": {
+          "base_time_seconds": 151730,
+          "costs": {
+            "food": 926638,
+            "stone": 1263597,
+            "timber": 1263597,
+            "ore": 758158,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 20
+            }
+          ]
+        },
+        "21": {
+          "base_time_seconds": 197248,
+          "costs": {
+            "food": 1389957,
+            "stone": 1896396,
+            "timber": 1896396,
+            "ore": 1137237,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 21
+            }
+          ]
+        },
+        "22": {
+          "base_time_seconds": 315597,
+          "costs": {
+            "food": 2084935,
+            "stone": 2843094,
+            "timber": 2843094,
+            "ore": 1705856,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 22
+            }
+          ]
+        },
+        "23": {
+          "base_time_seconds": 568074,
+          "costs": {
+            "food": 3127403,
+            "stone": 4264641,
+            "timber": 4264641,
+            "ore": 2558785,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 23
+            }
+          ]
+        },
+        "24": {
+          "base_time_seconds": 1022533,
+          "costs": {
+            "food": 4691106,
+            "stone": 6396963,
+            "timber": 6396963,
+            "ore": 3838178,
+            "gold_hammer": 0
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 24
+            }
+          ]
+        },
+        "25": {
+          "base_time_seconds": 3578865,
+          "costs": {
+            "food": 9382211,
+            "stone": 12793925,
+            "timber": 12793925,
+            "ore": 7676355,
+            "gold_hammer": 1
+          },
+          "requirements": [
+            {
+              "building_id": "quarry",
+              "level": 25
+            }
+          ]
+        }
+      },
+      "source_url": "https://lordsmobile.fandom.com/wiki/Embassy"
+    },
+    {
+      "id": "battle_hall",
+      "names": {
+        "ja-JP": "バトルホール",
+        "en-US": "Battle Hall"
+      },
+      "max_level": 25,
+      "levels": {
+        "1": {
+          "base_time_seconds": 120,
+          "costs": {
+            "food": 140,
+            "stone": 140,
+            "timber": 140,
+            "ore": 140,
+            "gold_hammer": 0,
+            "war_tome": 1
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 1
+            }
+          ]
+        },
+        "2": {
+          "base_time_seconds": 240,
+          "costs": {
+            "food": 210,
+            "stone": 210,
+            "timber": 210,
+            "ore": 210,
+            "gold_hammer": 0,
+            "war_tome": 2
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 2
+            }
+          ]
+        },
+        "3": {
+          "base_time_seconds": 480,
+          "costs": {
+            "food": 315,
+            "stone": 315,
+            "timber": 315,
+            "ore": 315,
+            "gold_hammer": 0,
+            "war_tome": 5
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 3
+            }
+          ]
+        },
+        "4": {
+          "base_time_seconds": 960,
+          "costs": {
+            "food": 472,
+            "stone": 472,
+            "timber": 472,
+            "ore": 472,
+            "gold_hammer": 0,
+            "war_tome": 12
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 4
+            }
+          ]
+        },
+        "5": {
+          "base_time_seconds": 1920,
+          "costs": {
+            "food": 708,
+            "stone": 708,
+            "timber": 708,
+            "ore": 708,
+            "gold_hammer": 0,
+            "war_tome": 20
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 5
+            }
+          ]
+        },
+        "6": {
+          "base_time_seconds": 3840,
+          "costs": {
+            "food": 1063,
+            "stone": 1063,
+            "timber": 1063,
+            "ore": 1063,
+            "gold_hammer": 0,
+            "war_tome": 30
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 6
+            }
+          ]
+        },
+        "7": {
+          "base_time_seconds": 7680,
+          "costs": {
+            "food": 1594,
+            "stone": 1594,
+            "timber": 1594,
+            "ore": 1594,
+            "gold_hammer": 0,
+            "war_tome": 45
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 7
+            }
+          ]
+        },
+        "8": {
+          "base_time_seconds": 15360,
+          "costs": {
+            "food": 2392,
+            "stone": 2392,
+            "timber": 2392,
+            "ore": 2392,
+            "gold_hammer": 0,
+            "war_tome": 60
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 8
+            }
+          ]
+        },
+        "9": {
+          "base_time_seconds": 27648,
+          "costs": {
+            "food": 3588,
+            "stone": 3588,
+            "timber": 3588,
+            "ore": 3588,
+            "gold_hammer": 0,
+            "war_tome": 85
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 9
+            }
+          ]
+        },
+        "10": {
+          "base_time_seconds": 44237,
+          "costs": {
+            "food": 5382,
+            "stone": 5382,
+            "timber": 5382,
+            "ore": 5382,
+            "gold_hammer": 0,
+            "war_tome": 100
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 10
+            }
+          ]
+        },
+        "11": {
+          "base_time_seconds": 57508,
+          "costs": {
+            "food": 8073,
+            "stone": 8073,
+            "timber": 8073,
+            "ore": 8073,
+            "gold_hammer": 0,
+            "war_tome": 120
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 11
+            }
+          ]
+        },
+        "12": {
+          "base_time_seconds": 66135,
+          "costs": {
+            "food": 12109,
+            "stone": 12109,
+            "timber": 12109,
+            "ore": 12109,
+            "gold_hammer": 0,
+            "war_tome": 150
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 12
+            }
+          ]
+        },
+        "13": {
+          "base_time_seconds": 76055,
+          "costs": {
+            "food": 18164,
+            "stone": 18164,
+            "timber": 18164,
+            "ore": 18164,
+            "gold_hammer": 0,
+            "war_tome": 180
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 13
+            }
+          ]
+        },
+        "14": {
+          "base_time_seconds": 87463,
+          "costs": {
+            "food": 27246,
+            "stone": 27246,
+            "timber": 27246,
+            "ore": 27246,
+            "gold_hammer": 0,
+            "war_tome": 250
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 14
+            }
+          ]
+        },
+        "15": {
+          "base_time_seconds": 100582,
+          "costs": {
+            "food": 40870,
+            "stone": 40870,
+            "timber": 40870,
+            "ore": 40870,
+            "gold_hammer": 0,
+            "war_tome": 340
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 15
+            }
+          ]
+        },
+        "16": {
+          "base_time_seconds": 115669,
+          "costs": {
+            "food": 61305,
+            "stone": 61305,
+            "timber": 61305,
+            "ore": 61305,
+            "gold_hammer": 0,
+            "war_tome": 500
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 16
+            }
+          ]
+        },
+        "17": {
+          "base_time_seconds": 133020,
+          "costs": {
+            "food": 91957,
+            "stone": 91957,
+            "timber": 91957,
+            "ore": 91957,
+            "gold_hammer": 0,
+            "war_tome": 700
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 17
+            }
+          ]
+        },
+        "18": {
+          "base_time_seconds": 152972,
+          "costs": {
+            "food": 137936,
+            "stone": 137936,
+            "timber": 137936,
+            "ore": 137936,
+            "gold_hammer": 0,
+            "war_tome": 900
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 18
+            }
+          ]
+        },
+        "19": {
+          "base_time_seconds": 175918,
+          "costs": {
+            "food": 206904,
+            "stone": 206904,
+            "timber": 206904,
+            "ore": 206904,
+            "gold_hammer": 0,
+            "war_tome": 1200
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 19
+            }
+          ]
+        },
+        "20": {
+          "base_time_seconds": 202306,
+          "costs": {
+            "food": 310357,
+            "stone": 310357,
+            "timber": 310357,
+            "ore": 310357,
+            "gold_hammer": 0,
+            "war_tome": 1500
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 20
+            }
+          ]
+        },
+        "21": {
+          "base_time_seconds": 262998,
+          "costs": {
+            "food": 465535,
+            "stone": 465535,
+            "timber": 465535,
+            "ore": 465535,
+            "gold_hammer": 0,
+            "war_tome": 1800
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 21
+            }
+          ]
+        },
+        "22": {
+          "base_time_seconds": 420796,
+          "costs": {
+            "food": 698303,
+            "stone": 698303,
+            "timber": 698303,
+            "ore": 698303,
+            "gold_hammer": 0,
+            "war_tome": 2100
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 22
+            }
+          ]
+        },
+        "23": {
+          "base_time_seconds": 757432,
+          "costs": {
+            "food": 1047455,
+            "stone": 1047455,
+            "timber": 1047455,
+            "ore": 1047455,
+            "gold_hammer": 0,
+            "war_tome": 2400
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 23
+            }
+          ]
+        },
+        "24": {
+          "base_time_seconds": 1363378,
+          "costs": {
+            "food": 1571183,
+            "stone": 1571183,
+            "timber": 1571183,
+            "ore": 1571183,
+            "gold_hammer": 0,
+            "war_tome": 3000
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 24
+            }
+          ]
+        },
+        "25": {
+          "base_time_seconds": 4771820,
+          "costs": {
+            "food": 3142367,
+            "stone": 3142367,
+            "timber": 3142367,
+            "ore": 3142367,
+            "gold_hammer": 1,
+            "war_tome": 4500
+          },
+          "requirements": [
+            {
+              "building_id": "embassy",
+              "level": 25
+            }
+          ]
+        }
+      },
+      "source_url": "https://lordsmobile.fandom.com/wiki/Battle_Hall"
+    },
+    {
+      "id": "prison",
+      "names": {
+        "ja-JP": "牢獄",
+        "en-US": "Prison"
+      },
+      "max_level": 25,
+      "levels": {
+        "1": {
+          "base_time_seconds": 0,
+          "costs": {
+            "food": 0,
+            "stone": 0,
+            "timber": 0,
+            "ore": 0,
+            "gold_hammer": 0
+          },
+          "requirements": []
+        },
+        "2": {
+          "base_time_seconds": 300,
+          "costs": {
+            "food": 562,
+            "stone": 562,
+            "timber": 562,
+            "ore": 562,
+            "gold_hammer": 0,
+            "steel_cuffs": 2
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "3": {
+          "base_time_seconds": 600,
+          "costs": {
+            "food": 843,
+            "stone": 843,
+            "timber": 843,
+            "ore": 843,
+            "gold_hammer": 0,
+            "steel_cuffs": 5
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "4": {
+          "base_time_seconds": 1200,
+          "costs": {
+            "food": 1265,
+            "stone": 1265,
+            "timber": 1265,
+            "ore": 1265,
+            "gold_hammer": 0,
+            "steel_cuffs": 12
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "5": {
+          "base_time_seconds": 2400,
+          "costs": {
+            "food": 1898,
+            "stone": 1898,
+            "timber": 1898,
+            "ore": 1898,
+            "gold_hammer": 0,
+            "steel_cuffs": 20
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "6": {
+          "base_time_seconds": 4800,
+          "costs": {
+            "food": 2847,
+            "stone": 2847,
+            "timber": 2847,
+            "ore": 2847,
+            "gold_hammer": 0,
+            "steel_cuffs": 30
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "7": {
+          "base_time_seconds": 9600,
+          "costs": {
+            "food": 4271,
+            "stone": 4271,
+            "timber": 4271,
+            "ore": 4271,
+            "gold_hammer": 0,
+            "steel_cuffs": 45
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "8": {
+          "base_time_seconds": 19200,
+          "costs": {
+            "food": 6407,
+            "stone": 6407,
+            "timber": 6407,
+            "ore": 6407,
+            "gold_hammer": 0,
+            "steel_cuffs": 60
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "9": {
+          "base_time_seconds": 34560,
+          "costs": {
+            "food": 9610,
+            "stone": 9610,
+            "timber": 9610,
+            "ore": 9610,
+            "gold_hammer": 0,
+            "steel_cuffs": 85
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "10": {
+          "base_time_seconds": 55296,
+          "costs": {
+            "food": 14416,
+            "stone": 14416,
+            "timber": 14416,
+            "ore": 14416,
+            "gold_hammer": 0,
+            "steel_cuffs": 100
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 10
+            }
+          ]
+        },
+        "11": {
+          "base_time_seconds": 71885,
+          "costs": {
+            "food": 21624,
+            "stone": 21624,
+            "timber": 21624,
+            "ore": 21624,
+            "gold_hammer": 0,
+            "steel_cuffs": 120
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 11
+            }
+          ]
+        },
+        "12": {
+          "base_time_seconds": 82668,
+          "costs": {
+            "food": 32436,
+            "stone": 32436,
+            "timber": 32436,
+            "ore": 32436,
+            "gold_hammer": 0,
+            "steel_cuffs": 150
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 12
+            }
+          ]
+        },
+        "13": {
+          "base_time_seconds": 95068,
+          "costs": {
+            "food": 48654,
+            "stone": 48654,
+            "timber": 48654,
+            "ore": 48654,
+            "gold_hammer": 0,
+            "steel_cuffs": 180
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 13
+            }
+          ]
+        },
+        "14": {
+          "base_time_seconds": 109328,
+          "costs": {
+            "food": 72982,
+            "stone": 72982,
+            "timber": 72982,
+            "ore": 72982,
+            "gold_hammer": 0,
+            "steel_cuffs": 250
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 14
+            }
+          ]
+        },
+        "15": {
+          "base_time_seconds": 125727,
+          "costs": {
+            "food": 109473,
+            "stone": 109473,
+            "timber": 109473,
+            "ore": 109473,
+            "gold_hammer": 0,
+            "steel_cuffs": 340
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 15
+            }
+          ]
+        },
+        "16": {
+          "base_time_seconds": 144587,
+          "costs": {
+            "food": 164210,
+            "stone": 164210,
+            "timber": 164210,
+            "ore": 164210,
+            "gold_hammer": 0,
+            "steel_cuffs": 500
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 16
+            }
+          ]
+        },
+        "17": {
+          "base_time_seconds": 166274,
+          "costs": {
+            "food": 246315,
+            "stone": 246315,
+            "timber": 246315,
+            "ore": 246315,
+            "gold_hammer": 0,
+            "steel_cuffs": 700
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 17
+            }
+          ]
+        },
+        "18": {
+          "base_time_seconds": 191215,
+          "costs": {
+            "food": 369472,
+            "stone": 369472,
+            "timber": 369472,
+            "ore": 369472,
+            "gold_hammer": 0,
+            "steel_cuffs": 900
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 18
+            }
+          ]
+        },
+        "19": {
+          "base_time_seconds": 219898,
+          "costs": {
+            "food": 554209,
+            "stone": 554209,
+            "timber": 554209,
+            "ore": 554209,
+            "gold_hammer": 0,
+            "steel_cuffs": 1200
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 19
+            }
+          ]
+        },
+        "20": {
+          "base_time_seconds": 252882,
+          "costs": {
+            "food": 831314,
+            "stone": 831314,
+            "timber": 831314,
+            "ore": 831314,
+            "gold_hammer": 0,
+            "steel_cuffs": 1500
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 20
+            }
+          ]
+        },
+        "21": {
+          "base_time_seconds": 328747,
+          "costs": {
+            "food": 1246971,
+            "stone": 1246971,
+            "timber": 1246971,
+            "ore": 1246971,
+            "gold_hammer": 0,
+            "steel_cuffs": 1800
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 21
+            }
+          ]
+        },
+        "22": {
+          "base_time_seconds": 525995,
+          "costs": {
+            "food": 1870456,
+            "stone": 1870456,
+            "timber": 1870456,
+            "ore": 1870456,
+            "gold_hammer": 0,
+            "steel_cuffs": 2100
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 22
+            }
+          ]
+        },
+        "23": {
+          "base_time_seconds": 946790,
+          "costs": {
+            "food": 2805685,
+            "stone": 2805685,
+            "timber": 2805685,
+            "ore": 2805685,
+            "gold_hammer": 0,
+            "steel_cuffs": 2400
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 23
+            }
+          ]
+        },
+        "24": {
+          "base_time_seconds": 1704222,
+          "costs": {
+            "food": 4208528,
+            "stone": 4208528,
+            "timber": 4208528,
+            "ore": 4208528,
+            "gold_hammer": 0,
+            "steel_cuffs": 3000
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 24
+            }
+          ]
+        },
+        "25": {
+          "base_time_seconds": 5964775,
+          "costs": {
+            "food": 8417056,
+            "stone": 8417056,
+            "timber": 8417056,
+            "ore": 8417056,
+            "gold_hammer": 1,
+            "steel_cuffs": 4500
+          },
+          "requirements": [
+            {
+              "building_id": "manor",
+              "level": 25
+            }
+          ]
+        }
+      },
+      "source_url": "https://lordsmobile.fandom.com/wiki/Prison"
+    },
+    {
+      "id": "altar",
+      "names": {
+        "ja-JP": "祭壇",
+        "en-US": "Altar"
+      },
+      "max_level": 25,
+      "levels": {
+        "1": {
+          "base_time_seconds": 120,
+          "costs": {
+            "food": 594,
+            "stone": 810,
+            "timber": 810,
+            "ore": 486,
+            "gold_hammer": 0,
+            "soul_crystal": 1
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "2": {
+          "base_time_seconds": 240,
+          "costs": {
+            "food": 891,
+            "stone": 1215,
+            "timber": 1215,
+            "ore": 729,
+            "gold_hammer": 0,
+            "soul_crystal": 2
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "3": {
+          "base_time_seconds": 480,
+          "costs": {
+            "food": 1336,
+            "stone": 1822,
+            "timber": 1822,
+            "ore": 1093,
+            "gold_hammer": 0,
+            "soul_crystal": 5
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "4": {
+          "base_time_seconds": 960,
+          "costs": {
+            "food": 2004,
+            "stone": 2733,
+            "timber": 2733,
+            "ore": 1640,
+            "gold_hammer": 0,
+            "soul_crystal": 12
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "5": {
+          "base_time_seconds": 1920,
+          "costs": {
+            "food": 3007,
+            "stone": 4100,
+            "timber": 4100,
+            "ore": 2460,
+            "gold_hammer": 0,
+            "soul_crystal": 20
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "6": {
+          "base_time_seconds": 3840,
+          "costs": {
+            "food": 4510,
+            "stone": 6150,
+            "timber": 6150,
+            "ore": 3690,
+            "gold_hammer": 0,
+            "soul_crystal": 30
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "7": {
+          "base_time_seconds": 7680,
+          "costs": {
+            "food": 6766,
+            "stone": 9226,
+            "timber": 9226,
+            "ore": 5535,
+            "gold_hammer": 0,
+            "soul_crystal": 45
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "8": {
+          "base_time_seconds": 15360,
+          "costs": {
+            "food": 10149,
+            "stone": 13839,
+            "timber": 13839,
+            "ore": 8303,
+            "gold_hammer": 0,
+            "soul_crystal": 60
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "9": {
+          "base_time_seconds": 27648,
+          "costs": {
+            "food": 15223,
+            "stone": 20759,
+            "timber": 20759,
+            "ore": 12455,
+            "gold_hammer": 0,
+            "soul_crystal": 85
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "10": {
+          "base_time_seconds": 44237,
+          "costs": {
+            "food": 22835,
+            "stone": 31139,
+            "timber": 31139,
+            "ore": 18683,
+            "gold_hammer": 0,
+            "soul_crystal": 100
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "11": {
+          "base_time_seconds": 57508,
+          "costs": {
+            "food": 34253,
+            "stone": 46709,
+            "timber": 46709,
+            "ore": 28025,
+            "gold_hammer": 0,
+            "soul_crystal": 120
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "12": {
+          "base_time_seconds": 66135,
+          "costs": {
+            "food": 51379,
+            "stone": 70063,
+            "timber": 70063,
+            "ore": 42037,
+            "gold_hammer": 0,
+            "soul_crystal": 150
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "13": {
+          "base_time_seconds": 76055,
+          "costs": {
+            "food": 77069,
+            "stone": 105094,
+            "timber": 105094,
+            "ore": 63056,
+            "gold_hammer": 0,
+            "soul_crystal": 180
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "14": {
+          "base_time_seconds": 87463,
+          "costs": {
+            "food": 115603,
+            "stone": 157641,
+            "timber": 157641,
+            "ore": 94585,
+            "gold_hammer": 0,
+            "soul_crystal": 250
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "15": {
+          "base_time_seconds": 100582,
+          "costs": {
+            "food": 173405,
+            "stone": 236462,
+            "timber": 236462,
+            "ore": 141877,
+            "gold_hammer": 0,
+            "soul_crystal": 340
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "16": {
+          "base_time_seconds": 115669,
+          "costs": {
+            "food": 260108,
+            "stone": 354694,
+            "timber": 354694,
+            "ore": 212816,
+            "gold_hammer": 0,
+            "soul_crystal": 500
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "17": {
+          "base_time_seconds": 133020,
+          "costs": {
+            "food": 390163,
+            "stone": 532041,
+            "timber": 532041,
+            "ore": 319224,
+            "gold_hammer": 0,
+            "soul_crystal": 700
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 17
+            }
+          ]
+        },
+        "18": {
+          "base_time_seconds": 152972,
+          "costs": {
+            "food": 585245,
+            "stone": 798061,
+            "timber": 798061,
+            "ore": 478836,
+            "gold_hammer": 0,
+            "soul_crystal": 900
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 18
+            }
+          ]
+        },
+        "19": {
+          "base_time_seconds": 175918,
+          "costs": {
+            "food": 877867,
+            "stone": 1197092,
+            "timber": 1197092,
+            "ore": 718255,
+            "gold_hammer": 0,
+            "soul_crystal": 1200
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 19
+            }
+          ]
+        },
+        "20": {
+          "base_time_seconds": 202306,
+          "costs": {
+            "food": 1316801,
+            "stone": 1795638,
+            "timber": 1795638,
+            "ore": 1077383,
+            "gold_hammer": 0,
+            "soul_crystal": 1500
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 20
+            }
+          ]
+        },
+        "21": {
+          "base_time_seconds": 262998,
+          "costs": {
+            "food": 1975202,
+            "stone": 2693457,
+            "timber": 2693457,
+            "ore": 1616074,
+            "gold_hammer": 0,
+            "soul_crystal": 1800
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 21
+            }
+          ]
+        },
+        "22": {
+          "base_time_seconds": 420796,
+          "costs": {
+            "food": 2962803,
+            "stone": 4040186,
+            "timber": 4040186,
+            "ore": 2424112,
+            "gold_hammer": 0,
+            "soul_crystal": 2100
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 22
+            }
+          ]
+        },
+        "23": {
+          "base_time_seconds": 757432,
+          "costs": {
+            "food": 4444205,
+            "stone": 6060280,
+            "timber": 6060280,
+            "ore": 3636168,
+            "gold_hammer": 0,
+            "soul_crystal": 2400
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 23
+            }
+          ]
+        },
+        "24": {
+          "base_time_seconds": 1363378,
+          "costs": {
+            "food": 6666308,
+            "stone": 9090420,
+            "timber": 9090420,
+            "ore": 5454252,
+            "gold_hammer": 0,
+            "soul_crystal": 3000
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 24
+            }
+          ]
+        },
+        "25": {
+          "base_time_seconds": 4771820,
+          "costs": {
+            "food": 13332616,
+            "stone": 18180841,
+            "timber": 18180841,
+            "ore": 10908504,
+            "gold_hammer": 1,
+            "soul_crystal": 4500
+          },
+          "requirements": [
+            {
+              "building_id": "prison",
+              "level": 25
+            }
+          ]
+        }
+      },
+      "source_url": "https://lordsmobile.fandom.com/wiki/Altar"
     },
     {
       "id": "trading_post",
@@ -4715,7 +6431,7 @@
             "stone": 5386915,
             "timber": 5386915,
             "ore": 3950404,
-            "gold_hammer": 0
+            "gold_hammer": 1
           },
           "requirements": [
             {
@@ -5536,7 +7252,7 @@
             "stone": 3160180,
             "timber": 2300100,
             "ore": 3160180,
-            "gold_hammer": 0
+            "gold_hammer": 1
           },
           "requirements": [
             {
@@ -5924,5 +7640,82 @@
       },
       "source_url": "https://lordsmobile.fandom.com/wiki/Watchtower"
     }
-  ]
+  ],
+  "castle_mana_progression": {
+    "base_castle_level": 25,
+    "stage_count": 5,
+    "names": {
+      "ja-JP": "城（マナ強化）",
+      "en-US": "Castle (Mana Upgrade)"
+    },
+    "notes": "マナレベル1は同一の資材・時間で5段階建設する。画面上では城Lv.25-1～Lv.25-5として表示する。",
+    "source_url": "https://lordsmobile.fandom.com/wiki/Castle",
+    "stages": {
+      "1": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "2": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "3": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "4": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      },
+      "5": {
+        "base_time_seconds": 2649349,
+        "costs": {
+          "food": 5333046,
+          "stone": 7272336,
+          "timber": 7272336,
+          "ore": 4363401,
+          "gold_hammer": 0,
+          "mana_ore": 23029,
+          "mana_crystal": 242,
+          "mana_steel": 0
+        }
+      }
+    }
+  }
 }
