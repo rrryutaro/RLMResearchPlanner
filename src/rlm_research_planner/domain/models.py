@@ -192,6 +192,48 @@ class ResearchPlanTask:
     created_at: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
+    source_name: str = ""
+
+
+@dataclass(frozen=True)
+class PaidItem:
+    kind: str
+    name: str = ""
+    quantity: int = 0
+    duration_seconds: int = 0
+    gem_value_each: float = 0.0
+    points_each: float = 0.0
+
+
+@dataclass(frozen=True)
+class PaidOffer:
+    offer_id: str
+    title: str
+    goal: str = "all_round"
+    memo: str = ""
+    diamond_cost: int = 0
+    included_gems: int = 0
+    bonus_gems: int = 0
+    items: tuple[PaidItem, ...] = ()
+    created_at: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+    updated_at: str = field(
+        default_factory=lambda: datetime.now(timezone.utc).isoformat()
+    )
+
+
+@dataclass(frozen=True)
+class PaidValuation:
+    points_per_gem: float = 1.0
+    general_speedup_points_per_hour: float = 0.0
+    research_speedup_points_per_hour: float = 0.0
+    training_speedup_points_per_hour: float = 0.0
+    construction_speedup_points_per_hour: float = 0.0
+    healing_speedup_points_per_hour: float = 0.0
+    merging_speedup_points_per_hour: float = 0.0
+    crafting_speedup_points_per_hour: float = 0.0
+    use_speedup_gem_presets: bool = True
 
 
 @dataclass
@@ -200,6 +242,8 @@ class PlayerState:
     research_levels: dict[str, int] = field(default_factory=dict)
     building_levels: dict[str, int] = field(default_factory=dict)
     plan_tasks: list[ResearchPlanTask] = field(default_factory=list)
+    paid_offers: list[PaidOffer] = field(default_factory=list)
+    paid_valuation: PaidValuation = field(default_factory=PaidValuation)
     observed_stats: dict[str, str] = field(default_factory=dict)
     updated_at: str = field(
         default_factory=lambda: datetime.now(timezone.utc).isoformat()

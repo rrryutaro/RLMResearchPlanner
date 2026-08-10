@@ -1,4 +1,4 @@
-import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.13-b1";
+import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.14-b1";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "mana_ore", "mana_crystal", "mana_steel"];
 
@@ -13,6 +13,7 @@ export async function loadCastleCatalog(url = "./data/buildings/castle_catalog.j
 }
 
 export function normalizeCastleCatalog(raw) {
+  let languagePack = null;
   const buildings = new Map();
   for (const source of raw.buildings || []) {
     const levels = new Map();
@@ -47,7 +48,9 @@ export function normalizeCastleCatalog(raw) {
     manaNames: { ...(manaSource.names || {}) },
     gemShopPacks,
     order: [...buildings.keys()],
-    buildingName(buildingId, locale) { const building = buildings.get(buildingId); return building ? localText(building.names, locale) : buildingId; },
+    setLanguagePack(pack) { languagePack = pack || null; },
+    sourceBuildingName(buildingId, locale) { const building = buildings.get(buildingId); return building ? localText(building.names, locale) : buildingId; },
+    buildingName(buildingId, locale) { const building = buildings.get(buildingId); return languagePack?.sections?.buildings?.[buildingId] || (building ? localText(building.names, languagePack?.fallbackLocale || locale) : buildingId); },
     manaName(locale) { return localText(this.manaNames, locale) || this.buildingName("castle", locale); },
   };
 }

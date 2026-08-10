@@ -6,6 +6,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from rlm_research_planner.domain.models import (
+    PaidItem,
+    PaidOffer,
+    PaidValuation,
     PlayerSettings,
     PlayerState,
     ResearchPlanTask,
@@ -19,6 +22,125 @@ from rlm_research_planner.services.calculation import (
 
 
 SCHEMA_VERSION = 1
+
+
+def _paid_item_from_raw(raw: object) -> PaidItem | None:
+    if not isinstance(raw, dict):
+        return None
+    kind = str(raw.get("kind", "custom")).strip() or "custom"
+    quantity = max(0, int(raw.get("quantity", 0)))
+    return PaidItem(
+        kind=kind,
+        name=str(raw.get("name", "")).strip()[:200],
+        quantity=quantity,
+        duration_seconds=max(0, int(raw.get("duration_seconds", 0))),
+        gem_value_each=max(0.0, float(raw.get("gem_value_each", 0.0))),
+        points_each=max(0.0, float(raw.get("points_each", 0.0))),
+    )
+
+
+def _paid_offer_from_raw(raw: object) -> PaidOffer | None:
+    if not isinstance(raw, dict):
+        return None
+    offer_id = str(raw.get("offer_id", "")).strip()
+    if not offer_id:
+        return None
+    return PaidOffer(
+        offer_id=offer_id[:100],
+        title=(str(raw.get("title", "")).strip() or "Untitled")[:200],
+        goal=str(raw.get("goal", "all_round")).strip() or "all_round",
+        memo=str(raw.get("memo", ""))[:2000],
+        diamond_cost=max(0, int(raw.get("diamond_cost", 0))),
+        included_gems=max(0, int(raw.get("included_gems", 0))),
+        bonus_gems=max(0, int(raw.get("bonus_gems", 0))),
+        items=tuple(
+            item
+            for item in (
+                _paid_item_from_raw(value)
+                for value in raw.get("items", [])
+            )
+            if item is not None
+        ),
+        created_at=str(raw.get("created_at", "")),
+        updated_at=str(raw.get("updated_at", "")),
+    )
+
+
+def _paid_valuation_from_raw(raw: object) -> PaidValuation:
+    value = raw if isinstance(raw, dict) else {}
+    return PaidValuation(
+        points_per_gem=max(0.0, float(value.get("points_per_gem", 1.0))),
+        general_speedup_points_per_hour=max(
+            0.0, float(value.get("general_speedup_points_per_hour", 0.0))
+        ),
+        research_speedup_points_per_hour=max(
+            0.0, float(value.get("research_speedup_points_per_hour", 0.0))
+        ),
+        training_speedup_points_per_hour=max(
+            0.0, float(value.get("training_speedup_points_per_hour", 0.0))
+        ),
+        construction_speedup_points_per_hour=max(
+            0.0, float(value.get("construction_speedup_points_per_hour", 0.0))
+        ),
+        healing_speedup_points_per_hour=max(
+            0.0, float(value.get("healing_speedup_points_per_hour", 0.0))
+        ),
+        merging_speedup_points_per_hour=max(
+            0.0, float(value.get("merging_speedup_points_per_hour", 0.0))
+        ),
+        crafting_speedup_points_per_hour=max(
+            0.0, float(value.get("crafting_speedup_points_per_hour", 0.0))
+        ),
+        use_speedup_gem_presets=bool(value.get("use_speedup_gem_presets", True)),
+    )
+
+
+def _paid_item_payload(item: PaidItem) -> dict[str, object]:
+    return {
+        "kind": item.kind,
+        "name": item.name,
+        "quantity": item.quantity,
+        "duration_seconds": item.duration_seconds,
+        "gem_value_each": item.gem_value_each,
+        "points_each": item.points_each,
+    }
+
+
+def _paid_offer_payload(offer: PaidOffer) -> dict[str, object]:
+    return {
+        "offer_id": offer.offer_id,
+        "title": offer.title,
+        "goal": offer.goal,
+        "memo": offer.memo,
+        "diamond_cost": offer.diamond_cost,
+        "included_gems": offer.included_gems,
+        "bonus_gems": offer.bonus_gems,
+        "items": [_paid_item_payload(item) for item in offer.items],
+        "created_at": offer.created_at,
+        "updated_at": offer.updated_at,
+    }
+
+
+def _paid_valuation_payload(value: PaidValuation) -> dict[str, object]:
+    return {
+        "points_per_gem": value.points_per_gem,
+        "general_speedup_points_per_hour": value.general_speedup_points_per_hour,
+        "research_speedup_points_per_hour": value.research_speedup_points_per_hour,
+        "training_speedup_points_per_hour": value.training_speedup_points_per_hour,
+        "construction_speedup_points_per_hour": (
+            value.construction_speedup_points_per_hour
+        ),
+        "healing_speedup_points_per_hour": (
+            value.healing_speedup_points_per_hour
+        ),
+        "merging_speedup_points_per_hour": (
+            value.merging_speedup_points_per_hour
+        ),
+        "crafting_speedup_points_per_hour": (
+            value.crafting_speedup_points_per_hour
+        ),
+        "use_speedup_gem_presets": value.use_speedup_gem_presets,
+    }
 
 
 class PlayerRepository:
@@ -121,10 +243,22 @@ class PlayerRepository:
                     research_id=str(item.get("research_id", "")),
                     target_level=max(1, int(item.get("target_level", 1))),
                     created_at=str(item.get("created_at", "")),
+                    source_name=str(item.get("source_name", "")),
                 )
                 for item in values.get("plan_tasks", [])
                 if isinstance(item, dict) and item.get("research_id")
             ],
+            paid_offers=[
+                offer
+                for offer in (
+                    _paid_offer_from_raw(item)
+                    for item in values.get("paid_offers", [])
+                )
+                if offer is not None
+            ],
+            paid_valuation=_paid_valuation_from_raw(
+                values.get("paid_valuation", {})
+            ),
             observed_stats={
                 str(key): str(value)
                 for key, value in values.get("observed_stats", {}).items()
@@ -170,9 +304,14 @@ class PlayerRepository:
                     "research_id": task.research_id,
                     "target_level": task.target_level,
                     "created_at": task.created_at,
+                    "source_name": task.source_name,
                 }
                 for task in state.plan_tasks
             ],
+            "paid_offers": [
+                _paid_offer_payload(offer) for offer in state.paid_offers
+            ],
+            "paid_valuation": _paid_valuation_payload(state.paid_valuation),
             "observed_stats": state.observed_stats,
             "updated_at": updated_at,
         }
@@ -246,9 +385,16 @@ class PlayerRepository:
                         "research_id": task.research_id,
                         "target_level": task.target_level,
                         "created_at": task.created_at,
+                        "source_name": task.source_name,
                     }
                     for task in state.plan_tasks
                 ],
+                "paid_offers": [
+                    _paid_offer_payload(offer) for offer in state.paid_offers
+                ],
+                "paid_valuation": _paid_valuation_payload(
+                    state.paid_valuation
+                ),
                 "updated_at": state.updated_at,
             },
         }
@@ -339,10 +485,22 @@ class PlayerRepository:
                     research_id=str(item.get("research_id", "")),
                     target_level=max(1, int(item.get("target_level", 1))),
                     created_at=str(item.get("created_at", "")),
+                    source_name=str(item.get("source_name", "")),
                 )
                 for item in player.get("plan_tasks", [])  # type: ignore[union-attr]
                 if isinstance(item, dict) and item.get("research_id")
             ],
+            paid_offers=[
+                offer
+                for offer in (
+                    _paid_offer_from_raw(item)
+                    for item in player.get("paid_offers", [])  # type: ignore[union-attr]
+                )
+                if offer is not None
+            ],
+            paid_valuation=_paid_valuation_from_raw(
+                player.get("paid_valuation", {})  # type: ignore[union-attr]
+            ),
             observed_stats={
                 str(key): str(value)
                 for key, value in raw_settings.get("observed_stats", {}).items()  # type: ignore[union-attr]

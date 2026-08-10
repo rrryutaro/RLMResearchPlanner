@@ -11,6 +11,7 @@ from rlm_research_planner.repositories.catalog_repository import (
 )
 from rlm_research_planner.repositories.player_repository import PlayerRepository
 from rlm_research_planner.services.localization import Translator
+from rlm_research_planner.services.language_pack import LanguagePackRepository
 from rlm_research_planner.services.validation import MasterDataValidator
 from rlm_research_planner.settings import SettingsRepository
 from rlm_research_planner.version import version_string
@@ -44,7 +45,7 @@ def main(argv: list[str] | None = None) -> int:
     if args.smoke_test:
         os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
-    from PySide6.QtCore import QLocale, QTimer
+    from PySide6.QtCore import QLocale, Qt, QTimer
     from PySide6.QtWidgets import QApplication
 
     from rlm_research_planner.ui.main_window import MainWindow
@@ -59,7 +60,16 @@ def main(argv: list[str] | None = None) -> int:
     if not args.smoke_test and not paths.settings_file.exists():
         system_locale = QLocale.system().name().replace("_", "-")
         app_settings.locale = "ja-JP" if system_locale.startswith("ja") else "en-US"
-    translator = Translator(paths.translations, app_settings.locale)
+    translator = Translator(
+        paths.translations,
+        app_settings.locale,
+        LanguagePackRepository(None if args.smoke_test else paths.language_packs),
+    )
+    app.setLayoutDirection(
+        Qt.LayoutDirection.RightToLeft
+        if translator.direction == "rtl"
+        else Qt.LayoutDirection.LeftToRight
+    )
 
     if args.smoke_test:
         player_repository = PlayerRepository(":memory:")

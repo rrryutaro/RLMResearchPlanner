@@ -74,6 +74,8 @@ def _speedup_kind(text: str) -> str | None:
         return "research"
     if "訓練" in compact or "training" in compact:
         return "training"
+    if "建設" in compact or "construction" in compact or "building" in compact:
+        return "construction"
     return "general"
 
 

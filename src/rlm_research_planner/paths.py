@@ -47,6 +47,10 @@ class AppPaths:
         return self.user_data / "player.sqlite3"
 
     @property
+    def language_packs(self) -> Path:
+        return self.user_data / "language_packs"
+
+    @property
     def settings_file(self) -> Path:
         return self.tool_root / "settings.json"
 

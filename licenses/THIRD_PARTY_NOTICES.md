@@ -31,7 +31,7 @@ delivery cost.
 
 ## PyInstaller
 
-The Windows executable is packaged with PyInstaller 6.21.0. PyInstaller is
+The Windows executable is packaged with PyInstaller 6.22.0. PyInstaller is
 licensed under GNU GPL version 2 with an exception that permits distribution of
 bundled applications. Its license and exception text accompany the distribution
 as `PyInstaller-COPYING.txt`.

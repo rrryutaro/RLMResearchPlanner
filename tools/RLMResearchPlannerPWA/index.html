@@ -9,7 +9,7 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.13-b1">
+    <link rel="stylesheet" href="./styles.css?v=0.0.14-b1">
     <title>RLM Research Planner PWA</title>
   </head>
   <body>
@@ -18,15 +18,16 @@
         <p class="eyebrow">Lords Mobile unofficial tool</p>
         <h1>RLM Research Planner</h1>
       </div>
-      <span id="connection-status" class="status-pill" aria-live="polite" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
+      <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
     </header>
 
     <nav class="tab-bar" aria-label="メインメニュー">
-      <button class="tab-button is-active" data-tab="tree" type="button">研究ツリー</button>
-      <button class="tab-button" data-tab="plan" type="button">研究計画</button>
-      <button class="tab-button" data-tab="castle" type="button">建設</button>
-      <button class="tab-button" data-tab="settings" type="button">プレイヤー</button>
-      <button class="tab-button" data-tab="help" type="button">ヘルプ</button>
+      <button class="tab-button is-active" data-tab="tree" type="button" data-i18n="tab.tree">研究ツリー</button>
+      <button class="tab-button" data-tab="plan" type="button" data-i18n="tab.plan">研究計画</button>
+      <button class="tab-button" data-tab="castle" type="button" data-i18n="tab.castle">建設</button>
+      <button class="tab-button" data-tab="settings" type="button" data-i18n="tab.player">プレイヤー</button>
+      <button class="tab-button" data-tab="paid" type="button" data-i18n="tab.paid">課金</button>
+      <button class="tab-button" data-tab="help" type="button" data-i18n="tab.help">ヘルプ</button>
     </nav>
 
     <div id="startup-error" class="startup-error" role="alert" hidden>
@@ -39,26 +40,26 @@
         <h2 id="tree-title" class="sr-only">研究ツリー</h2>
         <div class="tree-primary-actions">
           <button id="category-drawer-open" class="category-trigger" type="button">
-            <span>研究分野</span>
+            <span data-i18n="tree.category">研究分野</span>
             <strong id="category-current">経済</strong>
             <span aria-hidden="true">›</span>
           </button>
           <details id="tree-options" class="tree-options">
-            <summary>検索・表示設定</summary>
+            <summary data-i18n="pwa.tree_options">検索・表示設定</summary>
             <div class="toolbar tree-toolbar">
               <label class="field grow">
-                <span>検索</span>
-                <input id="tree-search" type="search" placeholder="研究名を検索">
+                <span data-i18n="tree.search">検索</span>
+                <input id="tree-search" type="search" placeholder="研究名を検索" data-i18n-placeholder="tree.search_placeholder">
               </label>
               <label class="check-field">
                 <input id="instant-only" type="checkbox">
-                <span>即時終了のみ</span>
+                <span data-i18n="tree.instant_finish_only">即時終了のみ</span>
               </label>
               <div class="zoom-controls" aria-label="ツリーの拡大縮小">
                 <button id="zoom-out" type="button" aria-label="縮小">−</button>
                 <output id="zoom-output">100%</output>
                 <button id="zoom-in" type="button" aria-label="拡大">＋</button>
-                <button id="zoom-fit" type="button" aria-label="ツリー全体を表示">全体</button>
+                <button id="zoom-fit" type="button" aria-label="ツリー全体を表示" data-i18n="tree.fit_all" data-i18n-aria="tree.fit_all">全体</button>
               </div>
             </div>
           </details>
@@ -87,7 +88,7 @@
             <div id="tree-cards"></div>
           </div>
         </div>
-        <p id="tree-empty" class="empty-state" hidden>条件に合う研究はありません。</p>
+        <p id="tree-empty" class="empty-state" hidden data-i18n="pwa.tree_empty">条件に合う研究はありません。</p>
       </section>
 
       <section id="tab-plan" class="tab-panel" aria-labelledby="plan-title">
@@ -95,28 +96,28 @@
           <div class="plan-title-block">
             <p class="eyebrow">必要時間と資源</p>
             <div class="plan-title-row">
-              <h2 id="plan-title">研究計画</h2>
+              <h2 id="plan-title" data-i18n="tab.plan">研究計画</h2>
               <label class="resource-mode-compact">
-                <span>資源</span>
+                <span data-i18n="plan.resource_display">資源</span>
                 <select id="resource-display-mode" aria-label="資源の表示形式">
-                  <option value="exact">通常</option>
-                  <option value="short">短縮</option>
+                  <option value="exact" data-i18n="plan.resource_exact">通常</option>
+                  <option value="short" data-i18n="plan.resource_short">短縮</option>
                 </select>
               </label>
             </div>
           </div>
           <div class="segmented" role="group" aria-label="計画方法">
-            <button class="is-active" id="plan-target-mode" type="button">目標研究</button>
-            <button id="plan-shortest-mode" type="button">短時間順</button>
-            <button id="plan-tasks-mode" type="button">登録タスク</button>
+            <button class="is-active" id="plan-target-mode" type="button" data-i18n="plan.mode.target">目標研究</button>
+            <button id="plan-shortest-mode" type="button" data-i18n="plan.mode.shortest">短時間順</button>
+            <button id="plan-tasks-mode" type="button" data-i18n="plan.mode.tasks">登録タスク</button>
           </div>
         </div>
         <div id="target-plan-view">
-          <div id="plan-placeholder" class="callout">研究ツリーでカードを開き、「この研究を計画」を選択してください。</div>
+          <div id="plan-placeholder" class="callout" data-i18n="pwa.plan_placeholder">研究ツリーでカードを開き、「この研究を計画」を選択してください。</div>
           <div id="plan-result" hidden>
             <article class="summary-card">
               <div>
-                <p class="eyebrow">目標</p>
+                <p class="eyebrow" data-i18n="plan.target">目標</p>
                 <h3 id="plan-target-name"></h3>
               </div>
               <div class="plan-summary-time">
@@ -127,18 +128,18 @@
             </article>
             <div id="resource-summary" class="resource-grid"></div>
             <div class="button-row plan-actions">
-              <button id="register-plan" type="button">タスクに登録</button>
-              <button id="complete-plan" class="primary" type="button">研究完了として反映</button>
+              <button id="register-plan" type="button" data-i18n="plan.register_task">タスクに登録</button>
+              <button id="complete-plan" class="primary" type="button" data-i18n="plan.mark_complete">研究完了として反映</button>
             </div>
-            <h3 id="plan-steps-title">必要な研究</h3>
+            <h3 id="plan-steps-title" data-i18n="pwa.required_research">必要な研究</h3>
             <div id="plan-steps" class="plan-list"></div>
             <p id="plan-issues" class="muted"></p>
           </div>
         </div>
         <div id="shortest-plan-view" hidden>
           <div class="list-toolbar">
-            <p>現在の前提条件を満たす次レベルを、完了までの時間が短い順に表示します。</p>
-            <label class="field compact"><span>表示数</span><select id="shortest-limit"><option>20</option><option>50</option><option>100</option></select></label>
+            <p data-i18n="pwa.shortest_description">現在の前提条件を満たす次レベルを、完了までの時間が短い順に表示します。</p>
+            <label class="field compact"><span data-i18n="pwa.display_count">表示数</span><select id="shortest-limit"><option>20</option><option>50</option><option>100</option></select></label>
           </div>
           <div id="shortest-selected" class="selected-research-banner" hidden></div>
           <div id="shortest-list" class="plan-list"></div>
@@ -151,31 +152,31 @@
       <section id="tab-castle" class="tab-panel" aria-labelledby="castle-title">
         <div class="section-heading castle-heading">
           <div>
-            <p class="eyebrow">現在の建設タスク</p>
-            <h2 id="castle-title">建設計画</h2>
+            <p class="eyebrow" data-i18n="pwa.current_construction">現在の建設タスク</p>
+            <h2 id="castle-title" data-i18n="help.castle.title">建設計画</h2>
           </div>
         </div>
         <section class="construction-selector" aria-labelledby="construction-selector-title">
-          <h3 id="construction-selector-title">計算する施設</h3>
+          <h3 id="construction-selector-title" data-i18n="castle.selection_title">計算する施設</h3>
           <div class="castle-target-controls">
-            <label class="field construction-facility"><span>施設</span><select id="construction-target"></select></label>
-            <label class="field compact construction-current"><span>現在Lv.</span><input id="castle-current" type="number" inputmode="numeric" min="1" max="25"></label>
-            <label id="castle-current-mana-field" class="field compact"><span>25後段階</span><input id="castle-current-mana" type="number" inputmode="numeric" min="0" max="5"></label>
+            <label class="field construction-facility"><span data-i18n="castle.facility">施設</span><select id="construction-target"></select></label>
+            <label class="field compact construction-current"><span data-i18n="castle.current_level">現在Lv.</span><input id="castle-current" type="number" inputmode="numeric" min="1" max="25"></label>
+            <label id="castle-current-mana-field" class="field compact"><span data-i18n="castle.mana_stage">25後段階</span><input id="castle-current-mana" type="number" inputmode="numeric" min="0" max="5"></label>
             <span class="construction-arrow" aria-hidden="true">→</span>
-            <label class="field compact construction-target"><span>目標Lv.</span><input id="castle-target" type="number" inputmode="numeric" min="1" max="25"></label>
-            <label id="castle-target-mana-field" class="field compact"><span>25後段階</span><input id="castle-target-mana" type="number" inputmode="numeric" min="0" max="5"></label>
+            <label class="field compact construction-target"><span data-i18n="castle.target_level">目標Lv.</span><input id="castle-target" type="number" inputmode="numeric" min="1" max="25"></label>
+            <label id="castle-target-mana-field" class="field compact"><span data-i18n="castle.target_mana_stage">25後段階</span><input id="castle-target-mana" type="number" inputmode="numeric" min="0" max="5"></label>
           </div>
           <strong id="construction-selection" class="construction-selection"></strong>
         </section>
         <div id="castle-summary" class="castle-summary"></div>
         <details class="settings-card castle-level-card">
-          <summary>現在の施設レベル</summary>
+          <summary data-i18n="castle.facility_levels">現在の施設レベル</summary>
           <div class="settings-card-body">
-            <p class="settings-description">現在の城レベルで保証される最低値より進んでいる施設だけ修正してください。</p>
+            <p class="settings-description" data-i18n="castle.facility_levels_hint">現在の城レベルで保証される最低値より進んでいる施設だけ修正してください。</p>
             <div id="castle-level-list" class="castle-level-list"></div>
           </div>
         </details>
-        <h3>必要な施設・資材・時間</h3>
+        <h3 data-i18n="castle.plan">必要な施設・資材・時間</h3>
         <div id="castle-plan-list" class="castle-plan-list"></div>
         <p id="castle-issues" class="muted"></p>
       </section>
@@ -183,123 +184,221 @@
       <section id="tab-settings" class="tab-panel" aria-labelledby="settings-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">端末内に自動保存</p>
-            <h2 id="settings-title">プレイヤー設定</h2>
+            <p class="eyebrow" data-i18n="pwa.auto_save">端末内に自動保存</p>
+            <h2 id="settings-title" data-i18n="tab.player">プレイヤー設定</h2>
           </div>
-          <span id="save-indicator" class="muted" aria-live="polite">保存済み</span>
+          <span id="save-indicator" class="muted" aria-live="polite" data-i18n="pwa.saved">保存済み</span>
         </div>
         <div class="settings-grid">
           <details class="settings-card">
-            <summary>共通設定</summary>
+            <summary data-i18n="player.common_settings">共通設定</summary>
             <div class="settings-card-body">
             <div class="form-grid">
-              <label class="field"><span>VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
-              <label class="field"><span>城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
-              <label class="field"><span>城Lv.25後のマナ強化段階</span><input id="setting-castle-mana" type="number" inputmode="numeric" min="0" max="5"></label>
-              <label class="field"><span>アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
-              <label class="field"><span>ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="6"><small id="guild-help-limit" class="field-hint"></small></label>
+              <label class="field"><span data-i18n="player.vip_level">VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
+              <label class="field"><span data-i18n="player.castle_level">城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
+              <label class="field"><span data-i18n="player.castle_mana_stage">城Lv.25後のマナ強化段階</span><input id="setting-castle-mana" type="number" inputmode="numeric" min="0" max="5"></label>
+              <label class="field"><span data-i18n="player.academy_level">アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
+              <label class="field"><span data-i18n="player.guild_helps">ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="6"><small id="guild-help-limit" class="field-hint"></small></label>
             </div>
             <p id="vip-free-time" class="hint"></p>
             </div>
           </details>
           <details class="settings-card">
-            <summary>建設時間</summary>
+            <summary data-i18n="player.construction_time_settings">建設時間</summary>
             <div class="settings-card-body">
             <div class="form-grid">
-              <label class="field"><span>建設速度 +%</span><input id="setting-construction-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
-              <label class="field"><span>建設スピードアップ +%</span><input id="setting-construction-boost" type="number" inputmode="decimal" min="0" step="1"></label>
+              <label class="field"><span data-i18n="player.construction_speed">建設速度 +%</span><input id="setting-construction-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="player.construction_speed_boost">建設スピードアップ +%</span><input id="setting-construction-boost" type="number" inputmode="decimal" min="0" step="1"></label>
             </div>
-            <p class="hint">建設スピードアップ x%を追加で使用する場合だけ入力します。建設速度に含めた場合は0にしてください。</p>
+            <p class="hint" data-i18n="player.construction_speed_boost_hint">建設スピードアップ x%を追加で使用する場合だけ入力します。建設速度に含めた場合は0にしてください。</p>
             </div>
           </details>
           <details class="settings-card">
-            <summary>研究時間</summary>
+            <summary data-i18n="player.research_time_settings">研究時間</summary>
             <div class="settings-card-body">
             <div class="form-grid">
-              <label class="field"><span>研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
-              <label class="field"><span>研究スピードアップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
+              <label class="field"><span data-i18n="player.research_speed">研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="player.research_speed_boost">研究スピードアップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
             </div>
-            <p class="hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
+            <p class="hint" data-i18n="player.research_speed_boost_hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
             </div>
           </details>
           <details class="settings-card">
-            <summary>所持資源</summary>
+            <summary data-i18n="player.resources">所持資源</summary>
             <div class="settings-card-body">
             <div id="resource-inputs" class="form-grid"></div>
             </div>
           </details>
           <details class="settings-card level-list-card">
             <summary>
-              <span>研究レベル一括入力</span>
+              <span data-i18n="pwa.bulk_levels">研究レベル一括入力</span>
               <span id="bulk-level-progress" class="status-pill"></span>
             </summary>
             <div class="settings-card-body">
-            <p class="settings-description">研究分野を選び、現在レベルだけを連続して入力できます。</p>
+            <p class="settings-description" data-i18n="pwa.bulk_levels_hint">研究分野を選び、現在レベルだけを連続して入力できます。</p>
             <div class="toolbar bulk-toolbar">
-              <label class="field grow"><span>研究分野</span><select id="bulk-category-select"></select></label>
-              <label class="field grow"><span>絞り込み</span><input id="bulk-level-search" type="search" placeholder="研究名を検索"></label>
+              <label class="field grow"><span data-i18n="tree.category">研究分野</span><select id="bulk-category-select"></select></label>
+              <label class="field grow"><span data-i18n="pwa.filter">絞り込み</span><input id="bulk-level-search" type="search" placeholder="研究名を検索" data-i18n-placeholder="tree.search_placeholder"></label>
             </div>
             <div id="bulk-level-list" class="bulk-level-list"></div>
             </div>
           </details>
-          <details class="settings-card backup-card">
-            <summary>バックアップ</summary>
+          <details class="settings-card backup-card directive-card">
+            <summary data-i18n="pwa.directive_title">研究指示データ</summary>
             <div class="settings-card-body">
-            <p>デスクトップ版と同じJSON形式で、プレイヤー設定と研究レベルを移動できます。</p>
+              <p data-i18n="pwa.directive_description">登録タスクだけを書き出して他の利用者へ渡します。読み込み時は現在のプレイヤー設定、所持資源、研究・施設レベルを維持し、研究タスクだけを追加・更新します。完了済みの研究は「完了済み」、未達の研究は現在状態からの不足分として再計算されます。</p>
+              <label class="field"><span data-i18n="plan.directive_name">指示名</span><input id="directive-name" type="text" maxlength="100" placeholder="例：レジェンドファイター研究計画" data-i18n-placeholder="plan.directive_name_placeholder"></label>
+              <div class="button-row">
+                <button id="export-directive" class="primary" type="button" data-i18n="pwa.directive_export">登録タスクを書き出す</button>
+                <label class="file-button"><span data-i18n="plan.directive_import">研究指示を読み込む</span><input id="import-directive" type="file" accept="application/json,.json"></label>
+              </div>
+            </div>
+          </details>
+          <details class="settings-card backup-card language-pack-card">
+            <summary data-i18n="language.pack_title">翻訳ファイル</summary>
+            <div class="settings-card-body">
+              <p data-i18n="language.pack_description">英語を基準にしたひな形を書き出し、UI・研究名・施設名などを翻訳できます。同じJSONをPC版とPWA版で使えます。空欄は英語で表示し、OCR言語は日本語・英語のままです。</p>
+              <div class="button-row">
+                <button id="export-language-template" class="primary" type="button" data-i18n="language.pack_export">翻訳ひな形を書き出す</button>
+                <label class="file-button"><span data-i18n="language.pack_import">翻訳ファイルを読み込む</span><input id="import-language-pack" type="file" accept="application/json,.json"></label>
+                <button id="remove-language-pack" type="button" data-i18n="language.pack_remove" disabled>追加翻訳を削除</button>
+              </div>
+            </div>
+          </details>
+          <details class="settings-card backup-card">
+            <summary data-i18n="pwa.backup_title">バックアップ</summary>
+            <div class="settings-card-body">
+            <p data-i18n="pwa.backup_description">デスクトップ版と同じJSON形式で、プレイヤー設定、所持資源、研究・施設レベル、登録タスクを移動できます。書き出したJSONファイルは、端末のファイル管理アプリからメール、メッセージ、クラウドストレージなどで他の端末や利用者へ送れます。受け取った側はここで「読み込む」を選択してください。</p>
             <div class="button-row">
-              <button id="export-backup" class="primary" type="button">書き出す</button>
-              <label class="file-button">読み込む<input id="import-backup" type="file" accept="application/json,.json"></label>
-              <button id="reset-player" class="danger" type="button">設定をクリア</button>
+              <button id="export-backup" class="primary" type="button" data-i18n="pwa.export">書き出す</button>
+              <label class="file-button"><span data-i18n="pwa.import">読み込む</span><input id="import-backup" type="file" accept="application/json,.json"></label>
+              <button id="reset-player" class="danger" type="button" data-i18n="pwa.clear_settings">設定をクリア</button>
             </div>
             </div>
           </details>
         </div>
       </section>
 
+      <section id="tab-paid" class="tab-panel" aria-labelledby="paid-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow" data-i18n="paid.workspace">課金候補を記録・比較</p>
+            <h2 id="paid-title" data-i18n="tab.paid">課金</h2>
+          </div>
+          <button id="paid-new" type="button" data-i18n="paid.new_offer">新規</button>
+        </div>
+        <p class="hint" data-i18n="paid.value_hint">ポイントとジェム換算は比較用の任意設定です。ゲーム公式の交換比率ではありません。</p>
+        <div class="segmented paid-view-tabs" role="group" aria-label="課金画面">
+          <button id="paid-view-input-button" class="is-active" type="button" data-i18n="paid.view.input">入力</button>
+          <button id="paid-view-saved-button" type="button" data-i18n="paid.view.saved">保存一覧</button>
+          <button id="paid-view-comparison-button" type="button" data-i18n="paid.view.comparison">比較</button>
+        </div>
+
+        <div id="paid-view-saved" class="paid-subview" hidden>
+          <div id="paid-offer-list" class="paid-offer-list"></div>
+          <div class="button-row">
+            <button id="paid-export-selected" type="button" data-i18n="paid.export_selected">選択中を書き出す</button>
+            <button id="paid-export-all" type="button" data-i18n="paid.export_all">すべて書き出す</button>
+            <label class="file-button"><span data-i18n="paid.import">課金データを取り込む</span><input id="paid-import" type="file" accept="application/json,.json"></label>
+          </div>
+        </div>
+
+        <div id="paid-view-comparison" class="paid-subview" hidden>
+          <label class="field compact"><span data-i18n="paid.comparison_goal">比較する目的</span><select id="paid-comparison-goal"></select></label>
+          <details class="paid-valuation-card">
+            <summary data-i18n="paid.valuation">比較ポイント設定</summary>
+            <p class="hint" data-i18n="paid.valuation_hint">1ジェム・各スピードアップ1時間を何ポイントとするか設定します。素材ごとの値は各行で変更でき、ジェム換算と追加ポイントの両方を入れた場合は加算します。</p>
+            <div class="form-grid">
+              <label class="field"><span data-i18n="paid.points_per_gem">1ジェム</span><input id="paid-rate-gem" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.general">汎用1時間</span><input id="paid-rate-general" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.research">研究1時間</span><input id="paid-rate-research" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.training">訓練1時間</span><input id="paid-rate-training" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.construction">建設1時間</span><input id="paid-rate-construction" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.healing">治療1時間</span><input id="paid-rate-healing" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.merging">融合1時間</span><input id="paid-rate-merging" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              <label class="field"><span data-i18n="paid.rate.crafting">月晶工房1時間</span><input id="paid-rate-crafting" type="number" inputmode="decimal" min="0" step="0.01"></label>
+            </div>
+            <label class="check-field"><input id="paid-use-speedup-gem-presets" type="checkbox"><span data-i18n="paid.use_speedup_gem_presets">ゲーム内ジェムショップの時短換算を使う</span></label>
+          </details>
+          <div id="paid-comparison-list" class="paid-offer-list paid-comparison-list"></div>
+        </div>
+
+        <article id="paid-view-input" class="paid-subview paid-editor settings-card">
+          <div class="settings-card-body">
+            <div class="form-grid paid-main-fields">
+              <label class="field"><span data-i18n="paid.title">タイトル</span><input id="paid-title-input" type="text" maxlength="200"></label>
+              <label class="field"><span data-i18n="paid.memo">メモ</span><input id="paid-memo-input" type="text" maxlength="2000"></label>
+              <label class="field"><span data-i18n="paid.goal">目的</span><select id="paid-goal"></select></label>
+              <label class="field"><span data-i18n="paid.price">価格（ダイヤ）</span><input id="paid-price" type="number" inputmode="numeric" min="0"></label>
+              <label class="field"><span data-i18n="paid.gems.included">付属ジェム</span><input id="paid-included-gems" type="number" inputmode="numeric" min="0"></label>
+              <label class="field"><span data-i18n="paid.gems.bonus">ボーナスジェム</span><input id="paid-bonus-gems" type="number" inputmode="numeric" min="0"></label>
+            </div>
+            <div id="paid-current-summary" class="paid-current-summary"></div>
+            <div class="section-subheading">
+              <h3 data-i18n="paid.items">内容</h3>
+              <button id="paid-add-item" type="button" data-i18n="paid.add_row">行を追加</button>
+            </div>
+            <div id="paid-item-list" class="paid-item-list"></div>
+            <div class="button-row paid-actions">
+              <button id="paid-save" class="primary" type="button" data-i18n="paid.save_offer">保存</button>
+              <button id="paid-delete" class="danger" type="button" data-i18n="paid.delete_offer">削除</button>
+            </div>
+          </div>
+        </article>
+      </section>
+
       <section id="tab-help" class="tab-panel" aria-labelledby="help-title">
         <div class="section-heading">
           <div>
-            <p class="eyebrow">使い方</p>
-            <h2 id="help-title">ヘルプ</h2>
+            <p class="eyebrow" data-i18n="pwa.usage">使い方</p>
+            <h2 id="help-title" data-i18n="tab.help">ヘルプ</h2>
           </div>
-          <label class="field compact"><span>表示言語</span><select id="language-select"><option value="ja-JP">日本語</option><option value="en-US">English</option></select></label>
+          <label class="field compact"><span data-i18n="language.label">表示言語</span><select id="language-select"><option value="ja-JP">日本語</option><option value="en-US">English</option></select></label>
         </div>
         <div class="help-content">
           <article class="callout important">
-            <h3>最初に必ず設定してください</h3>
-            <p><b>1.</b> VIPレベル<br><b>2.</b> 研究装備を着けた状態の研究速度<br><b>3.</b> 使用中の研究スピードアップ<br>建設を使う場合だけ、建設速度も入力します。</p>
+            <h3 data-i18n="help.required_setup.title">最初に必ず設定してください</h3>
+            <p id="pwa-help-required"></p>
           </article>
           <article>
-            <h3>研究レベルの入力</h3>
-            <p>カードをタップして現在レベルを変更します。ドラッグで移動、2本指のピンチ操作で拡大・縮小、「全体」でツリー全体を表示します。入力は端末内に自動保存されます。</p>
+            <h3 data-i18n="help.levels.title">研究レベルの入力</h3>
+            <p id="pwa-help-levels" data-i18n="pwa.help_levels">カードをタップして現在レベルを変更します。ドラッグで移動、2本指のピンチ操作で拡大・縮小、「全体」でツリー全体を表示します。入力は端末内に自動保存されます。</p>
           </article>
           <article>
-            <h3>研究計画</h3>
+            <h3 data-i18n="help.plan.title">研究計画</h3>
             <p id="help-plan-body"></p>
           </article>
           <article>
-            <h3>建設計画</h3>
+            <h3 data-i18n="help.castle.title">建設計画</h3>
             <p id="help-construction-body"></p>
           </article>
           <article>
-            <h3>PWA版の範囲</h3>
-            <p>OCRはありません。数値は手入力し、ブラウザー内へ保存します。「オンライン」は通信可否だけで、ゲーム接続や同期状態ではありません。端末変更前はバックアップしてください。</p>
+            <h3 data-i18n="help.paid.title">課金候補の比較</h3>
+            <p data-i18n="help.paid.body">課金タブは入力・保存一覧・比較に分かれています。目的と内容を保存し、目的別の順位や換算設定を比較画面で確認できます。ジェム換算と素材ポイントは変更可能な比較基準で、ゲーム公式の現金価値ではありません。課金データだけを書き出して追加取り込みでき、PWA版はすべて手入力です。</p>
           </article>
           <article>
-            <h3>収録データ</h3>
+            <h3 data-i18n="pwa.scope_title">PWA版の範囲</h3>
+            <p data-i18n="pwa.scope_body">OCRはありません。数値は手入力し、ブラウザー内へ保存します。「オンライン」は通信可否だけで、ゲーム接続や同期状態ではありません。端末変更前はバックアップしてください。研究指示データは登録タスクだけを共有し、受け取る側のレベルや設定を置き換えずに不足分を再計算します。</p>
+          </article>
+          <article>
+            <h3 data-i18n="pwa.environment_title">対応環境の目安</h3>
+            <p data-i18n="pwa.environment_body">iPhone / iPadはiOS / iPadOS 15.4以降のSafari、AndroidはAndroid 10以降と最新版Chromeを推奨します。Safari以外からiPhone / iPadのホーム画面へ追加する場合は16.4以降を推奨します。PCでは最新版のChromeまたはEdge、macOSではSafariも利用できます。実機確認範囲が限られるため動作保証ではなく、古いOSや更新されていないブラウザーは対象外です。</p>
+          </article>
+          <article>
+            <h3 data-i18n="help.data.title">収録データ</h3>
             <p id="catalog-data-status"></p>
             <p id="catalog-data-notes" class="hint"></p>
-            <p>動作確認済みゲームバージョンはv2.200.309です。これは必須バージョンではなく、以降のゲーム更新では研究データや画面表示が変わる可能性があります。</p>
+            <p data-i18n="pwa.game_version_note">動作確認済みゲームバージョンはv2.200.309です。これは必須バージョンではなく、以降のゲーム更新では研究データや画面表示が変わる可能性があります。</p>
           </article>
           <article>
-            <h3>インストール</h3>
-            <p>ブラウザーの「ホーム画面に追加」または「アプリをインストール」を選びます。読み込み後はオフラインでも使えます。</p>
+            <h3 data-i18n="pwa.install_title">インストール</h3>
+            <p data-i18n="pwa.install_body">ブラウザーの「ホーム画面に追加」または「アプリをインストール」を選びます。読み込み後はオフラインでも使えます。</p>
           </article>
           <article>
-            <h3>ライセンス・出典</h3>
+            <h3 data-i18n="help.license.title">ライセンス・出典</h3>
             <p><a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/LICENSE">MIT License</a>／<a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md">データのライセンスと出典</a>／<a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/licenses/THIRD_PARTY_NOTICES.md">第三者ライセンス</a></p>
           </article>
-          <p class="version-line">バージョン <span id="app-version"></span></p>
+          <p class="version-line"><span data-i18n="pwa.version">バージョン</span> <span id="app-version"></span></p>
         </div>
       </section>
     </main>
@@ -307,7 +406,7 @@
     <dialog id="category-drawer" class="category-drawer">
       <form method="dialog">
         <header>
-          <h2>研究分野</h2>
+          <h2 data-i18n="tree.category">研究分野</h2>
           <button value="cancel" aria-label="研究分野を閉じる">×</button>
         </header>
         <nav id="category-drawer-list" aria-label="研究分野一覧"></nav>
@@ -325,7 +424,7 @@
         </header>
         <div class="node-dialog-body">
           <div class="level-editor">
-            <label class="field"><span>現在レベル</span><input id="node-level-number" type="number" inputmode="numeric" min="0"></label>
+            <label class="field"><span data-i18n="player.current_level">現在レベル</span><input id="node-level-number" type="number" inputmode="numeric" min="0"></label>
             <span id="node-level-max" class="max-label"></span>
             <div class="level-slider-row">
               <button id="node-level-down" type="button" aria-label="現在レベルを1下げる">−</button>
@@ -335,10 +434,10 @@
           </div>
           <div id="node-effects" class="effect-box"></div>
           <section id="node-next-detail" class="node-next-detail" aria-label="次レベルの詳細"></section>
-          <label class="field"><span>目標レベル</span><select id="node-target-level"></select></label>
+          <label class="field"><span data-i18n="plan.target_level">目標レベル</span><select id="node-target-level"></select></label>
           <div class="button-row dialog-actions">
-            <button id="open-plan" class="primary" type="button">この研究を計画</button>
-            <button value="cancel" type="submit">閉じる</button>
+            <button id="open-plan" class="primary" type="button" data-i18n="pwa.plan_this_research">この研究を計画</button>
+            <button value="cancel" type="submit" data-i18n="common.close">閉じる</button>
           </div>
         </div>
       </form>
@@ -357,6 +456,6 @@
         navigator.serviceWorker.register("./sw.js").catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.13-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.14-b1"></script>
   </body>
 </html>

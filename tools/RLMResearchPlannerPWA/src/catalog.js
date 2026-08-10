@@ -25,6 +25,7 @@ export async function loadLocaleData(url = "./data/i18n/ja-JP.json") {
 }
 
 export function normalizeCatalog(raw) {
+  let languagePack = null;
   const nameToId = new Map();
   for (const category of raw.categories) {
     const overrides = category.id_overrides || {};
@@ -106,8 +107,11 @@ export function normalizeCatalog(raw) {
     sources: [...(raw.sources || [])],
     categories,
     nodes,
-    categoryTitle(category, locale) { return localText(category.titles, locale); },
-    nodeName(node, locale) { return localText(node.names, locale); },
+    setLanguagePack(pack) { languagePack = pack || null; },
+    sourceCategoryTitle(category, locale) { return localText(category.titles, locale); },
+    sourceNodeName(node, locale) { return localText(node.names, locale); },
+    categoryTitle(category, locale) { return languagePack?.sections?.categories?.[category.id] || localText(category.titles, languagePack?.fallbackLocale || locale); },
+    nodeName(node, locale) { return languagePack?.sections?.research?.[node.id] || localText(node.names, languagePack?.fallbackLocale || locale); },
   };
 }
 
@@ -130,7 +134,7 @@ function nearestVisibleEdges(categoryNodes, pairs) {
   return [...new Map(result.map((edge) => [edge.join("\0"), edge])).values()];
 }
 
-export function currentEffect(node, level, { locale = "en-US", labels = {}, name = "" } = {}) {
+export function currentEffect(node, level, { locale = "en-US", labels = {}, name = "", translatedLabel = "" } = {}) {
   const rawFirst = String(node.effectValues["1"] || "").trim();
   let value = level <= 0 ? (isUnlock(rawFirst) ? (locale.startsWith("ja") ? "未解放" : "Not unlocked") : "0") : String(node.effectValues[String(level)] || "").trim();
   if (!value) return "";
@@ -141,7 +145,7 @@ export function currentEffect(node, level, { locale = "en-US", labels = {}, name
     const hunt = value.match(/^Hunt Level (\d+) monsters$/i);
     if (hunt) value = `Lv.${hunt[1]}魔獣を討伐可能`;
   }
-  let label = String(labels[node.effectLabel] || node.effectLabel || "").trim();
+  let label = String(translatedLabel || labels[node.effectLabel] || node.effectLabel || "").trim();
   const generic = new Set(["", "ATK+", "Boost", "Cost Reduction", "DEF+", "Def. Boost", "Effect", "HP+", "Reduction", "Result", "Speed+", "Unlock", "Unlocks", "Upgrade Result", "Upgrade Results"]);
   if ((locale.startsWith("ja") && !labels[node.effectLabel]) || generic.has(node.effectLabel)) {
     label = String(name || "").replace(/\s*(?:I|II|III|IV|V)$/u, "").trim();

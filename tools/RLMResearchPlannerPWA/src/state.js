@@ -1,6 +1,8 @@
 export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "ancient_tomes", "lunite", "mana_ore", "special"];
 export const MAX_GUILD_HELPS = 30;
 const STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
+export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.0.14-b1";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
@@ -37,6 +39,8 @@ export function defaultState() {
     researchLevels: {},
     buildingLevels: {},
     planTasks: [],
+    paidOffers: [],
+    paidValuation: defaultPaidValuation(),
     observedStats: {},
     updatedAt: new Date().toISOString(),
   };
@@ -51,7 +55,10 @@ export function sanitizeState(value) {
   const base = defaultState();
   const source = value || {};
   const settings = source.settings || {};
-  base.locale = source.locale === "en-US" ? "en-US" : "ja-JP";
+  try {
+    const locale = String(source.locale || "ja-JP").trim().replaceAll("_", "-");
+    base.locale = /^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$/.test(locale) ? locale : "ja-JP";
+  } catch { base.locale = "ja-JP"; }
   base.settings.vipLevel = Math.min(15, Math.max(1, Math.trunc(number(settings.vipLevel ?? settings.vip_level, 1))));
   base.settings.castleLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.castleLevel ?? settings.castle_level, 1))));
   base.settings.castleTargetLevel = Math.min(25, Math.max(0, Math.trunc(number(settings.castleTargetLevel ?? settings.castle_target_level, 0))));
@@ -81,7 +88,10 @@ export function sanitizeState(value) {
     researchId: String(task.researchId || task.research_id),
     targetLevel: Math.max(1, Math.trunc(number(task.targetLevel ?? task.target_level, 1))),
     createdAt: String(task.createdAt || task.created_at || new Date().toISOString()),
+    sourceName: String(task.sourceName || task.source_name || ""),
   }));
+  base.paidOffers = (source.paidOffers || source.paid_offers || []).map(sanitizePaidOffer).filter((offer) => offer.offerId);
+  base.paidValuation = sanitizePaidValuation(source.paidValuation || source.paid_valuation);
   base.observedStats = { ...(source.observedStats || source.observed_stats || {}) };
   base.updatedAt = String(source.updatedAt || source.updated_at || base.updatedAt);
   return base;
@@ -126,15 +136,135 @@ export function backupPayload(state) {
         research_id: task.researchId,
         target_level: task.targetLevel,
         created_at: task.createdAt,
+        source_name: task.sourceName || "",
       })),
+      paid_offers: state.paidOffers.map((offer) => ({
+        offer_id: offer.offerId,
+        title: offer.title,
+        goal: offer.goal,
+        memo: offer.memo,
+        diamond_cost: offer.diamondCost,
+        included_gems: offer.includedGems,
+        bonus_gems: offer.bonusGems,
+        items: offer.items.map((item) => ({
+          kind: item.kind,
+          name: item.name,
+          quantity: item.quantity,
+          duration_seconds: item.durationSeconds,
+          gem_value_each: item.gemValueEach,
+          points_each: item.pointsEach,
+        })),
+        created_at: offer.createdAt,
+        updated_at: offer.updatedAt,
+      })),
+      paid_valuation: {
+        points_per_gem: state.paidValuation.pointsPerGem,
+        general_speedup_points_per_hour: state.paidValuation.generalSpeedupPointsPerHour,
+        research_speedup_points_per_hour: state.paidValuation.researchSpeedupPointsPerHour,
+        training_speedup_points_per_hour: state.paidValuation.trainingSpeedupPointsPerHour,
+        construction_speedup_points_per_hour: state.paidValuation.constructionSpeedupPointsPerHour,
+        healing_speedup_points_per_hour: state.paidValuation.healingSpeedupPointsPerHour,
+        merging_speedup_points_per_hour: state.paidValuation.mergingSpeedupPointsPerHour,
+        crafting_speedup_points_per_hour: state.paidValuation.craftingSpeedupPointsPerHour,
+        use_speedup_gem_presets: state.paidValuation.useSpeedupGemPresets,
+      },
       updated_at: state.updatedAt,
     },
   };
 }
 
+function normalizedDirectiveTasks(tasks) {
+  const normalized = [];
+  const positions = new Map();
+  for (const task of Array.isArray(tasks) ? tasks : []) {
+    const researchId = String(task?.researchId || task?.research_id || "").trim();
+    const targetLevel = Math.max(0, Math.trunc(number(task?.targetLevel ?? task?.target_level)));
+    if (!researchId || targetLevel < 1) continue;
+    if (positions.has(researchId)) {
+      const existing = normalized[positions.get(researchId)];
+      existing.targetLevel = Math.max(existing.targetLevel, targetLevel);
+      continue;
+    }
+    positions.set(researchId, normalized.length);
+    normalized.push({ researchId, targetLevel });
+  }
+  return normalized;
+}
+
+export function researchDirectivePayload(tasks, { name = "", datasetId = "", gameVersion = "" } = {}) {
+  return {
+    document_type: RESEARCH_DIRECTIVE_DOCUMENT_TYPE,
+    schema_version: 1,
+    exported_at: new Date().toISOString(),
+    name: String(name).trim().slice(0, 100),
+    dataset_id: String(datasetId || ""),
+    game_version: String(gameVersion || ""),
+    tasks: normalizedDirectiveTasks(tasks).map((task) => ({
+      research_id: task.researchId,
+      target_level: task.targetLevel,
+    })),
+  };
+}
+
+export function researchDirectiveFromPayload(raw) {
+  if (raw?.document_type !== RESEARCH_DIRECTIVE_DOCUMENT_TYPE || Number(raw?.schema_version) !== 1 || !Array.isArray(raw?.tasks)) {
+    throw new Error("対応していない研究指示データです");
+  }
+  const tasks = normalizedDirectiveTasks(raw.tasks);
+  if (!tasks.length) throw new Error("研究指示データに有効なタスクがありません");
+  return {
+    name: String(raw.name || "研究指示").trim().slice(0, 100) || "研究指示",
+    datasetId: String(raw.dataset_id || ""),
+    gameVersion: String(raw.game_version || ""),
+    tasks,
+  };
+}
+
+export function mergeResearchDirectiveTasks(existingTasks, directiveTasks, sourceName = "", createdAt = new Date().toISOString()) {
+  const tasks = [];
+  const positions = new Map();
+  for (const task of Array.isArray(existingTasks) ? existingTasks : []) {
+    const researchId = String(task?.researchId || task?.research_id || "").trim();
+    const targetLevel = Math.max(0, Math.trunc(number(task?.targetLevel ?? task?.target_level)));
+    if (!researchId || targetLevel < 1) continue;
+    if (positions.has(researchId)) {
+      const existing = tasks[positions.get(researchId)];
+      if (targetLevel > existing.targetLevel) existing.targetLevel = targetLevel;
+      continue;
+    }
+    positions.set(researchId, tasks.length);
+    tasks.push({
+      researchId,
+      targetLevel,
+      createdAt: String(task.createdAt || task.created_at || createdAt),
+      sourceName: String(task.sourceName || task.source_name || ""),
+    });
+  }
+  let added = 0;
+  let updated = 0;
+  let unchanged = 0;
+  for (const directive of normalizedDirectiveTasks(directiveTasks)) {
+    if (!positions.has(directive.researchId)) {
+      positions.set(directive.researchId, tasks.length);
+      tasks.push({ ...directive, createdAt, sourceName: String(sourceName || "") });
+      added += 1;
+      continue;
+    }
+    const existing = tasks[positions.get(directive.researchId)];
+    if (directive.targetLevel > existing.targetLevel) {
+      existing.targetLevel = directive.targetLevel;
+      existing.sourceName = String(sourceName || existing.sourceName || "");
+      updated += 1;
+    } else {
+      unchanged += 1;
+    }
+  }
+  return { tasks, added, updated, unchanged };
+}
+
 export function stateFromBackup(raw) {
   if (Number(raw?.schema_version) !== 1 || !raw?.player?.settings || !raw?.player?.research_levels) throw new Error("対応していないバックアップ形式です");
-  return sanitizeState({ settings: raw.player.settings, research_levels: raw.player.research_levels, building_levels: raw.player.building_levels, plan_tasks: raw.player.plan_tasks, observed_stats: raw.player.settings.observed_stats, updated_at: raw.player.updated_at });
+  return sanitizeState({ settings: raw.player.settings, research_levels: raw.player.research_levels, building_levels: raw.player.building_levels, plan_tasks: raw.player.plan_tasks, paid_offers: raw.player.paid_offers, paid_valuation: raw.player.paid_valuation, observed_stats: raw.player.settings.observed_stats, updated_at: raw.player.updated_at });
 }
 
 const VIP_MINUTES = { 1: 10, 2: 24, 3: 26, 4: 30, 5: 40, 6: 50, 7: 60, 8: 70, 9: 80, 10: 90, 11: 100, 12: 110, 13: 120, 14: 130, 15: 150 };

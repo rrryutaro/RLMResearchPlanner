@@ -1,13 +1,18 @@
 from __future__ import annotations
 
+import json
 import re
 import subprocess
 from collections.abc import Iterable
+from dataclasses import replace
+from datetime import datetime, timezone
 from difflib import SequenceMatcher
 from pathlib import Path
+from uuid import uuid4
 
 from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt
 from PySide6.QtGui import (
+    QAction,
     QBrush,
     QCloseEvent,
     QColor,
@@ -38,6 +43,7 @@ from PySide6.QtWidgets import (
     QListWidgetItem,
     QLayout,
     QMainWindow,
+    QMenu,
     QMessageBox,
     QProgressBar,
     QPushButton,
@@ -54,6 +60,9 @@ from PySide6.QtWidgets import (
 
 from rlm_research_planner.domain.models import (
     MasterData,
+    PaidItem,
+    PaidOffer,
+    PaidValuation,
     PlayerState,
     ResearchPlanTask,
     RESOURCE_KEYS,
@@ -83,6 +92,10 @@ from rlm_research_planner.services.castle_planning import (
     CastlePlanStep,
 )
 from rlm_research_planner.services.localization import Translator
+from rlm_research_planner.services.language_pack import (
+    LanguagePackError,
+    build_language_pack_template,
+)
 from rlm_research_planner.services.ocr import (
     OcrCandidate,
     OcrCardLevel,
@@ -103,14 +116,33 @@ from rlm_research_planner.services.ocr import (
     parse_research_level_fields,
 )
 from rlm_research_planner.services.paid_pack import (
-    SPEEDUP_KINDS,
     SpeedupEntry,
     detect_pack_price,
     parse_gem_bundle,
     parse_speedup_ocr,
-    summarize_speedups,
 )
 from rlm_research_planner.services.resource_format import format_resource_amount
+from rlm_research_planner.services.research_directive import (
+    ResearchDirectiveFormatError,
+    merge_research_directive_tasks,
+    research_directive_from_payload,
+    research_directive_payload,
+)
+from rlm_research_planner.services.paid_value import (
+    PAID_ITEM_KINDS,
+    PAID_GOALS,
+    SPEEDUP_ITEM_KINDS,
+    default_gem_value_each,
+    default_points_each,
+    paid_kind_has_time,
+    sorted_paid_offers,
+    summarize_paid_offer,
+)
+from rlm_research_planner.services.paid_offer_exchange import (
+    PaidOfferExchangeError,
+    paid_offer_exchange_payload,
+    paid_offers_from_exchange_payload,
+)
 from rlm_research_planner.services.window_capture import (
     CapturableWindow,
     capture_visible_window,
@@ -303,6 +335,7 @@ class MainWindow(QMainWindow):
         self._ocr_card_groups: list[tuple[QRect, tuple[OcrLine, ...]]] = []
         self._tree_levels_dirty = False
         self._player_settings_dirty = False
+        self._paid_current_offer_id = ""
         self.update_controller = UpdateController(
             self, self.settings_repository, self.app_settings
         )
@@ -317,18 +350,54 @@ class MainWindow(QMainWindow):
 
     def _resource_label(self, key: str) -> str:
         translated = self.t(f"resource.{key}")
-        return translated if translated != f"resource.{key}" else RESOURCE_LABELS.get(key, key)
+        fallback = (
+            translated
+            if translated != f"resource.{key}"
+            else RESOURCE_LABELS.get(key, key)
+        )
+        return self.translator.resource_name(key, fallback)
+
+    def _research_name(self, research_id: str) -> str:
+        content_locale = self.translator.content_locale
+        node = self._observed_nodes.get(research_id)
+        if node is not None:
+            fallback = node.localized_name(content_locale)
+        elif research_id in self._research:
+            fallback = self.master.localized_research(
+                research_id, content_locale
+            ).name
+        else:
+            fallback = research_id
+        return self.translator.research_name(research_id, fallback)
+
+    def _category_name(self, observation: ResearchTreeObservation) -> str:
+        return self.translator.category_name(
+            observation.category_id,
+            observation.localized_title(self.translator.content_locale),
+        )
+
+    def _building_name(self, building_id: str) -> str:
+        building = self.castle_catalog.buildings.get(building_id)
+        fallback = (
+            building.localized_name(self.translator.content_locale)
+            if building is not None
+            else building_id
+        )
+        return self.translator.building_name(building_id, fallback)
 
     def _tree_effect_lines(
         self, research_id: str, current_level: int, max_level: int
     ) -> tuple[str, str]:
         localized = self.master.localized_research(
-            research_id, self.translator.locale
+            research_id, self.translator.content_locale
         )
-        effect_label = (
-            self.translator.effect_label(localized.effect_label)
-            or localized.effect_label
-            or self.t("common.unknown")
+        effect_label = self.translator.research_effect(
+            research_id,
+            (
+                self.translator.effect_label(localized.effect_label)
+                or localized.effect_label
+                or self.t("common.unknown")
+            ),
         )
         if current_level <= 0:
             current_value = self._format_effect_line(effect_label, "0")
@@ -350,7 +419,9 @@ class MainWindow(QMainWindow):
         self, node: ObservedResearchNode, current_level: int
     ) -> tuple[str, str]:
         source_label = node.effect_label.strip()
-        label = self.translator.effect_label(source_label)
+        label = self.translator.research_effect(
+            node.id, self.translator.effect_label(source_label)
+        )
         if not label:
             generic_labels = {
                 "",
@@ -371,7 +442,7 @@ class MainWindow(QMainWindow):
             }
             if self.translator.locale.startswith("ja") or source_label in generic_labels:
                 label = self._effect_label_from_research_name(
-                    node.localized_name(self.translator.locale)
+                    self._research_name(node.id)
                 )
             else:
                 label = source_label
@@ -464,8 +535,8 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self._build_plan_tab(self.tabs), self.t("tab.plan"))
         self.tabs.addTab(self._build_castle_tab(self.tabs), self.t("tab.castle"))
         self.tabs.addTab(self._build_player_tab(self.tabs), self.t("tab.player"))
-        self.tabs.addTab(self._build_ocr_tab(self.tabs), self.t("tab.ocr"))
         self.tabs.addTab(self._build_paid_tab(self.tabs), self.t("tab.paid"))
+        self.tabs.addTab(self._build_ocr_tab(self.tabs), self.t("tab.ocr"))
         self.tabs.addTab(self._build_help_tab(self.tabs), self.t("tab.help"))
         layout.addWidget(self.tabs, 1)
 
@@ -489,9 +560,7 @@ class MainWindow(QMainWindow):
         self._tree_dataset_search_active = False
         self._tree_dataset_search_restore = ""
         for observation in self.observations:
-            item = QListWidgetItem(
-                observation.localized_title(self.translator.locale)
-            )
+            item = QListWidgetItem(self._category_name(observation))
             item.setData(
                 Qt.UserRole, f"observation:{observation.observation_id}"
             )
@@ -544,6 +613,7 @@ class MainWindow(QMainWindow):
         self.tree_view = ResearchTreeView(
             tree_panel, level_editing_enabled=True
         )
+        self.tree_view.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.tree_view.researchSelected.connect(self._tree_selection_changed)
         self.tree_view.researchActivated.connect(self._open_tree_detail)
         self.tree_view.researchLevelChanged.connect(self._set_tree_level)
@@ -598,7 +668,7 @@ class MainWindow(QMainWindow):
         self.tree_dataset_list.clear()
         instant_only = self.tree_instant_finish_check.isChecked()
         for observation in self.observations:
-            title = observation.localized_title(self.translator.locale)
+            title = self._category_name(observation)
             if (query or instant_only) and not any(
                 self._tree_node_matches_query(node, query)
                 and (
@@ -633,7 +703,7 @@ class MainWindow(QMainWindow):
         research = self._research.get(node.id)
         tags = research.tags if research is not None else ()
         search_text = " ".join(
-            (node.localized_name(self.translator.locale), node.id, *tags)
+            (self._research_name(node.id), node.id, *tags)
         )
         return query in search_text.casefold()
 
@@ -825,7 +895,7 @@ class MainWindow(QMainWindow):
             for node in sorted(
                 observation.nodes, key=lambda item: (item.row, item.column)
             ):
-                name = node.localized_name(self.translator.locale)
+                name = self._research_name(node.id)
                 if not self._tree_node_matches_query(node, query):
                     continue
                 if instant_only and not self._tree_node_is_instant_finish(node):
@@ -904,8 +974,8 @@ class MainWindow(QMainWindow):
             self.master.research,
             key=lambda item: (item.category_id, item.display_order),
         ):
-            localized = self.master.localized_research(research.id, self.translator.locale)
-            haystack = " ".join((localized.name, research.id, *research.tags)).casefold()
+            name = self._research_name(research.id)
+            haystack = " ".join((name, research.id, *research.tags)).casefold()
             if category and research.category_id != category:
                 continue
             if tag and tag not in research.tags:
@@ -1161,9 +1231,7 @@ class MainWindow(QMainWindow):
             if item.research_id != research.id or item.target_level > next_level:
                 continue
             if item.prerequisite_research_id:
-                name = self.master.localized_research(
-                    item.prerequisite_research_id, self.translator.locale
-                ).name
+                name = self._research_name(item.prerequisite_research_id)
                 prerequisites.append(f"{name} Lv.{item.prerequisite_level}")
             if item.building:
                 prerequisites.append(f"{item.building} Lv.{item.building_level}")
@@ -1200,7 +1268,7 @@ class MainWindow(QMainWindow):
         self.construction_target_combo.setMinimumWidth(190)
         for building_id, building in self.castle_catalog.buildings.items():
             self.construction_target_combo.addItem(
-                building.localized_name(self.translator.locale), building_id
+                self._building_name(building_id), building_id
             )
         controls.addWidget(self.construction_target_combo, 0, 1)
         self.castle_plan_current_label = QLabel(
@@ -1319,10 +1387,7 @@ class MainWindow(QMainWindow):
             self.player_state.settings.castle_level
         )
         for row, building_id in enumerate(facility_ids):
-            building = self.castle_catalog.buildings[building_id]
-            name_item = QTableWidgetItem(
-                building.localized_name(self.translator.locale)
-            )
+            name_item = QTableWidgetItem(self._building_name(building_id))
             name_item.setFlags(name_item.flags() & ~Qt.ItemIsEditable)
             self.castle_level_table.setItem(row, 0, name_item)
             value = max(
@@ -1450,10 +1515,10 @@ class MainWindow(QMainWindow):
     def _update_construction_selection_summary(self) -> None:
         if not hasattr(self, "castle_selection_summary_label"):
             return
-        building = self.castle_catalog.buildings[self._construction_target_id()]
+        building_id = self._construction_target_id()
         summary = self.t(
             "castle.selection_summary",
-            facility=building.localized_name(self.translator.locale),
+            facility=self._building_name(building_id),
             current=self.castle_plan_current_spin.value(),
             target=self.castle_plan_target_spin.value(),
         )
@@ -1708,7 +1773,7 @@ class MainWindow(QMainWindow):
             building_name = (
                 self.t("castle.mana_upgrade")
                 if step.mana_stage > 0
-                else building.localized_name(self.translator.locale)
+                else self._building_name(step.building_id)
             )
             values = [
                 building_name,
@@ -1987,9 +2052,7 @@ class MainWindow(QMainWindow):
             progress_entries.append(
                 (
                     research.id,
-                    self.master.localized_research(
-                        research.id, self.translator.locale
-                    ).name,
+                    self._research_name(research.id),
                     research.max_level,
                     False,
                 )
@@ -2003,7 +2066,7 @@ class MainWindow(QMainWindow):
                 progress_entries.append(
                     (
                         node.id,
-                        node.localized_name(self.translator.locale),
+                        self._research_name(node.id),
                         node.max_level,
                         True,
                     )
@@ -2370,10 +2433,36 @@ class MainWindow(QMainWindow):
         action_controls.addWidget(self.plan_reset_zoom_button)
         controls.addLayout(selection_controls)
         controls.addLayout(action_controls)
+        self.plan_directive_panel = QWidget(page)
+        directive_controls = QHBoxLayout(self.plan_directive_panel)
+        directive_controls.setContentsMargins(0, 0, 0, 0)
+        directive_controls.addWidget(QLabel(self.t("plan.directive_name"), page))
+        self.plan_directive_name_edit = QLineEdit(page)
+        self.plan_directive_name_edit.setMaxLength(100)
+        self.plan_directive_name_edit.setPlaceholderText(
+            self.t("plan.directive_name_placeholder")
+        )
+        directive_controls.addWidget(self.plan_directive_name_edit, 1)
+        self.plan_directive_import_button = QPushButton(
+            self.t("plan.directive_import"), page
+        )
+        self.plan_directive_import_button.clicked.connect(
+            self._import_research_directive
+        )
+        directive_controls.addWidget(self.plan_directive_import_button)
+        self.plan_directive_export_button = QPushButton(
+            self.t("plan.directive_export"), page
+        )
+        self.plan_directive_export_button.clicked.connect(
+            self._export_research_directive
+        )
+        directive_controls.addWidget(self.plan_directive_export_button)
+        controls.addWidget(self.plan_directive_panel)
         layout.addLayout(controls)
 
         self.plan_splitter = QSplitter(Qt.Vertical, page)
         self.plan_tree_view = ResearchTreeView(self.plan_splitter)
+        self.plan_tree_view.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.plan_fit_button.clicked.connect(self.plan_tree_view.fit_all)
         self.plan_reset_zoom_button.clicked.connect(self.plan_tree_view.reset_zoom)
         self.plan_splitter.addWidget(self.plan_tree_view)
@@ -2468,8 +2557,8 @@ class MainWindow(QMainWindow):
             self._update_plan_mode_visibility()
         observation = self._node_observation[research_id]
         self.plan_target_name_label.setText(
-            f"{observation.localized_title(self.translator.locale)} / "
-            f"{node.localized_name(self.translator.locale)}"
+            f"{self._category_name(observation)} / "
+            f"{self._research_name(node.id)}"
         )
         current = self._tree_level_draft.get(research_id, 0)
         self.plan_level_spin.blockSignals(True)
@@ -2490,6 +2579,7 @@ class MainWindow(QMainWindow):
         if not hasattr(self, "plan_tree_view"):
             return
         target_mode = self._plan_mode == "target"
+        tasks_mode = self._plan_mode == "tasks"
         for widget in (
             self.plan_target_caption,
             self.plan_target_name_label,
@@ -2502,6 +2592,7 @@ class MainWindow(QMainWindow):
             self.plan_tree_view,
         ):
             widget.setVisible(target_mode)
+        self.plan_directive_panel.setVisible(tasks_mode)
         self.plan_splitter.setSizes([480, 300] if target_mode else [0, 780])
 
     def _calculate_plan(self, *_args: object) -> None:
@@ -2576,7 +2667,7 @@ class MainWindow(QMainWindow):
         self.plan_complete_button.setEnabled(bool(result.steps))
         registered = any(
             task.research_id == result.target_research_id
-            and task.target_level == result.target_level
+            and task.target_level >= result.target_level
             for task in self.player_state.plan_tasks
         )
         self.plan_register_button.setText(
@@ -2612,7 +2703,7 @@ class MainWindow(QMainWindow):
             plan_nodes.append(
                 ResearchTreeNode(
                     research_id=research_id,
-                    name=node.localized_name(self.translator.locale),
+                    name=self._research_name(node.id),
                     current_level=current,
                     max_level=node.max_level,
                     status=self.t("plan.unmet_status", count=missing),
@@ -2690,17 +2781,103 @@ class MainWindow(QMainWindow):
         result = self._current_catalog_plan
         if self._plan_mode != "target" or result is None or not result.steps:
             return
-        task_key = (result.target_research_id, result.target_level)
-        if any(
-            (task.research_id, task.target_level) == task_key
-            for task in self.player_state.plan_tasks
-        ):
-            return
-        self.player_state.plan_tasks.append(
-            ResearchPlanTask(result.target_research_id, result.target_level)
+        merged = merge_research_directive_tasks(
+            self.player_state.plan_tasks,
+            [ResearchPlanTask(result.target_research_id, result.target_level)],
         )
+        if not merged.added and not merged.updated:
+            return
+        self.player_state.plan_tasks = list(merged.tasks)
         self.player_repository.save(self.player_state)
         self._render_catalog_plan(result)
+
+    def _export_research_directive(self) -> None:
+        if not self.player_state.plan_tasks:
+            QMessageBox.information(
+                self, self.t("info.title"), self.t("plan.directive_empty")
+            )
+            return
+        directive_name = (
+            self.plan_directive_name_edit.text().strip()
+            or self.t("plan.directive_default_name")
+        )
+        safe_name = re.sub(r'[\\/:*?"<>|]+', "_", directive_name).strip()[:60]
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            self.t("plan.directive_export"),
+            str(
+                self.paths.tool_root
+                / f"RLMResearchDirective_{safe_name or 'ResearchDirective'}.json"
+            ),
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        payload = research_directive_payload(
+            self.player_state.plan_tasks,
+            name=directive_name,
+            dataset_id=self.master.dataset_id,
+            game_version=self.master.game_version,
+        )
+        try:
+            Path(path).write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2),
+                encoding="utf-8",
+            )
+            QMessageBox.information(
+                self,
+                self.t("info.title"),
+                self.t("plan.directive_exported", count=len(payload["tasks"])),
+            )
+        except OSError as exc:
+            self._show_error(str(exc))
+
+    def _import_research_directive(self) -> None:
+        path, _ = QFileDialog.getOpenFileName(
+            self,
+            self.t("plan.directive_import"),
+            str(self.paths.tool_root),
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            raw = json.loads(Path(path).read_text(encoding="utf-8"))
+            directive = research_directive_from_payload(raw)
+            valid_tasks = [
+                task
+                for task in directive.tasks
+                if task.research_id in self._observed_nodes
+                and self._observed_nodes[task.research_id].max_level is not None
+                and task.target_level
+                <= int(self._observed_nodes[task.research_id].max_level or 0)
+            ]
+            skipped = len(directive.tasks) - len(valid_tasks)
+            if not valid_tasks:
+                raise ResearchDirectiveFormatError("no compatible tasks")
+            merged = merge_research_directive_tasks(
+                self.player_state.plan_tasks,
+                valid_tasks,
+                source_name=directive.name,
+            )
+            self.player_state.plan_tasks = list(merged.tasks)
+            self.player_repository.save(self.player_state)
+            self.plan_directive_name_edit.setText(directive.name)
+            self._render_registered_tasks()
+            QMessageBox.information(
+                self,
+                self.t("info.title"),
+                self.t(
+                    "plan.directive_imported",
+                    name=directive.name,
+                    added=merged.added,
+                    updated=merged.updated,
+                    unchanged=merged.unchanged,
+                    skipped=skipped,
+                ),
+            )
+        except (OSError, json.JSONDecodeError, ResearchDirectiveFormatError):
+            self._show_error(self.t("plan.directive_invalid"))
 
     def _resource_display_mode_changed(self, *_args: object) -> None:
         if not hasattr(self, "plan_resource_mode_combo"):
@@ -2750,7 +2927,7 @@ class MainWindow(QMainWindow):
         for row, step in enumerate(steps):
             observation = self._node_observation[step.research_id]
             name = (
-                f"{observation.localized_title(self.translator.locale)} / "
+                f"{self._category_name(observation)} / "
                 f"{self._catalog_research_name(step.research_id)}"
             )
             self._set_plan_step_row(row, step, name, link_to_tree=True)
@@ -2785,9 +2962,15 @@ class MainWindow(QMainWindow):
         self.plan_table.clearContents()
         self.plan_table.setRowCount(len(task_results))
         for row, (task, result) in enumerate(task_results):
+            task_name = self._catalog_research_name(task.research_id)
+            if task.source_name:
+                task_name = f"{task_name} [{task.source_name}]"
+            level_text = f"Lv.{task.target_level}"
+            if not result.steps:
+                level_text = f"{level_text} / {self.t('plan.task_completed')}"
             values = [
-                self._catalog_research_name(task.research_id),
-                f"Lv.{task.target_level}",
+                task_name,
+                level_text,
                 self._known_duration(result.total_base_seconds),
                 self._known_duration(result.total_adjusted_seconds),
                 self._known_duration(result.total_after_help_seconds),
@@ -3058,7 +3241,137 @@ class MainWindow(QMainWindow):
 
     def _build_paid_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
-        layout = QVBoxLayout(page)
+        outer_layout = QVBoxLayout(page)
+        self.paid_workspace_tabs = QTabWidget(page)
+        input_page = QWidget(self.paid_workspace_tabs)
+        saved_page = QWidget(self.paid_workspace_tabs)
+        comparison_page = QWidget(self.paid_workspace_tabs)
+        self.paid_workspace_tabs.addTab(input_page, self.t("paid.view.input"))
+        self.paid_workspace_tabs.addTab(saved_page, self.t("paid.view.saved"))
+        self.paid_workspace_tabs.addTab(
+            comparison_page, self.t("paid.view.comparison")
+        )
+        self.paid_workspace_tabs.setCurrentWidget(input_page)
+        outer_layout.addWidget(self.paid_workspace_tabs)
+        layout = QVBoxLayout(input_page)
+        saved_page_layout = QVBoxLayout(saved_page)
+        comparison_layout = QVBoxLayout(comparison_page)
+
+        saved_group = QGroupBox(self.t("paid.saved_offers"), saved_page)
+        saved_group_layout = QVBoxLayout(saved_group)
+        self.paid_offer_table = QTableWidget(0, 5, saved_group)
+        self.paid_offer_table.setHorizontalHeaderLabels(
+            [
+                self.t("paid.title"),
+                self.t("paid.goal"),
+                self.t("paid.memo"),
+                self.t("paid.price"),
+                self.t("paid.updated"),
+            ]
+        )
+        self.paid_offer_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.paid_offer_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.paid_offer_table.setSelectionMode(QTableWidget.ExtendedSelection)
+        self.paid_offer_table.verticalHeader().setVisible(False)
+        self.paid_offer_table.horizontalHeader().setSectionResizeMode(
+            0, QHeaderView.Stretch
+        )
+        self.paid_offer_table.horizontalHeader().setSectionResizeMode(
+            2, QHeaderView.Stretch
+        )
+        for column in (1, 3, 4):
+            self.paid_offer_table.horizontalHeader().setSectionResizeMode(
+                column, QHeaderView.ResizeToContents
+            )
+        self.paid_offer_table.cellDoubleClicked.connect(
+            self._load_paid_offer_row_and_show
+        )
+        saved_group_layout.addWidget(self.paid_offer_table)
+        saved_actions = QHBoxLayout()
+        new_button = QPushButton(self.t("paid.new_offer"), saved_group)
+        new_button.clicked.connect(self._new_paid_offer)
+        saved_actions.addWidget(new_button)
+        edit_button = QPushButton(self.t("paid.edit_offer"), saved_group)
+        edit_button.clicked.connect(self._edit_selected_paid_offer)
+        saved_actions.addWidget(edit_button)
+        delete_offer_button = QPushButton(
+            self.t("paid.delete_offer"), saved_group
+        )
+        delete_offer_button.clicked.connect(self._delete_paid_offer)
+        saved_actions.addWidget(delete_offer_button)
+        export_button = QPushButton(self.t("paid.export_selected"), saved_group)
+        export_button.clicked.connect(self._export_paid_offers)
+        saved_actions.addWidget(export_button)
+        export_all_button = QPushButton(self.t("paid.export_all"), saved_group)
+        export_all_button.clicked.connect(self._export_all_paid_offers)
+        saved_actions.addWidget(export_all_button)
+        import_button = QPushButton(self.t("paid.import"), saved_group)
+        import_button.clicked.connect(self._import_paid_offers)
+        saved_actions.addWidget(import_button)
+        saved_actions.addStretch(1)
+        saved_group_layout.addLayout(saved_actions)
+        saved_page_layout.addWidget(saved_group)
+
+        comparison_controls = QHBoxLayout()
+        comparison_controls.addWidget(
+            QLabel(self.t("paid.comparison_goal"), comparison_page)
+        )
+        self.paid_comparison_goal_combo = QComboBox(comparison_page)
+        self.paid_comparison_goal_combo.addItem(
+            self.t("paid.goal.any"), ""
+        )
+        for goal in PAID_GOALS:
+            self.paid_comparison_goal_combo.addItem(
+                self.t(f"paid.goal.{goal}"), goal
+            )
+        self.paid_comparison_goal_combo.currentIndexChanged.connect(
+            lambda _index: self._refresh_paid_offer_table()
+        )
+        comparison_controls.addWidget(self.paid_comparison_goal_combo)
+        comparison_controls.addStretch(1)
+        comparison_layout.addLayout(comparison_controls)
+        self.paid_comparison_table = QTableWidget(0, 7, comparison_page)
+        self.paid_comparison_table.setHorizontalHeaderLabels(
+            [
+                self.t("paid.title"),
+                self.t("paid.goal"),
+                self.t("paid.price"),
+                self.t("paid.total_time"),
+                self.t("paid.total_gem_value"),
+                self.t("paid.total_points"),
+                self.t("paid.points_per_diamond"),
+            ]
+        )
+        self.paid_comparison_table.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.paid_comparison_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.paid_comparison_table.verticalHeader().setVisible(False)
+        self.paid_comparison_table.horizontalHeader().setSectionResizeMode(
+            0, QHeaderView.Stretch
+        )
+        for column in range(1, 7):
+            self.paid_comparison_table.horizontalHeader().setSectionResizeMode(
+                column, QHeaderView.ResizeToContents
+            )
+        comparison_layout.addWidget(self.paid_comparison_table)
+
+        identity = QHBoxLayout()
+        identity.addWidget(QLabel(self.t("paid.title"), page))
+        self.paid_title_edit = QLineEdit(page)
+        self.paid_title_edit.setMaxLength(200)
+        identity.addWidget(self.paid_title_edit, 2)
+        identity.addWidget(QLabel(self.t("paid.memo"), page))
+        self.paid_memo_edit = QLineEdit(page)
+        self.paid_memo_edit.setMaxLength(2000)
+        identity.addWidget(self.paid_memo_edit, 3)
+        identity.addWidget(QLabel(self.t("paid.goal"), input_page))
+        self.paid_goal_combo = QComboBox(input_page)
+        for goal in PAID_GOALS:
+            self.paid_goal_combo.addItem(self.t(f"paid.goal.{goal}"), goal)
+        identity.addWidget(self.paid_goal_combo)
+        save_offer_button = QPushButton(self.t("paid.save_offer"), input_page)
+        save_offer_button.clicked.connect(self._save_paid_offer)
+        identity.addWidget(save_offer_button)
+        layout.addLayout(identity)
 
         controls = QHBoxLayout()
         controls.addWidget(QLabel(self.t("paid.price"), page))
@@ -3119,7 +3432,55 @@ class MainWindow(QMainWindow):
         gem_layout.addWidget(self.paid_gems_per_diamond_label)
         layout.addWidget(gem_group)
 
-        self.paid_item_table = QTableWidget(0, 5, page)
+        valuation_group = QGroupBox(
+            self.t("paid.valuation"), comparison_page
+        )
+        valuation_layout = QGridLayout(valuation_group)
+        valuation_specs = (
+            ("gem", "points_per_gem"),
+            ("general", "general_speedup_points_per_hour"),
+            ("research", "research_speedup_points_per_hour"),
+            ("training", "training_speedup_points_per_hour"),
+            ("construction", "construction_speedup_points_per_hour"),
+            ("healing", "healing_speedup_points_per_hour"),
+            ("merging", "merging_speedup_points_per_hour"),
+            ("crafting", "crafting_speedup_points_per_hour"),
+        )
+        self._paid_valuation_spins: dict[str, VisibleDoubleSpinBox] = {}
+        for index, (label_key, attribute) in enumerate(valuation_specs):
+            group_row = index // 4
+            column = index % 4
+            valuation_layout.addWidget(
+                QLabel(self.t(f"paid.rate.{label_key}"), valuation_group),
+                group_row * 2,
+                column,
+            )
+            spin = VisibleDoubleSpinBox(valuation_group)
+            spin.setRange(0.0, 999_999_999.0)
+            spin.setDecimals(3)
+            spin.setValue(float(getattr(self.player_state.paid_valuation, attribute)))
+            spin.valueChanged.connect(self._update_paid_summary)
+            valuation_layout.addWidget(spin, group_row * 2 + 1, column)
+            self._paid_valuation_spins[attribute] = spin
+        self.paid_speedup_gem_preset_check = QCheckBox(
+            self.t("paid.use_speedup_gem_presets"), valuation_group
+        )
+        self.paid_speedup_gem_preset_check.setChecked(
+            self.player_state.paid_valuation.use_speedup_gem_presets
+        )
+        self.paid_speedup_gem_preset_check.toggled.connect(
+            self._update_paid_summary
+        )
+        valuation_layout.addWidget(
+            self.paid_speedup_gem_preset_check,
+            4,
+            0,
+            1,
+            4,
+        )
+        comparison_layout.insertWidget(1, valuation_group)
+
+        self.paid_item_table = QTableWidget(0, 8, page)
         self.paid_item_table.setHorizontalHeaderLabels(
             [
                 self.t("paid.kind"),
@@ -3127,6 +3488,9 @@ class MainWindow(QMainWindow):
                 self.t("paid.unit"),
                 self.t("paid.quantity"),
                 self.t("paid.subtotal"),
+                self.t("paid.item_name"),
+                self.t("paid.gem_value_each"),
+                self.t("paid.points_each"),
             ]
         )
         self.paid_item_table.setSelectionBehavior(QTableWidget.SelectRows)
@@ -3136,7 +3500,10 @@ class MainWindow(QMainWindow):
         self.paid_item_table.horizontalHeader().setSectionResizeMode(
             0, QHeaderView.Stretch
         )
-        for column in range(1, 5):
+        self.paid_item_table.horizontalHeader().setSectionResizeMode(
+            5, QHeaderView.Stretch
+        )
+        for column in (1, 2, 3, 4, 6, 7):
             self.paid_item_table.horizontalHeader().setSectionResizeMode(
                 column, QHeaderView.ResizeToContents
             )
@@ -3144,7 +3511,9 @@ class MainWindow(QMainWindow):
 
         summary_group = QGroupBox(self.t("paid.summary"), page)
         summary_layout = QVBoxLayout(summary_group)
-        self.paid_summary_table = QTableWidget(4, 4, summary_group)
+        self.paid_summary_table = QTableWidget(
+            len(SPEEDUP_ITEM_KINDS) + 1, 4, summary_group
+        )
         self.paid_summary_table.setHorizontalHeaderLabels(
             [
                 self.t("paid.kind"),
@@ -3160,18 +3529,32 @@ class MainWindow(QMainWindow):
             QHeaderView.Stretch
         )
         summary_layout.addWidget(self.paid_summary_table)
+        totals = QHBoxLayout()
+        totals.addWidget(QLabel(self.t("paid.total_gem_value"), summary_group))
+        self.paid_total_gem_value_label = QLabel("0", summary_group)
+        totals.addWidget(self.paid_total_gem_value_label)
+        totals.addWidget(QLabel(self.t("paid.total_points"), summary_group))
+        self.paid_total_points_label = QLabel("0", summary_group)
+        totals.addWidget(self.paid_total_points_label)
+        totals.addWidget(QLabel(self.t("paid.points_per_diamond"), summary_group))
+        self.paid_points_per_diamond_label = QLabel("-", summary_group)
+        totals.addWidget(self.paid_points_per_diamond_label)
+        totals.addStretch(1)
+        summary_layout.addLayout(totals)
         layout.addWidget(summary_group)
 
         self._add_paid_row()
         self._update_paid_summary()
+        self._refresh_paid_offer_table()
         return page
 
     def _paid_kind_combo(self, kind: str = "general") -> QComboBox:
         combo = QComboBox(self.paid_item_table)
-        for key in SPEEDUP_KINDS:
+        for key in PAID_ITEM_KINDS:
             combo.addItem(self.t(f"paid.kind.{key}"), key)
         index = combo.findData(kind)
         combo.setCurrentIndex(max(0, index))
+        combo.setProperty("lastPaidKind", kind)
         combo.currentIndexChanged.connect(self._update_paid_summary)
         return combo
 
@@ -3198,12 +3581,15 @@ class MainWindow(QMainWindow):
         return max(0, seconds), "seconds"
 
     def _add_paid_row(
-        self, entry: SpeedupEntry | None = None, *, focus: bool = False
+        self,
+        entry: SpeedupEntry | PaidItem | None = None,
+        *,
+        focus: bool = False,
     ) -> None:
         row = self.paid_item_table.rowCount()
         self.paid_item_table.insertRow(row)
         kind = entry.kind if entry is not None else "general"
-        if (
+        if isinstance(entry, SpeedupEntry) and (
             entry is not None
             and entry.duration_value is not None
             and entry.duration_unit
@@ -3214,6 +3600,17 @@ class MainWindow(QMainWindow):
                 entry.duration_seconds if entry is not None else 0
             )
         quantity = entry.quantity if entry is not None else 0
+        name = entry.name if isinstance(entry, PaidItem) else ""
+        gem_value_each = (
+            entry.gem_value_each
+            if isinstance(entry, PaidItem)
+            else default_gem_value_each(kind)
+        )
+        points_each = (
+            entry.points_each
+            if isinstance(entry, PaidItem)
+            else default_points_each(kind)
+        )
 
         kind_combo = self._paid_kind_combo(kind)
         set_table_cell_widget(self.paid_item_table, row, 0, kind_combo)
@@ -3239,12 +3636,63 @@ class MainWindow(QMainWindow):
         subtotal.setTextAlignment(Qt.AlignCenter)
         subtotal.setFlags(subtotal.flags() & ~Qt.ItemIsEditable)
         self.paid_item_table.setItem(row, 4, subtotal)
+        name_edit = QLineEdit(self.paid_item_table)
+        name_edit.setMaxLength(200)
+        name_edit.setText(name)
+        name_edit.textChanged.connect(self._update_paid_summary)
+        set_table_cell_widget(self.paid_item_table, row, 5, name_edit)
+        gem_spin = VisibleDoubleSpinBox(self.paid_item_table)
+        gem_spin.setRange(0.0, 999_999_999.0)
+        gem_spin.setDecimals(2)
+        gem_spin.setValue(gem_value_each)
+        gem_spin.valueChanged.connect(self._update_paid_summary)
+        set_table_cell_widget(self.paid_item_table, row, 6, gem_spin)
+        points_spin = VisibleDoubleSpinBox(self.paid_item_table)
+        points_spin.setRange(0.0, 999_999_999.0)
+        points_spin.setDecimals(2)
+        points_spin.setValue(points_each)
+        points_spin.valueChanged.connect(self._update_paid_summary)
+        set_table_cell_widget(self.paid_item_table, row, 7, points_spin)
+        kind_combo.currentIndexChanged.connect(
+            lambda _index, paid_row=row: self._update_paid_row_kind(paid_row)
+        )
+        self._update_paid_row_kind(row)
         self._update_paid_summary()
         if focus:
             self.paid_item_table.scrollToBottom()
             self.paid_item_table.setCurrentCell(row, 1)
             duration_spin.setFocus(Qt.OtherFocusReason)
             duration_spin.selectAll()
+
+    def _update_paid_row_kind(self, row: int) -> None:
+        kind_combo = self.paid_item_table.cellWidget(row, 0)
+        duration_spin = self.paid_item_table.cellWidget(row, 1)
+        unit_combo = self.paid_item_table.cellWidget(row, 2)
+        if not isinstance(kind_combo, QComboBox):
+            return
+        kind = str(kind_combo.currentData())
+        previous_kind = str(kind_combo.property("lastPaidKind") or kind)
+        has_time = paid_kind_has_time(kind)
+        if duration_spin is not None:
+            duration_spin.setEnabled(has_time)
+            duration_spin.setVisible(has_time)
+        if unit_combo is not None:
+            unit_combo.setEnabled(has_time)
+            unit_combo.setVisible(has_time)
+        gem_spin = self.paid_item_table.cellWidget(row, 6)
+        points_spin = self.paid_item_table.cellWidget(row, 7)
+        if isinstance(gem_spin, VisibleDoubleSpinBox) and gem_spin.value() in (
+            0.0,
+            default_gem_value_each(previous_kind),
+        ):
+            gem_spin.setValue(default_gem_value_each(kind))
+        if isinstance(points_spin, VisibleDoubleSpinBox) and points_spin.value() in (
+            0.0,
+            default_points_each(previous_kind),
+        ):
+            points_spin.setValue(default_points_each(kind))
+        kind_combo.setProperty("lastPaidKind", kind)
+        self._update_paid_summary()
 
     def _remove_selected_paid_rows(self) -> None:
         rows = sorted(
@@ -3259,6 +3707,8 @@ class MainWindow(QMainWindow):
 
     def _clear_paid_rows(self) -> None:
         self.paid_item_table.setRowCount(0)
+        self.paid_title_edit.clear()
+        self.paid_memo_edit.clear()
         self.paid_diamond_spin.setValue(0)
         self.paid_included_gems_spin.setValue(0)
         self.paid_bonus_gems_spin.setValue(0)
@@ -3274,56 +3724,136 @@ class MainWindow(QMainWindow):
             "days": 86400,
         }.get(unit, 1)
 
-    def _paid_entries_from_table(self) -> tuple[SpeedupEntry, ...]:
-        entries: list[SpeedupEntry] = []
+    def _paid_entries_from_table(self) -> tuple[PaidItem, ...]:
+        entries: list[PaidItem] = []
         for row in range(self.paid_item_table.rowCount()):
             kind_combo = self.paid_item_table.cellWidget(row, 0)
             duration_spin = self.paid_item_table.cellWidget(row, 1)
             unit_combo = self.paid_item_table.cellWidget(row, 2)
             quantity_spin = self.paid_item_table.cellWidget(row, 3)
+            name_edit = self.paid_item_table.cellWidget(row, 5)
+            gem_spin = self.paid_item_table.cellWidget(row, 6)
+            points_spin = self.paid_item_table.cellWidget(row, 7)
             if not (
                 isinstance(kind_combo, QComboBox)
                 and isinstance(duration_spin, QSpinBox)
                 and isinstance(unit_combo, QComboBox)
                 and isinstance(quantity_spin, QSpinBox)
+                and isinstance(name_edit, QLineEdit)
+                and isinstance(gem_spin, VisibleDoubleSpinBox)
+                and isinstance(points_spin, VisibleDoubleSpinBox)
             ):
                 continue
-            duration_seconds = duration_spin.value() * self._paid_unit_seconds(
-                str(unit_combo.currentData())
+            kind = str(kind_combo.currentData())
+            duration_seconds = (
+                duration_spin.value()
+                * self._paid_unit_seconds(str(unit_combo.currentData()))
+                if paid_kind_has_time(kind)
+                else 0
             )
             quantity = quantity_spin.value()
-            if duration_seconds <= 0 or quantity <= 0:
+            if quantity <= 0:
                 continue
             entries.append(
-                SpeedupEntry(
-                    kind=str(kind_combo.currentData()),
+                PaidItem(
+                    kind=kind,
+                    name=name_edit.text().strip(),
                     duration_seconds=duration_seconds,
                     quantity=quantity,
+                    gem_value_each=gem_spin.value(),
+                    points_each=points_spin.value(),
                 )
             )
         return tuple(entries)
+
+    def _paid_valuation(self) -> PaidValuation:
+        return PaidValuation(
+            use_speedup_gem_presets=(
+                self.paid_speedup_gem_preset_check.isChecked()
+            ),
+            **{
+                attribute: spin.value()
+                for attribute, spin in self._paid_valuation_spins.items()
+            }
+        )
+
+    def _paid_offer_from_editor(self) -> PaidOffer:
+        now = datetime.now(timezone.utc).isoformat()
+        existing = next(
+            (
+                offer
+                for offer in self.player_state.paid_offers
+                if offer.offer_id == self._paid_current_offer_id
+            ),
+            None,
+        )
+        return PaidOffer(
+            offer_id=self._paid_current_offer_id or str(uuid4()),
+            title=self.paid_title_edit.text().strip(),
+            goal=str(self.paid_goal_combo.currentData() or "all_round"),
+            memo=self.paid_memo_edit.text(),
+            diamond_cost=self.paid_diamond_spin.value(),
+            included_gems=self.paid_included_gems_spin.value(),
+            bonus_gems=self.paid_bonus_gems_spin.value(),
+            items=self._paid_entries_from_table(),
+            created_at=existing.created_at if existing else now,
+            updated_at=now,
+        )
 
     def _update_paid_summary(self, *_args) -> None:
         if not hasattr(self, "paid_item_table"):
             return
         entries = self._paid_entries_from_table()
-        entry_by_row: dict[int, SpeedupEntry] = {}
-        entry_index = 0
+        entry_by_row: dict[int, PaidItem] = {}
         for row in range(self.paid_item_table.rowCount()):
+            kind_combo = self.paid_item_table.cellWidget(row, 0)
             duration_spin = self.paid_item_table.cellWidget(row, 1)
             quantity_spin = self.paid_item_table.cellWidget(row, 3)
-            if not isinstance(duration_spin, QSpinBox) or not isinstance(
-                quantity_spin, QSpinBox
+            name_edit = self.paid_item_table.cellWidget(row, 5)
+            gem_spin = self.paid_item_table.cellWidget(row, 6)
+            points_spin = self.paid_item_table.cellWidget(row, 7)
+            if not (
+                isinstance(kind_combo, QComboBox)
+                and isinstance(duration_spin, QSpinBox)
+                and isinstance(quantity_spin, QSpinBox)
+                and isinstance(name_edit, QLineEdit)
+                and isinstance(gem_spin, VisibleDoubleSpinBox)
+                and isinstance(points_spin, VisibleDoubleSpinBox)
             ):
                 continue
-            if duration_spin.value() > 0 and quantity_spin.value() > 0:
-                entry_by_row[row] = entries[entry_index]
-                entry_index += 1
+            if quantity_spin.value() > 0:
+                kind = str(kind_combo.currentData())
+                unit_combo = self.paid_item_table.cellWidget(row, 2)
+                duration_seconds = 0
+                if paid_kind_has_time(kind) and isinstance(unit_combo, QComboBox):
+                    duration_seconds = duration_spin.value() * self._paid_unit_seconds(
+                        str(unit_combo.currentData())
+                    )
+                entry_by_row[row] = PaidItem(
+                    kind=kind,
+                    name=name_edit.text().strip(),
+                    quantity=quantity_spin.value(),
+                    duration_seconds=duration_seconds,
+                    gem_value_each=gem_spin.value(),
+                    points_each=points_spin.value(),
+                )
         for row in range(self.paid_item_table.rowCount()):
             item = self.paid_item_table.item(row, 4)
             if item is not None:
                 entry = entry_by_row.get(row)
-                item.setText(format_duration(entry.total_seconds) if entry else "-")
+                if entry is None:
+                    item.setText("-")
+                else:
+                    parts = []
+                    if entry.duration_seconds:
+                        parts.append(
+                            format_duration(entry.duration_seconds * entry.quantity)
+                        )
+                    if entry.gem_value_each:
+                        parts.append(f"{entry.gem_value_each * entry.quantity:,.2f} gem")
+                    if entry.points_each:
+                        parts.append(f"{entry.points_each * entry.quantity:,.2f} pt")
+                    item.setText(" / ".join(parts) or "-")
 
         cost = self.paid_diamond_spin.value()
         total_gems = (
@@ -3334,15 +3864,29 @@ class MainWindow(QMainWindow):
         self.paid_gems_per_diamond_label.setText(
             f"{total_gems / cost:,.2f}" if cost > 0 else "-"
         )
-        summaries = summarize_speedups(entries, cost)
-        for row, summary in enumerate(summaries):
+        speedup_entries = tuple(
+            SpeedupEntry(item.kind, item.duration_seconds, item.quantity)
+            for item in entries
+            if paid_kind_has_time(item.kind) and item.duration_seconds > 0
+        )
+        for row, kind in enumerate((*SPEEDUP_ITEM_KINDS, "all")):
+            total_seconds = (
+                sum(entry.total_seconds for entry in speedup_entries)
+                if kind == "all"
+                else sum(
+                    entry.total_seconds
+                    for entry in speedup_entries
+                    if entry.kind == kind
+                )
+            )
+            seconds_per_diamond = total_seconds / cost if cost else None
             values = (
-                self.t(f"paid.kind.{summary.kind}"),
-                format_duration(summary.total_seconds),
+                self.t(f"paid.kind.{kind}"),
+                format_duration(total_seconds),
                 f"{cost:,}" if cost > 0 else "-",
                 (
-                    format_duration(summary.seconds_per_diamond)
-                    if summary.seconds_per_diamond is not None
+                    format_duration(seconds_per_diamond)
+                    if seconds_per_diamond is not None
                     else "-"
                 ),
             )
@@ -3350,6 +3894,298 @@ class MainWindow(QMainWindow):
                 item = QTableWidgetItem(value)
                 item.setTextAlignment(Qt.AlignCenter)
                 self.paid_summary_table.setItem(row, column, item)
+        offer = self._paid_offer_from_editor()
+        paid_summary = summarize_paid_offer(offer, self._paid_valuation())
+        self.paid_total_gem_value_label.setText(
+            f"{paid_summary.total_gem_value:,.2f}"
+        )
+        self.paid_total_points_label.setText(f"{paid_summary.total_points:,.2f}")
+        self.paid_points_per_diamond_label.setText(
+            f"{paid_summary.points_per_diamond:,.3f}"
+            if paid_summary.points_per_diamond is not None
+            else "-"
+        )
+        self._refresh_paid_offer_table()
+
+    def _refresh_paid_offer_table(self) -> None:
+        if not hasattr(self, "paid_offer_table"):
+            return
+        valuation = (
+            self._paid_valuation()
+            if hasattr(self, "_paid_valuation_spins")
+            else self.player_state.paid_valuation
+        )
+        saved_offers = sorted(
+            self.player_state.paid_offers,
+            key=lambda offer: (offer.updated_at, offer.title.casefold()),
+            reverse=True,
+        )
+        self.paid_offer_table.setRowCount(len(saved_offers))
+        for row, offer in enumerate(saved_offers):
+            values = (
+                offer.title,
+                self.t(f"paid.goal.{offer.goal}"),
+                offer.memo,
+                f"{offer.diamond_cost:,}" if offer.diamond_cost else "-",
+                offer.updated_at[:19].replace("T", " ") if offer.updated_at else "-",
+            )
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(value)
+                item.setTextAlignment(
+                    Qt.AlignVCenter
+                    | (Qt.AlignLeft if column in (0, 2) else Qt.AlignCenter)
+                )
+                if column == 0:
+                    item.setData(Qt.UserRole, offer.offer_id)
+                self.paid_offer_table.setItem(row, column, item)
+            if offer.offer_id == self._paid_current_offer_id:
+                self.paid_offer_table.selectRow(row)
+
+        goal = ""
+        if hasattr(self, "paid_comparison_goal_combo"):
+            goal = str(self.paid_comparison_goal_combo.currentData() or "")
+        compared = [
+            offer
+            for offer in self.player_state.paid_offers
+            if not goal or offer.goal == goal
+        ]
+        offers = sorted_paid_offers(compared, valuation)
+        self.paid_comparison_table.setRowCount(len(offers))
+        for row, offer in enumerate(offers):
+            summary = summarize_paid_offer(offer, valuation)
+            values = (
+                offer.title,
+                self.t(f"paid.goal.{offer.goal}"),
+                f"{offer.diamond_cost:,}" if offer.diamond_cost else "-",
+                format_duration(summary.total_speedup_seconds),
+                f"{summary.total_gem_value:,.2f}",
+                f"{summary.total_points:,.2f}",
+                (
+                    f"{summary.points_per_diamond:,.3f}"
+                    if summary.points_per_diamond is not None
+                    else "-"
+                ),
+            )
+            for column, value in enumerate(values):
+                item = QTableWidgetItem(value)
+                item.setTextAlignment(
+                    Qt.AlignVCenter
+                    | (Qt.AlignLeft if column == 0 else Qt.AlignCenter)
+                )
+                if column == 0:
+                    item.setData(Qt.UserRole, offer.offer_id)
+                self.paid_comparison_table.setItem(row, column, item)
+
+    def _load_paid_offer_row(self, row: int, _column: int = 0) -> None:
+        item = self.paid_offer_table.item(row, 0)
+        offer_id = str(item.data(Qt.UserRole) or "") if item else ""
+        offer = next(
+            (
+                value
+                for value in self.player_state.paid_offers
+                if value.offer_id == offer_id
+            ),
+            None,
+        )
+        if offer is None:
+            return
+        self._paid_current_offer_id = offer.offer_id
+        self.paid_title_edit.setText(offer.title)
+        self.paid_memo_edit.setText(offer.memo)
+        goal_index = self.paid_goal_combo.findData(offer.goal)
+        self.paid_goal_combo.setCurrentIndex(max(0, goal_index))
+        self.paid_diamond_spin.setValue(offer.diamond_cost)
+        self.paid_included_gems_spin.setValue(offer.included_gems)
+        self.paid_bonus_gems_spin.setValue(offer.bonus_gems)
+        self.paid_item_table.setRowCount(0)
+        for paid_item in offer.items:
+            self._add_paid_row(paid_item)
+        if not offer.items:
+            self._add_paid_row()
+        self._update_paid_summary()
+        self._refresh_paid_offer_table()
+
+    def _load_paid_offer_row_and_show(self, row: int, column: int = 0) -> None:
+        self._load_paid_offer_row(row, column)
+        self.paid_workspace_tabs.setCurrentIndex(0)
+
+    def _selected_paid_offer_ids(self) -> list[str]:
+        ids: list[str] = []
+        for row in sorted(
+            {index.row() for index in self.paid_offer_table.selectedIndexes()}
+        ):
+            item = self.paid_offer_table.item(row, 0)
+            offer_id = str(item.data(Qt.UserRole) or "") if item else ""
+            if offer_id and offer_id not in ids:
+                ids.append(offer_id)
+        return ids
+
+    def _edit_selected_paid_offer(self) -> None:
+        rows = sorted(
+            {index.row() for index in self.paid_offer_table.selectedIndexes()}
+        )
+        if not rows:
+            self._show_info(self.t("paid.select_offer"))
+            return
+        self._load_paid_offer_row_and_show(rows[0])
+
+    def _new_paid_offer(self) -> None:
+        self._paid_current_offer_id = ""
+        self._clear_paid_rows()
+        self.paid_goal_combo.setCurrentIndex(
+            max(0, self.paid_goal_combo.findData("all_round"))
+        )
+        self.paid_offer_table.clearSelection()
+        self.paid_workspace_tabs.setCurrentIndex(0)
+
+    def _save_paid_offer(self) -> None:
+        title = self.paid_title_edit.text().strip()
+        if not title:
+            self._show_info(self.t("paid.title_required"))
+            self.paid_title_edit.setFocus(Qt.OtherFocusReason)
+            return
+        offer = self._paid_offer_from_editor()
+        positions = {
+            item.offer_id: index
+            for index, item in enumerate(self.player_state.paid_offers)
+        }
+        if offer.offer_id in positions:
+            self.player_state.paid_offers[positions[offer.offer_id]] = offer
+        else:
+            self.player_state.paid_offers.append(offer)
+        self._paid_current_offer_id = offer.offer_id
+        self.player_state.paid_valuation = self._paid_valuation()
+        self.player_repository.save(self.player_state)
+        self._refresh_paid_offer_table()
+        self._show_info(self.t("paid.saved"))
+
+    def _delete_paid_offer(self) -> None:
+        offer_ids = self._selected_paid_offer_ids()
+        if not offer_ids and self._paid_current_offer_id:
+            offer_ids = [self._paid_current_offer_id]
+        if not offer_ids:
+            self._show_info(self.t("paid.select_offer"))
+            return
+        answer = QMessageBox.question(
+            self,
+            self.t("confirm.title"),
+            self.t("paid.delete_confirm"),
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+        if answer != QMessageBox.Yes:
+            return
+        self.player_state.paid_offers = [
+            offer
+            for offer in self.player_state.paid_offers
+            if offer.offer_id not in offer_ids
+        ]
+        self.player_state.paid_valuation = self._paid_valuation()
+        self.player_repository.save(self.player_state)
+        self._new_paid_offer()
+        self.paid_workspace_tabs.setCurrentIndex(1)
+        self._refresh_paid_offer_table()
+
+    def _export_paid_offers(self) -> None:
+        offer_ids = self._selected_paid_offer_ids()
+        if not offer_ids:
+            self._show_info(self.t("paid.select_offer_export"))
+            return
+        offers = [
+            offer
+            for offer in self.player_state.paid_offers
+            if offer.offer_id in offer_ids
+        ]
+        self._write_paid_offers(offers)
+
+    def _export_all_paid_offers(self) -> None:
+        offers = list(self.player_state.paid_offers)
+        if not offers:
+            self._show_info(self.t("paid.no_saved"))
+            return
+        self._write_paid_offers(offers)
+
+    def _write_paid_offers(self, offers: list[PaidOffer]) -> None:
+        path, _selected_filter = QFileDialog.getSaveFileName(
+            self,
+            self.t("paid.export_all"),
+            "RLMResearchPlanner-paid-offers.json",
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            Path(path).write_text(
+                json.dumps(
+                    paid_offer_exchange_payload(
+                        offers,
+                        self._paid_valuation(),
+                        name=self.t("paid.shared_data_name"),
+                    ),
+                    ensure_ascii=False,
+                    indent=2,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+        except OSError as exc:
+            self._show_error(self.t("paid.export_failed", error=exc))
+            return
+        self._show_info(self.t("paid.exported", count=len(offers)))
+
+    def _import_paid_offers(self) -> None:
+        path, _selected_filter = QFileDialog.getOpenFileName(
+            self,
+            self.t("paid.import"),
+            "",
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            raw = json.loads(Path(path).read_text(encoding="utf-8"))
+            offers, imported_valuation, _name = paid_offers_from_exchange_payload(
+                raw
+            )
+        except (OSError, json.JSONDecodeError, PaidOfferExchangeError) as exc:
+            self._show_error(self.t("paid.import_failed", error=exc))
+            return
+        existing = {offer.offer_id: offer for offer in self.player_state.paid_offers}
+        added = 0
+        skipped = 0
+        for offer in offers:
+            if offer.offer_id not in existing:
+                self.player_state.paid_offers.append(offer)
+                existing[offer.offer_id] = offer
+                added += 1
+            elif existing[offer.offer_id] == offer:
+                skipped += 1
+            else:
+                imported = replace(offer, offer_id=str(uuid4()))
+                self.player_state.paid_offers.append(imported)
+                existing[imported.offer_id] = imported
+                added += 1
+        use_rates = QMessageBox.question(
+            self,
+            self.t("confirm.title"),
+            self.t("paid.import_valuation_confirm"),
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.No,
+        )
+        if use_rates == QMessageBox.Yes:
+            self.player_state.paid_valuation = imported_valuation
+            for attribute, spin in self._paid_valuation_spins.items():
+                spin.setValue(float(getattr(imported_valuation, attribute)))
+            self.paid_speedup_gem_preset_check.setChecked(
+                imported_valuation.use_speedup_gem_presets
+            )
+        else:
+            self.player_state.paid_valuation = self._paid_valuation()
+        self.player_repository.save(self.player_state)
+        self._refresh_paid_offer_table()
+        self._show_info(
+            self.t("paid.imported", added=added, skipped=skipped)
+        )
 
     def _capture_paid_pack(self) -> None:
         self.paid_capture_button.setEnabled(False)
@@ -3392,12 +4228,39 @@ class MainWindow(QMainWindow):
         settings = QHBoxLayout()
         settings.addWidget(QLabel(self.t("language.label"), page))
         self.language_combo = QComboBox(page)
-        self.language_combo.addItem("日本語", "ja-JP")
-        self.language_combo.addItem("English", "en-US")
+        for locale, name, _direction, custom in self.translator.available_locales():
+            label = f"{name} ({locale})" if custom else name
+            self.language_combo.addItem(label, locale)
         index = self.language_combo.findData(self.translator.locale)
         self.language_combo.setCurrentIndex(max(0, index))
         self.language_combo.currentIndexChanged.connect(self._change_language)
         settings.addWidget(self.language_combo)
+        self.language_pack_button = QPushButton(
+            self.t("language.pack_actions"), page
+        )
+        language_pack_menu = QMenu(self.language_pack_button)
+        export_action = QAction(self.t("language.pack_export"), page)
+        export_action.triggered.connect(self._export_language_pack_template)
+        language_pack_menu.addAction(export_action)
+        import_action = QAction(self.t("language.pack_import"), page)
+        import_action.triggered.connect(self._import_language_pack)
+        language_pack_menu.addAction(import_action)
+        self.language_pack_remove_action = QAction(
+            self.t("language.pack_remove"), page
+        )
+        self.language_pack_remove_action.triggered.connect(
+            self._remove_language_pack
+        )
+        selected_locale = str(self.language_combo.currentData() or "")
+        self.language_pack_remove_action.setEnabled(
+            any(
+                locale == selected_locale and custom
+                for locale, _name, _direction, custom in self.translator.available_locales()
+            )
+        )
+        language_pack_menu.addAction(self.language_pack_remove_action)
+        self.language_pack_button.setMenu(language_pack_menu)
+        settings.addWidget(self.language_pack_button)
         settings.addWidget(QLabel(self.t("appearance.label"), page))
         self.visual_style_combo = QComboBox(page)
         self.visual_style_combo.addItem(
@@ -3465,6 +4328,7 @@ class MainWindow(QMainWindow):
             ("help.ocr.title", "help.ocr.body_v003"),
             ("help.paid.title", "help.paid.body"),
             ("help.appearance.title", "help.appearance.body"),
+            ("language.pack_title", "language.pack_description"),
             ("help.data.title", "help.data.body"),
             ("help.license.title", "help.license.body"),
             ("help.update.title", "help.update.body"),
@@ -4508,7 +5372,7 @@ class MainWindow(QMainWindow):
             (
                 research.id,
                 self.master.localized_research(
-                    research.id, self.translator.locale
+                    research.id, profile.locale
                 ).name,
                 research.max_level,
             )
@@ -4523,7 +5387,7 @@ class MainWindow(QMainWindow):
         entries.extend(
             (
                 node.id,
-                node.localized_name(self.translator.locale),
+                node.localized_name(profile.locale),
                 node.max_level,
             )
             for node in observed_nodes
@@ -4555,7 +5419,7 @@ class MainWindow(QMainWindow):
         label_entries = [
             (
                 node.id,
-                node.localized_name(self.translator.locale),
+                node.localized_name(profile.locale),
                 int(node.max_level or 0),
             )
             for node in observation.nodes
@@ -4745,19 +5609,11 @@ class MainWindow(QMainWindow):
     def _research_combo(self, parent: QWidget) -> QComboBox:
         combo = QComboBox(parent)
         for research in self.master.research:
-            localized = self.master.localized_research(research.id, self.translator.locale)
-            combo.addItem(localized.name, research.id)
+            combo.addItem(self._research_name(research.id), research.id)
         return combo
 
     def _catalog_research_name(self, research_id: str) -> str:
-        if research_id in self._research:
-            return self.master.localized_research(
-                research_id, self.translator.locale
-            ).name
-        node = self._observed_nodes.get(research_id)
-        if node is not None:
-            return node.localized_name(self.translator.locale)
-        return research_id
+        return self._research_name(research_id)
 
     @staticmethod
     def _select_combo_data(combo: QComboBox | None, value: str) -> None:
@@ -4771,12 +5627,98 @@ class MainWindow(QMainWindow):
         locale = str(self.language_combo.currentData())
         if locale == self.translator.locale:
             return
+        self._activate_locale(locale)
+
+    def _activate_locale(self, locale: str) -> None:
         self.app_settings.locale = locale
         self.translator.set_locale(locale)
+        self.settings_repository.save(self.app_settings)
+        application = QApplication.instance()
+        if application is not None:
+            application.setLayoutDirection(
+                Qt.LayoutDirection.RightToLeft
+                if self.translator.direction == "rtl"
+                else Qt.LayoutDirection.LeftToRight
+            )
         current_tab = self.tabs.currentIndex()
         self._build_ui()
         self._apply_visual_style()
         self.tabs.setCurrentIndex(min(current_tab, self.tabs.count() - 1))
+
+    def _export_language_pack_template(self) -> None:
+        path, _selected_filter = QFileDialog.getSaveFileName(
+            self,
+            self.t("language.pack_export"),
+            "RLMResearchPlanner-language-template.json",
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            payload = build_language_pack_template(
+                messages=self.translator.english_messages(),
+                master=self.master,
+                observations=self.observations,
+                castle_catalog=self.castle_catalog,
+            )
+            Path(path).write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+        except (OSError, ValueError) as exc:
+            self._show_error(self.t("language.pack_export_failed", error=exc))
+            return
+        self._show_info(self.t("language.pack_exported"))
+
+    def _import_language_pack(self) -> None:
+        repository = self.translator.language_pack_repository
+        if repository is None:
+            self._show_error(self.t("language.pack_storage_unavailable"))
+            return
+        path, _selected_filter = QFileDialog.getOpenFileName(
+            self,
+            self.t("language.pack_import"),
+            "",
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            raw = json.loads(Path(path).read_text(encoding="utf-8"))
+            pack = repository.install(raw)
+            self.translator.reload_language_packs()
+        except (OSError, json.JSONDecodeError, LanguagePackError) as exc:
+            self._show_error(self.t("language.pack_invalid", error=exc))
+            return
+        self._activate_locale(pack.locale)
+        self._show_info(self.t("language.pack_imported", name=pack.name))
+
+    def _remove_language_pack(self) -> None:
+        repository = self.translator.language_pack_repository
+        locale = str(self.language_combo.currentData() or "")
+        custom_locales = {
+            item_locale
+            for item_locale, _name, _direction, custom in self.translator.available_locales()
+            if custom
+        }
+        if repository is None or locale not in custom_locales:
+            return
+        answer = QMessageBox.question(
+            self,
+            self.t("info.title"),
+            self.t("language.pack_remove_confirm", locale=locale),
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            removed = repository.remove(locale)
+            self.translator.reload_language_packs()
+        except (OSError, LanguagePackError) as exc:
+            self._show_error(self.t("language.pack_remove_failed", error=exc))
+            return
+        if removed:
+            self._activate_locale("en-US")
+            self._show_info(self.t("language.pack_removed"))
 
     def _show_error(self, message: str) -> None:
         QMessageBox.critical(self, self.t("error.title"), message)
