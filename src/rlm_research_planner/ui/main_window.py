@@ -256,12 +256,15 @@ class MainWindow(QMainWindow):
         self._startup_reveal_pending = False
         self._startup_reveal_scheduled = False
         self._startup_window_cloaked = False
+        self._startup_first_paint_completed = False
         self.app_settings = app_settings
         self.app_settings.visual_style = normalize_visual_style(
             self.app_settings.visual_style
         )
         self.setProperty("visualStyle", self.app_settings.visual_style)
         apply_window_visual_surface(self, self.app_settings.visual_style)
+        self._startup_window_cloaked = self._set_native_window_cloaked(True)
+        self._startup_reveal_pending = self._startup_window_cloaked
         self.paths = paths
         self.master = master
         self.observations = observations
@@ -313,8 +316,6 @@ class MainWindow(QMainWindow):
         self._build_ui()
         self._apply_visual_style()
         self._restore_geometry()
-        self._startup_window_cloaked = self._set_native_window_cloaked(True)
-        self._startup_reveal_pending = self._startup_window_cloaked
         self.update_controller.schedule_startup_check()
 
     def showEvent(self, event) -> None:
@@ -325,6 +326,11 @@ class MainWindow(QMainWindow):
         ):
             self._startup_reveal_scheduled = True
             QTimer.singleShot(0, self._reveal_after_startup_paint)
+
+    def paintEvent(self, event) -> None:
+        super().paintEvent(event)
+        if self._startup_reveal_pending:
+            self._startup_first_paint_completed = True
 
     def _set_native_window_cloaked(self, cloaked: bool) -> bool:
         if sys.platform != "win32":
@@ -345,6 +351,8 @@ class MainWindow(QMainWindow):
                 ctypes.byref(value),
                 ctypes.sizeof(value),
             )
+            if result == 0:
+                ctypes.windll.dwmapi.DwmFlush()
         except (AttributeError, OSError):
             return False
         return result == 0
@@ -352,6 +360,25 @@ class MainWindow(QMainWindow):
     def _reveal_after_startup_paint(self) -> None:
         if not self._startup_reveal_pending:
             return
+        self.ensurePolished()
+        central = self.centralWidget()
+        if central is not None:
+            central.ensurePolished()
+            layout = central.layout()
+            if layout is not None:
+                layout.activate()
+            central.repaint()
+        self.repaint()
+        QApplication.processEvents()
+        self._startup_first_paint_completed = True
+        QTimer.singleShot(16, self._finish_startup_reveal)
+
+    def _finish_startup_reveal(self) -> None:
+        if not self._startup_reveal_pending:
+            return
+        central = self.centralWidget()
+        if central is not None:
+            central.repaint()
         self.repaint()
         QApplication.processEvents()
         self._set_native_window_cloaked(False)

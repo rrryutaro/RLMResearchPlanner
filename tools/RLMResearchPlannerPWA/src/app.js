@@ -1,13 +1,13 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.12-b2";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.12-b2";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, loadState, maxGuildHelpsForCastle, saveState, stateFromBackup } from "./state.js?v=0.0.12-b2";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.12-b2";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.12-b2";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.12-b2";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.12-b2";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.13-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.13-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, loadState, maxGuildHelpsForCastle, saveState, stateFromBackup } from "./state.js?v=0.0.13-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.13-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.13-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.13-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.13-b1";
 
-const RELEASE_VERSION = "0.0.12";
-const DEVELOPMENT_BUILD = 2;
+const RELEASE_VERSION = "0.0.13";
+const DEVELOPMENT_BUILD = 1;
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`

@@ -1,4 +1,4 @@
-import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.12-b2";
+import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.13-b1";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "mana_ore", "mana_crystal", "mana_steel"];
 

@@ -57784,7 +57784,7 @@
         "Bigger Bags III": 10,
         "Bigger Infirmary III": 10,
         "Barracks Expansion II": 10,
-        "Lunar Foundry": 6,
+        "Lunar Foundry": 1,
         "Crafting Speed I": 10,
         "Lunite Harvesting I": 10,
         "Lunite Storage": 10,
@@ -57924,14 +57924,9 @@
           }
         },
         "Lunar Foundry": {
-          "label": "Max Storage",
+          "label": "Unlock",
           "levels": {
-            "1": "1,440",
-            "2": "1,440",
-            "3": "1,440",
-            "4": "1,440",
-            "5": "1,440",
-            "6": "1,440"
+            "1": "Unlocks Lunar Foundry"
           }
         },
         "Crafting Speed I": {
@@ -59868,113 +59863,31 @@
         },
         "Lunar Foundry": {
           "1": {
-            "academy_level": null,
-            "base_time_seconds": null,
-            "technolabe_count": null,
-            "power": 70970,
+            "academy_level": 25,
+            "base_time_seconds": 1141200,
+            "technolabe_count": 1,
+            "power": 94383,
             "costs": {
-              "food": 5615764,
-              "stone": 4941872,
-              "timber": 4043350,
+              "food": 488059,
+              "stone": 366044,
+              "timber": 305037,
+              "ore": 305037,
               "gold": 572165,
-              "ancient_tomes": 30,
-              "ore": 6738917,
-              "lunite": 24,
-              "mana_ore": 11231
+              "ancient_tomes": 30
             },
             "costs_verified": true,
-            "requirements": [],
-            "buildings": {},
-            "verification_status": "sourced_partial"
-          },
-          "2": {
-            "academy_level": null,
-            "base_time_seconds": null,
-            "technolabe_count": null,
-            "power": 78067,
-            "costs": {
-              "food": 9540000,
-              "stone": 8400000,
-              "timber": 6870000,
-              "ore": 90000,
-              "lunite": 24,
-              "mana_ore": 19000
-            },
-            "costs_verified": true,
-            "requirements": [],
-            "buildings": {},
-            "verification_status": "sourced_partial"
-          },
-          "3": {
-            "academy_level": null,
-            "base_time_seconds": 4540172,
-            "technolabe_count": null,
-            "power": 85873,
-            "costs": {
-              "food": 16229559,
-              "stone": 14282012,
-              "timber": 11685282,
-              "ore": 19475471,
-              "lunite": 24,
-              "mana_ore": 32459
-            },
-            "costs_verified": true,
-            "requirements": [],
+            "requirements": [
+              {
+                "research": "Bigger Infirmary III",
+                "level": 4
+              },
+              {
+                "research": "Barracks Expansion II",
+                "level": 4
+              }
+            ],
             "buildings": {},
             "verification_status": "sourced"
-          },
-          "4": {
-            "academy_level": null,
-            "base_time_seconds": 4994189,
-            "technolabe_count": null,
-            "power": 94460,
-            "costs": {
-              "food": 27590251,
-              "stone": 24279421,
-              "timber": 19864981,
-              "ore": 33108301,
-              "lunite": 24,
-              "mana_ore": 55180
-            },
-            "costs_verified": true,
-            "requirements": [],
-            "buildings": {},
-            "verification_status": "sourced"
-          },
-          "5": {
-            "academy_level": null,
-            "base_time_seconds": null,
-            "technolabe_count": null,
-            "power": null,
-            "costs": {
-              "food": 675000,
-              "stone": 594000,
-              "timber": 486000,
-              "ore": 810000,
-              "lunite": 24
-            },
-            "costs_verified": true,
-            "requirements": [],
-            "buildings": {},
-            "verification_status": "sourced_partial"
-          },
-          "6": {
-            "academy_level": null,
-            "base_time_seconds": null,
-            "technolabe_count": null,
-            "power": 114296,
-            "costs": {
-              "food": 79700000,
-              "stone": 70100000,
-              "timber": 57400000,
-              "ore": 95600000,
-              "lunite": 24,
-              "mana_ore": 191000
-            },
-            "costs_verified": true,
-            "requirements": [],
-            "buildings": {},
-            "verification_status": "sourced_partial"
           }
         },
         "Crafting Speed I": {
