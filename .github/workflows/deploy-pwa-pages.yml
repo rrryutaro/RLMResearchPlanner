@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - "tools/RLMResearchPlannerPWA/**"
+      - "scripts/check_pwa_release.mjs"
       - ".github/workflows/deploy-pwa-pages.yml"
   workflow_dispatch:
 
@@ -27,6 +28,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Verify PWA release
+        shell: bash
+        run: |
+          node --check tools/RLMResearchPlannerPWA/src/app.js
+          node --check tools/RLMResearchPlannerPWA/src/catalog.js
+          node --check tools/RLMResearchPlannerPWA/src/planning.js
+          node --check tools/RLMResearchPlannerPWA/src/castle-planning.js
+          node --check tools/RLMResearchPlannerPWA/src/state.js
+          node --check tools/RLMResearchPlannerPWA/src/language-pack.js
+          node --check tools/RLMResearchPlannerPWA/src/paid-value.js
+          node --check tools/RLMResearchPlannerPWA/sw.js
+          node scripts/check_pwa_release.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload PWA

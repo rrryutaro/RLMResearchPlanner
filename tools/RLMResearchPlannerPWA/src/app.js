@@ -1,15 +1,16 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.14-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.14-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.0.14-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.14-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.14-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.14-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.14-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, translateStatic } from "./language-pack.js?v=0.0.14-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.0.14-b1";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.15-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.15-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.0.15-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.0.15-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.15-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.0.15-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.15-b1";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, translateStatic } from "./language-pack.js?v=0.0.15-b1";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.0.15-b1";
 
-const RELEASE_VERSION = "0.0.14";
+const RELEASE_VERSION = "0.0.15";
 const DEVELOPMENT_BUILD = 1;
+const ASSET_VERSION = "0.0.15-b1";
 const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
 const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
   ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
@@ -61,10 +62,10 @@ const create = (tag, className = "", text = "") => {
 async function start() {
   try {
     const [loadedCatalog, loadedCastleCatalog, japaneseLocaleData, englishLocaleData] = await Promise.all([
-      loadCatalog(),
-      loadCastleCatalog(),
-      loadLocaleData("./data/i18n/ja-JP.json"),
-      loadLocaleData("./data/i18n/en-US.json"),
+      loadCatalog(`./data/research/catalog.json?v=${ASSET_VERSION}`),
+      loadCastleCatalog(`./data/buildings/castle_catalog.json?v=${ASSET_VERSION}`),
+      loadLocaleData(`./data/i18n/ja-JP.json?v=${ASSET_VERSION}`),
+      loadLocaleData(`./data/i18n/en-US.json?v=${ASSET_VERSION}`),
     ]);
     catalog = loadedCatalog;
     castleCatalog = loadedCastleCatalog;
@@ -92,10 +93,15 @@ async function start() {
     renderCommonHelp();
     byId("app-version").textContent = APP_VERSION;
     populateLanguageOptions();
+    window.rlmMarkStartupComplete?.();
   } catch (error) {
+    if (window.rlmHandleStartupError) {
+      window.rlmHandleStartupError(error);
+      return;
+    }
     const target = byId("startup-error");
     const message = byId("startup-error-message");
-    if (target && message) { message.textContent = t("pwa.startup_error", `研究データを読み込めませんでした: ${error.message}`, { error: error.message }); target.hidden = false; }
+    if (target && message) { message.textContent = t("pwa.startup_error", `起動に必要なデータを読み込めませんでした: ${error.message}`, { error: error.message }); target.hidden = false; }
   }
 }
 

@@ -1,4 +1,5 @@
-import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.14-b1";
+import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.15-b1";
+import { loadJsonResource } from "./catalog.js?v=0.0.15-b1";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "mana_ore", "mana_crystal", "mana_steel"];
 
@@ -7,9 +8,7 @@ function localText(values, locale) {
 }
 
 export async function loadCastleCatalog(url = "./data/buildings/castle_catalog.json") {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`城・施設データを読み込めませんでした (${response.status})`);
-  return normalizeCastleCatalog(await response.json());
+  return normalizeCastleCatalog(await loadJsonResource(url, "城・施設データ"));
 }
 
 export function normalizeCastleCatalog(raw) {

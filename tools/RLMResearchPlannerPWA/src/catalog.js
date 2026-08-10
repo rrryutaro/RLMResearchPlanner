@@ -7,21 +7,34 @@ function localText(values, locale) {
 }
 
 export async function loadCatalog(url = "./data/research/catalog.json") {
-  const response = await fetch(url);
-  if (!response.ok) throw new Error(`研究データを読み込めません (${response.status})`);
-  return normalizeCatalog(await response.json());
+  return normalizeCatalog(await loadJsonResource(url, "研究データ"));
 }
 
 export async function loadEffectLabels(url = "./data/i18n/ja-JP.json") {
-  const response = await fetch(url);
-  if (!response.ok) return {};
-  return (await response.json()).effect_labels || {};
+  return (await loadJsonResource(url, "効果ラベル")).effect_labels || {};
 }
 
 export async function loadLocaleData(url = "./data/i18n/ja-JP.json") {
-  const response = await fetch(url);
-  if (!response.ok) return { messages: {}, effect_labels: {} };
-  return response.json();
+  return loadJsonResource(url, "表示言語データ");
+}
+
+export async function loadJsonResource(url, label = "データ") {
+  let lastError;
+  for (let attempt = 0; attempt < 2; attempt += 1) {
+    const retryUrl = attempt === 0 ? url : `${url}${String(url).includes("?") ? "&" : "?"}reload=${Date.now()}`;
+    try {
+      const response = await fetch(retryUrl, { cache: attempt === 0 ? "default" : "reload" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      const text = await response.text();
+      if (/^\s*</u.test(text)) throw new Error("JSONの代わりにHTMLが返されました");
+      const value = JSON.parse(text);
+      if (!value || typeof value !== "object" || Array.isArray(value)) throw new Error("JSONの形式が正しくありません");
+      return value;
+    } catch (error) {
+      lastError = error;
+    }
+  }
+  throw new Error(`${label}を読み込めません (${lastError?.message || "不明なエラー"})`);
 }
 
 export function normalizeCatalog(raw) {

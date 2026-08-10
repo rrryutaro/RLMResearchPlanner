@@ -43,6 +43,7 @@ h1 { margin-bottom: 0; overflow: hidden; font-size: clamp(1.25rem, 4vw, 1.75rem)
 .tab-button.is-active { color: #07151d; border-color: var(--accent); background: var(--accent); font-weight: 800; }
 .startup-error { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 12px clamp(12px, 3vw, 28px) 0; padding: 12px 14px; border: 1px solid var(--danger); border-radius: 10px; color: #ffe4e1; background: #4b2423; }
 .startup-error button { flex: none; padding-inline: 12px; }
+.startup-error-actions { display: flex; flex: none; flex-wrap: wrap; gap: 8px; }
 .tab-panel { display: none; width: 100%; max-width: 100%; min-width: 0; padding: clamp(12px, 3vw, 28px); }
 .tab-panel.is-active { display: block; }
 

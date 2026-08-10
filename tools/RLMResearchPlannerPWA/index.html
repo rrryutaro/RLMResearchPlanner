@@ -9,8 +9,8 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.14-b1">
-    <title>RLM Research Planner PWA</title>
+    <link rel="stylesheet" href="./styles.css?v=0.0.15-b1">
+    <title>RLM Research Planner モバイル版</title>
   </head>
   <body>
     <header class="app-header">
@@ -32,7 +32,10 @@
 
     <div id="startup-error" class="startup-error" role="alert" hidden>
       <span id="startup-error-message"></span>
-      <button id="startup-retry" type="button">再読み込み</button>
+      <div class="startup-error-actions">
+        <button id="startup-retry" type="button">再読み込み</button>
+        <button id="startup-recover" type="button">最新版を再取得</button>
+      </div>
     </div>
 
     <main>
@@ -257,7 +260,7 @@
           <details class="settings-card backup-card language-pack-card">
             <summary data-i18n="language.pack_title">翻訳ファイル</summary>
             <div class="settings-card-body">
-              <p data-i18n="language.pack_description">英語を基準にしたひな形を書き出し、UI・研究名・施設名などを翻訳できます。同じJSONをPC版とPWA版で使えます。空欄は英語で表示し、OCR言語は日本語・英語のままです。</p>
+              <p data-i18n="language.pack_description">英語を基準にしたひな形を書き出し、UI・研究名・施設名などを翻訳できます。同じJSONをPC版とモバイル版で使えます。空欄は英語で表示し、OCR言語は日本語・英語のままです。</p>
               <div class="button-row">
                 <button id="export-language-template" class="primary" type="button" data-i18n="language.pack_export">翻訳ひな形を書き出す</button>
                 <label class="file-button"><span data-i18n="language.pack_import">翻訳ファイルを読み込む</span><input id="import-language-pack" type="file" accept="application/json,.json"></label>
@@ -374,11 +377,11 @@
           </article>
           <article>
             <h3 data-i18n="help.paid.title">課金候補の比較</h3>
-            <p data-i18n="help.paid.body">課金タブは入力・保存一覧・比較に分かれています。目的と内容を保存し、目的別の順位や換算設定を比較画面で確認できます。ジェム換算と素材ポイントは変更可能な比較基準で、ゲーム公式の現金価値ではありません。課金データだけを書き出して追加取り込みでき、PWA版はすべて手入力です。</p>
+            <p data-i18n="help.paid.body">課金タブは入力・保存一覧・比較に分かれています。目的と内容を保存し、目的別の順位や換算設定を比較画面で確認できます。ジェム換算と素材ポイントは変更可能な比較基準で、ゲーム公式の現金価値ではありません。課金データだけを書き出して追加取り込みでき、モバイル版はすべて手入力です。</p>
           </article>
           <article>
-            <h3 data-i18n="pwa.scope_title">PWA版の範囲</h3>
-            <p data-i18n="pwa.scope_body">OCRはありません。数値は手入力し、ブラウザー内へ保存します。「オンライン」は通信可否だけで、ゲーム接続や同期状態ではありません。端末変更前はバックアップしてください。研究指示データは登録タスクだけを共有し、受け取る側のレベルや設定を置き換えずに不足分を再計算します。</p>
+            <h3 data-i18n="pwa.scope_title">モバイル版について</h3>
+            <p data-i18n="pwa.scope_body">モバイル版はPWAという、ブラウザーから使えてホーム画面にも追加できるアプリ形式です。OCRはありません。数値は手入力し、ブラウザー内へ保存します。「オンライン」は通信可否だけで、ゲーム接続や同期状態ではありません。端末変更前はバックアップしてください。研究指示データは登録タスクだけを共有し、受け取る側のレベルや設定を置き換えずに不足分を再計算します。</p>
           </article>
           <article>
             <h3 data-i18n="pwa.environment_title">対応環境の目安</h3>
@@ -445,17 +448,81 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
+      const startupVersion = "0.0.15-b1";
+      const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
+      const appRoot = new URL("./", location.href).href;
+      const clearAppShell = async () => {
+        if ("serviceWorker" in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(registrations.filter((registration) => registration.scope === appRoot).map((registration) => registration.unregister()));
+        }
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.filter((key) => key.startsWith("rlm-research-planner-pwa-")).map((key) => caches.delete(key)));
+        }
+      };
+      const showStartupError = (error) => {
+        const target = document.getElementById("startup-error");
+        const message = document.getElementById("startup-error-message");
+        message.textContent = `起動に必要なデータを読み込めませんでした: ${error?.message || error || "不明なエラー"}`;
+        target.hidden = false;
+      };
+      window.rlmRecoverPwa = async () => {
+        const button = document.getElementById("startup-recover");
+        if (!navigator.onLine) {
+          showStartupError("最新版の再取得にはインターネット接続が必要です");
+          return;
+        }
+        button.disabled = true;
+        button.textContent = "再取得しています…";
+        try { await clearAppShell(); }
+        finally {
+          const url = new URL(location.href);
+          url.searchParams.set("reload", Date.now());
+          location.replace(url.href);
+        }
+      };
+      window.rlmHandleStartupError = async (error) => {
+        if (navigator.onLine && !sessionStorage.getItem(startupRecoveryKey)) {
+          sessionStorage.setItem(startupRecoveryKey, "1");
+          try {
+            await clearAppShell();
+            location.reload();
+            return;
+          } catch { /* 手動復旧ボタンを表示します。 */ }
+        }
+        showStartupError(error);
+      };
+      window.rlmMarkStartupComplete = () => {
+        sessionStorage.removeItem(startupRecoveryKey);
+        window.rlmStartupComplete = true;
+      };
+      document.getElementById("startup-recover").addEventListener("click", window.rlmRecoverPwa);
+      window.addEventListener("error", (event) => {
+        if (!window.rlmStartupComplete) window.rlmHandleStartupError(event.error || event.message);
+      });
+      window.addEventListener("unhandledrejection", (event) => {
+        if (!window.rlmStartupComplete) window.rlmHandleStartupError(event.reason);
+      });
       if (location.protocol === "file:") {
         const target = document.getElementById("startup-error");
         const message = document.getElementById("startup-error-message");
         const retry = document.getElementById("startup-retry");
+        const recover = document.getElementById("startup-recover");
         message.textContent = "HTMLを直接開いたため研究データを読み込めません。StartRLMResearchPlannerPWA.bat、またはリポジトリのランチャーから起動してください。";
         retry.hidden = true;
+        recover.hidden = true;
         target.hidden = false;
       } else if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js").catch(() => {});
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (refreshing) return;
+          refreshing = true;
+          location.reload();
+        });
+        navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).then((registration) => registration.update()).catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.14-b1"></script>
+    <script type="module" src="./src/app.js?v=0.0.15-b1"></script>
   </body>
 </html>

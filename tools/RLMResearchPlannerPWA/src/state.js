@@ -2,7 +2,7 @@ export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "gold_ha
 export const MAX_GUILD_HELPS = 30;
 const STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
 export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
-import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.0.14-b1";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.0.15-b1";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
