@@ -1,15 +1,12 @@
 from __future__ import annotations
 
-import ctypes
 import re
 import subprocess
-import sys
-from ctypes import wintypes
 from collections.abc import Iterable
 from difflib import SequenceMatcher
 from pathlib import Path
 
-from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt, QTimer
+from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt
 from PySide6.QtGui import (
     QBrush,
     QCloseEvent,
@@ -165,7 +162,6 @@ RESOURCE_LABELS = {
     "lunite": "Lunite",
 }
 PLAN_RESOURCE_KEYS = tuple(RESOURCE_LABELS)
-_DWMWA_CLOAK = 13
 
 
 class _OcrImagePreview(QLabel):
@@ -253,18 +249,16 @@ class MainWindow(QMainWindow):
         translator: Translator,
     ) -> None:
         super().__init__()
-        self._startup_reveal_pending = False
-        self._startup_reveal_scheduled = False
-        self._startup_window_cloaked = False
-        self._startup_first_paint_completed = False
         self.app_settings = app_settings
         self.app_settings.visual_style = normalize_visual_style(
             self.app_settings.visual_style
         )
         self.setProperty("visualStyle", self.app_settings.visual_style)
+        # Do not request winId() here. Creating the native HWND while the Qt
+        # hierarchy is still incomplete is itself a source of startup flashes
+        # on Windows. Prepare the paint surface, build the complete hierarchy,
+        # and let QWidget.show() create the HWND only after __init__ returns.
         apply_window_visual_surface(self, self.app_settings.visual_style)
-        self._startup_window_cloaked = self._set_native_window_cloaked(True)
-        self._startup_reveal_pending = self._startup_window_cloaked
         self.paths = paths
         self.master = master
         self.observations = observations
@@ -317,73 +311,6 @@ class MainWindow(QMainWindow):
         self._apply_visual_style()
         self._restore_geometry()
         self.update_controller.schedule_startup_check()
-
-    def showEvent(self, event) -> None:
-        super().showEvent(event)
-        if (
-            self._startup_reveal_pending
-            and not self._startup_reveal_scheduled
-        ):
-            self._startup_reveal_scheduled = True
-            QTimer.singleShot(0, self._reveal_after_startup_paint)
-
-    def paintEvent(self, event) -> None:
-        super().paintEvent(event)
-        if self._startup_reveal_pending:
-            self._startup_first_paint_completed = True
-
-    def _set_native_window_cloaked(self, cloaked: bool) -> bool:
-        if sys.platform != "win32":
-            return False
-        try:
-            value = ctypes.c_int(1 if cloaked else 0)
-            set_window_attribute = ctypes.windll.dwmapi.DwmSetWindowAttribute
-            set_window_attribute.argtypes = (
-                wintypes.HWND,
-                wintypes.DWORD,
-                ctypes.c_void_p,
-                wintypes.DWORD,
-            )
-            set_window_attribute.restype = ctypes.c_long
-            result = set_window_attribute(
-                wintypes.HWND(int(self.winId())),
-                _DWMWA_CLOAK,
-                ctypes.byref(value),
-                ctypes.sizeof(value),
-            )
-            if result == 0:
-                ctypes.windll.dwmapi.DwmFlush()
-        except (AttributeError, OSError):
-            return False
-        return result == 0
-
-    def _reveal_after_startup_paint(self) -> None:
-        if not self._startup_reveal_pending:
-            return
-        self.ensurePolished()
-        central = self.centralWidget()
-        if central is not None:
-            central.ensurePolished()
-            layout = central.layout()
-            if layout is not None:
-                layout.activate()
-            central.repaint()
-        self.repaint()
-        QApplication.processEvents()
-        self._startup_first_paint_completed = True
-        QTimer.singleShot(16, self._finish_startup_reveal)
-
-    def _finish_startup_reveal(self) -> None:
-        if not self._startup_reveal_pending:
-            return
-        central = self.centralWidget()
-        if central is not None:
-            central.repaint()
-        self.repaint()
-        QApplication.processEvents()
-        self._set_native_window_cloaked(False)
-        self._startup_window_cloaked = False
-        self._startup_reveal_pending = False
 
     def t(self, key: str, **values: object) -> str:
         return self.translator.text(key, **values)
@@ -523,34 +450,39 @@ class MainWindow(QMainWindow):
         self.setWindowTitle(self.t("app.title"))
         root = QWidget(self)
         root.setObjectName("RlmRoot")
+        root.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        # Install the opaque central surface before constructing any pages.
+        # All pages are created with an explicit parent so no temporary
+        # top-level QWidget/HWND can exist during startup.
+        self.setCentralWidget(root)
+        apply_window_visual_surface(self, self.app_settings.visual_style)
         layout = QVBoxLayout(root)
         layout.setContentsMargins(8, 8, 8, 8)
 
-        self.tabs = QTabWidget()
-        self.tabs.addTab(self._build_tree_tab(), self.t("tab.tree"))
-        self.tabs.addTab(self._build_plan_tab(), self.t("tab.plan"))
-        self.tabs.addTab(self._build_castle_tab(), self.t("tab.castle"))
-        self.tabs.addTab(self._build_player_tab(), self.t("tab.player"))
-        self.tabs.addTab(self._build_ocr_tab(), self.t("tab.ocr"))
-        self.tabs.addTab(self._build_paid_tab(), self.t("tab.paid"))
-        self.tabs.addTab(self._build_help_tab(), self.t("tab.help"))
+        self.tabs = QTabWidget(root)
+        self.tabs.addTab(self._build_tree_tab(self.tabs), self.t("tab.tree"))
+        self.tabs.addTab(self._build_plan_tab(self.tabs), self.t("tab.plan"))
+        self.tabs.addTab(self._build_castle_tab(self.tabs), self.t("tab.castle"))
+        self.tabs.addTab(self._build_player_tab(self.tabs), self.t("tab.player"))
+        self.tabs.addTab(self._build_ocr_tab(self.tabs), self.t("tab.ocr"))
+        self.tabs.addTab(self._build_paid_tab(self.tabs), self.t("tab.paid"))
+        self.tabs.addTab(self._build_help_tab(self.tabs), self.t("tab.help"))
         layout.addWidget(self.tabs, 1)
-        self.setCentralWidget(root)
 
-    def _build_tree_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_tree_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         page_layout = QVBoxLayout(page)
-        splitter = QSplitter(Qt.Horizontal)
+        splitter = QSplitter(Qt.Horizontal, page)
 
-        dataset_panel = QWidget()
+        dataset_panel = QWidget(splitter)
         dataset_panel.setMinimumWidth(220)
         dataset_panel.setMaximumWidth(360)
         dataset_layout = QVBoxLayout(dataset_panel)
         dataset_layout.setContentsMargins(0, 0, 8, 0)
-        dataset_heading = QLabel(self.t("tree.dataset"))
+        dataset_heading = QLabel(self.t("tree.dataset"), dataset_panel)
         dataset_heading.setStyleSheet("font-weight:700;")
         dataset_layout.addWidget(dataset_heading)
-        self.tree_dataset_list = _AutoFitListWidget()
+        self.tree_dataset_list = _AutoFitListWidget(dataset_panel)
         self.tree_dataset_list.setStyleSheet(
             dataset_style_sheet(self.app_settings.visual_style)
         )
@@ -571,17 +503,17 @@ class MainWindow(QMainWindow):
         dataset_layout.addWidget(self.tree_dataset_list, 1)
         splitter.addWidget(dataset_panel)
 
-        tree_panel = QWidget()
+        tree_panel = QWidget(splitter)
         layout = QVBoxLayout(tree_panel)
         layout.setContentsMargins(8, 0, 0, 0)
         filters = QHBoxLayout()
-        filters.addWidget(QLabel(self.t("tree.search")))
-        self.search_edit = QLineEdit()
+        filters.addWidget(QLabel(self.t("tree.search"), tree_panel))
+        self.search_edit = QLineEdit(tree_panel)
         self.search_edit.setPlaceholderText(self.t("tree.search_placeholder"))
         self.search_edit.textChanged.connect(self._tree_search_changed)
         filters.addWidget(self.search_edit, 1)
         self.tree_instant_finish_check = QCheckBox(
-            self.t("tree.instant_finish_only")
+            self.t("tree.instant_finish_only"), tree_panel
         )
         self.tree_instant_finish_check.setToolTip(
             self.t("tree.instant_finish_hint")
@@ -590,22 +522,28 @@ class MainWindow(QMainWindow):
             self._tree_instant_finish_changed
         )
         filters.addWidget(self.tree_instant_finish_check)
-        self.tree_capture_button = QPushButton(self.t("tree.capture_levels"))
+        self.tree_capture_button = QPushButton(
+            self.t("tree.capture_levels"), tree_panel
+        )
         self.tree_capture_button.clicked.connect(self._capture_tree_levels)
         filters.addWidget(self.tree_capture_button)
-        self.tree_capture_progress = QProgressBar()
+        self.tree_capture_progress = QProgressBar(tree_panel)
         self.tree_capture_progress.setRange(0, 100)
         self.tree_capture_progress.setValue(0)
         self.tree_capture_progress.setMinimumWidth(110)
         self.tree_capture_progress.setMaximumWidth(170)
         filters.addWidget(self.tree_capture_progress)
-        self.tree_fit_button = QPushButton(self.t("tree.fit_all"))
-        self.tree_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"))
+        self.tree_fit_button = QPushButton(self.t("tree.fit_all"), tree_panel)
+        self.tree_reset_zoom_button = QPushButton(
+            self.t("tree.reset_zoom"), tree_panel
+        )
         filters.addWidget(self.tree_fit_button)
         filters.addWidget(self.tree_reset_zoom_button)
         layout.addLayout(filters)
 
-        self.tree_view = ResearchTreeView(level_editing_enabled=True)
+        self.tree_view = ResearchTreeView(
+            tree_panel, level_editing_enabled=True
+        )
         self.tree_view.researchSelected.connect(self._tree_selection_changed)
         self.tree_view.researchActivated.connect(self._open_tree_detail)
         self.tree_view.researchLevelChanged.connect(self._set_tree_level)
@@ -1133,18 +1071,18 @@ class MainWindow(QMainWindow):
             self._sync_progress_editor(candidate.research_id)
         self._calculate_plan()
 
-    def _build_detail_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_detail_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
         selector = QHBoxLayout()
-        selector.addWidget(QLabel(self.t("detail.research")))
-        self.detail_research_combo = self._research_combo()
+        selector.addWidget(QLabel(self.t("detail.research"), page))
+        self.detail_research_combo = self._research_combo(page)
         self._select_combo_data(self.detail_research_combo, self._selected_research_id)
         self.detail_research_combo.currentIndexChanged.connect(self._refresh_detail)
         selector.addWidget(self.detail_research_combo, 1)
         layout.addLayout(selector)
 
-        self.detail_description = QLabel()
+        self.detail_description = QLabel(page)
         self.detail_description.setWordWrap(True)
         layout.addWidget(self.detail_description)
         form = QFormLayout()
@@ -1162,7 +1100,7 @@ class MainWindow(QMainWindow):
             "source",
             "verification",
         ):
-            value = QLabel()
+            value = QLabel(page)
             value.setWordWrap(True)
             self.detail_values[key] = value
             form.addRow(self.t(f"detail.{key}"), value)
@@ -1249,30 +1187,36 @@ class MainWindow(QMainWindow):
         )
         self.detail_values["verification"].setText(level.verification_status)
 
-    def _build_castle_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_castle_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
 
-        selection_group = QGroupBox(self.t("castle.selection_title"))
+        selection_group = QGroupBox(self.t("castle.selection_title"), page)
         controls = QGridLayout(selection_group)
-        controls.addWidget(QLabel(self.t("castle.target_facility")), 0, 0)
-        self.construction_target_combo = QComboBox()
+        controls.addWidget(
+            QLabel(self.t("castle.target_facility"), selection_group), 0, 0
+        )
+        self.construction_target_combo = QComboBox(selection_group)
         self.construction_target_combo.setMinimumWidth(190)
         for building_id, building in self.castle_catalog.buildings.items():
             self.construction_target_combo.addItem(
                 building.localized_name(self.translator.locale), building_id
             )
         controls.addWidget(self.construction_target_combo, 0, 1)
-        self.castle_plan_current_label = QLabel(self.t("castle.current_level"))
+        self.castle_plan_current_label = QLabel(
+            self.t("castle.current_level"), selection_group
+        )
         controls.addWidget(self.castle_plan_current_label, 0, 2)
         self.castle_plan_current_spin = self._integer_spin(
-            1, 25, self.player_state.settings.castle_level
+            1, 25, self.player_state.settings.castle_level, selection_group
         )
         controls.addWidget(self.castle_plan_current_spin, 0, 3)
-        self.castle_plan_arrow_label = QLabel("→")
+        self.castle_plan_arrow_label = QLabel("→", selection_group)
         self.castle_plan_arrow_label.setAlignment(Qt.AlignCenter)
         controls.addWidget(self.castle_plan_arrow_label, 0, 4)
-        self.castle_plan_target_label = QLabel(self.t("castle.target_level"))
+        self.castle_plan_target_label = QLabel(
+            self.t("castle.target_level"), selection_group
+        )
         controls.addWidget(self.castle_plan_target_label, 0, 5)
         self.castle_plan_target_spin = self._integer_spin(
             1,
@@ -1285,27 +1229,31 @@ class MainWindow(QMainWindow):
                     or self.player_state.settings.castle_level + 1,
                 ),
             ),
+            selection_group,
         )
         self.player_state.settings.castle_target_level = (
             self.castle_plan_target_spin.value()
         )
         controls.addWidget(self.castle_plan_target_spin, 0, 6)
-        self.castle_selection_summary_label = QLabel()
+        self.castle_selection_summary_label = QLabel(selection_group)
         self.castle_selection_summary_label.setObjectName("ConstructionSelection")
         self.castle_selection_summary_label.setAlignment(Qt.AlignCenter)
         controls.addWidget(self.castle_selection_summary_label, 0, 7)
         controls.setColumnStretch(7, 1)
 
-        self.castle_plan_current_mana_label = QLabel(self.t("castle.mana_stage"))
+        self.castle_plan_current_mana_label = QLabel(
+            self.t("castle.mana_stage"), selection_group
+        )
         controls.addWidget(self.castle_plan_current_mana_label, 1, 2)
         self.castle_plan_current_mana_spin = self._integer_spin(
             0,
             self.castle_catalog.max_mana_stage,
             self.player_state.settings.castle_mana_stage,
+            selection_group,
         )
         controls.addWidget(self.castle_plan_current_mana_spin, 1, 3)
         self.castle_plan_target_mana_label = QLabel(
-            self.t("castle.target_mana_stage")
+            self.t("castle.target_mana_stage"), selection_group
         )
         controls.addWidget(self.castle_plan_target_mana_label, 1, 5)
         initial_target_mana = self.player_state.settings.castle_target_mana_stage
@@ -1322,21 +1270,24 @@ class MainWindow(QMainWindow):
             0,
             self.castle_catalog.max_mana_stage,
             initial_target_mana,
+            selection_group,
         )
         self.player_state.settings.castle_target_mana_stage = initial_target_mana
         controls.addWidget(self.castle_plan_target_mana_spin, 1, 6)
-        self.castle_plan_speed_label = QLabel()
+        self.castle_plan_speed_label = QLabel(selection_group)
         controls.addWidget(self.castle_plan_speed_label, 1, 7)
         layout.addWidget(selection_group)
 
-        splitter = QSplitter(Qt.Horizontal)
-        levels_panel = QWidget()
+        splitter = QSplitter(Qt.Horizontal, page)
+        levels_panel = QWidget(splitter)
         levels_layout = QVBoxLayout(levels_panel)
         levels_layout.setContentsMargins(0, 0, 6, 0)
-        levels_heading = QLabel(self.t("castle.facility_levels"))
+        levels_heading = QLabel(
+            self.t("castle.facility_levels"), levels_panel
+        )
         levels_heading.setStyleSheet("font-weight:700;font-size:15px;")
         levels_layout.addWidget(levels_heading)
-        hint = QLabel(self.t("castle.facility_levels_hint"))
+        hint = QLabel(self.t("castle.facility_levels_hint"), levels_panel)
         hint.setWordWrap(True)
         levels_layout.addWidget(hint)
 
@@ -1345,7 +1296,9 @@ class MainWindow(QMainWindow):
             for building_id in self.castle_catalog.buildings
             if building_id != "castle"
         ]
-        self.castle_level_table = QTableWidget(len(facility_ids), 3)
+        self.castle_level_table = QTableWidget(
+            len(facility_ids), 3, levels_panel
+        )
         self.castle_level_table.setHorizontalHeaderLabels(
             [
                 self.t("castle.facility"),
@@ -1377,7 +1330,10 @@ class MainWindow(QMainWindow):
                 self._building_level_draft.get(building_id, 0),
             )
             spin = self._integer_spin(
-                minimums.get(building_id, 0), building.max_level, value
+                minimums.get(building_id, 0),
+                building.max_level,
+                value,
+                self.castle_level_table,
             )
             spin.valueChanged.connect(
                 lambda changed, selected_id=building_id: self._building_level_changed(
@@ -1394,17 +1350,17 @@ class MainWindow(QMainWindow):
         levels_layout.addWidget(self.castle_level_table, 1)
         splitter.addWidget(levels_panel)
 
-        plan_panel = QWidget()
+        plan_panel = QWidget(splitter)
         plan_layout = QVBoxLayout(plan_panel)
         plan_layout.setContentsMargins(6, 0, 0, 0)
-        plan_heading = QLabel(self.t("castle.plan"))
+        plan_heading = QLabel(self.t("castle.plan"), plan_panel)
         plan_heading.setStyleSheet("font-weight:700;font-size:15px;")
         plan_layout.addWidget(plan_heading)
-        self.castle_plan_summary_label = QLabel()
+        self.castle_plan_summary_label = QLabel(plan_panel)
         self.castle_plan_summary_label.setWordWrap(True)
         plan_layout.addWidget(self.castle_plan_summary_label)
         self.castle_plan_table = QTableWidget(
-            0, 3 + len(CASTLE_RESOURCE_KEYS) + 2
+            0, 3 + len(CASTLE_RESOURCE_KEYS) + 2, plan_panel
         )
         self.castle_plan_table.setHorizontalHeaderLabels(
             [
@@ -1780,7 +1736,9 @@ class MainWindow(QMainWindow):
                         f"{format_duration(step.base_seconds)}"
                     )
                 self.castle_plan_table.setItem(row, column, item)
-            complete_button = QPushButton(self.t("plan.complete_step"))
+            complete_button = QPushButton(
+                self.t("plan.complete_step"), self.castle_plan_table
+            )
             complete_button.clicked.connect(
                 lambda _checked=False, saved=step: self._complete_castle_plan_step(
                     saved
@@ -1872,42 +1830,47 @@ class MainWindow(QMainWindow):
         suffix = f"-{mana_stage}" if level >= 25 and mana_stage > 0 else ""
         return f"Lv.{level}{suffix}"
 
-    def _build_player_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_player_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
-        splitter = QSplitter(Qt.Horizontal)
+        splitter = QSplitter(Qt.Horizontal, page)
 
-        settings_panel = QWidget()
+        settings_panel = QWidget(splitter)
         settings_form = QFormLayout(settings_panel)
         settings_form.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
         self.player_settings_panel = settings_panel
         self.player_settings_form = settings_form
         self.vip_level_spin = self._integer_spin(
-            1, 15, self.player_state.settings.vip_level
+            1, 15, self.player_state.settings.vip_level, settings_panel
         )
-        vip_row = QWidget()
+        vip_row = QWidget(settings_panel)
         vip_layout = QHBoxLayout(vip_row)
         vip_layout.setContentsMargins(0, 0, 0, 0)
         vip_layout.addWidget(self.vip_level_spin)
-        self.vip_free_speedup_label = QLabel()
+        self.vip_free_speedup_label = QLabel(vip_row)
         vip_layout.addWidget(self.vip_free_speedup_label, 1)
-        self.castle_spin = self._integer_spin(1, 25, self.player_state.settings.castle_level)
+        self.castle_spin = self._integer_spin(
+            1, 25, self.player_state.settings.castle_level, settings_panel
+        )
         self.castle_mana_stage_spin = self._integer_spin(
             0,
             self.castle_catalog.max_mana_stage,
             self.player_state.settings.castle_mana_stage,
+            settings_panel,
         )
         self.castle_mana_stage_spin.setEnabled(
             self.player_state.settings.castle_level == 25
         )
-        self.academy_spin = self._integer_spin(1, 25, self.player_state.settings.academy_level)
-        self.construction_speed_spin = VisibleDoubleSpinBox()
+        self.academy_spin = self._integer_spin(
+            1, 25, self.player_state.settings.academy_level, settings_panel
+        )
+        self.construction_speed_spin = VisibleDoubleSpinBox(settings_panel)
         self.construction_speed_spin.setRange(0.0, 10000.0)
         self.construction_speed_spin.setDecimals(2)
         self.construction_speed_spin.setValue(
             self.player_state.settings.construction_speed_percent
         )
-        self.construction_speed_boost_spin = VisibleDoubleSpinBox()
+        self.construction_speed_boost_spin = VisibleDoubleSpinBox(settings_panel)
         self.construction_speed_boost_spin.setRange(0.0, 10000.0)
         self.construction_speed_boost_spin.setDecimals(2)
         self.construction_speed_boost_spin.setValue(
@@ -1916,11 +1879,11 @@ class MainWindow(QMainWindow):
         self.construction_speed_boost_spin.setToolTip(
             self.t("player.construction_speed_boost_hint")
         )
-        self.research_speed_spin = VisibleDoubleSpinBox()
+        self.research_speed_spin = VisibleDoubleSpinBox(settings_panel)
         self.research_speed_spin.setRange(0.0, 10000.0)
         self.research_speed_spin.setDecimals(2)
         self.research_speed_spin.setValue(self.player_state.settings.research_speed_percent)
-        self.research_speed_boost_spin = VisibleDoubleSpinBox()
+        self.research_speed_boost_spin = VisibleDoubleSpinBox(settings_panel)
         self.research_speed_boost_spin.setRange(0.0, 10000.0)
         self.research_speed_boost_spin.setDecimals(2)
         self.research_speed_boost_spin.setValue(
@@ -1936,6 +1899,7 @@ class MainWindow(QMainWindow):
             0,
             guild_help_limit,
             min(self.player_state.settings.max_guild_helps, guild_help_limit),
+            settings_panel,
         )
         self.guild_help_spin.setToolTip(
             self.t(
@@ -1944,8 +1908,15 @@ class MainWindow(QMainWindow):
                 count=guild_help_limit,
             )
         )
-        self.speedup_spin = self._integer_spin(0, 2_000_000_000, self.player_state.settings.speedup_seconds)
-        common_group = QGroupBox(self.t("player.common_settings"))
+        self.speedup_spin = self._integer_spin(
+            0,
+            2_000_000_000,
+            self.player_state.settings.speedup_seconds,
+            settings_panel,
+        )
+        common_group = QGroupBox(
+            self.t("player.common_settings"), settings_panel
+        )
         common_form = QFormLayout(common_group)
         self.player_settings_form = common_form
         common_form.addRow(self.t("player.vip_level"), vip_row)
@@ -1958,7 +1929,9 @@ class MainWindow(QMainWindow):
         common_form.addRow(self.t("player.speedups"), self.speedup_spin)
         settings_form.addRow(common_group)
 
-        construction_group = QGroupBox(self.t("player.construction_time_settings"))
+        construction_group = QGroupBox(
+            self.t("player.construction_time_settings"), settings_panel
+        )
         construction_form = QFormLayout(construction_group)
         construction_form.addRow(
             self.t("player.construction_speed"), self.construction_speed_spin
@@ -1969,7 +1942,9 @@ class MainWindow(QMainWindow):
         )
         settings_form.addRow(construction_group)
 
-        research_group = QGroupBox(self.t("player.research_time_settings"))
+        research_group = QGroupBox(
+            self.t("player.research_time_settings"), settings_panel
+        )
         research_form = QFormLayout(research_group)
         research_form.addRow(self.t("player.research_speed"), self.research_speed_spin)
         research_form.addRow(
@@ -1978,17 +1953,20 @@ class MainWindow(QMainWindow):
         )
         settings_form.addRow(research_group)
 
-        resources_group = QGroupBox(self.t("player.resources"))
+        resources_group = QGroupBox(self.t("player.resources"), settings_panel)
         resources_form = QFormLayout(resources_group)
         self.resource_spins: dict[str, QSpinBox] = {}
         for key in RESOURCE_KEYS:
             spin = self._integer_spin(
-                0, 2_000_000_000, self.player_state.settings.resources.get(key, 0)
+                0,
+                2_000_000_000,
+                self.player_state.settings.resources.get(key, 0),
+                resources_group,
             )
             self.resource_spins[key] = spin
             resources_form.addRow(self._resource_label(key), spin)
         settings_form.addRow(resources_group)
-        settings_scroll = QScrollArea()
+        settings_scroll = QScrollArea(splitter)
         settings_scroll.setObjectName("PlayerSettingsScroll")
         settings_scroll.setFrameShape(QFrame.Shape.NoFrame)
         settings_scroll.setWidgetResizable(True)
@@ -2001,9 +1979,9 @@ class MainWindow(QMainWindow):
         self.player_settings_scroll = settings_scroll
         splitter.addWidget(settings_scroll)
 
-        progress_panel = QWidget()
+        progress_panel = QWidget(splitter)
         progress_layout = QVBoxLayout(progress_panel)
-        progress_layout.addWidget(QLabel(self.t("player.progress")))
+        progress_layout.addWidget(QLabel(self.t("player.progress"), progress_panel))
         progress_entries: list[tuple[str, str, int | None, bool]] = []
         for research in self.master.research:
             progress_entries.append(
@@ -2033,7 +2011,9 @@ class MainWindow(QMainWindow):
 
         self._progress_editors: dict[str, QSpinBox] = {}
         self._progress_maximum_items: dict[str, QTableWidgetItem] = {}
-        self.progress_table = QTableWidget(len(progress_entries), 3)
+        self.progress_table = QTableWidget(
+            len(progress_entries), 3, progress_panel
+        )
         self.progress_table.setHorizontalHeaderLabels(
             [
                 self.t("tree.name"),
@@ -2057,6 +2037,7 @@ class MainWindow(QMainWindow):
                 0,
                 max_level if max_level is not None else 99,
                 self._tree_level_draft.get(research_id, 0),
+                self.progress_table,
             )
             editor.setAccelerated(True)
             editor.setMinimumWidth(112)
@@ -2083,16 +2064,20 @@ class MainWindow(QMainWindow):
         layout.addWidget(splitter, 1)
 
         actions = QHBoxLayout()
-        self.player_save_status_label = QLabel()
+        self.player_save_status_label = QLabel(page)
         actions.addWidget(self.player_save_status_label, 1)
-        self.tree_clear_levels_button = QPushButton(self.t("tree.clear_levels"))
+        self.tree_clear_levels_button = QPushButton(
+            self.t("tree.clear_levels"), page
+        )
         self.tree_clear_levels_button.clicked.connect(self._clear_tree_levels)
-        self.tree_save_levels_button = QPushButton(self.t("player.save_all"))
+        self.tree_save_levels_button = QPushButton(
+            self.t("player.save_all"), page
+        )
         self.tree_save_levels_button.clicked.connect(self._save_player)
         self._update_player_save_button()
-        export_button = QPushButton(self.t("common.export"))
+        export_button = QPushButton(self.t("common.export"), page)
         export_button.clicked.connect(self._export_backup)
-        import_button = QPushButton(self.t("common.import"))
+        import_button = QPushButton(self.t("common.import"), page)
         import_button.clicked.connect(self._import_backup)
         actions.addStretch(1)
         actions.addWidget(self.tree_clear_levels_button)
@@ -2121,9 +2106,13 @@ class MainWindow(QMainWindow):
         return page
 
     def _integer_spin(
-        self, minimum: int, maximum: int, value: int
+        self,
+        minimum: int,
+        maximum: int,
+        value: int,
+        parent: QWidget | None = None,
     ) -> VisibleSpinBox:
-        spin = VisibleSpinBox()
+        spin = VisibleSpinBox(parent)
         spin.setRange(minimum, maximum)
         spin.setValue(value)
         spin.setGroupSeparatorShown(True)
@@ -2316,14 +2305,14 @@ class MainWindow(QMainWindow):
         except (OSError, ValueError, KeyError, TypeError) as exc:
             self._show_error(str(exc))
 
-    def _build_plan_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_plan_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
         controls = QVBoxLayout()
         selection_controls = QHBoxLayout()
         action_controls = QHBoxLayout()
-        selection_controls.addWidget(QLabel(self.t("plan.mode")))
-        self.plan_mode_combo = QComboBox()
+        selection_controls.addWidget(QLabel(self.t("plan.mode"), page))
+        self.plan_mode_combo = QComboBox(page)
         self.plan_mode_combo.addItem(self.t("plan.mode.target"), "target")
         self.plan_mode_combo.addItem(self.t("plan.mode.shortest"), "shortest")
         self.plan_mode_combo.addItem(self.t("plan.mode.tasks"), "tasks")
@@ -2332,27 +2321,31 @@ class MainWindow(QMainWindow):
         self.plan_mode_combo.setCurrentIndex(max(0, mode_index))
         self.plan_mode_combo.setToolTip(self.t("plan.mode.tooltip"))
         selection_controls.addWidget(self.plan_mode_combo)
-        self.plan_target_caption = QLabel(self.t("plan.target"))
+        self.plan_target_caption = QLabel(self.t("plan.target"), page)
         selection_controls.addWidget(self.plan_target_caption)
-        self.plan_target_name_label = QLabel(self.t("plan.no_target"))
+        self.plan_target_name_label = QLabel(self.t("plan.no_target"), page)
         self.plan_target_name_label.setObjectName("PlanTargetSelection")
         selection_controls.addWidget(self.plan_target_name_label, 1)
-        self.plan_level_caption = QLabel(self.t("plan.target_level"))
+        self.plan_level_caption = QLabel(self.t("plan.target_level"), page)
         selection_controls.addWidget(self.plan_level_caption)
-        self.plan_level_spin = VisibleSpinBox()
+        self.plan_level_spin = VisibleSpinBox(page)
         self.plan_level_spin.setMinimum(1)
         self.plan_level_spin.valueChanged.connect(self._calculate_plan)
         self.plan_level_spin.setEnabled(False)
         selection_controls.addWidget(self.plan_level_spin)
-        self.plan_complete_button = QPushButton(self.t("plan.mark_complete"))
+        self.plan_complete_button = QPushButton(
+            self.t("plan.mark_complete"), page
+        )
         self.plan_complete_button.setEnabled(False)
         self.plan_complete_button.clicked.connect(self._complete_current_plan)
         action_controls.addStretch(1)
-        self.plan_register_button = QPushButton(self.t("plan.register_task"))
+        self.plan_register_button = QPushButton(
+            self.t("plan.register_task"), page
+        )
         self.plan_register_button.setEnabled(False)
         self.plan_register_button.clicked.connect(self._register_current_plan)
-        action_controls.addWidget(QLabel(self.t("plan.resource_display")))
-        self.plan_resource_mode_combo = QComboBox()
+        action_controls.addWidget(QLabel(self.t("plan.resource_display"), page))
+        self.plan_resource_mode_combo = QComboBox(page)
         self.plan_resource_mode_combo.addItem(self.t("plan.resource_exact"), "exact")
         self.plan_resource_mode_combo.addItem(self.t("plan.resource_short"), "short")
         self.plan_resource_mode_combo.setCurrentIndex(
@@ -2369,21 +2362,23 @@ class MainWindow(QMainWindow):
         action_controls.addWidget(self.plan_resource_mode_combo)
         action_controls.addWidget(self.plan_register_button)
         action_controls.addWidget(self.plan_complete_button)
-        self.plan_fit_button = QPushButton(self.t("tree.fit_all"))
-        self.plan_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"))
+        self.plan_fit_button = QPushButton(self.t("tree.fit_all"), page)
+        self.plan_reset_zoom_button = QPushButton(
+            self.t("tree.reset_zoom"), page
+        )
         action_controls.addWidget(self.plan_fit_button)
         action_controls.addWidget(self.plan_reset_zoom_button)
         controls.addLayout(selection_controls)
         controls.addLayout(action_controls)
         layout.addLayout(controls)
 
-        self.plan_splitter = QSplitter(Qt.Vertical)
-        self.plan_tree_view = ResearchTreeView()
+        self.plan_splitter = QSplitter(Qt.Vertical, page)
+        self.plan_tree_view = ResearchTreeView(self.plan_splitter)
         self.plan_fit_button.clicked.connect(self.plan_tree_view.fit_all)
         self.plan_reset_zoom_button.clicked.connect(self.plan_tree_view.reset_zoom)
         self.plan_splitter.addWidget(self.plan_tree_view)
 
-        details = QWidget()
+        details = QWidget(self.plan_splitter)
         details_layout = QVBoxLayout(details)
         details_layout.setContentsMargins(0, 6, 0, 0)
         fixed_columns = [
@@ -2404,6 +2399,7 @@ class MainWindow(QMainWindow):
         self.plan_table = QTableWidget(
             0,
             len(fixed_columns) + len(resource_columns) + 3,
+            details,
         )
         self.plan_table.setHorizontalHeaderLabels(
             fixed_columns
@@ -2831,14 +2827,14 @@ class MainWindow(QMainWindow):
                     )
                     item.setToolTip(self.t("plan.open_task"))
                 self.plan_table.setItem(row, column, item)
-            actions = QWidget()
+            actions = QWidget(self.plan_table)
             action_layout = QHBoxLayout(actions)
             action_layout.setContentsMargins(2, 0, 2, 0)
-            show_button = QPushButton(self.t("plan.show_task"))
+            show_button = QPushButton(self.t("plan.show_task"), actions)
             show_button.clicked.connect(
                 lambda _checked=False, saved=task: self._show_registered_task(saved)
             )
-            remove_button = QPushButton(self.t("plan.remove_task"))
+            remove_button = QPushButton(self.t("plan.remove_task"), actions)
             remove_button.clicked.connect(
                 lambda _checked=False, saved=task: self._remove_registered_task(saved)
             )
@@ -2935,7 +2931,9 @@ class MainWindow(QMainWindow):
             elif column == 3:
                 item.setData(Qt.UserRole, step.adjusted_time_seconds)
             self.plan_table.setItem(row, column, item)
-        complete_button = QPushButton(self.t("plan.complete_step"))
+        complete_button = QPushButton(
+            self.t("plan.complete_step"), self.plan_table
+        )
         complete_button.clicked.connect(
             lambda _checked=False, saved=step: self._complete_plan_step(saved)
         )
@@ -3058,68 +3056,70 @@ class MainWindow(QMainWindow):
     def _partial_note(self, count: int) -> str:
         return self.t("plan.known_partial", count=count) if count else ""
 
-    def _build_paid_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_paid_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
 
         controls = QHBoxLayout()
-        controls.addWidget(QLabel(self.t("paid.price")))
-        self.paid_diamond_spin = VisibleSpinBox()
+        controls.addWidget(QLabel(self.t("paid.price"), page))
+        self.paid_diamond_spin = VisibleSpinBox(page)
         self.paid_diamond_spin.setRange(0, 99_999_999)
         self.paid_diamond_spin.setGroupSeparatorShown(True)
         self.paid_diamond_spin.setSpecialValueText("-")
         self.paid_diamond_spin.valueChanged.connect(self._update_paid_summary)
         controls.addWidget(self.paid_diamond_spin)
-        self.paid_capture_button = QPushButton(self.t("paid.capture"))
+        self.paid_capture_button = QPushButton(self.t("paid.capture"), page)
         self.paid_capture_button.clicked.connect(self._capture_paid_pack)
         controls.addWidget(self.paid_capture_button)
-        self.paid_capture_progress = QProgressBar()
+        self.paid_capture_progress = QProgressBar(page)
         self.paid_capture_progress.setRange(0, 100)
         self.paid_capture_progress.setValue(0)
         self.paid_capture_progress.setMinimumWidth(150)
         controls.addWidget(self.paid_capture_progress)
         controls.addStretch(1)
-        self.paid_add_row_button = QPushButton(self.t("paid.add_row"))
+        self.paid_add_row_button = QPushButton(self.t("paid.add_row"), page)
         self.paid_add_row_button.clicked.connect(
             lambda: self._add_paid_row(focus=True)
         )
         controls.addWidget(self.paid_add_row_button)
-        delete_button = QPushButton(self.t("paid.delete_rows"))
+        delete_button = QPushButton(self.t("paid.delete_rows"), page)
         delete_button.clicked.connect(self._remove_selected_paid_rows)
         controls.addWidget(delete_button)
-        clear_button = QPushButton(self.t("paid.clear"))
+        clear_button = QPushButton(self.t("paid.clear"), page)
         clear_button.clicked.connect(self._clear_paid_rows)
         controls.addWidget(clear_button)
         layout.addLayout(controls)
 
-        gem_group = QGroupBox(self.t("paid.gems"))
+        gem_group = QGroupBox(self.t("paid.gems"), page)
         gem_layout = QHBoxLayout(gem_group)
-        gem_layout.addWidget(QLabel(self.t("paid.gems.included")))
-        self.paid_included_gems_spin = VisibleSpinBox()
+        gem_layout.addWidget(QLabel(self.t("paid.gems.included"), gem_group))
+        self.paid_included_gems_spin = VisibleSpinBox(gem_group)
         self.paid_included_gems_spin.setRange(0, 99_999_999)
         self.paid_included_gems_spin.setGroupSeparatorShown(True)
         self.paid_included_gems_spin.valueChanged.connect(
             self._update_paid_summary
         )
         gem_layout.addWidget(self.paid_included_gems_spin)
-        gem_layout.addWidget(QLabel(self.t("paid.gems.bonus")))
-        self.paid_bonus_gems_spin = VisibleSpinBox()
+        gem_layout.addWidget(QLabel(self.t("paid.gems.bonus"), gem_group))
+        self.paid_bonus_gems_spin = VisibleSpinBox(gem_group)
         self.paid_bonus_gems_spin.setRange(0, 99_999_999)
         self.paid_bonus_gems_spin.setGroupSeparatorShown(True)
         self.paid_bonus_gems_spin.valueChanged.connect(self._update_paid_summary)
         gem_layout.addWidget(self.paid_bonus_gems_spin)
         gem_layout.addStretch(1)
-        gem_layout.addWidget(QLabel(self.t("paid.gems.total")))
-        self.paid_total_gems_label = QLabel("0")
+        gem_layout.addWidget(QLabel(self.t("paid.gems.total"), gem_group))
+        self.paid_total_gems_label = QLabel("0", gem_group)
         self.paid_total_gems_label.setStyleSheet("font-weight:700;")
         gem_layout.addWidget(self.paid_total_gems_label)
-        gem_layout.addWidget(QLabel(self.t("paid.gems.per_diamond")))
-        self.paid_gems_per_diamond_label = QLabel("-")
+        gem_layout.addWidget(
+            QLabel(self.t("paid.gems.per_diamond"), gem_group)
+        )
+        self.paid_gems_per_diamond_label = QLabel("-", gem_group)
         self.paid_gems_per_diamond_label.setStyleSheet("font-weight:700;")
         gem_layout.addWidget(self.paid_gems_per_diamond_label)
         layout.addWidget(gem_group)
 
-        self.paid_item_table = QTableWidget(0, 5)
+        self.paid_item_table = QTableWidget(0, 5, page)
         self.paid_item_table.setHorizontalHeaderLabels(
             [
                 self.t("paid.kind"),
@@ -3142,9 +3142,9 @@ class MainWindow(QMainWindow):
             )
         layout.addWidget(self.paid_item_table, 1)
 
-        summary_group = QGroupBox(self.t("paid.summary"))
+        summary_group = QGroupBox(self.t("paid.summary"), page)
         summary_layout = QVBoxLayout(summary_group)
-        self.paid_summary_table = QTableWidget(4, 4)
+        self.paid_summary_table = QTableWidget(4, 4, summary_group)
         self.paid_summary_table.setHorizontalHeaderLabels(
             [
                 self.t("paid.kind"),
@@ -3167,7 +3167,7 @@ class MainWindow(QMainWindow):
         return page
 
     def _paid_kind_combo(self, kind: str = "general") -> QComboBox:
-        combo = QComboBox()
+        combo = QComboBox(self.paid_item_table)
         for key in SPEEDUP_KINDS:
             combo.addItem(self.t(f"paid.kind.{key}"), key)
         index = combo.findData(kind)
@@ -3176,7 +3176,7 @@ class MainWindow(QMainWindow):
         return combo
 
     def _paid_unit_combo(self, unit: str = "hours") -> QComboBox:
-        combo = QComboBox()
+        combo = QComboBox(self.paid_item_table)
         for key in ("seconds", "minutes", "hours", "days"):
             combo.addItem(self.t(f"paid.unit.{key}"), key)
         index = combo.findData(unit)
@@ -3217,7 +3217,7 @@ class MainWindow(QMainWindow):
 
         kind_combo = self._paid_kind_combo(kind)
         set_table_cell_widget(self.paid_item_table, row, 0, kind_combo)
-        duration_spin = VisibleSpinBox()
+        duration_spin = VisibleSpinBox(self.paid_item_table)
         duration_spin.setRange(0, 99_999_999)
         duration_spin.setGroupSeparatorShown(True)
         duration_spin.setValue(duration)
@@ -3229,7 +3229,7 @@ class MainWindow(QMainWindow):
             2,
             self._paid_unit_combo(unit),
         )
-        quantity_spin = VisibleSpinBox()
+        quantity_spin = VisibleSpinBox(self.paid_item_table)
         quantity_spin.setRange(0, 99_999_999)
         quantity_spin.setGroupSeparatorShown(True)
         quantity_spin.setValue(quantity)
@@ -3386,20 +3386,20 @@ class MainWindow(QMainWindow):
         finally:
             self.paid_capture_button.setEnabled(True)
 
-    def _build_help_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_help_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
         settings = QHBoxLayout()
-        settings.addWidget(QLabel(self.t("language.label")))
-        self.language_combo = QComboBox()
+        settings.addWidget(QLabel(self.t("language.label"), page))
+        self.language_combo = QComboBox(page)
         self.language_combo.addItem("日本語", "ja-JP")
         self.language_combo.addItem("English", "en-US")
         index = self.language_combo.findData(self.translator.locale)
         self.language_combo.setCurrentIndex(max(0, index))
         self.language_combo.currentIndexChanged.connect(self._change_language)
         settings.addWidget(self.language_combo)
-        settings.addWidget(QLabel(self.t("appearance.label")))
-        self.visual_style_combo = QComboBox()
+        settings.addWidget(QLabel(self.t("appearance.label"), page))
+        self.visual_style_combo = QComboBox(page)
         self.visual_style_combo.addItem(
             self.t("appearance.desktop"), "desktop"
         )
@@ -3414,8 +3414,8 @@ class MainWindow(QMainWindow):
             self._change_visual_style
         )
         settings.addWidget(self.visual_style_combo)
-        settings.addWidget(QLabel(self.t("help.font_size")))
-        self.help_font_spin = VisibleSpinBox()
+        settings.addWidget(QLabel(self.t("help.font_size"), page))
+        self.help_font_spin = VisibleSpinBox(page)
         self.help_font_spin.setRange(9, 24)
         self.help_font_spin.setSuffix(" pt")
         self.help_font_spin.setValue(self.app_settings.help_font_size)
@@ -3423,22 +3423,24 @@ class MainWindow(QMainWindow):
         settings.addWidget(self.help_font_spin)
         settings.addStretch(1)
         self.help_version_label = QLabel(
-            self.t("app.version", version=version_string())
+            self.t("app.version", version=version_string()), page
         )
         settings.addWidget(self.help_version_label)
         settings.addSpacing(12)
-        self.update_check_button = QPushButton(self.t("update.check"))
+        self.update_check_button = QPushButton(self.t("update.check"), page)
         settings.addWidget(self.update_check_button)
         self.update_startup_checkbox = QCheckBox(
-            self.t("update.check_on_startup_short")
+            self.t("update.check_on_startup_short"), page
         )
         settings.addWidget(self.update_startup_checkbox)
-        self.update_releases_button = QPushButton(self.t("update.open_releases"))
+        self.update_releases_button = QPushButton(
+            self.t("update.open_releases"), page
+        )
         self.update_releases_button.clicked.connect(
             lambda: self.update_controller.open_releases_page()
         )
         settings.addWidget(self.update_releases_button)
-        self.update_status_label = QLabel()
+        self.update_status_label = QLabel(page)
         self.update_status_label.setMinimumWidth(0)
         settings.addWidget(self.update_status_label, 1)
         self.update_controller.bind_help_controls(
@@ -3448,7 +3450,7 @@ class MainWindow(QMainWindow):
         )
         layout.addLayout(settings)
 
-        self.help_browser = QTextBrowser()
+        self.help_browser = QTextBrowser(page)
         self.help_browser.setOpenExternalLinks(True)
         self.help_browser.setStyleSheet(
             f"font-size:{self.app_settings.help_font_size}pt;"
@@ -3540,54 +3542,54 @@ class MainWindow(QMainWindow):
             )
         self.settings_repository.save(self.app_settings)
 
-    def _build_ocr_tab(self) -> QWidget:
-        page = QWidget()
+    def _build_ocr_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
         layout = QVBoxLayout(page)
         controls = QGridLayout()
-        controls.addWidget(QLabel(self.t("ocr.window")), 0, 0)
-        self.window_combo = QComboBox()
+        controls.addWidget(QLabel(self.t("ocr.window"), page), 0, 0)
+        self.window_combo = QComboBox(page)
         controls.addWidget(self.window_combo, 0, 1, 1, 5)
-        refresh = QPushButton(self.t("common.refresh"))
+        refresh = QPushButton(self.t("common.refresh"), page)
         refresh.clicked.connect(self._refresh_windows)
         controls.addWidget(refresh, 0, 6)
-        capture = QPushButton(self.t("ocr.capture"))
+        capture = QPushButton(self.t("ocr.capture"), page)
         capture.clicked.connect(lambda: self._capture_window())
         controls.addWidget(capture, 1, 0, 1, 2)
-        open_image = QPushButton(self.t("ocr.open_image"))
+        open_image = QPushButton(self.t("ocr.open_image"), page)
         open_image.clicked.connect(self._open_ocr_image)
         controls.addWidget(open_image, 1, 2)
-        controls.addWidget(QLabel(self.t("ocr.language")), 1, 3)
-        self.ocr_language_combo = QComboBox()
+        controls.addWidget(QLabel(self.t("ocr.language"), page), 1, 3)
+        self.ocr_language_combo = QComboBox(page)
         for locale, profile in sorted(self._ocr_profiles.items()):
             self.ocr_language_combo.addItem(f"{locale} [{profile.status}]", locale)
         preferred = self.ocr_language_combo.findData(self.translator.locale)
         self.ocr_language_combo.setCurrentIndex(max(0, preferred))
         controls.addWidget(self.ocr_language_combo, 1, 4)
-        self.run_ocr_button = QPushButton(self.t("ocr.run"))
+        self.run_ocr_button = QPushButton(self.t("ocr.run"), page)
         self.run_ocr_button.clicked.connect(self._run_ocr)
         controls.addWidget(self.run_ocr_button, 1, 5)
-        self.ocr_progress = QProgressBar()
+        self.ocr_progress = QProgressBar(page)
         self._set_ocr_progress(0, maximum=100)
         self.ocr_progress.setMinimumWidth(150)
         controls.addWidget(self.ocr_progress, 1, 6)
         layout.addLayout(controls)
 
-        splitter = QSplitter(Qt.Horizontal)
-        left = QWidget()
+        splitter = QSplitter(Qt.Horizontal, page)
+        left = QWidget(splitter)
         left_layout = QVBoxLayout(left)
-        self.ocr_image_label = _OcrImagePreview(self.t("ocr.no_image"))
+        self.ocr_image_label = _OcrImagePreview(self.t("ocr.no_image"), left)
         self.ocr_image_label.setAlignment(Qt.AlignCenter)
         self.ocr_image_label.setMinimumSize(360, 280)
         self.ocr_image_label.setStyleSheet("background:#111820;border:1px solid #34434C;")
         left_layout.addWidget(self.ocr_image_label)
         splitter.addWidget(left)
 
-        right = QWidget()
+        right = QWidget(splitter)
         right_layout = QVBoxLayout(right)
-        result_tabs = QTabWidget()
-        field_page = QWidget()
+        result_tabs = QTabWidget(right)
+        field_page = QWidget(result_tabs)
         field_layout = QVBoxLayout(field_page)
-        self.ocr_field_table = QTableWidget(0, 3)
+        self.ocr_field_table = QTableWidget(0, 3, field_page)
         self.ocr_field_table.setHorizontalHeaderLabels(
             [
                 self.t("ocr.field_label"),
@@ -3604,9 +3606,13 @@ class MainWindow(QMainWindow):
         )
         field_layout.addWidget(self.ocr_field_table, 1)
         field_actions = QHBoxLayout()
-        apply_field_button = QPushButton(self.t("ocr.apply_selected_mapped"))
+        apply_field_button = QPushButton(
+            self.t("ocr.apply_selected_mapped"), field_page
+        )
         apply_field_button.clicked.connect(self._apply_selected_ocr_field)
-        apply_all_fields_button = QPushButton(self.t("ocr.apply_all_mapped"))
+        apply_all_fields_button = QPushButton(
+            self.t("ocr.apply_all_mapped"), field_page
+        )
         apply_all_fields_button.clicked.connect(self._apply_all_ocr_fields)
         field_actions.addStretch(1)
         field_actions.addWidget(apply_field_button)
@@ -3614,9 +3620,9 @@ class MainWindow(QMainWindow):
         field_layout.addLayout(field_actions)
         result_tabs.addTab(field_page, self.t("ocr.fields"))
 
-        research_page = QWidget()
+        research_page = QWidget(result_tabs)
         research_layout = QVBoxLayout(research_page)
-        self.ocr_candidate_table = QTableWidget(0, 3)
+        self.ocr_candidate_table = QTableWidget(0, 3, research_page)
         self.ocr_candidate_table.setHorizontalHeaderLabels(
             [self.t("tree.name"), self.t("tree.level"), self.t("ocr.evidence")]
         )
@@ -3625,9 +3631,11 @@ class MainWindow(QMainWindow):
         self.ocr_candidate_table.horizontalHeader().setSectionResizeMode(2, QHeaderView.Stretch)
         research_layout.addWidget(self.ocr_candidate_table, 1)
         candidate_actions = QHBoxLayout()
-        apply_button = QPushButton(self.t("common.apply"))
+        apply_button = QPushButton(self.t("common.apply"), research_page)
         apply_button.clicked.connect(self._apply_ocr_candidate)
-        apply_all_candidates = QPushButton(self.t("ocr.apply_all_candidates"))
+        apply_all_candidates = QPushButton(
+            self.t("ocr.apply_all_candidates"), research_page
+        )
         apply_all_candidates.clicked.connect(self._apply_all_ocr_candidates)
         candidate_actions.addStretch(1)
         candidate_actions.addWidget(apply_button)
@@ -4372,7 +4380,7 @@ class MainWindow(QMainWindow):
             label_item.setToolTip(candidate.evidence)
             value_item = QTableWidgetItem(candidate.value)
             value_item.setToolTip(self.t("ocr.edit_value_hint"))
-            mapping_combo = QComboBox()
+            mapping_combo = QComboBox(self.ocr_field_table)
             mapping_combo.addItem(self.t("ocr.mapping_none"), "")
             mapping_combo.addItem(
                 self.t("player.research_speed"), "research_speed"
@@ -4734,8 +4742,8 @@ class MainWindow(QMainWindow):
             self.t("ocr.applied_all_pending", count=len(candidates))
         )
 
-    def _research_combo(self) -> QComboBox:
-        combo = QComboBox()
+    def _research_combo(self, parent: QWidget) -> QComboBox:
+        combo = QComboBox(parent)
         for research in self.master.research:
             localized = self.master.localized_research(research.id, self.translator.locale)
             combo.addItem(localized.name, research.id)

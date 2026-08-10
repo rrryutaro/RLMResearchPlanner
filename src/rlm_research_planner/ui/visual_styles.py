@@ -248,16 +248,17 @@ def window_style_sheet(visual_style: str) -> str:
 def apply_window_visual_surface(
     window: QMainWindow, visual_style: str
 ) -> None:
-    """Prepare the native client surface before the first Windows paint.
+    """Prepare the Qt surface before Windows creates the native window.
 
-    Windows can erase a newly created native window with the default light
-    brush before Qt completes its first styled paint.  That single frame is
-    conspicuous when the saved visual style is dark.  Suppress the native
-    background erase and give both the main window and its central widget an
-    opaque palette matching the selected style before ``show()``.
+    RLMResearchPlanner uses the normal Windows frame, not a frameless window.
+    Keep Qt's normal background fill enabled and set its palette before the
+    first ``show()``. Disabling the system background here would leave the
+    first client pixels unpainted, while translucent backgrounds are a
+    frameless-window technique on Windows.
     """
 
-    window.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground, True)
+    window.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, False)
+    window.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground, False)
     palette = QPalette(QApplication.palette())
     if visual_style == "mobile":
         palette.setColor(QPalette.ColorRole.Window, QColor("#07151D"))
@@ -271,8 +272,11 @@ def apply_window_visual_surface(
         palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#07151D"))
 
     window.setPalette(palette)
-    window.setAutoFillBackground(True)
     window.setStyleSheet(window_style_sheet(visual_style))
+    # Setting a style sheet can disable autoFillBackground on the receiver.
+    # Re-enable it afterwards so the normal decorated window always owns an
+    # opaque first surface even before child widgets paint.
+    window.setAutoFillBackground(True)
     central = window.centralWidget()
     if central is not None:
         central.setPalette(palette)
