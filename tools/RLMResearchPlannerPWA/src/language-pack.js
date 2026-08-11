@@ -1,6 +1,7 @@
 export const LANGUAGE_PACK_DOCUMENT_TYPE = "RLMResearchPlanner.language-pack";
 export const LANGUAGE_PACK_SCHEMA_VERSION = 1;
 export const LANGUAGE_PACK_SECTIONS = ["messages", "categories", "research", "buildings", "effects", "resources"];
+export const PROTECTED_MESSAGE_KEYS = new Set(["app.disclaimer"]);
 const STORAGE_KEY = "rlm-research-planner-pwa.language-packs.v1";
 const LOCALE_PATTERN = /^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$/;
 const RTL_LANGUAGES = new Set(["ar", "arc", "ckb", "dv", "fa", "he", "ks", "nqo", "ps", "sd", "syr", "ug", "ur", "yi"]);
@@ -18,6 +19,36 @@ export function normalizeLocale(value) {
 
 export function defaultDirection(locale) {
   return RTL_LANGUAGES.has(String(locale).split("-", 1)[0].toLocaleLowerCase("en-US")) ? "rtl" : "ltr";
+}
+
+export function selectPreferredLocale(preferredLocales, availableLocales, fallbackLocale = "en-US") {
+  const available = [];
+  for (const value of availableLocales || []) {
+    try {
+      const locale = normalizeLocale(value);
+      if (!available.includes(locale)) available.push(locale);
+    } catch { /* Ignore invalid installed locale identifiers. */ }
+  }
+  const fallback = normalizeLocale(fallbackLocale);
+  if (!available.length) return fallback;
+
+  const preferred = [];
+  for (const value of preferredLocales || []) {
+    try {
+      const locale = normalizeLocale(value);
+      if (!preferred.includes(locale)) preferred.push(locale);
+    } catch { /* Ignore invalid browser language identifiers. */ }
+  }
+
+  for (const locale of preferred) {
+    const exact = available.find((candidate) => candidate.toLocaleLowerCase("en-US") === locale.toLocaleLowerCase("en-US"));
+    if (exact) return exact;
+    const language = locale.split("-", 1)[0].toLocaleLowerCase("en-US");
+    const baseMatch = available.find((candidate) => candidate.split("-", 1)[0].toLocaleLowerCase("en-US") === language);
+    if (baseMatch) return baseMatch;
+  }
+
+  return available.find((candidate) => candidate.toLocaleLowerCase("en-US") === fallback.toLocaleLowerCase("en-US")) || available[0];
 }
 
 function translatedText(value, section, key) {
@@ -51,6 +82,7 @@ export function languagePackFromPayload(raw) {
     sections[section] = Object.fromEntries(Object.entries(source).flatMap(([rawKey, value]) => {
       const key = String(rawKey).trim();
       if (!key || key.length > 300) throw new Error(`${section} contains an invalid key`);
+      if (section === "messages" && PROTECTED_MESSAGE_KEYS.has(key)) return [];
       const text = translatedText(value, section, key);
       return text ? [[key, text]] : [];
     }));
@@ -121,7 +153,7 @@ export function languagePackTemplate({ catalog, castleCatalog, messages }) {
     author: "",
     license: "",
     catalog_dataset_id: catalog.datasetId || "",
-    messages: Object.fromEntries(Object.entries(messages).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => [key, entry(value)])),
+    messages: Object.fromEntries(Object.entries(messages).filter(([key]) => !PROTECTED_MESSAGE_KEYS.has(key)).sort(([a], [b]) => a.localeCompare(b)).map(([key, value]) => [key, entry(value)])),
     categories,
     research,
     buildings,

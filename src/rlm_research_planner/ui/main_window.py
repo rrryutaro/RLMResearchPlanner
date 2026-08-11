@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+import unicodedata
 from collections.abc import Iterable
 from dataclasses import replace
 from datetime import datetime, timezone
@@ -48,12 +49,14 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QPushButton,
     QScrollArea,
+    QSizePolicy,
     QSpinBox,
     QSplitter,
     QTabWidget,
     QTableWidget,
     QTableWidgetItem,
     QTextBrowser,
+    QToolButton,
     QVBoxLayout,
     QWidget,
 )
@@ -66,6 +69,7 @@ from rlm_research_planner.domain.models import (
     PlayerState,
     ResearchPlanTask,
     RESOURCE_KEYS,
+    SpeedupInventoryItem,
     max_guild_helps_for_castle,
 )
 from rlm_research_planner.domain.observations import (
@@ -119,7 +123,7 @@ from rlm_research_planner.services.paid_pack import (
     SpeedupEntry,
     detect_pack_price,
     parse_gem_bundle,
-    parse_speedup_ocr,
+    parse_paid_item_ocr,
 )
 from rlm_research_planner.services.resource_format import format_resource_amount
 from rlm_research_planner.services.research_directive import (
@@ -134,6 +138,7 @@ from rlm_research_planner.services.paid_value import (
     SPEEDUP_ITEM_KINDS,
     default_gem_value_each,
     default_points_each,
+    minimum_gems_for_speedup_seconds,
     paid_kind_has_time,
     sorted_paid_offers,
     summarize_paid_offer,
@@ -142,6 +147,15 @@ from rlm_research_planner.services.paid_offer_exchange import (
     PaidOfferExchangeError,
     paid_offer_exchange_payload,
     paid_offers_from_exchange_payload,
+)
+from rlm_research_planner.services.speedup_inventory import (
+    PaidOfferRecommendation,
+    SPEEDUP_KINDS,
+    SpeedupCoverage,
+    add_paid_items_to_inventory,
+    normalize_speedup_inventory,
+    recommend_paid_offers,
+    speedup_coverage,
 )
 from rlm_research_planner.services.window_capture import (
     CapturableWindow,
@@ -173,9 +187,13 @@ from rlm_research_planner.ui.update_controller import UpdateController
 from rlm_research_planner.ui.visual_styles import (
     apply_window_visual_surface,
     dataset_style_sheet,
+    speedup_panel_style_sheet,
     table_link_color,
 )
 from rlm_research_planner.version import version_string
+from rlm_research_planner.repositories.research_dataset_repository import (
+    BUNDLED_DATASET_VERSION,
+)
 
 
 RESOURCE_LABELS = {
@@ -267,6 +285,307 @@ class _AutoFitListWidget(QListWidget):
             item.setSizeHint(QSize(0, row_height))
 
 
+class _SpeedupSimulationPanel(QWidget):
+    """Structured speed-up summary shared by research and construction plans."""
+
+    def __init__(self, translate, on_gem_usage_changed, parent=None) -> None:
+        super().__init__(parent)
+        self._translate = translate
+        self._on_gem_usage_changed = on_gem_usage_changed
+        self.setObjectName("speedupSimulationPanel")
+
+        outer = QVBoxLayout(self)
+        outer.setContentsMargins(0, 0, 0, 0)
+        outer.setSpacing(0)
+
+        self.toggle_button = QToolButton(self)
+        self.toggle_button.setObjectName("speedupSimulationToggle")
+        self.toggle_button.setCheckable(True)
+        self.toggle_button.setChecked(False)
+        self.toggle_button.setArrowType(Qt.ArrowType.RightArrow)
+        self.toggle_button.setToolButtonStyle(
+            Qt.ToolButtonStyle.ToolButtonTextBesideIcon
+        )
+        self.toggle_button.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Fixed,
+        )
+        self.toggle_button.toggled.connect(self._toggle_content)
+        outer.addWidget(self.toggle_button)
+
+        self.content = QFrame(self)
+        self.content.setObjectName("speedupSimulationBody")
+        content_layout = QVBoxLayout(self.content)
+        content_layout.setContentsMargins(12, 10, 12, 12)
+        content_layout.setSpacing(9)
+        self.content.setVisible(False)
+        outer.addWidget(self.content)
+
+        header = QHBoxLayout()
+        self.hint_label = QLabel(self.content)
+        self.hint_label.setWordWrap(True)
+        header.addWidget(self.hint_label, 1)
+        self.gem_checkbox = QCheckBox(self.content)
+        self.gem_checkbox.toggled.connect(self._on_gem_usage_changed)
+        header.addWidget(self.gem_checkbox, 0, Qt.AlignTop)
+        content_layout.addLayout(header)
+
+        self.status_label = QLabel(self.content)
+        self.status_label.setWordWrap(True)
+        self.status_label.setVisible(False)
+        content_layout.addWidget(self.status_label)
+
+        allocation = QGridLayout()
+        allocation.setContentsMargins(0, 0, 0, 0)
+        allocation.setHorizontalSpacing(10)
+
+        self.owned_group = QFrame(self.content)
+        self.owned_group.setObjectName("speedupOwnedGroup")
+        owned_layout = QVBoxLayout(self.owned_group)
+        owned_layout.setContentsMargins(9, 7, 9, 7)
+        owned_layout.setSpacing(4)
+        self.owned_title_label = QLabel(self.owned_group)
+        self.owned_title_label.setObjectName("speedupSectionTitle")
+        owned_layout.addWidget(self.owned_title_label)
+        owned_stats = QHBoxLayout()
+        owned_stats.setContentsMargins(0, 0, 0, 0)
+        owned_stats.setSpacing(14)
+        self.available_label = QLabel(self.owned_group)
+        self.applied_label = QLabel(self.owned_group)
+        owned_stats.addWidget(self.available_label)
+        owned_stats.addWidget(self.applied_label)
+        owned_stats.addStretch(1)
+        owned_layout.addLayout(owned_stats)
+        self.used_items_label = QLabel(self.owned_group)
+        self.used_items_label.setWordWrap(True)
+        self.surplus_label = QLabel(self.owned_group)
+        owned_layout.addWidget(self.used_items_label)
+        owned_layout.addWidget(self.surplus_label)
+        allocation.addWidget(self.owned_group, 0, 0)
+
+        self.remaining_group = QFrame(self.content)
+        self.remaining_group.setObjectName("speedupRemainingGroup")
+        remaining_layout = QVBoxLayout(self.remaining_group)
+        remaining_layout.setContentsMargins(9, 7, 9, 7)
+        remaining_layout.setSpacing(4)
+        self.remaining_title_label = QLabel(self.remaining_group)
+        self.remaining_title_label.setObjectName("speedupSectionTitle")
+        remaining_layout.addWidget(self.remaining_title_label)
+        self.remaining_label = QLabel(self.remaining_group)
+        self.remaining_label.setWordWrap(True)
+        self.direct_gems_label = QLabel(self.remaining_group)
+        self.direct_gems_label.setObjectName("speedupDirectGems")
+        self.direct_gems_label.setWordWrap(True)
+        remaining_layout.addWidget(self.remaining_label)
+        remaining_layout.addWidget(self.direct_gems_label)
+        allocation.addWidget(self.remaining_group, 0, 1)
+        allocation.setColumnStretch(0, 1)
+        allocation.setColumnStretch(1, 1)
+        content_layout.addLayout(allocation)
+
+        self.offers_group = QFrame(self.content)
+        self.offers_group.setObjectName("speedupOffersGroup")
+        offers_outer = QVBoxLayout(self.offers_group)
+        offers_outer.setContentsMargins(9, 7, 9, 9)
+        offers_outer.setSpacing(5)
+        self.offers_title_label = QLabel(self.offers_group)
+        self.offers_title_label.setObjectName("speedupSectionTitle")
+        offers_outer.addWidget(self.offers_title_label)
+        self.offers_content = QWidget(self.offers_group)
+        self.offers_layout = QVBoxLayout(self.offers_content)
+        self.offers_layout.setContentsMargins(0, 0, 0, 0)
+        self.offers_layout.setSpacing(5)
+        offers_outer.addWidget(self.offers_content)
+        content_layout.addWidget(self.offers_group)
+
+    def _toggle_content(self, expanded: bool) -> None:
+        self.toggle_button.setArrowType(
+            Qt.ArrowType.DownArrow if expanded else Qt.ArrowType.RightArrow
+        )
+        self.content.setVisible(expanded)
+
+    def _refresh_common_text(self, use_gems: bool) -> None:
+        self.toggle_button.setText(
+            self._translate("plan.speedup_simulation_title")
+        )
+        self.hint_label.setText(self._translate("plan.speedup_simulation_hint"))
+        self.gem_checkbox.blockSignals(True)
+        self.gem_checkbox.setText(self._translate("plan.speedup_use_gems"))
+        self.gem_checkbox.setChecked(use_gems)
+        self.gem_checkbox.blockSignals(False)
+        self.owned_title_label.setText(
+            self._translate("plan.speedup_owned_section")
+        )
+        self.remaining_title_label.setText(
+            self._translate("plan.speedup_remaining_section")
+        )
+        self.offers_title_label.setText(
+            self._translate("plan.speedup_purchase_options")
+        )
+
+    def _clear_offers(self) -> None:
+        while self.offers_layout.count():
+            item = self.offers_layout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+
+    def show_unknown(self, use_gems: bool) -> None:
+        self._refresh_common_text(use_gems)
+        self._clear_offers()
+        self.status_label.setText(self._translate("plan.speedup_unknown_time"))
+        self.status_label.setVisible(True)
+        self.owned_group.setVisible(False)
+        self.remaining_group.setVisible(False)
+        self.offers_group.setVisible(False)
+        self.setVisible(True)
+
+    def show_result(
+        self,
+        coverage: SpeedupCoverage,
+        recommendations: tuple[PaidOfferRecommendation, ...],
+        use_gems: bool,
+    ) -> None:
+        self._refresh_common_text(use_gems)
+        self.status_label.setVisible(False)
+        self.owned_group.setVisible(True)
+        self.remaining_group.setVisible(True)
+
+        self.available_label.setText(
+            self._translate(
+                "plan.speedup_owned",
+                time=format_duration(coverage.available_seconds),
+            )
+        )
+        self.applied_label.setText(
+            self._translate(
+                "plan.speedup_applied",
+                time=format_duration(coverage.applied_seconds),
+            )
+        )
+        used_items = " / ".join(
+            f"{self._translate(f'paid.kind.{item.kind}')} "
+            f"{format_duration(item.duration_seconds)} ×{item.quantity:,}"
+            for item in coverage.used_items
+        )
+        self.used_items_label.setText(
+            self._translate("plan.speedup_used_items", items=used_items)
+            if used_items
+            else ""
+        )
+        self.used_items_label.setVisible(bool(used_items))
+        self.surplus_label.setText(
+            self._translate(
+                "plan.speedup_surplus",
+                time=format_duration(coverage.surplus_seconds),
+            )
+        )
+        self.surplus_label.setVisible(coverage.surplus_seconds > 0)
+        self.remaining_label.setText(
+            self._translate(
+                "plan.speedup_remaining",
+                time=format_duration(coverage.remaining_seconds),
+            )
+        )
+        direct_gems = sum(
+            minimum_gems_for_speedup_seconds(seconds).gems
+            for seconds in coverage.remaining_task_seconds
+        )
+        self.direct_gems_label.setText(
+            self._translate(
+                "plan.speedup_direct_gems",
+                gems=f"{direct_gems:,}",
+                time=format_duration(coverage.remaining_seconds),
+            )
+        )
+        self.direct_gems_label.setVisible(
+            use_gems and coverage.remaining_seconds > 0
+        )
+
+        self._clear_offers()
+        self.offers_group.setVisible(coverage.remaining_seconds > 0)
+        if coverage.remaining_seconds <= 0:
+            self.setVisible(True)
+            return
+        if any(item.gems_used > 0 for item in recommendations):
+            basis = QLabel(self._translate("plan.speedup_gem_basis"), self.offers_group)
+            basis.setWordWrap(True)
+            self.offers_layout.addWidget(basis)
+        if not recommendations:
+            empty = QLabel(self._translate("plan.speedup_no_offer"), self.offers_group)
+            empty.setWordWrap(True)
+            self.offers_layout.addWidget(empty)
+        for recommendation in recommendations:
+            card = QFrame(self.offers_group)
+            card.setObjectName("speedupOfferCard")
+            card.setFrameShape(QFrame.StyledPanel)
+            card_layout = QGridLayout(card)
+            card_layout.setContentsMargins(8, 5, 8, 5)
+            card_layout.setHorizontalSpacing(12)
+            price = (
+                f"{recommendation.total_diamond_cost:,}"
+                if recommendation.total_diamond_cost is not None
+                else self._translate("common.unknown")
+            )
+            title = QLabel(
+                self._translate(
+                    "plan.speedup_offer",
+                    title=recommendation.title,
+                    count=recommendation.purchases,
+                    price=price,
+                ),
+                card,
+            )
+            title_font = QFont(title.font())
+            title_font.setBold(True)
+            title.setFont(title_font)
+            title.setWordWrap(False)
+            card_layout.addWidget(title, 0, 0)
+            column = 1
+            if recommendation.applied_speedup_seconds > 0:
+                speedups = QLabel(
+                    self._translate(
+                        "plan.speedup_offer_speedups",
+                        time=format_duration(
+                            recommendation.applied_speedup_seconds
+                        ),
+                    ),
+                    card,
+                )
+                speedups.setWordWrap(False)
+                card_layout.addWidget(speedups, 0, column)
+                column += 1
+            if recommendation.gems_used > 0:
+                gems = QLabel(
+                    self._translate(
+                        "plan.speedup_offer_gems",
+                        available=f"{recommendation.available_gems:,}",
+                        used=f"{recommendation.gems_used:,}",
+                        time=format_duration(
+                            recommendation.gem_applied_seconds
+                        ),
+                    ),
+                    card,
+                )
+                gems.setWordWrap(False)
+                card_layout.addWidget(gems, 0, column)
+                column += 1
+            remaining = QLabel(
+                self._translate(
+                    "plan.speedup_offer_remaining",
+                    time=format_duration(recommendation.remaining_seconds),
+                ),
+                card,
+            )
+            remaining.setWordWrap(False)
+            card_layout.addWidget(remaining, 0, column)
+            card_layout.setColumnStretch(0, 2)
+            for index in range(1, column + 1):
+                card_layout.setColumnStretch(index, 1)
+            self.offers_layout.addWidget(card)
+        self.setVisible(True)
+
+
 class MainWindow(QMainWindow):
     def __init__(
         self,
@@ -316,6 +635,8 @@ class MainWindow(QMainWindow):
         self._selected_tree_node_id = self._selected_research_id
         self._plan_target_research_id = ""
         self._plan_mode = "target"
+        self._shortest_plan_page = 0
+        self._shortest_plan_page_size = 20
         self._current_catalog_plan: CatalogPlanResult | None = None
         self._preserve_completed_plan_target = False
         self._capturable_windows: list[CapturableWindow] = []
@@ -1424,6 +1745,13 @@ class MainWindow(QMainWindow):
         self.castle_plan_summary_label = QLabel(plan_panel)
         self.castle_plan_summary_label.setWordWrap(True)
         plan_layout.addWidget(self.castle_plan_summary_label)
+        self.castle_speedup_panel = _SpeedupSimulationPanel(
+            self.t,
+            self._speedup_gem_usage_changed,
+            plan_panel,
+        )
+        self.castle_speedup_panel.setVisible(False)
+        plan_layout.addWidget(self.castle_speedup_panel)
         self.castle_plan_table = QTableWidget(
             0, 3 + len(CASTLE_RESOURCE_KEYS) + 2, plan_panel
         )
@@ -1702,6 +2030,38 @@ class MainWindow(QMainWindow):
         self._update_player_save_button()
         self._calculate_castle_plan()
 
+    def _show_speedup_plan(
+        self,
+        panel: _SpeedupSimulationPanel,
+        required_seconds: int,
+        target_kind: str,
+        task_seconds: tuple[int, ...],
+    ) -> None:
+        coverage = speedup_coverage(
+            required_seconds,
+            self.player_state.settings.speedup_inventory,
+            target_kind,
+            task_seconds,
+        )
+        recommendations = (
+            recommend_paid_offers(
+                coverage.remaining_seconds,
+                self.player_state.paid_offers,
+                target_kind,
+                task_seconds=coverage.remaining_task_seconds,
+                use_gems=(
+                    self.player_state.settings.use_gems_for_speedups
+                ),
+            )
+            if coverage.remaining_seconds > 0
+            else ()
+        )
+        panel.show_result(
+            coverage,
+            recommendations,
+            self.player_state.settings.use_gems_for_speedups,
+        )
+
     def _calculate_castle_plan(self, *_args: object) -> None:
         if not hasattr(self, "castle_plan_table"):
             return
@@ -1746,6 +2106,7 @@ class MainWindow(QMainWindow):
 
         if not result.steps:
             self.castle_plan_summary_label.setText(self.t("castle.no_work"))
+            self.castle_speedup_panel.setVisible(False)
         else:
             resource_summary = " / ".join(
                 f"{self._resource_label(key)} "
@@ -1763,6 +2124,13 @@ class MainWindow(QMainWindow):
                     if result.total_gems > 0
                     else ""
                 )
+            )
+
+            self._show_speedup_plan(
+                self.castle_speedup_panel,
+                result.total_adjusted_seconds,
+                "construction",
+                tuple(step.adjusted_seconds for step in result.steps),
             )
 
         self.castle_plan_table.setRowCount(
@@ -1973,12 +2341,6 @@ class MainWindow(QMainWindow):
                 count=guild_help_limit,
             )
         )
-        self.speedup_spin = self._integer_spin(
-            0,
-            2_000_000_000,
-            self.player_state.settings.speedup_seconds,
-            settings_panel,
-        )
         common_group = QGroupBox(
             self.t("player.common_settings"), settings_panel
         )
@@ -1991,7 +2353,6 @@ class MainWindow(QMainWindow):
         )
         common_form.addRow(self.t("player.academy_level"), self.academy_spin)
         common_form.addRow(self.t("player.guild_helps"), self.guild_help_spin)
-        common_form.addRow(self.t("player.speedups"), self.speedup_spin)
         settings_form.addRow(common_group)
 
         construction_group = QGroupBox(
@@ -2017,6 +2378,62 @@ class MainWindow(QMainWindow):
             self.research_speed_boost_spin,
         )
         settings_form.addRow(research_group)
+
+        speedup_group = QGroupBox(
+            self.t("player.speedup_inventory"), settings_panel
+        )
+        speedup_layout = QVBoxLayout(speedup_group)
+        speedup_hint = QLabel(
+            self.t("player.speedup_inventory_hint"), speedup_group
+        )
+        speedup_hint.setWordWrap(True)
+        speedup_layout.addWidget(speedup_hint)
+        self.speedup_inventory_table = QTableWidget(0, 4, speedup_group)
+        self.speedup_inventory_table.setHorizontalHeaderLabels(
+            [
+                self.t("paid.kind"),
+                self.t("paid.duration"),
+                self.t("paid.unit"),
+                self.t("paid.quantity"),
+            ]
+        )
+        self.speedup_inventory_table.setSelectionBehavior(QTableWidget.SelectRows)
+        self.speedup_inventory_table.setSelectionMode(QTableWidget.ExtendedSelection)
+        self.speedup_inventory_table.verticalHeader().setVisible(False)
+        speedup_header = self.speedup_inventory_table.horizontalHeader()
+        speedup_header.setSectionResizeMode(0, QHeaderView.Stretch)
+        for column in (1, 2, 3):
+            speedup_header.setSectionResizeMode(column, QHeaderView.ResizeToContents)
+        speedup_layout.addWidget(self.speedup_inventory_table)
+        speedup_actions = QHBoxLayout()
+        speedup_add_button = QPushButton(self.t("player.speedup_add"), speedup_group)
+        speedup_add_button.clicked.connect(
+            lambda: self._add_speedup_inventory_row(focus=True)
+        )
+        speedup_actions.addWidget(speedup_add_button)
+        speedup_delete_button = QPushButton(
+            self.t("player.speedup_delete"), speedup_group
+        )
+        speedup_delete_button.clicked.connect(
+            self._remove_selected_speedup_inventory_rows
+        )
+        speedup_actions.addWidget(speedup_delete_button)
+        self.speedup_inventory_summary_label = QLabel(speedup_group)
+        speedup_actions.addWidget(self.speedup_inventory_summary_label, 1)
+        speedup_layout.addLayout(speedup_actions)
+        initial_inventory = list(self.player_state.settings.speedup_inventory)
+        if not initial_inventory and self.player_state.settings.speedup_seconds > 0:
+            initial_inventory = [
+                SpeedupInventoryItem(
+                    "general", 1, self.player_state.settings.speedup_seconds
+                )
+            ]
+        for entry in initial_inventory:
+            self._add_speedup_inventory_row(entry, notify=False)
+        if not initial_inventory:
+            self._add_speedup_inventory_row(notify=False)
+        self._update_speedup_inventory_summary()
+        settings_form.addRow(speedup_group)
 
         resources_group = QGroupBox(self.t("player.resources"), settings_panel)
         resources_form = QFormLayout(resources_group)
@@ -2163,10 +2580,152 @@ class MainWindow(QMainWindow):
             self._settings_changed
         )
         self.guild_help_spin.valueChanged.connect(self._settings_changed)
-        self.speedup_spin.valueChanged.connect(self._settings_changed)
         for spin in self.resource_spins.values():
             spin.valueChanged.connect(self._settings_changed)
         return page
+
+    def _speedup_inventory_kind_combo(self, kind: str = "general") -> QComboBox:
+        combo = QComboBox(self.speedup_inventory_table)
+        for key in SPEEDUP_KINDS:
+            combo.addItem(self.t(f"paid.kind.{key}"), key)
+        combo.setCurrentIndex(max(0, combo.findData(kind)))
+        combo.currentIndexChanged.connect(self._speedup_inventory_changed)
+        return combo
+
+    def _speedup_inventory_unit_combo(self, unit: str = "hours") -> QComboBox:
+        combo = QComboBox(self.speedup_inventory_table)
+        for key in ("seconds", "minutes", "hours", "days"):
+            combo.addItem(self.t(f"paid.unit.{key}"), key)
+        combo.setCurrentIndex(max(0, combo.findData(unit)))
+        combo.currentIndexChanged.connect(self._speedup_inventory_changed)
+        return combo
+
+    def _add_speedup_inventory_row(
+        self,
+        entry: SpeedupInventoryItem | None = None,
+        *,
+        focus: bool = False,
+        notify: bool = True,
+    ) -> None:
+        table = self.speedup_inventory_table
+        row = table.rowCount()
+        table.insertRow(row)
+        kind = entry.kind if entry is not None else "general"
+        duration_seconds = entry.duration_seconds if entry is not None else 3600
+        duration, unit = self._paid_duration_value(duration_seconds)
+        quantity = entry.quantity if entry is not None else 0
+        set_table_cell_widget(
+            table, row, 0, self._speedup_inventory_kind_combo(kind)
+        )
+        duration_spin = VisibleSpinBox(table)
+        duration_spin.setRange(1, 99_999_999)
+        duration_spin.setGroupSeparatorShown(True)
+        duration_spin.setValue(max(1, duration))
+        duration_spin.valueChanged.connect(self._speedup_inventory_changed)
+        set_table_cell_widget(table, row, 1, duration_spin)
+        set_table_cell_widget(
+            table, row, 2, self._speedup_inventory_unit_combo(unit)
+        )
+        quantity_spin = VisibleSpinBox(table)
+        quantity_spin.setRange(0, 99_999_999)
+        quantity_spin.setGroupSeparatorShown(True)
+        quantity_spin.setValue(max(0, quantity))
+        quantity_spin.valueChanged.connect(self._speedup_inventory_changed)
+        set_table_cell_widget(table, row, 3, quantity_spin)
+        if notify:
+            self._speedup_inventory_changed()
+        if focus:
+            table.scrollToBottom()
+            table.setCurrentCell(row, 1)
+            duration_spin.setFocus(Qt.OtherFocusReason)
+            duration_spin.selectAll()
+
+    def _speedup_inventory_from_table(self) -> list[SpeedupInventoryItem]:
+        if not hasattr(self, "speedup_inventory_table"):
+            return list(self.player_state.settings.speedup_inventory)
+        entries: list[SpeedupInventoryItem] = []
+        for row in range(self.speedup_inventory_table.rowCount()):
+            kind_combo = self.speedup_inventory_table.cellWidget(row, 0)
+            duration_spin = self.speedup_inventory_table.cellWidget(row, 1)
+            unit_combo = self.speedup_inventory_table.cellWidget(row, 2)
+            quantity_spin = self.speedup_inventory_table.cellWidget(row, 3)
+            if not (
+                isinstance(kind_combo, QComboBox)
+                and isinstance(duration_spin, QSpinBox)
+                and isinstance(unit_combo, QComboBox)
+                and isinstance(quantity_spin, QSpinBox)
+            ):
+                continue
+            entries.append(
+                SpeedupInventoryItem(
+                    kind=str(kind_combo.currentData()),
+                    duration_seconds=(
+                        duration_spin.value()
+                        * self._paid_unit_seconds(str(unit_combo.currentData()))
+                    ),
+                    quantity=quantity_spin.value(),
+                )
+            )
+        return list(normalize_speedup_inventory(entries))
+
+    def _replace_speedup_inventory_table(
+        self, entries: Iterable[SpeedupInventoryItem]
+    ) -> None:
+        self.speedup_inventory_table.setRowCount(0)
+        normalized = list(normalize_speedup_inventory(entries))
+        for entry in normalized:
+            self._add_speedup_inventory_row(entry, notify=False)
+        if not normalized:
+            self._add_speedup_inventory_row(notify=False)
+        self._speedup_inventory_changed()
+
+    def _remove_selected_speedup_inventory_rows(self) -> None:
+        rows = sorted(
+            {
+                index.row()
+                for index in self.speedup_inventory_table.selectedIndexes()
+            },
+            reverse=True,
+        )
+        for row in rows:
+            self.speedup_inventory_table.removeRow(row)
+        if self.speedup_inventory_table.rowCount() == 0:
+            self._add_speedup_inventory_row(notify=False)
+        self._speedup_inventory_changed()
+
+    def _update_speedup_inventory_summary(self) -> None:
+        if not hasattr(self, "speedup_inventory_summary_label"):
+            return
+        entries = self._speedup_inventory_from_table()
+        total = sum(item.duration_seconds * item.quantity for item in entries)
+        self.speedup_inventory_summary_label.setText(
+            self.t("player.speedup_total", time=format_duration(total))
+        )
+
+    def _speedup_inventory_changed(self, *_args: object) -> None:
+        if not hasattr(self, "speedup_inventory_table"):
+            return
+        self.player_state.settings.speedup_inventory = (
+            self._speedup_inventory_from_table()
+        )
+        self.player_state.settings.speedup_seconds = 0
+        self._update_speedup_inventory_summary()
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_plan()
+        self._calculate_castle_plan()
+
+    def _speedup_gem_usage_changed(self, checked: bool) -> None:
+        if (
+            self.player_state.settings.use_gems_for_speedups
+            == bool(checked)
+        ):
+            return
+        self.player_state.settings.use_gems_for_speedups = bool(checked)
+        self._player_settings_dirty = True
+        self._update_player_save_button()
+        self._calculate_plan()
+        self._calculate_castle_plan()
 
     def _integer_spin(
         self,
@@ -2225,7 +2784,8 @@ class MainWindow(QMainWindow):
         settings.max_guild_helps = min(
             self.guild_help_spin.value(), guild_help_limit
         )
-        settings.speedup_seconds = self.speedup_spin.value()
+        settings.speedup_inventory = self._speedup_inventory_from_table()
+        settings.speedup_seconds = 0
         settings.resources = {key: spin.value() for key, spin in self.resource_spins.items()}
         self._player_settings_dirty = True
         self._update_player_save_button()
@@ -2371,10 +2931,10 @@ class MainWindow(QMainWindow):
     def _build_plan_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
         layout = QVBoxLayout(page)
-        controls = QVBoxLayout()
-        selection_controls = QHBoxLayout()
-        action_controls = QHBoxLayout()
-        selection_controls.addWidget(QLabel(self.t("plan.mode"), page))
+        self.plan_toolbar = QWidget(page)
+        selection_controls = QHBoxLayout(self.plan_toolbar)
+        selection_controls.setContentsMargins(0, 0, 0, 0)
+        selection_controls.addWidget(QLabel(self.t("plan.mode"), self.plan_toolbar))
         self.plan_mode_combo = QComboBox(page)
         self.plan_mode_combo.addItem(self.t("plan.mode.target"), "target")
         self.plan_mode_combo.addItem(self.t("plan.mode.shortest"), "shortest")
@@ -2401,13 +2961,81 @@ class MainWindow(QMainWindow):
         )
         self.plan_complete_button.setEnabled(False)
         self.plan_complete_button.clicked.connect(self._complete_current_plan)
-        action_controls.addStretch(1)
         self.plan_register_button = QPushButton(
             self.t("plan.register_task"), page
         )
         self.plan_register_button.setEnabled(False)
         self.plan_register_button.clicked.connect(self._register_current_plan)
-        action_controls.addWidget(QLabel(self.t("plan.resource_display"), page))
+        self.plan_directive_panel = QWidget(self.plan_toolbar)
+        directive_controls = QHBoxLayout(self.plan_directive_panel)
+        directive_controls.setContentsMargins(0, 0, 0, 0)
+        directive_controls.addWidget(
+            QLabel(self.t("plan.directive_name"), self.plan_directive_panel)
+        )
+        self.plan_directive_name_edit = QLineEdit(self.plan_directive_panel)
+        self.plan_directive_name_edit.setMaxLength(100)
+        self.plan_directive_name_edit.setPlaceholderText(
+            self.t("plan.directive_name_placeholder")
+        )
+        directive_controls.addWidget(self.plan_directive_name_edit, 1)
+        self.plan_directive_import_button = QPushButton(
+            self.t("plan.directive_import"), self.plan_directive_panel
+        )
+        self.plan_directive_import_button.clicked.connect(
+            self._import_research_directive
+        )
+        directive_controls.addWidget(self.plan_directive_import_button)
+        self.plan_directive_export_button = QPushButton(
+            self.t("plan.directive_export"), self.plan_directive_panel
+        )
+        self.plan_directive_export_button.clicked.connect(
+            self._export_research_directive
+        )
+        directive_controls.addWidget(self.plan_directive_export_button)
+        selection_controls.addWidget(self.plan_directive_panel, 1)
+
+        self.plan_shortest_controls = QWidget(self.plan_toolbar)
+        shortest_controls = QHBoxLayout(self.plan_shortest_controls)
+        shortest_controls.setContentsMargins(0, 0, 0, 0)
+        shortest_controls.addWidget(
+            QLabel(self.t("plan.page_size"), self.plan_shortest_controls)
+        )
+        self.plan_shortest_page_size_combo = QComboBox(self.plan_shortest_controls)
+        for page_size in (10, 20, 50, 100):
+            self.plan_shortest_page_size_combo.addItem(str(page_size), page_size)
+        self.plan_shortest_page_size_combo.setCurrentIndex(
+            self.plan_shortest_page_size_combo.findData(
+                self._shortest_plan_page_size
+            )
+        )
+        self.plan_shortest_page_size_combo.currentIndexChanged.connect(
+            self._shortest_plan_page_size_changed
+        )
+        shortest_controls.addWidget(self.plan_shortest_page_size_combo)
+        self.plan_shortest_previous_button = QPushButton(
+            self.t("plan.previous_page"), self.plan_shortest_controls
+        )
+        self.plan_shortest_previous_button.clicked.connect(
+            lambda: self._change_shortest_plan_page(-1)
+        )
+        shortest_controls.addWidget(self.plan_shortest_previous_button)
+        self.plan_shortest_page_label = QLabel(self.plan_shortest_controls)
+        self.plan_shortest_page_label.setAlignment(Qt.AlignCenter)
+        shortest_controls.addWidget(self.plan_shortest_page_label)
+        self.plan_shortest_next_button = QPushButton(
+            self.t("plan.next_page"), self.plan_shortest_controls
+        )
+        self.plan_shortest_next_button.clicked.connect(
+            lambda: self._change_shortest_plan_page(1)
+        )
+        shortest_controls.addWidget(self.plan_shortest_next_button)
+        selection_controls.addWidget(self.plan_shortest_controls, 1)
+
+        selection_controls.addStretch(1)
+        self.plan_resource_mode_label = QLabel(
+            self.t("plan.resource_display"), self.plan_toolbar
+        )
+        selection_controls.addWidget(self.plan_resource_mode_label)
         self.plan_resource_mode_combo = QComboBox(page)
         self.plan_resource_mode_combo.addItem(self.t("plan.resource_exact"), "exact")
         self.plan_resource_mode_combo.addItem(self.t("plan.resource_short"), "short")
@@ -2422,43 +3050,16 @@ class MainWindow(QMainWindow):
         self.plan_resource_mode_combo.currentIndexChanged.connect(
             self._resource_display_mode_changed
         )
-        action_controls.addWidget(self.plan_resource_mode_combo)
-        action_controls.addWidget(self.plan_register_button)
-        action_controls.addWidget(self.plan_complete_button)
+        selection_controls.addWidget(self.plan_resource_mode_combo)
+        selection_controls.addWidget(self.plan_register_button)
+        selection_controls.addWidget(self.plan_complete_button)
         self.plan_fit_button = QPushButton(self.t("tree.fit_all"), page)
         self.plan_reset_zoom_button = QPushButton(
             self.t("tree.reset_zoom"), page
         )
-        action_controls.addWidget(self.plan_fit_button)
-        action_controls.addWidget(self.plan_reset_zoom_button)
-        controls.addLayout(selection_controls)
-        controls.addLayout(action_controls)
-        self.plan_directive_panel = QWidget(page)
-        directive_controls = QHBoxLayout(self.plan_directive_panel)
-        directive_controls.setContentsMargins(0, 0, 0, 0)
-        directive_controls.addWidget(QLabel(self.t("plan.directive_name"), page))
-        self.plan_directive_name_edit = QLineEdit(page)
-        self.plan_directive_name_edit.setMaxLength(100)
-        self.plan_directive_name_edit.setPlaceholderText(
-            self.t("plan.directive_name_placeholder")
-        )
-        directive_controls.addWidget(self.plan_directive_name_edit, 1)
-        self.plan_directive_import_button = QPushButton(
-            self.t("plan.directive_import"), page
-        )
-        self.plan_directive_import_button.clicked.connect(
-            self._import_research_directive
-        )
-        directive_controls.addWidget(self.plan_directive_import_button)
-        self.plan_directive_export_button = QPushButton(
-            self.t("plan.directive_export"), page
-        )
-        self.plan_directive_export_button.clicked.connect(
-            self._export_research_directive
-        )
-        directive_controls.addWidget(self.plan_directive_export_button)
-        controls.addWidget(self.plan_directive_panel)
-        layout.addLayout(controls)
+        selection_controls.addWidget(self.plan_fit_button)
+        selection_controls.addWidget(self.plan_reset_zoom_button)
+        layout.addWidget(self.plan_toolbar)
 
         self.plan_splitter = QSplitter(Qt.Vertical, page)
         self.plan_tree_view = ResearchTreeView(self.plan_splitter)
@@ -2470,6 +3071,13 @@ class MainWindow(QMainWindow):
         details = QWidget(self.plan_splitter)
         details_layout = QVBoxLayout(details)
         details_layout.setContentsMargins(0, 6, 0, 0)
+        self.plan_speedup_panel = _SpeedupSimulationPanel(
+            self.t,
+            self._speedup_gem_usage_changed,
+            details,
+        )
+        self.plan_speedup_panel.setVisible(False)
+        details_layout.addWidget(self.plan_speedup_panel)
         fixed_columns = [
             self.t("tree.name"),
             self.t("plan.level"),
@@ -2579,6 +3187,7 @@ class MainWindow(QMainWindow):
         if not hasattr(self, "plan_tree_view"):
             return
         target_mode = self._plan_mode == "target"
+        shortest_mode = self._plan_mode == "shortest"
         tasks_mode = self._plan_mode == "tasks"
         for widget in (
             self.plan_target_caption,
@@ -2592,8 +3201,22 @@ class MainWindow(QMainWindow):
             self.plan_tree_view,
         ):
             widget.setVisible(target_mode)
+        self.plan_shortest_controls.setVisible(shortest_mode)
         self.plan_directive_panel.setVisible(tasks_mode)
         self.plan_splitter.setSizes([480, 300] if target_mode else [0, 780])
+
+    def _shortest_plan_page_size_changed(self, *_args: object) -> None:
+        self._shortest_plan_page_size = max(
+            1, int(self.plan_shortest_page_size_combo.currentData() or 20)
+        )
+        self._shortest_plan_page = 0
+        if self._plan_mode == "shortest":
+            self._calculate_plan()
+
+    def _change_shortest_plan_page(self, offset: int) -> None:
+        self._shortest_plan_page = max(0, self._shortest_plan_page + offset)
+        if self._plan_mode == "shortest":
+            self._calculate_plan()
 
     def _calculate_plan(self, *_args: object) -> None:
         if not hasattr(self, "plan_level_spin"):
@@ -2601,6 +3224,7 @@ class MainWindow(QMainWindow):
         if self._plan_mode == "shortest":
             self._current_catalog_plan = None
             self.plan_complete_button.setEnabled(False)
+            self.plan_speedup_panel.setVisible(False)
             planning_state = PlayerState(
                 settings=self.player_state.settings,
                 research_levels=dict(self._tree_level_draft),
@@ -2613,6 +3237,7 @@ class MainWindow(QMainWindow):
             self._current_catalog_plan = None
             self.plan_complete_button.setEnabled(False)
             self.plan_register_button.setEnabled(False)
+            self.plan_speedup_panel.setVisible(False)
             self._render_registered_tasks()
             return
         research_id = self._plan_target_research_id
@@ -2620,6 +3245,7 @@ class MainWindow(QMainWindow):
             self._current_catalog_plan = None
             self.plan_complete_button.setEnabled(False)
             self.plan_table.setRowCount(0)
+            self.plan_speedup_panel.setVisible(False)
             return
         target_level = self._normalized_plan_target_level(research_id)
         planning_state = PlayerState(
@@ -2659,10 +3285,26 @@ class MainWindow(QMainWindow):
         return target
 
     def _render_catalog_plan(self, result: CatalogPlanResult) -> None:
+        if result.steps and result.unknown_time_steps:
+            self.plan_speedup_panel.show_unknown(
+                self.player_state.settings.use_gems_for_speedups
+            )
+        elif result.steps:
+            self._show_speedup_plan(
+                self.plan_speedup_panel,
+                result.total_after_help_seconds,
+                "research",
+                tuple(step.after_help_seconds for step in result.steps),
+            )
+        else:
+            self.plan_speedup_panel.setVisible(False)
         self._set_visible_plan_resources(
-            key
-            for key in PLAN_RESOURCE_KEYS
-            if result.total_costs.get(key, 0) > 0
+            (
+                key
+                for key in PLAN_RESOURCE_KEYS
+                if result.total_costs.get(key, 0) > 0
+                or (key == "special" and result.unknown_cost_steps > 0)
+            )
         )
         self.plan_complete_button.setEnabled(bool(result.steps))
         registered = any(
@@ -2757,7 +3399,11 @@ class MainWindow(QMainWindow):
                 + self._partial_note(result.unknown_technolabe_steps),
             ]
             total_values.extend(
-                self._material_amount(result.total_costs.get(key, 0))
+                (
+                    self.t("common.unknown")
+                    if key == "special" and result.unknown_cost_steps > 0
+                    else self._material_amount(result.total_costs.get(key, 0))
+                )
                 for key in PLAN_RESOURCE_KEYS
             )
             total_values.extend(
@@ -2917,14 +3563,40 @@ class MainWindow(QMainWindow):
             self._preserve_completed_plan_target = False
 
     def _render_shortest_plan(self, steps: list[CatalogPlanStep]) -> None:
+        page_size = max(1, self._shortest_plan_page_size)
+        total_items = len(steps)
+        total_pages = (total_items + page_size - 1) // page_size
+        if total_pages:
+            self._shortest_plan_page = min(
+                self._shortest_plan_page, total_pages - 1
+            )
+        else:
+            self._shortest_plan_page = 0
+        start = self._shortest_plan_page * page_size
+        page_steps = steps[start : start + page_size]
+        current_page = self._shortest_plan_page + 1 if total_pages else 0
+        self.plan_shortest_page_label.setText(
+            self.t(
+                "plan.page_status",
+                current=current_page,
+                total=total_pages,
+                count=total_items,
+            )
+        )
+        self.plan_shortest_previous_button.setEnabled(
+            self._shortest_plan_page > 0
+        )
+        self.plan_shortest_next_button.setEnabled(
+            self._shortest_plan_page + 1 < total_pages
+        )
         self._set_visible_plan_resources(
             key
             for key in PLAN_RESOURCE_KEYS
-            if any(step.costs.get(key, 0) > 0 for step in steps)
+            if any(step.costs.get(key, 0) > 0 for step in page_steps)
         )
         self.plan_table.clearContents()
-        self.plan_table.setRowCount(len(steps))
-        for row, step in enumerate(steps):
+        self.plan_table.setRowCount(len(page_steps))
+        for row, step in enumerate(page_steps):
             observation = self._node_observation[step.research_id]
             name = (
                 f"{self._category_name(observation)} / "
@@ -3082,7 +3754,11 @@ class MainWindow(QMainWindow):
             ),
         ]
         values.extend(
-            self._material_amount(step.costs.get(key, 0))
+            (
+                self.t("common.unknown")
+                if key == "special" and not step.costs_verified
+                else self._material_amount(step.costs.get(key, 0))
+            )
             for key in PLAN_RESOURCE_KEYS
         )
         values.extend(
@@ -3246,16 +3922,19 @@ class MainWindow(QMainWindow):
         input_page = QWidget(self.paid_workspace_tabs)
         saved_page = QWidget(self.paid_workspace_tabs)
         comparison_page = QWidget(self.paid_workspace_tabs)
+        share_page = QWidget(self.paid_workspace_tabs)
         self.paid_workspace_tabs.addTab(input_page, self.t("paid.view.input"))
         self.paid_workspace_tabs.addTab(saved_page, self.t("paid.view.saved"))
         self.paid_workspace_tabs.addTab(
             comparison_page, self.t("paid.view.comparison")
         )
+        self.paid_workspace_tabs.addTab(share_page, self.t("paid.view.share"))
         self.paid_workspace_tabs.setCurrentWidget(input_page)
         outer_layout.addWidget(self.paid_workspace_tabs)
         layout = QVBoxLayout(input_page)
         saved_page_layout = QVBoxLayout(saved_page)
         comparison_layout = QVBoxLayout(comparison_page)
+        share_layout = QVBoxLayout(share_page)
 
         saved_group = QGroupBox(self.t("paid.saved_offers"), saved_page)
         saved_group_layout = QVBoxLayout(saved_group)
@@ -3302,15 +3981,40 @@ class MainWindow(QMainWindow):
         export_button = QPushButton(self.t("paid.export_selected"), saved_group)
         export_button.clicked.connect(self._export_paid_offers)
         saved_actions.addWidget(export_button)
-        export_all_button = QPushButton(self.t("paid.export_all"), saved_group)
-        export_all_button.clicked.connect(self._export_all_paid_offers)
-        saved_actions.addWidget(export_all_button)
-        import_button = QPushButton(self.t("paid.import"), saved_group)
-        import_button.clicked.connect(self._import_paid_offers)
-        saved_actions.addWidget(import_button)
+        add_inventory_button = QPushButton(
+            self.t("paid.add_to_inventory"), saved_group
+        )
+        add_inventory_button.clicked.connect(
+            self._add_selected_paid_offers_to_inventory
+        )
+        saved_actions.addWidget(add_inventory_button)
         saved_actions.addStretch(1)
         saved_group_layout.addLayout(saved_actions)
         saved_page_layout.addWidget(saved_group)
+
+        share_group = QGroupBox(self.t("paid.share_title"), share_page)
+        share_group_layout = QVBoxLayout(share_group)
+        share_description = QLabel(self.t("paid.share_description"), share_group)
+        share_description.setWordWrap(True)
+        share_group_layout.addWidget(share_description)
+        share_actions = QHBoxLayout()
+        export_all_button = QPushButton(
+            self.t("paid.export_all_with_settings"), share_group
+        )
+        export_all_button.clicked.connect(self._export_all_paid_offers)
+        share_actions.addWidget(export_all_button)
+        export_valuation_button = QPushButton(
+            self.t("paid.export_valuation"), share_group
+        )
+        export_valuation_button.clicked.connect(self._export_paid_valuation)
+        share_actions.addWidget(export_valuation_button)
+        import_button = QPushButton(self.t("paid.import_shared"), share_group)
+        import_button.clicked.connect(self._import_paid_offers)
+        share_actions.addWidget(import_button)
+        share_actions.addStretch(1)
+        share_group_layout.addLayout(share_actions)
+        share_layout.addWidget(share_group)
+        share_layout.addStretch(1)
 
         comparison_controls = QHBoxLayout()
         comparison_controls.addWidget(
@@ -3766,6 +4470,34 @@ class MainWindow(QMainWindow):
             )
         return tuple(entries)
 
+    @staticmethod
+    def _paid_entry_signature(
+        entry: SpeedupEntry | PaidItem,
+    ) -> tuple[str, str, int, int]:
+        name = entry.name if isinstance(entry, PaidItem) else ""
+        normalized_name = re.sub(
+            r"\s+", "", unicodedata.normalize("NFKC", name)
+        ).casefold()
+        return (
+            entry.kind,
+            normalized_name,
+            max(0, int(entry.duration_seconds)),
+            max(0, int(entry.quantity)),
+        )
+
+    def _paid_row_is_empty(self, row: int) -> bool:
+        duration_spin = self.paid_item_table.cellWidget(row, 1)
+        quantity_spin = self.paid_item_table.cellWidget(row, 3)
+        name_edit = self.paid_item_table.cellWidget(row, 5)
+        return (
+            isinstance(duration_spin, QSpinBox)
+            and duration_spin.value() == 0
+            and isinstance(quantity_spin, QSpinBox)
+            and quantity_spin.value() == 0
+            and isinstance(name_edit, QLineEdit)
+            and not name_edit.text().strip()
+        )
+
     def _paid_valuation(self) -> PaidValuation:
         return PaidValuation(
             use_speedup_gem_presets=(
@@ -4029,6 +4761,36 @@ class MainWindow(QMainWindow):
             return
         self._load_paid_offer_row_and_show(rows[0])
 
+    def _add_selected_paid_offers_to_inventory(self) -> None:
+        offer_ids = self._selected_paid_offer_ids()
+        if not offer_ids:
+            self._show_info(self.t("paid.select_offer"))
+            return
+        selected_items = [
+            item
+            for offer in self.player_state.paid_offers
+            if offer.offer_id in offer_ids
+            for item in offer.items
+        ]
+        updated = add_paid_items_to_inventory(
+            self.player_state.settings.speedup_inventory,
+            selected_items,
+        )
+        if list(updated) == list(
+            normalize_speedup_inventory(
+                self.player_state.settings.speedup_inventory
+            )
+        ):
+            self._show_info(self.t("paid.no_speedups_to_add"))
+            return
+        self.player_state.settings.speedup_inventory = list(updated)
+        self.player_state.settings.speedup_seconds = 0
+        self._replace_speedup_inventory_table(updated)
+        self.player_repository.save(self.player_state)
+        self._player_settings_dirty = False
+        self._update_player_save_button()
+        self._show_info(self.t("paid.added_to_inventory"))
+
     def _new_paid_offer(self) -> None:
         self._paid_current_offer_id = ""
         self._clear_paid_rows()
@@ -4057,6 +4819,8 @@ class MainWindow(QMainWindow):
         self.player_state.paid_valuation = self._paid_valuation()
         self.player_repository.save(self.player_state)
         self._refresh_paid_offer_table()
+        self._calculate_plan()
+        self._calculate_castle_plan()
         self._show_info(self.t("paid.saved"))
 
     def _delete_paid_offer(self) -> None:
@@ -4085,6 +4849,8 @@ class MainWindow(QMainWindow):
         self._new_paid_offer()
         self.paid_workspace_tabs.setCurrentIndex(1)
         self._refresh_paid_offer_table()
+        self._calculate_plan()
+        self._calculate_castle_plan()
 
     def _export_paid_offers(self) -> None:
         offer_ids = self._selected_paid_offer_ids()
@@ -4105,11 +4871,24 @@ class MainWindow(QMainWindow):
             return
         self._write_paid_offers(offers)
 
-    def _write_paid_offers(self, offers: list[PaidOffer]) -> None:
+    def _export_paid_valuation(self) -> None:
+        self._write_paid_offers([], valuation_only=True)
+
+    def _write_paid_offers(
+        self, offers: list[PaidOffer], *, valuation_only: bool = False
+    ) -> None:
         path, _selected_filter = QFileDialog.getSaveFileName(
             self,
-            self.t("paid.export_all"),
-            "RLMResearchPlanner-paid-offers.json",
+            self.t(
+                "paid.export_valuation"
+                if valuation_only
+                else "paid.export_all_with_settings"
+            ),
+            (
+                "RLMResearchPlanner-paid-settings.json"
+                if valuation_only
+                else "RLMResearchPlanner-paid-offers.json"
+            ),
             "JSON (*.json)",
         )
         if not path:
@@ -4120,7 +4899,11 @@ class MainWindow(QMainWindow):
                     paid_offer_exchange_payload(
                         offers,
                         self._paid_valuation(),
-                        name=self.t("paid.shared_data_name"),
+                        name=self.t(
+                            "paid.valuation_shared_data_name"
+                            if valuation_only
+                            else "paid.shared_data_name"
+                        ),
                     ),
                     ensure_ascii=False,
                     indent=2,
@@ -4131,7 +4914,11 @@ class MainWindow(QMainWindow):
         except OSError as exc:
             self._show_error(self.t("paid.export_failed", error=exc))
             return
-        self._show_info(self.t("paid.exported", count=len(offers)))
+        self._show_info(
+            self.t("paid.valuation_exported")
+            if valuation_only
+            else self.t("paid.exported", count=len(offers))
+        )
 
     def _import_paid_offers(self) -> None:
         path, _selected_filter = QFileDialog.getOpenFileName(
@@ -4165,12 +4952,17 @@ class MainWindow(QMainWindow):
                 self.player_state.paid_offers.append(imported)
                 existing[imported.offer_id] = imported
                 added += 1
-        use_rates = QMessageBox.question(
-            self,
-            self.t("confirm.title"),
-            self.t("paid.import_valuation_confirm"),
-            QMessageBox.Yes | QMessageBox.No,
-            QMessageBox.No,
+        valuation_only = not offers
+        use_rates = (
+            QMessageBox.Yes
+            if valuation_only
+            else QMessageBox.question(
+                self,
+                self.t("confirm.title"),
+                self.t("paid.import_valuation_confirm"),
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.No,
+            )
         )
         if use_rates == QMessageBox.Yes:
             self.player_state.paid_valuation = imported_valuation
@@ -4183,9 +4975,22 @@ class MainWindow(QMainWindow):
             self.player_state.paid_valuation = self._paid_valuation()
         self.player_repository.save(self.player_state)
         self._refresh_paid_offer_table()
-        self._show_info(
-            self.t("paid.imported", added=added, skipped=skipped)
-        )
+        self._calculate_plan()
+        self._calculate_castle_plan()
+        if valuation_only:
+            self.paid_workspace_tabs.setCurrentIndex(2)
+            self._show_info(self.t("paid.valuation_imported"))
+        else:
+            self.paid_workspace_tabs.setCurrentIndex(1)
+            self._show_info(
+                self.t(
+                    "paid.imported_with_valuation"
+                    if use_rates == QMessageBox.Yes
+                    else "paid.imported",
+                    added=added,
+                    skipped=skipped,
+                )
+            )
 
     def _capture_paid_pack(self) -> None:
         self.paid_capture_button.setEnabled(False)
@@ -4196,7 +5001,7 @@ class MainWindow(QMainWindow):
             self._ocr_paid_gem_line_groups = []
             self._run_ocr(force_window_capture=True, paid_pack=True)
             paid_line_groups = self._ocr_paid_line_groups
-            entries = parse_speedup_ocr("", paid_line_groups)
+            entries = parse_paid_item_ocr("", paid_line_groups)
             price = detect_pack_price(
                 paid_line_groups,
                 image_width=self._ocr_image.width(),
@@ -4207,18 +5012,37 @@ class MainWindow(QMainWindow):
                 image_width=self._ocr_image.width(),
                 image_height=self._ocr_image.height(),
             )
-            self.paid_diamond_spin.setValue(price or 0)
-            self.paid_included_gems_spin.setValue(gems.included_gems)
-            self.paid_bonus_gems_spin.setValue(gems.bonus_gems)
+            if price is not None:
+                self.paid_diamond_spin.setValue(price)
+            if gems.included_gems > 0:
+                self.paid_included_gems_spin.setValue(gems.included_gems)
+            if gems.bonus_gems > 0:
+                self.paid_bonus_gems_spin.setValue(gems.bonus_gems)
             if not entries:
-                self.paid_item_table.setRowCount(0)
-                self._add_paid_row()
                 self._show_info(self.t("paid.no_items"))
                 return
-            self.paid_item_table.setRowCount(0)
+
+            existing_entries = self._paid_entries_from_table()
+            seen = {
+                self._paid_entry_signature(entry) for entry in existing_entries
+            }
+            if (
+                not existing_entries
+                and self.paid_item_table.rowCount() == 1
+                and self._paid_row_is_empty(0)
+            ):
+                self.paid_item_table.setRowCount(0)
+            added = 0
             for entry in entries:
+                signature = self._paid_entry_signature(entry)
+                if signature in seen:
+                    continue
                 self._add_paid_row(entry)
+                seen.add(signature)
+                added += 1
             self._update_paid_summary()
+            if added == 0:
+                self._show_info(self.t("paid.no_new_items"))
         finally:
             self.paid_capture_button.setEnabled(True)
 
@@ -4289,6 +5113,10 @@ class MainWindow(QMainWindow):
             self.t("app.version", version=version_string()), page
         )
         settings.addWidget(self.help_version_label)
+        self.help_dataset_version_label = QLabel(
+            self.t("app.dataset_version", version=BUNDLED_DATASET_VERSION), page
+        )
+        settings.addWidget(self.help_dataset_version_label)
         settings.addSpacing(12)
         self.update_check_button = QPushButton(self.t("update.check"), page)
         settings.addWidget(self.update_check_button)
@@ -4329,7 +5157,9 @@ class MainWindow(QMainWindow):
             ("help.paid.title", "help.paid.body"),
             ("help.appearance.title", "help.appearance.body"),
             ("language.pack_title", "language.pack_description"),
+            ("help.files.title", "help.files.body"),
             ("help.data.title", "help.data.body"),
+            ("help.disclaimer.title", "app.disclaimer"),
             ("help.license.title", "help.license.body"),
             ("help.update.title", "help.update.body"),
         )
@@ -4338,8 +5168,6 @@ class MainWindow(QMainWindow):
         for title_key, body_key in sections:
             body.append(f"<h2>{self.t(title_key)}</h2>")
             body.append(f"<p>{self.t(body_key)}</p>")
-        body.append("<hr>")
-        body.append(f"<p>{self.t('app.disclaimer')}</p>")
         self.help_browser.setHtml("".join(body))
         layout.addWidget(self.help_browser)
         return page
@@ -4355,6 +5183,10 @@ class MainWindow(QMainWindow):
             self.tree_dataset_list.setStyleSheet(
                 dataset_style_sheet(visual_style)
             )
+        for panel_name in ("plan_speedup_panel", "castle_speedup_panel"):
+            panel = getattr(self, panel_name, None)
+            if panel is not None:
+                panel.setStyleSheet(speedup_panel_style_sheet(visual_style))
         for tree_view_name in ("tree_view", "plan_tree_view"):
             tree_view = getattr(self, tree_view_name, None)
             if tree_view is not None:

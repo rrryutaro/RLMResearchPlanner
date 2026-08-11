@@ -157,6 +157,8 @@ class PlayerSettings:
     research_speed_boost_percent: float = 0.0
     max_guild_helps: int = 0
     speedup_seconds: int = 0
+    speedup_inventory: list[SpeedupInventoryItem] = field(default_factory=list)
+    use_gems_for_speedups: bool = False
     resource_display_mode: str = "exact"
     resources: dict[str, int] = field(
         default_factory=lambda: {key: 0 for key in RESOURCE_KEYS}
@@ -193,6 +195,13 @@ class ResearchPlanTask:
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
     source_name: str = ""
+
+
+@dataclass(frozen=True)
+class SpeedupInventoryItem:
+    kind: str
+    duration_seconds: int
+    quantity: int
 
 
 @dataclass(frozen=True)

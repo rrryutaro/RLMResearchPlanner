@@ -1,8 +1,17 @@
-const CACHE_PREFIX = "rlm-research-planner-pwa-";
-const CACHE_NAME = `${CACHE_PREFIX}v0.0.15-b1`;
+const SCOPE_PATH = new URL(self.registration.scope).pathname;
+const SCOPE_KEY = SCOPE_PATH.replace(/[^a-z0-9]+/giu, "-").replace(/^-+|-+$/gu, "") || "root";
+const IS_PREVIEW_SCOPE = /\/preview\/$/u.test(SCOPE_PATH);
+const CACHE_NAMESPACE = IS_PREVIEW_SCOPE ? "rlm-research-planner-preview" : "rlm-research-planner-pwa";
+const CACHE_PREFIX = `${CACHE_NAMESPACE}-${SCOPE_KEY}-`;
+const LEGACY_CACHE_PREFIX = "rlm-research-planner-pwa-v";
+const CACHE_NAME = `${CACHE_PREFIX}v0.1.0-b13`;
 const APP_SHELL = [
-  "./", "./index.html", "./styles.css?v=0.0.15-b1", "./manifest.webmanifest", "./icons/app-icon.svg",
-  "./src/app.js?v=0.0.15-b1", "./src/catalog.js?v=0.0.15-b1", "./src/planning.js?v=0.0.15-b1", "./src/castle-planning.js?v=0.0.15-b1", "./src/state.js?v=0.0.15-b1", "./src/language-pack.js?v=0.0.15-b1", "./src/paid-value.js?v=0.0.15-b1", "./src/resource-format.js?v=0.0.15-b1", "./src/tree-layout.js?v=0.0.15-b1", "./src/tree-zoom.js?v=0.0.15-b1", "./data/research/catalog.json?v=0.0.15-b1", "./data/buildings/castle_catalog.json?v=0.0.15-b1", "./data/i18n/ja-JP.json?v=0.0.15-b1", "./data/i18n/en-US.json?v=0.0.15-b1",
+  "./", "./index.html", "./styles.css?v=0.1.0-b13", "./manifest.webmanifest", "./icons/app-icon.svg",
+  "./src/app.js?v=0.1.0-b13", "./src/catalog.js?v=0.1.0-b13", "./src/planning.js?v=0.1.0-b13", "./src/castle-planning.js?v=0.1.0-b13", "./src/state.js?v=0.1.0-b13", "./src/language-pack.js?v=0.1.0-b13", "./src/paid-value.js?v=0.1.0-b13", "./src/speedup-inventory.js?v=0.1.0-b13", "./src/resource-format.js?v=0.1.0-b13", "./src/tree-layout.js?v=0.1.0-b13", "./src/tree-zoom.js?v=0.1.0-b13",
+  "./data/research-dataset/manifest.json?v=0.1.0-b13", "./data/research-dataset/sources.json?v=0.1.0-b13", "./data/research-dataset/evidence.json?v=0.1.0-b13", "./data/research-dataset/id-aliases.json?v=0.1.0-b13",
+  "./data/research-dataset/locales/ja-JP.json?v=0.1.0-b13", "./data/research-dataset/locales/en-US.json?v=0.1.0-b13",
+  "./data/research-dataset/trees/economy.json?v=0.1.0-b13", "./data/research-dataset/trees/defense.json?v=0.1.0-b13", "./data/research-dataset/trees/military.json?v=0.1.0-b13", "./data/research-dataset/trees/monster_hunt.json?v=0.1.0-b13", "./data/research-dataset/trees/upgrade_defenses.json?v=0.1.0-b13", "./data/research-dataset/trees/upgrade_military.json?v=0.1.0-b13", "./data/research-dataset/trees/army_leadership.json?v=0.1.0-b13", "./data/research-dataset/trees/military_command.json?v=0.1.0-b13", "./data/research-dataset/trees/familiars.json?v=0.1.0-b13", "./data/research-dataset/trees/familiar_battles.json?v=0.1.0-b13", "./data/research-dataset/trees/sigils.json?v=0.1.0-b13", "./data/research-dataset/trees/wonder_battles.json?v=0.1.0-b13", "./data/research-dataset/trees/gear.json?v=0.1.0-b13", "./data/research-dataset/trees/advanced_wonder_battles.json?v=0.1.0-b13", "./data/research-dataset/trees/mana_awakening.json?v=0.1.0-b13", "./data/research-dataset/trees/guild_duel.json?v=0.1.0-b13",
+  "./data/buildings/castle_catalog.json?v=0.1.0-b13", "./data/i18n/ja-JP.json?v=0.1.0-b13", "./data/i18n/en-US.json?v=0.1.0-b13",
 ];
 
 self.addEventListener("install", (event) => {
@@ -10,7 +19,7 @@ self.addEventListener("install", (event) => {
 });
 
 self.addEventListener("activate", (event) => {
-  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
+  event.waitUntil(caches.keys().then((keys) => Promise.all(keys.filter((key) => (key.startsWith(CACHE_PREFIX) && key !== CACHE_NAME) || (!IS_PREVIEW_SCOPE && key.startsWith(LEGACY_CACHE_PREFIX))).map((key) => caches.delete(key)))).then(() => self.clients.claim()));
 });
 
 self.addEventListener("fetch", (event) => {

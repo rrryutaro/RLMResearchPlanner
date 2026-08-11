@@ -9,14 +9,17 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.0.15-b1">
-    <title>RLM Research Planner モバイル版</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.0-b13">
+    <title>RLM Research Planner v0.1.0</title>
   </head>
   <body>
     <header class="app-header">
-      <div>
+      <div class="app-title">
         <p class="eyebrow">Lords Mobile unofficial tool</p>
-        <h1>RLM Research Planner</h1>
+        <div class="app-title-line">
+          <h1>RLM Research Planner</h1>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="バージョン">v0.1.0</span>
+        </div>
       </div>
       <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
     </header>
@@ -29,6 +32,11 @@
       <button class="tab-button" data-tab="paid" type="button" data-i18n="tab.paid">課金</button>
       <button class="tab-button" data-tab="help" type="button" data-i18n="tab.help">ヘルプ</button>
     </nav>
+
+    <div id="startup-loading" class="startup-loading" role="status" aria-live="polite">
+      <span class="startup-loading-spinner" aria-hidden="true"></span>
+      <span id="startup-loading-message">研究データを読み込んでいます…</span>
+    </div>
 
     <div id="startup-error" class="startup-error" role="alert" hidden>
       <span id="startup-error-message"></span>
@@ -130,6 +138,7 @@
               </div>
             </article>
             <div id="resource-summary" class="resource-grid"></div>
+            <details id="plan-speedup-summary" class="speedup-simulation"></details>
             <div class="button-row plan-actions">
               <button id="register-plan" type="button" data-i18n="plan.register_task">タスクに登録</button>
               <button id="complete-plan" class="primary" type="button" data-i18n="plan.mark_complete">研究完了として反映</button>
@@ -142,7 +151,12 @@
         <div id="shortest-plan-view" hidden>
           <div class="list-toolbar">
             <p data-i18n="pwa.shortest_description">現在の前提条件を満たす次レベルを、完了までの時間が短い順に表示します。</p>
-            <label class="field compact"><span data-i18n="pwa.display_count">表示数</span><select id="shortest-limit"><option>20</option><option>50</option><option>100</option></select></label>
+            <div class="pagination-controls">
+              <label><span data-i18n="plan.page_size">1ページ件数</span><select id="shortest-limit"><option>10</option><option selected>20</option><option>50</option><option>100</option></select></label>
+              <button id="shortest-previous" type="button" data-i18n="plan.previous_page">前へ</button>
+              <output id="shortest-page-status" aria-live="polite">0 / 0（全0件）</output>
+              <button id="shortest-next" type="button" data-i18n="plan.next_page">次へ</button>
+            </div>
           </div>
           <div id="shortest-selected" class="selected-research-banner" hidden></div>
           <div id="shortest-list" class="plan-list"></div>
@@ -226,6 +240,32 @@
             <p class="hint" data-i18n="player.research_speed_boost_hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
             </div>
           </details>
+          <details class="settings-card speedup-inventory-card">
+            <summary data-i18n="player.speedup_inventory">所持スピードアップ</summary>
+            <div class="settings-card-body">
+              <p class="settings-description" data-i18n="player.speedup_inventory_hint">登録内容を一覧から選び、共通の入力欄で追加・編集します。</p>
+              <div id="speedup-inventory-list" class="speedup-inventory-list"></div>
+              <p id="speedup-inventory-empty" class="empty-state" data-i18n="player.speedup_empty">所持スピードアップは未登録です。</p>
+              <div id="speedup-inventory-editor" class="speedup-inventory-editor" hidden>
+                <strong id="speedup-inventory-editor-title" data-i18n="player.speedup_new">スピードアップを追加</strong>
+                <div class="speedup-inventory-fields">
+                  <label class="field speedup-kind-field"><span data-i18n="paid.kind">種類</span><select id="speedup-inventory-kind"></select></label>
+                  <label class="field"><span data-i18n="paid.duration">1個の時間</span><input id="speedup-inventory-duration" type="number" inputmode="numeric" min="1" value="1"></label>
+                  <label class="field"><span data-i18n="paid.unit">単位</span><select id="speedup-inventory-unit"></select></label>
+                  <label class="field"><span data-i18n="paid.quantity">個数</span><input id="speedup-inventory-quantity" type="number" inputmode="numeric" min="1" value="1"></label>
+                </div>
+                <div class="button-row compact-actions">
+                  <button id="speedup-inventory-save" class="primary" type="button" data-i18n="common.save">保存</button>
+                  <button id="speedup-inventory-cancel" type="button" data-i18n="common.cancel">キャンセル</button>
+                  <button id="speedup-inventory-delete" class="danger" type="button" data-i18n="player.speedup_delete">削除</button>
+                </div>
+              </div>
+              <div class="speedup-inventory-footer">
+                <button id="speedup-inventory-add" type="button" data-i18n="player.speedup_add">時短を追加</button>
+                <span id="speedup-inventory-summary" class="muted"></span>
+              </div>
+            </div>
+          </details>
           <details class="settings-card">
             <summary data-i18n="player.resources">所持資源</summary>
             <div class="settings-card-body">
@@ -295,14 +335,13 @@
           <button id="paid-view-input-button" class="is-active" type="button" data-i18n="paid.view.input">入力</button>
           <button id="paid-view-saved-button" type="button" data-i18n="paid.view.saved">保存一覧</button>
           <button id="paid-view-comparison-button" type="button" data-i18n="paid.view.comparison">比較</button>
+          <button id="paid-view-share-button" type="button" data-i18n="paid.view.share">共有</button>
         </div>
 
         <div id="paid-view-saved" class="paid-subview" hidden>
           <div id="paid-offer-list" class="paid-offer-list"></div>
           <div class="button-row">
             <button id="paid-export-selected" type="button" data-i18n="paid.export_selected">選択中を書き出す</button>
-            <button id="paid-export-all" type="button" data-i18n="paid.export_all">すべて書き出す</button>
-            <label class="file-button"><span data-i18n="paid.import">課金データを取り込む</span><input id="paid-import" type="file" accept="application/json,.json"></label>
           </div>
         </div>
 
@@ -326,6 +365,20 @@
           <div id="paid-comparison-list" class="paid-offer-list paid-comparison-list"></div>
         </div>
 
+        <div id="paid-view-share" class="paid-subview" hidden>
+          <article class="settings-card">
+            <div class="settings-card-body">
+              <h3 data-i18n="paid.share_title">課金データの共有</h3>
+              <p class="hint" data-i18n="paid.share_description">課金項目と比較ポイント設定をJSONファイルへ書き出し、別の端末や他の利用者から取り込めます。取り込みでは既存の課金項目を残したまま追加します。</p>
+              <div class="button-row">
+                <button id="paid-export-all" class="primary" type="button" data-i18n="paid.export_all_with_settings">課金項目と比較設定を書き出す</button>
+                <button id="paid-export-valuation" type="button" data-i18n="paid.export_valuation">比較設定だけを書き出す</button>
+                <label class="file-button"><span data-i18n="paid.import_shared">課金項目・比較設定を取り込む</span><input id="paid-import" type="file" accept="application/json,.json"></label>
+              </div>
+            </div>
+          </article>
+        </div>
+
         <article id="paid-view-input" class="paid-subview paid-editor settings-card">
           <div class="settings-card-body">
             <div class="form-grid paid-main-fields">
@@ -342,6 +395,23 @@
               <button id="paid-add-item" type="button" data-i18n="paid.add_row">行を追加</button>
             </div>
             <div id="paid-item-list" class="paid-item-list"></div>
+            <div id="paid-item-editor" class="speedup-inventory-editor paid-item-editor" hidden>
+              <strong id="paid-item-editor-title" data-i18n="paid.item_new">内容を追加</strong>
+              <div class="paid-item-editor-fields">
+                <label class="field paid-item-kind-field"><span data-i18n="paid.kind">種類</span><select id="paid-item-kind"></select></label>
+                <label class="field paid-item-name-field"><span data-i18n="paid.item_name">項目名</span><input id="paid-item-name" type="text" maxlength="200"></label>
+                <label class="field"><span data-i18n="paid.quantity">個数</span><input id="paid-item-quantity" type="number" inputmode="numeric" min="1" value="1"></label>
+                <label id="paid-item-duration-field" class="field paid-time-field"><span data-i18n="paid.duration">1個の時間</span><input id="paid-item-duration" type="number" inputmode="decimal" min="0" value="1"></label>
+                <label id="paid-item-unit-field" class="field paid-time-field"><span data-i18n="paid.unit">単位</span><select id="paid-item-unit"></select></label>
+                <label class="field"><span data-i18n="paid.gem_value_each">1個のジェム換算</span><input id="paid-item-gem-value" type="number" inputmode="decimal" min="0" step="0.01"></label>
+                <label class="field"><span data-i18n="paid.points_each">1個の追加ポイント</span><input id="paid-item-points" type="number" inputmode="decimal" min="0" step="0.01"></label>
+              </div>
+              <div class="button-row compact-actions">
+                <button id="paid-item-save" class="primary" type="button" data-i18n="common.save">保存</button>
+                <button id="paid-item-cancel" type="button" data-i18n="common.cancel">キャンセル</button>
+                <button id="paid-item-delete" class="danger" type="button" data-i18n="paid.delete_row">この行を削除</button>
+              </div>
+            </div>
             <div class="button-row paid-actions">
               <button id="paid-save" class="primary" type="button" data-i18n="paid.save_offer">保存</button>
               <button id="paid-delete" class="danger" type="button" data-i18n="paid.delete_offer">削除</button>
@@ -377,7 +447,7 @@
           </article>
           <article>
             <h3 data-i18n="help.paid.title">課金候補の比較</h3>
-            <p data-i18n="help.paid.body">課金タブは入力・保存一覧・比較に分かれています。目的と内容を保存し、目的別の順位や換算設定を比較画面で確認できます。ジェム換算と素材ポイントは変更可能な比較基準で、ゲーム公式の現金価値ではありません。課金データだけを書き出して追加取り込みでき、モバイル版はすべて手入力です。</p>
+            <p data-i18n="help.paid.body">課金タブは入力・保存一覧・比較に分かれています。目的と内容を保存し、目的別の順位や換算設定を比較画面で確認できます。ジェム換算と素材ポイントは変更可能な比較基準で、ゲーム公式の現金価値ではありません。課金データだけを書き出して追加取り込みでき、PWA版はすべて手入力です。</p>
           </article>
           <article>
             <h3 data-i18n="pwa.scope_title">モバイル版について</h3>
@@ -388,14 +458,23 @@
             <p data-i18n="pwa.environment_body">iPhone / iPadはiOS / iPadOS 15.4以降のSafari、AndroidはAndroid 10以降と最新版Chromeを推奨します。Safari以外からiPhone / iPadのホーム画面へ追加する場合は16.4以降を推奨します。PCでは最新版のChromeまたはEdge、macOSではSafariも利用できます。実機確認範囲が限られるため動作保証ではなく、古いOSや更新されていないブラウザーは対象外です。</p>
           </article>
           <article>
+            <h3 data-i18n="help.files.title">書き出し・読み込みファイル</h3>
+            <p id="help-files-body"></p>
+          </article>
+          <article>
             <h3 data-i18n="help.data.title">収録データ</h3>
             <p id="catalog-data-status"></p>
             <p id="catalog-data-notes" class="hint"></p>
+            <p id="dataset-version">研究データ</p>
             <p data-i18n="pwa.game_version_note">動作確認済みゲームバージョンはv2.200.309です。これは必須バージョンではなく、以降のゲーム更新では研究データや画面表示が変わる可能性があります。</p>
           </article>
           <article>
             <h3 data-i18n="pwa.install_title">インストール</h3>
             <p data-i18n="pwa.install_body">ブラウザーの「ホーム画面に追加」または「アプリをインストール」を選びます。読み込み後はオフラインでも使えます。</p>
+          </article>
+          <article class="callout important">
+            <h3 data-i18n="help.disclaimer.title">重要な注意・免責</h3>
+            <p data-i18n="app.disclaimer">本ツールは無償の非公式ツールです。表示内容は参考情報であり、正確性を保証しません。課金・ジェム・希少アイテムの使用前に必ずゲーム画面で確認し、自己の判断で利用してください。本ツールの利用により生じた損害について、法令上免除できない場合を除き、開発者は責任を負いません。</p>
           </article>
           <article>
             <h3 data-i18n="help.license.title">ライセンス・出典</h3>
@@ -448,9 +527,27 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.0.15-b1";
+      const startupVersion = "0.1.0-b13";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
+      const appScopePath = new URL(appRoot).pathname;
+      const appScopeKey = appScopePath.replace(/[^a-z0-9]+/giu, "-").replace(/^-+|-+$/gu, "") || "root";
+      const isPreviewScope = /\/preview\/$/u.test(appScopePath);
+      const appCacheNamespace = isPreviewScope ? "rlm-research-planner-preview" : "rlm-research-planner-pwa";
+      const appCachePrefix = `${appCacheNamespace}-${appScopeKey}-`;
+      const legacyCachePrefix = "rlm-research-planner-pwa-v";
+      const startupLoading = document.getElementById("startup-loading");
+      const startupLoadingMessage = document.getElementById("startup-loading-message");
+      const mainElement = document.querySelector("main");
+      const prefersJapanese = (navigator.languages || [navigator.language || ""]).some((locale) => String(locale).toLowerCase().startsWith("ja"));
+      const startupVersionLabel = isPreviewScope
+        ? (prefersJapanese ? "v0.1.0 確認版" : "v0.1.0 Preview")
+        : "v0.1.0";
+      document.getElementById("header-version").textContent = startupVersionLabel;
+      document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
+      document.title = `RLM Research Planner ${startupVersionLabel}`;
+      startupLoadingMessage.textContent = prefersJapanese ? "研究データを読み込んでいます…" : "Loading research data…";
+      mainElement.setAttribute("aria-busy", "true");
       const clearAppShell = async () => {
         if ("serviceWorker" in navigator) {
           const registrations = await navigator.serviceWorker.getRegistrations();
@@ -458,10 +555,12 @@
         }
         if ("caches" in window) {
           const keys = await caches.keys();
-          await Promise.all(keys.filter((key) => key.startsWith("rlm-research-planner-pwa-")).map((key) => caches.delete(key)));
+          await Promise.all(keys.filter((key) => key.startsWith(appCachePrefix) || (!isPreviewScope && key.startsWith(legacyCachePrefix))).map((key) => caches.delete(key)));
         }
       };
       const showStartupError = (error) => {
+        startupLoading.hidden = true;
+        mainElement.setAttribute("aria-busy", "false");
         const target = document.getElementById("startup-error");
         const message = document.getElementById("startup-error-message");
         message.textContent = `起動に必要なデータを読み込めませんでした: ${error?.message || error || "不明なエラー"}`;
@@ -493,9 +592,23 @@
         }
         showStartupError(error);
       };
+      const registerServiceWorker = () => {
+        if (!("serviceWorker" in navigator)) return;
+        const hadController = Boolean(navigator.serviceWorker.controller);
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener("controllerchange", () => {
+          if (!hadController || refreshing) return;
+          refreshing = true;
+          location.reload();
+        });
+        navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).then((registration) => registration.update()).catch(() => {});
+      };
       window.rlmMarkStartupComplete = () => {
         sessionStorage.removeItem(startupRecoveryKey);
         window.rlmStartupComplete = true;
+        startupLoading.hidden = true;
+        mainElement.setAttribute("aria-busy", "false");
+        if (location.protocol !== "file:") setTimeout(registerServiceWorker, 0);
       };
       document.getElementById("startup-recover").addEventListener("click", window.rlmRecoverPwa);
       window.addEventListener("error", (event) => {
@@ -505,6 +618,8 @@
         if (!window.rlmStartupComplete) window.rlmHandleStartupError(event.reason);
       });
       if (location.protocol === "file:") {
+        startupLoading.hidden = true;
+        mainElement.setAttribute("aria-busy", "false");
         const target = document.getElementById("startup-error");
         const message = document.getElementById("startup-error-message");
         const retry = document.getElementById("startup-retry");
@@ -513,16 +628,8 @@
         retry.hidden = true;
         recover.hidden = true;
         target.hidden = false;
-      } else if ("serviceWorker" in navigator) {
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener("controllerchange", () => {
-          if (refreshing) return;
-          refreshing = true;
-          location.reload();
-        });
-        navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).then((registration) => registration.update()).catch(() => {});
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.0.15-b1"></script>
+    <script type="module" src="./src/app.js?v=0.1.0-b13"></script>
   </body>
 </html>

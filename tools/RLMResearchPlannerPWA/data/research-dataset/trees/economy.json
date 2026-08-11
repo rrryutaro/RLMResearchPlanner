@@ -1,0 +1,2570 @@
+{
+  "coverage": "complete",
+  "default_verification": {
+    "checked_on": "2026-08-07",
+    "notes": "Imported from the frozen legacy catalog during the versioned dataset migration. Display connections remain provisional until checked against direct game evidence.",
+    "source_ids": [
+      "src_fandom_economy"
+    ],
+    "status": "provisional"
+  },
+  "display_connections": [
+    {
+      "from_ids": [
+        "economy_construction_speed"
+      ],
+      "to_ids": [
+        "economy_vault_management"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "economy_food_harvest_1"
+      ],
+      "to_ids": [
+        "economy_stone_harvest_1",
+        "economy_timber_harvest_1",
+        "economy_ore_harvest_1"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "economy_vault_management"
+      ],
+      "to_ids": [
+        "economy_weight_training_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "economy_stone_harvest_1",
+        "economy_timber_harvest_1",
+        "economy_ore_harvest_1"
+      ],
+      "to_ids": [
+        "economy_resource_harvesting_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "economy_weight_training_i",
+        "economy_resource_harvesting_i"
+      ],
+      "to_ids": [
+        "economy_gem_harvesting_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "document_type": "RLMResearchData.tree",
+  "legacy_compatibility": {
+    "notes": "研究名・配置・接続・最大レベル・レベル別効果を参照元から収録する。日本語名はGamerchと公開の日本語研究一覧、その他の値はCC BY-SAのLords Mobile Wikiを参照。",
+    "scope": "all_names_layout_only",
+    "source_type": "community_catalog",
+    "verification_status": "sourced_layout_levels_effects_prerequisites"
+  },
+  "nodes": [
+    {
+      "effects": [
+        {
+          "metric_id": "economy_construction_speed",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "21%",
+              "level": 6,
+              "value": "21%"
+            },
+            {
+              "display_fallback": "28%",
+              "level": 7,
+              "value": "28%"
+            },
+            {
+              "display_fallback": "37%",
+              "level": 8,
+              "value": "37%"
+            },
+            {
+              "display_fallback": "48%",
+              "level": 9,
+              "value": "48%"
+            },
+            {
+              "display_fallback": "70%",
+              "level": 10,
+              "value": "70%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_construction_speed",
+      "layout": {
+        "column": 0,
+        "row": 0
+      },
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 420,
+          "buildings": {},
+          "costs": {
+            "food": 571,
+            "gold": 794,
+            "ore": 429,
+            "stone": 714,
+            "timber": 1142
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 180,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 3,
+          "base_time_seconds": 2280,
+          "buildings": {},
+          "costs": {
+            "food": 1903,
+            "gold": 5288,
+            "ore": 1428,
+            "stone": 2379,
+            "timber": 3806
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 299,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 5,
+          "base_time_seconds": 6780,
+          "buildings": {},
+          "costs": {
+            "food": 5709,
+            "gold": 15862,
+            "ore": 4282,
+            "stone": 7136,
+            "timber": 11418
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 538,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 20220,
+          "buildings": {},
+          "costs": {
+            "food": 19029,
+            "gold": 105743,
+            "ore": 14272,
+            "stone": 23786,
+            "timber": 38058
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 1616,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 60600,
+          "buildings": {},
+          "costs": {
+            "food": 47572,
+            "gold": 264356,
+            "ore": 35679,
+            "stone": 59465,
+            "timber": 95143
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 4845,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 181740,
+          "buildings": {},
+          "costs": {
+            "food": 95143,
+            "gold": 528712,
+            "ore": 71358,
+            "stone": 118929,
+            "timber": 190286
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 14536,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 545220,
+          "buildings": {},
+          "costs": {
+            "food": 475714,
+            "gold": 1321779,
+            "ore": 356786,
+            "stone": 594643,
+            "timber": 951428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 43608,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 1635600,
+          "buildings": {},
+          "costs": {
+            "food": 951428,
+            "gold": 2643558,
+            "ore": 713571,
+            "stone": 1189285,
+            "timber": 1902856
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 130823,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 4906740,
+          "buildings": {},
+          "costs": {
+            "food": 1902856,
+            "gold": 10574231,
+            "ore": 1427142,
+            "stone": 2378570,
+            "timber": 3805712
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 392471,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 12266880,
+          "buildings": {},
+          "costs": {
+            "food": 3805712,
+            "gold": 23792019,
+            "ore": 2854284,
+            "stone": 4757140,
+            "timber": 7611423
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 981178,
+          "prerequisites": [],
+          "technolabe_count": 5
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_food_harvest_1",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "22%",
+              "level": 6,
+              "value": "22%"
+            },
+            {
+              "display_fallback": "31%",
+              "level": 7,
+              "value": "31%"
+            },
+            {
+              "display_fallback": "43%",
+              "level": 8,
+              "value": "43%"
+            },
+            {
+              "display_fallback": "58%",
+              "level": 9,
+              "value": "58%"
+            },
+            {
+              "display_fallback": "80%",
+              "level": 10,
+              "value": "80%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_food_harvest_1",
+      "layout": {
+        "column": 2,
+        "row": 0
+      },
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 240,
+          "buildings": {},
+          "costs": {
+            "food": 35,
+            "gold": 397,
+            "ore": 42,
+            "stone": 58,
+            "timber": 58
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 90,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 1140,
+          "buildings": {},
+          "costs": {
+            "food": 115,
+            "gold": 2644,
+            "ore": 140,
+            "stone": 191,
+            "timber": 191
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 150,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 3420,
+          "buildings": {},
+          "costs": {
+            "food": 343,
+            "gold": 7931,
+            "ore": 419,
+            "stone": 571,
+            "timber": 571
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 269,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 10140,
+          "buildings": {},
+          "costs": {
+            "food": 1142,
+            "gold": 52872,
+            "ore": 1396,
+            "stone": 1903,
+            "timber": 1903
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 808,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 30300,
+          "buildings": {},
+          "costs": {
+            "food": 2855,
+            "gold": 132178,
+            "ore": 3489,
+            "stone": 4758,
+            "timber": 4758
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 2422,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 90900,
+          "buildings": {},
+          "costs": {
+            "food": 5709,
+            "gold": 264356,
+            "ore": 6978,
+            "stone": 9515,
+            "timber": 9515
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 7268,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 272640,
+          "buildings": {},
+          "costs": {
+            "food": 28543,
+            "gold": 660890,
+            "ore": 34886,
+            "stone": 47572,
+            "timber": 47572
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 21804,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 817800,
+          "buildings": {},
+          "costs": {
+            "food": 57086,
+            "gold": 1321779,
+            "ore": 69772,
+            "stone": 95143,
+            "timber": 95143
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 65412,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2453400,
+          "buildings": {},
+          "costs": {
+            "food": 114172,
+            "gold": 5287116,
+            "ore": 139543,
+            "stone": 190286,
+            "timber": 190286
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 196235,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6133440,
+          "buildings": {},
+          "costs": {
+            "food": 228343,
+            "gold": 11896010,
+            "ore": 279086,
+            "stone": 380572,
+            "timber": 380572
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 490589,
+          "prerequisites": [],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_vault_management",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "21%",
+              "level": 6,
+              "value": "21%"
+            },
+            {
+              "display_fallback": "28%",
+              "level": 7,
+              "value": "28%"
+            },
+            {
+              "display_fallback": "37%",
+              "level": 8,
+              "value": "37%"
+            },
+            {
+              "display_fallback": "48%",
+              "level": 9,
+              "value": "48%"
+            },
+            {
+              "display_fallback": "70%",
+              "level": 10,
+              "value": "70%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_vault_management",
+      "layout": {
+        "column": 0,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": 3,
+          "base_time_seconds": 840,
+          "buildings": {},
+          "costs": {
+            "food": 86,
+            "gold": 278,
+            "ore": 105,
+            "stone": 143,
+            "timber": 143
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 63,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 5,
+          "base_time_seconds": 3180,
+          "buildings": {},
+          "costs": {
+            "food": 286,
+            "gold": 1851,
+            "ore": 349,
+            "stone": 476,
+            "timber": 476
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 105,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 6540,
+          "buildings": {},
+          "costs": {
+            "food": 857,
+            "gold": 5552,
+            "ore": 1047,
+            "stone": 1428,
+            "timber": 1428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 188,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 9180,
+          "buildings": {},
+          "costs": {
+            "food": 2855,
+            "gold": 37010,
+            "ore": 3489,
+            "stone": 4758,
+            "timber": 4758
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 566,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 21180,
+          "buildings": {},
+          "costs": {
+            "food": 7136,
+            "gold": 92525,
+            "ore": 8722,
+            "stone": 11893,
+            "timber": 11893
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 1696,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 63540,
+          "buildings": {},
+          "costs": {
+            "food": 14272,
+            "gold": 185050,
+            "ore": 17443,
+            "stone": 23786,
+            "timber": 23786
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 5087,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 190560,
+          "buildings": {},
+          "costs": {
+            "food": 71358,
+            "gold": 462623,
+            "ore": 87215,
+            "stone": 118929,
+            "timber": 118929
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 15263,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 571680,
+          "buildings": {},
+          "costs": {
+            "food": 142715,
+            "gold": 925246,
+            "ore": 174429,
+            "stone": 237857,
+            "timber": 237857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 45788,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1715040,
+          "buildings": {},
+          "costs": {
+            "food": 285429,
+            "gold": 3700981,
+            "ore": 348857,
+            "stone": 475714,
+            "timber": 475714
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 137365,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4287600,
+          "buildings": {},
+          "costs": {
+            "food": 570857,
+            "gold": 8327207,
+            "ore": 697714,
+            "stone": 951428,
+            "timber": 951428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 343412,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_construction_speed"
+            }
+          ],
+          "technolabe_count": 2
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_stone_harvest_1",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "22%",
+              "level": 6,
+              "value": "22%"
+            },
+            {
+              "display_fallback": "31%",
+              "level": 7,
+              "value": "31%"
+            },
+            {
+              "display_fallback": "43%",
+              "level": 8,
+              "value": "43%"
+            },
+            {
+              "display_fallback": "58%",
+              "level": 9,
+              "value": "58%"
+            },
+            {
+              "display_fallback": "80%",
+              "level": 10,
+              "value": "80%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_stone_harvest_1",
+      "layout": {
+        "column": 1,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 1140,
+          "buildings": {},
+          "costs": {
+            "food": 86,
+            "gold": 397,
+            "ore": 105,
+            "stone": 143,
+            "timber": 143
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 90,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "economy_food_harvest_1"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 4500,
+          "buildings": {},
+          "costs": {
+            "food": 286,
+            "gold": 2644,
+            "ore": 349,
+            "stone": 476,
+            "timber": 476
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 150,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 9360,
+          "buildings": {},
+          "costs": {
+            "food": 857,
+            "gold": 7931,
+            "ore": 1047,
+            "stone": 1428,
+            "timber": 1428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 269,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 13080,
+          "buildings": {},
+          "costs": {
+            "food": 2855,
+            "gold": 52872,
+            "ore": 3489,
+            "stone": 4758,
+            "timber": 4758
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 808,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 30300,
+          "buildings": {},
+          "costs": {
+            "food": 7136,
+            "gold": 132178,
+            "ore": 8722,
+            "stone": 11893,
+            "timber": 11893
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 2422,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 90780,
+          "buildings": {},
+          "costs": {
+            "food": 14272,
+            "gold": 264356,
+            "ore": 17443,
+            "stone": 23786,
+            "timber": 23786
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 7268,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 272280,
+          "buildings": {},
+          "costs": {
+            "food": 71358,
+            "gold": 660890,
+            "ore": 87215,
+            "stone": 118929,
+            "timber": 118929
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 21804,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 816720,
+          "buildings": {},
+          "costs": {
+            "food": 142715,
+            "gold": 1321779,
+            "ore": 174429,
+            "stone": 237857,
+            "timber": 237857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 65412,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2450100,
+          "buildings": {},
+          "costs": {
+            "food": 285429,
+            "gold": 5287116,
+            "ore": 348857,
+            "stone": 475714,
+            "timber": 475714
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 196235,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6125160,
+          "buildings": {},
+          "costs": {
+            "food": 570857,
+            "gold": 11896010,
+            "ore": 697714,
+            "stone": 951428,
+            "timber": 951428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 490589,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_food_harvest_1"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_timber_harvest_1",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "22%",
+              "level": 6,
+              "value": "22%"
+            },
+            {
+              "display_fallback": "31%",
+              "level": 7,
+              "value": "31%"
+            },
+            {
+              "display_fallback": "43%",
+              "level": 8,
+              "value": "43%"
+            },
+            {
+              "display_fallback": "58%",
+              "level": 9,
+              "value": "58%"
+            },
+            {
+              "display_fallback": "80%",
+              "level": 10,
+              "value": "80%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_timber_harvest_1",
+      "layout": {
+        "column": 2,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 1140,
+          "buildings": {},
+          "costs": {
+            "food": 86,
+            "gold": 397,
+            "ore": 105,
+            "stone": 143,
+            "timber": 143
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 90,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "economy_food_harvest_1"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 4500,
+          "buildings": {},
+          "costs": {
+            "food": 286,
+            "gold": 2644,
+            "ore": 349,
+            "stone": 476,
+            "timber": 476
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 150,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 9360,
+          "buildings": {},
+          "costs": {
+            "food": 857,
+            "gold": 7931,
+            "ore": 1047,
+            "stone": 1428,
+            "timber": 1428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 269,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 13080,
+          "buildings": {},
+          "costs": {
+            "food": 2855,
+            "gold": 52872,
+            "ore": 3489,
+            "stone": 4758,
+            "timber": 4758
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 808,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 30300,
+          "buildings": {},
+          "costs": {
+            "food": 7136,
+            "gold": 132178,
+            "ore": 8722,
+            "stone": 11893,
+            "timber": 11893
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 2422,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 90780,
+          "buildings": {},
+          "costs": {
+            "food": 14272,
+            "gold": 264356,
+            "ore": 17443,
+            "stone": 23786,
+            "timber": 23786
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 7268,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 272280,
+          "buildings": {},
+          "costs": {
+            "food": 71358,
+            "gold": 660890,
+            "ore": 87215,
+            "stone": 118929,
+            "timber": 118929
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 21804,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 816720,
+          "buildings": {},
+          "costs": {
+            "food": 142715,
+            "gold": 1321779,
+            "ore": 175429,
+            "stone": 237857,
+            "timber": 237857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 65412,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2450100,
+          "buildings": {},
+          "costs": {
+            "food": 285429,
+            "gold": 5287116,
+            "ore": 348857,
+            "stone": 475714,
+            "timber": 475714
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 196235,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6125160,
+          "buildings": {},
+          "costs": {
+            "food": 570857,
+            "gold": 11896010,
+            "ore": 697714,
+            "stone": 951428,
+            "timber": 951428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 490589,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_food_harvest_1"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_ore_harvest_1",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "22%",
+              "level": 6,
+              "value": "22%"
+            },
+            {
+              "display_fallback": "31%",
+              "level": 7,
+              "value": "31%"
+            },
+            {
+              "display_fallback": "43%",
+              "level": 8,
+              "value": "43%"
+            },
+            {
+              "display_fallback": "58%",
+              "level": 9,
+              "value": "58%"
+            },
+            {
+              "display_fallback": "80%",
+              "level": 10,
+              "value": "80%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_ore_harvest_1",
+      "layout": {
+        "column": 3,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 1140,
+          "buildings": {},
+          "costs": {
+            "food": 86,
+            "gold": 397,
+            "ore": 105,
+            "stone": 143,
+            "timber": 143
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 90,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "economy_food_harvest_1"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 4500,
+          "buildings": {},
+          "costs": {
+            "food": 286,
+            "gold": 2644,
+            "ore": 349,
+            "stone": 476,
+            "timber": 476
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 150,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 9360,
+          "buildings": {},
+          "costs": {
+            "food": 857,
+            "gold": 7931,
+            "ore": 1047,
+            "stone": 1428,
+            "timber": 1428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 269,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 13080,
+          "buildings": {},
+          "costs": {
+            "food": 2855,
+            "gold": 52872,
+            "ore": 3489,
+            "stone": 4758,
+            "timber": 4758
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 808,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 30300,
+          "buildings": {},
+          "costs": {
+            "food": 7136,
+            "gold": 132178,
+            "ore": 8722,
+            "stone": 11893,
+            "timber": 11893
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 2422,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 90780,
+          "buildings": {},
+          "costs": {
+            "food": 14272,
+            "gold": 264356,
+            "ore": 17443,
+            "stone": 23786,
+            "timber": 23786
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 7268,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 272280,
+          "buildings": {},
+          "costs": {
+            "food": 71358,
+            "gold": 660890,
+            "ore": 87215,
+            "stone": 118929,
+            "timber": 118929
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 21804,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 816720,
+          "buildings": {},
+          "costs": {
+            "food": 142715,
+            "gold": 1321779,
+            "ore": 175429,
+            "stone": 237857,
+            "timber": 237857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 65412,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2450100,
+          "buildings": {},
+          "costs": {
+            "food": 285429,
+            "gold": 5287116,
+            "ore": 348857,
+            "stone": 475714,
+            "timber": 475714
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 196235,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6125160,
+          "buildings": {},
+          "costs": {
+            "food": 570857,
+            "gold": 11896010,
+            "ore": 697714,
+            "stone": 951428,
+            "timber": 951428
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 490589,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_food_harvest_1"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_weight_training_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "21%",
+              "level": 6,
+              "value": "21%"
+            },
+            {
+              "display_fallback": "29%",
+              "level": 7,
+              "value": "29%"
+            },
+            {
+              "display_fallback": "39%",
+              "level": 8,
+              "value": "39%"
+            },
+            {
+              "display_fallback": "51%",
+              "level": 9,
+              "value": "51%"
+            },
+            {
+              "display_fallback": "75%",
+              "level": 10,
+              "value": "75%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_weight_training_i",
+      "layout": {
+        "column": 0,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": 4,
+          "base_time_seconds": 1380,
+          "buildings": {},
+          "costs": {
+            "food": 514,
+            "gold": 476,
+            "ore": 628,
+            "stone": 857,
+            "timber": 857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 108,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "economy_vault_management"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 5400,
+          "buildings": {},
+          "costs": {
+            "food": 1713,
+            "gold": 3173,
+            "ore": 2094,
+            "stone": 2855,
+            "timber": 2855
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 180,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 11220,
+          "buildings": {},
+          "costs": {
+            "food": 5138,
+            "gold": 9517,
+            "ore": 6280,
+            "stone": 8563,
+            "timber": 8563
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 323,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 15720,
+          "buildings": {},
+          "costs": {
+            "food": 17126,
+            "gold": 63446,
+            "ore": 20932,
+            "stone": 28543,
+            "timber": 28543
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 969,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 36300,
+          "buildings": {},
+          "costs": {
+            "food": 42815,
+            "gold": 158614,
+            "ore": 53239,
+            "stone": 71358,
+            "timber": 71358
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 2907,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 108900,
+          "buildings": {},
+          "costs": {
+            "food": 85629,
+            "gold": 317227,
+            "ore": 104658,
+            "stone": 142715,
+            "timber": 142715
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 8721,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 326700,
+          "buildings": {},
+          "costs": {
+            "food": 428143,
+            "gold": 793068,
+            "ore": 523286,
+            "stone": 713571,
+            "timber": 713571
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 26165,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 980040,
+          "buildings": {},
+          "costs": {
+            "food": 856286,
+            "gold": 1586135,
+            "ore": 1046571,
+            "stone": 1427142,
+            "timber": 1427142
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 78494,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2940120,
+          "buildings": {},
+          "costs": {
+            "food": 1712571,
+            "gold": 6344539,
+            "ore": 2093142,
+            "stone": 2854284,
+            "timber": 2854284
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 235483,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7350180,
+          "buildings": {},
+          "costs": {
+            "food": 3425141,
+            "gold": 14275212,
+            "ore": 4186283,
+            "stone": 5708568,
+            "timber": 5708568
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 588707,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_vault_management"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_resource_harvesting_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "21%",
+              "level": 6,
+              "value": "21%"
+            },
+            {
+              "display_fallback": "28%",
+              "level": 7,
+              "value": "28%"
+            },
+            {
+              "display_fallback": "37%",
+              "level": 8,
+              "value": "37%"
+            },
+            {
+              "display_fallback": "48%",
+              "level": 9,
+              "value": "48%"
+            },
+            {
+              "display_fallback": "70%",
+              "level": 10,
+              "value": "70%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_resource_harvesting_i",
+      "layout": {
+        "column": 2,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": 3,
+          "base_time_seconds": 1500,
+          "buildings": {},
+          "costs": {
+            "food": 514,
+            "gold": 516,
+            "ore": 628,
+            "stone": 857,
+            "timber": 857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 117,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "economy_timber_harvest_1"
+            },
+            {
+              "level": 1,
+              "research_id": "economy_stone_harvest_1"
+            },
+            {
+              "level": 1,
+              "research_id": "economy_ore_harvest_1"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 5,
+          "base_time_seconds": 5880,
+          "buildings": {},
+          "costs": {
+            "food": 1713,
+            "gold": 3437,
+            "ore": 2094,
+            "stone": 2855,
+            "timber": 2855
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 195,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 12180,
+          "buildings": {},
+          "costs": {
+            "food": 5138,
+            "gold": 10310,
+            "ore": 6280,
+            "stone": 8563,
+            "timber": 8563
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 349,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 17040,
+          "buildings": {},
+          "costs": {
+            "food": 17126,
+            "gold": 68773,
+            "ore": 20943,
+            "stone": 28543,
+            "timber": 28543
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 1050,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 39360,
+          "buildings": {},
+          "costs": {
+            "food": 42815,
+            "gold": 171832,
+            "ore": 52329,
+            "stone": 71358,
+            "timber": 71358
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 3150,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 118020,
+          "buildings": {},
+          "costs": {
+            "food": 85629,
+            "gold": 343663,
+            "ore": 104658,
+            "stone": 142715,
+            "timber": 194658
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 9448,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 353940,
+          "buildings": {},
+          "costs": {
+            "food": 428143,
+            "gold": 859157,
+            "ore": 523286,
+            "stone": 713571,
+            "timber": 713571
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 28345,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1061700,
+          "buildings": {},
+          "costs": {
+            "food": 856026,
+            "gold": 1718313,
+            "ore": 1046571,
+            "stone": 1427142,
+            "timber": 1427142
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 85036,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 3185100,
+          "buildings": {},
+          "costs": {
+            "food": 1712571,
+            "gold": 6873250,
+            "ore": 2093142,
+            "stone": 2854284,
+            "timber": 2854284
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 255106,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7962720,
+          "buildings": {},
+          "costs": {
+            "food": 3425141,
+            "gold": 15464813,
+            "ore": 4186283,
+            "stone": 5708568,
+            "timber": 5708568
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 637765,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_timber_harvest_1"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_stone_harvest_1"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_ore_harvest_1"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "economy_gem_harvesting_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 2,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 3,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4%",
+              "level": 4,
+              "value": "4%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 5,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 6,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "7%",
+              "level": 7,
+              "value": "7%"
+            },
+            {
+              "display_fallback": "8%",
+              "level": 8,
+              "value": "8%"
+            },
+            {
+              "display_fallback": "9%",
+              "level": 9,
+              "value": "9%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "economy_gem_harvesting_i",
+      "layout": {
+        "column": 1,
+        "row": 3
+      },
+      "levels": [
+        {
+          "academy_level": 6,
+          "base_time_seconds": 1740,
+          "buildings": {},
+          "costs": {
+            "food": 514,
+            "gold": 595,
+            "ore": 628,
+            "stone": 857,
+            "timber": 857
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 135,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 1,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 6780,
+          "buildings": {},
+          "costs": {
+            "food": 1713,
+            "gold": 3966,
+            "ore": 2094,
+            "stone": 2855,
+            "timber": 2855
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 224,
+          "prerequisites": [
+            {
+              "level": 2,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 2,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 14040,
+          "buildings": {},
+          "costs": {
+            "food": 5138,
+            "gold": 11897,
+            "ore": 6280,
+            "stone": 8563,
+            "timber": 8563
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 404,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 3,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 19620,
+          "buildings": {},
+          "costs": {
+            "food": 17126,
+            "gold": 79307,
+            "ore": 20932,
+            "stone": 28543,
+            "timber": 28543
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 1212,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 4,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 45420,
+          "buildings": {},
+          "costs": {
+            "food": 42815,
+            "gold": 198267,
+            "ore": 52329,
+            "stone": 71358,
+            "timber": 71358
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 3634,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 5,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 136140,
+          "buildings": {},
+          "costs": {
+            "food": 85629,
+            "gold": 396534,
+            "ore": 104658,
+            "stone": 142715,
+            "timber": 142715
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 10901,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 6,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 408360,
+          "buildings": {},
+          "costs": {
+            "food": 428143,
+            "gold": 991335,
+            "ore": 523286,
+            "stone": 713571,
+            "timber": 713571
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 32706,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 7,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1225080,
+          "buildings": {},
+          "costs": {
+            "food": 856286,
+            "gold": 1982669,
+            "ore": 1046571,
+            "stone": 1427142,
+            "timber": 1427142
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 98118,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 8,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3675120,
+          "buildings": {},
+          "costs": {
+            "food": 1712571,
+            "gold": 7930673,
+            "ore": 2093142,
+            "stone": 2854284,
+            "timber": 2854284
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 294353,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 9,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9187740,
+          "buildings": {},
+          "costs": {
+            "food": 3425141,
+            "gold": 17844014,
+            "ore": 4186283,
+            "stone": 5708568,
+            "timber": 5708568
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 735884,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "economy_resource_harvesting_i"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_weight_training_i"
+            }
+          ],
+          "technolabe_count": 4
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    }
+  ],
+  "schema_version": 2,
+  "source_edges": [
+    {
+      "prerequisite_id": "economy_construction_speed",
+      "research_id": "economy_vault_management",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_food_harvest_1",
+      "research_id": "economy_ore_harvest_1",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_food_harvest_1",
+      "research_id": "economy_stone_harvest_1",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_food_harvest_1",
+      "research_id": "economy_timber_harvest_1",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_ore_harvest_1",
+      "research_id": "economy_resource_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_resource_harvesting_i",
+      "research_id": "economy_gem_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_stone_harvest_1",
+      "research_id": "economy_resource_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_timber_harvest_1",
+      "research_id": "economy_resource_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_vault_management",
+      "research_id": "economy_weight_training_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "economy_weight_training_i",
+      "research_id": "economy_gem_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_economy"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "tree_id": "economy"
+}

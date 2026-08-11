@@ -2,7 +2,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from rlm_research_planner.domain.models import MasterData, PlayerState, RESOURCE_KEYS
+from rlm_research_planner.domain.models import (
+    MasterData,
+    PlayerState,
+    RESOURCE_KEYS,
+    SpeedupInventoryItem,
+)
 from rlm_research_planner.services.calculation import (
     GuildHelpPolicy,
     RoundingMode,
@@ -11,6 +16,7 @@ from rlm_research_planner.services.calculation import (
     apply_research_speed,
     free_speedup_seconds_for_vip,
 )
+from rlm_research_planner.services.speedup_inventory import speedup_coverage
 
 
 @dataclass(frozen=True)
@@ -222,10 +228,20 @@ class ResearchPlanner:
         result.help_reduction_seconds = max(
             0, result.total_adjusted_seconds - result.total_after_help_seconds
         )
-        result.speedup_shortfall_seconds = max(
-            0,
-            result.total_after_help_seconds - state.settings.speedup_seconds,
+        inventory = state.settings.speedup_inventory
+        if not inventory and state.settings.speedup_seconds > 0:
+            inventory = [
+                SpeedupInventoryItem(
+                    "general", 1, state.settings.speedup_seconds
+                )
+            ]
+        coverage = speedup_coverage(
+            result.total_after_help_seconds,
+            inventory,
+            "research",
+            (step.after_help_seconds for step in result.steps),
         )
+        result.speedup_shortfall_seconds = coverage.remaining_seconds
         result.timing_classification = self._timing_classification(result)
         return result
 
@@ -279,7 +295,20 @@ class ResearchPlanner:
                         {"resource": resource, "amount": required - available},
                     )
                 )
-        if result.total_after_help_seconds > state.settings.speedup_seconds:
+        inventory = state.settings.speedup_inventory
+        if not inventory and state.settings.speedup_seconds > 0:
+            inventory = [
+                SpeedupInventoryItem(
+                    "general", 1, state.settings.speedup_seconds
+                )
+            ]
+        coverage = speedup_coverage(
+            result.total_after_help_seconds,
+            inventory,
+            "research",
+            (step.after_help_seconds for step in result.steps),
+        )
+        if coverage.remaining_seconds > 0:
             result.warnings.append(
                 "Available speedups do not cover the post-help research time"
             )
@@ -287,10 +316,7 @@ class ResearchPlanner:
                 PlanIssue(
                     "speedup_shortage",
                     {
-                        "seconds": (
-                            result.total_after_help_seconds
-                            - state.settings.speedup_seconds
-                        )
+                        "seconds": coverage.remaining_seconds
                     },
                 )
             )

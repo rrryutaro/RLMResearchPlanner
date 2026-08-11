@@ -1,0 +1,16 @@
+{
+  "document_type": "RLMResearchData.evidence",
+  "evidence": [
+    {
+      "captured_on": "2026-08-06",
+      "game_version": "unknown",
+      "id": "evidence_economy_tree_ja_jp_2026_08_06_01",
+      "locale": "ja-JP",
+      "notes": "画面内で確認できた研究名、最大レベル、接続関係だけを記録する。研究時間、資源、効果量、画面外の接続は未確認。プレイヤーの現在レベルは収録しない。",
+      "redistribution_allowed": false,
+      "scope": "visible_portion_only",
+      "type": "game_capture"
+    }
+  ],
+  "schema_version": 2
+}

@@ -1,0 +1,6110 @@
+{
+  "coverage": "complete",
+  "default_verification": {
+    "checked_on": "2026-08-07",
+    "notes": "Imported from the frozen legacy catalog during the versioned dataset migration. Display connections remain provisional until checked against direct game evidence.",
+    "source_ids": [
+      "src_fandom_army_leadership"
+    ],
+    "status": "provisional"
+  },
+  "display_connections": [
+    {
+      "from_ids": [
+        "army_leadership_resource_harvesting_ii"
+      ],
+      "to_ids": [
+        "army_leadership_weight_training_ii",
+        "army_leadership_ration_run_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_weight_training_ii",
+        "army_leadership_ration_run_i"
+      ],
+      "to_ids": [
+        "army_leadership_training_speed_iii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_training_speed_iii"
+      ],
+      "to_ids": [
+        "army_leadership_ranged_phalanx",
+        "army_leadership_cavalry_phalanx"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_ranged_phalanx",
+        "army_leadership_cavalry_phalanx"
+      ],
+      "to_ids": [
+        "army_leadership_bigger_infirmary_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_bigger_infirmary_i"
+      ],
+      "to_ids": [
+        "army_leadership_gold_storage_i",
+        "army_leadership_max_deposit_i",
+        "army_leadership_gold_harvesting_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_gold_storage_i"
+      ],
+      "to_ids": [
+        "army_leadership_bigger_bags_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_max_deposit_i"
+      ],
+      "to_ids": [
+        "army_leadership_tax_break"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_gold_harvesting_i"
+      ],
+      "to_ids": [
+        "army_leadership_forced_march_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_bigger_bags_i",
+        "army_leadership_tax_break",
+        "army_leadership_forced_march_i"
+      ],
+      "to_ids": [
+        "army_leadership_more_gatherers"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_more_gatherers"
+      ],
+      "to_ids": [
+        "army_leadership_infantry_wedge",
+        "army_leadership_ranged_wedge",
+        "army_leadership_cavalry_wedge"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_infantry_wedge",
+        "army_leadership_ranged_wedge",
+        "army_leadership_cavalry_wedge"
+      ],
+      "to_ids": [
+        "army_leadership_army_offense_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_army_offense_ii"
+      ],
+      "to_ids": [
+        "army_leadership_army_defense_ii",
+        "army_leadership_army_health_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_army_offense_ii"
+      ],
+      "to_ids": [
+        "army_leadership_bigger_army_iii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_bigger_army_iii"
+      ],
+      "to_ids": [
+        "army_leadership_sabotage",
+        "army_leadership_plague"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "army_leadership_sabotage",
+        "army_leadership_plague"
+      ],
+      "to_ids": [
+        "army_leadership_demoralize"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "document_type": "RLMResearchData.tree",
+  "legacy_compatibility": {
+    "notes": "研究名・配置・接続・最大レベル・レベル別効果を参照元から収録する。日本語名はGamerchと公開の日本語研究一覧、その他の値はCC BY-SAのLords Mobile Wikiを参照。",
+    "scope": "all_names_layout_only",
+    "source_type": "community_catalog",
+    "verification_status": "sourced_layout_levels_effects_prerequisites"
+  },
+  "nodes": [
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_weight_training_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 2,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 3,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4.5%",
+              "level": 4,
+              "value": "4.5%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 5,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "8%",
+              "level": 6,
+              "value": "8%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 7,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "13%",
+              "level": 8,
+              "value": "13%"
+            },
+            {
+              "display_fallback": "17%",
+              "level": 9,
+              "value": "17%"
+            },
+            {
+              "display_fallback": "30%",
+              "level": 10,
+              "value": "30%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_weight_training_ii",
+      "layout": {
+        "column": 0,
+        "row": 0
+      },
+      "levels": [
+        {
+          "academy_level": 18,
+          "base_time_seconds": 234720,
+          "buildings": {},
+          "costs": {
+            "food": 513164,
+            "gold": 282330,
+            "ore": 136844,
+            "stone": 205266,
+            "timber": 171055
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 18992,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 769746,
+            "gold": 423495,
+            "ore": 205266,
+            "stone": 307899,
+            "timber": 256582
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 25321,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 391200,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 273688,
+            "stone": 410531,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 31652,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 547620,
+          "buildings": {},
+          "costs": {
+            "food": 1334225,
+            "gold": 734058,
+            "ore": 355794,
+            "stone": 533690,
+            "timber": 444742
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 44313,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1744756,
+            "gold": 959922,
+            "ore": 465269,
+            "stone": 697903,
+            "timber": 581586
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 63304,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1173480,
+          "buildings": {},
+          "costs": {
+            "food": 2360552,
+            "gold": 1298718,
+            "ore": 629481,
+            "stone": 944221,
+            "timber": 786851
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 94956,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1955760,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 1094749,
+            "stone": 1642123,
+            "timber": 1368436
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 158260,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4693800,
+          "buildings": {},
+          "costs": {
+            "food": 6157961,
+            "gold": 3387959,
+            "ore": 1642123,
+            "stone": 2463185,
+            "timber": 2052654
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 379824,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 2189498,
+            "stone": 3284246,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11734380,
+          "buildings": {},
+          "costs": {
+            "food": 12315921,
+            "gold": 6775918,
+            "ore": 3284246,
+            "stone": 4926369,
+            "timber": 4109307
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 949559,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_resource_harvesting_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 2,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 3,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4.5%",
+              "level": 4,
+              "value": "4.5%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 5,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "8%",
+              "level": 6,
+              "value": "8%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 7,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "13%",
+              "level": 8,
+              "value": "13%"
+            },
+            {
+              "display_fallback": "17%",
+              "level": 9,
+              "value": "17%"
+            },
+            {
+              "display_fallback": "30%",
+              "level": 10,
+              "value": "30%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_resource_harvesting_ii",
+      "layout": {
+        "column": 1,
+        "row": 0
+      },
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 156480,
+          "buildings": {},
+          "costs": {
+            "food": 273688,
+            "gold": 188220,
+            "ore": 182459,
+            "stone": 114037,
+            "timber": 68422
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 12661,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 208620,
+          "buildings": {},
+          "costs": {
+            "food": 410531,
+            "gold": 282330,
+            "ore": 273688,
+            "stone": 171055,
+            "timber": 102633
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 16881,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 260820,
+          "buildings": {},
+          "costs": {
+            "food": 547375,
+            "gold": 376440,
+            "ore": 364917,
+            "stone": 228073,
+            "timber": 136844
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 21102,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 365100,
+          "buildings": {},
+          "costs": {
+            "food": 711587,
+            "gold": 489372,
+            "ore": 474392,
+            "stone": 296495,
+            "timber": 177897
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 29542,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 521580,
+          "buildings": {},
+          "costs": {
+            "food": 930537,
+            "gold": 639948,
+            "ore": 620358,
+            "stone": 387724,
+            "timber": 232635
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 42202,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1258961,
+            "gold": 865812,
+            "ore": 839308,
+            "stone": 524567,
+            "timber": 314741
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 63304,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1303860,
+          "buildings": {},
+          "costs": {
+            "food": 2189498,
+            "gold": 1505760,
+            "ore": 1459665,
+            "stone": 912291,
+            "timber": 547375
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 105507,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3129180,
+          "buildings": {},
+          "costs": {
+            "food": 3284246,
+            "gold": 2258640,
+            "ore": 2189498,
+            "stone": 1368436,
+            "timber": 821062
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 253216,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4172220,
+          "buildings": {},
+          "costs": {
+            "food": 4378995,
+            "gold": 3011519,
+            "ore": 2919330,
+            "stone": 1824581,
+            "timber": 1094749
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 337621,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7822920,
+          "buildings": {},
+          "costs": {
+            "food": 6568492,
+            "gold": 4517279,
+            "ore": 4378995,
+            "stone": 2736872,
+            "timber": 1642123
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 633040,
+          "prerequisites": [],
+          "technolabe_count": 3
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_ration_run_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 2,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 3,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4.5%",
+              "level": 4,
+              "value": "4.5%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 5,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "8%",
+              "level": 6,
+              "value": "8%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 7,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "13%",
+              "level": 8,
+              "value": "13%"
+            },
+            {
+              "display_fallback": "17%",
+              "level": 9,
+              "value": "17%"
+            },
+            {
+              "display_fallback": "30%",
+              "level": 10,
+              "value": "30%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_ration_run_i",
+      "layout": {
+        "column": 2,
+        "row": 0
+      },
+      "levels": [
+        {
+          "academy_level": 18,
+          "base_time_seconds": 234720,
+          "buildings": {},
+          "costs": {
+            "food": 513164,
+            "gold": 282330,
+            "ore": 136844,
+            "stone": 205266,
+            "timber": 171055
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 18992,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 769746,
+            "gold": 423495,
+            "ore": 205266,
+            "stone": 307899,
+            "timber": 256582
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 25321,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 391200,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 273688,
+            "stone": 410531,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 31652,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 547620,
+          "buildings": {},
+          "costs": {
+            "food": 1334225,
+            "gold": 734058,
+            "ore": 355794,
+            "stone": 533690,
+            "timber": 444742
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 44313,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1744756,
+            "gold": 959922,
+            "ore": 465269,
+            "stone": 697903,
+            "timber": 581586
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 63304,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1173480,
+          "buildings": {},
+          "costs": {
+            "food": 2360552,
+            "gold": 1298718,
+            "ore": 629481,
+            "stone": 944221,
+            "timber": 786851
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 94956,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1955760,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 1094749,
+            "stone": 1642123,
+            "timber": 1368436
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 158260,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4693800,
+          "buildings": {},
+          "costs": {
+            "food": 6157961,
+            "gold": 3387959,
+            "ore": 1642123,
+            "stone": 2463185,
+            "timber": 2052654
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 379824,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 2189498,
+            "stone": 3284246,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11734380,
+          "buildings": {},
+          "costs": {
+            "food": 12315921,
+            "gold": 6775918,
+            "ore": 3284246,
+            "stone": 4926369,
+            "timber": 4105307
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 949559,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_resource_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_training_speed_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.5%",
+              "level": 1,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 2,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 3,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 4,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 5,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4%",
+              "level": 6,
+              "value": "4%"
+            },
+            {
+              "display_fallback": "5.5%",
+              "level": 7,
+              "value": "5.5%"
+            },
+            {
+              "display_fallback": "7%",
+              "level": 8,
+              "value": "7%"
+            },
+            {
+              "display_fallback": "9%",
+              "level": 9,
+              "value": "9%"
+            },
+            {
+              "display_fallback": "16%",
+              "level": 10,
+              "value": "16%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_training_speed_iii",
+      "layout": {
+        "column": 1,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 469380,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 273688,
+            "stone": 410531,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 37983,
+          "prerequisites": [
+            {
+              "level": 2,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 2,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 625860,
+          "buildings": {},
+          "costs": {
+            "food": 1539491,
+            "gold": 846990,
+            "ore": 410531,
+            "stone": 615797,
+            "timber": 513164
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 50643,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 2052654,
+            "gold": 1129320,
+            "ore": 547375,
+            "stone": 821062,
+            "timber": 684218
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 63304,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1095240,
+          "buildings": {},
+          "costs": {
+            "food": 2668450,
+            "gold": 1468116,
+            "ore": 711587,
+            "stone": 1067380,
+            "timber": 889484
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 88626,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 1564620,
+          "buildings": {},
+          "costs": {
+            "food": 3489511,
+            "gold": 1919844,
+            "ore": 930537,
+            "stone": 1395805,
+            "timber": 1163171
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 126608,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 5,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 2346900,
+          "buildings": {},
+          "costs": {
+            "food": 4721103,
+            "gold": 2597435,
+            "ore": 1258961,
+            "stone": 1888442,
+            "timber": 1573701
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 189911,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 6,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 3911460,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 2189498,
+            "stone": 3284246,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 316520,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 9387540,
+          "buildings": {},
+          "costs": {
+            "food": 12315921,
+            "gold": 6775918,
+            "ore": 3284246,
+            "stone": 4926369,
+            "timber": 4105307
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 759648,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12516660,
+          "buildings": {},
+          "costs": {
+            "food": 16421228,
+            "gold": 9034557,
+            "ore": 4378955,
+            "stone": 6568492,
+            "timber": 5473743
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 1012864,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 23468760,
+          "buildings": {},
+          "costs": {
+            "food": 24631842,
+            "gold": 13551835,
+            "ore": 6568492,
+            "stone": 9852737,
+            "timber": 8210614
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 1899119,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_weight_training_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "army_leadership_ration_run_i"
+            }
+          ],
+          "technolabe_count": 9
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_ranged_phalanx",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocks Ranged Phalanx",
+              "level": 1,
+              "value": "Unlocks Ranged Phalanx"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_ranged_phalanx",
+      "layout": {
+        "column": 0,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": 20,
+          "base_time_seconds": 961560,
+          "buildings": {},
+          "costs": {
+            "food": 1319445,
+            "gold": 725926,
+            "ore": 703704,
+            "stone": 351852,
+            "timber": 263889
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 77808,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_cavalry_phalanx",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocks Cavalry Phalanx",
+              "level": 1,
+              "value": "Unlocks Cavalry Phalanx"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_cavalry_phalanx",
+      "layout": {
+        "column": 2,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": 20,
+          "base_time_seconds": 961560,
+          "buildings": {},
+          "costs": {
+            "food": 1319445,
+            "gold": 725926,
+            "ore": 351852,
+            "stone": 527778,
+            "timber": 439815
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 77808,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_bigger_infirmary_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.1%",
+              "level": 1,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 3,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 4,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "0.7%",
+              "level": 5,
+              "value": "0.7%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 6,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "1.4%",
+              "level": 7,
+              "value": "1.4%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 8,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 9,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "7%",
+              "level": 10,
+              "value": "7%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_bigger_infirmary_i",
+      "layout": {
+        "column": 1,
+        "row": 3
+      },
+      "levels": [
+        {
+          "academy_level": 21,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 684218,
+            "gold": 376440,
+            "ore": 273688,
+            "stone": 182459,
+            "timber": 228073
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 25322,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_cavalry_phalanx"
+            },
+            {
+              "level": 1,
+              "research_id": "army_leadership_ranged_phalanx"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 417240,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 410531,
+            "stone": 273688,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 33762,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 521580,
+          "buildings": {},
+          "costs": {
+            "food": 1368436,
+            "gold": 752880,
+            "ore": 547375,
+            "stone": 364917,
+            "timber": 456146
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 42203,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 730140,
+          "buildings": {},
+          "costs": {
+            "food": 1778967,
+            "gold": 978744,
+            "ore": 711587,
+            "stone": 474392,
+            "timber": 592989
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 59084,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1043100,
+          "buildings": {},
+          "costs": {
+            "food": 2326341,
+            "gold": 1279896,
+            "ore": 930537,
+            "stone": 620358,
+            "timber": 775447
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 84405,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1564620,
+          "buildings": {},
+          "costs": {
+            "food": 3147402,
+            "gold": 1731624,
+            "ore": 1258961,
+            "stone": 839308,
+            "timber": 1049134
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 126608,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2607660,
+          "buildings": {},
+          "costs": {
+            "food": 5473743,
+            "gold": 3011519,
+            "ore": 2189498,
+            "stone": 1459665,
+            "timber": 1824581
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 211013,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 3284246,
+            "stone": 2189498,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8344440,
+          "buildings": {},
+          "costs": {
+            "food": 10947486,
+            "gold": 6023038,
+            "ore": 4378995,
+            "stone": 2919330,
+            "timber": 3649162
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 675242,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15645840,
+          "buildings": {},
+          "costs": {
+            "food": 16421228,
+            "gold": 9034557,
+            "ore": 6568492,
+            "stone": 4378995,
+            "timber": 5473743
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 1266080,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_training_speed_iii"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_gold_storage_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 2,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 3,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4.5%",
+              "level": 4,
+              "value": "4.5%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 5,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "8%",
+              "level": 6,
+              "value": "8%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 7,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "13%",
+              "level": 8,
+              "value": "13%"
+            },
+            {
+              "display_fallback": "17%",
+              "level": 9,
+              "value": "17%"
+            },
+            {
+              "display_fallback": "30%",
+              "level": 10,
+              "value": "30%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_gold_storage_i",
+      "layout": {
+        "column": 0,
+        "row": 4
+      },
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 234720,
+          "buildings": {},
+          "costs": {
+            "food": 513164,
+            "gold": 282330,
+            "ore": 136844,
+            "stone": 205266,
+            "timber": 171055
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 18992,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 769746,
+            "gold": 423495,
+            "ore": 205266,
+            "stone": 307899,
+            "timber": 256582
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 25321,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 391200,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 273688,
+            "stone": 410531,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 31652,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 547620,
+          "buildings": {},
+          "costs": {
+            "food": 1334225,
+            "gold": 734058,
+            "ore": 355794,
+            "stone": 533690,
+            "timber": 444742
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 44313,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1744756,
+            "gold": 959922,
+            "ore": 465269,
+            "stone": 697903,
+            "timber": 581586
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 63304,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1173480,
+          "buildings": {},
+          "costs": {
+            "food": 2360552,
+            "gold": 1298718,
+            "ore": 629481,
+            "stone": 944221,
+            "timber": 786851
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 94956,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1955760,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 1094749,
+            "stone": 1642123,
+            "timber": 1368436
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 158260,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4693800,
+          "buildings": {},
+          "costs": {
+            "food": 6157961,
+            "gold": 3387959,
+            "ore": 1642123,
+            "stone": 2463185,
+            "timber": 2052654
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 379824,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 2189498,
+            "stone": 3284246,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11734380,
+          "buildings": {},
+          "costs": {
+            "food": 12315921,
+            "gold": 6775918,
+            "ore": 3284246,
+            "stone": 4926369,
+            "timber": 4105307
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 949559,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_max_deposit_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "100",
+              "level": 1,
+              "value": "100"
+            },
+            {
+              "display_fallback": "300",
+              "level": 2,
+              "value": "300"
+            },
+            {
+              "display_fallback": "600",
+              "level": 3,
+              "value": "600"
+            },
+            {
+              "display_fallback": "1,100",
+              "level": 4,
+              "value": "1,100"
+            },
+            {
+              "display_fallback": "1,800",
+              "level": 5,
+              "value": "1,800"
+            },
+            {
+              "display_fallback": "2,700",
+              "level": 6,
+              "value": "2,700"
+            },
+            {
+              "display_fallback": "3,800",
+              "level": 7,
+              "value": "3,800"
+            },
+            {
+              "display_fallback": "5,200",
+              "level": 8,
+              "value": "5,200"
+            },
+            {
+              "display_fallback": "7,000",
+              "level": 9,
+              "value": "7,000"
+            },
+            {
+              "display_fallback": "10,000",
+              "level": 10,
+              "value": "10,000"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_max_deposit_i",
+      "layout": {
+        "column": 1,
+        "row": 4
+      },
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 234720,
+          "buildings": {},
+          "costs": {
+            "food": 513164,
+            "gold": 282330,
+            "ore": 273688,
+            "stone": 68422,
+            "timber": 171055
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 18992,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 769746,
+            "gold": 423495,
+            "ore": 410531,
+            "stone": 102633,
+            "timber": 256582
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 25321,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 391200,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 547375,
+            "stone": 136844,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 31652,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 547620,
+          "buildings": {},
+          "costs": {
+            "food": 1334225,
+            "gold": 734058,
+            "ore": 711587,
+            "stone": 177897,
+            "timber": 444742
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 44313,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1744756,
+            "gold": 959922,
+            "ore": 930537,
+            "stone": 232635,
+            "timber": 581586
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 63304,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1173480,
+          "buildings": {},
+          "costs": {
+            "food": 2360552,
+            "gold": 1298718,
+            "ore": 1258961,
+            "stone": 314741,
+            "timber": 786851
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 94956,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1955760,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 2189498,
+            "stone": 547375,
+            "timber": 1368436
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 158260,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4693800,
+          "buildings": {},
+          "costs": {
+            "food": 6157961,
+            "gold": 3387959,
+            "ore": 3284246,
+            "stone": 821062,
+            "timber": 2052654
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 379824,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 4378995,
+            "stone": 1094749,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11734380,
+          "buildings": {},
+          "costs": {
+            "food": 12315921,
+            "gold": 6775918,
+            "ore": 6568492,
+            "stone": 1642123,
+            "timber": 4105307
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 949559,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_gold_harvesting_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 2,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 3,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 4,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "15%",
+              "level": 5,
+              "value": "15%"
+            },
+            {
+              "display_fallback": "21%",
+              "level": 6,
+              "value": "21%"
+            },
+            {
+              "display_fallback": "28%",
+              "level": 7,
+              "value": "28%"
+            },
+            {
+              "display_fallback": "36%",
+              "level": 8,
+              "value": "36%"
+            },
+            {
+              "display_fallback": "48%",
+              "level": 9,
+              "value": "48%"
+            },
+            {
+              "display_fallback": "70%",
+              "level": 10,
+              "value": "70%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_gold_harvesting_i",
+      "layout": {
+        "column": 2,
+        "row": 4
+      },
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 234720,
+          "buildings": {},
+          "costs": {
+            "food": 513164,
+            "gold": 282330,
+            "ore": 273688,
+            "stone": 136844,
+            "timber": 102633
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 18992,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 769746,
+            "gold": 423495,
+            "ore": 410531,
+            "stone": 205266,
+            "timber": 153950
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 25321,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 391200,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 547375,
+            "stone": 273688,
+            "timber": 205266
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 31652,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 547620,
+          "buildings": {},
+          "costs": {
+            "food": 1334225,
+            "gold": 734058,
+            "ore": 711587,
+            "stone": 355794,
+            "timber": 266845
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 44313,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1744756,
+            "gold": 959922,
+            "ore": 930537,
+            "stone": 465269,
+            "timber": 348952
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 63304,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1173480,
+          "buildings": {},
+          "costs": {
+            "food": 2360552,
+            "gold": 1298718,
+            "ore": 1258961,
+            "stone": 629481,
+            "timber": 472111
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 94956,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1955760,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 2189498,
+            "stone": 1094749,
+            "timber": 821062
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 158260,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4693800,
+          "buildings": {},
+          "costs": {
+            "food": 6157961,
+            "gold": 3387959,
+            "ore": 3284246,
+            "stone": 1642123,
+            "timber": 1231593
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 379824,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 10947486,
+            "gold": 6023038,
+            "ore": 4378995,
+            "stone": 2919330,
+            "timber": 3649162
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11734380,
+          "buildings": {},
+          "costs": {
+            "food": 12315921,
+            "gold": 6775918,
+            "ore": 6568492,
+            "stone": 3284246,
+            "timber": 2463185
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 949559,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_bigger_infirmary_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_bigger_bags_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "50,000",
+              "level": 1,
+              "value": "50,000"
+            },
+            {
+              "display_fallback": "110,000",
+              "level": 2,
+              "value": "110,000"
+            },
+            {
+              "display_fallback": "180,000",
+              "level": 3,
+              "value": "180,000"
+            },
+            {
+              "display_fallback": "260,000",
+              "level": 4,
+              "value": "260,000"
+            },
+            {
+              "display_fallback": "350,000",
+              "level": 5,
+              "value": "350,000"
+            },
+            {
+              "display_fallback": "470,000",
+              "level": 6,
+              "value": "470,000"
+            },
+            {
+              "display_fallback": "710,000",
+              "level": 7,
+              "value": "710,000"
+            },
+            {
+              "display_fallback": "1,110,000",
+              "level": 8,
+              "value": "1,110,000"
+            },
+            {
+              "display_fallback": "1,750,000",
+              "level": 9,
+              "value": "1,750,000"
+            },
+            {
+              "display_fallback": "3,000,000",
+              "level": 10,
+              "value": "3,000,000"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_bigger_bags_i",
+      "layout": {
+        "column": 0,
+        "row": 5
+      },
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 547375,
+            "gold": 376440,
+            "ore": 364917,
+            "stone": 228073,
+            "timber": 136844
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 25322,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 417240,
+          "buildings": {},
+          "costs": {
+            "food": 821062,
+            "gold": 564660,
+            "ore": 547375,
+            "stone": 342109,
+            "timber": 205266
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 33762,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 521580,
+          "buildings": {},
+          "costs": {
+            "food": 1094749,
+            "gold": 752880,
+            "ore": 729833,
+            "stone": 456146,
+            "timber": 273688
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 42203,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 730140,
+          "buildings": {},
+          "costs": {
+            "food": 1423174,
+            "gold": 978744,
+            "ore": 948783,
+            "stone": 592989,
+            "timber": 355794
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 59084,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1043100,
+          "buildings": {},
+          "costs": {
+            "food": 1861073,
+            "gold": 1279896,
+            "ore": 1240715,
+            "stone": 775447,
+            "timber": 465269
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 84405,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1564620,
+          "buildings": {},
+          "costs": {
+            "food": 2517922,
+            "gold": 1731624,
+            "ore": 1678615,
+            "stone": 1049134,
+            "timber": 629481
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 126608,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2607660,
+          "buildings": {},
+          "costs": {
+            "food": 4378995,
+            "gold": 3011519,
+            "ore": 2919330,
+            "stone": 1824581,
+            "timber": 1094749
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 211013,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 6568492,
+            "gold": 4517279,
+            "ore": 4378995,
+            "stone": 2736872,
+            "timber": 1642123
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8344440,
+          "buildings": {},
+          "costs": {
+            "food": 8759989,
+            "gold": 6023038,
+            "ore": 5838659,
+            "stone": 3649162,
+            "timber": 2189498
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 675242,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15645840,
+          "buildings": {},
+          "costs": {
+            "food": 13136983,
+            "gold": 9034557,
+            "ore": 8757989,
+            "stone": 5473743,
+            "timber": 3284246
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 1266080,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_gold_storage_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_tax_break",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.1%",
+              "level": 1,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 3,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 4,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 5,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 6,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.7%",
+              "level": 7,
+              "value": "0.7%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 8,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "0.9%",
+              "level": 9,
+              "value": "0.9%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 10,
+              "value": "1%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_tax_break",
+      "layout": {
+        "column": 1,
+        "row": 5
+      },
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 684218,
+            "gold": 376440,
+            "ore": 182459,
+            "stone": 273688,
+            "timber": 228073
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 25322,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 417240,
+          "buildings": {},
+          "costs": {
+            "food": 1026327,
+            "gold": 564660,
+            "ore": 273688,
+            "stone": 410531,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 33762,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 521580,
+          "buildings": {},
+          "costs": {
+            "food": 1368436,
+            "gold": 752880,
+            "ore": 364917,
+            "stone": 547375,
+            "timber": 456146
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 42203,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 730140,
+          "buildings": {},
+          "costs": {
+            "food": 1778967,
+            "gold": 978744,
+            "ore": 474392,
+            "stone": 711587,
+            "timber": 592989
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 59084,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1043100,
+          "buildings": {},
+          "costs": {
+            "food": 2326341,
+            "gold": 1279896,
+            "ore": 620358,
+            "stone": 930537,
+            "timber": 775447
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 84405,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1564620,
+          "buildings": {},
+          "costs": {
+            "food": 3147402,
+            "gold": 1731624,
+            "ore": 839308,
+            "stone": 1258961,
+            "timber": 1049134
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 126608,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2607660,
+          "buildings": {},
+          "costs": {
+            "food": 5473743,
+            "gold": 3011519,
+            "ore": 1459665,
+            "stone": 2189498,
+            "timber": 1824581
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 211013,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 8210614,
+            "gold": 4517279,
+            "ore": 2189498,
+            "stone": 3284246,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8344440,
+          "buildings": {},
+          "costs": {
+            "food": 10947486,
+            "gold": 6023038,
+            "ore": 2919330,
+            "stone": 4378995,
+            "timber": 3649162
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 675242,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15645840,
+          "buildings": {},
+          "costs": {
+            "food": 16421228,
+            "gold": 9034557,
+            "ore": 4378995,
+            "stone": 6568492,
+            "timber": 5473743
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 1266080,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_max_deposit_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_forced_march_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1%",
+              "level": 1,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 2,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 3,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "4.5%",
+              "level": 4,
+              "value": "4.5%"
+            },
+            {
+              "display_fallback": "6%",
+              "level": 5,
+              "value": "6%"
+            },
+            {
+              "display_fallback": "8%",
+              "level": 6,
+              "value": "8%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 7,
+              "value": "10%"
+            },
+            {
+              "display_fallback": "13%",
+              "level": 8,
+              "value": "13%"
+            },
+            {
+              "display_fallback": "17%",
+              "level": 9,
+              "value": "17%"
+            },
+            {
+              "display_fallback": "30%",
+              "level": 10,
+              "value": "30%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_forced_march_i",
+      "layout": {
+        "column": 2,
+        "row": 5
+      },
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 312960,
+          "buildings": {},
+          "costs": {
+            "food": 547375,
+            "gold": 376440,
+            "ore": 364917,
+            "stone": 228073,
+            "timber": 136844
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 25322,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 417240,
+          "buildings": {},
+          "costs": {
+            "food": 821062,
+            "gold": 564660,
+            "ore": 547375,
+            "stone": 342109,
+            "timber": 205266
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 33762,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 521580,
+          "buildings": {},
+          "costs": {
+            "food": 1094749,
+            "gold": 752880,
+            "ore": 729833,
+            "stone": 456146,
+            "timber": 273688
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 42203,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 730140,
+          "buildings": {},
+          "costs": {
+            "food": 1423174,
+            "gold": 978744,
+            "ore": 948783,
+            "stone": 592989,
+            "timber": 355794
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 59084,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1043100,
+          "buildings": {},
+          "costs": {
+            "food": 1861073,
+            "gold": 1279896,
+            "ore": 1240715,
+            "stone": 775447,
+            "timber": 465269
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 84405,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1564620,
+          "buildings": {},
+          "costs": {
+            "food": 2517922,
+            "gold": 1731624,
+            "ore": 1678615,
+            "stone": 1049134,
+            "timber": 629481
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 126608,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2607660,
+          "buildings": {},
+          "costs": {
+            "food": 4378995,
+            "gold": 3011519,
+            "ore": 2919330,
+            "stone": 1824581,
+            "timber": 1094749
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 211013,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 6568492,
+            "gold": 4517279,
+            "ore": 4378995,
+            "stone": 2736872,
+            "timber": 1642123
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 506432,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 8344440,
+          "buildings": {},
+          "costs": {
+            "food": 8757989,
+            "gold": 6023038,
+            "ore": 5838659,
+            "stone": 3649162,
+            "timber": 2189498
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 675242,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 15645840,
+          "buildings": {},
+          "costs": {
+            "food": 13136983,
+            "gold": 9034557,
+            "ore": 8757989,
+            "stone": 5473743,
+            "timber": 3284246
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 1266080,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_gold_harvesting_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_more_gatherers",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "500",
+              "level": 1,
+              "value": "500"
+            },
+            {
+              "display_fallback": "1,000",
+              "level": 2,
+              "value": "1,000"
+            },
+            {
+              "display_fallback": "2,000",
+              "level": 3,
+              "value": "2,000"
+            },
+            {
+              "display_fallback": "3,000",
+              "level": 4,
+              "value": "3,000"
+            },
+            {
+              "display_fallback": "4,500",
+              "level": 5,
+              "value": "4,500"
+            },
+            {
+              "display_fallback": "6,000",
+              "level": 6,
+              "value": "6,000"
+            },
+            {
+              "display_fallback": "8,000",
+              "level": 7,
+              "value": "8,000"
+            },
+            {
+              "display_fallback": "11,000",
+              "level": 8,
+              "value": "11,000"
+            },
+            {
+              "display_fallback": "20,000",
+              "level": 9,
+              "value": "20,000"
+            },
+            {
+              "display_fallback": "50,000",
+              "level": 10,
+              "value": "50,000"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_more_gatherers",
+      "layout": {
+        "column": 1,
+        "row": 6
+      },
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 782340,
+          "buildings": {},
+          "costs": {
+            "food": 1368436,
+            "gold": 941100,
+            "ore": 912291,
+            "stone": 570182,
+            "timber": 342109
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 63304,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_forced_march_i"
+            },
+            {
+              "level": 4,
+              "research_id": "army_leadership_bigger_bags_i"
+            },
+            {
+              "level": 4,
+              "research_id": "army_leadership_tax_break"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1043100,
+          "buildings": {},
+          "costs": {
+            "food": 2052654,
+            "gold": 1411650,
+            "ore": 1368436,
+            "stone": 855273,
+            "timber": 513164
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 84406,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1303860,
+          "buildings": {},
+          "costs": {
+            "food": 2736872,
+            "gold": 1882200,
+            "ore": 1824581,
+            "stone": 1140364,
+            "timber": 684218
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 105506,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1825380,
+          "buildings": {},
+          "costs": {
+            "food": 3557933,
+            "gold": 2446859,
+            "ore": 2371956,
+            "stone": 1482472,
+            "timber": 889484
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 147710,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2607660,
+          "buildings": {},
+          "costs": {
+            "food": 4652682,
+            "gold": 3199739,
+            "ore": 3101788,
+            "stone": 1938618,
+            "timber": 1163171
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 211013,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3911460,
+          "buildings": {},
+          "costs": {
+            "food": 6294804,
+            "gold": 4329059,
+            "ore": 4196536,
+            "stone": 2622835,
+            "timber": 1573701
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 316520,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_forced_march_i"
+            },
+            {
+              "level": 6,
+              "research_id": "army_leadership_bigger_bags_i"
+            },
+            {
+              "level": 6,
+              "research_id": "army_leadership_tax_break"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6519120,
+          "buildings": {},
+          "costs": {
+            "food": 10947486,
+            "gold": 7528797,
+            "ore": 7298324,
+            "stone": 4561453,
+            "timber": 2736872
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 527533,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_forced_march_i"
+            },
+            {
+              "level": 7,
+              "research_id": "army_leadership_bigger_bags_i"
+            },
+            {
+              "level": 7,
+              "research_id": "army_leadership_tax_break"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 15645840,
+          "buildings": {},
+          "costs": {
+            "food": 16421228,
+            "gold": 11293196,
+            "ore": 10947486,
+            "stone": 6842179,
+            "timber": 4105307
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 1266079,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_forced_march_i"
+            },
+            {
+              "level": 8,
+              "research_id": "army_leadership_bigger_bags_i"
+            },
+            {
+              "level": 8,
+              "research_id": "army_leadership_tax_break"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 20861100,
+          "buildings": {},
+          "costs": {
+            "food": 21894971,
+            "gold": 15057594,
+            "ore": 14596647,
+            "stone": 9122905,
+            "timber": 5473743
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 1688106,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_forced_march_i"
+            },
+            {
+              "level": 9,
+              "research_id": "army_leadership_bigger_bags_i"
+            },
+            {
+              "level": 9,
+              "research_id": "army_leadership_tax_break"
+            }
+          ],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 39114600,
+          "buildings": {},
+          "costs": {
+            "food": 32842456,
+            "gold": 22586391,
+            "ore": 21894971,
+            "stone": 13684357,
+            "timber": 8210614
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 3165199,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_forced_march_i"
+            },
+            {
+              "level": 10,
+              "research_id": "army_leadership_bigger_bags_i"
+            },
+            {
+              "level": 10,
+              "research_id": "army_leadership_tax_break"
+            }
+          ],
+          "technolabe_count": 14
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_infantry_wedge",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocks Infantry Wedge",
+              "level": 1,
+              "value": "Unlocks Infantry Wedge"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_infantry_wedge",
+      "layout": {
+        "column": 0,
+        "row": 7
+      },
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2884560,
+          "buildings": {},
+          "costs": {
+            "food": 3958334,
+            "gold": 2177778,
+            "ore": 1583334,
+            "stone": 1055556,
+            "timber": 1319445
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 233423,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_more_gatherers"
+            }
+          ],
+          "technolabe_count": 2
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_ranged_wedge",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocks Ranged Wedge",
+              "level": 1,
+              "value": "Unlocks Ranged Wedge"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_ranged_wedge",
+      "layout": {
+        "column": 1,
+        "row": 7
+      },
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2884560,
+          "buildings": {},
+          "costs": {
+            "food": 3958334,
+            "gold": 2177778,
+            "ore": 2111112,
+            "stone": 1055556,
+            "timber": 791667
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 233423,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_more_gatherers"
+            }
+          ],
+          "technolabe_count": 2
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_cavalry_wedge",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocks Cavalry Wedge",
+              "level": 1,
+              "value": "Unlocks Cavalry Wedge"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_cavalry_wedge",
+      "layout": {
+        "column": 2,
+        "row": 7
+      },
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2884560,
+          "buildings": {},
+          "costs": {
+            "food": 3958334,
+            "gold": 2177778,
+            "ore": 1055556,
+            "stone": 1583334,
+            "timber": 1319445
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 233423,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_more_gatherers"
+            }
+          ],
+          "technolabe_count": 2
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_army_defense_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 2,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 3,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 4,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "1.1%",
+              "level": 5,
+              "value": "1.1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 6,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_army_defense_ii",
+      "layout": {
+        "column": 0,
+        "row": 8
+      },
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1251720,
+          "buildings": {},
+          "costs": {
+            "food": 2736872,
+            "gold": 1505760,
+            "ore": 729833,
+            "stone": 1094749,
+            "timber": 912291
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 81030,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1668900,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 1094749,
+            "stone": 1642123,
+            "timber": 1368436
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 94534,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2086140,
+          "buildings": {},
+          "costs": {
+            "food": 5473743,
+            "gold": 3011519,
+            "ore": 1459665,
+            "stone": 2189498,
+            "timber": 1824581
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 101286,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2920560,
+          "buildings": {},
+          "costs": {
+            "food": 7115866,
+            "gold": 3914975,
+            "ore": 1897565,
+            "stone": 2846347,
+            "timber": 2371956
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 118167,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4172220,
+          "buildings": {},
+          "costs": {
+            "food": 9305363,
+            "gold": 5119582,
+            "ore": 2481430,
+            "stone": 3722145,
+            "timber": 3101788
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 168811,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 12589608,
+            "gold": 6926494,
+            "ore": 3357229,
+            "stone": 5035844,
+            "timber": 4196536
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 253216,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10430580,
+          "buildings": {},
+          "costs": {
+            "food": 21894971,
+            "gold": 12046075,
+            "ore": 5838659,
+            "stone": 8757989,
+            "timber": 7298324
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 422026,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 25033320,
+          "buildings": {},
+          "costs": {
+            "food": 32842456,
+            "gold": 18069113,
+            "ore": 8757989,
+            "stone": 13136983,
+            "timber": 10947486
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 1012864,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 33377760,
+          "buildings": {},
+          "costs": {
+            "food": 43789941,
+            "gold": 24092150,
+            "ore": 11677318,
+            "stone": 17515977,
+            "timber": 14596647
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 1350485,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 62583300,
+          "buildings": {},
+          "costs": {
+            "food": 65684911,
+            "gold": 36138225,
+            "ore": 17515977,
+            "stone": 26273965,
+            "timber": 21894971
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 2532159,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 22
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_army_offense_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 2,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 3,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 4,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "1.1%",
+              "level": 5,
+              "value": "1.1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 6,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_army_offense_ii",
+      "layout": {
+        "column": 1,
+        "row": 8
+      },
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1408140,
+          "buildings": {},
+          "costs": {
+            "food": 2463182,
+            "gold": 1693980,
+            "ore": 1642123,
+            "stone": 1026327,
+            "timber": 615797
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 91158,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_infantry_wedge"
+            },
+            {
+              "level": 1,
+              "research_id": "army_leadership_cavalry_wedge"
+            },
+            {
+              "level": 1,
+              "research_id": "army_leadership_ranged_wedge"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1877520,
+          "buildings": {},
+          "costs": {
+            "food": 3694777,
+            "gold": 2540969,
+            "ore": 2463185,
+            "stone": 1539491,
+            "timber": 923695
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 106351,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2346900,
+          "buildings": {},
+          "costs": {
+            "food": 4926369,
+            "gold": 3387959,
+            "ore": 3284246,
+            "stone": 2052654,
+            "timber": 1231593
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 113947,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3285660,
+          "buildings": {},
+          "costs": {
+            "food": 6404279,
+            "gold": 4404347,
+            "ore": 4269520,
+            "stone": 2668450,
+            "timber": 1601070
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 132938,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4693800,
+          "buildings": {},
+          "costs": {
+            "food": 8374827,
+            "gold": 5759530,
+            "ore": 5583218,
+            "stone": 3489511,
+            "timber": 2093707
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 189912,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7040640,
+          "buildings": {},
+          "costs": {
+            "food": 11330648,
+            "gold": 7792305,
+            "ore": 7553765,
+            "stone": 4721103,
+            "timber": 2832662
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 284868,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11734380,
+          "buildings": {},
+          "costs": {
+            "food": 19705474,
+            "gold": 13551835,
+            "ore": 13136983,
+            "stone": 8210614,
+            "timber": 4926369
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 474780,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_army_defense_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "army_leadership_more_gatherers"
+            },
+            {
+              "level": 7,
+              "research_id": "army_leadership_army_health_ii"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28162500,
+          "buildings": {},
+          "costs": {
+            "food": 29558210,
+            "gold": 20327752,
+            "ore": 19705474,
+            "stone": 12315921,
+            "timber": 7389553
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 1139472,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_army_defense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "army_leadership_more_gatherers"
+            },
+            {
+              "level": 8,
+              "research_id": "army_leadership_army_health_ii"
+            }
+          ],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 37549980,
+          "buildings": {},
+          "costs": {
+            "food": 39410947,
+            "gold": 27103669,
+            "ore": 26273965,
+            "stone": 16421228,
+            "timber": 9852737
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 1519295,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_army_defense_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "army_leadership_more_gatherers"
+            },
+            {
+              "level": 9,
+              "research_id": "army_leadership_army_health_ii"
+            }
+          ],
+          "technolabe_count": 14
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 70406220,
+          "buildings": {},
+          "costs": {
+            "food": 59116420,
+            "gold": 40655503,
+            "ore": 39410947,
+            "stone": 24631842,
+            "timber": 14779105
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 2848679,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_army_defense_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "army_leadership_more_gatherers"
+            },
+            {
+              "level": 10,
+              "research_id": "army_leadership_army_health_ii"
+            }
+          ],
+          "technolabe_count": 25
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_army_health_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 2,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 3,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 4,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "1.1%",
+              "level": 5,
+              "value": "1.1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 6,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_army_health_ii",
+      "layout": {
+        "column": 2,
+        "row": 8
+      },
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1251720,
+          "buildings": {},
+          "costs": {
+            "food": 2736872,
+            "gold": 1505760,
+            "ore": 1094749,
+            "stone": 729833,
+            "timber": 912291
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 81030,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1668900,
+          "buildings": {},
+          "costs": {
+            "food": 4105307,
+            "gold": 2258640,
+            "ore": 1642123,
+            "stone": 1094749,
+            "timber": 1368436
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 94534,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2086140,
+          "buildings": {},
+          "costs": {
+            "food": 5473743,
+            "gold": 3011519,
+            "ore": 2189498,
+            "stone": 1459665,
+            "timber": 1824581
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 101286,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2920560,
+          "buildings": {},
+          "costs": {
+            "food": 7115866,
+            "gold": 3914975,
+            "ore": 2846347,
+            "stone": 1897565,
+            "timber": 2371956
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 118167,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4172220,
+          "buildings": {},
+          "costs": {
+            "food": 9305363,
+            "gold": 5119582,
+            "ore": 3722145,
+            "stone": 2481430,
+            "timber": 3101788
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 168811,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6258360,
+          "buildings": {},
+          "costs": {
+            "food": 12589608,
+            "gold": 6926494,
+            "ore": 5035844,
+            "stone": 3357229,
+            "timber": 4196536
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 253216,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10430580,
+          "buildings": {},
+          "costs": {
+            "food": 21894971,
+            "gold": 12046075,
+            "ore": 8757989,
+            "stone": 5838659,
+            "timber": 7298324
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 422026,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 25033320,
+          "buildings": {},
+          "costs": {
+            "food": 32842456,
+            "gold": 18069113,
+            "ore": 13136983,
+            "stone": 8757989,
+            "timber": 10947486
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 1012864,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 33377760,
+          "buildings": {},
+          "costs": {
+            "food": 43789941,
+            "gold": 24092150,
+            "ore": 17515977,
+            "stone": 11677318,
+            "timber": 14596647
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 1350485,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 62583300,
+          "buildings": {},
+          "costs": {
+            "food": 65684911,
+            "gold": 36138225,
+            "ore": 26273965,
+            "stone": 17515977,
+            "timber": 21894971
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 2532159,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 22
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_bigger_army_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1",
+              "level": 1,
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_bigger_army_iii",
+      "layout": {
+        "column": 1,
+        "row": 9
+      },
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 67306440,
+          "buildings": {},
+          "costs": {
+            "food": 73888889,
+            "gold": 50814815,
+            "ore": 49259260,
+            "stone": 30787038,
+            "timber": 18472223
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 4357215,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_army_offense_ii"
+            }
+          ],
+          "technolabe_count": 24
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_sabotage",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 2,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 3,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 4,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "1.1%",
+              "level": 5,
+              "value": "1.1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 6,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_sabotage",
+      "layout": {
+        "column": 0,
+        "row": 10
+      },
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3911460,
+          "buildings": {},
+          "costs": {
+            "food": 13684357,
+            "gold": 4705498,
+            "ore": 1140364,
+            "stone": 4561453,
+            "timber": 1140364
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 253216,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_bigger_army_iii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5215320,
+          "buildings": {},
+          "costs": {
+            "food": 20526535,
+            "gold": 7058247,
+            "ore": 1710545,
+            "stone": 6842179,
+            "timber": 1710545
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 295419,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6519120,
+          "buildings": {},
+          "costs": {
+            "food": 27368713,
+            "gold": 9410996,
+            "ore": 2280727,
+            "stone": 9122905,
+            "timber": 2280727
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 316520,
+          "prerequisites": [
+            {
+              "level": 2,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9126780,
+          "buildings": {},
+          "costs": {
+            "food": 35579327,
+            "gold": 12234295,
+            "ore": 2964944,
+            "stone": 11859776,
+            "timber": 2964944
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 369273,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13038240,
+          "buildings": {},
+          "costs": {
+            "food": 46526812,
+            "gold": 15998694,
+            "ore": 3877235,
+            "stone": 15508938,
+            "timber": 3877235
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 527533,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 19557300,
+          "buildings": {},
+          "costs": {
+            "food": 62948040,
+            "gold": 21645291,
+            "ore": 5245670,
+            "stone": 20982680,
+            "timber": 5245670
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 791300,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 32595480,
+          "buildings": {},
+          "costs": {
+            "food": 109474852,
+            "gold": 37643984,
+            "ore": 9122905,
+            "stone": 36491618,
+            "timber": 9122905
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 1318833,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 78229140,
+          "buildings": {},
+          "costs": {
+            "food": 164212278,
+            "gold": 56465976,
+            "ore": 13684357,
+            "stone": 54737426,
+            "timber": 13684357
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 3165198,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 28
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 104305500,
+          "buildings": {},
+          "costs": {
+            "food": 218949703,
+            "gold": 75287968,
+            "ore": 18245809,
+            "stone": 72983235,
+            "timber": 18245809
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 4220265,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 37
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 195572760,
+          "buildings": {},
+          "costs": {
+            "food": 328424555,
+            "gold": 112931952,
+            "ore": 27368713,
+            "stone": 109474852,
+            "timber": 27368713
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 7912997,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 68
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_plague",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 2,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 3,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 4,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "1.1%",
+              "level": 5,
+              "value": "1.1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 6,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_plague",
+      "layout": {
+        "column": 2,
+        "row": 10
+      },
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3911460,
+          "buildings": {},
+          "costs": {
+            "food": 8552723,
+            "gold": 4705498,
+            "ore": 3421090,
+            "stone": 2850908,
+            "timber": 2280727
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 253216,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_bigger_army_iii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5215320,
+          "buildings": {},
+          "costs": {
+            "food": 12829085,
+            "gold": 7058247,
+            "ore": 5131634,
+            "stone": 4276362,
+            "timber": 3421090
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 295419,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6519120,
+          "buildings": {},
+          "costs": {
+            "food": 17105446,
+            "gold": 9410996,
+            "ore": 6842179,
+            "stone": 5701816,
+            "timber": 4561453
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 316520,
+          "prerequisites": [
+            {
+              "level": 2,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9126780,
+          "buildings": {},
+          "costs": {
+            "food": 22237080,
+            "gold": 12234295,
+            "ore": 8894832,
+            "stone": 7412360,
+            "timber": 5929888
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 369273,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13038240,
+          "buildings": {},
+          "costs": {
+            "food": 29079258,
+            "gold": 15998694,
+            "ore": 11631703,
+            "stone": 9693086,
+            "timber": 7754469
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 527533,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 19557300,
+          "buildings": {},
+          "costs": {
+            "food": 39432525,
+            "gold": 21645291,
+            "ore": 15737010,
+            "stone": 13114175,
+            "timber": 10491340
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 791300,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 32595480,
+          "buildings": {},
+          "costs": {
+            "food": 68421783,
+            "gold": 37643984,
+            "ore": 27368713,
+            "stone": 22807261,
+            "timber": 18245809
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 1318833,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 78229140,
+          "buildings": {},
+          "costs": {
+            "food": 102632674,
+            "gold": 56465976,
+            "ore": 41053070,
+            "stone": 34210892,
+            "timber": 27368713
+          },
+          "legacy_verification_status": "sourced",
+          "level": 8,
+          "power": 3165198,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 28
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 104305500,
+          "buildings": {},
+          "costs": {
+            "food": 136843565,
+            "gold": 75287968,
+            "ore": 54737426,
+            "stone": 45614522,
+            "timber": 36491618
+          },
+          "legacy_verification_status": "sourced",
+          "level": 9,
+          "power": 4220265,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 37
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 195572760,
+          "buildings": {},
+          "costs": {
+            "food": 205265347,
+            "gold": 112931952,
+            "ore": 82106139,
+            "stone": 68421783,
+            "timber": 54737426
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 7912997,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_demoralize"
+            }
+          ],
+          "technolabe_count": 68
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "army_leadership_demoralize",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 2,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 3,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "0.8%",
+              "level": 4,
+              "value": "0.8%"
+            },
+            {
+              "display_fallback": "1.1%",
+              "level": 5,
+              "value": "1.1%"
+            },
+            {
+              "display_fallback": "1.5%",
+              "level": 6,
+              "value": "1.5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "army_leadership_demoralize",
+      "layout": {
+        "column": 1,
+        "row": 11
+      },
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5476080,
+          "buildings": {},
+          "costs": {
+            "food": 11973812,
+            "gold": 6587698,
+            "ore": 6386033,
+            "stone": 3193017,
+            "timber": 2394763
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 354503,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 1,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7301400,
+          "buildings": {},
+          "costs": {
+            "food": 17960718,
+            "gold": 9881546,
+            "ore": 9579050,
+            "stone": 4789525,
+            "timber": 3592144
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 413586,
+          "prerequisites": [
+            {
+              "level": 2,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 2,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9126780,
+          "buildings": {},
+          "costs": {
+            "food": 23947624,
+            "gold": 13175395,
+            "ore": 12772066,
+            "stone": 6386033,
+            "timber": 4789525
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 443128,
+          "prerequisites": [
+            {
+              "level": 3,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 3,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12777480,
+          "buildings": {},
+          "costs": {
+            "food": 31131911,
+            "gold": 17128013,
+            "ore": 16603686,
+            "stone": 8301843,
+            "timber": 6226383
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 516982,
+          "prerequisites": [
+            {
+              "level": 4,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 4,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 18253500,
+          "buildings": {},
+          "costs": {
+            "food": 40710961,
+            "gold": 22398171,
+            "ore": 21712513,
+            "stone": 10856257,
+            "timber": 8142193
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 738546,
+          "prerequisites": [
+            {
+              "level": 5,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 5,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 27380220,
+          "buildings": {},
+          "costs": {
+            "food": 55079535,
+            "gold": 30303408,
+            "ore": 29375752,
+            "stone": 14687876,
+            "timber": 11015907
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 1107820,
+          "prerequisites": [
+            {
+              "level": 6,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 6,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 45633660,
+          "buildings": {},
+          "costs": {
+            "food": 95790495,
+            "gold": 52701578,
+            "ore": 51088264,
+            "stone": 25544132,
+            "timber": 19158099
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 1846366,
+          "prerequisites": [
+            {
+              "level": 7,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 7,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 143685743,
+            "gold": 79052367,
+            "ore": 76632396,
+            "stone": 38316198,
+            "timber": 28737149
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": 4431278,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 8,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 39,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_army_leadership"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 191580990,
+            "gold": 105403156,
+            "ore": 102176528,
+            "stone": 51088264,
+            "timber": 38316198
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": 5908371,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 9,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 51,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_army_leadership"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 287371485,
+            "gold": 158104733,
+            "ore": 153264792,
+            "stone": 76632396,
+            "timber": 57474297
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": 11078195,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "army_leadership_sabotage"
+            },
+            {
+              "level": 10,
+              "research_id": "army_leadership_plague"
+            }
+          ],
+          "technolabe_count": 96,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_army_leadership"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    }
+  ],
+  "schema_version": 2,
+  "source_edges": [
+    {
+      "prerequisite_id": "army_leadership_army_offense_ii",
+      "research_id": "army_leadership_bigger_army_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_bigger_army_iii",
+      "research_id": "army_leadership_plague",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_bigger_army_iii",
+      "research_id": "army_leadership_sabotage",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_bigger_bags_i",
+      "research_id": "army_leadership_more_gatherers",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_bigger_infirmary_i",
+      "research_id": "army_leadership_gold_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_bigger_infirmary_i",
+      "research_id": "army_leadership_gold_storage_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_bigger_infirmary_i",
+      "research_id": "army_leadership_max_deposit_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_cavalry_phalanx",
+      "research_id": "army_leadership_bigger_infirmary_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_cavalry_wedge",
+      "research_id": "army_leadership_army_health_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_cavalry_wedge",
+      "research_id": "army_leadership_army_offense_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_forced_march_i",
+      "research_id": "army_leadership_more_gatherers",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_gold_harvesting_i",
+      "research_id": "army_leadership_forced_march_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_gold_storage_i",
+      "research_id": "army_leadership_bigger_bags_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_infantry_wedge",
+      "research_id": "army_leadership_army_defense_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_infantry_wedge",
+      "research_id": "army_leadership_army_offense_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_max_deposit_i",
+      "research_id": "army_leadership_tax_break",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_more_gatherers",
+      "research_id": "army_leadership_army_offense_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_more_gatherers",
+      "research_id": "army_leadership_cavalry_wedge",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_more_gatherers",
+      "research_id": "army_leadership_infantry_wedge",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_more_gatherers",
+      "research_id": "army_leadership_ranged_wedge",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_plague",
+      "research_id": "army_leadership_demoralize",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_ranged_phalanx",
+      "research_id": "army_leadership_bigger_infirmary_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_ranged_wedge",
+      "research_id": "army_leadership_army_offense_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_ration_run_i",
+      "research_id": "army_leadership_training_speed_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_sabotage",
+      "research_id": "army_leadership_demoralize",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_tax_break",
+      "research_id": "army_leadership_more_gatherers",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_training_speed_iii",
+      "research_id": "army_leadership_bigger_infirmary_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_training_speed_iii",
+      "research_id": "army_leadership_cavalry_phalanx",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_training_speed_iii",
+      "research_id": "army_leadership_ranged_phalanx",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "army_leadership_weight_training_ii",
+      "research_id": "army_leadership_training_speed_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_army_leadership"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "tree_id": "army_leadership"
+}

@@ -35,6 +35,7 @@ class CatalogPlanStep:
     verification_status: str
     technolabe_count: int | None = None
     technolabe_efficiency_percent: float | None = None
+    costs_verified: bool = False
 
 
 @dataclass(frozen=True)
@@ -316,14 +317,15 @@ class CatalogResearchPlanner:
     ) -> CatalogPlanStep:
         if level_data is None:
             return CatalogPlanStep(
-                research_id,
-                level_number,
-                None,
-                None,
-                None,
-                {},
-                None,
-                "unverified",
+                research_id=research_id,
+                level=level_number,
+                base_time_seconds=None,
+                adjusted_time_seconds=None,
+                after_help_seconds=None,
+                costs={},
+                power=None,
+                verification_status="unverified",
+                costs_verified=False,
             )
         adjusted = None
         after_help = None
@@ -347,16 +349,17 @@ class CatalogResearchPlanner:
             level_data.technolabe_count,
         )
         return CatalogPlanStep(
-            research_id,
-            level_number,
-            level_data.base_time_seconds,
-            adjusted,
-            after_help,
-            dict(level_data.costs),
-            level_data.power,
-            level_data.verification_status,
-            technolabe_count,
-            efficiency,
+            research_id=research_id,
+            level=level_number,
+            base_time_seconds=level_data.base_time_seconds,
+            adjusted_time_seconds=adjusted,
+            after_help_seconds=after_help,
+            costs=dict(level_data.costs),
+            power=level_data.power,
+            verification_status=level_data.verification_status,
+            technolabe_count=technolabe_count,
+            technolabe_efficiency_percent=efficiency,
+            costs_verified=level_data.costs_verified,
         )
 
     @staticmethod

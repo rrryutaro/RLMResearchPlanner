@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rrryutaro/RLMResearchData/schemas/research-tree.schema.json",
+  "title": "RLM research tree",
+  "type": "object",
+  "required": [
+    "document_type",
+    "schema_version",
+    "tree_id",
+    "coverage",
+    "default_verification",
+    "nodes",
+    "source_edges",
+    "display_connections"
+  ],
+  "properties": {
+    "document_type": { "const": "RLMResearchData.tree" },
+    "schema_version": { "const": 2 },
+    "tree_id": { "$ref": "common.schema.json#/$defs/id" },
+    "coverage": { "enum": ["complete", "partial", "structure_only"] },
+    "default_verification": {
+      "$ref": "common.schema.json#/$defs/verification"
+    },
+    "verification_overrides": {
+      "$ref": "common.schema.json#/$defs/verificationOverrides"
+    },
+    "legacy_compatibility": {
+      "$ref": "#/$defs/legacyCompatibility"
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/node" }
+    },
+    "source_edges": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/sourceEdge" }
+    },
+    "display_connections": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/displayConnection" }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "layout": {
+      "type": "object",
+      "required": ["row", "column"],
+      "properties": {
+        "row": { "type": "integer", "minimum": 0 },
+        "column": { "type": "integer", "minimum": 0 }
+      },
+      "additionalProperties": false
+    },
+    "requirement": {
+      "type": "object",
+      "required": ["research_id", "level"],
+      "properties": {
+        "research_id": { "$ref": "common.schema.json#/$defs/id" },
+        "level": { "type": "integer", "minimum": 1 }
+      },
+      "additionalProperties": false
+    },
+    "level": {
+      "type": "object",
+      "required": ["level"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 1 },
+        "academy_level": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "maximum": 25
+        },
+        "base_time_seconds": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "technolabe_count": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "power": {
+          "type": ["integer", "null"],
+          "minimum": 0
+        },
+        "costs": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "propertyNames": {
+                "enum": [
+                  "food",
+                  "stone",
+                  "timber",
+                  "ore",
+                  "gold",
+                  "gold_hammer",
+                  "war_tome",
+                  "steel_cuffs",
+                  "soul_crystal",
+                  "ancient_tomes",
+                  "lunite",
+                  "mana_ore",
+                  "special"
+                ]
+              },
+              "additionalProperties": { "type": "integer", "minimum": 0 }
+            }
+          ]
+        },
+        "prerequisites": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/requirement" }
+        },
+        "buildings": {
+          "oneOf": [
+            { "type": "null" },
+            {
+              "type": "object",
+              "propertyNames": { "$ref": "common.schema.json#/$defs/id" },
+              "additionalProperties": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 25
+              }
+            }
+          ]
+        },
+        "verification": {
+          "$ref": "common.schema.json#/$defs/verification"
+        },
+        "verification_overrides": {
+          "$ref": "common.schema.json#/$defs/verificationOverrides"
+        },
+        "legacy_verification_status": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+        }
+      },
+      "additionalProperties": false
+    },
+    "effectValue": {
+      "type": "object",
+      "required": ["level", "value"],
+      "properties": {
+        "level": { "type": "integer", "minimum": 1 },
+        "value": { "type": ["number", "string", "boolean"] },
+        "display_fallback": { "type": "string", "minLength": 1, "maxLength": 1000 }
+      },
+      "additionalProperties": false
+    },
+    "effect": {
+      "type": "object",
+      "required": ["metric_id", "unit", "values"],
+      "properties": {
+        "metric_id": { "$ref": "common.schema.json#/$defs/id" },
+        "unit": {
+          "enum": ["percent", "seconds", "minutes", "count", "level", "unlock", "text"]
+        },
+        "values": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/effectValue" }
+        },
+        "parsed": { "type": "boolean" }
+      },
+      "allOf": [
+        {
+          "if": {
+            "required": ["parsed"],
+            "properties": { "parsed": { "const": false } }
+          },
+          "then": {
+            "properties": {
+              "unit": { "const": "text" },
+              "values": {
+                "items": { "required": ["display_fallback"] }
+              }
+            }
+          }
+        }
+      ],
+      "additionalProperties": false
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "max_level", "layout", "levels"],
+      "properties": {
+        "id": { "$ref": "common.schema.json#/$defs/id" },
+        "max_level": { "type": "integer", "minimum": 1 },
+        "layout": { "$ref": "#/$defs/layout" },
+        "levels": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/level" }
+        },
+        "effects": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/effect" }
+        },
+        "lifecycle": { "$ref": "common.schema.json#/$defs/lifecycle" },
+        "verification_overrides": {
+          "$ref": "common.schema.json#/$defs/verificationOverrides"
+        }
+      },
+      "additionalProperties": false
+    },
+    "legacyCompatibility": {
+      "type": "object",
+      "required": ["source_type", "verification_status", "scope", "notes"],
+      "properties": {
+        "source_type": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "verification_status": { "type": "string", "minLength": 1, "maxLength": 200 },
+        "scope": { "type": "string", "maxLength": 4000 },
+        "notes": { "type": "string", "maxLength": 4000 }
+      },
+      "additionalProperties": false
+    },
+    "displayConnection": {
+      "type": "object",
+      "required": ["from_ids", "to_ids", "verification"],
+      "properties": {
+        "from_ids": {
+          "allOf": [
+            { "$ref": "common.schema.json#/$defs/idList" },
+            { "minItems": 1 }
+          ]
+        },
+        "to_ids": {
+          "allOf": [
+            { "$ref": "common.schema.json#/$defs/idList" },
+            { "minItems": 1 }
+          ]
+        },
+        "verification": {
+          "$ref": "common.schema.json#/$defs/verification"
+        }
+      },
+      "additionalProperties": false
+    },
+    "sourceEdge": {
+      "type": "object",
+      "required": ["prerequisite_id", "research_id", "verification"],
+      "properties": {
+        "prerequisite_id": { "$ref": "common.schema.json#/$defs/id" },
+        "research_id": { "$ref": "common.schema.json#/$defs/id" },
+        "verification": {
+          "$ref": "common.schema.json#/$defs/verification"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

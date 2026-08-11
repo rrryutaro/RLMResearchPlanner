@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.0.15-b1";
+import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.0-b13";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 
@@ -80,6 +80,23 @@ export function shortestAvailable(catalog, state) {
     steps.push(stepFrom(node, level, data, state.settings));
   }
   return steps.sort((a, b) => a.adjustedSeconds - b.adjustedSeconds || a.baseSeconds - b.baseSeconds || a.researchId.localeCompare(b.researchId));
+}
+
+export function paginateItems(items, requestedPage, requestedPageSize) {
+  const pageSize = Math.max(1, Math.trunc(Number(requestedPageSize) || 1));
+  const totalItems = items.length;
+  const totalPages = Math.ceil(totalItems / pageSize);
+  const page = totalPages
+    ? Math.min(totalPages - 1, Math.max(0, Math.trunc(Number(requestedPage) || 0)))
+    : 0;
+  const start = page * pageSize;
+  return {
+    items: items.slice(start, start + pageSize),
+    page,
+    pageSize,
+    totalItems,
+    totalPages,
+  };
 }
 
 export function createPlan(catalog, state, targetId, targetLevel) {
@@ -226,5 +243,6 @@ function stepFrom(node, level, data, settings) {
     technolabeCount: technolabe.count,
     technolabeEfficiencyPercent: technolabe.efficiencyPercent,
     costs: { ...(data?.costs || {}) },
+    costsVerified: Boolean(data?.costsVerified),
   };
 }

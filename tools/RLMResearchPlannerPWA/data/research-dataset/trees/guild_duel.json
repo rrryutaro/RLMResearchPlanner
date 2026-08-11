@@ -1,0 +1,2513 @@
+{
+  "coverage": "structure_only",
+  "default_verification": {
+    "checked_on": "2026-08-07",
+    "notes": "Imported from the frozen legacy catalog during the versioned dataset migration. Display connections remain provisional until checked against direct game evidence.",
+    "source_ids": [
+      "src_bigsoneca_guild_duel_video"
+    ],
+    "status": "provisional"
+  },
+  "display_connections": [
+    {
+      "from_ids": [
+        "guild_duel_gathering_incentive"
+      ],
+      "to_ids": [
+        "guild_duel_hero_incentive",
+        "guild_duel_construction_incentive",
+        "guild_duel_research_incentive",
+        "guild_duel_training_incentive"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_hero_incentive",
+        "guild_duel_construction_incentive",
+        "guild_duel_research_incentive",
+        "guild_duel_training_incentive"
+      ],
+      "to_ids": [
+        "guild_duel_reward_incentive_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_reward_incentive_i"
+      ],
+      "to_ids": [
+        "guild_duel_army_colosseum_def_i",
+        "guild_duel_army_colosseum_atk_i",
+        "guild_duel_army_colosseum_hp_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_army_colosseum_def_i",
+        "guild_duel_army_colosseum_atk_i",
+        "guild_duel_army_colosseum_hp_i"
+      ],
+      "to_ids": [
+        "guild_duel_artifact_incentive"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_artifact_incentive"
+      ],
+      "to_ids": [
+        "guild_duel_speed_up_incentive",
+        "guild_duel_stage_incentive",
+        "guild_duel_hunting_incentive"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_speed_up_incentive",
+        "guild_duel_stage_incentive",
+        "guild_duel_hunting_incentive"
+      ],
+      "to_ids": [
+        "guild_duel_reward_incentive_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_reward_incentive_ii"
+      ],
+      "to_ids": [
+        "guild_duel_army_def_ii",
+        "guild_duel_army_atk_ii",
+        "guild_duel_army_hp_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_army_def_ii",
+        "guild_duel_army_atk_ii",
+        "guild_duel_army_hp_ii"
+      ],
+      "to_ids": [
+        "guild_duel_familiar_incentive"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_familiar_incentive"
+      ],
+      "to_ids": [
+        "guild_duel_army_colosseum_def_ii",
+        "guild_duel_army_colosseum_atk_ii",
+        "guild_duel_army_colosseum_hp_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_army_colosseum_def_ii",
+        "guild_duel_army_colosseum_atk_ii",
+        "guild_duel_army_colosseum_hp_ii"
+      ],
+      "to_ids": [
+        "guild_duel_army_def_iii",
+        "guild_duel_army_atk_iii",
+        "guild_duel_army_hp_iii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "guild_duel_army_def_iii",
+        "guild_duel_army_atk_iii",
+        "guild_duel_army_hp_iii"
+      ],
+      "to_ids": [
+        "guild_duel_master_incentive",
+        "guild_duel_crafting_incentive"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "document_type": "RLMResearchData.tree",
+  "legacy_compatibility": {
+    "notes": "公開情報で全26ノードの配置、接続、最大レベル、効果を確認。英語・日本語名は表示用翻訳。各レベルの時間・資源・専用素材は、信頼できる公開数値表を確認できていないため未収録。",
+    "scope": "tree_structure_reference_only",
+    "source_type": "community_catalog",
+    "verification_status": "structure_only_numeric_level_data_unavailable"
+  },
+  "nodes": [
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_gathering_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_gathering_incentive",
+      "layout": {
+        "column": 3,
+        "row": 0
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_hero_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_hero_incentive",
+      "layout": {
+        "column": 0,
+        "row": 1
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_construction_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_construction_incentive",
+      "layout": {
+        "column": 2,
+        "row": 1
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_research_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_research_incentive",
+      "layout": {
+        "column": 4,
+        "row": 1
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_training_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_training_incentive",
+      "layout": {
+        "column": 6,
+        "row": 1
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_reward_incentive_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocked",
+              "level": 1,
+              "value": "Unlocked"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_reward_incentive_i",
+      "layout": {
+        "column": 3,
+        "row": 2
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_colosseum_def_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_colosseum_def_i",
+      "layout": {
+        "column": 1,
+        "row": 3
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_colosseum_atk_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_colosseum_atk_i",
+      "layout": {
+        "column": 3,
+        "row": 3
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_colosseum_hp_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_colosseum_hp_i",
+      "layout": {
+        "column": 5,
+        "row": 3
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_artifact_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_artifact_incentive",
+      "layout": {
+        "column": 3,
+        "row": 4
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_speed_up_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_speed_up_incentive",
+      "layout": {
+        "column": 1,
+        "row": 5
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_stage_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_stage_incentive",
+      "layout": {
+        "column": 3,
+        "row": 5
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_hunting_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_hunting_incentive",
+      "layout": {
+        "column": 5,
+        "row": 5
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_reward_incentive_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocked",
+              "level": 1,
+              "value": "Unlocked"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_reward_incentive_ii",
+      "layout": {
+        "column": 3,
+        "row": 6
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_def_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+1%",
+              "level": 1,
+              "value": "+1%"
+            },
+            {
+              "display_fallback": "+2%",
+              "level": 2,
+              "value": "+2%"
+            },
+            {
+              "display_fallback": "+3%",
+              "level": 3,
+              "value": "+3%"
+            },
+            {
+              "display_fallback": "+4%",
+              "level": 4,
+              "value": "+4%"
+            },
+            {
+              "display_fallback": "+5%",
+              "level": 5,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+6%",
+              "level": 6,
+              "value": "+6%"
+            },
+            {
+              "display_fallback": "+7%",
+              "level": 7,
+              "value": "+7%"
+            },
+            {
+              "display_fallback": "+8%",
+              "level": 8,
+              "value": "+8%"
+            },
+            {
+              "display_fallback": "+9%",
+              "level": 9,
+              "value": "+9%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 10,
+              "value": "+10%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_def_ii",
+      "layout": {
+        "column": 1,
+        "row": 7
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_atk_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+1%",
+              "level": 1,
+              "value": "+1%"
+            },
+            {
+              "display_fallback": "+2%",
+              "level": 2,
+              "value": "+2%"
+            },
+            {
+              "display_fallback": "+3%",
+              "level": 3,
+              "value": "+3%"
+            },
+            {
+              "display_fallback": "+4%",
+              "level": 4,
+              "value": "+4%"
+            },
+            {
+              "display_fallback": "+5%",
+              "level": 5,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+6%",
+              "level": 6,
+              "value": "+6%"
+            },
+            {
+              "display_fallback": "+7%",
+              "level": 7,
+              "value": "+7%"
+            },
+            {
+              "display_fallback": "+8%",
+              "level": 8,
+              "value": "+8%"
+            },
+            {
+              "display_fallback": "+9%",
+              "level": 9,
+              "value": "+9%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 10,
+              "value": "+10%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_atk_ii",
+      "layout": {
+        "column": 3,
+        "row": 7
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_hp_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+1%",
+              "level": 1,
+              "value": "+1%"
+            },
+            {
+              "display_fallback": "+2%",
+              "level": 2,
+              "value": "+2%"
+            },
+            {
+              "display_fallback": "+3%",
+              "level": 3,
+              "value": "+3%"
+            },
+            {
+              "display_fallback": "+4%",
+              "level": 4,
+              "value": "+4%"
+            },
+            {
+              "display_fallback": "+5%",
+              "level": 5,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+6%",
+              "level": 6,
+              "value": "+6%"
+            },
+            {
+              "display_fallback": "+7%",
+              "level": 7,
+              "value": "+7%"
+            },
+            {
+              "display_fallback": "+8%",
+              "level": 8,
+              "value": "+8%"
+            },
+            {
+              "display_fallback": "+9%",
+              "level": 9,
+              "value": "+9%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 10,
+              "value": "+10%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_hp_ii",
+      "layout": {
+        "column": 5,
+        "row": 7
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_familiar_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_familiar_incentive",
+      "layout": {
+        "column": 3,
+        "row": 8
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_colosseum_def_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_colosseum_def_ii",
+      "layout": {
+        "column": 1,
+        "row": 9
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_colosseum_atk_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_colosseum_atk_ii",
+      "layout": {
+        "column": 3,
+        "row": 9
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_colosseum_hp_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_colosseum_hp_ii",
+      "layout": {
+        "column": 5,
+        "row": 9
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_def_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+1%",
+              "level": 1,
+              "value": "+1%"
+            },
+            {
+              "display_fallback": "+2%",
+              "level": 2,
+              "value": "+2%"
+            },
+            {
+              "display_fallback": "+3%",
+              "level": 3,
+              "value": "+3%"
+            },
+            {
+              "display_fallback": "+4%",
+              "level": 4,
+              "value": "+4%"
+            },
+            {
+              "display_fallback": "+5%",
+              "level": 5,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+6%",
+              "level": 6,
+              "value": "+6%"
+            },
+            {
+              "display_fallback": "+7%",
+              "level": 7,
+              "value": "+7%"
+            },
+            {
+              "display_fallback": "+8%",
+              "level": 8,
+              "value": "+8%"
+            },
+            {
+              "display_fallback": "+9%",
+              "level": 9,
+              "value": "+9%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 10,
+              "value": "+10%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_def_iii",
+      "layout": {
+        "column": 1,
+        "row": 10
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_atk_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+1%",
+              "level": 1,
+              "value": "+1%"
+            },
+            {
+              "display_fallback": "+2%",
+              "level": 2,
+              "value": "+2%"
+            },
+            {
+              "display_fallback": "+3%",
+              "level": 3,
+              "value": "+3%"
+            },
+            {
+              "display_fallback": "+4%",
+              "level": 4,
+              "value": "+4%"
+            },
+            {
+              "display_fallback": "+5%",
+              "level": 5,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+6%",
+              "level": 6,
+              "value": "+6%"
+            },
+            {
+              "display_fallback": "+7%",
+              "level": 7,
+              "value": "+7%"
+            },
+            {
+              "display_fallback": "+8%",
+              "level": 8,
+              "value": "+8%"
+            },
+            {
+              "display_fallback": "+9%",
+              "level": 9,
+              "value": "+9%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 10,
+              "value": "+10%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_atk_iii",
+      "layout": {
+        "column": 3,
+        "row": 10
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_army_hp_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+1%",
+              "level": 1,
+              "value": "+1%"
+            },
+            {
+              "display_fallback": "+2%",
+              "level": 2,
+              "value": "+2%"
+            },
+            {
+              "display_fallback": "+3%",
+              "level": 3,
+              "value": "+3%"
+            },
+            {
+              "display_fallback": "+4%",
+              "level": 4,
+              "value": "+4%"
+            },
+            {
+              "display_fallback": "+5%",
+              "level": 5,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+6%",
+              "level": 6,
+              "value": "+6%"
+            },
+            {
+              "display_fallback": "+7%",
+              "level": 7,
+              "value": "+7%"
+            },
+            {
+              "display_fallback": "+8%",
+              "level": 8,
+              "value": "+8%"
+            },
+            {
+              "display_fallback": "+9%",
+              "level": 9,
+              "value": "+9%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 10,
+              "value": "+10%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_army_hp_iii",
+      "layout": {
+        "column": 5,
+        "row": 10
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_master_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_master_incentive",
+      "layout": {
+        "column": 1,
+        "row": 11
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "guild_duel_crafting_incentive",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "+5%",
+              "level": 1,
+              "value": "+5%"
+            },
+            {
+              "display_fallback": "+10%",
+              "level": 2,
+              "value": "+10%"
+            },
+            {
+              "display_fallback": "+15%",
+              "level": 3,
+              "value": "+15%"
+            },
+            {
+              "display_fallback": "+20%",
+              "level": 4,
+              "value": "+20%"
+            },
+            {
+              "display_fallback": "+25%",
+              "level": 5,
+              "value": "+25%"
+            },
+            {
+              "display_fallback": "+30%",
+              "level": 6,
+              "value": "+30%"
+            },
+            {
+              "display_fallback": "+35%",
+              "level": 7,
+              "value": "+35%"
+            },
+            {
+              "display_fallback": "+40%",
+              "level": 8,
+              "value": "+40%"
+            },
+            {
+              "display_fallback": "+45%",
+              "level": 9,
+              "value": "+45%"
+            },
+            {
+              "display_fallback": "+50%",
+              "level": 10,
+              "value": "+50%"
+            }
+          ]
+        }
+      ],
+      "id": "guild_duel_crafting_incentive",
+      "layout": {
+        "column": 5,
+        "row": 11
+      },
+      "levels": [],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    }
+  ],
+  "schema_version": 2,
+  "source_edges": [
+    {
+      "prerequisite_id": "guild_duel_gathering_incentive",
+      "research_id": "guild_duel_hero_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_gathering_incentive",
+      "research_id": "guild_duel_construction_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_gathering_incentive",
+      "research_id": "guild_duel_research_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_gathering_incentive",
+      "research_id": "guild_duel_training_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_hero_incentive",
+      "research_id": "guild_duel_reward_incentive_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_construction_incentive",
+      "research_id": "guild_duel_reward_incentive_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_research_incentive",
+      "research_id": "guild_duel_reward_incentive_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_training_incentive",
+      "research_id": "guild_duel_reward_incentive_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_reward_incentive_i",
+      "research_id": "guild_duel_army_colosseum_def_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_reward_incentive_i",
+      "research_id": "guild_duel_army_colosseum_atk_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_reward_incentive_i",
+      "research_id": "guild_duel_army_colosseum_hp_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_def_i",
+      "research_id": "guild_duel_artifact_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_atk_i",
+      "research_id": "guild_duel_artifact_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_hp_i",
+      "research_id": "guild_duel_artifact_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_artifact_incentive",
+      "research_id": "guild_duel_speed_up_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_artifact_incentive",
+      "research_id": "guild_duel_stage_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_artifact_incentive",
+      "research_id": "guild_duel_hunting_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_speed_up_incentive",
+      "research_id": "guild_duel_reward_incentive_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_stage_incentive",
+      "research_id": "guild_duel_reward_incentive_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_hunting_incentive",
+      "research_id": "guild_duel_reward_incentive_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_reward_incentive_ii",
+      "research_id": "guild_duel_army_def_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_reward_incentive_ii",
+      "research_id": "guild_duel_army_atk_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_reward_incentive_ii",
+      "research_id": "guild_duel_army_hp_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_def_ii",
+      "research_id": "guild_duel_familiar_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_atk_ii",
+      "research_id": "guild_duel_familiar_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_hp_ii",
+      "research_id": "guild_duel_familiar_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_familiar_incentive",
+      "research_id": "guild_duel_army_colosseum_def_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_familiar_incentive",
+      "research_id": "guild_duel_army_colosseum_atk_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_familiar_incentive",
+      "research_id": "guild_duel_army_colosseum_hp_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_def_ii",
+      "research_id": "guild_duel_army_def_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_def_ii",
+      "research_id": "guild_duel_army_atk_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_def_ii",
+      "research_id": "guild_duel_army_hp_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_atk_ii",
+      "research_id": "guild_duel_army_def_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_atk_ii",
+      "research_id": "guild_duel_army_atk_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_atk_ii",
+      "research_id": "guild_duel_army_hp_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_hp_ii",
+      "research_id": "guild_duel_army_def_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_hp_ii",
+      "research_id": "guild_duel_army_atk_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_colosseum_hp_ii",
+      "research_id": "guild_duel_army_hp_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_def_iii",
+      "research_id": "guild_duel_master_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_def_iii",
+      "research_id": "guild_duel_crafting_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_atk_iii",
+      "research_id": "guild_duel_master_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_atk_iii",
+      "research_id": "guild_duel_crafting_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_hp_iii",
+      "research_id": "guild_duel_master_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "guild_duel_army_hp_iii",
+      "research_id": "guild_duel_crafting_incentive",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_bigsoneca_guild_duel_video"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "tree_id": "guild_duel"
+}

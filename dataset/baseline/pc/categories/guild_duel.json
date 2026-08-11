@@ -1,0 +1,1094 @@
+{
+  "category_id": "guild_duel",
+  "display_connection_groups": [
+    {
+      "prerequisite_ids": [
+        "guild_duel_gathering_incentive"
+      ],
+      "research_ids": [
+        "guild_duel_hero_incentive",
+        "guild_duel_construction_incentive",
+        "guild_duel_research_incentive",
+        "guild_duel_training_incentive"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_hero_incentive",
+        "guild_duel_construction_incentive",
+        "guild_duel_research_incentive",
+        "guild_duel_training_incentive"
+      ],
+      "research_ids": [
+        "guild_duel_reward_incentive_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_reward_incentive_i"
+      ],
+      "research_ids": [
+        "guild_duel_army_colosseum_def_i",
+        "guild_duel_army_colosseum_atk_i",
+        "guild_duel_army_colosseum_hp_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_colosseum_def_i",
+        "guild_duel_army_colosseum_atk_i",
+        "guild_duel_army_colosseum_hp_i"
+      ],
+      "research_ids": [
+        "guild_duel_artifact_incentive"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_artifact_incentive"
+      ],
+      "research_ids": [
+        "guild_duel_speed_up_incentive",
+        "guild_duel_stage_incentive",
+        "guild_duel_hunting_incentive"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_speed_up_incentive",
+        "guild_duel_stage_incentive",
+        "guild_duel_hunting_incentive"
+      ],
+      "research_ids": [
+        "guild_duel_reward_incentive_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_reward_incentive_ii"
+      ],
+      "research_ids": [
+        "guild_duel_army_def_ii",
+        "guild_duel_army_atk_ii",
+        "guild_duel_army_hp_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_def_ii",
+        "guild_duel_army_atk_ii",
+        "guild_duel_army_hp_ii"
+      ],
+      "research_ids": [
+        "guild_duel_familiar_incentive"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_familiar_incentive"
+      ],
+      "research_ids": [
+        "guild_duel_army_colosseum_def_ii",
+        "guild_duel_army_colosseum_atk_ii",
+        "guild_duel_army_colosseum_hp_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_colosseum_def_ii",
+        "guild_duel_army_colosseum_atk_ii",
+        "guild_duel_army_colosseum_hp_ii"
+      ],
+      "research_ids": [
+        "guild_duel_army_def_iii",
+        "guild_duel_army_atk_iii",
+        "guild_duel_army_hp_iii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_def_iii",
+        "guild_duel_army_atk_iii",
+        "guild_duel_army_hp_iii"
+      ],
+      "research_ids": [
+        "guild_duel_master_incentive",
+        "guild_duel_crafting_incentive"
+      ]
+    }
+  ],
+  "display_connections": [
+    [
+      "guild_duel_army_atk_ii",
+      "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_army_atk_iii",
+      "guild_duel_crafting_incentive"
+    ],
+    [
+      "guild_duel_army_atk_iii",
+      "guild_duel_master_incentive"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_i",
+      "guild_duel_artifact_incentive"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_atk_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_hp_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_def_i",
+      "guild_duel_artifact_incentive"
+    ],
+    [
+      "guild_duel_army_colosseum_def_ii",
+      "guild_duel_army_atk_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_def_ii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_def_ii",
+      "guild_duel_army_hp_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_i",
+      "guild_duel_artifact_incentive"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_atk_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_hp_iii"
+    ],
+    [
+      "guild_duel_army_def_ii",
+      "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_army_def_iii",
+      "guild_duel_crafting_incentive"
+    ],
+    [
+      "guild_duel_army_def_iii",
+      "guild_duel_master_incentive"
+    ],
+    [
+      "guild_duel_army_hp_ii",
+      "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_army_hp_iii",
+      "guild_duel_crafting_incentive"
+    ],
+    [
+      "guild_duel_army_hp_iii",
+      "guild_duel_master_incentive"
+    ],
+    [
+      "guild_duel_artifact_incentive",
+      "guild_duel_hunting_incentive"
+    ],
+    [
+      "guild_duel_artifact_incentive",
+      "guild_duel_speed_up_incentive"
+    ],
+    [
+      "guild_duel_artifact_incentive",
+      "guild_duel_stage_incentive"
+    ],
+    [
+      "guild_duel_construction_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_atk_ii"
+    ],
+    [
+      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_def_ii"
+    ],
+    [
+      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_hp_ii"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_construction_incentive"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_hero_incentive"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_research_incentive"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_training_incentive"
+    ],
+    [
+      "guild_duel_hero_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_hunting_incentive",
+      "guild_duel_reward_incentive_ii"
+    ],
+    [
+      "guild_duel_research_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_reward_incentive_i",
+      "guild_duel_army_colosseum_atk_i"
+    ],
+    [
+      "guild_duel_reward_incentive_i",
+      "guild_duel_army_colosseum_def_i"
+    ],
+    [
+      "guild_duel_reward_incentive_i",
+      "guild_duel_army_colosseum_hp_i"
+    ],
+    [
+      "guild_duel_reward_incentive_ii",
+      "guild_duel_army_atk_ii"
+    ],
+    [
+      "guild_duel_reward_incentive_ii",
+      "guild_duel_army_def_ii"
+    ],
+    [
+      "guild_duel_reward_incentive_ii",
+      "guild_duel_army_hp_ii"
+    ],
+    [
+      "guild_duel_speed_up_incentive",
+      "guild_duel_reward_incentive_ii"
+    ],
+    [
+      "guild_duel_stage_incentive",
+      "guild_duel_reward_incentive_ii"
+    ],
+    [
+      "guild_duel_training_incentive",
+      "guild_duel_reward_incentive_i"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 3,
+      "effect_label": "Gathering Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_gathering_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gathering Incentive",
+        "ja-JP": "採取インセンティブ"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Hero Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_hero_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Hero Incentive",
+        "ja-JP": "ヒーローインセンティブ"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Construction Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_construction_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Construction Incentive",
+        "ja-JP": "建設インセンティブ"
+      },
+      "row": 1
+    },
+    {
+      "column": 4,
+      "effect_label": "Research Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_research_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Research Incentive",
+        "ja-JP": "研究インセンティブ"
+      },
+      "row": 1
+    },
+    {
+      "column": 6,
+      "effect_label": "Training Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_training_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Training Incentive",
+        "ja-JP": "訓練インセンティブ"
+      },
+      "row": 1
+    },
+    {
+      "column": 3,
+      "effect_label": "Guild Duel reward boost",
+      "effect_values": {
+        "1": "Unlocked"
+      },
+      "id": "guild_duel_reward_incentive_i",
+      "levels": [],
+      "max_level": 1,
+      "names": {
+        "en-US": "Reward Incentive I",
+        "ja-JP": "報酬インセンティブ I"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Army Colosseum DEF",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_army_colosseum_def_i",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army Colosseum DEF I",
+        "ja-JP": "軍隊コロシアム防御力 I"
+      },
+      "row": 3
+    },
+    {
+      "column": 3,
+      "effect_label": "Army Colosseum ATK",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_army_colosseum_atk_i",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army Colosseum ATK I",
+        "ja-JP": "軍隊コロシアム攻撃力 I"
+      },
+      "row": 3
+    },
+    {
+      "column": 5,
+      "effect_label": "Army Colosseum HP",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_army_colosseum_hp_i",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army Colosseum HP I",
+        "ja-JP": "軍隊コロシアムHP I"
+      },
+      "row": 3
+    },
+    {
+      "column": 3,
+      "effect_label": "Artifact Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_artifact_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Artifact Incentive",
+        "ja-JP": "アーティファクトインセンティブ"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Speed-Up Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_speed_up_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Speed-Up Incentive",
+        "ja-JP": "加速インセンティブ"
+      },
+      "row": 5
+    },
+    {
+      "column": 3,
+      "effect_label": "Stage Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_stage_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Stage Incentive",
+        "ja-JP": "冒険インセンティブ"
+      },
+      "row": 5
+    },
+    {
+      "column": 5,
+      "effect_label": "Hunting Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_hunting_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Hunting Incentive",
+        "ja-JP": "討伐インセンティブ"
+      },
+      "row": 5
+    },
+    {
+      "column": 3,
+      "effect_label": "Guild Duel reward boost",
+      "effect_values": {
+        "1": "Unlocked"
+      },
+      "id": "guild_duel_reward_incentive_ii",
+      "levels": [],
+      "max_level": 1,
+      "names": {
+        "en-US": "Reward Incentive II",
+        "ja-JP": "報酬インセンティブ II"
+      },
+      "row": 6
+    },
+    {
+      "column": 1,
+      "effect_label": "Army DEF",
+      "effect_values": {
+        "1": "+1%",
+        "10": "+10%",
+        "2": "+2%",
+        "3": "+3%",
+        "4": "+4%",
+        "5": "+5%",
+        "6": "+6%",
+        "7": "+7%",
+        "8": "+8%",
+        "9": "+9%"
+      },
+      "id": "guild_duel_army_def_ii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army DEF II",
+        "ja-JP": "軍隊防御力 II"
+      },
+      "row": 7
+    },
+    {
+      "column": 3,
+      "effect_label": "Army ATK",
+      "effect_values": {
+        "1": "+1%",
+        "10": "+10%",
+        "2": "+2%",
+        "3": "+3%",
+        "4": "+4%",
+        "5": "+5%",
+        "6": "+6%",
+        "7": "+7%",
+        "8": "+8%",
+        "9": "+9%"
+      },
+      "id": "guild_duel_army_atk_ii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army ATK II",
+        "ja-JP": "軍隊攻撃力 II"
+      },
+      "row": 7
+    },
+    {
+      "column": 5,
+      "effect_label": "Army HP",
+      "effect_values": {
+        "1": "+1%",
+        "10": "+10%",
+        "2": "+2%",
+        "3": "+3%",
+        "4": "+4%",
+        "5": "+5%",
+        "6": "+6%",
+        "7": "+7%",
+        "8": "+8%",
+        "9": "+9%"
+      },
+      "id": "guild_duel_army_hp_ii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army HP II",
+        "ja-JP": "軍隊HP II"
+      },
+      "row": 7
+    },
+    {
+      "column": 3,
+      "effect_label": "Familiar Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_familiar_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiar Incentive",
+        "ja-JP": "召喚獣インセンティブ"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "Army Colosseum DEF",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_army_colosseum_def_ii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army Colosseum DEF II",
+        "ja-JP": "軍隊コロシアム防御力 II"
+      },
+      "row": 9
+    },
+    {
+      "column": 3,
+      "effect_label": "Army Colosseum ATK",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_army_colosseum_atk_ii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army Colosseum ATK II",
+        "ja-JP": "軍隊コロシアム攻撃力 II"
+      },
+      "row": 9
+    },
+    {
+      "column": 5,
+      "effect_label": "Army Colosseum HP",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_army_colosseum_hp_ii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army Colosseum HP II",
+        "ja-JP": "軍隊コロシアムHP II"
+      },
+      "row": 9
+    },
+    {
+      "column": 1,
+      "effect_label": "Army DEF",
+      "effect_values": {
+        "1": "+1%",
+        "10": "+10%",
+        "2": "+2%",
+        "3": "+3%",
+        "4": "+4%",
+        "5": "+5%",
+        "6": "+6%",
+        "7": "+7%",
+        "8": "+8%",
+        "9": "+9%"
+      },
+      "id": "guild_duel_army_def_iii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army DEF III",
+        "ja-JP": "軍隊防御力 III"
+      },
+      "row": 10
+    },
+    {
+      "column": 3,
+      "effect_label": "Army ATK",
+      "effect_values": {
+        "1": "+1%",
+        "10": "+10%",
+        "2": "+2%",
+        "3": "+3%",
+        "4": "+4%",
+        "5": "+5%",
+        "6": "+6%",
+        "7": "+7%",
+        "8": "+8%",
+        "9": "+9%"
+      },
+      "id": "guild_duel_army_atk_iii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army ATK III",
+        "ja-JP": "軍隊攻撃力 III"
+      },
+      "row": 10
+    },
+    {
+      "column": 5,
+      "effect_label": "Army HP",
+      "effect_values": {
+        "1": "+1%",
+        "10": "+10%",
+        "2": "+2%",
+        "3": "+3%",
+        "4": "+4%",
+        "5": "+5%",
+        "6": "+6%",
+        "7": "+7%",
+        "8": "+8%",
+        "9": "+9%"
+      },
+      "id": "guild_duel_army_hp_iii",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Army HP III",
+        "ja-JP": "軍隊HP III"
+      },
+      "row": 10
+    },
+    {
+      "column": 1,
+      "effect_label": "Master Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_master_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Master Incentive",
+        "ja-JP": "マスターインセンティブ"
+      },
+      "row": 11
+    },
+    {
+      "column": 5,
+      "effect_label": "Crafting Guild Duel points",
+      "effect_values": {
+        "1": "+5%",
+        "10": "+50%",
+        "2": "+10%",
+        "3": "+15%",
+        "4": "+20%",
+        "5": "+25%",
+        "6": "+30%",
+        "7": "+35%",
+        "8": "+40%",
+        "9": "+45%"
+      },
+      "id": "guild_duel_crafting_incentive",
+      "levels": [],
+      "max_level": 10,
+      "names": {
+        "en-US": "Crafting Incentive",
+        "ja-JP": "製作インセンティブ"
+      },
+      "row": 11
+    }
+  ],
+  "platform": "pc",
+  "schema_version": 1,
+  "scope": "tree_structure_reference_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "source_edges": [
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_hero_incentive"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_construction_incentive"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_research_incentive"
+    ],
+    [
+      "guild_duel_gathering_incentive",
+      "guild_duel_training_incentive"
+    ],
+    [
+      "guild_duel_hero_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_construction_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_research_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_training_incentive",
+      "guild_duel_reward_incentive_i"
+    ],
+    [
+      "guild_duel_reward_incentive_i",
+      "guild_duel_army_colosseum_def_i"
+    ],
+    [
+      "guild_duel_reward_incentive_i",
+      "guild_duel_army_colosseum_atk_i"
+    ],
+    [
+      "guild_duel_reward_incentive_i",
+      "guild_duel_army_colosseum_hp_i"
+    ],
+    [
+      "guild_duel_army_colosseum_def_i",
+      "guild_duel_artifact_incentive"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_i",
+      "guild_duel_artifact_incentive"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_i",
+      "guild_duel_artifact_incentive"
+    ],
+    [
+      "guild_duel_artifact_incentive",
+      "guild_duel_speed_up_incentive"
+    ],
+    [
+      "guild_duel_artifact_incentive",
+      "guild_duel_stage_incentive"
+    ],
+    [
+      "guild_duel_artifact_incentive",
+      "guild_duel_hunting_incentive"
+    ],
+    [
+      "guild_duel_speed_up_incentive",
+      "guild_duel_reward_incentive_ii"
+    ],
+    [
+      "guild_duel_stage_incentive",
+      "guild_duel_reward_incentive_ii"
+    ],
+    [
+      "guild_duel_hunting_incentive",
+      "guild_duel_reward_incentive_ii"
+    ],
+    [
+      "guild_duel_reward_incentive_ii",
+      "guild_duel_army_def_ii"
+    ],
+    [
+      "guild_duel_reward_incentive_ii",
+      "guild_duel_army_atk_ii"
+    ],
+    [
+      "guild_duel_reward_incentive_ii",
+      "guild_duel_army_hp_ii"
+    ],
+    [
+      "guild_duel_army_def_ii",
+      "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_army_atk_ii",
+      "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_army_hp_ii",
+      "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_def_ii"
+    ],
+    [
+      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_atk_ii"
+    ],
+    [
+      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_hp_ii"
+    ],
+    [
+      "guild_duel_army_colosseum_def_ii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_def_ii",
+      "guild_duel_army_atk_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_def_ii",
+      "guild_duel_army_hp_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_atk_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_hp_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_atk_iii"
+    ],
+    [
+      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_hp_iii"
+    ],
+    [
+      "guild_duel_army_def_iii",
+      "guild_duel_master_incentive"
+    ],
+    [
+      "guild_duel_army_def_iii",
+      "guild_duel_crafting_incentive"
+    ],
+    [
+      "guild_duel_army_atk_iii",
+      "guild_duel_master_incentive"
+    ],
+    [
+      "guild_duel_army_atk_iii",
+      "guild_duel_crafting_incentive"
+    ],
+    [
+      "guild_duel_army_hp_iii",
+      "guild_duel_master_incentive"
+    ],
+    [
+      "guild_duel_army_hp_iii",
+      "guild_duel_crafting_incentive"
+    ]
+  ],
+  "titles": {
+    "en-US": "Guild Duel",
+    "ja-JP": "ギルド決闘"
+  },
+  "verification_status": "structure_only_numeric_level_data_unavailable"
+}

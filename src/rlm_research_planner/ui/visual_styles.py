@@ -150,6 +150,32 @@ QGroupBox::title {
     color: #66D8C2;
     background-color: #07151D;
 }
+QGroupBox#speedupSimulationPanel {
+    border-color: #326173;
+    background-color: #0B202A;
+}
+QGroupBox#speedupOwnedGroup {
+    border-color: #285363;
+    background-color: #102B35;
+}
+QGroupBox#speedupRemainingGroup {
+    border-color: #845C38;
+    background-color: #2B2119;
+}
+QGroupBox#speedupOffersGroup {
+    border-color: #285363;
+    background-color: #102B35;
+}
+QFrame#speedupOfferCard {
+    border: 1px solid #326173;
+    border-left: 3px solid #F2B632;
+    border-radius: 7px;
+    background-color: #0B202A;
+}
+QLabel#speedupDirectGems {
+    color: #F4F8F8;
+    font-weight: 700;
+}
 QLabel#ConstructionSelection {
     min-height: 28px;
     padding: 4px 12px;
@@ -216,6 +242,111 @@ QMenu::item:selected {
 """
 
 
+DESKTOP_SPEEDUP_PANEL_STYLE = """
+QWidget#speedupSimulationPanel {
+    border: 1px solid #9FB1BB;
+    border-radius: 8px;
+    background-color: #F5F8FA;
+}
+QToolButton#speedupSimulationToggle {
+    min-height: 34px;
+    padding: 5px 10px;
+    border: 0;
+    border-radius: 7px;
+    color: #164E63;
+    background-color: #F5F8FA;
+    font-weight: 700;
+    text-align: left;
+}
+QToolButton#speedupSimulationToggle:hover,
+QToolButton#speedupSimulationToggle:checked {
+    background-color: #E4EEF2;
+}
+QFrame#speedupSimulationBody {
+    border-top: 1px solid #C7D3D9;
+    background-color: #F5F8FA;
+}
+QFrame#speedupOwnedGroup,
+QFrame#speedupOffersGroup {
+    border: 1px solid #A9BBC5;
+    border-radius: 7px;
+    background-color: #FFFFFF;
+}
+QFrame#speedupRemainingGroup {
+    border: 1px solid #C99B68;
+    border-radius: 7px;
+    background-color: #FFF8EF;
+}
+QLabel#speedupSectionTitle {
+    color: #164E63;
+    background-color: transparent;
+    font-weight: 700;
+}
+QFrame#speedupOfferCard {
+    border: 1px solid #A9BBC5;
+    border-left: 3px solid #C69016;
+    border-radius: 6px;
+    background-color: #FFFFFF;
+}
+QLabel#speedupDirectGems {
+    color: #08765B;
+    font-weight: 700;
+}
+"""
+
+
+MOBILE_SPEEDUP_PANEL_STYLE = """
+QWidget#speedupSimulationPanel {
+    border: 1px solid #326173;
+    border-radius: 8px;
+    background-color: #0B202A;
+}
+QToolButton#speedupSimulationToggle {
+    min-height: 36px;
+    padding: 5px 10px;
+    border: 0;
+    border-radius: 7px;
+    color: #F4F8F8;
+    background-color: #0B202A;
+    font-weight: 700;
+    text-align: left;
+}
+QToolButton#speedupSimulationToggle:hover,
+QToolButton#speedupSimulationToggle:checked {
+    color: #07151D;
+    background-color: #F2B632;
+}
+QFrame#speedupSimulationBody {
+    border-top: 1px solid #326173;
+    background-color: #0B202A;
+}
+QFrame#speedupOwnedGroup,
+QFrame#speedupOffersGroup {
+    border: 1px solid #285363;
+    border-radius: 7px;
+    background-color: #102B35;
+}
+QFrame#speedupRemainingGroup {
+    border: 1px solid #845C38;
+    border-radius: 7px;
+    background-color: #2B2119;
+}
+QLabel#speedupSectionTitle {
+    color: #F4F8F8;
+    background-color: transparent;
+    font-weight: 700;
+}
+QLabel, QCheckBox {
+    color: #F4F8F8;
+    background-color: transparent;
+}
+QLabel#speedupDirectGems {
+    color: #F4F8F8;
+    font-weight: 700;
+}
+"""
+
+
 DESKTOP_DATASET_STYLE = (
     "QListWidget::item { border: 2px solid transparent; }"
     "QListWidget::item:selected {"
@@ -243,6 +374,14 @@ MOBILE_DATASET_STYLE = (
 
 def window_style_sheet(visual_style: str) -> str:
     return MOBILE_STYLE_SHEET if visual_style == "mobile" else ""
+
+
+def speedup_panel_style_sheet(visual_style: str) -> str:
+    return (
+        MOBILE_SPEEDUP_PANEL_STYLE
+        if visual_style == "mobile"
+        else DESKTOP_SPEEDUP_PANEL_STYLE
+    )
 
 
 def apply_window_visual_surface(

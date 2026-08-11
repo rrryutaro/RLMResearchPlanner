@@ -1,0 +1,3291 @@
+{
+  "category_id": "mana_awakening",
+  "display_connections": [
+    [
+      "mana_awakening_alchemy_ii",
+      "mana_awakening_mana_crystal_boon"
+    ],
+    [
+      "mana_awakening_barracks_expansion_iii",
+      "mana_awakening_mana_crystal_breakthrough"
+    ],
+    [
+      "mana_awakening_bigger_infirmary_iv",
+      "mana_awakening_mana_crystal_breakthrough"
+    ],
+    [
+      "mana_awakening_field_triage_iii",
+      "mana_awakening_mana_crystal_breakthrough"
+    ],
+    [
+      "mana_awakening_forced_march_iv",
+      "mana_awakening_mana_crystal_boon"
+    ],
+    [
+      "mana_awakening_lunite_harvesting_ii",
+      "mana_awakening_manasteel"
+    ],
+    [
+      "mana_awakening_lunite_storage_ii",
+      "mana_awakening_manasteel"
+    ],
+    [
+      "mana_awakening_mana_crystal_boon",
+      "mana_awakening_barracks_expansion_iii"
+    ],
+    [
+      "mana_awakening_mana_crystal_boon",
+      "mana_awakening_bigger_infirmary_iv"
+    ],
+    [
+      "mana_awakening_mana_crystal_boon",
+      "mana_awakening_field_triage_iii"
+    ],
+    [
+      "mana_awakening_mana_crystal_breakthrough",
+      "mana_awakening_mana_ore_harvesting_ii"
+    ],
+    [
+      "mana_awakening_mana_crystal_breakthrough",
+      "mana_awakening_mana_ore_storage_ii"
+    ],
+    [
+      "mana_awakening_mana_ore_harvesting_i",
+      "mana_awakening_alchemy_ii"
+    ],
+    [
+      "mana_awakening_mana_ore_harvesting_i",
+      "mana_awakening_forced_march_iv"
+    ],
+    [
+      "mana_awakening_mana_ore_harvesting_i",
+      "mana_awakening_ration_run_v"
+    ],
+    [
+      "mana_awakening_mana_ore_harvesting_ii",
+      "mana_awakening_lunite_harvesting_ii"
+    ],
+    [
+      "mana_awakening_mana_ore_harvesting_iii",
+      "mana_awakening_manasteel_boon"
+    ],
+    [
+      "mana_awakening_mana_ore_storage_i",
+      "mana_awakening_alchemy_ii"
+    ],
+    [
+      "mana_awakening_mana_ore_storage_i",
+      "mana_awakening_forced_march_iv"
+    ],
+    [
+      "mana_awakening_mana_ore_storage_i",
+      "mana_awakening_ration_run_v"
+    ],
+    [
+      "mana_awakening_mana_ore_storage_ii",
+      "mana_awakening_lunite_storage_ii"
+    ],
+    [
+      "mana_awakening_mana_ore_storage_iii",
+      "mana_awakening_manasteel_boon"
+    ],
+    [
+      "mana_awakening_manasteel",
+      "mana_awakening_mana_ore_harvesting_iii"
+    ],
+    [
+      "mana_awakening_manasteel",
+      "mana_awakening_mana_ore_storage_iii"
+    ],
+    [
+      "mana_awakening_manasteel_boon",
+      "mana_awakening_crafting_capacity_ii"
+    ],
+    [
+      "mana_awakening_manasteel_boon",
+      "mana_awakening_crafting_speed_iii"
+    ],
+    [
+      "mana_awakening_ration_run_v",
+      "mana_awakening_mana_crystal_boon"
+    ],
+    [
+      "mana_awakening_shelter_expansion_ii",
+      "mana_awakening_mana_ore_harvesting_i"
+    ],
+    [
+      "mana_awakening_shelter_expansion_ii",
+      "mana_awakening_mana_ore_storage_i"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 1,
+      "effect_label": "Shelter Capacity Boost",
+      "effect_values": {
+        "1": "500",
+        "2": "1,000",
+        "3": "2,000",
+        "4": "3,000",
+        "5": "4,500",
+        "6": "6,000",
+        "7": "8,000",
+        "8": "11,000",
+        "9": "20,000",
+        "10": "50,000"
+      },
+      "id": "mana_awakening_shelter_expansion_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 349440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "mana_ore": 8232
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 26535,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1222920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "mana_ore": 20579
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 88890,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1485000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1747020,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 34,
+            "mana_ore": 57622
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 133998,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2795280,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": 218908,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3668760,
+          "buildings": {
+            "mana_academy": 2
+          },
+          "costs": {
+            "ancient_tomes": 84,
+            "mana_ore": 144053
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 289223,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 9608640,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 171,
+            "mana_ore": 271643
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 729692,
+          "requirements": [],
+          "technolabe_count": 13
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Shelter Expansion II",
+        "ja-JP": "シェルター拡張II"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Mana Ore Production",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_mana_ore_harvesting_i",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 454260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 297154,
+            "gold": 216550,
+            "mana_ore": 9878,
+            "ore": 118862,
+            "stone": 178293,
+            "timber": 148577
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34495,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1589820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 1248047,
+            "gold": 757923,
+            "mana_ore": 24695,
+            "ore": 624024,
+            "stone": 312012,
+            "timber": 520020
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 115557,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1930500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 31,
+            "food": 1515485,
+            "gold": 920335,
+            "mana_ore": 44451,
+            "ore": 757743,
+            "stone": 378872,
+            "timber": 631452
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 144877,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1485770,
+            "gold": 1082747,
+            "mana_ore": 69146,
+            "ore": 594308,
+            "stone": 891462,
+            "timber": 742885
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 174197,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3633840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 80,
+            "food": 2377231,
+            "gold": 1732395,
+            "mana_ore": 133352,
+            "ore": 950893,
+            "stone": 1426339,
+            "timber": 1188616
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 284580,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4769400,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 109,
+            "food": 3120000,
+            "gold": 2270000,
+            "mana_ore": 172000,
+            "ore": 1240000,
+            "stone": 1870000,
+            "timber": 1560000
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 375991,
+          "requirements": [],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 222,
+            "food": 8171732,
+            "gold": 5955108,
+            "mana_ore": 325972,
+            "ore": 3268693,
+            "stone": 4903039,
+            "timber": 4085866
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 948600,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Mana Ore Harvesting I",
+        "ja-JP": "マナ鉱石生産量I"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Mana Ore Production",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_mana_ore_storage_i",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 454260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 356585,
+            "gold": 216550,
+            "mana_ore": 9878,
+            "ore": 178293,
+            "stone": 89147,
+            "timber": 148577
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34495,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1589820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 1248047,
+            "gold": 757923,
+            "mana_ore": 24695,
+            "ore": 624024,
+            "stone": 312012,
+            "timber": 520020
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 115557,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1930500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 31,
+            "food": 1515485,
+            "gold": 920335,
+            "mana_ore": 44451,
+            "ore": 757743,
+            "stone": 378872,
+            "timber": 631452
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 144877,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1782924,
+            "gold": 1082747,
+            "mana_ore": 69146,
+            "ore": 891462,
+            "stone": 445931,
+            "timber": 742885
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 174197,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 109,
+            "food": 3120000,
+            "gold": 2270000,
+            "mana_ore": 172000,
+            "ore": 1240000,
+            "stone": 1870000,
+            "timber": 1560000
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 375991,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 222,
+            "food": 9806078,
+            "gold": 5955108,
+            "mana_ore": 325972,
+            "ore": 4903039,
+            "stone": 2451520,
+            "timber": 4085866
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 948600,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Mana Ore Storage I",
+        "ja-JP": "マナ鉱石生産上限I"
+      },
+      "row": 1
+    },
+    {
+      "column": 0,
+      "effect_label": "Gathering Troops Travel Speed",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_ration_run_v",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 594000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 466303,
+            "gold": 283180,
+            "mana_ore": 10702,
+            "ore": 233152,
+            "stone": 194293,
+            "timber": 116576
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 45109,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2079000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 1632061,
+            "gold": 991130,
+            "mana_ore": 26753,
+            "ore": 816031,
+            "stone": 680026,
+            "timber": 408016
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 151112,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2524440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 1981788,
+            "gold": 1203515,
+            "mana_ore": 48155,
+            "ore": 990894,
+            "stone": 825745,
+            "timber": 495447
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 189455,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 2331515,
+            "gold": 1415900,
+            "mana_ore": 74908,
+            "ore": 1165758,
+            "stone": 971465,
+            "timber": 582879
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 227797,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6236880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 143,
+            "food": 4896182,
+            "gold": 2973390,
+            "mana_ore": 187269,
+            "ore": 2448091,
+            "stone": 2040076,
+            "timber": 1224046
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 491680,
+          "requirements": [],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 290,
+            "food": 12823332,
+            "gold": 7787449,
+            "mana_ore": 353136,
+            "ore": 6411666,
+            "stone": 5343055,
+            "timber": 3205833
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1240477,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Ration Run V",
+        "ja-JP": "採取進軍速度V"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Transmutation Time Boost",
+      "effect_values": {
+        "1": "0.1%",
+        "2": "0.1%",
+        "3": "0.1%",
+        "4": "0.1%",
+        "5": "0.1%",
+        "6": "0.2%",
+        "7": "0.3%",
+        "8": "0.5%",
+        "9": "1%",
+        "10": "2.5%"
+      },
+      "id": "mana_awakening_alchemy_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 594000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 466303,
+            "gold": 283180,
+            "mana_ore": 10702,
+            "ore": 233152,
+            "stone": 194293,
+            "timber": 116576
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 45109,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2079000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 1632061,
+            "gold": 991130,
+            "mana_ore": 26753,
+            "ore": 816031,
+            "stone": 680026,
+            "timber": 408016
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 151112,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2524440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 1981788,
+            "gold": 1203515,
+            "mana_ore": 48155,
+            "ore": 990894,
+            "stone": 825745,
+            "timber": 495447
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 189455,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 2331515,
+            "gold": 1415900,
+            "mana_ore": 74908,
+            "ore": 1165758,
+            "stone": 971465,
+            "timber": 582879
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6236880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 143,
+            "food": 4896182,
+            "gold": 2973390,
+            "mana_ore": 187269,
+            "ore": 2040076,
+            "stone": 1224046,
+            "timber": 2448091
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 491680,
+          "requirements": [],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 290,
+            "food": 12823332,
+            "gold": 7787449,
+            "mana_ore": 353136,
+            "ore": 6411666,
+            "stone": 5343055,
+            "timber": 3205833
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1240477,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Alchemy II",
+        "ja-JP": "錬金時間短縮II"
+      },
+      "row": 2
+    },
+    {
+      "column": 2,
+      "effect_label": "Supply Troops Travel Speed",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_forced_march_iv",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 594000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "mana_ore": 10702
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 45109,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2079000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "mana_ore": 26753
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 151112,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2524440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "mana_ore": 48155
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 189455,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 57,
+            "mana_ore": 74908
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 227797,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6236880,
+          "buildings": {
+            "mana_academy": 2
+          },
+          "costs": {
+            "ancient_tomes": 143,
+            "mana_ore": 187269
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 491680,
+          "requirements": [],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 290,
+            "mana_ore": 353136
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1240477,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Forced March IV",
+        "ja-JP": "資源供給加速IV"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Mana Crystals from Refinement",
+      "effect_values": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5"
+      },
+      "id": "mana_awakening_mana_crystal_boon",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 3459120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 45,
+            "mana_ore": 20168
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 253933,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7069080,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 125,
+            "mana_ore": 66265
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 539973,
+          "requirements": [],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 2
+          },
+          "costs": {
+            "ancient_tomes": 235,
+            "mana_ore": 135000
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 843524,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 19601520,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 423,
+            "mana_ore": 227604
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1532353,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 9,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 9,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": 27
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 4
+          },
+          "costs": {
+            "ancient_tomes": 671,
+            "mana_ore": 345728
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 2837043,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 10,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 10,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 5,
+      "names": {
+        "en-US": "Mana Crystal Boon",
+        "ja-JP": "マナクリスタル恩恵"
+      },
+      "row": 3
+    },
+    {
+      "column": 0,
+      "effect_label": "Infirmary Healing Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "2": "0.5%",
+        "3": "0.5%",
+        "4": "1%",
+        "5": "1%",
+        "6": "1%",
+        "7": "1%",
+        "8": "1%",
+        "9": "2%",
+        "10": "7%"
+      },
+      "id": "mana_awakening_field_triage_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 937095,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 768,
+            "gold": 466,
+            "mana_ore": 115,
+            "ore": 192,
+            "stone": 320,
+            "timber": 384
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 74296,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3382920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 268,
+            "gold": 163,
+            "mana_ore": 288,
+            "ore": 672,
+            "stone": 112,
+            "timber": 134
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 248892,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4157940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 3264121,
+            "gold": 1982260,
+            "mana_ore": 51860,
+            "ore": 816031,
+            "stone": 1360051,
+            "timber": 1632061
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 312043,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5869980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 128,
+            "food": 4608171,
+            "gold": 2798485,
+            "mana_ore": 115243,
+            "ore": 1152043,
+            "stone": 1920072,
+            "timber": 2304086
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 460635,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Field Triage III",
+        "ja-JP": "応急術III"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Barracks' Training Capacity Boost",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_barracks_expansion_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 937095,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 640,
+            "gold": 466,
+            "mana_ore": 115,
+            "stone": 320
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 74296,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3382920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 224,
+            "gold": 163,
+            "mana_ore": 288,
+            "stone": 112
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 248892,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4157940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 2720101,
+            "gold": 1982260,
+            "mana_ore": 51860,
+            "stone": 1360051
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 312043,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5869980,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 128,
+            "food": 3840143,
+            "gold": 2798485,
+            "mana_ore": 115243,
+            "stone": 1920072
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 460635,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Barracks Expansion III",
+        "ja-JP": "兵舎拡張III"
+      },
+      "row": 4
+    },
+    {
+      "column": 2,
+      "effect_label": "Infirmary Capacity Boost",
+      "effect_values": {
+        "1": "0.1%",
+        "2": "0.1%",
+        "3": "0.1%",
+        "4": "0.2%",
+        "5": "0.2%",
+        "6": "0.3%",
+        "7": "0.4%",
+        "8": "0.6%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_bigger_infirmary_iv",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 937095,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 640,
+            "gold": 466,
+            "mana_ore": 115,
+            "stone": 320
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 74296,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3382920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 224,
+            "gold": 163,
+            "mana_ore": 288,
+            "stone": 112
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 248892,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4157940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 2720101,
+            "gold": 1982260,
+            "mana_ore": 51860,
+            "stone": 1360051
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 312043,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5869980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 128,
+            "food": 3840143,
+            "gold": 2798485,
+            "mana_ore": 115243,
+            "stone": 1920072
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 460635,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Bigger Infirmary IV",
+        "ja-JP": "医療所拡張IV"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Daily Mana Crystal Refinement Limit",
+      "effect_values": {
+        "1": "1",
+        "2": "1",
+        "3": "1",
+        "4": "1",
+        "5": "1"
+      },
+      "id": "mana_awakening_mana_crystal_breakthrough",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 5483640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 71,
+            "food": 432,
+            "gold": 262,
+            "mana_ore": 23,
+            "ore": 18,
+            "stone": 108,
+            "timber": 216
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 403985,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_barracks_expansion_iii"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_bigger_infirmary_iv"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_field_triage_iii"
+            }
+          ],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 11311980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 199,
+            "food": 8880329,
+            "gold": 5392913,
+            "mana_ore": 75731,
+            "ore": 3700137,
+            "stone": 2220083,
+            "timber": 4440165
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 859046,
+          "requirements": [],
+          "technolabe_count": 15
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 374,
+            "food": 13440498,
+            "gold": 8162246,
+            "mana_ore": 154755,
+            "ore": 5600208,
+            "stone": 3360125,
+            "timber": 6720249
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1341971,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "mana_awakening_barracks_expansion_iii"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_bigger_infirmary_iv"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_field_triage_iii"
+            }
+          ],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 5,
+      "names": {
+        "en-US": "Mana Crystal Breakthrough",
+        "ja-JP": "マナクリスタル精製突破"
+      },
+      "row": 5
+    },
+    {
+      "column": 0,
+      "effect_label": "Mana Ore Production",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_mana_ore_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 786,
+            "gold": 716,
+            "mana_ore": 131,
+            "ore": 294,
+            "stone": 491,
+            "timber": 786
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 114098,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 2,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7512180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 144,
+            "food": 3932575,
+            "gold": 3581394,
+            "mana_ore": 92194,
+            "ore": 1474341,
+            "stone": 2457234,
+            "timber": 3931575
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 576191,
+          "requirements": [],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Mana Ore Harvesting II",
+        "ja-JP": "マナ鉱石生産量II"
+      },
+      "row": 6
+    },
+    {
+      "column": 2,
+      "effect_label": "Max Mana Ore Storage",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_mana_ore_storage_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 117,
+            "gold": 716,
+            "mana_ore": 131,
+            "stone": 393,
+            "timber": 589
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 114098,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5258520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 60,
+            "food": 4128153,
+            "gold": 2506976,
+            "mana_ore": 32927,
+            "stone": 1376051,
+            "timber": 2064077
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 382226,
+          "requirements": [],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7512180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 144,
+            "food": 5897362,
+            "gold": 3581394,
+            "mana_ore": 92194,
+            "stone": 1965788,
+            "timber": 2948681
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 576191,
+          "requirements": [],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Mana Ore Storage II",
+        "ja-JP": "マナ鉱石生産上限II"
+      },
+      "row": 6
+    },
+    {
+      "column": 0,
+      "effect_label": "Lunite Production",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_lunite_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 33,
+            "food": 19,
+            "gold": 866,
+            "mana_ore": 148,
+            "ore": 475,
+            "stone": 356,
+            "timber": 594
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 137979,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 2,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 9084540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 174,
+            "food": 9508924,
+            "gold": 4330988,
+            "mana_ore": 103719,
+            "ore": 2377231,
+            "stone": 1782924,
+            "timber": 2971539
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 696789,
+          "requirements": [],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Lunite Harvesting II",
+        "ja-JP": "月晶生産量II"
+      },
+      "row": 7
+    },
+    {
+      "column": 2,
+      "effect_label": "Max Lunite Storage +",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_lunite_storage_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 33,
+            "food": 118,
+            "gold": 866,
+            "mana_ore": 148,
+            "ore": 475,
+            "stone": 594,
+            "timber": 713
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 137979,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 2,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 9084540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 174,
+            "food": 5943078,
+            "gold": 4330988,
+            "mana_ore": 103719,
+            "ore": 2377231,
+            "stone": 2971539,
+            "timber": 3565847
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 696789,
+          "requirements": [],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Lunite Storage II",
+        "ja-JP": "月晶生産上限II"
+      },
+      "row": 7
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Unlocks Manasteel Refinement"
+      },
+      "id": "mana_awakening_manasteel",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 5
+          },
+          "costs": {
+            "ancient_tomes": 1157,
+            "food": 31630886,
+            "gold": 28813560,
+            "mana_ore": 193114,
+            "ore": 31630886,
+            "stone": 19769304,
+            "timber": 11861582
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4641639,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_lunite_harvesting_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_lunite_storage_ii"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Manasteel",
+        "ja-JP": "マナスチール"
+      },
+      "row": 8
+    },
+    {
+      "column": 0,
+      "effect_label": "Mana Ore Production",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0,4%",
+        "3": "0,6%",
+        "4": "0,8%",
+        "5": "1,1%",
+        "6": "1,5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "mana_awakening_mana_ore_harvesting_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 2194367,
+            "gold": 1332612,
+            "mana_ore": 15641,
+            "ore": 731456,
+            "stone": 731456,
+            "timber": 1097184
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 212275,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 112,
+            "food": 7680285,
+            "gold": 4664141,
+            "mana_ore": 39101,
+            "ore": 2560095,
+            "stone": 2560095,
+            "timber": 3840143
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 711118,
+          "requirements": [],
+          "technolabe_count": 13
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 365,
+            "food": 13166202,
+            "gold": 7995670,
+            "mana_ore": 156401,
+            "ore": 4388734,
+            "stone": 4388734,
+            "timber": 6583101
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1316099,
+          "requirements": [],
+          "technolabe_count": 22
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Mana Ore Harvesting III",
+        "ja-JP": "マナ鉱石生産量III"
+      },
+      "row": 9
+    },
+    {
+      "column": 2,
+      "effect_label": "Max Mana Ore Storage",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0,4%",
+        "3": "0,6%",
+        "4": "0,8%",
+        "5": "1,10%",
+        "6": "1,50%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "mana_awakening_mana_ore_storage_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 1462912,
+            "gold": 1332612,
+            "mana_ore": 15641,
+            "ore": 548592,
+            "stone": 914320
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 212275,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 112,
+            "food": 5120190,
+            "gold": 4664141,
+            "mana_ore": 39101,
+            "ore": 1920072,
+            "stone": 3200119
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 711118,
+          "requirements": [],
+          "technolabe_count": 13
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 186,
+            "food": 6217373,
+            "gold": 5663599,
+            "mana_ore": 70381,
+            "ore": 2331515,
+            "stone": 3885859
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 891551,
+          "requirements": [],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 268,
+            "food": 7314557,
+            "gold": 6663058,
+            "mana_ore": 109481,
+            "ore": 2742959,
+            "stone": 4571598
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1071984,
+          "requirements": [],
+          "technolabe_count": 19
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Mana Ore Storage III",
+        "ja-JP": "マナ鉱石生産上限III"
+      },
+      "row": 9
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Manasteel Refinement Bonus +1"
+      },
+      "id": "mana_awakening_manasteel_boon",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 85324260,
+          "buildings": {
+            "mana_academy": 6
+          },
+          "costs": {
+            "ancient_tomes": 1837,
+            "food": 111638419,
+            "gold": 50847458,
+            "mana_ore": 454385,
+            "ore": 13954803,
+            "stone": 55819210,
+            "timber": 13954803
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 6552902,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_mana_ore_harvesting_iii"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_mana_ore_storage_iii"
+            }
+          ],
+          "technolabe_count": 112
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Manasteel Boon",
+        "ja-JP": "マナスチール恩恵"
+      },
+      "row": 10
+    },
+    {
+      "column": 0,
+      "effect_label": "Crafting Speed",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.2%",
+        "3": "0.2%",
+        "4": "0.2%",
+        "5": "0.3%",
+        "6": "0.4%",
+        "7": "0.5%",
+        "8": "1%",
+        "9": "2%",
+        "10": "5%"
+      },
+      "id": "mana_awakening_crafting_speed_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 4754462,
+            "gold": 2165494,
+            "mana_ore": 16464,
+            "ore": 1188616,
+            "stone": 891462,
+            "timber": 1485770
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 344946,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 2,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 22711260,
+          "buildings": {},
+          "costs": {
+            "food": 23772390,
+            "gold": 10827469,
+            "ore": 5943078,
+            "stone": 4457308
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1714974,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 27218688,
+          "buildings": {},
+          "costs": {
+            "food": 28526771,
+            "gold": 12992963,
+            "ore": 7131693,
+            "stone": 5348770
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 2138661,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Crafting Speed III",
+        "ja-JP": "部隊武装錬成速度III"
+      },
+      "row": 11
+    },
+    {
+      "column": 2,
+      "effect_label": "Crafting Capacity",
+      "effect_values": {
+        "1": "20",
+        "2": "20",
+        "3": "20",
+        "4": "20",
+        "5": "30",
+        "6": "40",
+        "7": "50",
+        "8": "100",
+        "9": "200",
+        "10": "500"
+      },
+      "id": "mana_awakening_crafting_capacity_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 4542300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 4754462,
+            "gold": 2165494,
+            "mana_ore": 16464,
+            "ore": 1188616,
+            "stone": 1485770,
+            "timber": 891462
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 344946,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 2,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 8,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Crafting Capacity II",
+        "ja-JP": "部隊武装錬成数量II"
+      },
+      "row": 11
+    }
+  ],
+  "platform": "pwa",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "titles": {
+    "en-US": "Mana Awakening",
+    "ja-JP": "マナ覚醒"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

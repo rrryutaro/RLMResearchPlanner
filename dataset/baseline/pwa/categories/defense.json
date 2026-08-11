@@ -1,0 +1,2007 @@
+{
+  "category_id": "defense",
+  "display_connections": [
+    [
+      "defense_archer_tower",
+      "defense_trap_power_i"
+    ],
+    [
+      "defense_flame_boulders",
+      "defense_wall_strength_iii"
+    ],
+    [
+      "defense_fortified_tower",
+      "defense_wall_strength_iii"
+    ],
+    [
+      "defense_hot_iron_spikes",
+      "defense_wall_strength_iii"
+    ],
+    [
+      "defense_metal_spikes",
+      "defense_wall_strength_ii"
+    ],
+    [
+      "defense_rolling_logs",
+      "defense_wall_strength_ii"
+    ],
+    [
+      "defense_sniper_tower",
+      "defense_wall_strength_ii"
+    ],
+    [
+      "defense_spike_boulders",
+      "defense_trap_power_i"
+    ],
+    [
+      "defense_spikes",
+      "defense_trap_power_i"
+    ],
+    [
+      "defense_trap_crafting_i",
+      "defense_archer_tower"
+    ],
+    [
+      "defense_trap_crafting_i",
+      "defense_spike_boulders"
+    ],
+    [
+      "defense_trap_crafting_i",
+      "defense_spikes"
+    ],
+    [
+      "defense_trap_power_i",
+      "defense_trap_defense_i"
+    ],
+    [
+      "defense_trap_power_i",
+      "defense_trap_durability_i"
+    ],
+    [
+      "defense_trap_power_i",
+      "defense_wall_strength_i"
+    ],
+    [
+      "defense_wall_strength_i",
+      "defense_metal_spikes"
+    ],
+    [
+      "defense_wall_strength_i",
+      "defense_rolling_logs"
+    ],
+    [
+      "defense_wall_strength_i",
+      "defense_sniper_tower"
+    ],
+    [
+      "defense_wall_strength_ii",
+      "defense_flame_boulders"
+    ],
+    [
+      "defense_wall_strength_ii",
+      "defense_fortified_tower"
+    ],
+    [
+      "defense_wall_strength_ii",
+      "defense_hot_iron_spikes"
+    ],
+    [
+      "defense_wall_strength_iii",
+      "defense_burning_logs"
+    ],
+    [
+      "defense_wall_strength_iii",
+      "defense_burning_spikes"
+    ],
+    [
+      "defense_wall_strength_iii",
+      "defense_skyscraper"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 1,
+      "effect_label": "Trap-building Speed",
+      "effect_values": {
+        "1": "20%"
+      },
+      "id": "defense_trap_crafting_i",
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 300,
+          "buildings": {},
+          "costs": {
+            "food": 584,
+            "gold": 756,
+            "ore": 467,
+            "stone": 700,
+            "timber": 584
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 24,
+          "requirements": [],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Trap Crafting I",
+        "ja-JP": "罠配置I"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Spikes"
+      },
+      "id": "defense_spikes",
+      "levels": [
+        {
+          "academy_level": 5,
+          "base_time_seconds": 1200,
+          "buildings": {},
+          "costs": {
+            "food": 6997,
+            "gold": 18886,
+            "ore": 8552,
+            "stone": 11662,
+            "timber": 11662
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 240,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_crafting_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Spikes",
+        "ja-JP": "スパイク"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Archer Tower"
+      },
+      "id": "defense_archer_tower",
+      "levels": [
+        {
+          "academy_level": 5,
+          "base_time_seconds": 1200,
+          "buildings": {},
+          "costs": {
+            "food": 6997,
+            "gold": 18886,
+            "ore": 8552,
+            "stone": 11662,
+            "timber": 11662
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 240,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_crafting_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Archer Tower",
+        "ja-JP": "アーチャータワー"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Spike Boulders"
+      },
+      "id": "defense_spike_boulders",
+      "levels": [
+        {
+          "academy_level": 5,
+          "base_time_seconds": 1200,
+          "buildings": {},
+          "costs": {
+            "food": 9718,
+            "gold": 18886,
+            "ore": 7775,
+            "stone": 11662,
+            "timber": 9718
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 240,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_crafting_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Spike Boulders",
+        "ja-JP": "スパイクボルダー"
+      },
+      "row": 1
+    },
+    {
+      "column": 0,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%",
+        "10": "135%"
+      },
+      "id": "defense_trap_defense_i",
+      "levels": [
+        {
+          "academy_level": 6,
+          "base_time_seconds": 540,
+          "buildings": {},
+          "costs": {
+            "food": 129,
+            "gold": 158,
+            "ore": 158,
+            "stone": 215,
+            "timber": 215
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 36,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 2040,
+          "buildings": {},
+          "costs": {
+            "food": 429,
+            "gold": 1048,
+            "ore": 525,
+            "stone": 715,
+            "timber": 715
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 59,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 3420,
+          "buildings": {},
+          "costs": {
+            "food": 1287,
+            "gold": 3143,
+            "ore": 1573,
+            "stone": 2145,
+            "timber": 2145
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 107,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 5940,
+          "buildings": {},
+          "costs": {
+            "food": 4289,
+            "gold": 20953,
+            "ore": 5243,
+            "stone": 7149,
+            "timber": 7149
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 320,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 13740,
+          "buildings": {},
+          "costs": {
+            "food": 10723,
+            "gold": 52382,
+            "ore": 13106,
+            "stone": 17871,
+            "timber": 17871
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 960,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 41160,
+          "buildings": {},
+          "costs": {
+            "food": 21445,
+            "gold": 104764,
+            "ore": 26211,
+            "stone": 35742,
+            "timber": 35742
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2880,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 123360,
+          "buildings": {},
+          "costs": {
+            "food": 107225,
+            "gold": 261909,
+            "ore": 131053,
+            "stone": 178708,
+            "timber": 178708
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 8641,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 369960,
+          "buildings": {},
+          "costs": {
+            "food": 214449,
+            "gold": 523817,
+            "ore": 262105,
+            "stone": 357415,
+            "timber": 357415
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 25923,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1109880,
+          "buildings": {},
+          "costs": {
+            "food": 428898,
+            "gold": 2095265,
+            "ore": 524209,
+            "stone": 714830,
+            "timber": 714830
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 77767,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2774700,
+          "buildings": {},
+          "costs": {
+            "food": 857796,
+            "gold": 4714345,
+            "ore": 1048417,
+            "stone": 1429659,
+            "timber": 1429659
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 194419,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "economy_timber_harvest_1"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_stone_harvest_1"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_ore_harvest_1"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Defense I",
+        "ja-JP": "罠防御力I"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%",
+        "10": "135%"
+      },
+      "id": "defense_trap_power_i",
+      "levels": [
+        {
+          "academy_level": 6,
+          "base_time_seconds": 540,
+          "buildings": {},
+          "costs": {
+            "food": 143,
+            "gold": 158,
+            "ore": 108,
+            "stone": 179,
+            "timber": 286
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 36,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_spike_boulders"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_archer_tower"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_spikes"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 2040,
+          "buildings": {},
+          "costs": {
+            "food": 477,
+            "gold": 1048,
+            "ore": 358,
+            "stone": 596,
+            "timber": 954
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 59,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 3420,
+          "buildings": {},
+          "costs": {
+            "food": 1430,
+            "gold": 3143,
+            "ore": 1073,
+            "stone": 1788,
+            "timber": 2860
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 107,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 5940,
+          "buildings": {},
+          "costs": {
+            "food": 4766,
+            "gold": 20953,
+            "ore": 3575,
+            "stone": 5957,
+            "timber": 9532
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 320,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 13740,
+          "buildings": {},
+          "costs": {
+            "food": 11914,
+            "gold": 52382,
+            "ore": 8936,
+            "stone": 14893,
+            "timber": 23828
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 960,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 41160,
+          "buildings": {},
+          "costs": {
+            "food": 23828,
+            "gold": 104764,
+            "ore": 17871,
+            "stone": 29785,
+            "timber": 47656
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2880,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 123360,
+          "buildings": {},
+          "costs": {
+            "food": 119139,
+            "gold": 261909,
+            "ore": 89354,
+            "stone": 148923,
+            "timber": 238277
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 8641,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 369960,
+          "buildings": {},
+          "costs": {
+            "food": 238277,
+            "gold": 523817,
+            "ore": 178708,
+            "stone": 297846,
+            "timber": 476553
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 25923,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 8,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1109880,
+          "buildings": {},
+          "costs": {
+            "food": 476553,
+            "gold": 2095265,
+            "ore": 357415,
+            "stone": 595692,
+            "timber": 953106
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 77767,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 9,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2774700,
+          "buildings": {},
+          "costs": {
+            "food": 953106,
+            "gold": 4714345,
+            "ore": 714830,
+            "stone": 1191384,
+            "timber": 1906212
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 194419,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 10,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Power I",
+        "ja-JP": "罠攻撃力I"
+      },
+      "row": 2
+    },
+    {
+      "column": 2,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%",
+        "10": "135%"
+      },
+      "id": "defense_trap_durability_i",
+      "levels": [
+        {
+          "academy_level": 6,
+          "base_time_seconds": 540,
+          "buildings": {},
+          "costs": {
+            "food": 129,
+            "gold": 158,
+            "ore": 129,
+            "stone": 129,
+            "timber": 129
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 36,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 2040,
+          "buildings": {},
+          "costs": {
+            "food": 429,
+            "gold": 1048,
+            "ore": 429,
+            "stone": 429,
+            "timber": 429
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 59,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 3420,
+          "buildings": {},
+          "costs": {
+            "food": 1287,
+            "gold": 3143,
+            "ore": 1287,
+            "stone": 1287,
+            "timber": 1287
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 107,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 5940,
+          "buildings": {},
+          "costs": {
+            "food": 4289,
+            "gold": 20953,
+            "ore": 4289,
+            "stone": 4289,
+            "timber": 4289
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 320,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 13740,
+          "buildings": {},
+          "costs": {
+            "food": 10723,
+            "gold": 52382,
+            "ore": 10723,
+            "stone": 10723,
+            "timber": 10723
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 960,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 41160,
+          "buildings": {},
+          "costs": {
+            "food": 21445,
+            "gold": 104764,
+            "ore": 21445,
+            "stone": 21445,
+            "timber": 21445
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2880,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 123360,
+          "buildings": {},
+          "costs": {
+            "food": 107225,
+            "gold": 261909,
+            "ore": 107225,
+            "stone": 107225,
+            "timber": 107225
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 8641,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 369960,
+          "buildings": {},
+          "costs": {
+            "food": 214449,
+            "gold": 523817,
+            "ore": 214449,
+            "stone": 214449,
+            "timber": 214449
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 25923,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1109880,
+          "buildings": {},
+          "costs": {
+            "food": 428898,
+            "gold": 2095265,
+            "ore": 428898,
+            "stone": 428898,
+            "timber": 428898
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 77767,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2774700,
+          "buildings": {},
+          "costs": {
+            "food": 857796,
+            "gold": 4714345,
+            "ore": 1048417,
+            "stone": 1429659,
+            "timber": 1429659
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 194419,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "economy_timber_harvest_1"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_stone_harvest_1"
+            },
+            {
+              "level": 10,
+              "research_id": "economy_ore_harvest_1"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Durability I",
+        "ja-JP": "罠HPI"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1,000",
+        "2": "3,000",
+        "3": "7,000",
+        "4": "13,000",
+        "5": "21,000",
+        "6": "32,000",
+        "7": "46,000",
+        "8": "64,000",
+        "9": "87,000",
+        "10": "125,000"
+      },
+      "id": "defense_wall_strength_i",
+      "levels": [
+        {
+          "academy_level": 6,
+          "base_time_seconds": 1020,
+          "buildings": {},
+          "costs": {
+            "food": 258,
+            "gold": 315,
+            "ore": 258,
+            "stone": 258,
+            "timber": 258
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 72,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 4080,
+          "buildings": {},
+          "costs": {
+            "food": 858,
+            "gold": 2096,
+            "ore": 858,
+            "stone": 858,
+            "timber": 858
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 118,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 6780,
+          "buildings": {},
+          "costs": {
+            "food": 2574,
+            "gold": 6286,
+            "ore": 2574,
+            "stone": 2574,
+            "timber": 2574
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 214,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 11880,
+          "buildings": {},
+          "costs": {
+            "food": 8578,
+            "gold": 41906,
+            "ore": 8578,
+            "stone": 8578,
+            "timber": 8578
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 640,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 27420,
+          "buildings": {},
+          "costs": {
+            "food": 21445,
+            "gold": 104764,
+            "ore": 21445,
+            "stone": 21445,
+            "timber": 21445
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1920,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 82260,
+          "buildings": {},
+          "costs": {
+            "food": 42890,
+            "gold": 209527,
+            "ore": 42890,
+            "stone": 42890,
+            "timber": 42890
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 5760,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 246660,
+          "buildings": {},
+          "costs": {
+            "food": 214449,
+            "gold": 523817,
+            "ore": 214449,
+            "stone": 214449,
+            "timber": 214449
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 17282,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 739920,
+          "buildings": {},
+          "costs": {
+            "food": 428898,
+            "gold": 1047633,
+            "ore": 428898,
+            "stone": 428898,
+            "timber": 428898
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 51845,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 2219760,
+          "buildings": {},
+          "costs": {
+            "food": 857796,
+            "gold": 4190529,
+            "ore": 857796,
+            "stone": 857796,
+            "timber": 857796
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 155535,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 5549340,
+          "buildings": {},
+          "costs": {
+            "food": 1715591,
+            "gold": 9428689,
+            "ore": 1715591,
+            "stone": 1715591,
+            "timber": 1715591
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 388837,
+          "requirements": [],
+          "technolabe_count": 2
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Strength I",
+        "ja-JP": "城壁強度I"
+      },
+      "row": 3
+    },
+    {
+      "column": 0,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Metal Spikes"
+      },
+      "id": "defense_metal_spikes",
+      "levels": [
+        {
+          "academy_level": 9,
+          "base_time_seconds": 76260,
+          "buildings": {},
+          "costs": {
+            "food": 38872,
+            "gold": 75542,
+            "ore": 31098,
+            "stone": 46647,
+            "timber": 38872
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4797,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_wall_strength_i"
+            },
+            {
+              "level": 3,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Metal Spikes",
+        "ja-JP": "メタルスパイク"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Sniper Tower"
+      },
+      "id": "defense_sniper_tower",
+      "levels": [
+        {
+          "academy_level": 9,
+          "base_time_seconds": 76260,
+          "buildings": {},
+          "costs": {
+            "food": 31098,
+            "gold": 75542,
+            "ore": 23324,
+            "stone": 38872,
+            "timber": 62195
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4797,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_wall_strength_i"
+            },
+            {
+              "level": 3,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Sniper Tower",
+        "ja-JP": "スナイパータワー"
+      },
+      "row": 4
+    },
+    {
+      "column": 2,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Rolling Logs"
+      },
+      "id": "defense_rolling_logs",
+      "levels": [
+        {
+          "academy_level": 9,
+          "base_time_seconds": 76260,
+          "buildings": {},
+          "costs": {
+            "food": 27988,
+            "gold": 75542,
+            "ore": 34208,
+            "stone": 46647,
+            "timber": 46647
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4797,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_wall_strength_i"
+            },
+            {
+              "level": 3,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Rolling Logs",
+        "ja-JP": "ローリングログ"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1,200",
+        "2": "3,600",
+        "3": "8,400",
+        "4": "15,600",
+        "5": "25,200",
+        "6": "38,400",
+        "7": "55,200",
+        "8": "76,800",
+        "9": "104,400",
+        "10": "150,000"
+      },
+      "id": "defense_wall_strength_ii",
+      "levels": [
+        {
+          "academy_level": 10,
+          "base_time_seconds": 3600,
+          "buildings": {},
+          "costs": {
+            "food": 901,
+            "gold": 1101,
+            "ore": 901,
+            "stone": 901,
+            "timber": 901
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 249,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_wall_strength_i"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_metal_spikes"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_sniper_tower"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_rolling_logs"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 14220,
+          "buildings": {},
+          "costs": {
+            "food": 3003,
+            "gold": 7334,
+            "ore": 3003,
+            "stone": 3003,
+            "timber": 3003
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 415,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 23700,
+          "buildings": {},
+          "costs": {
+            "food": 9007,
+            "gold": 22001,
+            "ore": 9007,
+            "stone": 9007,
+            "timber": 9007
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 747,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 41460,
+          "buildings": {},
+          "costs": {
+            "food": 30023,
+            "gold": 146669,
+            "ore": 30023,
+            "stone": 30023,
+            "timber": 30023
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 2240,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 95940,
+          "buildings": {},
+          "costs": {
+            "food": 75058,
+            "gold": 366672,
+            "ore": 75058,
+            "stone": 75058,
+            "timber": 75058
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 6721,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 287760,
+          "buildings": {},
+          "costs": {
+            "food": 150115,
+            "gold": 733343,
+            "ore": 150115,
+            "stone": 150115,
+            "timber": 150115
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 20162,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 863280,
+          "buildings": {},
+          "costs": {
+            "food": 750571,
+            "gold": 1833357,
+            "ore": 570571,
+            "stone": 750571,
+            "timber": 570571
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 60486,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 2589720,
+          "buildings": {},
+          "costs": {
+            "food": 1501142,
+            "gold": 3666713,
+            "ore": 1501142,
+            "stone": 1501142,
+            "timber": 1501142
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 181457,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 7769100,
+          "buildings": {},
+          "costs": {
+            "food": 3002284,
+            "gold": 14666850,
+            "ore": 3002284,
+            "stone": 3002284,
+            "timber": 3002284
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 544372,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 19422660,
+          "buildings": {},
+          "costs": {
+            "food": 6004567,
+            "gold": 33000411,
+            "ore": 6004567,
+            "stone": 6004567,
+            "timber": 6004567
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1360929,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_wall_strength_i"
+            }
+          ],
+          "technolabe_count": 7
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Strength II",
+        "ja-JP": "城壁強度II"
+      },
+      "row": 5
+    },
+    {
+      "column": 0,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Hot Iron Spikes"
+      },
+      "id": "defense_hot_iron_spikes",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 381300,
+          "buildings": {},
+          "costs": {
+            "food": 194359,
+            "gold": 377706,
+            "ore": 155487,
+            "stone": 223231,
+            "timber": 194359
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23985,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Hot Iron Spikes",
+        "ja-JP": "アイアンスパイク"
+      },
+      "row": 6
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Fortified Tower"
+      },
+      "id": "defense_fortified_tower",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 381300,
+          "buildings": {},
+          "costs": {
+            "food": 139939,
+            "gold": 377706,
+            "ore": 171036,
+            "stone": 233231,
+            "timber": 233231
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23985,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Fortified Tower",
+        "ja-JP": "ガンナータワー"
+      },
+      "row": 6
+    },
+    {
+      "column": 2,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Flame Boulders"
+      },
+      "id": "defense_flame_boulders",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 381300,
+          "buildings": {},
+          "costs": {
+            "food": 139939,
+            "gold": 377706,
+            "ore": 171036,
+            "stone": 233231,
+            "timber": 233231
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23985,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Flame Boulders",
+        "ja-JP": "フレイムボルダー"
+      },
+      "row": 6
+    },
+    {
+      "column": 1,
+      "effect_label": "Max Wall HP",
+      "effect_values": {
+        "1": "2,200",
+        "2": "6,600",
+        "3": "15,400",
+        "4": "28,600",
+        "5": "46,200",
+        "6": "70,400",
+        "7": "101,200",
+        "8": "140,800",
+        "9": "191,400",
+        "10": "275,000"
+      },
+      "id": "defense_wall_strength_iii",
+      "levels": [
+        {
+          "academy_level": 18,
+          "base_time_seconds": 7620,
+          "buildings": {},
+          "costs": {
+            "food": 1931,
+            "gold": 2358,
+            "ore": 1931,
+            "stone": 1931,
+            "timber": 1931
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 534,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_hot_iron_spikes"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_fortified_tower"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_flame_boulders"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 30480,
+          "buildings": {},
+          "costs": {
+            "food": 6434,
+            "gold": 15715,
+            "ore": 6434,
+            "stone": 6434,
+            "timber": 6434
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 889,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 50760,
+          "buildings": {},
+          "costs": {
+            "food": 19301,
+            "gold": 47144,
+            "ore": 19301,
+            "stone": 19301,
+            "timber": 19301
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1600,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 88860,
+          "buildings": {},
+          "costs": {
+            "food": 64335,
+            "gold": 314290,
+            "ore": 64335,
+            "stone": 64335,
+            "timber": 64335
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 4800,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 205560,
+          "buildings": {},
+          "costs": {
+            "food": 160837,
+            "gold": 785725,
+            "ore": 160837,
+            "stone": 160837,
+            "timber": 160837
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 14402,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 616620,
+          "buildings": {},
+          "costs": {
+            "food": 321674,
+            "gold": 1571449,
+            "ore": 321674,
+            "stone": 321674,
+            "timber": 321674
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 43204,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1849800,
+          "buildings": {},
+          "costs": {
+            "food": 1608367,
+            "gold": 3928621,
+            "ore": 1608367,
+            "stone": 1608367,
+            "timber": 1608367
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 129612,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 5549340,
+          "buildings": {},
+          "costs": {
+            "food": 3216733,
+            "gold": 7857241,
+            "ore": 3216733,
+            "stone": 3216733,
+            "timber": 3216733
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 388837,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 16647960,
+          "buildings": {},
+          "costs": {
+            "food": 6433465,
+            "gold": 31428963,
+            "ore": 6433465,
+            "stone": 6433465,
+            "timber": 6433465
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1166511,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 41619900,
+          "buildings": {},
+          "costs": {
+            "food": 12866929,
+            "gold": 70715167,
+            "ore": 12866929,
+            "stone": 12866929,
+            "timber": 12866929
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2916278,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_wall_strength_ii"
+            }
+          ],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Strength III",
+        "ja-JP": "城壁強度III"
+      },
+      "row": 7
+    },
+    {
+      "column": 0,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Burning Spikes"
+      },
+      "id": "defense_burning_spikes",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1906380,
+          "buildings": {},
+          "costs": {
+            "food": 699691,
+            "gold": 1888527,
+            "ore": 855178,
+            "stone": 1166151,
+            "timber": 1166151
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 119922,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_wall_strength_iii"
+            },
+            {
+              "level": 10,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Burning Spikes",
+        "ja-JP": "バーニングスパイク"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Skyscraper"
+      },
+      "id": "defense_skyscraper",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1906380,
+          "buildings": {},
+          "costs": {
+            "food": 699691,
+            "gold": 1888527,
+            "ore": 855178,
+            "stone": 1166151,
+            "timber": 1166151
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 119922,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_wall_strength_iii"
+            },
+            {
+              "level": 10,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Skyscraper",
+        "ja-JP": "スカイクレーバー"
+      },
+      "row": 8
+    },
+    {
+      "column": 2,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Burning Logs"
+      },
+      "id": "defense_burning_logs",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1906380,
+          "buildings": {},
+          "costs": {
+            "food": 699691,
+            "gold": 1888527,
+            "ore": 855178,
+            "stone": 1166151,
+            "timber": 1166151
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 119922,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_wall_strength_iii"
+            },
+            {
+              "level": 10,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": null
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Burning Logs",
+        "ja-JP": "バーニングログ"
+      },
+      "row": 8
+    }
+  ],
+  "platform": "pwa",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "titles": {
+    "en-US": "Defense",
+    "ja-JP": "城壁防御"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

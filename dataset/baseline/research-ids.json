@@ -1,0 +1,2795 @@
+[
+  {
+    "category_id": "economy",
+    "en-US": "Construction Speed",
+    "id": "economy_construction_speed",
+    "ja-JP": "建設速度",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Food Harvesting I",
+    "id": "economy_food_harvest_1",
+    "ja-JP": "食糧収穫I",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Vault Management",
+    "id": "economy_vault_management",
+    "ja-JP": "保管庫管理",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Stone Harvesting I",
+    "id": "economy_stone_harvest_1",
+    "ja-JP": "石材収穫I",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Timber Harvesting I",
+    "id": "economy_timber_harvest_1",
+    "ja-JP": "木材収穫I",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Metal Harvesting I",
+    "id": "economy_ore_harvest_1",
+    "ja-JP": "鉱石収穫I",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Weight Training I",
+    "id": "economy_weight_training_i",
+    "ja-JP": "資源所持量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Resource Harvesting I",
+    "id": "economy_resource_harvesting_i",
+    "ja-JP": "資源採取I",
+    "max_level": 10
+  },
+  {
+    "category_id": "economy",
+    "en-US": "Gem Harvesting I",
+    "id": "economy_gem_harvesting_i",
+    "ja-JP": "ジェム採掘I",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Trap Crafting I",
+    "id": "defense_trap_crafting_i",
+    "ja-JP": "罠配置I",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Spikes",
+    "id": "defense_spikes",
+    "ja-JP": "スパイク",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Archer Tower",
+    "id": "defense_archer_tower",
+    "ja-JP": "アーチャータワー",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Spike Boulders",
+    "id": "defense_spike_boulders",
+    "ja-JP": "スパイクボルダー",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Trap Defense I",
+    "id": "defense_trap_defense_i",
+    "ja-JP": "罠防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Trap Power I",
+    "id": "defense_trap_power_i",
+    "ja-JP": "罠攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Trap Durability I",
+    "id": "defense_trap_durability_i",
+    "ja-JP": "罠HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Wall Strength I",
+    "id": "defense_wall_strength_i",
+    "ja-JP": "城壁強度I",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Metal Spikes",
+    "id": "defense_metal_spikes",
+    "ja-JP": "メタルスパイク",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Sniper Tower",
+    "id": "defense_sniper_tower",
+    "ja-JP": "スナイパータワー",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Rolling Logs",
+    "id": "defense_rolling_logs",
+    "ja-JP": "ローリングログ",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Wall Strength II",
+    "id": "defense_wall_strength_ii",
+    "ja-JP": "城壁強度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Hot Iron Spikes",
+    "id": "defense_hot_iron_spikes",
+    "ja-JP": "アイアンスパイク",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Fortified Tower",
+    "id": "defense_fortified_tower",
+    "ja-JP": "ガンナータワー",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Flame Boulders",
+    "id": "defense_flame_boulders",
+    "ja-JP": "フレイムボルダー",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Wall Strength III",
+    "id": "defense_wall_strength_iii",
+    "ja-JP": "城壁強度III",
+    "max_level": 10
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Burning Spikes",
+    "id": "defense_burning_spikes",
+    "ja-JP": "バーニングスパイク",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Skyscraper",
+    "id": "defense_skyscraper",
+    "ja-JP": "スカイクレーバー",
+    "max_level": 1
+  },
+  {
+    "category_id": "defense",
+    "en-US": "Burning Logs",
+    "id": "defense_burning_logs",
+    "ja-JP": "バーニングログ",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Training Speed I",
+    "id": "military_training_speed_i",
+    "ja-JP": "訓練速度I",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Intelligence Report",
+    "id": "military_intelligence_report",
+    "ja-JP": "諜報術",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Quick Maneuvers I",
+    "id": "military_quick_maneuvers_i",
+    "ja-JP": "進軍加速I",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Infantry Offense I",
+    "id": "military_infantry_offense_i",
+    "ja-JP": "歩兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Siege Attack I",
+    "id": "military_siege_attack_i",
+    "ja-JP": "攻城兵器攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Ranged Offense I",
+    "id": "military_ranged_offense_i",
+    "ja-JP": "弓兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Cavalry Offense I",
+    "id": "military_cavalry_offense_i",
+    "ja-JP": "騎兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Infantry Defense I",
+    "id": "military_infantry_defense_i",
+    "ja-JP": "歩兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Siege Toughness I",
+    "id": "military_siege_toughness_i",
+    "ja-JP": "攻城兵器防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Ranged Defense I",
+    "id": "military_ranged_defense_i",
+    "ja-JP": "弓兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Cavalry Defense I",
+    "id": "military_cavalry_defense_i",
+    "ja-JP": "騎兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Gladiator",
+    "id": "military_gladiator",
+    "ja-JP": "グラディエーター",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Catapult",
+    "id": "military_catapult",
+    "ja-JP": "カタパルト",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Sharpshooter",
+    "id": "military_sharpshooter",
+    "ja-JP": "スナイパー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Reptilian Rider",
+    "id": "military_reptilian_rider",
+    "ja-JP": "リザードライダー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Infantry Health I",
+    "id": "military_infantry_health_i",
+    "ja-JP": "歩兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Siege Durability I",
+    "id": "military_siege_durability_i",
+    "ja-JP": "攻城兵器HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Ranged Health I",
+    "id": "military_ranged_health_i",
+    "ja-JP": "弓兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Cavalry Health I",
+    "id": "military_cavalry_health_i",
+    "ja-JP": "騎兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Royal Guard",
+    "id": "military_royal_guard",
+    "ja-JP": "ロイヤルガーディアン",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Fire Trebuchet",
+    "id": "military_fire_trebuchet",
+    "ja-JP": "フレイムランチャー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Stealth Sniper",
+    "id": "military_stealth_sniper",
+    "ja-JP": "ステルススナイパー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Royal Cavalry",
+    "id": "military_royal_cavalry",
+    "ja-JP": "ロイヤルライダー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Army Defense I",
+    "id": "military_army_defense_i",
+    "ja-JP": "軍隊防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Army Offense I",
+    "id": "military_army_offense_i",
+    "ja-JP": "軍隊攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Army Health I",
+    "id": "military_army_health_i",
+    "ja-JP": "軍隊HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Heroic Fighter",
+    "id": "military_heroic_fighter",
+    "ja-JP": "レジェンドファイター",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Destroyer",
+    "id": "military_destroyer",
+    "ja-JP": "デストロイヤー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Heroic Cannoneer",
+    "id": "military_heroic_cannoneer",
+    "ja-JP": "レジェンドガンナー",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Ancient Drake Rider",
+    "id": "military_ancient_drake_rider",
+    "ja-JP": "レジェンドドラグーン",
+    "max_level": 1
+  },
+  {
+    "category_id": "military",
+    "en-US": "Furious Defense I",
+    "id": "military_furious_defense_i",
+    "ja-JP": "バーサーカー軍隊防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Furious Durability I",
+    "id": "military_furious_durability_i",
+    "ja-JP": "バーサーカー軍隊HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Furious Offense I",
+    "id": "military_furious_offense_i",
+    "ja-JP": "バーサーカー軍隊攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Infantry-Ranged Counter Boost",
+    "id": "military_infantry_ranged_counter_boost",
+    "ja-JP": "歩対弓強化ブースト",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Ranged-Cavalry Counter Boost",
+    "id": "military_ranged_cavalry_counter_boost",
+    "ja-JP": "弓対騎強化ブースト",
+    "max_level": 10
+  },
+  {
+    "category_id": "military",
+    "en-US": "Cavalry-Infantry Counter Boost",
+    "id": "military_cavalry_infantry_counter_boost",
+    "ja-JP": "騎対歩強化ブースト",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunt I",
+    "id": "monster_hunt_monster_hunt_i",
+    "ja-JP": "魔獣討伐I",
+    "max_level": 1
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Energy Recovery I",
+    "id": "monster_hunt_energy_recovery_i",
+    "ja-JP": "行動力回復I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Energy Limit I",
+    "id": "monster_hunt_energy_limit_i",
+    "ja-JP": "行動力上限I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Energy Saver I",
+    "id": "monster_hunt_energy_saver_i",
+    "ja-JP": "行動力消耗低下I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunt II",
+    "id": "monster_hunt_monster_hunt_ii",
+    "ja-JP": "魔獣討伐II",
+    "max_level": 1
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Aggressive Hunter I",
+    "id": "monster_hunt_aggressive_hunter_i",
+    "ja-JP": "討伐連撃I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Animal Handling",
+    "id": "monster_hunt_animal_handling",
+    "ja-JP": "討伐進軍加速",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunter I",
+    "id": "monster_hunt_monster_hunter_i",
+    "ja-JP": "討伐ダメージ上昇I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Survival Tactics I",
+    "id": "monster_hunt_survival_tactics_i",
+    "ja-JP": "討伐HP上昇I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Hunter Recovery I",
+    "id": "monster_hunt_hunter_recovery_i",
+    "ja-JP": "討伐回復量上昇I",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunt III",
+    "id": "monster_hunt_monster_hunt_iii",
+    "ja-JP": "魔獣討伐III",
+    "max_level": 1
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Aggressive Hunter II",
+    "id": "monster_hunt_aggressive_hunter_ii",
+    "ja-JP": "討伐連撃II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunter II",
+    "id": "monster_hunt_monster_hunter_ii",
+    "ja-JP": "討伐ダメージ上昇II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Survival Tactics II",
+    "id": "monster_hunt_survival_tactics_ii",
+    "ja-JP": "討伐HP上昇II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Hunter Recovery II",
+    "id": "monster_hunt_hunter_recovery_ii",
+    "ja-JP": "討伐回復量上昇II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunt IV",
+    "id": "monster_hunt_monster_hunt_iv",
+    "ja-JP": "魔獣討伐IV",
+    "max_level": 1
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "MP Advantage",
+    "id": "monster_hunt_mp_advantage",
+    "ja-JP": "ヒーロー初期SP",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunter III",
+    "id": "monster_hunt_monster_hunter_iii",
+    "ja-JP": "討伐ダメージ上昇III",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Energy Recovery II",
+    "id": "monster_hunt_energy_recovery_ii",
+    "ja-JP": "行動力回復II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Energy Saver II",
+    "id": "monster_hunt_energy_saver_ii",
+    "ja-JP": "行動力消耗低下II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Energy Limit II",
+    "id": "monster_hunt_energy_limit_ii",
+    "ja-JP": "行動力上限II",
+    "max_level": 10
+  },
+  {
+    "category_id": "monster_hunt",
+    "en-US": "Monster Hunt V",
+    "id": "monster_hunt_monster_hunt_v",
+    "ja-JP": "魔獣討伐V",
+    "max_level": 1
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Retrieval I",
+    "id": "upgrade_defenses_trap_retrieval_i",
+    "ja-JP": "罠回収 I",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Wall Defense I",
+    "id": "upgrade_defenses_wall_defense_i",
+    "ja-JP": "城壁防御力 I",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Wall Repair I",
+    "id": "upgrade_defenses_wall_repair_i",
+    "ja-JP": "城壁修復 I",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Wall Durability I",
+    "id": "upgrade_defenses_wall_durability_i",
+    "ja-JP": "城壁HP I",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Retrieval II",
+    "id": "upgrade_defenses_trap_retrieval_ii",
+    "ja-JP": "罠回収 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Defense II",
+    "id": "upgrade_defenses_trap_defense_ii",
+    "ja-JP": "罠防御力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Strength II",
+    "id": "upgrade_defenses_trap_strength_ii",
+    "ja-JP": "罠攻撃力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Durability II",
+    "id": "upgrade_defenses_trap_durability_ii",
+    "ja-JP": "罠HP II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Retrieval III",
+    "id": "upgrade_defenses_trap_retrieval_iii",
+    "ja-JP": "罠回収 III",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Wall Defense II",
+    "id": "upgrade_defenses_wall_defense_ii",
+    "ja-JP": "城壁防御力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Wall Repair II",
+    "id": "upgrade_defenses_wall_repair_ii",
+    "ja-JP": "城壁修復 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Wall Durability II",
+    "id": "upgrade_defenses_wall_durability_ii",
+    "ja-JP": "城壁HP II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Crafting II",
+    "id": "upgrade_defenses_trap_crafting_ii",
+    "ja-JP": "罠配置 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_defenses",
+    "en-US": "Trap Retrieval IV",
+    "id": "upgrade_defenses_trap_retrieval_iv",
+    "ja-JP": "罠回収 IV",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Gathering Priority",
+    "id": "upgrade_military_gathering_priority",
+    "ja-JP": "採取編成",
+    "max_level": 1
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Grunt Subsidy",
+    "id": "upgrade_military_grunt_subsidy",
+    "ja-JP": "ソルジャー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Ballista Subsidy",
+    "id": "upgrade_military_ballista_subsidy",
+    "ja-JP": "バリスタ補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Archer Subsidy",
+    "id": "upgrade_military_archer_subsidy",
+    "ja-JP": "アーチャー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Cataphract Subsidy",
+    "id": "upgrade_military_cataphract_subsidy",
+    "ja-JP": "ランサー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Gladiator Subsidy",
+    "id": "upgrade_military_gladiator_subsidy",
+    "ja-JP": "グラディエーター補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Catapult Subsidy",
+    "id": "upgrade_military_catapult_subsidy",
+    "ja-JP": "カタパルト補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Sharpshooter Subsidy",
+    "id": "upgrade_military_sharpshooter_subsidy",
+    "ja-JP": "スナイパー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Reptilian Rider Subsidy",
+    "id": "upgrade_military_reptilian_rider_subsidy",
+    "ja-JP": "リザードライダー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Field Triage I",
+    "id": "upgrade_military_field_triage_i",
+    "ja-JP": "応急術",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Rally Priority",
+    "id": "upgrade_military_rally_priority",
+    "ja-JP": "集結選兵",
+    "max_level": 1
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Quick Maneuvers II",
+    "id": "upgrade_military_quick_maneuvers_ii",
+    "ja-JP": "進軍加速II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Royal Guard Subsidy",
+    "id": "upgrade_military_royal_guard_subsidy",
+    "ja-JP": "ロイヤルガーディアン補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Fire Trebuchet Subsidy",
+    "id": "upgrade_military_fire_trebuchet_subsidy",
+    "ja-JP": "フレイムランチャー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Stealth Sniper Subsidy",
+    "id": "upgrade_military_stealth_sniper_subsidy",
+    "ja-JP": "ステルススナイパー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Royal Cavalry Subsidy",
+    "id": "upgrade_military_royal_cavalry_subsidy",
+    "ja-JP": "ロイヤルライダー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Barracks Expansion I",
+    "id": "upgrade_military_barracks_expansion_i",
+    "ja-JP": "兵舎拡大",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Innate Talent",
+    "id": "upgrade_military_innate_talent",
+    "ja-JP": "才能メモリー",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Training Speed II",
+    "id": "upgrade_military_training_speed_ii",
+    "ja-JP": "訓練速度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Quick Swap",
+    "id": "upgrade_military_quick_swap",
+    "ja-JP": "クイック換装",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Central Command I",
+    "id": "upgrade_military_central_command_i",
+    "ja-JP": "編成ストック",
+    "max_level": 5
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Bigger Army I",
+    "id": "upgrade_military_bigger_army_i",
+    "ja-JP": "進軍上限I",
+    "max_level": 1
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Heroic Fighter Subsidy",
+    "id": "upgrade_military_heroic_fighter_subsidy",
+    "ja-JP": "レジェンドファイター補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Destroyer Subsidy",
+    "id": "upgrade_military_destroyer_subsidy",
+    "ja-JP": "デストロイヤー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Heroic Cannoneer Subsidy",
+    "id": "upgrade_military_heroic_cannoneer_subsidy",
+    "ja-JP": "レジェンドガンナー補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Ancient Drake Rider Subsidy",
+    "id": "upgrade_military_ancient_drake_rider_subsidy",
+    "ja-JP": "レジェンドドラグーン補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "upgrade_military",
+    "en-US": "Bigger Army II",
+    "id": "upgrade_military_bigger_army_ii",
+    "ja-JP": "進軍上限II",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Weight Training II",
+    "id": "army_leadership_weight_training_ii",
+    "ja-JP": "資源所持量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Resource Harvesting II",
+    "id": "army_leadership_resource_harvesting_ii",
+    "ja-JP": "資源採取II",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Ration Run I",
+    "id": "army_leadership_ration_run_i",
+    "ja-JP": "採取進軍速度I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Training Speed III",
+    "id": "army_leadership_training_speed_iii",
+    "ja-JP": "訓練速度III",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Ranged Phalanx",
+    "id": "army_leadership_ranged_phalanx",
+    "ja-JP": "弓兵方陣",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Cavalry Phalanx",
+    "id": "army_leadership_cavalry_phalanx",
+    "ja-JP": "騎兵方陣",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Bigger Infirmary I",
+    "id": "army_leadership_bigger_infirmary_i",
+    "ja-JP": "医療所容量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Gold Storage I",
+    "id": "army_leadership_gold_storage_i",
+    "ja-JP": "ゴールド容量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Max Deposit I",
+    "id": "army_leadership_max_deposit_i",
+    "ja-JP": "ジェム投資額I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Gold Harvesting I",
+    "id": "army_leadership_gold_harvesting_i",
+    "ja-JP": "ゴールド生産量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Bigger Bags I",
+    "id": "army_leadership_bigger_bags_i",
+    "ja-JP": "資源供給量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Tax Break",
+    "id": "army_leadership_tax_break",
+    "ja-JP": "資源供給減税",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Forced March I",
+    "id": "army_leadership_forced_march_i",
+    "ja-JP": "資源供給加速I",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "More Gatherers",
+    "id": "army_leadership_more_gatherers",
+    "ja-JP": "採取軍隊規模",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Infantry Wedge",
+    "id": "army_leadership_infantry_wedge",
+    "ja-JP": "歩兵特攻陣",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Ranged Wedge",
+    "id": "army_leadership_ranged_wedge",
+    "ja-JP": "弓兵特攻陣",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Cavalry Wedge",
+    "id": "army_leadership_cavalry_wedge",
+    "ja-JP": "騎兵特攻陣",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Army Defense II",
+    "id": "army_leadership_army_defense_ii",
+    "ja-JP": "軍隊防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Army Offense II",
+    "id": "army_leadership_army_offense_ii",
+    "ja-JP": "軍隊攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Army Health II",
+    "id": "army_leadership_army_health_ii",
+    "ja-JP": "軍隊HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Bigger Army III",
+    "id": "army_leadership_bigger_army_iii",
+    "ja-JP": "進軍上限III",
+    "max_level": 1
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Sabotage",
+    "id": "army_leadership_sabotage",
+    "ja-JP": "防御呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Plague",
+    "id": "army_leadership_plague",
+    "ja-JP": "HP呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "army_leadership",
+    "en-US": "Demoralize",
+    "id": "army_leadership_demoralize",
+    "ja-JP": "攻撃呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Excess Supplies",
+    "id": "military_command_excess_supplies",
+    "ja-JP": "救援資源",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Food Storage",
+    "id": "military_command_food_storage",
+    "ja-JP": "食糧生産上限",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Stone Storage",
+    "id": "military_command_stone_storage",
+    "ja-JP": "石材容量上限",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Timber Storage",
+    "id": "military_command_timber_storage",
+    "ja-JP": "木材容量上限",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Ore Storage",
+    "id": "military_command_ore_storage",
+    "ja-JP": "鉱石容量上限",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Gold Storage II",
+    "id": "military_command_gold_storage_ii",
+    "ja-JP": "ゴールド生産上限II",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Stamina Limit",
+    "id": "military_command_stamina_limit",
+    "ja-JP": "スタミナ上限",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Breakthrough",
+    "id": "military_command_breakthrough",
+    "ja-JP": "装備限界突破",
+    "max_level": 1
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Shelter Expansion I",
+    "id": "military_command_shelter_expansion_i",
+    "ja-JP": "シェルター格納I",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Alchemy",
+    "id": "military_command_alchemy",
+    "ja-JP": "錬金時間短縮I",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Darknest Invasion",
+    "id": "military_command_darknest_invasion",
+    "ja-JP": "闇の巣窟軍隊規模",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Darknest Convention",
+    "id": "military_command_darknest_convention",
+    "ja-JP": "闇の巣窟参加進軍速度",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Darknest Navigation",
+    "id": "military_command_darknest_navigation",
+    "ja-JP": "闇の巣窟連合軍進軍速度",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Max Deposit II",
+    "id": "military_command_max_deposit_ii",
+    "ja-JP": "ジェム投資額II",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Energy Limit III",
+    "id": "military_command_energy_limit_iii",
+    "ja-JP": "行動力上限III",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Darknest Defense",
+    "id": "military_command_darknest_defense",
+    "ja-JP": "闇の巣窟軍隊防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Darknest Offense",
+    "id": "military_command_darknest_offense",
+    "ja-JP": "闇の巣窟軍隊攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Darknest Tenacity",
+    "id": "military_command_darknest_tenacity",
+    "ja-JP": "闇の巣窟軍隊HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Devotion",
+    "id": "military_command_devotion",
+    "ja-JP": "祭壇ブースト時間",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Furious Defense II",
+    "id": "military_command_furious_defense_ii",
+    "ja-JP": "バーサーカー軍隊防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Furious Durability II",
+    "id": "military_command_furious_durability_ii",
+    "ja-JP": "バーサーカー軍隊HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Furious Offense II",
+    "id": "military_command_furious_offense_ii",
+    "ja-JP": "バーサーカー軍隊攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "military_command",
+    "en-US": "Hidden Talent",
+    "id": "military_command_hidden_talent",
+    "ja-JP": "才能ポイント",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Anima Harvesting I",
+    "id": "familiars_anima_harvesting_i",
+    "ja-JP": "獣晶石生産量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Merging Cost (Pact 1)",
+    "id": "familiars_merging_cost_pact_1",
+    "ja-JP": "Lv1召喚の書コスト低下",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Food Harvesting II",
+    "id": "familiars_food_harvesting_ii",
+    "ja-JP": "食糧収穫II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Gym Training I",
+    "id": "familiars_gym_training_i",
+    "ja-JP": "調教経験値I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Pact 2",
+    "id": "familiars_pact_2",
+    "ja-JP": "Lv2召喚の書",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Stone Harvesting II",
+    "id": "familiars_stone_harvesting_ii",
+    "ja-JP": "石材収穫II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Timber Harvesting II",
+    "id": "familiars_timber_harvesting_ii",
+    "ja-JP": "木材収穫II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Metal Harvesting II",
+    "id": "familiars_metal_harvesting_ii",
+    "ja-JP": "鉱石収穫II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Anima Storage I",
+    "id": "familiars_anima_storage_i",
+    "ja-JP": "獣晶石生産上限I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Pact Merging Speed I",
+    "id": "familiars_pact_merging_speed_i",
+    "ja-JP": "召喚の書精製速度I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Merging Cost (Pact 2)",
+    "id": "familiars_merging_cost_pact_2",
+    "ja-JP": "Lv2召喚の書コスト低下",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Pact 3",
+    "id": "familiars_pact_3",
+    "ja-JP": "Lv3召喚の書",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Anima Harvesting II",
+    "id": "familiars_anima_harvesting_ii",
+    "ja-JP": "獣晶石生産量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Gold Harvesting II",
+    "id": "familiars_gold_harvesting_ii",
+    "ja-JP": "ゴールド生産量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Gym Membership I",
+    "id": "familiars_gym_membership_i",
+    "ja-JP": "調教時間上限",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Gym Training II",
+    "id": "familiars_gym_training_ii",
+    "ja-JP": "調教経験値II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Anima Storage II",
+    "id": "familiars_anima_storage_ii",
+    "ja-JP": "獣晶石生産上限II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Pact Merging Speed II",
+    "id": "familiars_pact_merging_speed_ii",
+    "ja-JP": "召喚の書精製速度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Merging Cost (Pact 3)",
+    "id": "familiars_merging_cost_pact_3",
+    "ja-JP": "Lv3召喚の書コスト低下",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Pact 4",
+    "id": "familiars_pact_4",
+    "ja-JP": "Lv4召喚の書",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Skillstone Merging Speed I",
+    "id": "familiars_skillstone_merging_speed_i",
+    "ja-JP": "スキル核精製速度",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Durable Wards",
+    "id": "familiars_durable_wards",
+    "ja-JP": "退獣陣継続時間",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Merging Cost (Pact 4)",
+    "id": "familiars_merging_cost_pact_4",
+    "ja-JP": "Lv4召喚の書コスト低下",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiars",
+    "en-US": "Skill EXP Boost",
+    "id": "familiars_skill_exp_boost",
+    "ja-JP": "スキル経験値",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Battle Slot I",
+    "id": "familiar_battles_familiar_battle_slot_i",
+    "ja-JP": "召喚獣の編成I",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Pact Merging Speed III",
+    "id": "familiar_battles_pact_merging_speed_iii",
+    "ja-JP": "召喚の書精製速度III",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Gym Training III",
+    "id": "familiar_battles_gym_training_iii",
+    "ja-JP": "調教経験値III",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Infantry ATK) I",
+    "id": "familiar_battles_familiarity_infantry_atk_i",
+    "ja-JP": "召喚獣出陣時歩兵攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Ranged ATK) I",
+    "id": "familiar_battles_familiarity_ranged_atk_i",
+    "ja-JP": "召喚獣出陣時弓兵攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Cavalry ATK) I",
+    "id": "familiar_battles_familiarity_cavalry_atk_i",
+    "ja-JP": "召喚獣出陣時騎兵攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Battle Slot II",
+    "id": "familiar_battles_familiar_battle_slot_ii",
+    "ja-JP": "召喚獣の編成II",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Infantry HP) I",
+    "id": "familiar_battles_familiarity_infantry_hp_i",
+    "ja-JP": "召喚獣出陣時歩兵HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Ranged HP) I",
+    "id": "familiar_battles_familiarity_ranged_hp_i",
+    "ja-JP": "召喚獣出陣時弓兵HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Cavalry HP) I",
+    "id": "familiar_battles_familiarity_cavalry_hp_i",
+    "ja-JP": "召喚獣出陣時騎兵HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Infantry DEF) I",
+    "id": "familiar_battles_familiarity_infantry_def_i",
+    "ja-JP": "召喚獣出陣時歩兵防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Ranged DEF) I",
+    "id": "familiar_battles_familiarity_ranged_def_i",
+    "ja-JP": "召喚獣出陣時弓兵防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Cavalry DEF) I",
+    "id": "familiar_battles_familiarity_cavalry_def_i",
+    "ja-JP": "召喚獣出陣時騎兵防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Battle Slot III",
+    "id": "familiar_battles_familiar_battle_slot_iii",
+    "ja-JP": "召喚獣の編成III",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Infantry DEF) II",
+    "id": "familiar_battles_familiarity_infantry_def_ii",
+    "ja-JP": "召喚獣出陣時歩兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Ranged DEF) II",
+    "id": "familiar_battles_familiarity_ranged_def_ii",
+    "ja-JP": "召喚獣出陣時弓兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Cavalry DEF) II",
+    "id": "familiar_battles_familiarity_cavalry_def_ii",
+    "ja-JP": "召喚獣出陣時騎兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Infantry HP) II",
+    "id": "familiar_battles_familiarity_infantry_hp_ii",
+    "ja-JP": "召喚獣出陣時歩兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Ranged HP) II",
+    "id": "familiar_battles_familiarity_ranged_hp_ii",
+    "ja-JP": "召喚獣出陣時弓兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Cavalry HP) II",
+    "id": "familiar_battles_familiarity_cavalry_hp_ii",
+    "ja-JP": "召喚獣出陣時騎兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Infantry ATK) II",
+    "id": "familiar_battles_familiarity_infantry_atk_ii",
+    "ja-JP": "召喚獣出陣時歩兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Ranged ATK) II",
+    "id": "familiar_battles_familiarity_ranged_atk_ii",
+    "ja-JP": "召喚獣出陣時弓兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiarity (Cavalry ATK) II",
+    "id": "familiar_battles_familiarity_cavalry_atk_ii",
+    "ja-JP": "召喚獣出陣時騎兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Battle Slot IV",
+    "id": "familiar_battles_familiar_battle_slot_iv",
+    "ja-JP": "召喚獣の編成IV",
+    "max_level": 1
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Skillstone Merging Speed II",
+    "id": "familiar_battles_skillstone_merging_speed_ii",
+    "ja-JP": "スキル核精製速度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Gym Membership II",
+    "id": "familiar_battles_gym_membership_ii",
+    "ja-JP": "調教時間上限II",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Defense",
+    "id": "familiar_battles_familiar_defense",
+    "ja-JP": "召喚獣堅牢",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Offense",
+    "id": "familiar_battles_familiar_offense",
+    "ja-JP": "召喚獣強攻",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Tenacity",
+    "id": "familiar_battles_familiar_tenacity",
+    "ja-JP": "召喚獣鼓舞",
+    "max_level": 10
+  },
+  {
+    "category_id": "familiar_battles",
+    "en-US": "Familiar Battle Slot V",
+    "id": "familiar_battles_familiar_battle_slot_v",
+    "ja-JP": "召喚獣の編成V",
+    "max_level": 1
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Resource Harvesting III",
+    "id": "sigils_resource_harvesting_iii",
+    "ja-JP": "資源採取III",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Forging Speed",
+    "id": "sigils_forging_speed",
+    "ja-JP": "鍛造速度",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Weight Training III",
+    "id": "sigils_weight_training_iii",
+    "ja-JP": "資源所持量III",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Forging Cost",
+    "id": "sigils_forging_cost",
+    "ja-JP": "鍛造補助",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Ration Run II",
+    "id": "sigils_ration_run_ii",
+    "ja-JP": "採取進軍速度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Infantry ATK) I",
+    "id": "sigils_leadership_infantry_atk_i",
+    "ja-JP": "ロード出陣歩兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Siege ATK) I",
+    "id": "sigils_leadership_siege_atk_i",
+    "ja-JP": "ロード出陣攻城兵器攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Ranged ATK) I",
+    "id": "sigils_leadership_ranged_atk_i",
+    "ja-JP": "ロード出陣弓兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Cavalry ATK) I",
+    "id": "sigils_leadership_cavalry_atk_i",
+    "ja-JP": "ロード出陣騎兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Infantry HP) I",
+    "id": "sigils_leadership_infantry_hp_i",
+    "ja-JP": "ロード出陣歩兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Siege HP) I",
+    "id": "sigils_leadership_siege_hp_i",
+    "ja-JP": "ロード出陣攻城兵器HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Ranged HP) I",
+    "id": "sigils_leadership_ranged_hp_i",
+    "ja-JP": "ロード出陣弓兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Cavalry HP) I",
+    "id": "sigils_leadership_cavalry_hp_i",
+    "ja-JP": "ロード出陣騎兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Infantry DEF) I",
+    "id": "sigils_leadership_infantry_def_i",
+    "ja-JP": "ロード出陣歩兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Siege DEF) I",
+    "id": "sigils_leadership_siege_def_i",
+    "ja-JP": "ロード出陣攻城兵器防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Ranged DEF) I",
+    "id": "sigils_leadership_ranged_def_i",
+    "ja-JP": "ロード出陣弓兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Leadership (Cavalry DEF) I",
+    "id": "sigils_leadership_cavalry_def_i",
+    "ja-JP": "ロード出陣騎兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Helmet Sigil",
+    "id": "sigils_helmet_sigil",
+    "ja-JP": "シギル頭装備",
+    "max_level": 1
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Defense (Infantry)",
+    "id": "sigils_furious_defense_infantry",
+    "ja-JP": "バーサーカー歩兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Defense (Siege)",
+    "id": "sigils_furious_defense_siege",
+    "ja-JP": "バーサーカー攻城兵器防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Defense (Ranged)",
+    "id": "sigils_furious_defense_ranged",
+    "ja-JP": "バーサーカー弓兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Defense (Cavalry)",
+    "id": "sigils_furious_defense_cavalry",
+    "ja-JP": "バーサーカー騎兵防御力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Armor Sigil",
+    "id": "sigils_armor_sigil",
+    "ja-JP": "シギル体装備",
+    "max_level": 1
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Legs Sigil",
+    "id": "sigils_legs_sigil",
+    "ja-JP": "シギル足装備",
+    "max_level": 1
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Durability (Infantry)",
+    "id": "sigils_furious_durability_infantry",
+    "ja-JP": "バーサーカー歩兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Durability (Siege)",
+    "id": "sigils_furious_durability_siege",
+    "ja-JP": "バーサーカー攻城兵器HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Durability (Ranged)",
+    "id": "sigils_furious_durability_ranged",
+    "ja-JP": "バーサーカー弓兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Durability (Cavalry)",
+    "id": "sigils_furious_durability_cavalry",
+    "ja-JP": "バーサーカー騎兵HP",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Main-hand Sigil",
+    "id": "sigils_main_hand_sigil",
+    "ja-JP": "シギルメイン武器",
+    "max_level": 1
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Off-hand Sigil",
+    "id": "sigils_off_hand_sigil",
+    "ja-JP": "シギルサブ武器",
+    "max_level": 1
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Offense (Infantry)",
+    "id": "sigils_furious_offense_infantry",
+    "ja-JP": "バーサーカー歩兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Offense (Siege)",
+    "id": "sigils_furious_offense_siege",
+    "ja-JP": "バーサーカー攻城兵器攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Offense (Ranged)",
+    "id": "sigils_furious_offense_ranged",
+    "ja-JP": "バーサーカー弓兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Furious Offense (Cavalry)",
+    "id": "sigils_furious_offense_cavalry",
+    "ja-JP": "バーサーカー騎兵攻撃力",
+    "max_level": 10
+  },
+  {
+    "category_id": "sigils",
+    "en-US": "Accessory Sigil",
+    "id": "sigils_accessory_sigil",
+    "ja-JP": "シギルアクセサリー",
+    "max_level": 1
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Wonder March",
+    "id": "wonder_battles_wonder_march",
+    "ja-JP": "ワンダー戦争進軍速度I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Gem Harvesting II",
+    "id": "wonder_battles_gem_harvesting_ii",
+    "ja-JP": "ジェム採掘II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ration Run III",
+    "id": "wonder_battles_ration_run_iii",
+    "ja-JP": "採取進軍速度III",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Bigger Bags II",
+    "id": "wonder_battles_bigger_bags_ii",
+    "ja-JP": "資源供給量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Forced March II",
+    "id": "wonder_battles_forced_march_ii",
+    "ja-JP": "資源供給加速II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Infantry Offense (Wonder) I",
+    "id": "wonder_battles_infantry_offense_wonder_i",
+    "ja-JP": "ワンダー戦争歩兵攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ranged Offense (Wonder) I",
+    "id": "wonder_battles_ranged_offense_wonder_i",
+    "ja-JP": "ワンダー戦争弓兵攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Cavalry Offense (Wonder) I",
+    "id": "wonder_battles_cavalry_offense_wonder_i",
+    "ja-JP": "ワンダー戦争騎兵攻撃力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Infantry Durability (Wonder) I",
+    "id": "wonder_battles_infantry_durability_wonder_i",
+    "ja-JP": "ワンダー戦争歩兵HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ranged Durability (Wonder) I",
+    "id": "wonder_battles_ranged_durability_wonder_i",
+    "ja-JP": "ワンダー戦争弓兵HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Cavalry Durability (Wonder) I",
+    "id": "wonder_battles_cavalry_durability_wonder_i",
+    "ja-JP": "ワンダー戦争騎兵HPI",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Infantry Defense (Wonder) I",
+    "id": "wonder_battles_infantry_defense_wonder_i",
+    "ja-JP": "ワンダー戦争歩兵防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ranged Defense (Wonder) I",
+    "id": "wonder_battles_ranged_defense_wonder_i",
+    "ja-JP": "ワンダー戦争弓兵防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Cavalry Defense (Wonder) I",
+    "id": "wonder_battles_cavalry_defense_wonder_i",
+    "ja-JP": "ワンダー戦争騎兵防御力I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Training Speed IV",
+    "id": "wonder_battles_training_speed_iv",
+    "ja-JP": "訓練速度IV",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Bigger Infirmary II",
+    "id": "wonder_battles_bigger_infirmary_ii",
+    "ja-JP": "医療所容量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Wonder Rally I",
+    "id": "wonder_battles_wonder_rally_i",
+    "ja-JP": "ワンダー戦争連合軍規模I",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Infantry Defense (Wonder) II",
+    "id": "wonder_battles_infantry_defense_wonder_ii",
+    "ja-JP": "ワンダー戦争歩兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ranged Defense (Wonder) II",
+    "id": "wonder_battles_ranged_defense_wonder_ii",
+    "ja-JP": "ワンダー戦争弓兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Cavalry Defense (Wonder) II",
+    "id": "wonder_battles_cavalry_defense_wonder_ii",
+    "ja-JP": "ワンダー戦争騎兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Infantry Durability (Wonder) II",
+    "id": "wonder_battles_infantry_durability_wonder_ii",
+    "ja-JP": "ワンダー戦争歩兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ranged Durability (Wonder) II",
+    "id": "wonder_battles_ranged_durability_wonder_ii",
+    "ja-JP": "ワンダー戦争弓兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Cavalry Durability (Wonder) II",
+    "id": "wonder_battles_cavalry_durability_wonder_ii",
+    "ja-JP": "ワンダー戦争騎兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Infantry Offense (Wonder) II",
+    "id": "wonder_battles_infantry_offense_wonder_ii",
+    "ja-JP": "ワンダー戦争歩兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Ranged Offense (Wonder) II",
+    "id": "wonder_battles_ranged_offense_wonder_ii",
+    "ja-JP": "ワンダー戦争弓兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Cavalry Offense (Wonder) II",
+    "id": "wonder_battles_cavalry_offense_wonder_ii",
+    "ja-JP": "ワンダー戦争騎兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "wonder_battles",
+    "en-US": "Wonder Rally II",
+    "id": "wonder_battles_wonder_rally_ii",
+    "ja-JP": "ワンダー戦争連合軍規模II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Quick Maneuvers III",
+    "id": "gear_quick_maneuvers_iii",
+    "ja-JP": "進軍加速III",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Ration Run IV",
+    "id": "gear_ration_run_iv",
+    "ja-JP": "採取進軍速度IV",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Central Command II",
+    "id": "gear_central_command_ii",
+    "ja-JP": "編成ストックII",
+    "max_level": 5
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Forced March III",
+    "id": "gear_forced_march_iii",
+    "ja-JP": "資源供給加速III",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Field Triage II",
+    "id": "gear_field_triage_ii",
+    "ja-JP": "応急術II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Bigger Bags III",
+    "id": "gear_bigger_bags_iii",
+    "ja-JP": "資源供給量III",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Bigger Infirmary III",
+    "id": "gear_bigger_infirmary_iii",
+    "ja-JP": "医療所拡張III",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Barracks Expansion II",
+    "id": "gear_barracks_expansion_ii",
+    "ja-JP": "兵舎拡張II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Lunar Foundry",
+    "id": "gear_lunar_foundry",
+    "ja-JP": "月晶工房",
+    "max_level": 1
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Crafting Speed I",
+    "id": "gear_crafting_speed_i",
+    "ja-JP": "部隊武装錬成速度I",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Lunite Harvesting I",
+    "id": "gear_lunite_harvesting_i",
+    "ja-JP": "月晶生産量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Lunite Storage",
+    "id": "gear_lunite_storage",
+    "ja-JP": "月晶生産上限I",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Infantry Defense II",
+    "id": "gear_infantry_defense_ii",
+    "ja-JP": "歩兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Siege Toughness II",
+    "id": "gear_siege_toughness_ii",
+    "ja-JP": "攻城兵器防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Ranged Defense II",
+    "id": "gear_ranged_defense_ii",
+    "ja-JP": "弓兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Cavalry Defense II",
+    "id": "gear_cavalry_defense_ii",
+    "ja-JP": "騎兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Infantry Health II",
+    "id": "gear_infantry_health_ii",
+    "ja-JP": "歩兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Siege Durability II",
+    "id": "gear_siege_durability_ii",
+    "ja-JP": "攻城兵器HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Ranged Health II",
+    "id": "gear_ranged_health_ii",
+    "ja-JP": "弓兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Cavalry Health II",
+    "id": "gear_cavalry_health_ii",
+    "ja-JP": "騎兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Infantry Offense II",
+    "id": "gear_infantry_offense_ii",
+    "ja-JP": "歩兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Siege Attack II",
+    "id": "gear_siege_attack_ii",
+    "ja-JP": "攻城兵器攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Ranged Offense II",
+    "id": "gear_ranged_offense_ii",
+    "ja-JP": "弓兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Cavalry Offense II",
+    "id": "gear_cavalry_offense_ii",
+    "ja-JP": "騎兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Crafting Speed II",
+    "id": "gear_crafting_speed_ii",
+    "ja-JP": "部隊武装錬成速度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Crafting Capacity",
+    "id": "gear_crafting_capacity",
+    "ja-JP": "部隊武装錬成数量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Luminary Guard",
+    "id": "gear_luminary_guard",
+    "ja-JP": "ディバインナイト",
+    "max_level": 1
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Luminary Avenger",
+    "id": "gear_luminary_avenger",
+    "ja-JP": "ディバインキャノン",
+    "max_level": 1
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Luminary Marksman",
+    "id": "gear_luminary_marksman",
+    "ja-JP": "ディバインシューター",
+    "max_level": 1
+  },
+  {
+    "category_id": "gear",
+    "en-US": "Luminary Lion Force",
+    "id": "gear_luminary_lion_force",
+    "ja-JP": "ディバインライダー",
+    "max_level": 1
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Wonder Rally Participant",
+    "id": "advanced_wonder_battles_wonder_rally_participant",
+    "ja-JP": "ワンダー戦争連合軍に参加規模",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Infantry ATK) II",
+    "id": "advanced_wonder_battles_leadership_infantry_atk_ii",
+    "ja-JP": "ロード出陣歩兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Siege ATK) II",
+    "id": "advanced_wonder_battles_leadership_siege_atk_ii",
+    "ja-JP": "ロード出陣攻城兵器攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Ranged ATK) II",
+    "id": "advanced_wonder_battles_leadership_ranged_atk_ii",
+    "ja-JP": "ロード出陣弓兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Cavalry ATK) II",
+    "id": "advanced_wonder_battles_leadership_cavalry_atk_ii",
+    "ja-JP": "ロード出陣騎兵攻撃力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Infantry DEF) II",
+    "id": "advanced_wonder_battles_leadership_infantry_def_ii",
+    "ja-JP": "ロード出陣歩兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Siege DEF) II",
+    "id": "advanced_wonder_battles_leadership_siege_def_ii",
+    "ja-JP": "ロード出陣攻城兵器防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Ranged DEF) II",
+    "id": "advanced_wonder_battles_leadership_ranged_def_ii",
+    "ja-JP": "ロード出陣弓兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Cavalry DEF) II",
+    "id": "advanced_wonder_battles_leadership_cavalry_def_ii",
+    "ja-JP": "ロード出陣騎兵防御力II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Infantry HP) II",
+    "id": "advanced_wonder_battles_leadership_infantry_hp_ii",
+    "ja-JP": "ロード出陣歩兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Siege HP) II",
+    "id": "advanced_wonder_battles_leadership_siege_hp_ii",
+    "ja-JP": "ロード出陣攻城兵器HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Ranged HP) II",
+    "id": "advanced_wonder_battles_leadership_ranged_hp_ii",
+    "ja-JP": "ロード出陣弓兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Leadership (Cavalry HP) II",
+    "id": "advanced_wonder_battles_leadership_cavalry_hp_ii",
+    "ja-JP": "ロード出陣騎兵HPII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Wonder March II",
+    "id": "advanced_wonder_battles_wonder_march_ii",
+    "ja-JP": "ワンダー戦争進軍速度II",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Infantry Durability (Wonder) III",
+    "id": "advanced_wonder_battles_infantry_durability_wonder_iii",
+    "ja-JP": "ワンダー戦争歩兵HPIII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Ranged Durability (Wonder) III",
+    "id": "advanced_wonder_battles_ranged_durability_wonder_iii",
+    "ja-JP": "ワンダー戦争弓兵HPIII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Cavalry Durability (Wonder) III",
+    "id": "advanced_wonder_battles_cavalry_durability_wonder_iii",
+    "ja-JP": "ワンダー戦争騎兵HPIII",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Infantry Offense (Wonder) III",
+    "id": "advanced_wonder_battles_infantry_offense_wonder_iii",
+    "ja-JP": "ワンダー戦争歩兵攻撃力III",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Ranged Offense (Wonder) III",
+    "id": "advanced_wonder_battles_ranged_offense_wonder_iii",
+    "ja-JP": "ワンダー戦争弓兵攻撃力III",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Cavalry Offense (Wonder) III",
+    "id": "advanced_wonder_battles_cavalry_offense_wonder_iii",
+    "ja-JP": "ワンダー戦争騎兵攻撃力III",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Infantry Defense (Wonder) III",
+    "id": "advanced_wonder_battles_infantry_defense_wonder_iii",
+    "ja-JP": "ワンダー戦争歩兵防御力III",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Ranged Defense (Wonder) III",
+    "id": "advanced_wonder_battles_ranged_defense_wonder_iii",
+    "ja-JP": "ワンダー戦争弓兵防御力III",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Cavalry Defense (Wonder) III",
+    "id": "advanced_wonder_battles_cavalry_defense_wonder_iii",
+    "ja-JP": "ワンダー戦争騎兵防御力III",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Infantry DEF Curse (Wonder)",
+    "id": "advanced_wonder_battles_infantry_def_curse_wonder",
+    "ja-JP": "ワンダー戦争歩兵防御力呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Ranged DEF Curse (Wonder)",
+    "id": "advanced_wonder_battles_ranged_def_curse_wonder",
+    "ja-JP": "ワンダー戦争弓兵防御力呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Cavalry DEF Curse (Wonder)",
+    "id": "advanced_wonder_battles_cavalry_def_curse_wonder",
+    "ja-JP": "ワンダー戦争騎兵防御力呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Infantry HP Curse (Wonder)",
+    "id": "advanced_wonder_battles_infantry_hp_curse_wonder",
+    "ja-JP": "ワンダー戦争歩兵HP呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Ranged HP Curse (Wonder)",
+    "id": "advanced_wonder_battles_ranged_hp_curse_wonder",
+    "ja-JP": "ワンダー戦争弓兵HP呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Cavalry HP Curse (Wonder)",
+    "id": "advanced_wonder_battles_cavalry_hp_curse_wonder",
+    "ja-JP": "ワンダー戦争騎兵HP呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Infantry ATK Curse (Wonder)",
+    "id": "advanced_wonder_battles_infantry_atk_curse_wonder",
+    "ja-JP": "ワンダー戦争歩兵攻撃力呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Ranged ATK Curse (Wonder)",
+    "id": "advanced_wonder_battles_ranged_atk_curse_wonder",
+    "ja-JP": "ワンダー戦争弓兵攻撃力呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "advanced_wonder_battles",
+    "en-US": "Cavalry ATK Curse (Wonder)",
+    "id": "advanced_wonder_battles_cavalry_atk_curse_wonder",
+    "ja-JP": "ワンダー戦争騎兵攻撃力呪詛",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Shelter Expansion II",
+    "id": "mana_awakening_shelter_expansion_ii",
+    "ja-JP": "シェルター拡張II",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Ore Harvesting I",
+    "id": "mana_awakening_mana_ore_harvesting_i",
+    "ja-JP": "マナ鉱石生産量I",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Ore Storage I",
+    "id": "mana_awakening_mana_ore_storage_i",
+    "ja-JP": "マナ鉱石生産上限I",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Ration Run V",
+    "id": "mana_awakening_ration_run_v",
+    "ja-JP": "採取進軍速度V",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Alchemy II",
+    "id": "mana_awakening_alchemy_ii",
+    "ja-JP": "錬金時間短縮II",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Forced March IV",
+    "id": "mana_awakening_forced_march_iv",
+    "ja-JP": "資源供給加速IV",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Crystal Boon",
+    "id": "mana_awakening_mana_crystal_boon",
+    "ja-JP": "マナクリスタル恩恵",
+    "max_level": 5
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Field Triage III",
+    "id": "mana_awakening_field_triage_iii",
+    "ja-JP": "応急術III",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Barracks Expansion III",
+    "id": "mana_awakening_barracks_expansion_iii",
+    "ja-JP": "兵舎拡張III",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Bigger Infirmary IV",
+    "id": "mana_awakening_bigger_infirmary_iv",
+    "ja-JP": "医療所拡張IV",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Crystal Breakthrough",
+    "id": "mana_awakening_mana_crystal_breakthrough",
+    "ja-JP": "マナクリスタル精製突破",
+    "max_level": 5
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Ore Harvesting II",
+    "id": "mana_awakening_mana_ore_harvesting_ii",
+    "ja-JP": "マナ鉱石生産量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Ore Storage II",
+    "id": "mana_awakening_mana_ore_storage_ii",
+    "ja-JP": "マナ鉱石生産上限II",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Lunite Harvesting II",
+    "id": "mana_awakening_lunite_harvesting_ii",
+    "ja-JP": "月晶生産量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Lunite Storage II",
+    "id": "mana_awakening_lunite_storage_ii",
+    "ja-JP": "月晶生産上限II",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Manasteel",
+    "id": "mana_awakening_manasteel",
+    "ja-JP": "マナスチール",
+    "max_level": 1
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Ore Harvesting III",
+    "id": "mana_awakening_mana_ore_harvesting_iii",
+    "ja-JP": "マナ鉱石生産量III",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Mana Ore Storage III",
+    "id": "mana_awakening_mana_ore_storage_iii",
+    "ja-JP": "マナ鉱石生産上限III",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Manasteel Boon",
+    "id": "mana_awakening_manasteel_boon",
+    "ja-JP": "マナスチール恩恵",
+    "max_level": 1
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Crafting Speed III",
+    "id": "mana_awakening_crafting_speed_iii",
+    "ja-JP": "部隊武装錬成速度III",
+    "max_level": 10
+  },
+  {
+    "category_id": "mana_awakening",
+    "en-US": "Crafting Capacity II",
+    "id": "mana_awakening_crafting_capacity_ii",
+    "ja-JP": "部隊武装錬成数量II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Gathering Incentive",
+    "id": "guild_duel_gathering_incentive",
+    "ja-JP": "採取インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Hero Incentive",
+    "id": "guild_duel_hero_incentive",
+    "ja-JP": "ヒーローインセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Construction Incentive",
+    "id": "guild_duel_construction_incentive",
+    "ja-JP": "建設インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Research Incentive",
+    "id": "guild_duel_research_incentive",
+    "ja-JP": "研究インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Training Incentive",
+    "id": "guild_duel_training_incentive",
+    "ja-JP": "訓練インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Reward Incentive I",
+    "id": "guild_duel_reward_incentive_i",
+    "ja-JP": "報酬インセンティブ I",
+    "max_level": 1
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army Colosseum DEF I",
+    "id": "guild_duel_army_colosseum_def_i",
+    "ja-JP": "軍隊コロシアム防御力 I",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army Colosseum ATK I",
+    "id": "guild_duel_army_colosseum_atk_i",
+    "ja-JP": "軍隊コロシアム攻撃力 I",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army Colosseum HP I",
+    "id": "guild_duel_army_colosseum_hp_i",
+    "ja-JP": "軍隊コロシアムHP I",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Artifact Incentive",
+    "id": "guild_duel_artifact_incentive",
+    "ja-JP": "アーティファクトインセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Speed-Up Incentive",
+    "id": "guild_duel_speed_up_incentive",
+    "ja-JP": "加速インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Stage Incentive",
+    "id": "guild_duel_stage_incentive",
+    "ja-JP": "冒険インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Hunting Incentive",
+    "id": "guild_duel_hunting_incentive",
+    "ja-JP": "討伐インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Reward Incentive II",
+    "id": "guild_duel_reward_incentive_ii",
+    "ja-JP": "報酬インセンティブ II",
+    "max_level": 1
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army DEF II",
+    "id": "guild_duel_army_def_ii",
+    "ja-JP": "軍隊防御力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army ATK II",
+    "id": "guild_duel_army_atk_ii",
+    "ja-JP": "軍隊攻撃力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army HP II",
+    "id": "guild_duel_army_hp_ii",
+    "ja-JP": "軍隊HP II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Familiar Incentive",
+    "id": "guild_duel_familiar_incentive",
+    "ja-JP": "召喚獣インセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army Colosseum DEF II",
+    "id": "guild_duel_army_colosseum_def_ii",
+    "ja-JP": "軍隊コロシアム防御力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army Colosseum ATK II",
+    "id": "guild_duel_army_colosseum_atk_ii",
+    "ja-JP": "軍隊コロシアム攻撃力 II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army Colosseum HP II",
+    "id": "guild_duel_army_colosseum_hp_ii",
+    "ja-JP": "軍隊コロシアムHP II",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army DEF III",
+    "id": "guild_duel_army_def_iii",
+    "ja-JP": "軍隊防御力 III",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army ATK III",
+    "id": "guild_duel_army_atk_iii",
+    "ja-JP": "軍隊攻撃力 III",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Army HP III",
+    "id": "guild_duel_army_hp_iii",
+    "ja-JP": "軍隊HP III",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Master Incentive",
+    "id": "guild_duel_master_incentive",
+    "ja-JP": "マスターインセンティブ",
+    "max_level": 10
+  },
+  {
+    "category_id": "guild_duel",
+    "en-US": "Crafting Incentive",
+    "id": "guild_duel_crafting_incentive",
+    "ja-JP": "製作インセンティブ",
+    "max_level": 10
+  }
+]

@@ -1,8 +1,23 @@
 export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "ancient_tomes", "lunite", "mana_ore", "special"];
 export const MAX_GUILD_HELPS = 30;
-const STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
+const PRODUCTION_STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
+const PREVIEW_STORAGE_KEY = "rlm-research-planner-preview.player.v1";
+
+export function playerStorageKey(pathname = globalThis.location?.pathname || "") {
+  return /\/preview(?:\/|$)/u.test(String(pathname)) ? PREVIEW_STORAGE_KEY : PRODUCTION_STORAGE_KEY;
+}
+
+export function hasSavedState(storage = globalThis.localStorage, pathname = globalThis.location?.pathname || "") {
+  const storageKey = playerStorageKey(pathname);
+  try {
+    if (!storage) return false;
+    if (storage.getItem(storageKey)) return true;
+    return storageKey === PREVIEW_STORAGE_KEY && Boolean(storage.getItem(PRODUCTION_STORAGE_KEY));
+  } catch { return false; }
+}
 export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
-import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.0.15-b1";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.0-b13";
+import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.0-b13";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
@@ -33,6 +48,8 @@ export function defaultState() {
       researchSpeedBoostPercent: 0,
       maxGuildHelps: 0,
       speedupSeconds: 0,
+      speedupInventory: [],
+      useGemsForSpeedups: false,
       resourceDisplayMode: "exact",
       resources: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])),
     },
@@ -76,6 +93,18 @@ export function sanitizeState(value) {
     Math.max(0, Math.trunc(number(settings.maxGuildHelps ?? settings.max_guild_helps))),
   );
   base.settings.speedupSeconds = Math.max(0, Math.trunc(number(settings.speedupSeconds ?? settings.speedup_seconds)));
+  base.settings.speedupInventory = normalizeSpeedupInventory(
+    settings.speedupInventory ?? settings.speedup_inventory,
+  );
+  if (!base.settings.speedupInventory.length && base.settings.speedupSeconds > 0) {
+    base.settings.speedupInventory = [{
+      kind: "general",
+      durationSeconds: 1,
+      quantity: base.settings.speedupSeconds,
+    }];
+  }
+  base.settings.speedupSeconds = 0;
+  base.settings.useGemsForSpeedups = (settings.useGemsForSpeedups ?? settings.use_gems_for_speedups) === true;
   base.settings.resourceDisplayMode = (settings.resourceDisplayMode ?? settings.resource_display_mode) === "short" ? "short" : "exact";
   const resources = settings.resources || {};
   for (const key of RESOURCE_KEYS) base.settings.resources[key] = Math.max(0, Math.trunc(number(resources[key])));
@@ -97,14 +126,22 @@ export function sanitizeState(value) {
   return base;
 }
 
-export function loadState(storage = localStorage) {
-  try { return sanitizeState(JSON.parse(storage.getItem(STORAGE_KEY) || "null")); }
+export function loadState(storage = localStorage, pathname = globalThis.location?.pathname || "") {
+  const storageKey = playerStorageKey(pathname);
+  try {
+    let serialized = storage.getItem(storageKey);
+    if (!serialized && storageKey === PREVIEW_STORAGE_KEY) {
+      serialized = storage.getItem(PRODUCTION_STORAGE_KEY);
+      if (serialized) storage.setItem(PREVIEW_STORAGE_KEY, serialized);
+    }
+    return sanitizeState(JSON.parse(serialized || "null"));
+  }
   catch { return defaultState(); }
 }
 
-export function saveState(state, storage = localStorage) {
+export function saveState(state, storage = localStorage, pathname = globalThis.location?.pathname || "") {
   state.updatedAt = new Date().toISOString();
-  storage.setItem(STORAGE_KEY, JSON.stringify(state));
+  storage.setItem(playerStorageKey(pathname), JSON.stringify(state));
 }
 
 export function backupPayload(state) {
@@ -125,7 +162,15 @@ export function backupPayload(state) {
         research_speed_boost_percent: state.settings.researchSpeedBoostPercent,
         free_speedup_seconds: freeSecondsForVip(state.settings.vipLevel),
         max_guild_helps: guildHelpCount(state.settings),
-        speedup_seconds: state.settings.speedupSeconds,
+        speedup_seconds: normalizeSpeedupInventory(state.settings.speedupInventory)
+          .filter((item) => item.kind === "general")
+          .reduce((total, item) => total + item.durationSeconds * item.quantity, 0),
+        speedup_inventory: normalizeSpeedupInventory(state.settings.speedupInventory).map((item) => ({
+          kind: item.kind,
+          duration_seconds: item.durationSeconds,
+          quantity: item.quantity,
+        })),
+        use_gems_for_speedups: state.settings.useGemsForSpeedups === true,
         resource_display_mode: state.settings.resourceDisplayMode,
         resources: { ...state.settings.resources },
         observed_stats: { ...state.observedStats },

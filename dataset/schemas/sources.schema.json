@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rrryutaro/RLMResearchData/schemas/sources.schema.json",
+  "title": "RLM research dataset source registry",
+  "type": "object",
+  "required": ["document_type", "schema_version", "sources"],
+  "properties": {
+    "document_type": { "const": "RLMResearchData.sources" },
+    "schema_version": { "const": 2 },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "name", "license"],
+        "properties": {
+          "id": { "$ref": "common.schema.json#/$defs/id" },
+          "type": {
+            "enum": ["official", "wiki", "game_capture", "community", "video", "derived", "other"]
+          },
+          "name": { "type": "string", "minLength": 1, "maxLength": 500 },
+          "url": { "type": "string", "format": "uri" },
+          "retrieved_on": { "$ref": "common.schema.json#/$defs/date" },
+          "license": {
+            "type": "object",
+            "required": ["name", "attribution"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1, "maxLength": 200 },
+              "url": { "type": "string", "format": "uri" },
+              "attribution": { "type": "string", "minLength": 1, "maxLength": 4000 }
+            },
+            "additionalProperties": false
+          },
+          "notes": { "type": "string", "maxLength": 4000 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

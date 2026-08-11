@@ -1,0 +1,288 @@
+{
+  "document_type": "RLMResearchData.sources",
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "src_bigsoneca_guild_duel_video",
+      "license": {
+        "attribution": "BigSoneca Guild Duel gameplay video",
+        "name": "Public gameplay reference (facts transcribed)"
+      },
+      "name": "BigSoneca Guild Duel gameplay video",
+      "notes": "Guild Duel tree structure, maximum levels, and effects only; no per-level time or cost values retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "video",
+      "url": "https://www.youtube.com/watch?v=QKP5dGy1IHs"
+    },
+    {
+      "id": "src_fandom_advanced_wonder_battles",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Advanced Wonder Battles on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Advanced Wonder Battles",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Advanced_Wonder_Battles"
+    },
+    {
+      "id": "src_fandom_army_leadership",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Army Leadership on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Army Leadership",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Army_Leadership"
+    },
+    {
+      "id": "src_fandom_defense",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Defense on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Defense",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Defense"
+    },
+    {
+      "id": "src_fandom_economy",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Economy on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Economy",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Economy"
+    },
+    {
+      "id": "src_fandom_familiar_battles",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Familiar Battles on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Familiar Battles",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Familiar_Battles"
+    },
+    {
+      "id": "src_fandom_familiars",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Familiars on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Familiars",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Familiars"
+    },
+    {
+      "id": "src_fandom_gear",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Gear on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Gear",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Gear"
+    },
+    {
+      "id": "src_fandom_mana_awakening",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Mana Awakening on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Mana Awakening",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Mana_Awakening"
+    },
+    {
+      "id": "src_fandom_military",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Military on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Military",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Military"
+    },
+    {
+      "id": "src_fandom_military_command",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Military Command on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Military Command",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Military_Command"
+    },
+    {
+      "id": "src_fandom_monster_hunt",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Monster Hunt on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Monster Hunt",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Monster_Hunt"
+    },
+    {
+      "id": "src_fandom_research",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom) on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom)",
+      "notes": "Normalized and adapted into project-specific structured records. retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Research"
+    },
+    {
+      "id": "src_fandom_sigils",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Sigils on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Sigils",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Sigils"
+    },
+    {
+      "id": "src_fandom_sigils_furious_defense_infantry",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Furious Defense (Infantry) on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Furious Defense (Infantry)",
+      "notes": "Exact level 3 resource values for Furious Defense (Infantry) retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Furious_Defense_%28Infantry%29"
+    },
+    {
+      "id": "src_fandom_sigils_helmet_sigil",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Helmet Sigil on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Helmet Sigil",
+      "notes": "Level 1 time, prerequisites, power, and resource values for Helmet Sigil retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Helmet_Sigil"
+    },
+    {
+      "id": "src_fandom_upgrade_defenses",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Upgrade Defenses on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Upgrade Defenses",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Upgrade_Defenses"
+    },
+    {
+      "id": "src_fandom_upgrade_military",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Upgrade Military on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Upgrade Military",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Upgrade_Military"
+    },
+    {
+      "id": "src_fandom_wonder_battles",
+      "license": {
+        "attribution": "Contributors to Lords Mobile Wiki (Fandom): Wonder Battles on the Lords Mobile Wiki (Fandom); adapted and normalized by RLMResearchPlanner.",
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+      },
+      "name": "Lords Mobile Wiki (Fandom): Wonder Battles",
+      "notes": "retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lordsmobile.fandom.com/wiki/Wonder_Battles"
+    },
+    {
+      "id": "src_gamerch_research_list",
+      "license": {
+        "attribution": "Gamerch ロードモバイル攻略Wiki 研究一覧",
+        "name": "Reference only; no redistribution license asserted"
+      },
+      "name": "Gamerch ロードモバイル攻略Wiki 研究一覧",
+      "notes": "Japanese research names and tree layout retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "wiki",
+      "url": "https://lords-mobile.gamerch.com/%E7%A0%94%E7%A9%B6-%E7%A0%94%E7%A9%B6%E4%B8%80%E8%A6%A7"
+    },
+    {
+      "id": "src_retry_advanced_wonder_battles",
+      "license": {
+        "attribution": "Retry YN 上級ワンダー軍事研究一覧",
+        "name": "Reference only; no redistribution license asserted"
+      },
+      "name": "Retry YN 上級ワンダー軍事研究一覧",
+      "notes": "Advanced Wonder Battles Japanese research names retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "community",
+      "url": "https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-14/"
+    },
+    {
+      "id": "src_retry_wonder_battles",
+      "license": {
+        "attribution": "Retry YN ワンダー戦争研究一覧",
+        "name": "Reference only; no redistribution license asserted"
+      },
+      "name": "Retry YN ワンダー戦争研究一覧",
+      "notes": "Wonder Battles Japanese research names retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "community",
+      "url": "https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-12/"
+    }
+  ]
+}

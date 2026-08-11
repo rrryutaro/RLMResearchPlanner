@@ -13,6 +13,11 @@ def format_resource_amount(amount: int, mode: str = "exact") -> str:
         (1_000, "K"),
     ):
         if abs(value) >= divisor:
+            if divisor == 1_000:
+                shortened = abs(value) // divisor
+                if value < 0:
+                    shortened = -shortened
+                return f"{shortened}{suffix}"
             hundredths = abs(value) * 100 // divisor
             shortened = hundredths / 100
             if value < 0:

@@ -1,0 +1,43 @@
+{
+  "document_type": "RLMResearchData.catalog-update-gate",
+  "schema_version": 1,
+  "required_updates": 2,
+  "updates": [
+    {
+      "sequence": 1,
+      "catalog_sha256": "142a2990c7994dbbd47013778f6ac02a7ad2de420f41ddae3b5d31c565dba91d",
+      "summary": "Added fact-specific source provenance for Sigils / Furious Defense (Infantry) level 3 costs.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3143,
+      "representative_plans": 16,
+      "review_warnings": 180
+    },
+    {
+      "sequence": 2,
+      "catalog_sha256": "d9309837d5c5d199b8c77697e819b723f92424f01c13336d748ced751175af03",
+      "summary": "Completed Sigils / Helmet Sigil level 1 resource values and attached fact-specific sources for time, costs, and requirements.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3143,
+      "representative_plans": 16,
+      "review_warnings": 180
+    },
+    {
+      "sequence": 3,
+      "catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+      "summary": "Centered the three-column Advanced Wonder Battles rows on the five-column game layout using direct in-game screenshot evidence.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3143,
+      "representative_plans": 16,
+      "review_warnings": 180
+    }
+  ]
+}

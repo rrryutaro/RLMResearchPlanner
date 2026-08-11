@@ -1,0 +1,3668 @@
+{
+  "category_id": "upgrade_defenses",
+  "display_connection_groups": [
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_trap_retrieval_i"
+      ],
+      "research_ids": [
+        "upgrade_defenses_wall_repair_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_wall_repair_i"
+      ],
+      "research_ids": [
+        "upgrade_defenses_wall_defense_i",
+        "upgrade_defenses_wall_durability_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_wall_defense_i",
+        "upgrade_defenses_wall_repair_i",
+        "upgrade_defenses_wall_durability_i"
+      ],
+      "research_ids": [
+        "upgrade_defenses_trap_retrieval_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_trap_retrieval_ii"
+      ],
+      "research_ids": [
+        "upgrade_defenses_trap_strength_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_trap_strength_ii"
+      ],
+      "research_ids": [
+        "upgrade_defenses_trap_defense_ii",
+        "upgrade_defenses_trap_durability_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_trap_defense_ii",
+        "upgrade_defenses_trap_strength_ii",
+        "upgrade_defenses_trap_durability_ii"
+      ],
+      "research_ids": [
+        "upgrade_defenses_trap_retrieval_iii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_trap_retrieval_iii"
+      ],
+      "research_ids": [
+        "upgrade_defenses_wall_defense_ii",
+        "upgrade_defenses_wall_repair_ii",
+        "upgrade_defenses_wall_durability_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_wall_repair_ii"
+      ],
+      "research_ids": [
+        "upgrade_defenses_trap_crafting_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "upgrade_defenses_wall_defense_ii",
+        "upgrade_defenses_trap_crafting_ii",
+        "upgrade_defenses_wall_durability_ii"
+      ],
+      "research_ids": [
+        "upgrade_defenses_trap_retrieval_iv"
+      ]
+    }
+  ],
+  "display_connections": [
+    [
+      "upgrade_defenses_trap_crafting_ii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_trap_defense_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_trap_durability_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_i",
+      "upgrade_defenses_wall_repair_i"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_ii",
+      "upgrade_defenses_trap_strength_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_wall_defense_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_wall_durability_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_wall_repair_ii"
+    ],
+    [
+      "upgrade_defenses_trap_strength_ii",
+      "upgrade_defenses_trap_defense_ii"
+    ],
+    [
+      "upgrade_defenses_trap_strength_ii",
+      "upgrade_defenses_trap_durability_ii"
+    ],
+    [
+      "upgrade_defenses_trap_strength_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_wall_defense_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_wall_defense_ii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_wall_durability_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_wall_durability_ii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_wall_repair_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_wall_repair_i",
+      "upgrade_defenses_wall_defense_i"
+    ],
+    [
+      "upgrade_defenses_wall_repair_i",
+      "upgrade_defenses_wall_durability_i"
+    ],
+    [
+      "upgrade_defenses_wall_repair_ii",
+      "upgrade_defenses_trap_crafting_ii"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 1,
+      "effect_label": "Trap Retrieval I",
+      "effect_values": {
+        "1": "1%",
+        "10": "50%",
+        "2": "2%",
+        "3": "4%",
+        "4": "6%",
+        "5": "9%",
+        "6": "12%",
+        "7": "16%",
+        "8": "21%",
+        "9": "28%"
+      },
+      "id": "upgrade_defenses_trap_retrieval_i",
+      "levels": [
+        {
+          "academy_level": 10,
+          "base_time_seconds": 4980,
+          "buildings": {},
+          "costs": {
+            "food": 2007,
+            "gold": 527,
+            "ore": 2453,
+            "stone": 3344,
+            "timber": 3344
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 199,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 9960,
+          "buildings": {},
+          "costs": {
+            "food": 3010,
+            "gold": 3511,
+            "ore": 3679,
+            "stone": 5016,
+            "timber": 5016
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 396,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 16860,
+          "buildings": {},
+          "costs": {
+            "food": 8026,
+            "gold": 10531,
+            "ore": 9809,
+            "stone": 13376,
+            "timber": 13376
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 794,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 24780,
+          "buildings": {},
+          "costs": {
+            "food": 15048,
+            "gold": 70205,
+            "ore": 18392,
+            "stone": 25080,
+            "timber": 25080
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1983,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 37200,
+          "buildings": {},
+          "costs": {
+            "food": 27086,
+            "gold": 175513,
+            "ore": 33105,
+            "stone": 45143,
+            "timber": 45143
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 2974,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 120360,
+          "buildings": {},
+          "costs": {
+            "food": 45143,
+            "gold": 351025,
+            "ore": 55175,
+            "stone": 75238,
+            "timber": 75238
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 9638,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 361080,
+          "buildings": {},
+          "costs": {
+            "food": 250792,
+            "gold": 877562,
+            "ore": 306523,
+            "stone": 417986,
+            "timber": 417986
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 28914,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 1083120,
+          "buildings": {},
+          "costs": {
+            "food": 501583,
+            "gold": 1755124,
+            "stone": 835971,
+            "timber": 835971
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 86742,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 3249240,
+          "buildings": {},
+          "costs": {
+            "food": 1003165,
+            "gold": 7020496,
+            "ore": 1226090,
+            "stone": 1671941,
+            "timber": 1671941
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 260224,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 8123100,
+          "buildings": {},
+          "costs": {
+            "food": 2006329,
+            "gold": 15796116,
+            "ore": 2452179,
+            "stone": 3343881,
+            "timber": 3343881
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 650561,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Retrieval I",
+        "ja-JP": "罠回収 I"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Wall DEF Boost",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_wall_defense_i",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 9960,
+          "buildings": {},
+          "costs": {
+            "food": 5574,
+            "gold": 1054,
+            "ore": 5574,
+            "stone": 5574,
+            "timber": 5574
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 397,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 19860,
+          "buildings": {},
+          "costs": {
+            "food": 8360,
+            "gold": 7021,
+            "ore": 8360,
+            "stone": 8360,
+            "timber": 8360
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 793,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 33720,
+          "buildings": {},
+          "costs": {
+            "food": 22293,
+            "gold": 21062,
+            "ore": 22293,
+            "stone": 22293,
+            "timber": 22293
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1587,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 49560,
+          "buildings": {},
+          "costs": {
+            "food": 41799,
+            "gold": 140410,
+            "ore": 41779,
+            "stone": 41779,
+            "timber": 41779
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 3966,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 74340,
+          "buildings": {},
+          "costs": {
+            "food": 75238,
+            "gold": 351025,
+            "ore": 60190,
+            "stone": 90285,
+            "timber": 75238
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 5949,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 240720,
+          "buildings": {},
+          "costs": {
+            "food": 125396,
+            "gold": 702050,
+            "ore": 125396,
+            "stone": 125396,
+            "timber": 125396
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 19276,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 722100,
+          "buildings": {},
+          "costs": {
+            "food": 696642,
+            "gold": 1755124,
+            "ore": 696642,
+            "stone": 696642,
+            "timber": 696642
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 57828,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2166180,
+          "buildings": {},
+          "costs": {
+            "food": 1393284,
+            "gold": 3510248,
+            "ore": 1393284,
+            "stone": 1393284,
+            "timber": 1393284
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 173483,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_wall_defense_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 6498480,
+          "buildings": {},
+          "costs": {
+            "food": 2786567,
+            "gold": 14040992,
+            "ore": 2786567,
+            "stone": 2786567,
+            "timber": 2786567
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 520448,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_retrieval_iv"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 16246140,
+          "buildings": {},
+          "costs": {
+            "food": 5573134,
+            "gold": 31592231,
+            "ore": 5573134,
+            "stone": 5573134,
+            "timber": 5573134
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1301122,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_retrieval_iv"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Defense I",
+        "ja-JP": "城壁防御力 I"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Castle Wall repair speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "30%",
+        "2": "1%",
+        "3": "2%",
+        "4": "3%",
+        "5": "4.5%",
+        "6": "6%",
+        "7": "8%",
+        "8": "11%",
+        "9": "15%"
+      },
+      "id": "upgrade_defenses_wall_repair_i",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 9960,
+          "buildings": {},
+          "costs": {
+            "food": 4013,
+            "gold": 1054,
+            "ore": 4905,
+            "stone": 6688,
+            "timber": 6688
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 397,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 19860,
+          "buildings": {},
+          "costs": {
+            "food": 6019,
+            "gold": 7021,
+            "ore": 7357,
+            "stone": 10032,
+            "timber": 10032
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 793,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 33720,
+          "buildings": {},
+          "costs": {
+            "food": 16051,
+            "gold": 21062,
+            "ore": 19618,
+            "stone": 26752,
+            "timber": 26752
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1587,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 49560,
+          "buildings": {},
+          "costs": {
+            "food": 41799,
+            "gold": 140410,
+            "ore": 54171,
+            "stone": 66209,
+            "timber": 54171
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 3966,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 74340,
+          "buildings": {},
+          "costs": {
+            "food": 54171,
+            "gold": 351025,
+            "ore": 66209,
+            "stone": 90285,
+            "timber": 90285
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 5949,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 240720,
+          "buildings": {},
+          "costs": {
+            "food": 90285,
+            "gold": 702050,
+            "ore": 110349,
+            "stone": 150475,
+            "timber": 150475
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 19276,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 722100,
+          "buildings": {},
+          "costs": {
+            "food": 501593,
+            "gold": 1755124,
+            "ore": 613045,
+            "stone": 835971,
+            "timber": 835971
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 57828,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2166180,
+          "buildings": {},
+          "costs": {
+            "food": 1003165,
+            "gold": 3510248,
+            "ore": 1226090,
+            "stone": 1671941,
+            "timber": 1671941
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 173483,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 6498480,
+          "buildings": {},
+          "costs": {
+            "food": 2786567,
+            "gold": 14040992,
+            "ore": 2486567,
+            "stone": 2486567,
+            "timber": 2686567
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 520448,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 16246140,
+          "buildings": {},
+          "costs": {
+            "food": 4012657,
+            "gold": 31592231,
+            "ore": 4904358,
+            "stone": 6687761,
+            "timber": 6687761
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1301122,
+          "requirements": [],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Repair I",
+        "ja-JP": "城壁修復 I"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Wall HP Boost",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_wall_durability_i",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 9960,
+          "buildings": {},
+          "costs": {
+            "food": 5574,
+            "gold": 1054,
+            "ore": 4459,
+            "stone": 6688,
+            "timber": 5574
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 397,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 19860,
+          "buildings": {},
+          "costs": {
+            "food": 8360,
+            "gold": 7021,
+            "ore": 6688,
+            "stone": 10032,
+            "timber": 8360
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 793,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 33720,
+          "buildings": {},
+          "costs": {
+            "food": 22293,
+            "gold": 21062,
+            "ore": 17835,
+            "stone": 26752,
+            "timber": 22293
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1587,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 49560,
+          "buildings": {},
+          "costs": {
+            "food": 41799,
+            "gold": 140410,
+            "ore": 75238,
+            "stone": 60190,
+            "timber": 90285
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 3966,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 74340,
+          "buildings": {},
+          "costs": {
+            "food": 75238,
+            "gold": 351025,
+            "ore": 60190,
+            "stone": 90285,
+            "timber": 75238
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 5949,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 240720,
+          "buildings": {},
+          "costs": {
+            "food": 125396,
+            "gold": 702050,
+            "ore": 100317,
+            "stone": 150475,
+            "timber": 125396
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 19276,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 722100,
+          "buildings": {},
+          "costs": {
+            "food": 696642,
+            "gold": 1755124,
+            "ore": 557314,
+            "stone": 835971,
+            "timber": 696642
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 57828,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2166180,
+          "buildings": {},
+          "costs": {
+            "food": 1393284,
+            "gold": 3510248,
+            "ore": 1114627,
+            "stone": 1671941,
+            "timber": 1393284
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 173483,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_wall_durability_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6498480,
+          "buildings": {},
+          "costs": {
+            "food": 2786567,
+            "gold": 14040992,
+            "ore": 2371941,
+            "stone": 2671941,
+            "timber": 2671941
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 520448,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_retrieval_iv"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 16246140,
+          "buildings": {},
+          "costs": {
+            "food": 5573134,
+            "gold": 31592231,
+            "ore": 5573134,
+            "stone": 5573134,
+            "timber": 5573134
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1301122,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_retrieval_iv"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Durability I",
+        "ja-JP": "城壁HP I"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Trap Retrieval II",
+      "effect_values": {
+        "1": "1%",
+        "10": "50%",
+        "2": "2%",
+        "3": "4%",
+        "4": "6%",
+        "5": "9%",
+        "6": "12%",
+        "7": "16%",
+        "8": "21%",
+        "9": "28%"
+      },
+      "id": "upgrade_defenses_trap_retrieval_ii",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 12420,
+          "buildings": {},
+          "costs": {
+            "food": 6131,
+            "gold": 1317,
+            "ore": 5016,
+            "stone": 8360,
+            "timber": 8360
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 496,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_wall_durability_i"
+            },
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_wall_defense_i"
+            },
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 24780,
+          "buildings": {},
+          "costs": {
+            "food": 9196,
+            "gold": 8776,
+            "ore": 7524,
+            "stone": 12540,
+            "timber": 12540
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 992,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 42120,
+          "buildings": {},
+          "costs": {
+            "food": 24522,
+            "gold": 26327,
+            "ore": 20064,
+            "stone": 33439,
+            "timber": 33439
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1983,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 61920,
+          "buildings": {},
+          "costs": {
+            "food": 45979,
+            "gold": 175513,
+            "ore": 37619,
+            "stone": 62698,
+            "timber": 62698
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 4958,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 92880,
+          "buildings": {},
+          "costs": {
+            "food": 82762,
+            "gold": 438781,
+            "ore": 67714,
+            "stone": 112856,
+            "timber": 112856
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 7436,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 300900,
+          "buildings": {},
+          "costs": {
+            "food": 137936,
+            "gold": 877562,
+            "ore": 112856,
+            "stone": 188094,
+            "timber": 188094
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 24095,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 902580,
+          "buildings": {},
+          "costs": {
+            "food": 766306,
+            "gold": 2193905,
+            "ore": 626978,
+            "stone": 1044963,
+            "timber": 1044963
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 72285,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 2707740,
+          "buildings": {},
+          "costs": {
+            "food": 1532612,
+            "gold": 4387810,
+            "ore": 1253956,
+            "stone": 2089926,
+            "timber": 2089926
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 216853,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 8123100,
+          "buildings": {},
+          "costs": {
+            "food": 3065224,
+            "gold": 17551239,
+            "ore": 2507911,
+            "stone": 4179851,
+            "timber": 4179851
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 650561,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 20307660,
+          "buildings": {},
+          "costs": {
+            "food": 6130448,
+            "gold": 39490288,
+            "ore": 5015821,
+            "stone": 8359701,
+            "timber": 8359701
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1626402,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_trap_retrieval_i"
+            }
+          ],
+          "technolabe_count": 8,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Retrieval II",
+        "ja-JP": "罠回収 II"
+      },
+      "row": 2
+    },
+    {
+      "column": 0,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_trap_defense_ii",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 17340,
+          "buildings": {},
+          "costs": {
+            "food": 7023,
+            "gold": 1843,
+            "ore": 8583,
+            "stone": 11704,
+            "timber": 11704
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 695,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 34680,
+          "buildings": {},
+          "costs": {
+            "food": 10534,
+            "gold": 12286,
+            "ore": 12874,
+            "stone": 17556,
+            "timber": 17556
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1388,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 58980,
+          "buildings": {},
+          "costs": {
+            "food": 39012,
+            "gold": 36858,
+            "ore": 31210,
+            "stone": 46815,
+            "timber": 39012
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 2776,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 86700,
+          "buildings": {},
+          "costs": {
+            "food": 52667,
+            "gold": 245718,
+            "ore": 64370,
+            "stone": 87777,
+            "timber": 87777
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 6941,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 130020,
+          "buildings": {},
+          "costs": {
+            "food": 131666,
+            "gold": 614294,
+            "ore": 105333,
+            "stone": 157999,
+            "timber": 131666
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 10411,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 421200,
+          "buildings": {},
+          "costs": {
+            "food": 157999,
+            "gold": 1228587,
+            "ore": 192110,
+            "stone": 263331,
+            "timber": 263331
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 33733,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 1263600,
+          "buildings": {},
+          "costs": {
+            "food": 877769,
+            "gold": 3071467,
+            "ore": 1072829,
+            "stone": 1462948,
+            "timber": 1462948
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 101199,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 3790800,
+          "buildings": {},
+          "costs": {
+            "food": 1755538,
+            "gold": 6142934,
+            "ore": 2145657,
+            "stone": 2925896,
+            "timber": 2925896
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 303595,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 11372280,
+          "buildings": {},
+          "costs": {
+            "food": 3511075,
+            "gold": 24571735,
+            "ore": 4291314,
+            "stone": 5851791,
+            "timber": 5851791
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 910785,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28430700,
+          "buildings": {},
+          "costs": {
+            "food": 7022149,
+            "gold": 55286403,
+            "ore": 8585627,
+            "stone": 11703582,
+            "timber": 11703582
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2276962,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 10,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Defense II",
+        "ja-JP": "罠防御力 II"
+      },
+      "row": 3
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_trap_strength_ii",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 17340,
+          "buildings": {},
+          "costs": {
+            "food": 7023,
+            "gold": 1843,
+            "ore": 8583,
+            "stone": 11704,
+            "timber": 11704
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 695,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 34680,
+          "buildings": {},
+          "costs": {
+            "food": 10534,
+            "gold": 12,
+            "ore": 12874,
+            "stone": 17556,
+            "timber": 17556
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1388,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 58980,
+          "buildings": {},
+          "costs": {
+            "food": 28089,
+            "gold": 36858,
+            "ore": 34331,
+            "stone": 46815,
+            "timber": 46815
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 2776,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 86700,
+          "buildings": {},
+          "costs": {
+            "food": 52667,
+            "gold": 245718,
+            "ore": 64370,
+            "stone": 87777,
+            "timber": 87777
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 6941,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 130020,
+          "buildings": {},
+          "costs": {
+            "food": 94800,
+            "gold": 614294,
+            "ore": 115866,
+            "stone": 157999,
+            "timber": 157999
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 10411,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 421200,
+          "buildings": {},
+          "costs": {
+            "food": 157999,
+            "gold": 1228587,
+            "ore": 193110,
+            "stone": 263331,
+            "timber": 263331
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 33733,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 1263600,
+          "buildings": {},
+          "costs": {
+            "food": 877769,
+            "gold": 3071467,
+            "ore": 1072829,
+            "stone": 1462948,
+            "timber": 1462948
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 101199,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 3790800,
+          "buildings": {},
+          "costs": {
+            "food": 1755538,
+            "gold": 6142934,
+            "ore": 2145657,
+            "stone": 2925896,
+            "timber": 2925896
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 303595,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_durability_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_defense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 11372280,
+          "buildings": {},
+          "costs": {
+            "food": 3511075,
+            "gold": 24571735,
+            "ore": 4291314,
+            "stone": 5851791,
+            "timber": 5851791
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 910785,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_durability_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "defense_trap_defense_i"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28430700,
+          "buildings": {},
+          "costs": {
+            "food": 7022149,
+            "gold": 55286403,
+            "ore": 8585627,
+            "stone": 11703582,
+            "timber": 11703582
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2276962,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_trap_durability_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_trap_defense_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "defense_trap_power_i"
+            }
+          ],
+          "technolabe_count": 10,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Strength II",
+        "ja-JP": "罠攻撃力 II"
+      },
+      "row": 3
+    },
+    {
+      "column": 2,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_trap_durability_ii",
+      "levels": [
+        {
+          "academy_level": 11,
+          "base_time_seconds": 17340,
+          "buildings": {},
+          "costs": {
+            "food": 9753,
+            "gold": 1843,
+            "ore": 7803,
+            "stone": 11704,
+            "timber": 9753
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 695,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 34680,
+          "buildings": {},
+          "costs": {
+            "food": 14630,
+            "gold": 12286,
+            "ore": 11704,
+            "stone": 17556,
+            "timber": 14630
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1388,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "defense_trap_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 58980,
+          "buildings": {},
+          "costs": {
+            "food": 39012,
+            "gold": 36858,
+            "ore": 31210,
+            "stone": 46815,
+            "timber": 39012
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 2776,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "defense_trap_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 86700,
+          "buildings": {},
+          "costs": {
+            "food": 73148,
+            "gold": 245718,
+            "ore": 58518,
+            "stone": 87777,
+            "timber": 73148
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 6941,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "defense_trap_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 130020,
+          "buildings": {},
+          "costs": {
+            "food": 131666,
+            "gold": 614294,
+            "ore": 105333,
+            "stone": 157999,
+            "timber": 131666
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 10411,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "defense_trap_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 421200,
+          "buildings": {},
+          "costs": {
+            "food": 219443,
+            "gold": 1228587,
+            "ore": 175554,
+            "stone": 263331,
+            "timber": 219443
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 33733,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "defense_trap_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 1263600,
+          "buildings": {},
+          "costs": {
+            "food": 1219124,
+            "gold": 3071467,
+            "ore": 975299,
+            "stone": 1462948,
+            "timber": 1219124
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 101199,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "defense_trap_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 3790800,
+          "buildings": {},
+          "costs": {
+            "food": 2925896,
+            "gold": 6142934,
+            "ore": 2145657,
+            "stone": 1755538,
+            "timber": 2925896
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 303595,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 11372280,
+          "buildings": {},
+          "costs": {
+            "food": 5851791,
+            "gold": 24571735,
+            "ore": 4291314,
+            "stone": 3511075,
+            "timber": 5851791
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 910785,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28430700,
+          "buildings": {},
+          "costs": {
+            "food": 9752985,
+            "gold": 55286403,
+            "ore": 7802388,
+            "stone": 11703582,
+            "timber": 9752985
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2276962,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "defense_trap_durability_i"
+            },
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            }
+          ],
+          "technolabe_count": 10,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Durability II",
+        "ja-JP": "罠HP II"
+      },
+      "row": 3
+    },
+    {
+      "column": 1,
+      "effect_label": "Trap Retrieval III",
+      "effect_values": {
+        "1": "1%",
+        "10": "50%",
+        "2": "2%",
+        "3": "4%",
+        "4": "6%",
+        "5": "9%",
+        "6": "12%",
+        "7": "16%",
+        "8": "21%",
+        "9": "28%"
+      },
+      "id": "upgrade_defenses_trap_retrieval_iii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 24780,
+          "buildings": {},
+          "costs": {
+            "food": 13933,
+            "gold": 2633,
+            "ore": 11147,
+            "stone": 16720,
+            "timber": 13933
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 992,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_durability_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_strength_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_trap_defense_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 49560,
+          "buildings": {},
+          "costs": {
+            "food": 20900,
+            "gold": 17552,
+            "ore": 16720,
+            "stone": 25080,
+            "timber": 20900
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1983,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 84240,
+          "buildings": {},
+          "costs": {
+            "food": 55732,
+            "gold": 52654,
+            "ore": 44586,
+            "stone": 66878,
+            "timber": 55732
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 3966,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 123840,
+          "buildings": {},
+          "costs": {
+            "food": 104497,
+            "gold": 351025,
+            "ore": 83598,
+            "stone": 125396,
+            "timber": 104497
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 9916,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 185760,
+          "buildings": {},
+          "costs": {
+            "food": 188094,
+            "gold": 877562,
+            "ore": 150475,
+            "stone": 225712,
+            "timber": 188094
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 14873,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 601740,
+          "buildings": {},
+          "costs": {
+            "food": 313489,
+            "gold": 1755124,
+            "ore": 250792,
+            "stone": 376187,
+            "timber": 313489
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 48190,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1805160,
+          "buildings": {},
+          "costs": {
+            "food": 1741605,
+            "gold": 4387810,
+            "ore": 1393284,
+            "stone": 2089926,
+            "timber": 1741605
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 144569,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 5415420,
+          "buildings": {},
+          "costs": {
+            "food": 3483209,
+            "gold": 8775620,
+            "ore": 2786567,
+            "stone": 4179851,
+            "timber": 3483209
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 433707,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 16246200,
+          "buildings": {},
+          "costs": {
+            "food": 6966418,
+            "gold": 35102478,
+            "ore": 5573134,
+            "stone": 8359701,
+            "timber": 6966418
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1301122,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 40655520,
+          "buildings": {},
+          "costs": {
+            "food": 13932835,
+            "gold": 78980576,
+            "ore": 11146268,
+            "stone": 16719402,
+            "timber": 13932835
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 3252804,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_trap_retrieval_ii"
+            }
+          ],
+          "technolabe_count": 15,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Retrieval III",
+        "ja-JP": "罠回収 III"
+      },
+      "row": 4
+    },
+    {
+      "column": 0,
+      "effect_label": "Wall DEF Boost",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_wall_defense_ii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 22320,
+          "buildings": {},
+          "costs": {
+            "food": 9029,
+            "gold": 2370,
+            "ore": 11035,
+            "stone": 15048,
+            "timber": 15048
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 893,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            },
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_wall_defense_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 44580,
+          "buildings": {},
+          "costs": {
+            "food": 13543,
+            "gold": 15797,
+            "ore": 16553,
+            "stone": 22572,
+            "timber": 22572
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1785,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 75780,
+          "buildings": {},
+          "costs": {
+            "food": 36114,
+            "gold": 47389,
+            "ore": 44140,
+            "stone": 60190,
+            "timber": 60190
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 3569,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 111480,
+          "buildings": {},
+          "costs": {
+            "food": 67714,
+            "gold": 315923,
+            "ore": 82762,
+            "stone": 112856,
+            "timber": 112856
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 8924,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 167160,
+          "buildings": {},
+          "costs": {
+            "food": 121885,
+            "gold": 789806,
+            "ore": 148970,
+            "stone": 203141,
+            "timber": 203141
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 13386,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 541560,
+          "buildings": {},
+          "costs": {
+            "food": 203141,
+            "gold": 1579612,
+            "ore": 248284,
+            "stone": 338568,
+            "timber": 338568
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 43371,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1624620,
+          "buildings": {},
+          "costs": {
+            "food": 1567444,
+            "gold": 3949029,
+            "ore": 1567444,
+            "stone": 1567444,
+            "timber": 1567444
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 130112,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4873860,
+          "buildings": {},
+          "costs": {
+            "food": 2257120,
+            "gold": 7898058,
+            "ore": 2758702,
+            "stone": 3761866,
+            "timber": 3761866
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 390337,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 14621520,
+          "buildings": {},
+          "costs": {
+            "food": 4514239,
+            "gold": 31592231,
+            "ore": 5517403,
+            "stone": 7523731,
+            "timber": 7523731
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1171009,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_wall_defense_i"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 36553740,
+          "buildings": {},
+          "costs": {
+            "food": 9028477,
+            "gold": 71082518,
+            "ore": 11034806,
+            "stone": 15047462,
+            "timber": 15047462
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2927524,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_wall_defense_i"
+            }
+          ],
+          "technolabe_count": 13,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Defense II",
+        "ja-JP": "城壁防御力 II"
+      },
+      "row": 5
+    },
+    {
+      "column": 1,
+      "effect_label": "Castle Wall Repair Speed",
+      "effect_values": {
+        "1": "1%",
+        "10": "70%",
+        "2": "2%",
+        "3": "3%",
+        "4": "5%",
+        "5": "7%",
+        "6": "9%",
+        "7": "12%",
+        "8": "17%",
+        "9": "30%"
+      },
+      "id": "upgrade_defenses_wall_repair_ii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 22320,
+          "buildings": {},
+          "costs": {
+            "food": 9029,
+            "gold": 2370,
+            "ore": 11035,
+            "stone": 15048,
+            "timber": 15048
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 893,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            },
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 44580,
+          "buildings": {},
+          "costs": {
+            "food": 13543,
+            "gold": 15797,
+            "ore": 16553,
+            "stone": 22572,
+            "timber": 22572
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1785,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 75780,
+          "buildings": {},
+          "costs": {
+            "food": 36114,
+            "gold": 47389,
+            "ore": 44140,
+            "stone": 60190,
+            "timber": 60190
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 3569,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 111480,
+          "buildings": {},
+          "costs": {
+            "food": 67714,
+            "gold": 315923,
+            "ore": 82762,
+            "stone": 112856,
+            "timber": 112856
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 8924,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 167160,
+          "buildings": {},
+          "costs": {
+            "food": 121885,
+            "gold": 789806,
+            "ore": 148970,
+            "stone": 203141,
+            "timber": 203141
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 13386,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 541560,
+          "buildings": {},
+          "costs": {
+            "food": 203141,
+            "gold": 1579612,
+            "ore": 248284,
+            "stone": 338568,
+            "timber": 338568
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 43371,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1624620,
+          "buildings": {},
+          "costs": {
+            "food": 1128560,
+            "gold": 3949029,
+            "ore": 1379351,
+            "stone": 1880933,
+            "timber": 1880933
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 130112,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4873860,
+          "buildings": {},
+          "costs": {
+            "food": 2257120,
+            "gold": 7898058,
+            "ore": 2758702,
+            "stone": 3761866,
+            "timber": 3761866
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 390337,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 14621520,
+          "buildings": {},
+          "costs": {
+            "food": 4514239,
+            "gold": 31592231,
+            "ore": 5517403,
+            "stone": 7523731,
+            "timber": 7523731
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1171009,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 36553740,
+          "buildings": {},
+          "costs": {
+            "food": 9028477,
+            "gold": 71082518,
+            "ore": 11034806,
+            "stone": 15047462,
+            "timber": 15047462
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2927524,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_wall_repair_i"
+            }
+          ],
+          "technolabe_count": 13,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Repair II",
+        "ja-JP": "城壁修復 II"
+      },
+      "row": 5
+    },
+    {
+      "column": 2,
+      "effect_label": "Wall HP Boost",
+      "effect_values": {
+        "1": "1%",
+        "10": "135%",
+        "2": "3%",
+        "3": "7%",
+        "4": "13%",
+        "5": "21%",
+        "6": "32%",
+        "7": "46%",
+        "8": "64%",
+        "9": "87%"
+      },
+      "id": "upgrade_defenses_wall_durability_ii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 22320,
+          "buildings": {},
+          "costs": {
+            "food": 12540,
+            "gold": 2370,
+            "ore": 12540,
+            "stone": 12540,
+            "timber": 12540
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 893,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            },
+            {
+              "level": 5,
+              "research_id": "upgrade_defenses_wall_durability_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 44580,
+          "buildings": {},
+          "costs": {
+            "food": 18810,
+            "gold": 15797,
+            "ore": 18810,
+            "stone": 18810,
+            "timber": 18810
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1785,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 75780,
+          "buildings": {},
+          "costs": {
+            "food": 50159,
+            "gold": 47389,
+            "ore": 50159,
+            "stone": 50159,
+            "timber": 50159
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 3569,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 111480,
+          "buildings": {},
+          "costs": {
+            "food": 94047,
+            "gold": 315923,
+            "ore": 94047,
+            "stone": 94047,
+            "timber": 94047
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 8924,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 167160,
+          "buildings": {},
+          "costs": {
+            "food": 169284,
+            "gold": 789806,
+            "ore": 169284,
+            "stone": 169284,
+            "timber": 169284
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 13386,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 541560,
+          "buildings": {},
+          "costs": {
+            "food": 282140,
+            "gold": 1579612,
+            "ore": 282140,
+            "stone": 282140,
+            "timber": 282140
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 43371,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1624620,
+          "buildings": {},
+          "costs": {
+            "food": 1567444,
+            "gold": 3949029,
+            "ore": 1567444,
+            "stone": 1567444,
+            "timber": 1567444
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 130112,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4873860,
+          "buildings": {},
+          "costs": {
+            "food": 3134888,
+            "gold": 7898058,
+            "ore": 3134888,
+            "stone": 3134888,
+            "timber": 3134888
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 390337,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_wall_durability_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 14621520,
+          "buildings": {},
+          "costs": {
+            "food": 6269776,
+            "gold": 31592231,
+            "ore": 6269776,
+            "stone": 6269776,
+            "timber": 6269776
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1171009,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_wall_durability_i"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 36553740,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": true,
+          "level": 10,
+          "power": 2927524,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_wall_durability_i"
+            }
+          ],
+          "technolabe_count": 13,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Wall Durability II",
+        "ja-JP": "城壁HP II"
+      },
+      "row": 5
+    },
+    {
+      "column": 1,
+      "effect_label": "Trap-building Speed",
+      "effect_values": {
+        "1": "1%",
+        "10": "80%",
+        "2": "3%",
+        "3": "6%",
+        "4": "10%",
+        "5": "15%",
+        "6": "21%",
+        "7": "29%",
+        "8": "40%",
+        "9": "55%"
+      },
+      "id": "upgrade_defenses_trap_crafting_ii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 24780,
+          "buildings": {},
+          "costs": {
+            "food": 10032,
+            "gold": 2633,
+            "ore": 12261,
+            "stone": 16720,
+            "timber": 16720
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 992,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "upgrade_defenses_wall_repair_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 49560,
+          "buildings": {},
+          "costs": {
+            "food": 15048,
+            "gold": 17552,
+            "ore": 18392,
+            "stone": 25080,
+            "timber": 25080
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 1983,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 84240,
+          "buildings": {},
+          "costs": {
+            "food": 40127,
+            "gold": 52654,
+            "ore": 49044,
+            "stone": 66878,
+            "timber": 66878
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 3966,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 123840,
+          "buildings": {},
+          "costs": {
+            "food": 75238,
+            "gold": 351025,
+            "ore": 91957,
+            "stone": 125396,
+            "timber": 125396
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 9916,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 185760,
+          "buildings": {},
+          "costs": {
+            "food": 135428,
+            "gold": 877562,
+            "ore": 165523,
+            "stone": 225712,
+            "timber": 225712
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 14873,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 601740,
+          "buildings": {},
+          "costs": {
+            "food": 225712,
+            "gold": 1755124,
+            "ore": 275871,
+            "stone": 376187,
+            "timber": 376187
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 48190,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1805160,
+          "buildings": {},
+          "costs": {
+            "food": 1253956,
+            "gold": 4387810,
+            "ore": 1532612,
+            "stone": 2089926,
+            "timber": 2089926
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 144569,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 5415420,
+          "buildings": {},
+          "costs": {
+            "food": 2507911,
+            "gold": 8775620,
+            "ore": 3065224,
+            "stone": 4179851,
+            "timber": 4179851
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 433707,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 16246200,
+          "buildings": {},
+          "costs": {
+            "food": 5015821,
+            "gold": 35102478,
+            "ore": 6130448,
+            "stone": 8359701,
+            "timber": 8359701
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1301122,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_wall_repair_ii"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 40655520,
+          "buildings": {},
+          "costs": {
+            "food": 10031642,
+            "gold": 78980576,
+            "ore": 12260895,
+            "stone": 16719402,
+            "timber": 16719402
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 3252804,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_wall_repair_ii"
+            }
+          ],
+          "technolabe_count": 15,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Crafting II",
+        "ja-JP": "罠配置 II"
+      },
+      "row": 6
+    },
+    {
+      "column": 1,
+      "effect_label": "Trap Retrieval IV",
+      "effect_values": {
+        "1": "1%",
+        "10": "50%",
+        "2": "2%",
+        "3": "4%",
+        "4": "6%",
+        "5": "9%",
+        "6": "12%",
+        "7": "16%",
+        "8": "21%",
+        "9": "28%"
+      },
+      "id": "upgrade_defenses_trap_retrieval_iv",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 29760,
+          "buildings": {},
+          "costs": {
+            "food": 12038,
+            "gold": 3160,
+            "ore": 14714,
+            "stone": 20064,
+            "timber": 20064
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 1190,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_wall_durability_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_crafting_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_wall_defense_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 59460,
+          "buildings": {},
+          "costs": {
+            "food": 18057,
+            "gold": 21062,
+            "ore": 2207,
+            "stone": 30095,
+            "timber": 30095
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 2380,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 101040,
+          "buildings": {},
+          "costs": {
+            "food": 48152,
+            "gold": 63185,
+            "ore": 58853,
+            "stone": 80254,
+            "timber": 80254
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 4760,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 148620,
+          "buildings": {},
+          "costs": {
+            "food": 90285,
+            "gold": 42123,
+            "ore": 110349,
+            "stone": 150475,
+            "timber": 150475
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 11898,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 222900,
+          "buildings": {},
+          "costs": {
+            "food": 162513,
+            "gold": 1053075,
+            "ore": 198627,
+            "stone": 270855,
+            "timber": 270855
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 17848,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 722100,
+          "buildings": {},
+          "costs": {
+            "food": 270855,
+            "gold": 2106149,
+            "ore": 331045,
+            "stone": 451424,
+            "timber": 451424
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 57828,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2166180,
+          "buildings": {},
+          "costs": {
+            "food": 1504747,
+            "gold": 5265372,
+            "ore": 1839135,
+            "stone": 2507911,
+            "timber": 2507911
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 173483,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6498480,
+          "buildings": {},
+          "costs": {
+            "food": 3009493,
+            "gold": 10530744,
+            "ore": 3678269,
+            "stone": 5015821,
+            "timber": 5015821
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 520448,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 19495320,
+          "buildings": {},
+          "costs": {
+            "food": 6018985,
+            "gold": 42122974,
+            "ore": 7356537,
+            "stone": 10031642,
+            "timber": 10031642
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1561346,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            },
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_wall_durability_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_trap_crafting_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "upgrade_defenses_wall_defense_ii"
+            }
+          ],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 48738300,
+          "buildings": {},
+          "costs": {
+            "food": 12037970,
+            "gold": 94776691,
+            "ore": 14713074,
+            "stone": 20063283,
+            "timber": 20063283
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 3903365,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_trap_retrieval_iii"
+            },
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_wall_durability_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_trap_crafting_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "upgrade_defenses_wall_defense_ii"
+            }
+          ],
+          "technolabe_count": 17,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Trap Retrieval IV",
+        "ja-JP": "罠回収 IV"
+      },
+      "row": 7
+    }
+  ],
+  "platform": "pc",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "source_edges": [
+    [
+      "upgrade_defenses_trap_crafting_ii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_trap_defense_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_trap_durability_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_i",
+      "upgrade_defenses_wall_defense_i"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_i",
+      "upgrade_defenses_wall_durability_i"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_i",
+      "upgrade_defenses_wall_repair_i"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_ii",
+      "upgrade_defenses_trap_defense_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_ii",
+      "upgrade_defenses_trap_durability_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_ii",
+      "upgrade_defenses_trap_strength_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_wall_defense_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_wall_durability_ii"
+    ],
+    [
+      "upgrade_defenses_trap_retrieval_iii",
+      "upgrade_defenses_wall_repair_ii"
+    ],
+    [
+      "upgrade_defenses_trap_strength_ii",
+      "upgrade_defenses_trap_retrieval_iii"
+    ],
+    [
+      "upgrade_defenses_wall_defense_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_wall_defense_i",
+      "upgrade_defenses_wall_defense_ii"
+    ],
+    [
+      "upgrade_defenses_wall_defense_ii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_wall_durability_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_wall_durability_i",
+      "upgrade_defenses_wall_durability_ii"
+    ],
+    [
+      "upgrade_defenses_wall_durability_ii",
+      "upgrade_defenses_trap_retrieval_iv"
+    ],
+    [
+      "upgrade_defenses_wall_repair_i",
+      "upgrade_defenses_trap_retrieval_ii"
+    ],
+    [
+      "upgrade_defenses_wall_repair_i",
+      "upgrade_defenses_wall_repair_ii"
+    ],
+    [
+      "upgrade_defenses_wall_repair_ii",
+      "upgrade_defenses_trap_crafting_ii"
+    ]
+  ],
+  "titles": {
+    "en-US": "Upgrade Defenses",
+    "ja-JP": "上級防城"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

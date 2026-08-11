@@ -1,0 +1,18 @@
+{
+  "document_type": "RLMResearchData.sources",
+  "schema_version": 2,
+  "sources": [
+    {
+      "id": "src_fandom_economy",
+      "type": "wiki",
+      "name": "Lords Mobile Wiki contributors: Economy",
+      "url": "https://lordsmobile.fandom.com/wiki/Economy",
+      "retrieved_on": "2026-08-07",
+      "license": {
+        "name": "CC BY-SA 3.0 Unported",
+        "url": "https://creativecommons.org/licenses/by-sa/3.0/",
+        "attribution": "Contributors to the Lords Mobile Wiki Economy article"
+      }
+    }
+  ]
+}

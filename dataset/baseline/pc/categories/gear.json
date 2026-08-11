@@ -1,0 +1,6447 @@
+{
+  "category_id": "gear",
+  "display_connection_groups": [
+    {
+      "prerequisite_ids": [
+        "gear_quick_maneuvers_iii"
+      ],
+      "research_ids": [
+        "gear_ration_run_iv",
+        "gear_central_command_ii",
+        "gear_forced_march_iii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_ration_run_iv"
+      ],
+      "research_ids": [
+        "gear_field_triage_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_forced_march_iii"
+      ],
+      "research_ids": [
+        "gear_bigger_bags_iii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_field_triage_ii"
+      ],
+      "research_ids": [
+        "gear_bigger_infirmary_iii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_bigger_bags_iii"
+      ],
+      "research_ids": [
+        "gear_barracks_expansion_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_bigger_infirmary_iii",
+        "gear_barracks_expansion_ii"
+      ],
+      "research_ids": [
+        "gear_lunar_foundry"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_lunar_foundry"
+      ],
+      "research_ids": [
+        "gear_crafting_speed_i",
+        "gear_lunite_harvesting_i",
+        "gear_lunite_storage"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_crafting_speed_i",
+        "gear_lunite_harvesting_i",
+        "gear_lunite_storage"
+      ],
+      "research_ids": [
+        "gear_infantry_defense_ii",
+        "gear_siege_toughness_ii",
+        "gear_ranged_defense_ii",
+        "gear_cavalry_defense_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_infantry_defense_ii"
+      ],
+      "research_ids": [
+        "gear_infantry_health_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_siege_toughness_ii"
+      ],
+      "research_ids": [
+        "gear_siege_durability_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_ranged_defense_ii"
+      ],
+      "research_ids": [
+        "gear_ranged_health_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_cavalry_defense_ii"
+      ],
+      "research_ids": [
+        "gear_cavalry_health_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_infantry_health_ii"
+      ],
+      "research_ids": [
+        "gear_infantry_offense_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_siege_durability_ii"
+      ],
+      "research_ids": [
+        "gear_siege_attack_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_ranged_health_ii"
+      ],
+      "research_ids": [
+        "gear_ranged_offense_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_cavalry_health_ii"
+      ],
+      "research_ids": [
+        "gear_cavalry_offense_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_infantry_offense_ii",
+        "gear_siege_attack_ii",
+        "gear_ranged_offense_ii",
+        "gear_cavalry_offense_ii"
+      ],
+      "research_ids": [
+        "gear_crafting_speed_ii",
+        "gear_crafting_capacity"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "gear_crafting_speed_ii",
+        "gear_crafting_capacity"
+      ],
+      "research_ids": [
+        "gear_luminary_guard",
+        "gear_luminary_avenger",
+        "gear_luminary_marksman",
+        "gear_luminary_lion_force"
+      ]
+    }
+  ],
+  "display_connections": [
+    [
+      "gear_barracks_expansion_ii",
+      "gear_lunar_foundry"
+    ],
+    [
+      "gear_bigger_bags_iii",
+      "gear_barracks_expansion_ii"
+    ],
+    [
+      "gear_bigger_infirmary_iii",
+      "gear_lunar_foundry"
+    ],
+    [
+      "gear_cavalry_defense_ii",
+      "gear_cavalry_health_ii"
+    ],
+    [
+      "gear_cavalry_health_ii",
+      "gear_cavalry_offense_ii"
+    ],
+    [
+      "gear_cavalry_offense_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_cavalry_offense_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_crafting_capacity",
+      "gear_luminary_avenger"
+    ],
+    [
+      "gear_crafting_capacity",
+      "gear_luminary_guard"
+    ],
+    [
+      "gear_crafting_capacity",
+      "gear_luminary_lion_force"
+    ],
+    [
+      "gear_crafting_capacity",
+      "gear_luminary_marksman"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_cavalry_defense_ii"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_infantry_defense_ii"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_ranged_defense_ii"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_siege_toughness_ii"
+    ],
+    [
+      "gear_crafting_speed_ii",
+      "gear_luminary_avenger"
+    ],
+    [
+      "gear_crafting_speed_ii",
+      "gear_luminary_guard"
+    ],
+    [
+      "gear_crafting_speed_ii",
+      "gear_luminary_lion_force"
+    ],
+    [
+      "gear_crafting_speed_ii",
+      "gear_luminary_marksman"
+    ],
+    [
+      "gear_field_triage_ii",
+      "gear_bigger_infirmary_iii"
+    ],
+    [
+      "gear_forced_march_iii",
+      "gear_bigger_bags_iii"
+    ],
+    [
+      "gear_infantry_defense_ii",
+      "gear_infantry_health_ii"
+    ],
+    [
+      "gear_infantry_health_ii",
+      "gear_infantry_offense_ii"
+    ],
+    [
+      "gear_infantry_offense_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_infantry_offense_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_lunar_foundry",
+      "gear_crafting_speed_i"
+    ],
+    [
+      "gear_lunar_foundry",
+      "gear_lunite_harvesting_i"
+    ],
+    [
+      "gear_lunar_foundry",
+      "gear_lunite_storage"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_cavalry_defense_ii"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_infantry_defense_ii"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_ranged_defense_ii"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_siege_toughness_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_cavalry_defense_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_infantry_defense_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_ranged_defense_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_siege_toughness_ii"
+    ],
+    [
+      "gear_quick_maneuvers_iii",
+      "gear_central_command_ii"
+    ],
+    [
+      "gear_quick_maneuvers_iii",
+      "gear_forced_march_iii"
+    ],
+    [
+      "gear_quick_maneuvers_iii",
+      "gear_ration_run_iv"
+    ],
+    [
+      "gear_ranged_defense_ii",
+      "gear_ranged_health_ii"
+    ],
+    [
+      "gear_ranged_health_ii",
+      "gear_ranged_offense_ii"
+    ],
+    [
+      "gear_ranged_offense_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_ranged_offense_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_ration_run_iv",
+      "gear_field_triage_ii"
+    ],
+    [
+      "gear_siege_attack_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_siege_attack_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_siege_durability_ii",
+      "gear_siege_attack_ii"
+    ],
+    [
+      "gear_siege_toughness_ii",
+      "gear_siege_durability_ii"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 2,
+      "effect_label": "Travel Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "15%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "3%",
+        "6": "4%",
+        "7": "5%",
+        "8": "6%",
+        "9": "8%"
+      },
+      "id": "gear_quick_maneuvers_iii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 32820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 1,
+            "food": 12531,
+            "gold": 12234,
+            "ore": 7658,
+            "stone": 10443,
+            "timber": 10443
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 3423,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 114840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 1,
+            "food": 43858,
+            "gold": 42824,
+            "ore": 26802,
+            "stone": 36546,
+            "timber": 36546
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 11456,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 139440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 2,
+            "food": 53256,
+            "gold": 52000,
+            "ore": 32526,
+            "stone": 44380,
+            "timber": 44380
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 14373,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 164040,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 2,
+            "food": 62654,
+            "gold": 61177,
+            "ore": 38289,
+            "stone": 52212,
+            "timber": 52212
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 17283,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 196860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 3,
+            "food": 75185,
+            "gold": 73412,
+            "ore": 45946,
+            "stone": 62654,
+            "timber": 62654
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 21047,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 262500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 4,
+            "food": 100246,
+            "gold": 97883,
+            "ore": 61262,
+            "stone": 83539,
+            "timber": 83539
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 28234,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 344520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 131573,
+            "gold": 128471,
+            "ore": 80406,
+            "stone": 109644,
+            "timber": 109644
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 37303,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 492120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 6,
+            "food": 187961,
+            "gold": 183530,
+            "ore": 114865,
+            "stone": 156634,
+            "timber": 156634
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 52532,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 688980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 8,
+            "food": 263145,
+            "gold": 256941,
+            "ore": 160811,
+            "stone": 219288,
+            "timber": 219288
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 72211,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 902220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 10,
+            "food": 344595,
+            "gold": 336471,
+            "ore": 210586,
+            "stone": 287163,
+            "timber": 287163
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 94113,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Quick Maneuvers III",
+        "ja-JP": "進軍加速III"
+      },
+      "row": 0
+    },
+    {
+      "column": 1,
+      "effect_label": "Gathering Troops Travel Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "15%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "3%",
+        "6": "4%",
+        "7": "5%",
+        "8": "6%",
+        "9": "8%"
+      },
+      "id": "gear_ration_run_iv",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 72180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 1,
+            "food": 43510,
+            "gold": 30589,
+            "ore": 21755,
+            "stone": 21755,
+            "timber": 21755
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 7530,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_quick_maneuvers_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 252660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 2,
+            "food": 152283,
+            "gold": 107059,
+            "ore": 76142,
+            "stone": 76142,
+            "timber": 76142
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 25222,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 306780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 3,
+            "food": 184916,
+            "gold": 130000,
+            "ore": 92485,
+            "stone": 92485,
+            "timber": 92485
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 31622,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "gear_quick_maneuvers_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 360900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 217548,
+            "gold": 152941,
+            "ore": 108774,
+            "stone": 108774,
+            "timber": 108774
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 38022,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 433080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 261057,
+            "gold": 183530,
+            "ore": 130529,
+            "stone": 130529,
+            "timber": 130529
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 46304,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 577440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 348076,
+            "gold": 244706,
+            "ore": 174038,
+            "stone": 174038,
+            "timber": 174038
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 62114,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 757860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 12,
+            "food": 456849,
+            "gold": 321176,
+            "ore": 228425,
+            "stone": 228425,
+            "timber": 228425
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 82067,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1082640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 652642,
+            "gold": 458823,
+            "ore": 326321,
+            "stone": 326321,
+            "timber": 326321
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 115571,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_quick_maneuvers_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1515660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 913698,
+            "gold": 642352,
+            "ore": 456849,
+            "stone": 456849,
+            "timber": 456849
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 158863,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_quick_maneuvers_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1984800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 1196510,
+            "gold": 598255,
+            "ore": 598255,
+            "stone": 598255,
+            "timber": 598255
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 207050,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_quick_maneuvers_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Ration Run IV",
+        "ja-JP": "採取進軍速度IV"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Battalions",
+      "effect_values": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5"
+      },
+      "id": "gear_central_command_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1036560,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 13,
+            "food": 637224,
+            "gold": 530713,
+            "ore": 318612,
+            "stone": 477918,
+            "timber": 477918
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 106143,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_quick_maneuvers_iii"
+            },
+            {
+              "level": 3,
+              "research_id": "upgrade_military_central_command_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2130720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 35,
+            "food": 1309849,
+            "gold": 1090010,
+            "ore": 654925,
+            "stone": 982387,
+            "timber": 982387
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 218182,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3224820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 63,
+            "food": 1982474,
+            "gold": 1651106,
+            "ore": 991237,
+            "stone": 1486856,
+            "timber": 1486856
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 330221,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5873820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 113,
+            "food": 3610934,
+            "gold": 3007372,
+            "ore": 1805467,
+            "stone": 2708201,
+            "timber": 2708201
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 601474,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11171700,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 180,
+            "food": 6867855,
+            "gold": 5719902,
+            "ore": 3433928,
+            "stone": 5150891,
+            "timber": 5150891
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1143980,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 5,
+      "names": {
+        "en-US": "Central Command II",
+        "ja-JP": "編成ストックII"
+      },
+      "row": 1
+    },
+    {
+      "column": 3,
+      "effect_label": "Supply Troops Travel Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "15%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "3%",
+        "6": "4%",
+        "7": "5%",
+        "8": "6%",
+        "9": "8%"
+      },
+      "id": "gear_forced_march_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 72180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 1,
+            "food": 34808,
+            "gold": 30589,
+            "ore": 34808,
+            "stone": 21755,
+            "timber": 13053
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 7530,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 252660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 2,
+            "food": 121827,
+            "gold": 107059,
+            "ore": 121827,
+            "stone": 76142,
+            "timber": 45685
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 25222,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 306780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 3,
+            "food": 147933,
+            "gold": 130000,
+            "ore": 147933,
+            "stone": 92458,
+            "timber": 55475
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 31622,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 360900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 174038,
+            "gold": 152941,
+            "ore": 174038,
+            "stone": 108774,
+            "timber": 65265
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 38022,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 433080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 208846,
+            "gold": 183530,
+            "ore": 208846,
+            "stone": 130529,
+            "timber": 78317
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 46304,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 577440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 278461,
+            "gold": 244706,
+            "ore": 278461,
+            "stone": 174038,
+            "timber": 104423
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 62114,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 757860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 12,
+            "food": 365480,
+            "gold": 321176,
+            "ore": 365480,
+            "stone": 228425,
+            "timber": 137055
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 82067,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1082640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 522114,
+            "gold": 458823,
+            "ore": 522114,
+            "stone": 326321,
+            "timber": 195793
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 115571,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1515660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 730959,
+            "gold": 642352,
+            "ore": 730959,
+            "stone": 456849,
+            "timber": 274110
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 158863,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1984800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 957208,
+            "gold": 841176,
+            "ore": 957208,
+            "stone": 598255,
+            "timber": 358953
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 207050,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Forced March III",
+        "ja-JP": "資源供給加速III"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Infirmary Healing Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "15%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "3%",
+        "6": "4%",
+        "7": "5%",
+        "8": "6%",
+        "9": "8%"
+      },
+      "id": "gear_field_triage_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 91860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 2,
+            "food": 90500,
+            "gold": 39765,
+            "ore": 22625,
+            "stone": 16969,
+            "timber": 28282
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 9583,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 321540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 4,
+            "food": 316749,
+            "gold": 139177,
+            "ore": 79188,
+            "stone": 59391,
+            "timber": 98984
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 32101,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 390420,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 6,
+            "food": 384624,
+            "gold": 169000,
+            "ore": 96156,
+            "stone": 72117,
+            "timber": 120195
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 40246,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 459300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 8,
+            "food": 452498,
+            "gold": 198824,
+            "ore": 113125,
+            "stone": 84844,
+            "timber": 141406
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 48392,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 551160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 10,
+            "food": 542998,
+            "gold": 238588,
+            "ore": 135750,
+            "stone": 101813,
+            "timber": 169687
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 58932,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 734880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 723997,
+            "gold": 318118,
+            "ore": 181000,
+            "stone": 135750,
+            "timber": 226249
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 79055,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 964500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 950246,
+            "gold": 417529,
+            "ore": 237562,
+            "stone": 178172,
+            "timber": 296952
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 104449,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1377900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 25,
+            "food": 1357494,
+            "gold": 596470,
+            "ore": 339374,
+            "stone": 254531,
+            "timber": 424217
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 147090,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1929000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 31,
+            "food": 1900492,
+            "gold": 835058,
+            "ore": 475123,
+            "stone": 356343,
+            "timber": 593904
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 202190,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2526060,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 39,
+            "food": 2488739,
+            "gold": 1093528,
+            "ore": 622185,
+            "stone": 466639,
+            "timber": 777731
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 263517,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Field Triage II",
+        "ja-JP": "応急術II"
+      },
+      "row": 2
+    },
+    {
+      "column": 3,
+      "effect_label": "Supply Capacity",
+      "effect_values": {
+        "1": "10,000",
+        "10": "1,000,000",
+        "2": "30,000",
+        "3": "60,000",
+        "4": "100,000",
+        "5": "150,000",
+        "6": "210,000",
+        "7": "290,000",
+        "8": "400,000",
+        "9": "560,000"
+      },
+      "id": "gear_bigger_bags_iii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 91860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 2,
+            "food": 67875,
+            "gold": 39765,
+            "ore": 33938,
+            "stone": 22625,
+            "timber": 22625
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 9583,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 321540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 4,
+            "food": 237562,
+            "gold": 139177,
+            "ore": 118781,
+            "stone": 79188,
+            "timber": 79188
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 32101,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 390420,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 6,
+            "food": 288468,
+            "gold": 169000,
+            "ore": 144234,
+            "stone": 96156,
+            "timber": 96156
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 40246,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 459300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 8,
+            "food": 339374,
+            "gold": 198824,
+            "ore": 169687,
+            "stone": 113125,
+            "timber": 113125
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 48392,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 551160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 10,
+            "food": 407249,
+            "gold": 238588,
+            "ore": 203625,
+            "stone": 135750,
+            "timber": 135750
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 58932,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 734880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 542998,
+            "gold": 318118,
+            "ore": 271499,
+            "stone": 181000,
+            "timber": 181000
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 79055,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 964500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 712685,
+            "gold": 417529,
+            "ore": 356343,
+            "stone": 237562,
+            "timber": 237562
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 104449,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1377900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 25,
+            "food": 1018121,
+            "gold": 596470,
+            "ore": 509061,
+            "stone": 339374,
+            "timber": 339374
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 147090,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1929000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 31,
+            "food": 1425369,
+            "gold": 835058,
+            "ore": 712685,
+            "stone": 475123,
+            "timber": 475123
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 202190,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2526060,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 39,
+            "food": 1866555,
+            "gold": 1093528,
+            "ore": 933278,
+            "stone": 622185,
+            "timber": 622185
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 263517,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Bigger Bags III",
+        "ja-JP": "資源供給量III"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Infirmary Capacity Boost",
+      "effect_values": {
+        "1": "0.1%",
+        "10": "7%",
+        "2": "0.2%",
+        "3": "0.3%",
+        "4": "0.5%",
+        "5": "0.7%",
+        "6": "1%",
+        "7": "1.4%",
+        "8": "2%",
+        "9": "3%"
+      },
+      "id": "gear_bigger_infirmary_iii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 118140,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 3,
+            "food": 59173,
+            "gold": 52000,
+            "ore": 59173,
+            "stone": 36984,
+            "timber": 22290
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 12321,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_field_triage_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 413400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 207105,
+            "gold": 182000,
+            "ore": 207105,
+            "stone": 129441,
+            "timber": 77665
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 41273,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 501960,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 8,
+            "food": 251485,
+            "gold": 221000,
+            "ore": 251485,
+            "stone": 157178,
+            "timber": 94307
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 51745,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "gear_field_triage_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 590520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 295865,
+            "gold": 260000,
+            "ore": 295865,
+            "stone": 184916,
+            "timber": 110950
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 62217,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "military_heroic_fighter"
+            },
+            {
+              "level": 1,
+              "research_id": "military_destroyer"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 708660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 355037,
+            "gold": 312000,
+            "ore": 355037,
+            "stone": 221899,
+            "timber": 133139
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 75770,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 944820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 21,
+            "food": 473383,
+            "gold": 416000,
+            "ore": 473383,
+            "stone": 295865,
+            "timber": 177519
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 101643,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1240080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 29,
+            "food": 621315,
+            "gold": 546000,
+            "ore": 621315,
+            "stone": 388322,
+            "timber": 232993
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 134291,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1771560,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 37,
+            "food": 887593,
+            "gold": 779999,
+            "ore": 887593,
+            "stone": 554746,
+            "timber": 332848
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 189116,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_field_triage_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2480160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 1242629,
+            "gold": 1091999,
+            "ore": 1242629,
+            "stone": 776644,
+            "timber": 465986
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 259958,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_field_triage_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3247800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 58,
+            "food": 1627253,
+            "gold": 1429998,
+            "ore": 1627253,
+            "stone": 1017033,
+            "timber": 610220
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 338808,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_field_triage_ii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Bigger Infirmary III",
+        "ja-JP": "医療所拡張III"
+      },
+      "row": 3
+    },
+    {
+      "column": 3,
+      "effect_label": "Barracks' Training Capacity Boost",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_barracks_expansion_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 118140,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 3,
+            "food": 73967,
+            "gold": 52000,
+            "ore": 44380,
+            "stone": 36984,
+            "timber": 29587
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 12321,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_bigger_bags_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 413400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 258882,
+            "gold": 182000,
+            "ore": 155329,
+            "stone": 129441,
+            "timber": 103553
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 41273,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 501960,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 8,
+            "food": 314356,
+            "gold": 221000,
+            "ore": 188614,
+            "stone": 157178,
+            "timber": 125743
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 51745,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "gear_bigger_bags_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 590520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 369831,
+            "gold": 260000,
+            "ore": 221899,
+            "stone": 184916,
+            "timber": 147933
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 62217,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "military_ancient_drake_rider"
+            },
+            {
+              "level": 1,
+              "research_id": "military_heroic_cannoneer"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 708660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 443797,
+            "gold": 312000,
+            "ore": 266278,
+            "stone": 221899,
+            "timber": 177519
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 75770,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 944820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 21,
+            "food": 591729,
+            "gold": 416000,
+            "ore": 355037,
+            "stone": 295865,
+            "timber": 236692
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 101643,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1240080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 29,
+            "food": 776644,
+            "gold": 546000,
+            "ore": 465986,
+            "stone": 388322,
+            "timber": 310658
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 134291,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1771560,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 37,
+            "food": 1109491,
+            "gold": 779999,
+            "ore": 665695,
+            "stone": 554746,
+            "timber": 443797
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 189116,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_bigger_bags_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2480160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 1553287,
+            "gold": 1091999,
+            "ore": 931972,
+            "stone": 776644,
+            "timber": 621315
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 259958,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_bigger_bags_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3247800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 58,
+            "food": 2034066,
+            "gold": 1429998,
+            "ore": 1220440,
+            "stone": 1017033,
+            "timber": 813627
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 338808,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_bigger_bags_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Barracks Expansion II",
+        "ja-JP": "兵舎拡張II"
+      },
+      "row": 3
+    },
+    {
+      "column": 2,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Lunar Foundry"
+      },
+      "id": "gear_lunar_foundry",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1141200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 30,
+            "food": 488059,
+            "gold": 572165,
+            "ore": 305037,
+            "stone": 366044,
+            "timber": 305037
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 94383,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "gear_bigger_infirmary_iii"
+            },
+            {
+              "level": 4,
+              "research_id": "gear_barracks_expansion_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Lunar Foundry",
+        "ja-JP": "月晶工房"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Crafting Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "gear_crafting_speed_i",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 157500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 125308,
+            "gold": 73412,
+            "ore": 41770,
+            "stone": 41770,
+            "timber": 62654
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 16428,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunar_foundry"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 551160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 10,
+            "food": 438575,
+            "gold": 256941,
+            "ore": 146192,
+            "stone": 146192,
+            "timber": 219288
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 55030,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 669240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 16,
+            "food": 532556,
+            "gold": 312000,
+            "ore": 177519,
+            "stone": 177519,
+            "timber": 266278
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 68994,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 787380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 23,
+            "food": 626536,
+            "gold": 367059,
+            "ore": 208846,
+            "stone": 208846,
+            "timber": 313268
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 82956,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 944820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 30,
+            "food": 751843,
+            "gold": 440470,
+            "ore": 250615,
+            "stone": 250615,
+            "timber": 375922
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 101027,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1259760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 42,
+            "food": 1002458,
+            "gold": 587294,
+            "ore": 334153,
+            "stone": 334153,
+            "timber": 501229
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 135523,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1653420,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 1315725,
+            "gold": 770823,
+            "ore": 438575,
+            "stone": 438575,
+            "timber": 657863
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 179055,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2362080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 73,
+            "food": 1879607,
+            "gold": 1101175,
+            "ore": 626536,
+            "stone": 626536,
+            "timber": 939804
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 252155,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3306840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 91,
+            "food": 2631450,
+            "gold": 1541645,
+            "ore": 877150,
+            "stone": 877150,
+            "timber": 1315725
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 346611,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4330380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 115,
+            "food": 3445946,
+            "gold": 2018821,
+            "ore": 1148649,
+            "stone": 1148649,
+            "timber": 1722973
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 451743,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Crafting Speed I",
+        "ja-JP": "部隊武装錬成速度I"
+      },
+      "row": 5
+    },
+    {
+      "column": 2,
+      "effect_label": "Lunite Production",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "gear_lunite_harvesting_i",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 157500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 83539,
+            "gold": 73412,
+            "ore": 83539,
+            "stone": 52212,
+            "timber": 31327
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 16428,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunar_foundry"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 551160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 10,
+            "food": 292384,
+            "gold": 256941,
+            "ore": 292384,
+            "stone": 182740,
+            "timber": 109644
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 55030,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 669240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 16,
+            "food": 355037,
+            "gold": 312000,
+            "ore": 355037,
+            "stone": 221899,
+            "timber": 133139
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 68994,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 787380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 23,
+            "food": 417691,
+            "gold": 367059,
+            "ore": 417691,
+            "stone": 261057,
+            "timber": 156634
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 82956,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 944820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 30,
+            "food": 501229,
+            "gold": 440470,
+            "ore": 501229,
+            "stone": 313268,
+            "timber": 187961
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 101027,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1259760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 42,
+            "food": 668305,
+            "gold": 587294,
+            "ore": 668305,
+            "stone": 417691,
+            "timber": 250615
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 135523,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1653420,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 877150,
+            "gold": 770823,
+            "ore": 877150,
+            "stone": 548219,
+            "timber": 328932
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 179055,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2362080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 73,
+            "food": 1253072,
+            "gold": 1101175,
+            "ore": 1253072,
+            "stone": 783170,
+            "timber": 469902
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 252155,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3306840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 91,
+            "food": 1754300,
+            "gold": 1541645,
+            "ore": 1754300,
+            "stone": 1096438,
+            "timber": 657863
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 346611,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4330380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 115,
+            "food": 2297298,
+            "gold": 2018821,
+            "ore": 2297298,
+            "stone": 1435811,
+            "timber": 861487
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 451743,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Lunite Harvesting I",
+        "ja-JP": "月晶生産量I"
+      },
+      "row": 5
+    },
+    {
+      "column": 3,
+      "effect_label": "Max Lunite Storage +",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "gear_lunite_storage",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 157500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 167077,
+            "gold": 73412,
+            "ore": 20885,
+            "stone": 83539,
+            "timber": 20885
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 16428,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunar_foundry"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 551160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 10,
+            "food": 584767,
+            "gold": 256941,
+            "ore": 73096,
+            "stone": 292384,
+            "timber": 73096
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 55030,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 669240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 16,
+            "food": 710074,
+            "gold": 312000,
+            "ore": 88760,
+            "stone": 355037,
+            "timber": 88760
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 68994,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 787380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 23,
+            "food": 835381,
+            "gold": 367059,
+            "ore": 104423,
+            "stone": 417691,
+            "timber": 104423
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 82956,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 944820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 30,
+            "food": 1002458,
+            "gold": 440470,
+            "ore": 125308,
+            "stone": 501229,
+            "timber": 125308
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 101027,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1259760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 42,
+            "food": 1336610,
+            "gold": 587294,
+            "ore": 167077,
+            "stone": 668305,
+            "timber": 167077
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 135523,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1653420,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 1754300,
+            "gold": 770823,
+            "ore": 219288,
+            "stone": 877150,
+            "timber": 219288
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 179055,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2362080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 73,
+            "food": 2506143,
+            "gold": 1101175,
+            "ore": 313268,
+            "stone": 1253072,
+            "timber": 313268
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 252155,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3306840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 91,
+            "food": 3508600,
+            "gold": 1561645,
+            "ore": 438575,
+            "stone": 1754300,
+            "timber": 438575
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 346611,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4330380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 115,
+            "food": 4594595,
+            "gold": 2018821,
+            "ore": 574325,
+            "stone": 2297298,
+            "timber": 574325
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 451743,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_barracks_expansion_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_bigger_infirmary_iii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Lunite Storage",
+        "ja-JP": "月晶生産上限I"
+      },
+      "row": 5
+    },
+    {
+      "column": 0,
+      "effect_label": "Infantry DEF",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_infantry_defense_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 229680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 250615,
+            "gold": 110118,
+            "ore": 62654,
+            "stone": 46991,
+            "timber": 78317
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23957,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunite_harvesting_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_crafting_speed_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_lunite_storage"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 803760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 877150,
+            "gold": 385412,
+            "ore": 219288,
+            "stone": 164466,
+            "timber": 274110
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 80253,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 976020,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 1065111,
+            "gold": 468000,
+            "ore": 266278,
+            "stone": 199709,
+            "timber": 332848
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 100615,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 1253072,
+            "gold": 550588,
+            "ore": 313268,
+            "stone": 234951,
+            "timber": 391585
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 120979,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1377900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1503686,
+            "gold": 660705,
+            "ore": 375922,
+            "stone": 281942,
+            "timber": 469902
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 147330,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1837140,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 60,
+            "food": 2004915,
+            "gold": 880940,
+            "ore": 501229,
+            "stone": 375922,
+            "timber": 626536
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 197638,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2411280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 82,
+            "food": 2631450,
+            "gold": 1156234,
+            "ore": 657863,
+            "stone": 493397,
+            "timber": 822329
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 261121,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3444660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 107,
+            "food": 3759214,
+            "gold": 1651763,
+            "ore": 939804,
+            "stone": 704853,
+            "timber": 1174755
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 367727,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_lunite_harvesting_i"
+            },
+            {
+              "level": 7,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_crafting_speed_i"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_lunite_storage"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 132,
+            "food": 5262900,
+            "gold": 2312468,
+            "ore": 1315725,
+            "stone": 986794,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 505473,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6315180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 167,
+            "food": 6891892,
+            "gold": 3028231,
+            "ore": 1722973,
+            "stone": 1292230,
+            "timber": 2153717
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 658794,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Infantry Defense II",
+        "ja-JP": "歩兵防御力II"
+      },
+      "row": 6
+    },
+    {
+      "column": 1,
+      "effect_label": "Siege Engine DEF",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_siege_toughness_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 229680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 156634,
+            "gold": 110118,
+            "ore": 78317,
+            "stone": 78317,
+            "timber": 78317
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23957,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunite_harvesting_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_crafting_speed_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_lunite_storage"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 803760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 548219,
+            "gold": 385412,
+            "ore": 274110,
+            "stone": 274110,
+            "timber": 274110
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 80253,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 976020,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 665695,
+            "gold": 468000,
+            "ore": 332848,
+            "stone": 332848,
+            "timber": 332848
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 100615,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 783170,
+            "gold": 550588,
+            "ore": 391585,
+            "stone": 391585,
+            "timber": 391585
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 120979,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1377900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 939804,
+            "gold": 660705,
+            "ore": 469902,
+            "stone": 469902,
+            "timber": 469902
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 147330,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1837140,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 60,
+            "food": 1253072,
+            "gold": 880940,
+            "ore": 626536,
+            "stone": 626536,
+            "timber": 626536
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 197638,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2411280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 82,
+            "food": 1644657,
+            "gold": 1156234,
+            "ore": 822329,
+            "stone": 822329,
+            "timber": 822329
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 261121,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3405060,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 107,
+            "food": 2349509,
+            "gold": 1651763,
+            "ore": 1174755,
+            "stone": 1174755,
+            "timber": 1174755
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 367727,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 132
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 505473,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6315180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 167,
+            "food": 4307433,
+            "gold": 3028231,
+            "ore": 2153717,
+            "stone": 2153717,
+            "timber": 2153717
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 658794,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Siege Toughness II",
+        "ja-JP": "攻城兵器防御力II"
+      },
+      "row": 6
+    },
+    {
+      "column": 3,
+      "effect_label": "Ranged DEF",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_ranged_defense_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 229680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 250615,
+            "gold": 110118,
+            "ore": 62654,
+            "stone": 46991,
+            "timber": 78317
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23957,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunite_harvesting_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_crafting_speed_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_lunite_storage"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 803760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 877150,
+            "gold": 385412,
+            "ore": 219288,
+            "stone": 164466,
+            "timber": 274110
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 80253,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 976020,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 1065111,
+            "gold": 468000,
+            "ore": 266278,
+            "stone": 199709,
+            "timber": 332848
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 100615,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 1253072,
+            "gold": 550588,
+            "ore": 313268,
+            "stone": 391585,
+            "timber": 234951
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 120979,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1377900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1503686,
+            "gold": 660705,
+            "ore": 375922,
+            "stone": 469902,
+            "timber": 281942
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 147330,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1837140,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 60,
+            "food": 2004915,
+            "gold": 880940,
+            "ore": 501229,
+            "stone": 626536,
+            "timber": 375922
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 197638,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2411280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 82,
+            "food": 2631450,
+            "gold": 1156234,
+            "ore": 657863,
+            "stone": 822329,
+            "timber": 493397
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 261121,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3405060,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 107,
+            "food": 3759214,
+            "gold": 1651763,
+            "ore": 939804,
+            "stone": 704853,
+            "timber": 1174755
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 367727,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_lunite_harvesting_i"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_crafting_speed_i"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_lunite_storage"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 132,
+            "food": 5262900,
+            "gold": 2312468,
+            "ore": 1315725,
+            "stone": 986794,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 505473,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6315180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 167,
+            "food": 6891892,
+            "gold": 3028231,
+            "ore": 1722973,
+            "stone": 1292230,
+            "timber": 2153713
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 658794,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Ranged Defense II",
+        "ja-JP": "弓兵防御力II"
+      },
+      "row": 6
+    },
+    {
+      "column": 4,
+      "effect_label": "Cavalry DEF",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_cavalry_defense_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 229680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 250615,
+            "gold": 110118,
+            "ore": 62654,
+            "stone": 78317,
+            "timber": 46991
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23957,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_lunite_harvesting_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_crafting_speed_i"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_lunite_storage"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 803760,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 877150,
+            "gold": 385412,
+            "ore": 219288,
+            "stone": 274110,
+            "timber": 164466
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 80253,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 976020,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 1065111,
+            "gold": 468000,
+            "ore": 266278,
+            "stone": 332848,
+            "timber": 199709
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 100615,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 1253072,
+            "gold": 550588,
+            "ore": 313268,
+            "stone": 381585,
+            "timber": 234951
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 120979,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1377900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1503686,
+            "gold": 660705,
+            "ore": 375922,
+            "stone": 469902,
+            "timber": 281942
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 147330,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1837140,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 60,
+            "food": 2004915,
+            "gold": 880940,
+            "ore": 501229,
+            "stone": 626536,
+            "timber": 375922
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 197638,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2411280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 82,
+            "food": 2631450,
+            "gold": 1156234,
+            "ore": 822329,
+            "stone": 822329,
+            "timber": 822329
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 261121,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3405060,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 107,
+            "food": 3759214,
+            "gold": 1651763,
+            "ore": 939804,
+            "stone": 1174755,
+            "timber": 704853
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 367727,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 132,
+            "food": 5262900,
+            "gold": 2312468,
+            "ore": 1315725,
+            "stone": 986794,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 505473,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6315180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 167,
+            "food": 6891892,
+            "gold": 3028231,
+            "ore": 1722973,
+            "stone": 1292230,
+            "timber": 2153717
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 658794,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Cavalry Defense II",
+        "ja-JP": "騎兵防御力II"
+      },
+      "row": 6
+    },
+    {
+      "column": 0,
+      "effect_label": "Infantry Max HP",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_infantry_health_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 328080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 348076,
+            "gold": 152941,
+            "ore": 87019,
+            "stone": 108774,
+            "timber": 65265
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34224,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_infantry_defense_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 20,
+            "food": 1218264,
+            "gold": 535294,
+            "ore": 304566,
+            "stone": 308708,
+            "timber": 228425
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 114647,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1394280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 1479321,
+            "gold": 650000,
+            "ore": 369831,
+            "stone": 462288,
+            "timber": 277373
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 143736,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1640340,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 48,
+            "food": 1740377,
+            "gold": 764705,
+            "ore": 435095,
+            "stone": 543868,
+            "timber": 326321
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 172827,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1968360,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62,
+            "food": 2088453,
+            "gold": 917646,
+            "ore": 522144,
+            "stone": 652642,
+            "timber": 391585
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 210471,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2624520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 86,
+            "food": 2784603,
+            "gold": 1223528,
+            "ore": 696151,
+            "stone": 870189,
+            "timber": 522114
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 282340,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3444660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 117,
+            "food": 3654792,
+            "gold": 1605880,
+            "ore": 913698,
+            "stone": 1142123,
+            "timber": 685274
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 373031,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4920900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 152,
+            "food": 5221131,
+            "gold": 2294115,
+            "ore": 1305283,
+            "stone": 1631604,
+            "timber": 978962
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 525323,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 189,
+            "food": 7309583,
+            "gold": 3211760,
+            "ore": 1827396,
+            "stone": 2284245,
+            "timber": 1370547
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 722106,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9021660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 238,
+            "food": 9572073,
+            "gold": 4205876,
+            "ore": 2393019,
+            "stone": 2991273,
+            "timber": 1794764
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 941133,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Infantry Health II",
+        "ja-JP": "歩兵HPII"
+      },
+      "row": 7
+    },
+    {
+      "column": 1,
+      "effect_label": "Siege Engine Max HP",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_siege_durability_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 335460,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 217548,
+            "gold": 152941,
+            "ore": 108774,
+            "stone": 108774,
+            "timber": 108774
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34224,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_siege_toughness_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1187822,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 20,
+            "food": 761415,
+            "gold": 535294,
+            "ore": 380708,
+            "stone": 380708,
+            "timber": 380708
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 114647,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1394280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 924526,
+            "gold": 650000,
+            "ore": 462288,
+            "stone": 462288,
+            "timber": 462288
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 143736,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1640340,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 48,
+            "food": 1087736,
+            "gold": 764705,
+            "ore": 543868,
+            "stone": 543868,
+            "timber": 543868
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 172827,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1968360,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62,
+            "food": 1310000,
+            "gold": 917646,
+            "ore": 652642,
+            "stone": 652642,
+            "timber": 652642
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 210471,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2624520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 86
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 282340,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3444660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 117
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 373031,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4920900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 152,
+            "food": 3263207,
+            "gold": 2294115,
+            "ore": 1631604,
+            "stone": 1631604,
+            "timber": 1631604
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 525323,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 189
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 722106,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9021660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 238,
+            "food": 5982546,
+            "gold": 4205876,
+            "ore": 2991273,
+            "stone": 2991273,
+            "timber": 2991273
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 941133,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Siege Durability II",
+        "ja-JP": "攻城兵器HPII"
+      },
+      "row": 7
+    },
+    {
+      "column": 3,
+      "effect_label": "Ranged Max HP",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_ranged_health_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 328080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 348076,
+            "gold": 152941,
+            "ore": 87019,
+            "stone": 108774,
+            "timber": 65265
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34224,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_ranged_defense_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 20,
+            "food": 1218264,
+            "gold": 535294,
+            "ore": 304566,
+            "stone": 380708,
+            "timber": 228425
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 114647,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1394280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 1479321,
+            "gold": 650000,
+            "ore": 369831,
+            "stone": 462288,
+            "timber": 277373
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 143736,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1640340,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 48,
+            "food": 1740377,
+            "gold": 764705,
+            "ore": 435095,
+            "stone": 543868,
+            "timber": 326321
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced_partial"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1968360,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62,
+            "food": 2088453,
+            "gold": 917114,
+            "ore": 522114,
+            "stone": 652642,
+            "timber": 391585
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced_partial"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2624520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 86,
+            "food": 2784603,
+            "gold": 1223528,
+            "ore": 696151,
+            "stone": 870189,
+            "timber": 522114
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 282340,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3444660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 117,
+            "food": 2284245,
+            "gold": 1605880,
+            "ore": 1142123,
+            "stone": 1142123,
+            "timber": 1142123
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced_partial"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4920900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 152,
+            "food": 5221131,
+            "gold": 2294115,
+            "ore": 1305283,
+            "stone": 1163604,
+            "timber": 978962
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 525323,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_ranged_defense_ii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 189,
+            "food": 7309583,
+            "gold": 3211760,
+            "ore": 1827396,
+            "stone": 2284245,
+            "timber": 1370547
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 722106,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9021660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 238,
+            "food": 9572073,
+            "gold": 4205876,
+            "ore": 2393019,
+            "stone": 2991273,
+            "timber": 1794764
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced_partial"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Ranged Health II",
+        "ja-JP": "弓兵HPII"
+      },
+      "row": 7
+    },
+    {
+      "column": 4,
+      "effect_label": "Cavalry Max HP",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_cavalry_health_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 328080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 348076,
+            "gold": 152941,
+            "ore": 87019,
+            "stone": 65265,
+            "timber": 108774
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34224,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_cavalry_defense_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1148220,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 20,
+            "food": 1218264,
+            "gold": 535294,
+            "ore": 304566,
+            "stone": 228425,
+            "timber": 380708
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 114647,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1394280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 1479321,
+            "gold": 650000,
+            "ore": 369831,
+            "stone": 277373,
+            "timber": 462288
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 143736,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1640340,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 48,
+            "food": 1740377,
+            "gold": 764705,
+            "ore": 435095,
+            "stone": 326321,
+            "timber": 543868
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 172827,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1968360,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 210471,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2624520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 86
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 282340,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3444660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 117,
+            "food": 3654792,
+            "gold": 1605880,
+            "ore": 913698,
+            "stone": 685274,
+            "timber": 1142123
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 373031,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4920900,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 152,
+            "food": 5221131,
+            "gold": 2294115,
+            "ore": 1305283,
+            "stone": 978962,
+            "timber": 1631604
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 525323,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_cavalry_defense_ii"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 189
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 722106,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9021660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 238,
+            "food": 9572073,
+            "gold": 4205876,
+            "ore": 2393019,
+            "stone": 2991273,
+            "timber": 1794764
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 941133,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Cavalry Health II",
+        "ja-JP": "騎兵HPII"
+      },
+      "row": 7
+    },
+    {
+      "column": 0,
+      "effect_label": "Infantry ATK",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_infantry_offense_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 459300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 13,
+            "food": 313268,
+            "gold": 220235,
+            "ore": 156634,
+            "stone": 156634,
+            "timber": 156634
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 47913,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_infantry_health_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1607520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 28,
+            "food": 1096438,
+            "gold": 770823,
+            "ore": 548219,
+            "stone": 548219,
+            "timber": 548219
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 160506,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1951980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 47,
+            "food": 1331389,
+            "gold": 935999,
+            "ore": 665695,
+            "stone": 665695,
+            "timber": 665695
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 201231,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2296440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 67,
+            "food": 1566340,
+            "gold": 1101175,
+            "ore": 783170,
+            "stone": 783170,
+            "timber": 783170
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 241957,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2755740,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 87,
+            "food": 1879607,
+            "gold": 1321410,
+            "ore": 939804,
+            "stone": 939804,
+            "timber": 939804
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 294660,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3674280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 120,
+            "food": 2506143,
+            "gold": 1761880,
+            "ore": 1253072,
+            "stone": 1253072,
+            "timber": 1253072
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 395276,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 164,
+            "food": 3289313,
+            "gold": 2312468,
+            "ore": 1644657,
+            "stone": 1644657,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 522243,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 213,
+            "food": 4699018,
+            "gold": 3303525,
+            "ore": 2349509,
+            "stone": 2349509,
+            "timber": 2349509
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 735453,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_infantry_health_ii"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9644940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 264,
+            "food": 6578625,
+            "gold": 4624935,
+            "ore": 3283313,
+            "stone": 3283313,
+            "timber": 3283313
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1010947,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12630300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 334,
+            "food": 8614865,
+            "gold": 4307433,
+            "ore": 4307433,
+            "stone": 4307433,
+            "timber": 4307433
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1317587,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Infantry Offense II",
+        "ja-JP": "歩兵攻撃力II"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "Siege Engine ATK",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_siege_attack_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 459300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 13,
+            "food": 313268,
+            "gold": 220235,
+            "ore": 156634,
+            "stone": 156634,
+            "timber": 156634
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 47913,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_siege_durability_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1607520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 28,
+            "food": 1096438,
+            "gold": 770823,
+            "ore": 548219,
+            "stone": 548219,
+            "timber": 548219
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 160506,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1951980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 47,
+            "food": 1331389,
+            "gold": 935999,
+            "ore": 665695,
+            "stone": 665695,
+            "timber": 665695
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 201231,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2296440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 67,
+            "food": 1556340,
+            "gold": 1101175,
+            "ore": 783170,
+            "stone": 783170,
+            "timber": 783170
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 241957,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2755740,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 87,
+            "food": 1879607,
+            "gold": 1321410,
+            "ore": 939804,
+            "stone": 939804,
+            "timber": 939804
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 294660,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3674280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 120
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 395276,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 164,
+            "food": 3289313,
+            "gold": 2312468,
+            "ore": 1644657,
+            "stone": 1644657,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 522243,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 213,
+            "food": 4699018,
+            "gold": 3303525,
+            "ore": 2349509,
+            "stone": 2349509,
+            "timber": 2349509
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 735453,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9644940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 264,
+            "food": 6578625,
+            "gold": 4624935,
+            "ore": 3283313,
+            "stone": 3283313,
+            "timber": 3283313
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1010947,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12630300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 334,
+            "food": 8614865,
+            "gold": 6056462,
+            "ore": 4307433,
+            "stone": 4307433,
+            "timber": 4307433
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1317587,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Siege Attack II",
+        "ja-JP": "攻城兵器攻撃力II"
+      },
+      "row": 8
+    },
+    {
+      "column": 3,
+      "effect_label": "Ranged ATK",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_ranged_offense_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 459300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 13,
+            "food": 313268,
+            "gold": 220235,
+            "ore": 156634,
+            "stone": 156634,
+            "timber": 156634
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 47913,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_ranged_health_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1607520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 28
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 160506,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1951980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 47,
+            "food": 1331389,
+            "gold": 935999,
+            "ore": 665695,
+            "stone": 665695,
+            "timber": 665695
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 201231,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2296440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 67
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 241957,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2755740,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 87,
+            "food": 1879607,
+            "gold": 1321410,
+            "ore": 939804,
+            "stone": 939804,
+            "timber": 939804
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 294660,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3674280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 120,
+            "food": 2506143,
+            "gold": 1761880,
+            "ore": 1253072,
+            "stone": 1253072,
+            "timber": 1253072
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 395276,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 164,
+            "food": 3289313,
+            "gold": 2312468,
+            "ore": 1644657,
+            "stone": 1644657,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 522243,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 213,
+            "food": 4699018,
+            "gold": 3303525,
+            "ore": 2349509,
+            "stone": 2349509,
+            "timber": 2349509
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 735453,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_ranged_health_ii"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9644940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 264,
+            "food": 6578625,
+            "gold": 4624935,
+            "ore": 3283313,
+            "stone": 3283313,
+            "timber": 3283313
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1010947,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12630300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 334,
+            "food": 8614865,
+            "gold": 6056462,
+            "ore": 4307433,
+            "stone": 4307433,
+            "timber": 4307433
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1317587,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Ranged Offense II",
+        "ja-JP": "弓兵攻撃力II"
+      },
+      "row": 8
+    },
+    {
+      "column": 4,
+      "effect_label": "Cavalry ATK",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "gear_cavalry_offense_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 459300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 13,
+            "food": 313268,
+            "gold": 220235,
+            "ore": 156634,
+            "stone": 156634,
+            "timber": 156634
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 47913,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_cavalry_health_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1607520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 28,
+            "food": 1096438,
+            "gold": 770823,
+            "ore": 548219,
+            "stone": 548219,
+            "timber": 548219
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 160506,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1951980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 47,
+            "food": 1331389,
+            "gold": 935999,
+            "ore": 665695,
+            "stone": 665695,
+            "timber": 665695
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 201231,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2296440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 67,
+            "food": 1566340,
+            "gold": 1101175,
+            "ore": 783170,
+            "stone": 783170,
+            "timber": 783170
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 241957,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2755740,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 87,
+            "food": 1879607,
+            "gold": 1321410,
+            "ore": 939804,
+            "stone": 939804,
+            "timber": 939804
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 294660,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3674280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 120,
+            "food": 2506143,
+            "gold": 1761880,
+            "ore": 1253072,
+            "stone": 1253072,
+            "timber": 1253072
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 395276,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4822500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 164,
+            "food": 3289313,
+            "gold": 2312468,
+            "ore": 1644657,
+            "stone": 1644657,
+            "timber": 1644657
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 522243,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 213,
+            "food": 4699018,
+            "gold": 3303525,
+            "ore": 2349509,
+            "stone": 2349509,
+            "timber": 2349509
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 735453,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_cavalry_health_ii"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9644940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 264,
+            "food": 6578625,
+            "gold": 4624935,
+            "ore": 3283313,
+            "stone": 3283313,
+            "timber": 3283313
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1010947,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12630300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 334,
+            "food": 8614865,
+            "gold": 6056462,
+            "ore": 4307433,
+            "stone": 4307433,
+            "timber": 4307433
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1658794,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Cavalry Offense II",
+        "ja-JP": "騎兵攻撃力II"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "Crafting Speed",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "gear_crafting_speed_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 656160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 522114,
+            "gold": 305882,
+            "ore": 174038,
+            "stone": 174038,
+            "timber": 261057
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 68447,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_cavalry_offense_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_ranged_offense_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_siege_attack_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2296440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 32,
+            "food": 1827396,
+            "gold": 1070587,
+            "ore": 609132,
+            "stone": 609132,
+            "timber": 913698
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 229294,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2788500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 54,
+            "food": 2218981,
+            "gold": 1299999,
+            "ore": 739661,
+            "stone": 739661,
+            "timber": 1109491
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 287473,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3280620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 77,
+            "food": 2610566,
+            "gold": 1529410,
+            "ore": 870189,
+            "stone": 870189,
+            "timber": 1305283
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 345653,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3936720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 3132679,
+            "gold": 1835292,
+            "ore": 1044227,
+            "stone": 1044227,
+            "timber": 1566340
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 420943,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5248980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 138,
+            "food": 4176905,
+            "gold": 2447056,
+            "ore": 1392302,
+            "stone": 1392302,
+            "timber": 2088453
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 564679,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 187,
+            "food": 5482187,
+            "gold": 3211760,
+            "ore": 1827396,
+            "stone": 1827396,
+            "timber": 2741094
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 746062,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9841800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 243,
+            "food": 5743244,
+            "gold": 4588229,
+            "ore": 2349509,
+            "stone": 3915848,
+            "timber": 3915848
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1050647,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_cavalry_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_ranged_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_siege_attack_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13778460,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 301,
+            "food": 8040541,
+            "gold": 6423520,
+            "ore": 3289313,
+            "stone": 5482187,
+            "timber": 5482187
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1444211,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "gear_cavalry_offense_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "gear_ranged_offense_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "gear_siege_attack_ii"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 18043260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 381,
+            "food": 10529280,
+            "gold": 8411752,
+            "ore": 4307433,
+            "stone": 7179055,
+            "timber": 7179055
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1882266,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_cavalry_offense_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_ranged_offense_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_siege_attack_ii"
+            }
+          ],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Crafting Speed II",
+        "ja-JP": "部隊武装錬成速度II"
+      },
+      "row": 9
+    },
+    {
+      "column": 3,
+      "effect_label": "Crafting Capacity",
+      "effect_values": {
+        "1": "20",
+        "10": "1,000",
+        "2": "40",
+        "3": "60",
+        "4": "80",
+        "5": "110",
+        "6": "150",
+        "7": "200",
+        "8": "300",
+        "9": "500"
+      },
+      "id": "gear_crafting_capacity",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 656160,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 382883,
+            "gold": 305882,
+            "ore": 156634,
+            "stone": 261057,
+            "timber": 261057
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 68447,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_cavalry_offense_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_ranged_offense_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "gear_siege_attack_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2296440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 32,
+            "food": 1340091,
+            "gold": 1070587,
+            "ore": 548219,
+            "stone": 913698,
+            "timber": 913698
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 229294,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2788500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 54,
+            "food": 1627253,
+            "gold": 1299999,
+            "ore": 665695,
+            "stone": 1109491,
+            "timber": 1109491
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 287473,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3280620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 77,
+            "food": 1914415,
+            "gold": 1529410,
+            "ore": 783170,
+            "stone": 1305283,
+            "timber": 1305283
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 345653,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3936720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 2297298,
+            "gold": 1835292,
+            "ore": 939804,
+            "stone": 1566340,
+            "timber": 1566340
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 420943,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5248980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 138,
+            "food": 3063064,
+            "gold": 2477056,
+            "ore": 1253072,
+            "stone": 2088453,
+            "timber": 2088453
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 564679,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6889260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 187,
+            "food": 4020271,
+            "gold": 3211760,
+            "ore": 1644657,
+            "stone": 2741094,
+            "timber": 2741094
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 746062,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9841800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 243,
+            "food": 5743244,
+            "gold": 4588229,
+            "ore": 2349509,
+            "stone": 3915848,
+            "timber": 3915848
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1050647,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "gear_infantry_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_cavalry_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_ranged_offense_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "gear_siege_attack_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13778460,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 301,
+            "food": 8040541,
+            "gold": 6423520,
+            "ore": 3289313,
+            "stone": 5482187,
+            "timber": 5482187
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1444211,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 18043260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 381,
+            "food": 10529280,
+            "gold": 8411752,
+            "ore": 4307433,
+            "stone": 7179055,
+            "timber": 7179055
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1882266,
+          "requirements": [],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Crafting Capacity",
+        "ja-JP": "部隊武装錬成数量I"
+      },
+      "row": 9
+    },
+    {
+      "column": 0,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Luminary Guard"
+      },
+      "id": "gear_luminary_guard",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 25105380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 593,
+            "food": 23426805,
+            "gold": 13731959,
+            "ore": 5856702,
+            "stone": 5856702,
+            "timber": 5856702
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2076405,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_crafting_speed_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_crafting_capacity"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Luminary Guard",
+        "ja-JP": "ディバインナイト"
+      },
+      "row": 10
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Luminary Avenger"
+      },
+      "id": "gear_luminary_avenger",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 25105380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 593,
+            "food": 23426805,
+            "gold": 13731959,
+            "ore": 5856702,
+            "stone": 5856702,
+            "timber": 5856702
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2076405,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_crafting_speed_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_crafting_capacity"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Luminary Avenger",
+        "ja-JP": "ディバインキャノン"
+      },
+      "row": 10
+    },
+    {
+      "column": 3,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Luminary Marksman"
+      },
+      "id": "gear_luminary_marksman",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 25105380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 593,
+            "food": 23426805,
+            "gold": 13731959,
+            "ore": 5856702,
+            "stone": 5856702,
+            "timber": 5856702
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2076405,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_crafting_speed_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_crafting_capacity"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Luminary Marksman",
+        "ja-JP": "ディバインシューター"
+      },
+      "row": 10
+    },
+    {
+      "column": 4,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Luminary Lion Force"
+      },
+      "id": "gear_luminary_lion_force",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 25105380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 593,
+            "food": 23426805,
+            "gold": 13731959,
+            "ore": 5856702,
+            "stone": 5856702,
+            "timber": 5856702
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2076405,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "gear_crafting_speed_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "gear_crafting_capacity"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Luminary Lion Force",
+        "ja-JP": "ディバインライダー"
+      },
+      "row": 10
+    }
+  ],
+  "platform": "pc",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "source_edges": [
+    [
+      "gear_barracks_expansion_ii",
+      "gear_lunar_foundry"
+    ],
+    [
+      "gear_barracks_expansion_ii",
+      "gear_lunite_harvesting_i"
+    ],
+    [
+      "gear_bigger_bags_iii",
+      "gear_barracks_expansion_ii"
+    ],
+    [
+      "gear_bigger_infirmary_iii",
+      "gear_lunar_foundry"
+    ],
+    [
+      "gear_bigger_infirmary_iii",
+      "gear_lunite_harvesting_i"
+    ],
+    [
+      "gear_cavalry_defense_ii",
+      "gear_cavalry_health_ii"
+    ],
+    [
+      "gear_cavalry_health_ii",
+      "gear_cavalry_offense_ii"
+    ],
+    [
+      "gear_cavalry_offense_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_cavalry_offense_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_crafting_capacity",
+      "gear_luminary_lion_force"
+    ],
+    [
+      "gear_crafting_capacity",
+      "gear_luminary_marksman"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_cavalry_defense_ii"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_infantry_defense_ii"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_ranged_defense_ii"
+    ],
+    [
+      "gear_crafting_speed_i",
+      "gear_siege_toughness_ii"
+    ],
+    [
+      "gear_crafting_speed_ii",
+      "gear_luminary_avenger"
+    ],
+    [
+      "gear_crafting_speed_ii",
+      "gear_luminary_guard"
+    ],
+    [
+      "gear_field_triage_ii",
+      "gear_bigger_infirmary_iii"
+    ],
+    [
+      "gear_forced_march_iii",
+      "gear_bigger_bags_iii"
+    ],
+    [
+      "gear_infantry_defense_ii",
+      "gear_infantry_health_ii"
+    ],
+    [
+      "gear_infantry_health_ii",
+      "gear_infantry_offense_ii"
+    ],
+    [
+      "gear_infantry_offense_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_infantry_offense_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_lunar_foundry",
+      "gear_crafting_speed_i"
+    ],
+    [
+      "gear_lunar_foundry",
+      "gear_lunite_harvesting_i"
+    ],
+    [
+      "gear_lunar_foundry",
+      "gear_lunite_storage"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_cavalry_defense_ii"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_infantry_defense_ii"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_ranged_defense_ii"
+    ],
+    [
+      "gear_lunite_harvesting_i",
+      "gear_siege_toughness_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_infantry_defense_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_ranged_defense_ii"
+    ],
+    [
+      "gear_lunite_storage",
+      "gear_siege_toughness_ii"
+    ],
+    [
+      "gear_quick_maneuvers_iii",
+      "gear_central_command_ii"
+    ],
+    [
+      "gear_quick_maneuvers_iii",
+      "gear_forced_march_iii"
+    ],
+    [
+      "gear_quick_maneuvers_iii",
+      "gear_ration_run_iv"
+    ],
+    [
+      "gear_ranged_defense_ii",
+      "gear_ranged_health_ii"
+    ],
+    [
+      "gear_ranged_health_ii",
+      "gear_ranged_offense_ii"
+    ],
+    [
+      "gear_ranged_offense_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_ranged_offense_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_ration_run_iv",
+      "gear_field_triage_ii"
+    ],
+    [
+      "gear_siege_attack_ii",
+      "gear_crafting_capacity"
+    ],
+    [
+      "gear_siege_attack_ii",
+      "gear_crafting_speed_ii"
+    ],
+    [
+      "gear_siege_durability_ii",
+      "gear_siege_attack_ii"
+    ],
+    [
+      "gear_siege_toughness_ii",
+      "gear_siege_durability_ii"
+    ]
+  ],
+  "titles": {
+    "en-US": "Gear",
+    "ja-JP": "部隊武装"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

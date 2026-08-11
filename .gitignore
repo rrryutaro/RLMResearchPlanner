@@ -5,8 +5,9 @@ build/
 dist/
 *.spec
 settings.json
-user_data/
 launcher_settings.json
+user_data/
+TestData/
 .pytest_cache/
 .coverage
 htmlcov/

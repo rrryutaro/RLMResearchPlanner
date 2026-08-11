@@ -44,7 +44,9 @@ redistributed.
 ## Fandom research attribution
 
 Credit belongs to the contributors of the Lords Mobile Wiki pages below. Page
-history on each linked article identifies the individual contributors.
+history on each linked article identifies the individual contributors. The
+project thanks these contributors for recording and maintaining the source
+information used to build the planner dataset.
 
 - Research index: https://lordsmobile.fandom.com/wiki/Research
 - Economy: https://lordsmobile.fandom.com/wiki/Economy
@@ -58,6 +60,8 @@ history on each linked article identifies the individual contributors.
 - Familiars: https://lordsmobile.fandom.com/wiki/Familiars
 - Familiar Battles: https://lordsmobile.fandom.com/wiki/Familiar_Battles
 - Sigils: https://lordsmobile.fandom.com/wiki/Sigils
+  - Helmet Sigil: https://lordsmobile.fandom.com/wiki/Helmet_Sigil
+  - Furious Defense (Infantry): https://lordsmobile.fandom.com/wiki/Furious_Defense_%28Infantry%29
 - Wonder Battles: https://lordsmobile.fandom.com/wiki/Wonder_Battles
 - Gear: https://lordsmobile.fandom.com/wiki/Gear
 - Advanced Wonder Battles: https://lordsmobile.fandom.com/wiki/Advanced_Wonder_Battles
@@ -99,7 +103,8 @@ redistributed.
   https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-12/
 - Retry YN Advanced Wonder Battles research list:
   https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-14/
-- BigSoneca Guild Duel gameplay:
+- BigSoneca Guild Duel gameplay (tree structure, maximum levels, and effects
+  only; no per-level time or cost values were adopted):
   https://www.youtube.com/watch?v=QKP5dGy1IHs
 - Games Guide Info building overview:
   https://www.gamesguideinfo.com/lords-mobile/overview/buildings

@@ -1,0 +1,94 @@
+{
+  "aliases_path": "id-aliases.json",
+  "checked_on": "2026-08-07",
+  "dataset_id": "lords_mobile_research_data",
+  "dataset_version": "0.1.0",
+  "document_type": "RLMResearchData.manifest",
+  "evidence_path": "evidence.json",
+  "game_version": "unknown",
+  "license": {
+    "attribution": "Fandom-derived portions credit contributors to the Lords Mobile Wiki. Project normalization and arrangement are offered under CC BY-SA 3.0; see DATA_LICENSE.md for source-by-source details.",
+    "name": "CC BY-SA 3.0 Unported",
+    "url": "https://creativecommons.org/licenses/by-sa/3.0/"
+  },
+  "locales": [
+    {
+      "locale": "en-US",
+      "path": "locales/en-US.json",
+      "required": true
+    },
+    {
+      "locale": "ja-JP",
+      "path": "locales/ja-JP.json",
+      "required": true
+    }
+  ],
+  "schema_version": 2,
+  "sources_path": "sources.json",
+  "trees": [
+    {
+      "id": "economy",
+      "path": "trees/economy.json"
+    },
+    {
+      "id": "defense",
+      "path": "trees/defense.json"
+    },
+    {
+      "id": "military",
+      "path": "trees/military.json"
+    },
+    {
+      "id": "monster_hunt",
+      "path": "trees/monster_hunt.json"
+    },
+    {
+      "id": "upgrade_defenses",
+      "path": "trees/upgrade_defenses.json"
+    },
+    {
+      "id": "upgrade_military",
+      "path": "trees/upgrade_military.json"
+    },
+    {
+      "id": "army_leadership",
+      "path": "trees/army_leadership.json"
+    },
+    {
+      "id": "military_command",
+      "path": "trees/military_command.json"
+    },
+    {
+      "id": "familiars",
+      "path": "trees/familiars.json"
+    },
+    {
+      "id": "familiar_battles",
+      "path": "trees/familiar_battles.json"
+    },
+    {
+      "id": "sigils",
+      "path": "trees/sigils.json"
+    },
+    {
+      "id": "wonder_battles",
+      "path": "trees/wonder_battles.json"
+    },
+    {
+      "id": "gear",
+      "path": "trees/gear.json"
+    },
+    {
+      "id": "advanced_wonder_battles",
+      "path": "trees/advanced_wonder_battles.json"
+    },
+    {
+      "id": "mana_awakening",
+      "path": "trees/mana_awakening.json"
+    },
+    {
+      "id": "guild_duel",
+      "path": "trees/guild_duel.json"
+    }
+  ]
+}

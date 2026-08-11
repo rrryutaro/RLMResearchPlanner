@@ -22,6 +22,7 @@ LANGUAGE_PACK_SECTIONS = (
     "effects",
     "resources",
 )
+PROTECTED_MESSAGE_KEYS = frozenset(("app.disclaimer",))
 _LOCALE_PATTERN = re.compile(r"^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$")
 _RTL_LANGUAGES = frozenset(
     ("ar", "arc", "ckb", "dv", "fa", "he", "ks", "nqo", "ps", "sd", "syr", "ug", "ur", "yi")
@@ -87,6 +88,53 @@ def default_direction(locale: str) -> str:
     return "rtl" if locale.split("-", 1)[0].lower() in _RTL_LANGUAGES else "ltr"
 
 
+def select_preferred_locale(
+    preferred_locales: Iterable[object],
+    available_locales: Iterable[object],
+    fallback_locale: str = "en-US",
+) -> str:
+    available: list[str] = []
+    for value in available_locales:
+        try:
+            locale = normalize_locale(value)
+        except LanguagePackError:
+            continue
+        if locale not in available:
+            available.append(locale)
+
+    fallback = normalize_locale(fallback_locale)
+    if not available:
+        return fallback
+
+    preferred: list[str] = []
+    for value in preferred_locales:
+        try:
+            locale = normalize_locale(value)
+        except LanguagePackError:
+            continue
+        if locale not in preferred:
+            preferred.append(locale)
+
+    available_by_casefold = {locale.casefold(): locale for locale in available}
+    for locale in preferred:
+        exact = available_by_casefold.get(locale.casefold())
+        if exact is not None:
+            return exact
+        language = locale.split("-", 1)[0].casefold()
+        base_match = next(
+            (
+                candidate
+                for candidate in available
+                if candidate.split("-", 1)[0].casefold() == language
+            ),
+            None,
+        )
+        if base_match is not None:
+            return base_match
+
+    return available_by_casefold.get(fallback.casefold(), available[0])
+
+
 def _plain_translation(value: object, *, section: str, key: str) -> str:
     source_text = ""
     if isinstance(value, dict):
@@ -149,6 +197,8 @@ def language_pack_from_dict(raw: object) -> LanguagePack:
             key = str(raw_key).strip()
             if not key or len(key) > 300:
                 raise LanguagePackError(f"{section} contains an invalid key")
+            if section == "messages" and key in PROTECTED_MESSAGE_KEYS:
+                continue
             text = _plain_translation(raw_value, section=section, key=key)
             if text:
                 translations[key] = text
@@ -256,7 +306,9 @@ def build_language_pack_template(
         "license": "",
         "catalog_dataset_id": master.dataset_id,
         "messages": {
-            key: _entry(value) for key, value in sorted(messages.items())
+            key: _entry(value)
+            for key, value in sorted(messages.items())
+            if key not in PROTECTED_MESSAGE_KEYS
         },
         "categories": {
             key: _entry(value) for key, value in sorted(category_sources.items())

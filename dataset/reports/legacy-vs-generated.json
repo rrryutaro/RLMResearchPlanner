@@ -1,0 +1,1476 @@
+{
+  "comparison_policy": {
+    "application_runtime_changed": true,
+    "desktop_default_input": "generated research dataset",
+    "desktop_legacy_fallback": "--legacy-research-catalog",
+    "metadata_translation": "Legacy verification labels are intentionally translated to the new verification vocabulary and are excluded from value equality.",
+    "values_compared": [
+      "stable IDs and localized names",
+      "maximum levels and layout coordinates",
+      "raw effects",
+      "all level times, costs, requirements, buildings, and power",
+      "legacy source edges consumed by the desktop UI",
+      "display connection groups",
+      "one deterministic dependency plan per tree"
+    ]
+  },
+  "dataset_version": "0.1.0",
+  "differences": [],
+  "document_type": "RLMResearchData.legacy-comparison",
+  "phase": 4,
+  "schema_version": 1,
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "statistics": {
+    "categories": 16,
+    "data_quality_warnings": 180,
+    "levels": 3143,
+    "planning_differences": 0,
+    "representative_plans": 16,
+    "research": 399,
+    "structural_differences": 0,
+    "validation_differences": 0
+  },
+  "status": "match",
+  "warnings": [
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 6665648,
+      "research_id": "advanced_wonder_battles_cavalry_durability_wonder_iii",
+      "tree_id": "advanced_wonder_battles",
+      "value": 2329766
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 6665648,
+      "research_id": "advanced_wonder_battles_ranged_durability_wonder_iii",
+      "tree_id": "advanced_wonder_battles",
+      "value": 2329766
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 10,
+      "previous_level": 9,
+      "previous_value": 3649162,
+      "research_id": "army_leadership_gold_harvesting_i",
+      "tree_id": "army_leadership",
+      "value": 2463185
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 2698830,
+      "research_id": "familiar_battles_familiar_tenacity",
+      "tree_id": "familiar_battles",
+      "value": 2457853
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 1660819,
+      "research_id": "familiar_battles_familiarity_cavalry_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 1245614
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 2076023,
+      "research_id": "familiar_battles_familiarity_cavalry_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 1512531
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 8897240,
+      "research_id": "familiar_battles_familiarity_cavalry_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 7473682
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 1660819,
+      "research_id": "familiar_battles_familiarity_infantry_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 1245614
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 2076023,
+      "research_id": "familiar_battles_familiarity_infantry_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 1512531
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 8897240,
+      "research_id": "familiar_battles_familiarity_infantry_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 7473682
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 1660819,
+      "research_id": "familiar_battles_familiarity_ranged_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 1245614
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 2076023,
+      "research_id": "familiar_battles_familiarity_ranged_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 1512531
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 8897240,
+      "research_id": "familiar_battles_familiarity_ranged_atk_ii",
+      "tree_id": "familiar_battles",
+      "value": 7473682
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 11862986,
+      "research_id": "familiar_battles_gym_membership_ii",
+      "tree_id": "familiar_battles",
+      "value": 9342102
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 11862986,
+      "research_id": "familiar_battles_skillstone_merging_speed_ii",
+      "tree_id": "familiar_battles",
+      "value": 9342102
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 3697039,
+      "research_id": "familiars_skillstone_merging_speed_i",
+      "tree_id": "familiars",
+      "value": 1489262
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 155019,
+      "research_id": "familiars_stone_harvesting_ii",
+      "tree_id": "familiars",
+      "value": 139666
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 8,
+      "previous_level": 7,
+      "previous_value": 822329,
+      "research_id": "gear_cavalry_defense_ii",
+      "tree_id": "gear",
+      "value": 704853
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 1174755,
+      "research_id": "gear_cavalry_defense_ii",
+      "tree_id": "gear",
+      "value": 986794
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 10,
+      "previous_level": 9,
+      "previous_value": 4624935,
+      "research_id": "gear_infantry_offense_ii",
+      "tree_id": "gear",
+      "value": 4307433
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 4,
+      "previous_level": 3,
+      "previous_value": 332848,
+      "research_id": "gear_ranged_defense_ii",
+      "tree_id": "gear",
+      "value": 234951
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 8,
+      "previous_level": 7,
+      "previous_value": 822329,
+      "research_id": "gear_ranged_defense_ii",
+      "tree_id": "gear",
+      "value": 704853
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 2784603,
+      "research_id": "gear_ranged_health_ii",
+      "tree_id": "gear",
+      "value": 2284245
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 8,
+      "previous_level": 7,
+      "previous_value": 1142123,
+      "research_id": "gear_ranged_health_ii",
+      "tree_id": "gear",
+      "value": 978962
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 10,
+      "previous_level": 9,
+      "previous_value": 642352,
+      "research_id": "gear_ration_run_iv",
+      "tree_id": "gear",
+      "value": 598255
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_alchemy_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_alchemy_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_alchemy_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_alchemy_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 640,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening",
+      "value": 224
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 466,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening",
+      "value": 163
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 320,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening",
+      "value": 112
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 640,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening",
+      "value": 224
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 466,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening",
+      "value": 163
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 320,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening",
+      "value": 112
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 2,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 2,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 768,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening",
+      "value": 268
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 466,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening",
+      "value": 163
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 320,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening",
+      "value": 112
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 384,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening",
+      "value": 134
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_field_triage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_forced_march_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_forced_march_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_forced_march_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_forced_march_iv",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 2,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 2,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "mana_awakening_mana_crystal_breakthrough",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_mana_crystal_breakthrough",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 4,
+      "previous_level": 3,
+      "previous_value": 1515485,
+      "research_id": "mana_awakening_mana_ore_harvesting_i",
+      "tree_id": "mana_awakening",
+      "value": 1485770
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 4,
+      "previous_level": 3,
+      "previous_value": 757743,
+      "research_id": "mana_awakening_mana_ore_harvesting_i",
+      "tree_id": "mana_awakening",
+      "value": 594308
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_mana_ore_harvesting_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_mana_ore_harvesting_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_mana_ore_harvesting_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 2,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_mana_ore_storage_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_mana_ore_storage_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_mana_ore_storage_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_mana_ore_storage_i",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_ration_run_v",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_ration_run_v",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_ration_run_v",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_ration_run_v",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "mana_awakening_shelter_expansion_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "mana_awakening_shelter_expansion_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 8,
+      "research_id": "mana_awakening_shelter_expansion_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "mana_awakening_shelter_expansion_ii",
+      "tree_id": "mana_awakening"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 1255613,
+      "research_id": "military_cavalry_infantry_counter_boost",
+      "tree_id": "military",
+      "value": 988796
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 8,
+      "previous_level": 7,
+      "previous_value": 2799546,
+      "research_id": "military_command_darknest_tenacity",
+      "tree_id": "military_command",
+      "value": 2379615
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.food",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 5949036,
+      "research_id": "military_command_darknest_tenacity",
+      "tree_id": "military_command",
+      "value": 5599092
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 3569422,
+      "research_id": "military_command_darknest_tenacity",
+      "tree_id": "military_command",
+      "value": 3499433
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 9,
+      "previous_level": 8,
+      "previous_value": 2974518,
+      "research_id": "military_command_darknest_tenacity",
+      "tree_id": "military_command",
+      "value": 2099660
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "military_command_darknest_tenacity",
+      "tree_id": "military_command"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "military_command_furious_durability_ii",
+      "tree_id": "military_command"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "military_command_hidden_talent",
+      "tree_id": "military_command"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 4,
+      "previous_level": 3,
+      "previous_value": 266024,
+      "research_id": "sigils_furious_defense_infantry",
+      "tree_id": "sigils",
+      "value": 265910
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "sigils_furious_defense_infantry",
+      "tree_id": "sigils"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "sigils_furious_defense_infantry",
+      "tree_id": "sigils"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 2394340,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils",
+      "value": 1607568
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 2495122,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils",
+      "value": 558411
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 7,
+      "previous_level": 6,
+      "previous_value": 1663415,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils",
+      "value": 558411
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "sigils_furious_defense_siege",
+      "tree_id": "sigils"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "base_time_seconds",
+      "level": 8,
+      "previous_level": 7,
+      "previous_value": 4076100,
+      "research_id": "sigils_furious_durability_cavalry",
+      "tree_id": "sigils",
+      "value": 3041880
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 8,
+      "previous_level": 4,
+      "previous_value": 1559451,
+      "research_id": "sigils_furious_durability_cavalry",
+      "tree_id": "sigils",
+      "value": 797730
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 8,
+      "previous_level": 4,
+      "previous_value": 1039634,
+      "research_id": "sigils_furious_durability_cavalry",
+      "tree_id": "sigils",
+      "value": 797730
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 14714,
+      "research_id": "upgrade_defenses_trap_retrieval_iv",
+      "tree_id": "upgrade_defenses",
+      "value": 2207
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 4,
+      "previous_level": 3,
+      "previous_value": 63185,
+      "research_id": "upgrade_defenses_trap_retrieval_iv",
+      "tree_id": "upgrade_defenses",
+      "value": 42123
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 1843,
+      "research_id": "upgrade_defenses_trap_strength_ii",
+      "tree_id": "upgrade_defenses",
+      "value": 12
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 5,
+      "previous_level": 4,
+      "previous_value": 75238,
+      "research_id": "upgrade_defenses_wall_durability_i",
+      "tree_id": "upgrade_defenses",
+      "value": 60190
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.timber",
+      "level": 5,
+      "previous_level": 4,
+      "previous_value": 90285,
+      "research_id": "upgrade_defenses_wall_durability_i",
+      "tree_id": "upgrade_defenses",
+      "value": 75238
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "upgrade_defenses_wall_durability_ii",
+      "tree_id": "upgrade_defenses"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 5,
+      "previous_level": 4,
+      "previous_value": 5039695,
+      "research_id": "upgrade_military_training_speed_ii",
+      "tree_id": "upgrade_military",
+      "value": 1119930
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 333397,
+      "research_id": "wonder_battles_cavalry_defense_wonder_ii",
+      "tree_id": "wonder_battles",
+      "value": 116688
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 6,
+      "previous_level": 5,
+      "previous_value": 1737148,
+      "research_id": "wonder_battles_cavalry_defense_wonder_ii",
+      "tree_id": "wonder_battles",
+      "value": 1389719
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 3,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 4,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 5,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 6,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 7,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 9,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "empty_verified_costs",
+      "field": "costs",
+      "level": 10,
+      "research_id": "wonder_battles_cavalry_durability_wonder_ii",
+      "tree_id": "wonder_battles"
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.gold",
+      "level": 2,
+      "previous_level": 1,
+      "previous_value": 333397,
+      "research_id": "wonder_battles_ranged_defense_wonder_ii",
+      "tree_id": "wonder_battles",
+      "value": 116688
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.stone",
+      "level": 3,
+      "previous_level": 2,
+      "previous_value": 1013337,
+      "research_id": "wonder_battles_ranged_defense_wonder_ii",
+      "tree_id": "wonder_battles",
+      "value": 738288
+    },
+    {
+      "code": "level_value_decreased",
+      "field": "costs.ore",
+      "level": 4,
+      "previous_level": 3,
+      "previous_value": 275068,
+      "research_id": "wonder_battles_ration_run_iii",
+      "tree_id": "wonder_battles",
+      "value": 232609
+    }
+  ]
+}

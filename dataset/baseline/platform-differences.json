@@ -1,0 +1,40 @@
+{
+  "catalog_hashes": {
+    "match": true,
+    "pc": [
+      "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed"
+    ],
+    "pwa": [
+      "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed"
+    ]
+  },
+  "category_ids": [
+    "advanced_wonder_battles",
+    "army_leadership",
+    "defense",
+    "economy",
+    "familiar_battles",
+    "familiars",
+    "gear",
+    "guild_duel",
+    "mana_awakening",
+    "military",
+    "military_command",
+    "monster_hunt",
+    "sigils",
+    "upgrade_defenses",
+    "upgrade_military",
+    "wonder_battles"
+  ],
+  "display_connection_differences": [],
+  "document_type": "RLMResearchPlanner.research-platform-differences",
+  "known_runtime_policy_differences": [],
+  "metadata_differences": [],
+  "missing_categories": {
+    "pc": [],
+    "pwa": []
+  },
+  "representative_plan_differences": [],
+  "schema_version": 1,
+  "shared_data_differences": []
+}

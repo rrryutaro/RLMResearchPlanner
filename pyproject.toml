@@ -4,19 +4,20 @@ build-backend = "hatchling.build"
 
 [project]
 name = "RLMResearchPlanner"
-version = "0.0.20"
+version = "0.1.0"
 description = "Unofficial multilingual research planner for Lords Mobile"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.11"
 dependencies = [
-    "PySide6>=6.8,<7",
+    "PySide6==6.11.1",
 ]
 
 [project.optional-dependencies]
 dev = [
+    "jsonschema>=4,<5",
     "pytest>=8,<9",
-    "pyinstaller>=6,<7",
+    "pyinstaller==6.22.0",
 ]
 
 [project.scripts]

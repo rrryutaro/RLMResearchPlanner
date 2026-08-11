@@ -1,0 +1,43 @@
+name: Research data correction
+description: Report a value, dependency, name, or tree-layout problem.
+title: "[Data] "
+labels: [data]
+body:
+  - type: input
+    id: research_id
+    attributes:
+      label: Research ID or displayed name
+    validations:
+      required: true
+  - type: dropdown
+    id: field
+    attributes:
+      label: Affected field
+      options:
+        - Research name / translation
+        - Time
+        - Resources or special material
+        - Prerequisite
+        - Effect
+        - Maximum level
+        - Tree position or connection
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: current_expected
+    attributes:
+      label: Current value and expected value
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Public source or private evidence description
+      description: Do not upload account information or unredacted game screenshots.
+    validations:
+      required: true
+  - type: input
+    id: game_version
+    attributes:
+      label: Game version and language

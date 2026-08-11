@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rrryutaro/RLMResearchData/schemas/common.schema.json",
+  "title": "RLM research dataset common definitions",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+$",
+      "minLength": 1,
+      "maxLength": 200
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+    },
+    "locale": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300,
+      "pattern": "^(?![A-Za-z]:)(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))[^\\\\]+$"
+    },
+    "idList": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true
+    },
+    "verification": {
+      "type": "object",
+      "required": ["status"],
+      "properties": {
+        "status": {
+          "enum": ["verified", "cross_checked", "provisional", "disputed"]
+        },
+        "source_ids": { "$ref": "#/$defs/idList" },
+        "evidence_ids": { "$ref": "#/$defs/idList" },
+        "checked_on": { "$ref": "#/$defs/date" },
+        "notes": { "type": "string", "maxLength": 4000 }
+      },
+      "additionalProperties": false
+    },
+    "verificationOverrides": {
+      "type": "object",
+      "properties": {
+        "time": { "$ref": "#/$defs/verification" },
+        "costs": { "$ref": "#/$defs/verification" },
+        "requirements": { "$ref": "#/$defs/verification" },
+        "effects": { "$ref": "#/$defs/verification" },
+        "layout": { "$ref": "#/$defs/verification" }
+      },
+      "additionalProperties": false
+    },
+    "lifecycle": {
+      "type": "object",
+      "required": ["state"],
+      "properties": {
+        "state": { "enum": ["active", "deprecated"] },
+        "superseded_by": { "$ref": "#/$defs/id" },
+        "notes": { "type": "string", "maxLength": 2000 }
+      },
+      "additionalProperties": false
+    }
+  }
+}

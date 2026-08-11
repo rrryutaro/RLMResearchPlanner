@@ -37,6 +37,7 @@ const SPEEDUP_GEM_VALUE_BY_SECONDS = new Map([
   [8 * 60 * 60, 650], [15 * 60 * 60, 1000], [24 * 60 * 60, 1500],
   [3 * 24 * 60 * 60, 4400], [7 * 24 * 60 * 60, 10000], [30 * 24 * 60 * 60, 40000],
 ]);
+let standardSpeedupGemCosts = null;
 const MERGING_SPEEDUP_GEM_VALUE_BY_SECONDS = new Map([
   [15 * 60, 140], [60 * 60, 260], [3 * 60 * 60, 600], [8 * 60 * 60, 1300],
   [15 * 60 * 60, 2000], [24 * 60 * 60, 3000], [3 * 24 * 60 * 60, 8800],
@@ -49,6 +50,59 @@ const finite = (value, fallback = 0) => {
   return Number.isFinite(parsed) ? parsed : fallback;
 };
 const nonNegative = (value, fallback = 0) => Math.max(0, finite(value, fallback));
+
+function buildStandardSpeedupGemCosts() {
+  if (standardSpeedupGemCosts) return standardSpeedupGemCosts;
+  const presets = [...SPEEDUP_GEM_VALUE_BY_SECONDS.entries()]
+    .map(([seconds, gems]) => [Math.max(1, Math.trunc(seconds / 60)), Math.max(0, Math.trunc(gems))])
+    .sort((left, right) => left[0] - right[0]);
+  const maximumMinutes = presets.at(-1)[0];
+  const costs = Array(maximumMinutes + 1).fill(Number.MAX_SAFE_INTEGER);
+  const purchasedMinutes = Array(maximumMinutes + 1).fill(0);
+  costs[0] = 0;
+  for (let targetMinutes = 1; targetMinutes <= maximumMinutes; targetMinutes += 1) {
+    for (const [duration, cost] of presets) {
+      const previous = Math.max(0, targetMinutes - duration);
+      const candidateCost = cost + costs[previous];
+      const candidateMinutes = duration + purchasedMinutes[previous];
+      if (candidateCost < costs[targetMinutes]
+        || (candidateCost === costs[targetMinutes] && candidateMinutes < purchasedMinutes[targetMinutes])) {
+        costs[targetMinutes] = candidateCost;
+        purchasedMinutes[targetMinutes] = candidateMinutes;
+      }
+    }
+  }
+  standardSpeedupGemCosts = { costs, purchasedMinutes, maximumMinutes };
+  return standardSpeedupGemCosts;
+}
+
+export function minimumGemsForSpeedupSeconds(seconds) {
+  const requiredMinutes = Math.max(0, Math.ceil(nonNegative(seconds) / 60));
+  if (!requiredMinutes) return { gems: 0, purchasedSeconds: 0 };
+  const { costs, purchasedMinutes, maximumMinutes } = buildStandardSpeedupGemCosts();
+  const maximumCost = SPEEDUP_GEM_VALUE_BY_SECONDS.get(maximumMinutes * 60);
+  const fullItems = Math.floor(requiredMinutes / maximumMinutes);
+  const remainder = requiredMinutes % maximumMinutes;
+  if (!remainder) {
+    return {
+      gems: fullItems * maximumCost,
+      purchasedSeconds: fullItems * maximumMinutes * 60,
+    };
+  }
+  const withRemainder = {
+    gems: fullItems * maximumCost + costs[remainder],
+    purchasedSeconds: (fullItems * maximumMinutes + purchasedMinutes[remainder]) * 60,
+  };
+  const withExtraFullItem = {
+    gems: (fullItems + 1) * maximumCost,
+    purchasedSeconds: (fullItems + 1) * maximumMinutes * 60,
+  };
+  return withRemainder.gems < withExtraFullItem.gems
+    || (withRemainder.gems === withExtraFullItem.gems
+      && withRemainder.purchasedSeconds <= withExtraFullItem.purchasedSeconds)
+    ? withRemainder
+    : withExtraFullItem;
+}
 
 export function defaultPaidValuation() {
   return {
@@ -227,6 +281,6 @@ export function paidOfferExchangePayload(offers, valuation, name = "") {
 export function paidOffersFromExchangePayload(raw) {
   if (raw?.document_type !== PAID_OFFER_DOCUMENT_TYPE || Number(raw?.schema_version) !== 1 || !Array.isArray(raw?.offers)) throw new Error("対応していない課金データです");
   const offers = raw.offers.map(sanitizePaidOffer).filter((offer) => offer.title);
-  if (!offers.length) throw new Error("取り込める課金項目がありません");
+  if (!offers.length && (!raw.valuation || typeof raw.valuation !== "object" || Array.isArray(raw.valuation))) throw new Error("取り込める課金項目または比較設定がありません");
   return { offers, valuation: sanitizePaidValuation(raw.valuation), name: String(raw.name || "").slice(0, 200) };
 }

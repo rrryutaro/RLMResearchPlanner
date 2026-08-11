@@ -1,0 +1,42 @@
+{
+  "baseline_phase": 0,
+  "category_ids": [
+    "economy",
+    "defense",
+    "military",
+    "monster_hunt",
+    "upgrade_defenses",
+    "upgrade_military",
+    "army_leadership",
+    "military_command",
+    "familiars",
+    "familiar_battles",
+    "sigils",
+    "wonder_battles",
+    "gear",
+    "advanced_wonder_battles",
+    "mana_awakening",
+    "guild_duel"
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "edit_policy": {
+    "applications_read_this_baseline": false,
+    "generated_files_are_editable": false,
+    "source_of_truth": "legacy_catalog"
+  },
+  "schema_version": 1,
+  "source_catalog": {
+    "checked_on": "2026-08-07",
+    "dataset_id": "lords-mobile-research-name-catalog-2026-08-07",
+    "game_version": "unknown",
+    "path": "tools/RLMResearchPlanner/data/research/catalog.json",
+    "schema_version": 1,
+    "sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed"
+  },
+  "statistics": {
+    "categories": 16,
+    "levels": 3143,
+    "representative_plans": 16,
+    "research": 399
+  }
+}

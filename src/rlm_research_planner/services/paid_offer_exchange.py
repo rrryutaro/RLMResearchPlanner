@@ -119,10 +119,11 @@ def paid_offers_from_exchange_payload(
             )
         except (TypeError, ValueError):
             continue
-    if not offers:
-        raise PaidOfferExchangeError("No valid paid offers were found")
-
     raw_valuation = raw.get("valuation")
+    if not offers and not isinstance(raw_valuation, dict):
+        raise PaidOfferExchangeError(
+            "No valid paid offers or comparison settings were found"
+        )
     value = raw_valuation if isinstance(raw_valuation, dict) else {}
     try:
         valuation = PaidValuation(

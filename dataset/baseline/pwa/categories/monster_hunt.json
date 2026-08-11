@@ -1,0 +1,4130 @@
+{
+  "category_id": "monster_hunt",
+  "display_connections": [
+    [
+      "monster_hunt_aggressive_hunter_i",
+      "monster_hunt_survival_tactics_i"
+    ],
+    [
+      "monster_hunt_aggressive_hunter_ii",
+      "monster_hunt_survival_tactics_ii"
+    ],
+    [
+      "monster_hunt_animal_handling",
+      "monster_hunt_monster_hunt_iii"
+    ],
+    [
+      "monster_hunt_energy_limit_i",
+      "monster_hunt_monster_hunt_ii"
+    ],
+    [
+      "monster_hunt_energy_limit_ii",
+      "monster_hunt_monster_hunt_v"
+    ],
+    [
+      "monster_hunt_energy_recovery_i",
+      "monster_hunt_monster_hunt_ii"
+    ],
+    [
+      "monster_hunt_energy_recovery_ii",
+      "monster_hunt_energy_limit_ii"
+    ],
+    [
+      "monster_hunt_energy_saver_i",
+      "monster_hunt_monster_hunt_ii"
+    ],
+    [
+      "monster_hunt_energy_saver_ii",
+      "monster_hunt_energy_limit_ii"
+    ],
+    [
+      "monster_hunt_hunter_recovery_i",
+      "monster_hunt_monster_hunt_iii"
+    ],
+    [
+      "monster_hunt_hunter_recovery_ii",
+      "monster_hunt_monster_hunt_iv"
+    ],
+    [
+      "monster_hunt_monster_hunt_i",
+      "monster_hunt_energy_limit_i"
+    ],
+    [
+      "monster_hunt_monster_hunt_i",
+      "monster_hunt_energy_recovery_i"
+    ],
+    [
+      "monster_hunt_monster_hunt_i",
+      "monster_hunt_energy_saver_i"
+    ],
+    [
+      "monster_hunt_monster_hunt_ii",
+      "monster_hunt_aggressive_hunter_i"
+    ],
+    [
+      "monster_hunt_monster_hunt_ii",
+      "monster_hunt_animal_handling"
+    ],
+    [
+      "monster_hunt_monster_hunt_ii",
+      "monster_hunt_monster_hunter_i"
+    ],
+    [
+      "monster_hunt_monster_hunt_iii",
+      "monster_hunt_aggressive_hunter_ii"
+    ],
+    [
+      "monster_hunt_monster_hunt_iii",
+      "monster_hunt_monster_hunter_ii"
+    ],
+    [
+      "monster_hunt_monster_hunt_iv",
+      "monster_hunt_monster_hunter_iii"
+    ],
+    [
+      "monster_hunt_monster_hunt_iv",
+      "monster_hunt_mp_advantage"
+    ],
+    [
+      "monster_hunt_monster_hunter_i",
+      "monster_hunt_hunter_recovery_i"
+    ],
+    [
+      "monster_hunt_monster_hunter_ii",
+      "monster_hunt_hunter_recovery_ii"
+    ],
+    [
+      "monster_hunt_monster_hunter_iii",
+      "monster_hunt_energy_saver_ii"
+    ],
+    [
+      "monster_hunt_mp_advantage",
+      "monster_hunt_energy_recovery_ii"
+    ],
+    [
+      "monster_hunt_survival_tactics_i",
+      "monster_hunt_monster_hunt_iii"
+    ],
+    [
+      "monster_hunt_survival_tactics_ii",
+      "monster_hunt_monster_hunt_iv"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Hunt Level 1 monsters"
+      },
+      "id": "monster_hunt_monster_hunt_i",
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 660,
+          "buildings": {},
+          "costs": {
+            "food": 352,
+            "gold": 758,
+            "ore": 430,
+            "stone": 547,
+            "timber": 625
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 474,
+          "requirements": [],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Monster Hunt I",
+        "ja-JP": "魔獣討伐I"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Energy Regain Speed",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.3%",
+        "3": "3.9%",
+        "4": "5.8%",
+        "5": "8%",
+        "6": "10.5%",
+        "7": "13.3%",
+        "8": "16.4%",
+        "9": "19.8%",
+        "10": "23.5%"
+      },
+      "id": "monster_hunt_energy_recovery_i",
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 540,
+          "buildings": {},
+          "costs": {
+            "food": 269,
+            "gold": 113,
+            "ore": 329,
+            "stone": 418,
+            "timber": 478
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 40,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 840,
+          "buildings": {},
+          "costs": {
+            "food": 869,
+            "gold": 748,
+            "ore": 1095,
+            "stone": 1294,
+            "timber": 1593
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 66,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 1500,
+          "buildings": {},
+          "costs": {
+            "food": 2687,
+            "gold": 2242,
+            "ore": 3285,
+            "stone": 4180,
+            "timber": 4777
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 119,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 4500,
+          "buildings": {},
+          "costs": {
+            "food": 8957,
+            "gold": 14945,
+            "ore": 10948,
+            "stone": 13933,
+            "timber": 15923
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 357,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 13440,
+          "buildings": {},
+          "costs": {
+            "food": 22392,
+            "gold": 37361,
+            "ore": 27368,
+            "stone": 34832,
+            "timber": 39808
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1070,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 40260,
+          "buildings": {},
+          "costs": {
+            "food": 44784,
+            "gold": 74722,
+            "ore": 54736,
+            "stone": 69663,
+            "timber": 79615
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 3210,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 120660,
+          "buildings": {},
+          "costs": {
+            "food": 223916,
+            "gold": 186805,
+            "ore": 273676,
+            "stone": 348314,
+            "timber": 398073
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 9629,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 361860,
+          "buildings": {},
+          "costs": {
+            "food": 447832,
+            "gold": 373609,
+            "ore": 547351,
+            "stone": 696682,
+            "timber": 796146
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 28889,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1085580,
+          "buildings": {},
+          "costs": {
+            "food": 895664,
+            "gold": 1494433,
+            "ore": 1094701,
+            "stone": 1393256,
+            "timber": 1592292
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 86668,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2713980,
+          "buildings": {},
+          "costs": {
+            "food": 1791328,
+            "gold": 3362473,
+            "ore": 2189401,
+            "stone": 2786511,
+            "timber": 3184583
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 216668,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Energy Recovery I",
+        "ja-JP": "行動力回復I"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Max energy",
+      "effect_values": {
+        "1": "250",
+        "2": "650",
+        "3": "1200",
+        "4": "1900",
+        "5": "2750",
+        "6": "3750",
+        "7": "4900",
+        "8": "6200",
+        "9": "7650",
+        "10": "9250"
+      },
+      "id": "monster_hunt_energy_limit_i",
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 780,
+          "buildings": {},
+          "costs": {
+            "food": 404,
+            "gold": 169,
+            "ore": 493,
+            "stone": 627,
+            "timber": 717
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 60,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 1260,
+          "buildings": {},
+          "costs": {
+            "food": 1344,
+            "gold": 1121,
+            "ore": 1643,
+            "stone": 2090,
+            "timber": 2389
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 99,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 2280,
+          "buildings": {},
+          "costs": {
+            "food": 4031,
+            "gold": 3363,
+            "ore": 4927,
+            "stone": 6270,
+            "timber": 7166
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 178,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 6720,
+          "buildings": {},
+          "costs": {
+            "food": 13435,
+            "gold": 22417,
+            "ore": 16421,
+            "stone": 20899,
+            "timber": 23885
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 535,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 20160,
+          "buildings": {},
+          "costs": {
+            "food": 33588,
+            "gold": 56042,
+            "ore": 41052,
+            "stone": 52248,
+            "timber": 59711
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1605,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 60360,
+          "buildings": {},
+          "costs": {
+            "food": 67175,
+            "gold": 112083,
+            "ore": 82103,
+            "stone": 104495,
+            "timber": 119422
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 4815,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 180960,
+          "buildings": {},
+          "costs": {
+            "food": 335874,
+            "gold": 280207,
+            "ore": 410513,
+            "stone": 522471,
+            "timber": 597110
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 14445,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 542820,
+          "buildings": {},
+          "costs": {
+            "food": 671748,
+            "gold": 560413,
+            "ore": 821026,
+            "stone": 1044942,
+            "timber": 1194219
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 43333,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1628400,
+          "buildings": {},
+          "costs": {
+            "food": 1343496,
+            "gold": 2241649,
+            "ore": 1642051,
+            "stone": 2089883,
+            "timber": 2388438
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 130001,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4070940,
+          "buildings": {},
+          "costs": {
+            "food": 2688992,
+            "gold": 5043710,
+            "ore": 3284102,
+            "stone": 4179766,
+            "timber": 4776875
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 325002,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Energy Limit I",
+        "ja-JP": "行動力上限I"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Energy Saver",
+      "effect_values": {
+        "1": "0.25%",
+        "2": "0.8%",
+        "3": "1.65%",
+        "4": "2.8%",
+        "5": "4.25%",
+        "6": "6%",
+        "7": "8.05%",
+        "8": "10.4%",
+        "9": "13.05%",
+        "10": "16%"
+      },
+      "id": "monster_hunt_energy_saver_i",
+      "levels": [
+        {
+          "academy_level": 1,
+          "base_time_seconds": 780,
+          "buildings": {},
+          "costs": {
+            "food": 560,
+            "gold": 169,
+            "ore": 448,
+            "stone": 672,
+            "timber": 560
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 60,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 2,
+          "base_time_seconds": 1260,
+          "buildings": {},
+          "costs": {
+            "food": 1866,
+            "gold": 1121,
+            "ore": 1493,
+            "stone": 2240,
+            "timber": 1866
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 99,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 4,
+          "base_time_seconds": 2280,
+          "buildings": {},
+          "costs": {
+            "food": 5598,
+            "gold": 3363,
+            "ore": 4479,
+            "stone": 6718,
+            "timber": 5598
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 178,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 6,
+          "base_time_seconds": 6720,
+          "buildings": {},
+          "costs": {
+            "food": 18660,
+            "gold": 22417,
+            "ore": 14928,
+            "stone": 22392,
+            "timber": 18660
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 535,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 20160,
+          "buildings": {},
+          "costs": {
+            "food": 46650,
+            "gold": 56042,
+            "ore": 37320,
+            "stone": 55979,
+            "timber": 46650
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1605,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 60360,
+          "buildings": {},
+          "costs": {
+            "food": 93299,
+            "gold": 112083,
+            "ore": 74639,
+            "stone": 111958,
+            "timber": 93299
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 4815,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 180960,
+          "buildings": {},
+          "costs": {
+            "food": 466492,
+            "gold": 280207,
+            "ore": 373194,
+            "stone": 559790,
+            "timber": 466492
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 14445,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 542820,
+          "buildings": {},
+          "costs": {
+            "food": 932984,
+            "gold": 560413,
+            "ore": 746387,
+            "stone": 1119580,
+            "timber": 932984
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 43333,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1628400,
+          "buildings": {},
+          "costs": {
+            "food": 1865967,
+            "gold": 2241649,
+            "ore": 1492774,
+            "stone": 2239160,
+            "timber": 1865967
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 130001,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4070940,
+          "buildings": {},
+          "costs": {
+            "food": 3731934,
+            "gold": 5043710,
+            "ore": 2985547,
+            "stone": 4478320,
+            "timber": 3731934
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 325002,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Energy Saver I",
+        "ja-JP": "行動力消耗低下I"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Hunt Level 2 monsters"
+      },
+      "id": "monster_hunt_monster_hunt_ii",
+      "levels": [
+        {
+          "academy_level": 7,
+          "base_time_seconds": 30360,
+          "buildings": {},
+          "costs": {
+            "food": 105359,
+            "gold": 50504,
+            "ore": 128772,
+            "stone": 163891,
+            "timber": 187304
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 3156,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_energy_recovery_i"
+            },
+            {
+              "level": 1,
+              "research_id": "monster_hunt_energy_limit_i"
+            },
+            {
+              "level": 1,
+              "research_id": "monster_hunt_energy_saver_i"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Monster Hunt II",
+        "ja-JP": "魔獣討伐II"
+      },
+      "row": 2
+    },
+    {
+      "column": 0,
+      "effect_label": "Hunts in a row",
+      "effect_values": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "10": "10"
+      },
+      "id": "monster_hunt_aggressive_hunter_i",
+      "levels": [
+        {
+          "academy_level": 7,
+          "base_time_seconds": 1020,
+          "buildings": {},
+          "costs": {
+            "food": 538,
+            "gold": 225,
+            "ore": 657,
+            "stone": 1045,
+            "timber": 747
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 80,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 1680,
+          "buildings": {},
+          "costs": {
+            "food": 1792,
+            "gold": 1495,
+            "ore": 2190,
+            "stone": 3484,
+            "timber": 2488
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 132,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 3000,
+          "buildings": {},
+          "costs": {
+            "food": 5374,
+            "gold": 4484,
+            "ore": 6569,
+            "stone": 10450,
+            "timber": 7464
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 238,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 8940,
+          "buildings": {},
+          "costs": {
+            "food": 17914,
+            "gold": 29889,
+            "ore": 21895,
+            "stone": 34832,
+            "timber": 24880
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 713,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 26820,
+          "buildings": {},
+          "costs": {
+            "food": 44748,
+            "gold": 74722,
+            "ore": 54736,
+            "stone": 87079,
+            "timber": 62199
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 2140,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 80460,
+          "buildings": {},
+          "costs": {
+            "food": 89567,
+            "gold": 149444,
+            "ore": 109471,
+            "stone": 174157,
+            "timber": 124398
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 6420,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 241260,
+          "buildings": {},
+          "costs": {
+            "food": 447832,
+            "gold": 373609,
+            "ore": 547351,
+            "stone": 870785,
+            "timber": 621989
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 19259,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 723720,
+          "buildings": {},
+          "costs": {
+            "food": 895664,
+            "gold": 747217,
+            "ore": 1094701,
+            "stone": 1741569,
+            "timber": 1243978
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 57778,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_energy_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2171160,
+          "buildings": {},
+          "costs": {
+            "food": 1791328,
+            "gold": 2988865,
+            "ore": 2189401,
+            "stone": 3483138,
+            "timber": 2487956
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 173335,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_energy_recovery_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 3582656,
+            "gold": 6724946,
+            "ore": 4378802,
+            "stone": 6966276,
+            "timber": 4975911
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 433336,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_energy_recovery_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Aggressive Hunter I",
+        "ja-JP": "討伐連撃I"
+      },
+      "row": 3
+    },
+    {
+      "column": 1,
+      "effect_label": "Monster Hunt Travel Speed",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.4%",
+        "3": "4.2%",
+        "4": "6.4%",
+        "5": "9%",
+        "6": "12%",
+        "7": "15.4%",
+        "8": "19.2%",
+        "9": "23.4%",
+        "10": "28%"
+      },
+      "id": "monster_hunt_animal_handling",
+      "levels": [
+        {
+          "academy_level": 7,
+          "base_time_seconds": 1020,
+          "buildings": {},
+          "costs": {
+            "food": 538,
+            "gold": 225,
+            "ore": 657,
+            "stone": 836,
+            "timber": 956
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 80,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 1680,
+          "buildings": {},
+          "costs": {
+            "food": 1792,
+            "gold": 1495,
+            "ore": 2190,
+            "stone": 2787,
+            "timber": 3185
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 132,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 3000,
+          "buildings": {},
+          "costs": {
+            "food": 5374,
+            "gold": 4484,
+            "ore": 6569,
+            "stone": 8360,
+            "timber": 9554
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 238,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 8940,
+          "buildings": {},
+          "costs": {
+            "food": 17914,
+            "gold": 29889,
+            "ore": 21895,
+            "stone": 27866,
+            "timber": 31846
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 713,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 26820,
+          "buildings": {},
+          "costs": {
+            "food": 44784,
+            "gold": 74722,
+            "ore": 54736,
+            "stone": 69663,
+            "timber": 79615
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 2140,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 80460,
+          "buildings": {},
+          "costs": {
+            "food": 89567,
+            "gold": 149444,
+            "ore": 109471,
+            "stone": 139326,
+            "timber": 159230
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 6420,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 241260,
+          "buildings": {},
+          "costs": {
+            "food": 447832,
+            "gold": 373609,
+            "ore": 547351,
+            "stone": 696628,
+            "timber": 796146
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 19259,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 723720,
+          "buildings": {},
+          "costs": {
+            "food": 895664,
+            "gold": 747217,
+            "ore": 1094701,
+            "stone": 1393256,
+            "timber": 1592292
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 57778,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_energy_limit_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2171160,
+          "buildings": {},
+          "costs": {
+            "food": 1791328,
+            "gold": 2988865,
+            "ore": 2189401,
+            "stone": 2786511,
+            "timber": 3184583
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 173335,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_energy_limit_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 3582656,
+            "gold": 6724946,
+            "ore": 4378802,
+            "stone": 5573021,
+            "timber": 6369166
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 433336,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_energy_limit_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Animal Handling",
+        "ja-JP": "討伐進軍加速"
+      },
+      "row": 3
+    },
+    {
+      "column": 2,
+      "effect_label": "Monster Hunt DMG Boost",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.2%",
+        "3": "3.6%",
+        "4": "5.2%",
+        "5": "7%",
+        "6": "9%",
+        "7": "11.2%",
+        "8": "13.6%",
+        "9": "16.2%",
+        "10": "19%"
+      },
+      "id": "monster_hunt_monster_hunter_i",
+      "levels": [
+        {
+          "academy_level": 7,
+          "base_time_seconds": 1020,
+          "buildings": {},
+          "costs": {
+            "food": 747,
+            "gold": 225,
+            "ore": 598,
+            "stone": 896,
+            "timber": 747
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 80,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 1680,
+          "buildings": {},
+          "costs": {
+            "food": 2488,
+            "gold": 1495,
+            "ore": 1991,
+            "stone": 2986,
+            "timber": 2488
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 132,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 7,
+          "base_time_seconds": 3000,
+          "buildings": {},
+          "costs": {
+            "food": 7464,
+            "gold": 4484,
+            "ore": 5972,
+            "stone": 8957,
+            "timber": 7464
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 238,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 8940,
+          "buildings": {},
+          "costs": {
+            "food": 24880,
+            "gold": 29889,
+            "ore": 19904,
+            "stone": 29856,
+            "timber": 24880
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 713,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 10,
+          "base_time_seconds": 26820,
+          "buildings": {},
+          "costs": {
+            "food": 62199,
+            "gold": 74722,
+            "ore": 49760,
+            "stone": 74639,
+            "timber": 62199
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 2140,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 12,
+          "base_time_seconds": 80460,
+          "buildings": {},
+          "costs": {
+            "food": 124398,
+            "gold": 149444,
+            "ore": 99519,
+            "stone": 149278,
+            "timber": 124398
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 6420,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 241260,
+          "buildings": {},
+          "costs": {
+            "food": 621989,
+            "gold": 373609,
+            "ore": 497592,
+            "stone": 746387,
+            "timber": 621989
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 19259,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 723720,
+          "buildings": {},
+          "costs": {
+            "food": 1243978,
+            "gold": 747217,
+            "ore": 995183,
+            "stone": 1492774,
+            "timber": 1243978
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 57778,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_energy_saver_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2171160,
+          "buildings": {},
+          "costs": {
+            "food": 2487956,
+            "gold": 2988865,
+            "ore": 1990956,
+            "stone": 2985547,
+            "timber": 2487956
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 173335,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_energy_saver_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 4975911,
+            "gold": 6724946,
+            "ore": 3980729,
+            "stone": 5971094,
+            "timber": 4975911
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 433336,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_energy_saver_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Monster Hunter I",
+        "ja-JP": "討伐ダメージ上昇I"
+      },
+      "row": 3
+    },
+    {
+      "column": 0,
+      "effect_label": "Monster Hunt Max HP",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.25%",
+        "3": "3.75%",
+        "4": "5.5%",
+        "5": "7.5%",
+        "6": "9.75%",
+        "7": "12.25%",
+        "8": "15%",
+        "9": "18%",
+        "10": "21.25%"
+      },
+      "id": "monster_hunt_survival_tactics_i",
+      "levels": [
+        {
+          "academy_level": 8,
+          "base_time_seconds": 1020,
+          "buildings": {},
+          "costs": {
+            "food": 1120,
+            "gold": 337,
+            "ore": 1344,
+            "stone": 896,
+            "timber": 1120
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 119,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 1680,
+          "buildings": {},
+          "costs": {
+            "food": 3732,
+            "gold": 2242,
+            "ore": 4479,
+            "stone": 2986,
+            "timber": 3732
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 199,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 3000,
+          "buildings": {},
+          "costs": {
+            "food": 11196,
+            "gold": 6725,
+            "ore": 13435,
+            "stone": 8957,
+            "timber": 11196
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 356,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 8940,
+          "buildings": {},
+          "costs": {
+            "food": 37320,
+            "gold": 44833,
+            "ore": 44784,
+            "stone": 29856,
+            "timber": 37320
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1070,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 26820,
+          "buildings": {},
+          "costs": {
+            "food": 93299,
+            "gold": 112083,
+            "ore": 111958,
+            "stone": 74639,
+            "timber": 93299
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 3210,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 80460,
+          "buildings": {},
+          "costs": {
+            "food": 186597,
+            "gold": 224165,
+            "ore": 223916,
+            "stone": 149278,
+            "timber": 186597
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 9630,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 241260,
+          "buildings": {},
+          "costs": {
+            "food": 932984,
+            "gold": 560413,
+            "ore": 1119580,
+            "stone": 746387,
+            "timber": 932984
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 28889,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 723720,
+          "buildings": {},
+          "costs": {
+            "food": 1865967,
+            "gold": 1120825,
+            "ore": 2239160,
+            "stone": 1492774,
+            "timber": 1865967
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 86667,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 2171160,
+          "buildings": {},
+          "costs": {
+            "food": 3731934,
+            "gold": 4483298,
+            "ore": 4478320,
+            "stone": 2985547,
+            "timber": 3731934
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 260002,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 7463867,
+            "gold": 10087419,
+            "ore": 8956640,
+            "stone": 5971094,
+            "timber": 7463867
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 650004,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Survival Tactics I",
+        "ja-JP": "討伐HP上昇I"
+      },
+      "row": 4
+    },
+    {
+      "column": 2,
+      "effect_label": "Monster Hunt Healing Effect",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.2%",
+        "3": "3.6%",
+        "4": "5.2%",
+        "5": "7%",
+        "6": "9%",
+        "7": "11.2%",
+        "8": "13.6%",
+        "9": "16.2%",
+        "10": "19%"
+      },
+      "id": "monster_hunt_hunter_recovery_i",
+      "levels": [
+        {
+          "academy_level": 8,
+          "base_time_seconds": 1020,
+          "buildings": {},
+          "costs": {
+            "food": 1120,
+            "gold": 337,
+            "ore": 1344,
+            "stone": 896,
+            "timber": 1120
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 119,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 1680,
+          "buildings": {},
+          "costs": {
+            "food": 3732,
+            "gold": 2242,
+            "ore": 4479,
+            "stone": 2986,
+            "timber": 3732
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 199,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 8,
+          "base_time_seconds": 3000,
+          "buildings": {},
+          "costs": {
+            "food": 11196,
+            "gold": 6725,
+            "ore": 13435,
+            "stone": 8975,
+            "timber": 11196
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 356,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 9,
+          "base_time_seconds": 8940,
+          "buildings": {},
+          "costs": {
+            "food": 37320,
+            "gold": 44833,
+            "ore": 44784,
+            "stone": 29856,
+            "timber": 37320
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1070,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 11,
+          "base_time_seconds": 26820,
+          "buildings": {},
+          "costs": {
+            "food": 93299,
+            "gold": 112083,
+            "ore": 111958,
+            "stone": 74639,
+            "timber": 93299
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 3210,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 80460,
+          "buildings": {},
+          "costs": {
+            "food": 186597,
+            "gold": 224165,
+            "ore": 223916,
+            "stone": 149278,
+            "timber": 186597
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 9630,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 241260,
+          "buildings": {},
+          "costs": {
+            "food": 932984,
+            "gold": 560413,
+            "ore": 1119580,
+            "stone": 746387,
+            "timber": 932984
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 28889,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 723720,
+          "buildings": {},
+          "costs": {
+            "food": 1865967,
+            "gold": 1120825,
+            "ore": 2239160,
+            "stone": 1492774,
+            "timber": 1865967
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 86667,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 2171160,
+          "buildings": {},
+          "costs": {
+            "food": 3731934,
+            "gold": 4483298,
+            "ore": 4478320,
+            "stone": 2985547,
+            "timber": 3731934
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 260002,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 7463867,
+            "gold": 10087419,
+            "ore": 8956640,
+            "stone": 5971094,
+            "timber": 7463867
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 650004,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 6
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Hunter Recovery I",
+        "ja-JP": "討伐回復量上昇I"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Hunt Level 3 monsters"
+      },
+      "id": "monster_hunt_monster_hunt_iii",
+      "levels": [
+        {
+          "academy_level": 13,
+          "base_time_seconds": 606060,
+          "buildings": {},
+          "costs": {
+            "food": 702389,
+            "gold": 1010063,
+            "ore": 858475,
+            "stone": 1092604,
+            "timber": 1248690
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 63108,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_survival_tactics_i"
+            },
+            {
+              "level": 1,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            },
+            {
+              "level": 1,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Monster Hunt III",
+        "ja-JP": "魔獣討伐III"
+      },
+      "row": 5
+    },
+    {
+      "column": 0,
+      "effect_label": "Hunts in a row",
+      "effect_values": {
+        "1": "1",
+        "2": "2",
+        "3": "3",
+        "4": "4",
+        "5": "5",
+        "6": "6",
+        "7": "7",
+        "8": "8",
+        "9": "9",
+        "10": "10"
+      },
+      "id": "monster_hunt_aggressive_hunter_ii",
+      "levels": [
+        {
+          "academy_level": 13,
+          "base_time_seconds": 1500,
+          "buildings": {},
+          "costs": {
+            "food": 941,
+            "gold": 393,
+            "ore": 1150,
+            "stone": 1829,
+            "timber": 1307
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 139,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 2520,
+          "buildings": {},
+          "costs": {
+            "food": 3135,
+            "gold": 2616,
+            "ore": 3832,
+            "stone": 6096,
+            "timber": 4354
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 231,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 4500,
+          "buildings": {},
+          "costs": {
+            "food": 9405,
+            "gold": 7846,
+            "ore": 11495,
+            "stone": 18287,
+            "timber": 13062
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 416,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 13440,
+          "buildings": {},
+          "costs": {
+            "food": 31349,
+            "gold": 52306,
+            "ore": 38315,
+            "stone": 60995,
+            "timber": 43540
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1249,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 40260,
+          "buildings": {},
+          "costs": {
+            "food": 78371,
+            "gold": 130763,
+            "ore": 95787,
+            "stone": 152388,
+            "timber": 108849
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 3745,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 120660,
+          "buildings": {},
+          "costs": {
+            "food": 156742,
+            "gold": 261526,
+            "ore": 191573,
+            "stone": 304775,
+            "timber": 217697
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 11234,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 361860,
+          "buildings": {},
+          "costs": {
+            "food": 783706,
+            "gold": 653815,
+            "ore": 957863,
+            "stone": 1523873,
+            "timber": 1088481
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 33704,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_aggressive_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 1085580,
+          "buildings": {},
+          "costs": {
+            "food": 1567412,
+            "gold": 1307629,
+            "ore": 1915726,
+            "stone": 3047746,
+            "timber": 2176962
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 101112,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_survival_tactics_i"
+            },
+            {
+              "level": 8,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 3256740,
+          "buildings": {},
+          "costs": {
+            "food": 3134824,
+            "gold": 5230514,
+            "ore": 3831452,
+            "stone": 6095491,
+            "timber": 4353923
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 303336,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_survival_tactics_i"
+            },
+            {
+              "level": 9,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8141820,
+          "buildings": {},
+          "costs": {
+            "food": 6269648,
+            "gold": 11768656,
+            "ore": 7662903,
+            "stone": 12190982,
+            "timber": 8707845
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 758338,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_survival_tactics_i"
+            },
+            {
+              "level": 10,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 9
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Aggressive Hunter II",
+        "ja-JP": "討伐連撃II"
+      },
+      "row": 6
+    },
+    {
+      "column": 2,
+      "effect_label": "Monster Hunt DMG Boost",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.3%",
+        "3": "3.9%",
+        "4": "5.8%",
+        "5": "8%",
+        "6": "10.5%",
+        "7": "13.3%",
+        "8": "16.4%",
+        "9": "19.8%",
+        "10": "23.5%"
+      },
+      "id": "monster_hunt_monster_hunter_ii",
+      "levels": [
+        {
+          "academy_level": 13,
+          "base_time_seconds": 1740,
+          "buildings": {},
+          "costs": {
+            "food": 1493,
+            "gold": 449,
+            "ore": 1195,
+            "stone": 1792,
+            "timber": 1493
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 159,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 2940,
+          "buildings": {},
+          "costs": {
+            "food": 4976,
+            "gold": 2989,
+            "ore": 3981,
+            "stone": 5972,
+            "timber": 4976
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 264,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 5220,
+          "buildings": {},
+          "costs": {
+            "food": 14928,
+            "gold": 8967,
+            "ore": 11943,
+            "stone": 17914,
+            "timber": 14928
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 476,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 15660,
+          "buildings": {},
+          "costs": {
+            "food": 49760,
+            "gold": 59778,
+            "ore": 38808,
+            "stone": 59711,
+            "timber": 49760
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1426,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 46920,
+          "buildings": {},
+          "costs": {
+            "food": 124398,
+            "gold": 149444,
+            "ore": 99519,
+            "stone": 149278,
+            "timber": 124398
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 4280,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 140760,
+          "buildings": {},
+          "costs": {
+            "food": 248796,
+            "gold": 298887,
+            "ore": 199037,
+            "stone": 298555,
+            "timber": 248796
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 12840,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 422220,
+          "buildings": {},
+          "costs": {
+            "food": 1243978,
+            "gold": 747217,
+            "ore": 995183,
+            "stone": 1492774,
+            "timber": 1243978
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 38519,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_monster_hunter_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 1266540,
+          "buildings": {},
+          "costs": {
+            "food": 2487956,
+            "gold": 1494433,
+            "ore": 1990365,
+            "stone": 2985547,
+            "timber": 2487956
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 115556,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            },
+            {
+              "level": 8,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 3799500,
+          "buildings": {},
+          "costs": {
+            "food": 4975911,
+            "gold": 5977730,
+            "ore": 3980729,
+            "stone": 5971094,
+            "timber": 4975911
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 346669,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            },
+            {
+              "level": 9,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9498780,
+          "buildings": {},
+          "costs": {
+            "food": 9951822,
+            "gold": 13449892,
+            "ore": 7961458,
+            "stone": 11942187,
+            "timber": 9951822
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 866673,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            },
+            {
+              "level": 10,
+              "research_id": "monster_hunt_animal_handling"
+            }
+          ],
+          "technolabe_count": 11
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Monster Hunter II",
+        "ja-JP": "討伐ダメージ上昇II"
+      },
+      "row": 6
+    },
+    {
+      "column": 0,
+      "effect_label": "Monster Hunt Max HP",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.3%",
+        "3": "3.9%",
+        "4": "5.8%",
+        "5": "8%",
+        "6": "10.5%",
+        "7": "13.3%",
+        "8": "16.4%",
+        "9": "19.8%",
+        "10": "23.5%"
+      },
+      "id": "monster_hunt_survival_tactics_ii",
+      "levels": [
+        {
+          "academy_level": 13,
+          "base_time_seconds": 2040,
+          "buildings": {},
+          "costs": {
+            "food": 1866,
+            "gold": 561,
+            "ore": 2240,
+            "stone": 1493,
+            "timber": 1866
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 199,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_aggressive_hunter_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 3360,
+          "buildings": {},
+          "costs": {
+            "food": 6220,
+            "gold": 3737,
+            "ore": 7464,
+            "stone": 4976,
+            "timber": 6220
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 330,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "monster_hunt_survival_tactics_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 6000,
+          "buildings": {},
+          "costs": {
+            "food": 18660,
+            "gold": 11209,
+            "ore": 22392,
+            "stone": 14928,
+            "timber": 18660
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 594,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "monster_hunt_survival_tactics_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 17880,
+          "buildings": {},
+          "costs": {
+            "food": 62199,
+            "gold": 74722,
+            "ore": 74639,
+            "stone": 49760,
+            "timber": 62199
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1784,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "monster_hunt_survival_tactics_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 53640,
+          "buildings": {},
+          "costs": {
+            "food": 155498,
+            "gold": 186805,
+            "ore": 186597,
+            "stone": 124398,
+            "timber": 155498
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 5349,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "monster_hunt_survival_tactics_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 160860,
+          "buildings": {},
+          "costs": {
+            "food": 310995,
+            "gold": 373609,
+            "ore": 373194,
+            "stone": 248796,
+            "timber": 310995
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 16050,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "monster_hunt_survival_tactics_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 482520,
+          "buildings": {},
+          "costs": {
+            "food": 1554973,
+            "gold": 934021,
+            "ore": 1865967,
+            "stone": 1243978,
+            "timber": 1554973
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 48148,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_survival_tactics_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1447440,
+          "buildings": {},
+          "costs": {
+            "food": 3109945,
+            "gold": 1868041,
+            "ore": 3731934,
+            "stone": 2487956,
+            "timber": 3109945
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 144446,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_aggressive_hunter_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 4342320,
+          "buildings": {},
+          "costs": {
+            "food": 6219889,
+            "gold": 7472163,
+            "ore": 7463867,
+            "stone": 4975911,
+            "timber": 6219889
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 433336,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_aggressive_hunter_ii"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10855740,
+          "buildings": {},
+          "costs": {
+            "food": 12439778,
+            "gold": 16812365,
+            "ore": 14927733,
+            "stone": 9951822,
+            "timber": 12439778
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1083341,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_aggressive_hunter_ii"
+            }
+          ],
+          "technolabe_count": 12
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Survival Tactics II",
+        "ja-JP": "討伐HP上昇II"
+      },
+      "row": 7
+    },
+    {
+      "column": 2,
+      "effect_label": "Monster Hunt Healing Effect",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.4%",
+        "3": "4.2%",
+        "4": "6.4%",
+        "5": "9%",
+        "6": "12%",
+        "7": "15.4%",
+        "8": "19.2%",
+        "9": "23.4%",
+        "10": "28%"
+      },
+      "id": "monster_hunt_hunter_recovery_ii",
+      "levels": [
+        {
+          "academy_level": 13,
+          "base_time_seconds": 2040,
+          "buildings": {},
+          "costs": {
+            "food": 1866,
+            "gold": 561,
+            "ore": 2240,
+            "stone": 1493,
+            "timber": 1866
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 199,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunter_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 3360,
+          "buildings": {},
+          "costs": {
+            "food": 6220,
+            "gold": 3737,
+            "ore": 7464,
+            "stone": 4976,
+            "timber": 6220
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 330,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 13,
+          "base_time_seconds": 6000,
+          "buildings": {},
+          "costs": {
+            "food": 18660,
+            "gold": 11209,
+            "ore": 22392,
+            "stone": 14928,
+            "timber": 18660
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 594,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 14,
+          "base_time_seconds": 17880,
+          "buildings": {},
+          "costs": {
+            "food": 62199,
+            "gold": 74722,
+            "ore": 74639,
+            "stone": 49760,
+            "timber": 62199
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1784,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 53640,
+          "buildings": {},
+          "costs": {
+            "food": 155498,
+            "gold": 186805,
+            "ore": 186597,
+            "stone": 124398,
+            "timber": 155498
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 5349,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 160860,
+          "buildings": {},
+          "costs": {
+            "food": 310995,
+            "gold": 373609,
+            "ore": 373194,
+            "stone": 248796,
+            "timber": 310995
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 16050,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 482520,
+          "buildings": {},
+          "costs": {
+            "food": 1554973,
+            "gold": 934021,
+            "ore": 1865967,
+            "stone": 1243978,
+            "timber": 1554973
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 48148,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "monster_hunt_hunter_recovery_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1447440,
+          "buildings": {},
+          "costs": {
+            "food": 3109945,
+            "gold": 1868041,
+            "ore": 3731934,
+            "stone": 2487956,
+            "timber": 3109945
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 144446,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 4342320,
+          "buildings": {},
+          "costs": {
+            "food": 6219889,
+            "gold": 7472163,
+            "ore": 7463867,
+            "stone": 4975911,
+            "timber": 6219889
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 433336,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_monster_hunter_ii"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10855740,
+          "buildings": {},
+          "costs": {
+            "food": 12439778,
+            "gold": 16812365,
+            "ore": 14927733,
+            "stone": 9951822,
+            "timber": 12439778
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1083341,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_monster_hunter_ii"
+            }
+          ],
+          "technolabe_count": 12
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Hunter Recovery II",
+        "ja-JP": "討伐回復量上昇II"
+      },
+      "row": 7
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Hunt Level 4 monsters"
+      },
+      "id": "monster_hunt_monster_hunt_iv",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2272620,
+          "buildings": {},
+          "costs": {
+            "food": 2809553,
+            "gold": 3787736,
+            "ore": 3433898,
+            "stone": 4370415,
+            "timber": 4994760
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 236653,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_survival_tactics_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "monster_hunt_hunter_recovery_ii"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Monster Hunt IV",
+        "ja-JP": "魔獣討伐IV"
+      },
+      "row": 8
+    },
+    {
+      "column": 0,
+      "effect_label": "MP",
+      "effect_values": {
+        "1": "20",
+        "2": "50",
+        "3": "90",
+        "4": "140",
+        "5": "200",
+        "6": "270",
+        "7": "350",
+        "8": "440",
+        "9": "540",
+        "10": "650"
+      },
+      "id": "monster_hunt_mp_advantage",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2040,
+          "buildings": {},
+          "costs": {
+            "food": 2240,
+            "gold": 673,
+            "ore": 2687,
+            "stone": 1792,
+            "timber": 2240
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 238,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_iv"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 3360,
+          "buildings": {},
+          "costs": {
+            "food": 7464,
+            "gold": 4484,
+            "ore": 8957,
+            "stone": 5972,
+            "timber": 7464
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 397,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 6000,
+          "buildings": {},
+          "costs": {
+            "food": 22392,
+            "gold": 13450,
+            "ore": 26870,
+            "stone": 17914,
+            "timber": 22392
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 713,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 17880,
+          "buildings": {},
+          "costs": {
+            "food": 74639,
+            "gold": 89666,
+            "ore": 89567,
+            "stone": 59711,
+            "timber": 74639
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 2140,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 53640,
+          "buildings": {},
+          "costs": {
+            "food": 186597,
+            "gold": 224165,
+            "ore": 223916,
+            "stone": 149278,
+            "timber": 186597
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 6420,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 160860,
+          "buildings": {},
+          "costs": {
+            "food": 373194,
+            "gold": 448330,
+            "ore": 447832,
+            "stone": 298555,
+            "timber": 373194
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 19259,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 482520,
+          "buildings": {},
+          "costs": {
+            "food": 1865967,
+            "gold": 1120825,
+            "ore": 2239160,
+            "stone": 1492774,
+            "timber": 1865967
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 57778,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1447440,
+          "buildings": {},
+          "costs": {
+            "food": 3731934,
+            "gold": 2241649,
+            "ore": 4478320,
+            "stone": 2985547,
+            "timber": 3731934
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 173335,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4342320,
+          "buildings": {},
+          "costs": {
+            "food": 7463867,
+            "gold": 8966595,
+            "ore": 8956640,
+            "stone": 5971094,
+            "timber": 7463867
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 520003,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_survival_tactics_ii"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10855740,
+          "buildings": {},
+          "costs": {
+            "food": 14927733,
+            "gold": 20174838,
+            "ore": 17913280,
+            "stone": 11942187,
+            "timber": 14927733
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1300009,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_survival_tactics_ii"
+            }
+          ],
+          "technolabe_count": 12
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "MP Advantage",
+        "ja-JP": "ヒーロー初期SP"
+      },
+      "row": 9
+    },
+    {
+      "column": 2,
+      "effect_label": "Monster Hunt DMG Boost",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.5%",
+        "3": "4.5%",
+        "4": "7%",
+        "5": "10%",
+        "6": "13.5%",
+        "7": "17.5%",
+        "8": "22%",
+        "9": "27%",
+        "10": "32.5%"
+      },
+      "id": "monster_hunt_monster_hunter_iii",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2520,
+          "buildings": {},
+          "costs": {
+            "food": 2240,
+            "gold": 673,
+            "ore": 1792,
+            "stone": 2687,
+            "timber": 2240
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 238,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunt_iv"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 4140,
+          "buildings": {},
+          "costs": {
+            "food": 7464,
+            "gold": 4484,
+            "ore": 5972,
+            "stone": 8957,
+            "timber": 7464
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 397,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 7500,
+          "buildings": {},
+          "costs": {
+            "food": 22392,
+            "gold": 13450,
+            "ore": 17914,
+            "stone": 26870,
+            "timber": 22392
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 713,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 22380,
+          "buildings": {},
+          "costs": {
+            "food": 74639,
+            "gold": 89666,
+            "ore": 59711,
+            "stone": 89567,
+            "timber": 74639
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 2140,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 67020,
+          "buildings": {},
+          "costs": {
+            "food": 186597,
+            "gold": 224165,
+            "ore": 149597,
+            "stone": 223916,
+            "timber": 186597
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 6420,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 201060,
+          "buildings": {},
+          "costs": {
+            "food": 373194,
+            "gold": 448330,
+            "ore": 298555,
+            "stone": 447832,
+            "timber": 373194
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 19259,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 603120,
+          "buildings": {},
+          "costs": {
+            "food": 1865967,
+            "gold": 1120825,
+            "ore": 1492774,
+            "stone": 2239160,
+            "timber": 1865967
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 57778,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1809300,
+          "buildings": {},
+          "costs": {
+            "food": 3731934,
+            "gold": 2241649,
+            "ore": 2985547,
+            "stone": 4478320,
+            "timber": 3731934
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 173335,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 7463867,
+            "gold": 8966595,
+            "ore": 5971094,
+            "stone": 8956640,
+            "timber": 7463867
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 520003,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_hunter_recovery_ii"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13569660,
+          "buildings": {},
+          "costs": {
+            "food": 14927733,
+            "gold": 20174838,
+            "ore": 11942187,
+            "stone": 17913280,
+            "timber": 14927733
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1300009,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_hunter_recovery_ii"
+            }
+          ],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Monster Hunter III",
+        "ja-JP": "討伐ダメージ上昇III"
+      },
+      "row": 9
+    },
+    {
+      "column": 0,
+      "effect_label": "Energy Regain Speed",
+      "effect_values": {
+        "1": "1%",
+        "2": "2.4%",
+        "3": "4.2%",
+        "4": "6.4%",
+        "5": "9%",
+        "6": "12%",
+        "7": "15.4%",
+        "8": "19.2%",
+        "9": "23.4%",
+        "10": "28%"
+      },
+      "id": "monster_hunt_energy_recovery_ii",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2520,
+          "buildings": {},
+          "costs": {
+            "food": 1881,
+            "gold": 785,
+            "ore": 2299,
+            "stone": 2926,
+            "timber": 3344
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 278,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_mp_advantage"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 4140,
+          "buildings": {},
+          "costs": {
+            "food": 6270,
+            "gold": 5231,
+            "ore": 7663,
+            "stone": 9753,
+            "timber": 11147
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 462,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 7500,
+          "buildings": {},
+          "costs": {
+            "food": 18809,
+            "gold": 15692,
+            "ore": 22989,
+            "stone": 29259,
+            "timber": 33439
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 832,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 22380,
+          "buildings": {},
+          "costs": {
+            "food": 62697,
+            "gold": 104611,
+            "ore": 76630,
+            "stone": 97528,
+            "timber": 111461
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 2497,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 67020,
+          "buildings": {},
+          "costs": {
+            "food": 156742,
+            "gold": 261256,
+            "ore": 191573,
+            "stone": 243820,
+            "timber": 278652
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 7490,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 201060,
+          "buildings": {},
+          "costs": {
+            "food": 313483,
+            "gold": 523052,
+            "ore": 383146,
+            "stone": 487640,
+            "timber": 557303
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 22469,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 603120,
+          "buildings": {},
+          "costs": {
+            "food": 1567412,
+            "gold": 1307629,
+            "ore": 1915726,
+            "stone": 2438197,
+            "timber": 2786511
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 67408,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1809300,
+          "buildings": {},
+          "costs": {
+            "food": 3134824,
+            "gold": 2615257,
+            "ore": 3831452,
+            "stone": 4876393,
+            "timber": 5573021
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 202224,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_mp_advantage"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 6269648,
+            "gold": 10461027,
+            "ore": 7662903,
+            "stone": 9752786,
+            "timber": 11146041
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 606671,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_mp_advantage"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13569660,
+          "buildings": {},
+          "costs": {
+            "food": 12539296,
+            "gold": 23537311,
+            "ore": 15325806,
+            "stone": 19505571,
+            "timber": 22292081
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1516667,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_mp_advantage"
+            }
+          ],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Energy Recovery II",
+        "ja-JP": "行動力回復II"
+      },
+      "row": 10
+    },
+    {
+      "column": 2,
+      "effect_label": "Energy Saver",
+      "effect_values": {
+        "1": "0.5%",
+        "2": "1.4%",
+        "3": "2.7%",
+        "4": "4.4%",
+        "5": "6.5%",
+        "6": "9%",
+        "7": "11.9%",
+        "8": "15.2%",
+        "9": "18.9%",
+        "10": "23%"
+      },
+      "id": "monster_hunt_energy_saver_ii",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2520,
+          "buildings": {},
+          "costs": {
+            "food": 2799,
+            "gold": 841,
+            "ore": 2240,
+            "stone": 3359,
+            "timber": 2799
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 298,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "monster_hunt_monster_hunter_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 4140,
+          "buildings": {},
+          "costs": {
+            "food": 9330,
+            "gold": 5605,
+            "ore": 7464,
+            "stone": 11196,
+            "timber": 9330
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 495,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 7500,
+          "buildings": {},
+          "costs": {
+            "food": 27990,
+            "gold": 16813,
+            "ore": 22392,
+            "stone": 33588,
+            "timber": 27990
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 892,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 22380,
+          "buildings": {},
+          "costs": {
+            "food": 93299,
+            "gold": 112083,
+            "ore": 74639,
+            "stone": 111958,
+            "timber": 93299
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 2675,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 67020,
+          "buildings": {},
+          "costs": {
+            "food": 233246,
+            "gold": 280207,
+            "ore": 186597,
+            "stone": 279895,
+            "timber": 233246
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 8024,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 201060,
+          "buildings": {},
+          "costs": {
+            "food": 466492,
+            "gold": 560413,
+            "ore": 373194,
+            "stone": 559790,
+            "timber": 466492
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 24075,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 603120,
+          "buildings": {},
+          "costs": {
+            "food": 2332459,
+            "gold": 1401031,
+            "ore": 1865967,
+            "stone": 2798950,
+            "timber": 2332459
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 72222,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1809300,
+          "buildings": {},
+          "costs": {
+            "food": 4664917,
+            "gold": 2802061,
+            "ore": 3731934,
+            "stone": 5597900,
+            "timber": 4664917
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 216669,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_monster_hunter_iii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 9329833,
+            "gold": 11208244,
+            "ore": 7463867,
+            "stone": 11195800,
+            "timber": 9329833
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 650004,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_monster_hunter_iii"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13569660,
+          "buildings": {},
+          "costs": {
+            "food": 18659666,
+            "gold": 25218548,
+            "ore": 14927733,
+            "stone": 22391599,
+            "timber": 18659666
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1625011,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_monster_hunter_iii"
+            }
+          ],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Energy Saver II",
+        "ja-JP": "行動力消耗低下II"
+      },
+      "row": 10
+    },
+    {
+      "column": 1,
+      "effect_label": "Max energy",
+      "effect_values": {
+        "1": "400",
+        "2": "1,000",
+        "3": "1,800",
+        "4": "2,800",
+        "5": "4,000",
+        "6": "5,400",
+        "7": "7,000",
+        "8": "8,800",
+        "9": "10,800",
+        "10": "13,000"
+      },
+      "id": "monster_hunt_energy_limit_ii",
+      "levels": [
+        {
+          "academy_level": 20,
+          "base_time_seconds": 2520,
+          "buildings": {},
+          "costs": {
+            "food": 2284,
+            "gold": 953,
+            "ore": 2792,
+            "stone": 3553,
+            "timber": 4061
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 337,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "monster_hunt_energy_recovery_ii"
+            },
+            {
+              "level": 6,
+              "research_id": "monster_hunt_energy_saver_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 4140,
+          "buildings": {},
+          "costs": {
+            "food": 7614,
+            "gold": 6352,
+            "ore": 9305,
+            "stone": 11843,
+            "timber": 13535
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 562,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 7500,
+          "buildings": {},
+          "costs": {
+            "food": 22840,
+            "gold": 19055,
+            "ore": 27915,
+            "stone": 35529,
+            "timber": 40604
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1010,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 22380,
+          "buildings": {},
+          "costs": {
+            "food": 76132,
+            "gold": 127027,
+            "ore": 93050,
+            "stone": 118427,
+            "timber": 135345
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 3032,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 67020,
+          "buildings": {},
+          "costs": {
+            "food": 190329,
+            "gold": 317567,
+            "ore": 232624,
+            "stone": 296067,
+            "timber": 338362
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 9095,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 201060,
+          "buildings": {},
+          "costs": {
+            "food": 380658,
+            "gold": 635134,
+            "ore": 465248,
+            "stone": 592134,
+            "timber": 676724
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 27284,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 603120,
+          "buildings": {},
+          "costs": {
+            "food": 1903286,
+            "gold": 1587835,
+            "ore": 2326239,
+            "stone": 2960667,
+            "timber": 3383620
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 81852,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1809300,
+          "buildings": {},
+          "costs": {
+            "food": 3806572,
+            "gold": 3175669,
+            "ore": 4652477,
+            "stone": 5921334,
+            "timber": 6767239
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 245557,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "monster_hunt_energy_recovery_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "monster_hunt_energy_saver_ii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 5427900,
+          "buildings": {},
+          "costs": {
+            "food": 7613144,
+            "gold": 12702676,
+            "ore": 9304954,
+            "stone": 11842668,
+            "timber": 13534478
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 736672,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "monster_hunt_energy_recovery_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "monster_hunt_energy_saver_ii"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13569660,
+          "buildings": {},
+          "costs": {
+            "food": 15226288,
+            "gold": 28581021,
+            "ore": 18609907,
+            "stone": 23685336,
+            "timber": 27068956
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1841680,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_energy_recovery_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "monster_hunt_energy_saver_ii"
+            }
+          ],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Energy Limit II",
+        "ja-JP": "行動力上限II"
+      },
+      "row": 11
+    },
+    {
+      "column": 1,
+      "effect_label": "Upgrade Results",
+      "effect_values": {
+        "1": "Hunt Level 5 monsters"
+      },
+      "id": "monster_hunt_monster_hunt_v",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9090480,
+          "buildings": {},
+          "costs": {
+            "food": 8779851,
+            "gold": 15150942,
+            "ore": 10730929,
+            "stone": 13657546,
+            "timber": 15608623
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 946612,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "monster_hunt_energy_limit_ii"
+            }
+          ],
+          "technolabe_count": 10
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Monster Hunt V",
+        "ja-JP": "魔獣討伐V"
+      },
+      "row": 12
+    }
+  ],
+  "platform": "pwa",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "titles": {
+    "en-US": "Monster Hunt",
+    "ja-JP": "魔獣討伐"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

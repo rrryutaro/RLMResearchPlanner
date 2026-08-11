@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
+from math import ceil
 from typing import Iterable
 
 from rlm_research_planner.domain.models import PaidItem, PaidOffer, PaidValuation
@@ -80,6 +82,73 @@ MERGING_SPEEDUP_GEM_VALUE_BY_SECONDS = {
     3 * 24 * 60 * 60: 8_800.0,
     7 * 24 * 60 * 60: 20_000.0,
 }
+
+
+@dataclass(frozen=True)
+class GemSpeedupPurchase:
+    gems: int
+    purchased_seconds: int
+
+
+@lru_cache(maxsize=1)
+def _standard_speedup_gem_costs() -> tuple[tuple[int, ...], tuple[int, ...]]:
+    """Build the cheapest Gem Mall allocation for up to one 30-day item."""
+
+    presets = tuple(
+        sorted(
+            (
+                max(1, int(duration_seconds) // 60),
+                max(0, int(gem_cost)),
+            )
+            for duration_seconds, gem_cost in SPEEDUP_GEM_VALUE_BY_SECONDS.items()
+            if duration_seconds > 0 and gem_cost > 0
+        )
+    )
+    maximum_minutes = max(duration for duration, _cost in presets)
+    costs = [0] + [10**18] * maximum_minutes
+    purchased_minutes = [0] * (maximum_minutes + 1)
+    for target_minutes in range(1, maximum_minutes + 1):
+        best_cost = 10**18
+        best_minutes = 0
+        for duration, cost in presets:
+            previous = max(0, target_minutes - duration)
+            candidate_cost = cost + costs[previous]
+            candidate_minutes = duration + purchased_minutes[previous]
+            if (candidate_cost, candidate_minutes) < (best_cost, best_minutes):
+                best_cost = candidate_cost
+                best_minutes = candidate_minutes
+        costs[target_minutes] = best_cost
+        purchased_minutes[target_minutes] = best_minutes
+    return tuple(costs), tuple(purchased_minutes)
+
+
+def minimum_gems_for_speedup_seconds(seconds: int) -> GemSpeedupPurchase:
+    """Return the cheapest standard Gem Mall speed-ups covering ``seconds``."""
+
+    required_minutes = max(0, ceil(max(0, int(seconds)) / 60))
+    if required_minutes <= 0:
+        return GemSpeedupPurchase(0, 0)
+    costs, purchased_minutes = _standard_speedup_gem_costs()
+    maximum_minutes = len(costs) - 1
+    maximum_cost = int(SPEEDUP_GEM_VALUE_BY_SECONDS[maximum_minutes * 60])
+    full_items, remainder = divmod(required_minutes, maximum_minutes)
+    if remainder <= 0:
+        return GemSpeedupPurchase(
+            full_items * maximum_cost,
+            full_items * maximum_minutes * 60,
+        )
+    with_remainder = GemSpeedupPurchase(
+        full_items * maximum_cost + costs[remainder],
+        (full_items * maximum_minutes + purchased_minutes[remainder]) * 60,
+    )
+    with_extra_full_item = GemSpeedupPurchase(
+        (full_items + 1) * maximum_cost,
+        (full_items + 1) * maximum_minutes * 60,
+    )
+    return min(
+        (with_remainder, with_extra_full_item),
+        key=lambda value: (value.gems, value.purchased_seconds),
+    )
 
 
 @dataclass(frozen=True)

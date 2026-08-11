@@ -1,0 +1,6321 @@
+{
+  "category_id": "familiar_battles",
+  "display_connections": [
+    [
+      "familiar_battles_familiar_battle_slot_i",
+      "familiar_battles_gym_training_iii"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_i",
+      "familiar_battles_pact_merging_speed_iii"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_ii",
+      "familiar_battles_familiarity_cavalry_hp_i"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_ii",
+      "familiar_battles_familiarity_infantry_hp_i"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_ii",
+      "familiar_battles_familiarity_ranged_hp_i"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_iii",
+      "familiar_battles_familiarity_cavalry_def_ii"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_iii",
+      "familiar_battles_familiarity_infantry_def_ii"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_iii",
+      "familiar_battles_familiarity_ranged_def_ii"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_iv",
+      "familiar_battles_gym_membership_ii"
+    ],
+    [
+      "familiar_battles_familiar_battle_slot_iv",
+      "familiar_battles_skillstone_merging_speed_ii"
+    ],
+    [
+      "familiar_battles_familiar_defense",
+      "familiar_battles_familiar_battle_slot_v"
+    ],
+    [
+      "familiar_battles_familiar_offense",
+      "familiar_battles_familiar_battle_slot_v"
+    ],
+    [
+      "familiar_battles_familiar_offense",
+      "familiar_battles_familiar_defense"
+    ],
+    [
+      "familiar_battles_familiar_offense",
+      "familiar_battles_familiar_tenacity"
+    ],
+    [
+      "familiar_battles_familiar_tenacity",
+      "familiar_battles_familiar_battle_slot_v"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_atk_i",
+      "familiar_battles_familiar_battle_slot_ii"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_atk_ii",
+      "familiar_battles_familiar_battle_slot_iv"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_def_i",
+      "familiar_battles_familiar_battle_slot_iii"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_def_i",
+      "familiar_battles_familiarity_cavalry_def_ii"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_def_ii",
+      "familiar_battles_familiarity_cavalry_hp_ii"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_hp_i",
+      "familiar_battles_familiarity_cavalry_def_i"
+    ],
+    [
+      "familiar_battles_familiarity_cavalry_hp_ii",
+      "familiar_battles_familiarity_cavalry_atk_ii"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_atk_i",
+      "familiar_battles_familiar_battle_slot_ii"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_atk_ii",
+      "familiar_battles_familiar_battle_slot_iv"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_def_i",
+      "familiar_battles_familiar_battle_slot_iii"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_def_i",
+      "familiar_battles_familiarity_infantry_def_ii"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_def_ii",
+      "familiar_battles_familiarity_infantry_hp_ii"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_hp_i",
+      "familiar_battles_familiarity_infantry_def_i"
+    ],
+    [
+      "familiar_battles_familiarity_infantry_hp_ii",
+      "familiar_battles_familiarity_infantry_atk_ii"
+    ],
+    [
+      "familiar_battles_familiarity_ranged_atk_i",
+      "familiar_battles_familiar_battle_slot_ii"
+    ],
+    [
+      "familiar_battles_familiarity_ranged_atk_ii",
+      "familiar_battles_familiar_battle_slot_iv"
+    ],
+    [
+      "familiar_battles_familiarity_ranged_def_i",
+      "familiar_battles_familiar_battle_slot_iii"
+    ],
+    [
+      "familiar_battles_familiarity_ranged_def_ii",
+      "familiar_battles_familiarity_ranged_hp_ii"
+    ],
+    [
+      "familiar_battles_familiarity_ranged_hp_i",
+      "familiar_battles_familiarity_ranged_def_i"
+    ],
+    [
+      "familiar_battles_familiarity_ranged_hp_ii",
+      "familiar_battles_familiarity_ranged_atk_ii"
+    ],
+    [
+      "familiar_battles_gym_membership_ii",
+      "familiar_battles_familiar_offense"
+    ],
+    [
+      "familiar_battles_gym_training_iii",
+      "familiar_battles_familiarity_cavalry_atk_i"
+    ],
+    [
+      "familiar_battles_gym_training_iii",
+      "familiar_battles_familiarity_ranged_atk_i"
+    ],
+    [
+      "familiar_battles_pact_merging_speed_iii",
+      "familiar_battles_familiarity_cavalry_atk_i"
+    ],
+    [
+      "familiar_battles_pact_merging_speed_iii",
+      "familiar_battles_familiarity_infantry_atk_i"
+    ],
+    [
+      "familiar_battles_pact_merging_speed_iii",
+      "familiar_battles_familiarity_ranged_atk_i"
+    ],
+    [
+      "familiar_battles_skillstone_merging_speed_ii",
+      "familiar_battles_familiar_offense"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 1,
+      "effect_label": "Upgrade Result",
+      "effect_values": {
+        "1": "Unlocks 1st Familiar Battle Slot"
+      },
+      "id": "familiar_battles_familiar_battle_slot_i",
+      "levels": [
+        {
+          "academy_level": 21,
+          "base_time_seconds": 41220,
+          "buildings": {},
+          "costs": {
+            "food": 8550001,
+            "gold": 5512500,
+            "ore": 2137500,
+            "stone": 2137500,
+            "timber": 2137500
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 3032,
+          "requirements": [],
+          "technolabe_count": 1
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Familiar Battle Slot I",
+        "ja-JP": "召喚獣の編成I"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Merging Speed Boost (Pacts)",
+      "effect_values": {
+        "1": "0.5%",
+        "2": "1.0%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%",
+        "10": "20%"
+      },
+      "id": "familiar_battles_pact_merging_speed_iii",
+      "levels": [
+        {
+          "academy_level": 21,
+          "base_time_seconds": 148980,
+          "buildings": {},
+          "costs": {
+            "food": 148288,
+            "gold": 121102,
+            "ore": 59315,
+            "stone": 88973,
+            "timber": 74144
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 12453,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 521340,
+          "buildings": {},
+          "costs": {
+            "food": 519006,
+            "gold": 423855,
+            "ore": 207603,
+            "stone": 311404,
+            "timber": 259503
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 41716,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 633060,
+          "buildings": {},
+          "costs": {
+            "food": 630222,
+            "gold": 514681,
+            "ore": 252089,
+            "stone": 378133,
+            "timber": 315111
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 52301,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 744780,
+          "buildings": {},
+          "costs": {
+            "food": 741437,
+            "gold": 605507,
+            "ore": 296575,
+            "stone": 444862,
+            "timber": 370719
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 62885,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 893700,
+          "buildings": {},
+          "costs": {
+            "food": 889724,
+            "gold": 726608,
+            "ore": 355890,
+            "stone": 533835,
+            "timber": 444862
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 76583,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1191600,
+          "buildings": {},
+          "costs": {
+            "food": 1186299,
+            "gold": 968811,
+            "ore": 474520,
+            "stone": 711780,
+            "timber": 593150
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 102733,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1564020,
+          "buildings": {},
+          "costs": {
+            "food": 1557017,
+            "gold": 1271564,
+            "ore": 622807,
+            "stone": 934211,
+            "timber": 778509
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 135733,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2234280,
+          "buildings": {},
+          "costs": {
+            "food": 2224310,
+            "gold": 1816520,
+            "ore": 889724,
+            "stone": 1334586,
+            "timber": 1112155
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 191146,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3127980,
+          "buildings": {},
+          "costs": {
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1245614,
+            "stone": 1868424,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 262749,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4096140,
+          "buildings": {},
+          "costs": {
+            "food": 4077192,
+            "gold": 3330287,
+            "ore": 1631161,
+            "stone": 2446741,
+            "timber": 2038951
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 342444,
+          "requirements": [],
+          "technolabe_count": 2
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Pact Merging Speed III",
+        "ja-JP": "召喚の書精製速度III"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Lv EXP Boost",
+      "effect_values": {
+        "1": "0.5%",
+        "2": "1.0%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%",
+        "10": "20%"
+      },
+      "id": "familiar_battles_gym_training_iii",
+      "levels": [
+        {
+          "academy_level": 21,
+          "base_time_seconds": 148980,
+          "buildings": {},
+          "costs": {
+            "food": 148288,
+            "gold": 121102,
+            "ore": 59315,
+            "stone": 88973,
+            "timber": 74144
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 12453,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 521340,
+          "buildings": {},
+          "costs": {
+            "food": 519006,
+            "gold": 423855,
+            "ore": 207603,
+            "stone": 311404,
+            "timber": 259503
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 41716,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 633060,
+          "buildings": {},
+          "costs": {
+            "food": 630222,
+            "gold": 514681,
+            "ore": 252089,
+            "stone": 378133,
+            "timber": 315111
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 52301,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 744780,
+          "buildings": {},
+          "costs": {
+            "food": 741437,
+            "gold": 605507,
+            "ore": 296575,
+            "stone": 444862,
+            "timber": 370719
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 62885,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 893700,
+          "buildings": {},
+          "costs": {
+            "food": 889724,
+            "gold": 726608,
+            "ore": 355890,
+            "stone": 533835,
+            "timber": 444862
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 76583,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1191600,
+          "buildings": {},
+          "costs": {
+            "food": 1186299,
+            "gold": 968811,
+            "ore": 474520,
+            "stone": 711780,
+            "timber": 593150
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 102733,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1564020,
+          "buildings": {},
+          "costs": {
+            "food": 1557017,
+            "gold": 1271564,
+            "ore": 622807,
+            "stone": 934211,
+            "timber": 778509
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 135733,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2234280,
+          "buildings": {},
+          "costs": {
+            "food": 2224310,
+            "gold": 1816520,
+            "ore": 889724,
+            "stone": 1334586,
+            "timber": 1112155
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 191146,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3127980,
+          "buildings": {},
+          "costs": {
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1245614,
+            "stone": 1868424,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 262749,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4096140,
+          "buildings": {},
+          "costs": {
+            "food": 4077192,
+            "gold": 3330287,
+            "ore": 1631161,
+            "stone": 2446741,
+            "timber": 2038951
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 342444,
+          "requirements": [],
+          "technolabe_count": 2
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gym Training III",
+        "ja-JP": "調教経験値III"
+      },
+      "row": 1
+    },
+    {
+      "column": 0,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_infantry_atk_i",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 266918,
+            "gold": 181652,
+            "ore": 133549,
+            "stone": 66730,
+            "timber": 111216
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 19925,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 934211,
+            "gold": 635782,
+            "ore": 467106,
+            "stone": 233553,
+            "timber": 389255
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 66745,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1134399,
+            "gold": 772021,
+            "ore": 567200,
+            "stone": 283600,
+            "timber": 472666
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 83681,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1334586,
+            "gold": 908260,
+            "ore": 667293,
+            "stone": 333647,
+            "timber": 556078
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 100617,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1601504,
+            "gold": 1089912,
+            "ore": 800752,
+            "stone": 400376,
+            "timber": 667293
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 122532,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2135338,
+            "gold": 1453216,
+            "ore": 1067669,
+            "stone": 533835,
+            "timber": 889724
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 164374,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2802631,
+            "gold": 1907346,
+            "ore": 1401316,
+            "stone": 700658,
+            "timber": 1167763
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 217172,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 4003758,
+            "gold": 2724780,
+            "ore": 2001879,
+            "stone": 1000940,
+            "timber": 1668233
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 305834,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 5605261,
+            "gold": 3814692,
+            "ore": 2802631,
+            "stone": 1401316,
+            "timber": 2335526
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 420398,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 63,
+            "food": 7340223,
+            "gold": 4995430,
+            "ore": 3670112,
+            "stone": 1835056,
+            "timber": 3058427
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 547911,
+          "requirements": [],
+          "technolabe_count": 3
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Infantry ATK) I",
+        "ja-JP": "召喚獣出陣時歩兵攻撃力I"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_ranged_atk_i",
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 238320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 266918,
+            "gold": 181652,
+            "ore": 133459,
+            "stone": 66730,
+            "timber": 11216
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 19925,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_pact_merging_speed_iii"
+            },
+            {
+              "level": 1,
+              "research_id": "familiar_battles_gym_training_iii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 834120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 934211,
+            "gold": 635782,
+            "ore": 467106,
+            "stone": 233553,
+            "timber": 389255
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 66745,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1012860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1134399,
+            "gold": 772021,
+            "ore": 567200,
+            "stone": 283600,
+            "timber": 472666
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 83681,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1191600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1334586,
+            "gold": 908260,
+            "ore": 667293,
+            "stone": 333647,
+            "timber": 556078
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 100617,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1429920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1601504,
+            "gold": 1089912,
+            "ore": 800752,
+            "stone": 400976,
+            "timber": 667293
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 122532,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1906560,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2135338,
+            "gold": 1453216,
+            "ore": 1067669,
+            "stone": 533835,
+            "timber": 889724
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 164374,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2502360,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2802631,
+            "gold": 1907346,
+            "ore": 1401316,
+            "stone": 700658,
+            "timber": 1167763
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 217172,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3574800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 4003758,
+            "gold": 2724780,
+            "ore": 2001879,
+            "stone": 1000940,
+            "timber": 1668233
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 305834,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_pact_merging_speed_iii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_gym_training_iii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5004720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 5605261,
+            "gold": 3814692,
+            "ore": 2802631,
+            "stone": 1401316,
+            "timber": 2335526
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 420398,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_pact_merging_speed_iii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_gym_training_iii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6553800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 63,
+            "food": 7340223,
+            "gold": 4995430,
+            "ore": 3670112,
+            "stone": 1835056,
+            "timber": 3058427
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 547911,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_pact_merging_speed_iii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_gym_training_iii"
+            }
+          ],
+          "technolabe_count": 3
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Ranged ATK) I",
+        "ja-JP": "召喚獣出陣時弓兵攻撃力I"
+      },
+      "row": 2
+    },
+    {
+      "column": 2,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_cavalry_atk_i",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 238320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 266918,
+            "gold": 181652,
+            "ore": 133459,
+            "stone": 66730,
+            "timber": 11216
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 19925,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 834120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 934211,
+            "gold": 635782,
+            "ore": 467106,
+            "stone": 233553,
+            "timber": 389255
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 66745,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1012860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1134399,
+            "gold": 772021,
+            "ore": 567200,
+            "stone": 283600,
+            "timber": 472666
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 83681,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1191600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1334586,
+            "gold": 908260,
+            "ore": 667293,
+            "stone": 333647,
+            "timber": 556078
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 100617,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1429920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1601504,
+            "gold": 1089912,
+            "ore": 800752,
+            "stone": 400976,
+            "timber": 667293
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 122532,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1906560,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2135338,
+            "gold": 1453216,
+            "ore": 1067669,
+            "stone": 533835,
+            "timber": 889724
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 164374,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2502360,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2802631,
+            "gold": 1907346,
+            "ore": 1401316,
+            "stone": 700658,
+            "timber": 1167763
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 217172,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3574800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 4003758,
+            "gold": 2724780,
+            "ore": 2001879,
+            "stone": 1000940,
+            "timber": 1668233
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 305834,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5004720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 5605261,
+            "gold": 3814692,
+            "ore": 2802631,
+            "stone": 1401316,
+            "timber": 2335526
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 420398,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6553800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 63,
+            "food": 7340223,
+            "gold": 4995430,
+            "ore": 3670112,
+            "stone": 1835056,
+            "timber": 3058427
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 547911,
+          "requirements": [],
+          "technolabe_count": 3
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Cavalry ATK) I",
+        "ja-JP": "召喚獣出陣時騎兵攻撃力I"
+      },
+      "row": 2
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Familiar Battle Slot II"
+      },
+      "id": "familiar_battles_familiar_battle_slot_ii",
+      "levels": [
+        {
+          "academy_level": 22,
+          "base_time_seconds": 4946100,
+          "buildings": {},
+          "costs": {
+            "food": 17100000,
+            "gold": 11025000,
+            "ore": 4275000,
+            "stone": 4275000,
+            "timber": 4275000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 363830,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_infantry_atk_i"
+            },
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_i"
+            },
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_ranged_atk_i"
+            }
+          ],
+          "technolabe_count": 2
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Familiar Battle Slot II",
+        "ja-JP": "召喚獣の編成II"
+      },
+      "row": 3
+    },
+    {
+      "column": 0,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_infantry_hp_i",
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 357480,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 296575,
+            "gold": 242203,
+            "ore": 148288,
+            "stone": 148288,
+            "timber": 148288
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 29887,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiar_battle_slot_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1251180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1038012,
+            "gold": 847710,
+            "ore": 519006,
+            "stone": 519006,
+            "timber": 519006
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 100118,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1519320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1260443,
+            "gold": 1029362,
+            "ore": 630222,
+            "stone": 630222,
+            "timber": 630222
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 125521,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1787400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1482874,
+            "gold": 1211014,
+            "ore": 741437,
+            "stone": 741737,
+            "timber": 741437
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 150925,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2144880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1779448,
+            "gold": 1453216,
+            "ore": 889724,
+            "stone": 889724,
+            "timber": 889724
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 183799,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2859840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2372598,
+            "gold": 1937622,
+            "ore": 1186299,
+            "stone": 1186299,
+            "timber": 1186299
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 246561,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3753540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1557017,
+            "stone": 1557017,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 325758,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5362200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 53,
+            "food": 4448620,
+            "gold": 3633040,
+            "ore": 2224310,
+            "stone": 2224310,
+            "timber": 2224310
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 458751,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_atk_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7507080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 6228068,
+            "gold": 5086256,
+            "ore": 3114034,
+            "stone": 3114034,
+            "timber": 3114034
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 630596,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_infantry_atk_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9830700,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 84,
+            "food": 8155803,
+            "gold": 6660573,
+            "ore": 4077902,
+            "stone": 4077902,
+            "timber": 4077902
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 821867,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_atk_i"
+            }
+          ],
+          "technolabe_count": 4
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Infantry HP) I",
+        "ja-JP": "召喚獣出陣時歩兵HPI"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_ranged_hp_i",
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 357480,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 296575,
+            "gold": 242203,
+            "ore": 148288,
+            "stone": 148288,
+            "timber": 148288
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 29887,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiar_battle_slot_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1251180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1038012,
+            "gold": 847710,
+            "ore": 519006,
+            "stone": 519006,
+            "timber": 519006
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 100118,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1519320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1260443,
+            "gold": 1029362,
+            "ore": 630222,
+            "stone": 630222,
+            "timber": 630222
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 125521,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1787400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1482874,
+            "gold": 1211014,
+            "ore": 741437,
+            "stone": 741737,
+            "timber": 741437
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 150925,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2144880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1779448,
+            "gold": 1453216,
+            "ore": 889724,
+            "stone": 889724,
+            "timber": 889724
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 183799,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2859840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2372598,
+            "gold": 1937622,
+            "ore": 1186299,
+            "stone": 1186299,
+            "timber": 1186299
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 246561,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3753540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1557017,
+            "stone": 1557017,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 325758,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5362200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 53,
+            "food": 4448620,
+            "gold": 3633040,
+            "ore": 2224310,
+            "stone": 2224310,
+            "timber": 2224310
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 458751,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_atk_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7507080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 6228068,
+            "gold": 5086256,
+            "ore": 3114034,
+            "stone": 3114034,
+            "timber": 3114034
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 630596,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_ranged_atk_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9830700,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 84,
+            "food": 8155803,
+            "gold": 6660573,
+            "ore": 4077902,
+            "stone": 4077902,
+            "timber": 4077902
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 821867,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_atk_i"
+            }
+          ],
+          "technolabe_count": 4
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Ranged HP) I",
+        "ja-JP": "召喚獣出陣時弓兵HPI"
+      },
+      "row": 4
+    },
+    {
+      "column": 2,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_cavalry_hp_i",
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 357480,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 296575,
+            "gold": 242203,
+            "ore": 148288,
+            "stone": 148288,
+            "timber": 148288
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 29887,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiar_battle_slot_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1251180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1038012,
+            "gold": 847710,
+            "ore": 519006,
+            "stone": 519006,
+            "timber": 519006
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 100118,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1519320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1260443,
+            "gold": 1029362,
+            "ore": 630222,
+            "stone": 630222,
+            "timber": 630222
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 125521,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1787400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1482874,
+            "gold": 1211014,
+            "ore": 741437,
+            "stone": 741737,
+            "timber": 741437
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 150925,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2144880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1779448,
+            "gold": 1453216,
+            "ore": 889724,
+            "stone": 889724,
+            "timber": 889724
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 183799,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2859840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2372598,
+            "gold": 1937622,
+            "ore": 1186299,
+            "stone": 1186299,
+            "timber": 1186299
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 246561,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3753540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1557017,
+            "stone": 1557017,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 325758,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5362200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 53,
+            "food": 4448620,
+            "gold": 3633040,
+            "ore": 2224310,
+            "stone": 2224310,
+            "timber": 2224310
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 458751,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7507080,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 6228068,
+            "gold": 5086256,
+            "ore": 3114034,
+            "stone": 3114034,
+            "timber": 3114034
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 630596,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9830700,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 84,
+            "food": 8155803,
+            "gold": 6660573,
+            "ore": 4077902,
+            "stone": 4077902,
+            "timber": 4077902
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 821867,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_i"
+            }
+          ],
+          "technolabe_count": 4
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Cavalry HP) I",
+        "ja-JP": "召喚獣出陣時騎兵HPI"
+      },
+      "row": 4
+    },
+    {
+      "column": 0,
+      "effect_label": "Def. Boost",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_infantry_def_i",
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 476640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 533835,
+            "gold": 363304,
+            "ore": 266918,
+            "stone": 222431,
+            "timber": 133459
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 39849,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1668240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1868421,
+            "gold": 1271564,
+            "ore": 934211,
+            "stone": 778509,
+            "timber": 467106
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 133491,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2025720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2268797,
+            "gold": 1544042,
+            "ore": 1134399,
+            "stone": 945332,
+            "timber": 567200
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 167362,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2383200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2669172,
+            "gold": 1816520,
+            "ore": 1334586,
+            "stone": 1112155,
+            "timber": 667293
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 201233,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2859840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 3203007,
+            "gold": 2179824,
+            "ore": 1601504,
+            "stone": 1334586,
+            "timber": 800752
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 245065,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3813120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 4270675,
+            "gold": 2906432,
+            "ore": 2135338,
+            "stone": 1779448,
+            "timber": 1067669
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 328747,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5004720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 5605261,
+            "gold": 3814692,
+            "ore": 2802631,
+            "stone": 2335526,
+            "timber": 1401316
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 434345,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7149600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 80,
+            "food": 8007516,
+            "gold": 5449560,
+            "ore": 4003758,
+            "stone": 3336465,
+            "timber": 2001879
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 611668,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10009440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 99,
+            "food": 11210522,
+            "gold": 7629383,
+            "ore": 5605261,
+            "stone": 4671051,
+            "timber": 2802631
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 840795,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13107600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 125,
+            "food": 14680446,
+            "gold": 9990859,
+            "ore": 7340223,
+            "stone": 6116853,
+            "timber": 3670112
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1096822,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Infantry DEF) I",
+        "ja-JP": "召喚獣出陣時歩兵防御力I"
+      },
+      "row": 5
+    },
+    {
+      "column": 1,
+      "effect_label": "Def. Boost",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_ranged_def_i",
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 476640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 533835,
+            "gold": 363304,
+            "ore": 266918,
+            "stone": 222431,
+            "timber": 133459
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 39849,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1668240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1868421,
+            "gold": 1271564,
+            "ore": 934211,
+            "stone": 778509,
+            "timber": 467106
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 133491,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2025720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2268797,
+            "gold": 1544042,
+            "ore": 1134399,
+            "stone": 945332,
+            "timber": 567200
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 167362,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2383200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2669172,
+            "gold": 1816520,
+            "ore": 1334586,
+            "stone": 1112155,
+            "timber": 667293
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 201233,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2859840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 3203007,
+            "gold": 2179824,
+            "ore": 1601504,
+            "stone": 1334586,
+            "timber": 800752
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 245065,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3813120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 4270675,
+            "gold": 2906432,
+            "ore": 2135338,
+            "stone": 1779448,
+            "timber": 1067669
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 328747,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5004720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 5605261,
+            "gold": 3814692,
+            "ore": 2802631,
+            "stone": 2335526,
+            "timber": 1401316
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 434345,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7149600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 80,
+            "food": 8007516,
+            "gold": 5449560,
+            "ore": 4003758,
+            "stone": 3336465,
+            "timber": 2001879
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 611668,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10009440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 99,
+            "food": 11210522,
+            "gold": 7629383,
+            "ore": 5605261,
+            "stone": 4671051,
+            "timber": 2802631
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 840795,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13107600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 125,
+            "food": 14680446,
+            "gold": 9990859,
+            "ore": 7340223,
+            "stone": 6116853,
+            "timber": 3670112
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1096822,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Ranged DEF) I",
+        "ja-JP": "召喚獣出陣時弓兵防御力I"
+      },
+      "row": 5
+    },
+    {
+      "column": 2,
+      "effect_label": "Def. Boost",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_cavalry_def_i",
+      "levels": [
+        {
+          "academy_level": 23,
+          "base_time_seconds": 476640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 533835,
+            "gold": 363304,
+            "ore": 266918,
+            "stone": 222431,
+            "timber": 133459
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 39849,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 1668240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 1868421,
+            "gold": 1271564,
+            "ore": 934211,
+            "stone": 778509,
+            "timber": 467106
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 133491,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2025720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2268797,
+            "gold": 1544042,
+            "ore": 1134399,
+            "stone": 945332,
+            "timber": 567200
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 167362,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2383200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 2669172,
+            "gold": 1816520,
+            "ore": 1334586,
+            "stone": 1112155,
+            "timber": 667293
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 201233,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2859840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 3203007,
+            "gold": 2179824,
+            "ore": 1601504,
+            "stone": 1334586,
+            "timber": 800752
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 245065,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3813120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 4270675,
+            "gold": 2906432,
+            "ore": 2135338,
+            "stone": 1779448,
+            "timber": 1067669
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 328747,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5004720,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 0,
+            "food": 5605261,
+            "gold": 3814692,
+            "ore": 2802631,
+            "stone": 2335526,
+            "timber": 1401316
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 434345,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7149600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 80,
+            "food": 8007516,
+            "gold": 5449560,
+            "ore": 4003758,
+            "stone": 3336465,
+            "timber": 2001879
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 611668,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10009440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 99,
+            "food": 11210522,
+            "gold": 7629383,
+            "ore": 5605261,
+            "stone": 4671051,
+            "timber": 2802631
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 840795,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13107600,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 125,
+            "food": 14680446,
+            "gold": 9990859,
+            "ore": 7340223,
+            "stone": 6116853,
+            "timber": 3670112
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1096822,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Cavalry DEF) I",
+        "ja-JP": "召喚獣出陣時騎兵防御力I"
+      },
+      "row": 5
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlocks",
+      "effect_values": {
+        "1": "3rd Familiar Battle Slot"
+      },
+      "id": "familiar_battles_familiar_battle_slot_iii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 12365160,
+          "buildings": {},
+          "costs": {
+            "food": 25650000,
+            "gold": 16537500,
+            "ore": 6412501,
+            "stone": 6412501,
+            "timber": 6412501
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 909575,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            },
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            },
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 5
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Familiar Battle Slot III",
+        "ja-JP": "召喚獣の編成III"
+      },
+      "row": 6
+    },
+    {
+      "column": 0,
+      "effect_label": "DEF+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_infantry_def_ii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 744780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 934211,
+            "gold": 544956,
+            "ore": 333647,
+            "stone": 333647,
+            "timber": 200188
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 62263,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2606640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 3269736,
+            "gold": 1907346,
+            "ore": 1167763,
+            "stone": 700658,
+            "timber": 1167763
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 208580,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3165240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 3970394,
+            "gold": 2316063,
+            "ore": 1417998,
+            "stone": 850799,
+            "timber": 1417998
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 261503,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3723780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 26,
+            "food": 4671051,
+            "gold": 2724780,
+            "ore": 1668233,
+            "stone": 1000940,
+            "timber": 1668233
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 314427,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4468500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 5605261,
+            "gold": 3269736,
+            "ore": 2001879,
+            "stone": 1201128,
+            "timber": 2001879
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 382915,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5958000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 7473682,
+            "gold": 4359648,
+            "ore": 2669172,
+            "stone": 1601504,
+            "timber": 2669172
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 513667,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7819920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62,
+            "food": 9809207,
+            "gold": 5722038,
+            "ore": 3503289,
+            "stone": 2101973,
+            "timber": 3503289
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 678663,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11171280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 14013153,
+            "gold": 8174339,
+            "ore": 5004698,
+            "stone": 3002819,
+            "timber": 5004698
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 955731,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15639780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 19618414,
+            "gold": 11444075,
+            "ore": 7006577,
+            "stone": 4203946,
+            "timber": 7006577
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1313742,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 20480640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 127,
+            "food": 25690780,
+            "gold": 14986288,
+            "ore": 9175279,
+            "stone": 5505167,
+            "timber": 9175279
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1712223,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_def_i"
+            }
+          ],
+          "technolabe_count": 8
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Infantry DEF) II",
+        "ja-JP": "召喚獣出陣時歩兵防御力II"
+      },
+      "row": 7
+    },
+    {
+      "column": 1,
+      "effect_label": "DEF+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_ranged_def_ii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 744780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 934211,
+            "gold": 544956,
+            "ore": 333647,
+            "stone": 333647,
+            "timber": 200188
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 62263,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2606640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 3269736,
+            "gold": 1907346,
+            "ore": 1167763,
+            "stone": 700658,
+            "timber": 1167763
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 208580,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3165240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 3970394,
+            "gold": 2316063,
+            "ore": 1417998,
+            "stone": 850799,
+            "timber": 1417998
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 261503,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3723780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 26,
+            "food": 4671051,
+            "gold": 2724780,
+            "ore": 1668233,
+            "stone": 1000940,
+            "timber": 1668233
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 314427,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4468500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 5605261,
+            "gold": 3269736,
+            "ore": 2001879,
+            "stone": 1201128,
+            "timber": 2001879
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 382915,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5958000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 7473682,
+            "gold": 4359648,
+            "ore": 2669172,
+            "stone": 1601504,
+            "timber": 2669172
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 513667,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7819920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62,
+            "food": 9809207,
+            "gold": 5722038,
+            "ore": 3503289,
+            "stone": 2101973,
+            "timber": 3503289
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 678663,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11171280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 14013153,
+            "gold": 8174339,
+            "ore": 5004698,
+            "stone": 3002819,
+            "timber": 5004698
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 955731,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15639780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 19618414,
+            "gold": 11444075,
+            "ore": 7006577,
+            "stone": 4203946,
+            "timber": 7006577
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1313742,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 20480640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 127,
+            "food": 25690780,
+            "gold": 14986288,
+            "ore": 9175279,
+            "stone": 5505167,
+            "timber": 9175279
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1712223,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_def_i"
+            }
+          ],
+          "technolabe_count": 8
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Ranged DEF) II",
+        "ja-JP": "召喚獣出陣時弓兵防御力II"
+      },
+      "row": 7
+    },
+    {
+      "column": 2,
+      "effect_label": "DEF+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_cavalry_def_ii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 744780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 5,
+            "food": 934211,
+            "gold": 544956,
+            "ore": 333647,
+            "stone": 333647,
+            "timber": 200188
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 62263,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 2606640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 3269736,
+            "gold": 1907346,
+            "ore": 1167763,
+            "stone": 700658,
+            "timber": 1167763
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 208580,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3165240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 3970394,
+            "gold": 2316063,
+            "ore": 1417998,
+            "stone": 850799,
+            "timber": 1417998
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 261503,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3723780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 26,
+            "food": 4671051,
+            "gold": 2724780,
+            "ore": 1668233,
+            "stone": 1000940,
+            "timber": 1668233
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 314427,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 4468500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 34,
+            "food": 5605261,
+            "gold": 3269736,
+            "ore": 2001879,
+            "stone": 1201128,
+            "timber": 2001879
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 382915,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5958000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 7473682,
+            "gold": 4359648,
+            "ore": 2669172,
+            "stone": 1601504,
+            "timber": 2669172
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 513667,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7819920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 62,
+            "food": 9809207,
+            "gold": 5722038,
+            "ore": 3503289,
+            "stone": 2101973,
+            "timber": 3503289
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 678663,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11171280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 14013153,
+            "gold": 8174339,
+            "ore": 5004698,
+            "stone": 3002819,
+            "timber": 5004698
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 955731,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15639780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 19618414,
+            "gold": 11444075,
+            "ore": 7006577,
+            "stone": 4203946,
+            "timber": 7006577
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1313742,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 20480640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 127,
+            "food": 25690780,
+            "gold": 14986288,
+            "ore": 9175279,
+            "stone": 5505167,
+            "timber": 9175279
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1712223,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_def_i"
+            }
+          ],
+          "technolabe_count": 8
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Cavalry DEF) II",
+        "ja-JP": "召喚獣出陣時騎兵防御力II"
+      },
+      "row": 7
+    },
+    {
+      "column": 0,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_infantry_hp_ii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1042680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 889724,
+            "gold": 726608,
+            "ore": 444862,
+            "stone": 444862,
+            "timber": 444862
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 87168,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_infantry_def_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3649320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 17,
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1557017,
+            "stone": 1557017,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 292012,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4431300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 3781327,
+            "gold": 3088084,
+            "ore": 1890664,
+            "stone": 1890664,
+            "timber": 1890664
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 366104,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5213280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 38,
+            "food": 4448620,
+            "gold": 3633040,
+            "ore": 2224310,
+            "stone": 2224310,
+            "timber": 2224310
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 440197,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6254640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 5338344,
+            "gold": 4359648,
+            "ore": 2669172,
+            "stone": 2669172,
+            "timber": 2669172
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 536082,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8341200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 70,
+            "food": 7117792,
+            "gold": 5812864,
+            "ore": 3558896,
+            "stone": 3558896,
+            "timber": 3558896
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 719134,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10947840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 93,
+            "food": 9342102,
+            "gold": 7692383,
+            "ore": 4671051,
+            "stone": 4671051,
+            "timber": 4671051
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 950128,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_infantry_def_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15639780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 121,
+            "food": 13345860,
+            "gold": 10899119,
+            "ore": 6672930,
+            "stone": 6672930,
+            "timber": 6672930
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1338024,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_def_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 21895620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 150,
+            "food": 18684203,
+            "gold": 15258766,
+            "ore": 9342102,
+            "stone": 9342102,
+            "timber": 9342102
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1839239,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_infantry_def_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28672860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 190,
+            "food": 24467409,
+            "gold": 19981718,
+            "ore": 12233705,
+            "stone": 12233705,
+            "timber": 12233705
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2397112,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_def_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_hp_i"
+            }
+          ],
+          "technolabe_count": 10
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Infantry HP) II",
+        "ja-JP": "召喚獣出陣時歩兵HPII"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_ranged_hp_ii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1042680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 889724,
+            "gold": 726608,
+            "ore": 444862,
+            "stone": 444862,
+            "timber": 444862
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 87168,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_ranged_def_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3649320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 17,
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1557017,
+            "stone": 1557017,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 292012,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4431300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 3781327,
+            "gold": 3088084,
+            "ore": 1890664,
+            "stone": 1890664,
+            "timber": 1890664
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 366104,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5213280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 38,
+            "food": 4448620,
+            "gold": 3633040,
+            "ore": 2224310,
+            "stone": 2224310,
+            "timber": 2224310
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 440197,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6254640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 5338344,
+            "gold": 4359648,
+            "ore": 2669172,
+            "stone": 2669172,
+            "timber": 2669172
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 536082,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8341200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 70,
+            "food": 7117792,
+            "gold": 5812864,
+            "ore": 3558896,
+            "stone": 3558896,
+            "timber": 3558896
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 719134,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10947840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 93,
+            "food": 9342102,
+            "gold": 7692383,
+            "ore": 4671051,
+            "stone": 4671051,
+            "timber": 4671051
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 950128,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_ranged_def_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15639780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 121,
+            "food": 13345860,
+            "gold": 10899119,
+            "ore": 6672930,
+            "stone": 6672930,
+            "timber": 6672930
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1338024,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_def_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 21895620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 150,
+            "food": 18684203,
+            "gold": 15258766,
+            "ore": 9342102,
+            "stone": 9342102,
+            "timber": 9342102
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1839239,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_ranged_def_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28672860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 190,
+            "food": 24467409,
+            "gold": 19981718,
+            "ore": 12233705,
+            "stone": 12233705,
+            "timber": 12233705
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2397112,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_def_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_hp_i"
+            }
+          ],
+          "technolabe_count": 10
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Ranged HP) II",
+        "ja-JP": "召喚獣出陣時弓兵HPII"
+      },
+      "row": 8
+    },
+    {
+      "column": 2,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_cavalry_hp_ii",
+      "levels": [
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1042680,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "food": 889724,
+            "gold": 726608,
+            "ore": 444862,
+            "stone": 444862,
+            "timber": 444862
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 87168,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiarity_cavalry_def_ii"
+            }
+          ],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 3649320,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 17,
+            "food": 3114034,
+            "gold": 2543128,
+            "ore": 1557017,
+            "stone": 1557017,
+            "timber": 1557017
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 292012,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4431300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 3781327,
+            "gold": 3088084,
+            "ore": 1890664,
+            "stone": 1890664,
+            "timber": 1890664
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 366104,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 5213280,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 38,
+            "food": 4448620,
+            "gold": 3633040,
+            "ore": 2224310,
+            "stone": 2224310,
+            "timber": 2224310
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 440197,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6254640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 5338344,
+            "gold": 4359648,
+            "ore": 2669172,
+            "stone": 2669172,
+            "timber": 2669172
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 536082,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8341200,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 70,
+            "food": 7117792,
+            "gold": 5812864,
+            "ore": 3558896,
+            "stone": 3558896,
+            "timber": 3558896
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 719134,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 10947840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 93,
+            "food": 9342102,
+            "gold": 7692383,
+            "ore": 4671051,
+            "stone": 4671051,
+            "timber": 4671051
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 950128,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_cavalry_def_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15639780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 121,
+            "food": 13345860,
+            "gold": 10899119,
+            "ore": 6672930,
+            "stone": 6672930,
+            "timber": 6672930
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1338024,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_def_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 21895620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 150,
+            "food": 18684203,
+            "gold": 15258766,
+            "ore": 9342102,
+            "stone": 9342102,
+            "timber": 9342102
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1839239,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_cavalry_def_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28672860,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 190,
+            "food": 24467409,
+            "gold": 19981718,
+            "ore": 12233705,
+            "stone": 12233705,
+            "timber": 12233705
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 2397112,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_def_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_hp_i"
+            }
+          ],
+          "technolabe_count": 10
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Cavalry HP) II",
+        "ja-JP": "召喚獣出陣時騎兵HPII"
+      },
+      "row": 8
+    },
+    {
+      "column": 0,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_infantry_atk_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 1660819,
+            "gold": 968811,
+            "ore": 593150,
+            "stone": 355890,
+            "timber": 593150
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 124526,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 25,
+            "food": 1245614,
+            "gold": 3390837,
+            "ore": 2076023,
+            "stone": 2076023,
+            "timber": 2076023
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 417160,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 39,
+            "food": 7058477,
+            "gold": 4117445,
+            "ore": 2520885,
+            "stone": 1512531,
+            "timber": 2520885
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 523006,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 56,
+            "food": 8304091,
+            "gold": 4844053,
+            "ore": 2964747,
+            "stone": 1779448,
+            "timber": 2965747
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 628853,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 73,
+            "food": 9964909,
+            "gold": 5812864,
+            "ore": 3558896,
+            "stone": 2135338,
+            "timber": 3558896
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 765830,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 13286545,
+            "gold": 7750458,
+            "ore": 4748195,
+            "stone": 2847117,
+            "timber": 4745195
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1027334,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 137,
+            "food": 17438068,
+            "gold": 10172511,
+            "ore": 6228068,
+            "stone": 3736841,
+            "timber": 6228068
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 1357326,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 177,
+            "food": 24912271,
+            "gold": 14532158,
+            "ore": 8897240,
+            "stone": 5338344,
+            "timber": 8897240
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1911463,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 220,
+            "food": 34877179,
+            "gold": 20345021,
+            "ore": 12456136,
+            "stone": 12456136,
+            "timber": 7473682
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 2627484,
+          "requirements": [],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 278,
+            "food": 45672497,
+            "gold": 26642290,
+            "ore": 16311606,
+            "stone": 16311606,
+            "timber": 9786964
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 3424446,
+          "requirements": [],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Infantry ATK) II",
+        "ja-JP": "召喚獣出陣時歩兵攻撃力II"
+      },
+      "row": 9
+    },
+    {
+      "column": 1,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_ranged_atk_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 1660819,
+            "gold": 968811,
+            "ore": 593150,
+            "stone": 355890,
+            "timber": 593150
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 124526,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 25,
+            "food": 1245614,
+            "gold": 3390837,
+            "ore": 2076023,
+            "stone": 2076023,
+            "timber": 2076023
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 417160,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 39,
+            "food": 7058477,
+            "gold": 4117445,
+            "ore": 2520885,
+            "stone": 1512531,
+            "timber": 2520885
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 523006,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 56,
+            "food": 8304091,
+            "gold": 4844053,
+            "ore": 2964747,
+            "stone": 1779448,
+            "timber": 2965747
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 628853,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 73,
+            "food": 9964909,
+            "gold": 5812864,
+            "ore": 3558896,
+            "stone": 2135338,
+            "timber": 3558896
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 765830,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 13286545,
+            "gold": 7750458,
+            "ore": 4748195,
+            "stone": 2847117,
+            "timber": 4745195
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1027334,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 137,
+            "food": 17438068,
+            "gold": 10172511,
+            "ore": 6228068,
+            "stone": 3736841,
+            "timber": 6228068
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 1357326,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 177,
+            "food": 24912271,
+            "gold": 14532158,
+            "ore": 8897240,
+            "stone": 5338344,
+            "timber": 8897240
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1911463,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 220,
+            "food": 34877179,
+            "gold": 20345021,
+            "ore": 12456136,
+            "stone": 12456136,
+            "timber": 7473682
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 2627484,
+          "requirements": [],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 278,
+            "food": 45672497,
+            "gold": 26642290,
+            "ore": 16311606,
+            "stone": 16311606,
+            "timber": 9786964
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 3424446,
+          "requirements": [],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Ranged ATK) II",
+        "ja-JP": "召喚獣出陣時弓兵攻撃力II"
+      },
+      "row": 9
+    },
+    {
+      "column": 2,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiarity_cavalry_atk_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 1660819,
+            "gold": 968811,
+            "ore": 593150,
+            "stone": 355890,
+            "timber": 593150
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 124526,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 25,
+            "food": 1245614,
+            "gold": 3390837,
+            "ore": 2076023,
+            "stone": 2076023,
+            "timber": 2076023
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 417160,
+          "requirements": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 39,
+            "food": 7058477,
+            "gold": 4117445,
+            "ore": 2520885,
+            "stone": 1512531,
+            "timber": 2520885
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 523006,
+          "requirements": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 56,
+            "food": 8304091,
+            "gold": 4844053,
+            "ore": 2964747,
+            "stone": 1779448,
+            "timber": 2965747
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 628853,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 73,
+            "food": 9964909,
+            "gold": 5812864,
+            "ore": 3558896,
+            "stone": 2135338,
+            "timber": 3558896
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 765830,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 100,
+            "food": 13286545,
+            "gold": 7750458,
+            "ore": 4748195,
+            "stone": 2847117,
+            "timber": 4745195
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1027334,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 137,
+            "food": 17438068,
+            "gold": 10172511,
+            "ore": 6228068,
+            "stone": 3736841,
+            "timber": 6228068
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 1357326,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 177,
+            "food": 24912271,
+            "gold": 14532158,
+            "ore": 8897240,
+            "stone": 5338344,
+            "timber": 8897240
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 1911463,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 220,
+            "food": 34877179,
+            "gold": 20345021,
+            "ore": 12456136,
+            "stone": 12456136,
+            "timber": 7473682
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 2627484,
+          "requirements": [],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 278,
+            "food": 45672497,
+            "gold": 26642290,
+            "ore": 16311606,
+            "stone": 16311606,
+            "timber": 9786964
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 3424446,
+          "requirements": [],
+          "technolabe_count": 15
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiarity (Cavalry ATK) II",
+        "ja-JP": "召喚獣出陣時騎兵攻撃力II"
+      },
+      "row": 9
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "4th Battle Slot"
+      },
+      "id": "familiar_battles_familiar_battle_slot_iv",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 24730260,
+          "buildings": {},
+          "costs": {},
+          "costs_verified": false,
+          "level": 1,
+          "power": 1819150,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_infantry_atk_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_ii"
+            },
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiarity_ranged_atk_ii"
+            }
+          ],
+          "technolabe_count": 9
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Familiar Battle Slot IV",
+        "ja-JP": "召喚獣の編成IV"
+      },
+      "row": 10
+    },
+    {
+      "column": 0,
+      "effect_label": "Speed+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_skillstone_merging_speed_ii",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 2085300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 1482874,
+            "gold": 1211014,
+            "ore": 593150,
+            "stone": 889724,
+            "timber": 741437
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 174336,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7298580,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 28,
+            "food": 5190057,
+            "gold": 4238547,
+            "ore": 2076023,
+            "stone": 3114034,
+            "timber": 2595029
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 584024,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_atk_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_atk_ii"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 8862540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 6302212,
+            "gold": 5146806,
+            "ore": 2520885,
+            "stone": 3781327,
+            "timber": 3151106
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 732208,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_infantry_atk_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiarity_ranged_atk_ii"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 10426500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 7414367,
+            "gold": 6055066,
+            "ore": 2965747,
+            "stone": 4448620,
+            "timber": 3707184
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 880394,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_atk_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_atk_ii"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 12511800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 86,
+            "food": 8897240,
+            "gold": 7266079,
+            "ore": 3558896,
+            "stone": 5338344,
+            "timber": 4448620
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 16682400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 119,
+            "food": 11862986,
+            "gold": 9688106,
+            "ore": 4745195,
+            "stone": 7117792,
+            "timber": 5931493
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1438268,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 21895620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 161,
+            "food": 9342102,
+            "gold": 12715639,
+            "ore": 6228068,
+            "stone": 9342102,
+            "timber": 7785085
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 1900256,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 31279500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 209,
+            "food": 13345860,
+            "gold": 18165198,
+            "ore": 8897240,
+            "stone": 13345860,
+            "timber": 11121550
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 2676049,
+          "requirements": [],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 43791240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 260,
+            "food": 18684203,
+            "gold": 25431277,
+            "ore": 12456136,
+            "stone": 18684203,
+            "timber": 15570170
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 3678477,
+          "requirements": [],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 57345660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 328,
+            "food": 24467409,
+            "gold": 33302862,
+            "ore": 16311606,
+            "stone": 24467409,
+            "timber": 20389508
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 4794224,
+          "requirements": [],
+          "technolabe_count": 20
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Skillstone Merging Speed II",
+        "ja-JP": "スキル核精製速度II"
+      },
+      "row": 11
+    },
+    {
+      "column": 2,
+      "effect_label": "(Minutes)+",
+      "effect_values": {
+        "1": "5",
+        "2": "10",
+        "3": "15",
+        "4": "20",
+        "5": "30",
+        "6": "40",
+        "7": "50",
+        "8": "60",
+        "9": "80",
+        "10": "120"
+      },
+      "id": "familiar_battles_gym_membership_ii",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2085300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "food": 1482874,
+            "gold": 1211014,
+            "ore": 593150,
+            "stone": 889724,
+            "timber": 741437
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 174336,
+          "requirements": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7298580,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 28,
+            "food": 5190057,
+            "gold": 4238547,
+            "ore": 2076023,
+            "stone": 3114034,
+            "timber": 2595029
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 584024,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_infantry_atk_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiarity_ranged_atk_ii"
+            }
+          ],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 46,
+            "food": 6302212,
+            "gold": 5146806,
+            "ore": 2520885,
+            "stone": 3781327,
+            "timber": 3151106
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 10426500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 7414367,
+            "gold": 6055066,
+            "ore": 2965747,
+            "stone": 4448620,
+            "timber": 3707184
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 880394,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_infantry_atk_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_cavalry_atk_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiarity_ranged_atk_ii"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 12511800,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 86,
+            "food": 8897240,
+            "gold": 7266079,
+            "ore": 3558896,
+            "stone": 5338344,
+            "timber": 4448620
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 16682400,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 119,
+            "food": 11862986,
+            "gold": 9688106,
+            "ore": 4745195,
+            "stone": 7117792,
+            "timber": 5931493
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 21895620,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 161,
+            "food": 9342102,
+            "gold": 12715639,
+            "ore": 6228068,
+            "stone": 9342102,
+            "timber": 7785085
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 31279500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 209,
+            "food": 13345860,
+            "gold": 18165198,
+            "ore": 8897240,
+            "stone": 13345860,
+            "timber": 11121550
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 2676049,
+          "requirements": [],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 43791240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 260,
+            "food": 18684203,
+            "gold": 25431277,
+            "ore": 12456136,
+            "stone": 18684203,
+            "timber": 15570170
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 57345660,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 328,
+            "food": 24467409,
+            "gold": 33302862,
+            "ore": 16311606,
+            "stone": 24467409,
+            "timber": 20389508
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": null,
+          "requirements": [],
+          "technolabe_count": 20
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gym Membership II",
+        "ja-JP": "調教時間上限II"
+      },
+      "row": 11
+    },
+    {
+      "column": 0,
+      "effect_label": "DEF+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiar_defense",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 2698830,
+            "gold": 1574318,
+            "ore": 963868,
+            "stone": 771095,
+            "timber": 771095
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 249051,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 10426500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 36,
+            "food": 9445903,
+            "gold": 5510110,
+            "ore": 3373537,
+            "stone": 2698830,
+            "timber": 2698830
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 834320,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 12660780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 58,
+            "food": 11482000,
+            "gold": 6690848,
+            "ore": 4096438,
+            "stone": 3277150,
+            "timber": 3277150
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1046012,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 14895000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 13494147,
+            "gold": 7871586,
+            "ore": 4819339,
+            "stone": 3855471,
+            "timber": 3855471
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1257706,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 17874000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 105,
+            "food": 16192976,
+            "gold": 9445903,
+            "ore": 5783206,
+            "stone": 4626565,
+            "timber": 4626565
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1531661,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 23832000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 146,
+            "food": 21590635,
+            "gold": 12594537,
+            "ore": 7710941,
+            "stone": 6168753,
+            "timber": 6168753
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2054668,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 31279500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 199,
+            "food": 28337708,
+            "gold": 16530330,
+            "ore": 10120610,
+            "stone": 8096488,
+            "timber": 8096488
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 2714651,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 43791240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 257,
+            "food": 40482440,
+            "gold": 23614757,
+            "ore": 14458015,
+            "stone": 11566412,
+            "timber": 11566412
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 3822927,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 62558940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 319,
+            "food": 56675416,
+            "gold": 33060660,
+            "ore": 20241220,
+            "stone": 16192976,
+            "timber": 16192976
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 5254968,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 22
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 81922380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 404,
+            "food": 74217807,
+            "gold": 43293721,
+            "ore": 26506360,
+            "stone": 21205088,
+            "timber": 21205088
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 6848892,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 29
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiar Defense",
+        "ja-JP": "召喚獣堅牢"
+      },
+      "row": 12
+    },
+    {
+      "column": 1,
+      "effect_label": "ATK+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiar_offense",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 2979000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 2698830,
+            "gold": 1574318,
+            "ore": 1156642,
+            "stone": 771095,
+            "timber": 578321
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 249051,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_skillstone_merging_speed_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "familiar_battles_gym_membership_ii"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 10426500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 36,
+            "food": 9445903,
+            "gold": 5510110,
+            "ore": 4048244,
+            "stone": 2698830,
+            "timber": 2024122
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 834320,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 12660780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 58,
+            "food": 11470025,
+            "gold": 6690848,
+            "ore": 4915725,
+            "stone": 3277150,
+            "timber": 2457863
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1046012,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 14895000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 13494147,
+            "gold": 7871586,
+            "ore": 5783206,
+            "stone": 3855471,
+            "timber": 2891603
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1257706,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 17874000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 105,
+            "food": 16192976,
+            "gold": 9445903,
+            "ore": 6939847,
+            "stone": 4626565,
+            "timber": 3469924
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1531661,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 23832000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 146,
+            "food": 21590635,
+            "gold": 12594537,
+            "ore": 9253130,
+            "stone": 6168753,
+            "timber": 4626565
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2054668,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 31279500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 199,
+            "food": 29337708,
+            "gold": 16530330,
+            "ore": 12144732,
+            "stone": 8096488,
+            "timber": 6072366
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 2714651,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 44684940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 257,
+            "food": 40482440,
+            "gold": 23614757,
+            "ore": 17349617,
+            "stone": 11566412,
+            "timber": 8674809
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 3822927,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 62558940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 319,
+            "food": 56675416,
+            "gold": 33060660,
+            "ore": 24289464,
+            "stone": 16192976,
+            "timber": 12144732
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 5254968,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 22
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 81922380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 404,
+            "food": 74217807,
+            "gold": 43293721,
+            "ore": 31807632,
+            "stone": 21205088,
+            "timber": 15903816
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 6848892,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiar_tenacity"
+            },
+            {
+              "level": 10,
+              "research_id": "familiar_battles_familiar_defense"
+            }
+          ],
+          "technolabe_count": 29
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiar Offense",
+        "ja-JP": "召喚獣強攻"
+      },
+      "row": 12
+    },
+    {
+      "column": 2,
+      "effect_label": "HP+",
+      "effect_values": {
+        "1": "0.2%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%",
+        "10": "10%"
+      },
+      "id": "familiar_battles_familiar_tenacity",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 15,
+            "food": 2698830,
+            "gold": 1547318,
+            "ore": 1156642,
+            "stone": 578321,
+            "timber": 771095
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 249051,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 10426500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 36,
+            "food": 9445903,
+            "gold": 5510110,
+            "ore": 3373537,
+            "stone": 2698830,
+            "timber": 2698830
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 834320,
+          "requirements": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 12660780,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 58,
+            "food": 11470025,
+            "gold": 6690848,
+            "ore": 4915725,
+            "stone": 2457853,
+            "timber": 3277150
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1046012,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 14895000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 13494147,
+            "gold": 7871586,
+            "ore": 5783206,
+            "stone": 2891603,
+            "timber": 3855471
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1257706,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 17874000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 105,
+            "food": 16192976,
+            "gold": 9445903,
+            "ore": 6939847,
+            "stone": 3469924,
+            "timber": 4626565
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1531661,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 23832000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 146,
+            "food": 21590635,
+            "gold": 12594537,
+            "ore": 9253130,
+            "stone": 4626565,
+            "timber": 6168753
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2054668,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 31279500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 199,
+            "food": 28337708,
+            "gold": 16530330,
+            "ore": 12144732,
+            "stone": 6072366,
+            "timber": 8096488
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 2714651,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 11
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 43791240,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 257,
+            "food": 40482440,
+            "gold": 23614757,
+            "ore": 17349617,
+            "stone": 8674809,
+            "timber": 11566412
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 3822927,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 16
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 62558940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 319,
+            "food": 56675416,
+            "gold": 33060660,
+            "ore": 24289464,
+            "stone": 12144732,
+            "timber": 16192976
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 5254968,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 22
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 81922380,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 404,
+            "food": 74217807,
+            "gold": 43293721,
+            "ore": 31807632,
+            "stone": 15903816,
+            "timber": 21205088
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 6848892,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiar_battles_familiar_offense"
+            }
+          ],
+          "technolabe_count": 29
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Familiar Tenacity",
+        "ja-JP": "召喚獣鼓舞"
+      },
+      "row": 12
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Battle Slot V"
+      },
+      "id": "familiar_battles_familiar_battle_slot_v",
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 940,
+            "food": 51300001,
+            "gold": 33075000,
+            "ore": 12825000,
+            "stone": 12825000,
+            "timber": 12825000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 5154257,
+          "requirements": [],
+          "technolabe_count": 25
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Familiar Battle Slot V",
+        "ja-JP": "召喚獣の編成V"
+      },
+      "row": 13
+    }
+  ],
+  "platform": "pwa",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "titles": {
+    "en-US": "Familiar Battles",
+    "ja-JP": "召喚獣の出陣"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

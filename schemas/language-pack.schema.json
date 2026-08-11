@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rrryutaro/RLMResearchPlanner/schemas/language-pack.schema.json",
+  "title": "RLMResearchPlanner language pack",
+  "type": "object",
+  "required": [
+    "document_type",
+    "schema_version",
+    "locale",
+    "name",
+    "direction",
+    "fallback_locale",
+    "messages",
+    "categories",
+    "research",
+    "buildings",
+    "effects",
+    "resources"
+  ],
+  "properties": {
+    "document_type": { "const": "RLMResearchPlanner.language-pack" },
+    "schema_version": { "const": 1 },
+    "locale": { "$ref": "#/$defs/locale" },
+    "name": { "type": "string", "minLength": 1, "maxLength": 100 },
+    "direction": { "enum": ["ltr", "rtl"] },
+    "fallback_locale": { "$ref": "#/$defs/locale" },
+    "author": { "type": "string", "maxLength": 200 },
+    "license": { "type": "string", "maxLength": 200 },
+    "catalog_dataset_id": { "type": "string", "maxLength": 200 },
+    "messages": {
+      "description": "UI messages. The reserved app.disclaimer entry is ignored and is not exported.",
+      "$ref": "#/$defs/section"
+    },
+    "categories": { "$ref": "#/$defs/section" },
+    "research": { "$ref": "#/$defs/section" },
+    "buildings": { "$ref": "#/$defs/section" },
+    "effects": { "$ref": "#/$defs/section" },
+    "resources": { "$ref": "#/$defs/section" }
+  },
+  "additionalProperties": true,
+  "$defs": {
+    "locale": {
+      "type": "string",
+      "pattern": "^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$"
+    },
+    "entry": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["source", "text"],
+          "properties": {
+            "source": { "type": "string" },
+            "text": {
+              "type": "string",
+              "maxLength": 20000,
+              "pattern": "^[^<>]*$"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "string",
+          "maxLength": 20000,
+          "pattern": "^[^<>]*$"
+        }
+      ]
+    },
+    "section": {
+      "type": "object",
+      "propertyNames": { "minLength": 1, "maxLength": 300 },
+      "additionalProperties": { "$ref": "#/$defs/entry" }
+    }
+  }
+}

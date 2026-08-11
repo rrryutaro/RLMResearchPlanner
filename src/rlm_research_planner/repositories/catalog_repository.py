@@ -232,6 +232,8 @@ class JsonResearchCatalogRepository:
         if not isinstance(titles, dict) or not titles:
             raise ValueError(f"{category_id}: titles are required")
         status = str(raw.get("verification_status", "names_verified_layout_approximate"))
+        category_license_name = str(raw.get("license_name", "")).strip()
+        category_license_url = str(raw.get("license_url", "")).strip()
         return ResearchTreeObservation(
             observation_id=f"catalog-{category_id}",
             category_id=category_id,
@@ -246,8 +248,15 @@ class JsonResearchCatalogRepository:
             nodes=tuple(nodes),
             edges=tuple(edges),
             source_url=str(raw.get("source_url", source.get("url", ""))),
-            license_name=str(raw.get("license_name", source.get("license", ""))),
-            license_url=str(raw.get("license_url", source.get("license_url", ""))),
+            license_name=(
+                category_license_name
+                or str(source.get("license", ""))
+            ),
+            license_url=(
+                category_license_url
+                if category_license_name
+                else str(source.get("license_url", ""))
+            ),
             connection_groups=tuple(connection_groups),
         )
 

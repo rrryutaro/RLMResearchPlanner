@@ -6,6 +6,7 @@ from collections import Counter
 from dataclasses import dataclass
 from typing import Iterable
 
+from rlm_research_planner.domain.models import PaidItem
 from rlm_research_planner.services.ocr import OcrLine
 
 
@@ -24,6 +25,9 @@ class SpeedupEntry:
     @property
     def total_seconds(self) -> int:
         return max(0, self.duration_seconds) * max(0, self.quantity)
+
+
+PaidOcrEntry = SpeedupEntry | PaidItem
 
 
 @dataclass(frozen=True)
@@ -385,6 +389,195 @@ def _deduplicate(entries: Iterable[SpeedupEntry]) -> tuple[SpeedupEntry, ...]:
         key = (entry.kind, entry.duration_seconds, entry.quantity)
         unique.setdefault(key, entry)
     return tuple(unique.values())
+
+
+_NON_ITEM_LABELS = (
+    "以下のアイテムを獲得",
+    "獲得します",
+    "ボーナス",
+    "残りの数量",
+    "購入可能回数",
+    "特選",
+    "精選",
+    "お得",
+    "itemsincluded",
+    "itemsreceived",
+    "bonus",
+    "remaining",
+    "purchase",
+)
+
+
+def _paid_item_name(text: str, quantity: int) -> str:
+    normalized = " ".join(_normalized(text).split()).strip(" -:：・")
+    trailing_number = re.search(r"([\d,.]+)\s*$", normalized)
+    if trailing_number is not None:
+        try:
+            trailing_value = int(re.sub(r"[,.]", "", trailing_number.group(1)))
+        except ValueError:
+            trailing_value = -1
+        if trailing_value == quantity and trailing_number.start() > 0:
+            normalized = normalized[: trailing_number.start()].strip(" -:：・xX")
+    return normalized
+
+
+def _inline_paid_item_quantity(text: str) -> int | None:
+    normalized = " ".join(_normalized(text).split()).strip()
+    numeric_matches = list(re.finditer(r"\d{1,3}(?:[,.]\d{3})+|\d+", normalized))
+    if not numeric_matches:
+        return None
+    quantity_match = numeric_matches[-1]
+    if normalized[quantity_match.end() :].strip():
+        return None
+    try:
+        quantity = int(re.sub(r"[,.]", "", quantity_match.group(0)))
+    except ValueError:
+        return None
+    name = _paid_item_name(normalized, quantity)
+    if _paid_item_kind(name) == "resource" and len(numeric_matches) < 2:
+        # A lone number in a resource label is normally the amount contained
+        # in one item (for example Food 500,000), not the row quantity.
+        return None
+    return quantity if quantity > 0 else None
+
+
+def _looks_like_paid_item_label(text: str) -> bool:
+    normalized = " ".join(_normalized(text).split()).strip()
+    if not normalized:
+        return False
+    compact = re.sub(r"[\s_\-:：・]+", "", normalized).casefold()
+    if any(label in compact for label in _NON_ITEM_LABELS):
+        return False
+    if _DURATION_PATTERN.fullmatch(compact):
+        return False
+    if re.fullmatch(r"[\d,.%+x]+", compact):
+        return False
+    return re.search(r"[A-Za-z\u3040-\u30ff\u3400-\u9fff]", compact) is not None
+
+
+def _paid_item_kind(name: str) -> str:
+    compact = re.sub(r"[\s_\-]+", "", _normalized(name)).casefold()
+    if any(
+        term in compact
+        for term in (
+            "食糧",
+            "食料",
+            "石材",
+            "木材",
+            "鉱石",
+            "ゴールド",
+            "food",
+            "stone",
+            "timber",
+            "wood",
+            "ore",
+            "gold",
+        )
+    ):
+        return "resource"
+    if "宝箱" in compact or "chest" in compact or "box" in compact:
+        return "chest"
+    if any(term in compact for term in ("魔獣行動力", "monsterenergy")):
+        return "monster_energy"
+    if any(term in compact for term in ("素材", "material")):
+        return "material"
+    if "%" in compact or any(
+        term in compact for term in ("ブースト", "boost")
+    ):
+        return "boost_item"
+    if any(
+        term in compact
+        for term in ("コイン", "硬貨", "トークン", "メダル", "currency", "coin")
+    ):
+        return "currency"
+    return "custom"
+
+
+def _paid_item_label_score(name: str) -> tuple[int, int, int]:
+    replacement_count = sum(name.count(mark) for mark in ("�", "?", "□"))
+    meaningful = len(
+        re.findall(r"[A-Za-z0-9\u3040-\u30ff\u3400-\u9fff%]", name)
+    )
+    return (-replacement_count, meaningful, len(name))
+
+
+def parse_paid_item_ocr(
+    text: str, line_groups: Iterable[Iterable[OcrLine]]
+) -> tuple[PaidOcrEntry, ...]:
+    """Parse timed speed-ups and other visible pack rows from OCR output.
+
+    OCR runs several image variants for the same screen.  Non-timed item
+    candidates are therefore clustered by visual row before selecting the
+    clearest label.  This keeps a resource, chest, percentage boost, or other
+    named item as one editable paid-item row instead of limiting capture to
+    timed speed-ups.
+    """
+
+    groups = tuple(tuple(group) for group in line_groups)
+    all_lines = tuple(line for group in groups for line in group)
+    speedups = parse_speedup_ocr(text, groups)
+    candidates: list[tuple[float, float, PaidItem]] = []
+    for line in all_lines:
+        normalized = " ".join(_normalized(line.text).split())
+        speedup_kind = _speedup_kind(normalized)
+        if speedup_kind is not None and "%" not in normalized:
+            continue
+        if not _looks_like_paid_item_label(normalized):
+            continue
+        quantity = _quantity_to_right(line, all_lines)
+        if quantity is None:
+            quantity = _inline_paid_item_quantity(normalized)
+        if quantity is None or quantity <= 0:
+            continue
+        name = _paid_item_name(normalized, quantity)
+        if not _looks_like_paid_item_label(name):
+            continue
+        candidates.append(
+            (
+                line.y + line.height / 2.0,
+                float(max(1.0, line.height)),
+                PaidItem(
+                    kind=_paid_item_kind(name),
+                    name=name,
+                    quantity=quantity,
+                ),
+            )
+        )
+
+    clusters: list[list[tuple[float, float, PaidItem]]] = []
+    for candidate in sorted(candidates, key=lambda item: item[0]):
+        row = next(
+            (
+                cluster
+                for cluster in clusters
+                if cluster[0][2].quantity == candidate[2].quantity
+                and abs(cluster[0][0] - candidate[0])
+                <= max(cluster[0][1], candidate[1]) * 0.9
+            ),
+            None,
+        )
+        if row is None:
+            clusters.append([candidate])
+        else:
+            row.append(candidate)
+
+    items: list[PaidItem] = []
+    seen_items: set[tuple[str, str, int]] = set()
+    for cluster in clusters:
+        item = max(
+            cluster,
+            key=lambda candidate: _paid_item_label_score(candidate[2].name),
+        )[2]
+        key = (
+            item.kind,
+            re.sub(r"\s+", "", _normalized(item.name)).casefold(),
+            item.quantity,
+        )
+        if key in seen_items:
+            continue
+        seen_items.add(key)
+        items.append(item)
+    return tuple(speedups) + tuple(items)
 
 
 def detect_pack_price(

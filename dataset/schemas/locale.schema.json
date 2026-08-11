@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rrryutaro/RLMResearchData/schemas/locale.schema.json",
+  "title": "RLM research dataset locale",
+  "type": "object",
+  "required": [
+    "document_type",
+    "schema_version",
+    "locale",
+    "direction",
+    "fallback_locale",
+    "trees",
+    "research",
+    "metrics"
+  ],
+  "properties": {
+    "document_type": { "const": "RLMResearchData.locale" },
+    "schema_version": { "const": 2 },
+    "locale": { "$ref": "common.schema.json#/$defs/locale" },
+    "direction": { "enum": ["ltr", "rtl"] },
+    "fallback_locale": { "$ref": "common.schema.json#/$defs/locale" },
+    "trees": { "$ref": "#/$defs/textMap" },
+    "research": { "$ref": "#/$defs/textMap" },
+    "metrics": { "$ref": "#/$defs/textMap" }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "textMap": {
+      "type": "object",
+      "propertyNames": { "$ref": "common.schema.json#/$defs/id" },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000,
+        "pattern": "^[^\\u0000-\\u001F<>]*$"
+      }
+    }
+  }
+}

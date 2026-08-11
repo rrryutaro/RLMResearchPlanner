@@ -1,20 +1,19 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.0.15-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.0.15-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.0.15-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.0.15-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.0.15-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.0.15-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.0.15-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, translateStatic } from "./language-pack.js?v=0.0.15-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.0.15-b1";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.0-b13";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.0-b13";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.0-b13";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.1.0-b13";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.0-b13";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.0-b13";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.0-b13";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.0-b13";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.0-b13";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.0-b13";
 
-const RELEASE_VERSION = "0.0.15";
-const DEVELOPMENT_BUILD = 1;
-const ASSET_VERSION = "0.0.15-b1";
-const DEVELOPMENT_HOSTS = new Set(["localhost", "127.0.0.1", "[::1]"]);
-const APP_VERSION = DEVELOPMENT_HOSTS.has(window.location.hostname)
-  ? `${RELEASE_VERSION}+b${DEVELOPMENT_BUILD}`
-  : RELEASE_VERSION;
+const RELEASE_VERSION = "0.1.0";
+const DEVELOPMENT_BUILD = 13;
+const ASSET_VERSION = "0.1.0-b13";
+const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
+const APP_VERSION = RELEASE_VERSION;
 const RESOURCE_NAMES = {
   "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", gold_hammer: "ゴールドハンマー", war_tome: "戦典", steel_cuffs: "鋼鉄の手枷", soul_crystal: "霊魂石", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", mana_crystal: "マナクリスタル", mana_steel: "マナスチール", special: "特殊資材" },
   "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", gold_hammer: "Gold Hammer", war_tome: "War Tome", steel_cuffs: "Steel Cuffs", soul_crystal: "Soul Crystal", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", mana_crystal: "Mana Crystal", mana_steel: "Manasteel", special: "Special" },
@@ -32,12 +31,24 @@ let messages = {};
 let localeDataById = {};
 let languagePacks = loadLanguagePacks();
 let activeLanguagePack = null;
+const hadSavedState = hasSavedState();
 let state = loadState();
+if (!hadSavedState) {
+  const browserLanguages = globalThis.navigator?.languages?.length
+    ? [...globalThis.navigator.languages]
+    : [globalThis.navigator?.language || ""];
+  state.locale = selectPreferredLocale(
+    browserLanguages,
+    ["ja-JP", "en-US", ...Object.keys(languagePacks)],
+  );
+  try { saveState(state); } catch { /* Keep the selected language for this session. */ }
+}
 let selectedCategoryId = "";
 let selectedBulkCategoryId = "";
 let selectedNodeId = "";
 let zoom = window.innerWidth < 650 ? 0.72 : 1;
 let planMode = "target";
+let shortestPage = 0;
 let currentPlan = null;
 let castleTargetLevel = 0;
 let castleTargetManaStage = 0;
@@ -49,6 +60,8 @@ let suppressCardClick = false;
 let paidDraft = emptyPaidOffer();
 let paidEditingId = "";
 let paidView = "input";
+let paidItemEditingIndex = -1;
+let speedupEditingIndex = -1;
 const categoryLayouts = new Map();
 
 const byId = (id) => document.getElementById(id);
@@ -62,7 +75,7 @@ const create = (tag, className = "", text = "") => {
 async function start() {
   try {
     const [loadedCatalog, loadedCastleCatalog, japaneseLocaleData, englishLocaleData] = await Promise.all([
-      loadCatalog(`./data/research/catalog.json?v=${ASSET_VERSION}`),
+      loadCatalog("./data/research-dataset", ASSET_VERSION),
       loadCastleCatalog(`./data/buildings/castle_catalog.json?v=${ASSET_VERSION}`),
       loadLocaleData(`./data/i18n/ja-JP.json?v=${ASSET_VERSION}`),
       loadLocaleData(`./data/i18n/en-US.json?v=${ASSET_VERSION}`),
@@ -91,7 +104,14 @@ async function start() {
     renderPaid();
     renderCatalogStatus();
     renderCommonHelp();
+    const versionLabel = IS_PREVIEW
+      ? t("pwa.preview_version", `v${APP_VERSION} Preview`, { version: APP_VERSION })
+      : `v${APP_VERSION}`;
     byId("app-version").textContent = APP_VERSION;
+    byId("dataset-version").textContent = t("app.dataset_version", `研究データ ${catalog.datasetVersion}`, { version: catalog.datasetVersion });
+    byId("header-version").textContent = versionLabel;
+    byId("header-version").classList.toggle("is-preview", IS_PREVIEW);
+    document.title = `RLM Research Planner ${versionLabel}`;
     populateLanguageOptions();
     window.rlmMarkStartupComplete?.();
   } catch (error) {
@@ -101,7 +121,7 @@ async function start() {
     }
     const target = byId("startup-error");
     const message = byId("startup-error-message");
-    if (target && message) { message.textContent = t("pwa.startup_error", `起動に必要なデータを読み込めませんでした: ${error.message}`, { error: error.message }); target.hidden = false; }
+    if (target && message) { message.textContent = t("pwa.startup_error", `研究データを読み込めませんでした: ${error.message}`, { error: error.message }); target.hidden = false; }
   }
 }
 
@@ -109,9 +129,11 @@ function renderCommonHelp() {
   const required = byId("pwa-help-required");
   const plan = byId("help-plan-body");
   const construction = byId("help-construction-body");
+  const files = byId("help-files-body");
   if (required) required.innerHTML = messages["help.required_setup.body_v003"] || "";
   if (plan) plan.innerHTML = messages["help.plan.body"] || "";
   if (construction) construction.innerHTML = messages["help.castle.body"] || "";
+  if (files) files.innerHTML = messages["help.files.body"] || "";
 }
 
 function renderCatalogStatus() {
@@ -178,13 +200,153 @@ function paidUnitSeconds(unit) {
   return { seconds: 1, minutes: 60, hours: 3600, days: 86400 }[unit] || 1;
 }
 
+function speedupSimulationParts(requiredSeconds, targetKind, taskSeconds = null) {
+  const coverage = speedupCoverage(requiredSeconds, state.settings.speedupInventory, targetKind, taskSeconds);
+  return {
+    coverage,
+    recommendations: coverage.remainingSeconds
+      ? recommendPaidOffers(coverage.remainingSeconds, state.paidOffers, targetKind, 3, {
+        taskSeconds: coverage.remainingTaskSeconds,
+        useGems: state.settings.useGemsForSpeedups,
+      })
+      : [],
+  };
+}
+
+function speedupUsageText(usedItems) {
+  return usedItems.map((item) => {
+    const [duration, unit] = paidDurationParts(item.durationSeconds);
+    return `${paidKindLabel(item.kind)} ${duration.toLocaleString(state.locale)}${t(`paid.unit.${unit}`, unit)}×${item.quantity.toLocaleString(state.locale)}`;
+  }).join(" / ");
+}
+
+function renderSpeedupSimulation(target, requiredSeconds, targetKind, unknownTimeCount = 0, taskSeconds = null) {
+  if (!target) return;
+  const result = speedupSimulationParts(requiredSeconds, targetKind, taskSeconds);
+  const disclosure = create("summary", "speedup-simulation-toggle", t("plan.speedup_simulation_title", "速度アップ充当シミュレーション"));
+  const hint = create("span", "speedup-simulation-hint", t("plan.speedup_simulation_hint", "不足時は［課金］タブの［保存済み］から、利用可能な時短を含む候補を最大3件表示します。"));
+  const gemOption = create("label", "speedup-gem-option");
+  const gemCheckbox = create("input");
+  gemCheckbox.type = "checkbox";
+  gemCheckbox.checked = state.settings.useGemsForSpeedups === true;
+  gemCheckbox.addEventListener("change", () => {
+    state.settings.useGemsForSpeedups = gemCheckbox.checked;
+    saveNow();
+    refreshCurrentPlan();
+    renderCastle();
+  });
+  gemOption.append(gemCheckbox, create("span", "", t("plan.speedup_use_gems", "課金候補の付属ジェムも時短に使用")));
+  if (unknownTimeCount > 0) {
+    target.replaceChildren(
+      disclosure,
+      hint,
+      gemOption,
+      create("span", "speedup-remaining", t("plan.speedup_unknown_time", "研究時間が未収録のため計算できません")),
+    );
+    target.hidden = false;
+    return;
+  }
+  const summary = create("section", "speedup-allocation-section speedup-owned-section");
+  summary.append(
+    create("strong", "speedup-section-title", t("plan.speedup_owned_section", "所持スピードアップ")),
+    create("span", "", t("plan.speedup_owned", "利用可能: {time}", { time: formatDuration(result.coverage.availableSeconds) })),
+    create("span", "", t("plan.speedup_applied", "使用: {time}", { time: formatDuration(result.coverage.appliedSeconds) })),
+  );
+  if (result.coverage.usedItems.length) {
+    summary.append(create("span", "speedup-used-items", t(
+      "plan.speedup_used_items",
+      "使用内訳: {items}",
+      { items: speedupUsageText(result.coverage.usedItems) },
+    )));
+  }
+  if (result.coverage.surplusSeconds > 0) {
+    summary.append(create("span", "speedup-surplus", t("plan.speedup_surplus", "余り: {time}", { time: formatDuration(result.coverage.surplusSeconds) })));
+  }
+  const remaining = create("section", "speedup-allocation-section speedup-missing-section");
+  remaining.append(
+    create("strong", "speedup-section-title", t("plan.speedup_remaining_section", "足りない短縮")),
+    create("span", "speedup-remaining", t("plan.speedup_remaining", "不足: {time}", { time: formatDuration(result.coverage.remainingSeconds) })),
+  );
+  if (state.settings.useGemsForSpeedups && result.coverage.remainingSeconds > 0) {
+    const directGems = result.coverage.remainingTaskSeconds.reduce(
+      (sum, seconds) => sum + minimumGemsForSpeedupSeconds(seconds).gems,
+      0,
+    );
+    remaining.append(create("span", "speedup-direct-gems", t(
+      "plan.speedup_direct_gems",
+      "ジェムで即時終了: {gems}ジェム（{time}短縮）",
+      {
+        gems: directGems.toLocaleString(state.locale),
+        time: formatDuration(result.coverage.remainingSeconds),
+      },
+    )));
+  }
+  const offerList = create("div", "speedup-offer-list");
+  if (result.coverage.remainingSeconds > 0) {
+    offerList.append(create("strong", "speedup-section-title", t("plan.speedup_purchase_options", "登録済み課金で補う場合")));
+    if (result.recommendations.some((offer) => offer.gemsUsed > 0)) {
+      offerList.append(create("span", "speedup-gem-basis", t("plan.speedup_gem_basis", "ジェムショップの定型スピードアップ価格で換算")));
+    }
+    if (!result.recommendations.length) {
+      offerList.append(create("span", "muted", t("plan.speedup_no_offer", "残りを補える課金登録なし")));
+    } else {
+      for (const offer of result.recommendations) {
+        const price = offer.totalDiamondCost === null
+          ? t("common.unknown", "不明")
+          : offer.totalDiamondCost.toLocaleString(state.locale);
+        const card = create("article", "speedup-recommendation-card");
+        const breakdown = create("div", "speedup-recommendation-breakdown");
+        if (offer.appliedSpeedupSeconds > 0) breakdown.append(
+          create("span", "speedup-breakdown-part", t(
+            "plan.speedup_offer_speedups",
+            "パック内の速度アップ: {time}",
+            { time: formatDuration(offer.appliedSpeedupSeconds) },
+          )),
+        );
+        if (offer.gemsUsed > 0) breakdown.append(
+          create("span", "speedup-breakdown-part", t(
+            "plan.speedup_offer_gems",
+            "付属ジェム: {available}（{used}使用）→ {time}短縮",
+            {
+              available: offer.availableGems.toLocaleString(state.locale),
+              used: offer.gemsUsed.toLocaleString(state.locale),
+              time: formatDuration(offer.gemAppliedSeconds),
+            },
+          )),
+        );
+        breakdown.append(
+          create("span", `speedup-breakdown-part ${offer.remainingSeconds ? "speedup-remaining" : "speedup-surplus"}`, t(
+            "plan.speedup_offer_remaining",
+            "適用後の不足: {time}",
+            { time: formatDuration(offer.remainingSeconds) },
+          )),
+        );
+        card.append(
+          create("strong", "speedup-recommendation-title", t(
+            "plan.speedup_offer",
+            "{title} ×{count}（ダイヤ {price}）",
+            { title: offer.title, count: offer.purchases, price },
+          )),
+          breakdown,
+        );
+        offerList.append(card);
+      }
+    }
+  }
+  const sections = [disclosure, hint, gemOption, summary, remaining];
+  if (result.coverage.remainingSeconds > 0) sections.push(offerList);
+  target.replaceChildren(...sections);
+  target.hidden = requiredSeconds <= 0;
+}
+
 function bindPaid() {
   byId("paid-new")?.addEventListener("click", () => { newPaidOffer(); setPaidView("input"); });
-  for (const view of ["input", "saved", "comparison"]) byId(`paid-view-${view}-button`)?.addEventListener("click", () => setPaidView(view));
-  byId("paid-add-item")?.addEventListener("click", () => {
-    paidDraft.items.push({ kind: "general", name: "", quantity: 0, durationSeconds: 0, gemValueEach: 0, pointsEach: 0 });
-    renderPaidItems(); renderPaidSummary();
-  });
+  for (const view of ["input", "saved", "comparison", "share"]) byId(`paid-view-${view}-button`)?.addEventListener("click", () => setPaidView(view));
+  byId("paid-add-item")?.addEventListener("click", () => openPaidItemEditor());
+  byId("paid-item-save")?.addEventListener("click", savePaidItem);
+  byId("paid-item-cancel")?.addEventListener("click", closePaidItemEditor);
+  byId("paid-item-delete")?.addEventListener("click", deletePaidItem);
+  byId("paid-item-kind")?.addEventListener("change", () => refreshPaidItemEditorKind(true));
   byId("paid-save")?.addEventListener("click", savePaidOffer);
   byId("paid-delete")?.addEventListener("click", deletePaidOffer);
   byId("paid-goal")?.addEventListener("change", (event) => { paidDraft.goal = event.target.value; renderPaidSummary(); });
@@ -192,6 +354,7 @@ function bindPaid() {
   byId("paid-use-speedup-gem-presets")?.addEventListener("change", (event) => { state.paidValuation.useSpeedupGemPresets = event.target.checked; scheduleSave(); renderPaidSummary(); renderPaidComparison(); });
   byId("paid-export-selected")?.addEventListener("click", exportSelectedPaidOffer);
   byId("paid-export-all")?.addEventListener("click", exportAllPaidOffers);
+  byId("paid-export-valuation")?.addEventListener("click", exportPaidValuation);
   byId("paid-import")?.addEventListener("change", importPaidOffers);
   const draftFields = {
     "paid-title-input": "title", "paid-memo-input": "memo", "paid-price": "diamondCost",
@@ -215,8 +378,8 @@ function bindPaid() {
 }
 
 function setPaidView(view) {
-  paidView = ["input", "saved", "comparison"].includes(view) ? view : "input";
-  for (const key of ["input", "saved", "comparison"]) {
+  paidView = ["input", "saved", "comparison", "share"].includes(view) ? view : "input";
+  for (const key of ["input", "saved", "comparison", "share"]) {
     byId(`paid-view-${key}`).hidden = key !== paidView;
     byId(`paid-view-${key}-button`).classList.toggle("is-active", key === paidView);
   }
@@ -226,6 +389,7 @@ function setPaidView(view) {
 
 function newPaidOffer() {
   paidEditingId = "";
+  closePaidItemEditor();
   paidDraft = emptyPaidOffer();
   renderPaid();
 }
@@ -234,6 +398,7 @@ function loadPaidOffer(id) {
   const offer = state.paidOffers.find((item) => item.offerId === id);
   if (!offer) return;
   paidEditingId = id;
+  closePaidItemEditor();
   paidDraft = sanitizePaidOffer(structuredClone(offer));
   paidView = "input";
   renderPaid();
@@ -249,14 +414,14 @@ function savePaidOffer() {
   if (index >= 0) state.paidOffers[index] = saved; else state.paidOffers.push(saved);
   paidEditingId = offerId;
   paidDraft = sanitizePaidOffer(structuredClone(saved));
-  saveNow(); renderPaid(); toast(t("paid.saved", "課金項目を保存しました"));
+  saveNow(); renderPaid(); refreshCurrentPlan(); renderCastle(); toast(t("paid.saved", "課金項目を保存しました"));
 }
 
 function deletePaidOffer() {
   if (!paidEditingId) { newPaidOffer(); return; }
   if (!window.confirm(t("paid.delete_confirm", "この課金項目を削除しますか？"))) return;
   state.paidOffers = state.paidOffers.filter((item) => item.offerId !== paidEditingId);
-  saveNow(); newPaidOffer(); toast(t("paid.deleted", "課金項目を削除しました"));
+  saveNow(); newPaidOffer(); refreshCurrentPlan(); renderCastle(); toast(t("paid.deleted", "課金項目を削除しました"));
 }
 
 function renderPaid() {
@@ -298,7 +463,8 @@ function renderPaidOffers() {
   const offers = [...state.paidOffers].sort((left, right) => String(right.updatedAt).localeCompare(String(left.updatedAt)) || left.title.localeCompare(right.title));
   if (!offers.length) { list.replaceChildren(create("p", "empty-state", t("paid.no_saved", "保存した課金項目はありません。"))); return; }
   list.replaceChildren(...offers.map((offer) => {
-    const button = create("button", `paid-offer-card${offer.offerId === paidEditingId ? " is-selected" : ""}`);
+    const card = create("article", `paid-offer-card${offer.offerId === paidEditingId ? " is-selected" : ""}`);
+    const button = create("button", "paid-offer-open");
     button.type = "button";
     const heading = create("span", "paid-offer-heading");
     heading.append(create("strong", "", offer.title));
@@ -310,8 +476,28 @@ function renderPaidOffers() {
       create("span", "", offer.updatedAt ? offer.updatedAt.slice(0, 10) : ""),
     );
     button.addEventListener("click", () => loadPaidOffer(offer.offerId));
-    return button;
+    const addInventory = create("button", "paid-add-inventory", t("paid.add_to_inventory", "所持時短へ追加"));
+    addInventory.type = "button";
+    addInventory.addEventListener("click", () => addPaidOfferToInventory(offer));
+    card.append(button, addInventory);
+    return card;
   }));
+}
+
+function addPaidOfferToInventory(offer) {
+  const before = JSON.stringify(normalizeSpeedupInventory(state.settings.speedupInventory));
+  const updated = addPaidItemsToInventory(state.settings.speedupInventory, offer.items);
+  if (JSON.stringify(updated) === before) {
+    toast(t("paid.no_speedups_to_add", "この課金項目に追加できる時短はありません。"));
+    return;
+  }
+  state.settings.speedupInventory = updated;
+  state.settings.speedupSeconds = 0;
+  saveNow();
+  closeSpeedupInventoryEditor();
+  refreshCurrentPlan();
+  renderCastle();
+  toast(t("paid.added_to_inventory", "課金項目の時短を所持数へ追加しました。"));
 }
 
 function renderPaidComparison() {
@@ -353,6 +539,14 @@ function exportAllPaidOffers() {
   toast(t("paid.exported", "課金項目を書き出しました", { count: state.paidOffers.length }));
 }
 
+function exportPaidValuation() {
+  downloadJson(
+    paidOfferExchangePayload([], state.paidValuation, t("paid.valuation_shared_data_name", "課金比較設定")),
+    `RLMResearchPlanner-paid-settings-${new Date().toISOString().slice(0, 10)}.json`,
+  );
+  toast(t("paid.valuation_exported", "比較設定を書き出しました。"));
+}
+
 async function importPaidOffers(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try {
@@ -365,10 +559,107 @@ async function importPaidOffers(event) {
       if (existing.has(offer.offerId)) offer = { ...offer, offerId: globalThis.crypto?.randomUUID?.() || `offer-${Date.now()}-${added}` };
       state.paidOffers.push(offer); existing.set(offer.offerId, offer); added += 1;
     }
-    if (window.confirm(t("paid.import_valuation_confirm", "共有元の比較ポイント設定も取り込みますか？"))) state.paidValuation = imported.valuation;
-    saveNow(); renderPaid(); setPaidView("saved"); toast(t("paid.imported", "{added}件を追加しました（重複{skipped}件）", { added, skipped }));
+    const valuationOnly = imported.offers.length === 0;
+    const valuationApplied = valuationOnly || window.confirm(t("paid.import_valuation_confirm", "共有元の比較ポイント設定も取り込みますか？"));
+    if (valuationApplied) state.paidValuation = imported.valuation;
+    saveNow(); renderPaid(); setPaidView(valuationOnly ? "comparison" : "saved"); refreshCurrentPlan(); renderCastle();
+    toast(valuationOnly
+      ? t("paid.valuation_imported", "比較設定を取り込みました。")
+      : t(valuationApplied ? "paid.imported_with_valuation" : "paid.imported", "課金項目{added}件を追加しました。重複{skipped}件は変更していません。", { added, skipped }));
   } catch (error) { toast(t("paid.import_failed", `課金データを読み込めませんでした: ${error.message}`, { error: error.message })); }
   finally { event.target.value = ""; }
+}
+
+function refreshPaidItemEditorKind(applyDefaults = false) {
+  const kindInput = byId("paid-item-kind");
+  const kind = kindInput?.value || "general";
+  const previous = kindInput?.dataset.previousKind || kind;
+  if (applyDefaults) {
+    const gemValue = Number(byId("paid-item-gem-value").value) || 0;
+    const points = Number(byId("paid-item-points").value) || 0;
+    if (!gemValue || gemValue === defaultGemValueEach(previous)) byId("paid-item-gem-value").value = String(defaultGemValueEach(kind));
+    if (!points || points === defaultPointsEach(previous)) byId("paid-item-points").value = String(defaultPointsEach(kind));
+  }
+  if (kindInput) kindInput.dataset.previousKind = kind;
+  const hasTime = paidKindHasTime(kind);
+  byId("paid-item-duration-field").hidden = !hasTime;
+  byId("paid-item-unit-field").hidden = !hasTime;
+}
+
+function openPaidItemEditor(index = -1) {
+  const items = paidDraft.items || [];
+  paidItemEditingIndex = Number.isInteger(index) && index >= 0 && index < items.length ? index : -1;
+  const item = paidItemEditingIndex >= 0
+    ? items[paidItemEditingIndex]
+    : { kind: "general", name: "", quantity: 1, durationSeconds: 3600, gemValueEach: 0, pointsEach: 0 };
+  const kind = byId("paid-item-kind");
+  kind.replaceChildren(...PAID_ITEM_KINDS.map((key) => {
+    const option = create("option", "", paidKindLabel(key));
+    option.value = key;
+    return option;
+  }));
+  kind.value = item.kind;
+  kind.dataset.previousKind = item.kind;
+  byId("paid-item-name").value = item.name || "";
+  byId("paid-item-quantity").value = String(Math.max(1, Math.trunc(Number(item.quantity) || 1)));
+  const [durationValue, durationUnit] = paidDurationParts(item.durationSeconds);
+  byId("paid-item-duration").value = String(Math.max(0, durationValue));
+  const unit = byId("paid-item-unit");
+  unit.replaceChildren(...["seconds", "minutes", "hours", "days"].map((key) => {
+    const option = create("option", "", t(`paid.unit.${key}`, key));
+    option.value = key;
+    return option;
+  }));
+  unit.value = durationUnit;
+  byId("paid-item-gem-value").value = String(Math.max(0, Number(item.gemValueEach) || 0));
+  byId("paid-item-points").value = String(Math.max(0, Number(item.pointsEach) || 0));
+  byId("paid-item-editor-title").textContent = paidItemEditingIndex >= 0
+    ? t("paid.item_edit", "内容を編集")
+    : t("paid.item_new", "内容を追加");
+  byId("paid-item-delete").hidden = paidItemEditingIndex < 0;
+  byId("paid-item-editor").hidden = false;
+  refreshPaidItemEditorKind();
+  renderPaidItems();
+}
+
+function closePaidItemEditor() {
+  paidItemEditingIndex = -1;
+  const editor = byId("paid-item-editor");
+  if (editor) editor.hidden = true;
+  renderPaidItems();
+}
+
+function savePaidItem() {
+  const kind = byId("paid-item-kind").value;
+  const hasTime = paidKindHasTime(kind);
+  const durationSeconds = hasTime
+    ? Math.max(0, Number(byId("paid-item-duration").value) || 0) * paidUnitSeconds(byId("paid-item-unit").value)
+    : 0;
+  const item = {
+    kind,
+    name: byId("paid-item-name").value.trim(),
+    quantity: Math.max(1, Math.trunc(Number(byId("paid-item-quantity").value) || 1)),
+    durationSeconds: Math.max(0, Math.trunc(durationSeconds)),
+    gemValueEach: Math.max(0, Number(byId("paid-item-gem-value").value) || 0),
+    pointsEach: Math.max(0, Number(byId("paid-item-points").value) || 0),
+  };
+  if (paidItemEditingIndex >= 0 && paidItemEditingIndex < paidDraft.items.length) paidDraft.items[paidItemEditingIndex] = item;
+  else paidDraft.items.push(item);
+  closePaidItemEditor();
+  renderPaidSummary();
+}
+
+function deletePaidItem() {
+  if (paidItemEditingIndex < 0 || paidItemEditingIndex >= paidDraft.items.length) return;
+  paidDraft.items.splice(paidItemEditingIndex, 1);
+  closePaidItemEditor();
+  renderPaidSummary();
+}
+
+function paidItemListDetail(item) {
+  const parts = [paidKindLabel(item.kind), `${Math.max(0, Math.trunc(Number(item.quantity) || 0)).toLocaleString(state.locale)}${t("paid.quantity_suffix", "個")}`];
+  if (paidKindHasTime(item.kind) && item.durationSeconds > 0) parts.push(formatDuration(item.durationSeconds));
+  return parts.join(" / ");
 }
 
 function renderPaidItems() {
@@ -376,35 +667,20 @@ function renderPaidItems() {
   if (!list) return;
   if (!paidDraft.items.length) { list.replaceChildren(create("p", "empty-state", t("paid.no_items_manual", "「行を追加」から内容を入力してください。"))); return; }
   list.replaceChildren(...paidDraft.items.map((item, index) => {
-    const row = create("article", "paid-item-row");
-    const kindField = create("label", "field"); kindField.append(create("span", "", t("paid.kind", "種類")));
-    const kind = create("select");
-    kind.append(...PAID_ITEM_KINDS.map((key) => { const option = create("option", "", paidKindLabel(key)); option.value = key; option.selected = item.kind === key; return option; }));
-    kind.addEventListener("change", () => {
-      const previous = item.kind; item.kind = kind.value;
-      if (!paidKindHasTime(item.kind)) item.durationSeconds = 0;
-      if (!item.pointsEach || item.pointsEach === defaultPointsEach(previous)) item.pointsEach = defaultPointsEach(item.kind);
-      if (!item.gemValueEach || item.gemValueEach === defaultGemValueEach(previous)) item.gemValueEach = defaultGemValueEach(item.kind);
-      renderPaidItems(); renderPaidSummary();
-    }); kindField.append(kind);
-    const makeNumber = (label, value, callback, extra = {}) => {
-      const field = create("label", `field ${extra.className || ""}`); field.hidden = Boolean(extra.hidden); field.append(create("span", "", label));
-      const input = create("input"); input.type = "number"; input.inputMode = "decimal"; input.min = "0"; input.step = String(extra.step || 1); input.value = String(value);
-      input.addEventListener("input", () => { callback(Math.max(0, Number(input.value) || 0)); renderPaidSummary(); }); field.append(input); return field;
-    };
-    const nameField = create("label", "field"); nameField.append(create("span", "", t("paid.item_name", "項目名")));
-    const name = create("input"); name.type = "text"; name.maxLength = 200; name.value = item.name; name.addEventListener("input", () => { item.name = name.value; }); nameField.append(name);
-    const quantity = makeNumber(t("paid.quantity", "個数"), item.quantity, (value) => { item.quantity = Math.trunc(value); });
-    const [durationValue, durationUnit] = paidDurationParts(item.durationSeconds);
-    const duration = makeNumber(t("paid.duration", "1個の時間"), durationValue, (value) => { item.durationSeconds = Math.trunc(value * paidUnitSeconds(unit.value)); }, { className: "paid-time-field", hidden: !paidKindHasTime(item.kind) });
-    const unitField = create("label", "field paid-time-field"); unitField.hidden = !paidKindHasTime(item.kind); unitField.append(create("span", "", t("paid.unit", "単位")));
-    const unit = create("select");
-    for (const key of ["minutes", "hours", "days", "seconds"]) { const option = create("option", "", t(`paid.unit.${key}`, key)); option.value = key; option.selected = durationUnit === key; unit.append(option); }
-    unit.addEventListener("change", () => { item.durationSeconds = Math.trunc((Number(duration.querySelector("input").value) || 0) * paidUnitSeconds(unit.value)); renderPaidSummary(); }); unitField.append(unit);
-    const gem = makeNumber(t("paid.gem_value_each", "1個のジェム換算"), item.gemValueEach, (value) => { item.gemValueEach = value; }, { step: .01 });
-    const points = makeNumber(t("paid.points_each", "1個の追加ポイント"), item.pointsEach, (value) => { item.pointsEach = value; }, { step: .01 });
-    const remove = create("button", "remove-paid-item", "−"); remove.type = "button"; remove.setAttribute("aria-label", t("paid.delete_row", "この行を削除")); remove.addEventListener("click", () => { paidDraft.items.splice(index, 1); renderPaidItems(); renderPaidSummary(); });
-    row.append(kindField, nameField, quantity, duration, unitField, gem, points, remove);
+    const row = create("button", "speedup-inventory-row paid-item-summary-row");
+    row.type = "button";
+    row.classList.toggle("is-selected", paidItemEditingIndex === index && !byId("paid-item-editor").hidden);
+    row.setAttribute("aria-pressed", String(paidItemEditingIndex === index && !byId("paid-item-editor").hidden));
+    const main = create("span", "speedup-inventory-row-main");
+    main.append(
+      create("strong", "", item.name || paidKindLabel(item.kind)),
+      create("span", "", paidItemListDetail(item)),
+    );
+    const total = paidKindHasTime(item.kind) && item.durationSeconds > 0
+      ? formatDuration(item.durationSeconds * Math.max(0, Math.trunc(Number(item.quantity) || 0)))
+      : "";
+    row.append(main, create("span", "speedup-inventory-row-total", total));
+    row.addEventListener("click", () => openPaidItemEditor(index));
     return row;
   }));
 }
@@ -884,6 +1160,10 @@ function bindSettings() {
     input.addEventListener("input", () => { state.settings.resources[key] = Math.max(0, Math.trunc(Number(input.value) || 0)); scheduleSave(); refreshCurrentPlan(); });
     label.append(input); resourceInputs.append(label);
   }
+  byId("speedup-inventory-add")?.addEventListener("click", () => openSpeedupInventoryEditor());
+  byId("speedup-inventory-save")?.addEventListener("click", saveSpeedupInventoryEntry);
+  byId("speedup-inventory-cancel")?.addEventListener("click", closeSpeedupInventoryEditor);
+  byId("speedup-inventory-delete")?.addEventListener("click", deleteSpeedupInventoryEntry);
   byId("bulk-category-select")?.addEventListener("change", (event) => { selectedBulkCategoryId = event.target.value; renderBulkLevels(); });
   byId("bulk-level-search")?.addEventListener("input", renderBulkLevels);
   byId("language-select").addEventListener("change", (event) => activateLanguage(event.target.value));
@@ -896,7 +1176,7 @@ function bindSettings() {
   byId("remove-language-pack")?.addEventListener("click", removeCustomLanguagePack);
   byId("reset-player").addEventListener("click", () => {
     if (!window.confirm(t("pwa.clear_confirm", "プレイヤー設定と全研究レベルをクリアしますか？"))) return;
-    const locale = state.locale; state = defaultState(); state.locale = locale; paidEditingId = ""; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderPaid(); toast(t("pwa.cleared", "設定をクリアしました"));
+    const locale = state.locale; state = defaultState(); state.locale = locale; paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderPaid(); toast(t("pwa.cleared", "設定をクリアしました"));
   });
 }
 
@@ -920,9 +1200,118 @@ function populateSettings() {
     if (caption) caption.textContent = resourceName(key);
   });
   updateVipHint();
+  renderSpeedupInventory();
   populateBulkCategoryOptions();
   renderBulkLevels();
   renderCastle();
+}
+
+function speedupInventoryChanged() {
+  state.settings.speedupSeconds = 0;
+  updateSpeedupInventorySummary();
+  scheduleSave();
+  refreshCurrentPlan();
+  renderCastle();
+  if (planMode === "tasks") renderTasks();
+}
+
+function speedupInventoryEntryLabel(entry) {
+  const [durationValue, durationUnit] = paidDurationParts(entry.durationSeconds);
+  return t(
+    "player.speedup_entry",
+    "{duration}{unit} × {quantity}個",
+    {
+      duration: durationValue.toLocaleString(state.locale),
+      unit: t(`paid.unit.${durationUnit}`, durationUnit),
+      quantity: entry.quantity.toLocaleString(state.locale),
+    },
+  );
+}
+
+function openSpeedupInventoryEditor(index = -1) {
+  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
+  speedupEditingIndex = Number.isInteger(index) && index >= 0 && index < entries.length ? index : -1;
+  const entry = speedupEditingIndex >= 0
+    ? entries[speedupEditingIndex]
+    : { kind: "general", durationSeconds: 3600, quantity: 1 };
+  const kind = byId("speedup-inventory-kind");
+  kind.replaceChildren(...SPEEDUP_KINDS.map((key) => {
+    const option = create("option", "", paidKindLabel(key));
+    option.value = key;
+    return option;
+  }));
+  kind.value = entry.kind;
+  const [durationValue, durationUnit] = paidDurationParts(entry.durationSeconds);
+  byId("speedup-inventory-duration").value = String(Math.max(1, durationValue));
+  const unit = byId("speedup-inventory-unit");
+  unit.replaceChildren(...["seconds", "minutes", "hours", "days"].map((key) => {
+    const option = create("option", "", t(`paid.unit.${key}`, key));
+    option.value = key;
+    return option;
+  }));
+  unit.value = durationUnit;
+  byId("speedup-inventory-quantity").value = String(Math.max(1, entry.quantity));
+  byId("speedup-inventory-editor-title").textContent = speedupEditingIndex >= 0
+    ? t("player.speedup_edit", "スピードアップを編集")
+    : t("player.speedup_new", "スピードアップを追加");
+  byId("speedup-inventory-delete").hidden = speedupEditingIndex < 0;
+  byId("speedup-inventory-editor").hidden = false;
+  renderSpeedupInventory();
+}
+
+function closeSpeedupInventoryEditor() {
+  speedupEditingIndex = -1;
+  byId("speedup-inventory-editor").hidden = true;
+  renderSpeedupInventory();
+}
+
+function saveSpeedupInventoryEntry() {
+  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
+  const entry = {
+    kind: byId("speedup-inventory-kind").value,
+    durationSeconds: Math.max(1, Math.trunc(Number(byId("speedup-inventory-duration").value) || 1))
+      * paidUnitSeconds(byId("speedup-inventory-unit").value),
+    quantity: Math.max(1, Math.trunc(Number(byId("speedup-inventory-quantity").value) || 1)),
+  };
+  state.settings.speedupInventory = saveOwnedSpeedupEntry(entries, speedupEditingIndex, entry);
+  closeSpeedupInventoryEditor();
+  speedupInventoryChanged();
+}
+
+function deleteSpeedupInventoryEntry() {
+  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
+  if (speedupEditingIndex < 0 || speedupEditingIndex >= entries.length) return;
+  state.settings.speedupInventory = deleteOwnedSpeedupEntry(entries, speedupEditingIndex);
+  closeSpeedupInventoryEditor();
+  speedupInventoryChanged();
+}
+
+function renderSpeedupInventory() {
+  const list = byId("speedup-inventory-list");
+  if (!list) return;
+  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
+  state.settings.speedupInventory = entries;
+  list.replaceChildren(...entries.map((entry, index) => {
+    const row = create("button", "speedup-inventory-row");
+    row.type = "button";
+    row.classList.toggle("is-selected", speedupEditingIndex === index && !byId("speedup-inventory-editor").hidden);
+    row.setAttribute("aria-pressed", String(speedupEditingIndex === index && !byId("speedup-inventory-editor").hidden));
+    const main = create("span", "speedup-inventory-row-main");
+    main.append(create("strong", "", paidKindLabel(entry.kind)), create("span", "", speedupInventoryEntryLabel(entry)));
+    row.append(main, create("span", "speedup-inventory-row-total", formatDuration(entry.durationSeconds * entry.quantity)));
+    row.addEventListener("click", () => openSpeedupInventoryEditor(index));
+    return row;
+  }));
+  byId("speedup-inventory-empty").hidden = entries.length > 0;
+  updateSpeedupInventorySummary();
+}
+
+function updateSpeedupInventorySummary() {
+  const summary = byId("speedup-inventory-summary");
+  if (!summary) return;
+  const total = normalizeSpeedupInventory(state.settings.speedupInventory)
+    .reduce((value, item) => value + item.durationSeconds * item.quantity, 0);
+  summary.textContent = t("player.speedup_total", "全種類の合計: {time}", { time: formatDuration(total) });
 }
 
 function updateGuildHelpLimit() {
@@ -1131,6 +1520,15 @@ function renderCastle() {
     card.append(create("span", "", label), create("strong", "", value));
     return card;
   }));
+  const castleSpeedup = create("details", "speedup-simulation castle-speedup-simulation");
+  summary.append(castleSpeedup);
+  renderSpeedupSimulation(
+    castleSpeedup,
+    plan.totals.adjustedSeconds,
+    "construction",
+    0,
+    plan.steps.map((step) => step.adjustedSeconds),
+  );
 
   const requiredById = new Map(plan.buildings.map((item) => [item.buildingId, item.targetLevel]));
   const levelList = byId("castle-level-list");
@@ -1223,7 +1621,7 @@ function exportBackup() {
 async function importBackup(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try {
-    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; paidEditingId = ""; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderPaid(); toast(t("player.backup_restored", "バックアップを読み込みました"));
+    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderPaid(); toast(t("player.backup_restored", "バックアップを読み込みました"));
   } catch (error) { toast(error.message); }
   finally { event.target.value = ""; }
 }
@@ -1380,7 +1778,18 @@ function bindPlans() {
   byId("plan-tasks-mode").addEventListener("click", () => setPlanMode("tasks"));
   byId("register-plan").addEventListener("click", registerCurrentPlan);
   byId("complete-plan").addEventListener("click", completeCurrentPlan);
-  byId("shortest-limit").addEventListener("change", renderShortest);
+  byId("shortest-limit").addEventListener("change", () => {
+    shortestPage = 0;
+    renderShortest();
+  });
+  byId("shortest-previous").addEventListener("click", () => {
+    shortestPage = Math.max(0, shortestPage - 1);
+    renderShortest();
+  });
+  byId("shortest-next").addEventListener("click", () => {
+    shortestPage += 1;
+    renderShortest();
+  });
   byId("resource-display-mode").addEventListener("change", (event) => {
     state.settings.resourceDisplayMode = event.target.value === "short" ? "short" : "exact";
     saveNow(); renderPlan(); renderShortest(); renderTasks(); renderCastle();
@@ -1443,7 +1852,10 @@ function completeCurrentPlan() {
 function renderPlan() {
   byId("plan-placeholder").hidden = Boolean(currentPlan);
   byId("plan-result").hidden = !currentPlan;
-  if (!currentPlan) return;
+  if (!currentPlan) {
+    byId("plan-speedup-summary").hidden = true;
+    return;
+  }
   const target = catalog.nodes.get(currentPlan.targetId);
   const targetCategory = catalog.categories.find((item) => item.id === target.categoryId);
   byId("plan-target-name").textContent = `${catalog.nodeName(target, state.locale)} Lv.${currentPlan.targetLevel}`;
@@ -1464,7 +1876,24 @@ function renderPlan() {
     if (needed > available) chip.classList.add("is-short");
     chip.append(create("span", "", resources[key]), create("strong", "", formatResource(needed)), create("span", "", needed > available ? t("pwa.shortage", "不足 {amount}", { amount: formatResource(needed - available) }) : t("pwa.within_owned", "所持数以内"))); return chip;
   }));
-  if (!usedResources.length) byId("resource-summary").append(create("div", "callout", t("pwa.no_required_resources", "必要資源なし")));
+  if (currentPlan.totals.unknownCosts) {
+    const chip = create("div", "resource-chip is-unknown");
+    chip.append(
+      create("span", "", resourceName("special")),
+      create("strong", "", t("common.unknown", "未確認")),
+      create("span", "", t("pwa.unknown_special_material", "専用素材を含む費用データ未収録")),
+    );
+    byId("resource-summary").append(chip);
+  } else if (!usedResources.length) {
+    byId("resource-summary").append(create("div", "callout", t("pwa.no_required_resources", "必要資源なし")));
+  }
+  renderSpeedupSimulation(
+    byId("plan-speedup-summary"),
+    currentPlan.totals.afterHelpSeconds,
+    "research",
+    currentPlan.totals.unknownTime,
+    currentPlan.steps.map((step) => step.afterHelpSeconds || 0),
+  );
   byId("plan-steps").replaceChildren(...currentPlan.steps.map((step) => planRow(step, { showCategory: false })));
   byId("complete-plan").disabled = currentPlan.steps.length === 0;
   byId("register-plan").disabled = currentPlan.steps.length === 0;
@@ -1478,7 +1907,17 @@ function renderPlan() {
 function renderShortest() {
   if (!catalog) return;
   const limit = Number(byId("shortest-limit")?.value || 20);
-  const steps = shortestAvailable(catalog, state).slice(0, limit);
+  const result = paginateItems(shortestAvailable(catalog, state), shortestPage, limit);
+  shortestPage = result.page;
+  const steps = result.items;
+  const currentPage = result.totalPages ? result.page + 1 : 0;
+  byId("shortest-page-status").textContent = t(
+    "plan.page_status",
+    "{current} / {total}（全{count}件）",
+    { current: currentPage, total: result.totalPages, count: result.totalItems },
+  );
+  byId("shortest-previous").disabled = result.page === 0;
+  byId("shortest-next").disabled = result.page + 1 >= result.totalPages;
   const list = byId("shortest-list");
   list.replaceChildren(...steps.map((step) => planRow(step, { selected: step.researchId === selectedNodeId })));
   const selected = steps.find((step) => step.researchId === selectedNodeId);
@@ -1536,7 +1975,7 @@ function planRow(step, { showCategory = true, selected = false } = {}) {
   else main.classList.add("is-single-category");
   main.append(
     create("span", "plan-row-effect", `${t("plan.effect", "効果")} ${effect}`),
-    resourceDetails(step.costs, RESOURCE_KEYS),
+    resourceDetails(step.costs, RESOURCE_KEYS, step.costsVerified),
   );
   const footer = create("div", "plan-step-footer");
   const timing = create("div", "plan-step-timing");
@@ -1551,17 +1990,33 @@ function planRow(step, { showCategory = true, selected = false } = {}) {
   row.append(main, footer); return row;
 }
 
-function resourceDetails(costs, keys) {
+function resourceDetails(costs, keys, costsVerified = true) {
   const details = create("details", "plan-resource-details");
   const used = keys.filter((key) => Number(costs[key] || 0) > 0);
-  const summary = create("summary", "", used.length ? t("pwa.material_count", "資材 {count}", { count: used.length }) : t("pwa.no_materials", "資材なし"));
+  const summary = create(
+    "summary",
+    "",
+    used.length
+      ? t("pwa.material_count", "資材 {count}", { count: used.length })
+      : costsVerified
+        ? t("pwa.no_materials", "資材なし")
+        : t("pwa.materials_unknown", "資材 未確認"),
+  );
   const resources = create("div", "plan-row-resources");
   for (const key of used) {
     const item = create("div", "plan-resource-item");
     item.append(create("span", "", resourceName(key)), create("strong", "", formatResource(costs[key])));
     resources.append(item);
   }
-  if (!used.length) resources.append(create("div", "plan-resource-item", t("pwa.no_required_materials", "必要資材なし")));
+  if (!used.length) {
+    resources.append(create(
+      "div",
+      "plan-resource-item",
+      costsVerified
+        ? t("pwa.no_required_materials", "必要資材なし")
+        : t("pwa.unknown_special_material", "専用素材を含む費用データ未収録"),
+    ));
+  }
   details.append(summary, resources);
   return details;
 }

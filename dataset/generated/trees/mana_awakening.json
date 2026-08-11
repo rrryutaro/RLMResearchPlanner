@@ -1,0 +1,5654 @@
+{
+  "coverage": "complete",
+  "default_verification": {
+    "checked_on": "2026-08-07",
+    "notes": "Imported from the frozen legacy catalog during the versioned dataset migration. Display connections remain provisional until checked against direct game evidence.",
+    "source_ids": [
+      "src_fandom_mana_awakening"
+    ],
+    "status": "provisional"
+  },
+  "display_connections": [
+    {
+      "from_ids": [
+        "mana_awakening_shelter_expansion_ii"
+      ],
+      "to_ids": [
+        "mana_awakening_mana_ore_harvesting_i",
+        "mana_awakening_mana_ore_storage_i"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_mana_ore_harvesting_i",
+        "mana_awakening_mana_ore_storage_i"
+      ],
+      "to_ids": [
+        "mana_awakening_ration_run_v",
+        "mana_awakening_alchemy_ii",
+        "mana_awakening_forced_march_iv"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_ration_run_v",
+        "mana_awakening_alchemy_ii",
+        "mana_awakening_forced_march_iv"
+      ],
+      "to_ids": [
+        "mana_awakening_mana_crystal_boon"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_mana_crystal_boon"
+      ],
+      "to_ids": [
+        "mana_awakening_field_triage_iii",
+        "mana_awakening_barracks_expansion_iii",
+        "mana_awakening_bigger_infirmary_iv"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_field_triage_iii",
+        "mana_awakening_barracks_expansion_iii",
+        "mana_awakening_bigger_infirmary_iv"
+      ],
+      "to_ids": [
+        "mana_awakening_mana_crystal_breakthrough"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_mana_crystal_breakthrough"
+      ],
+      "to_ids": [
+        "mana_awakening_mana_ore_harvesting_ii",
+        "mana_awakening_mana_ore_storage_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_mana_ore_harvesting_ii"
+      ],
+      "to_ids": [
+        "mana_awakening_lunite_harvesting_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_mana_ore_storage_ii"
+      ],
+      "to_ids": [
+        "mana_awakening_lunite_storage_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_lunite_harvesting_ii",
+        "mana_awakening_lunite_storage_ii"
+      ],
+      "to_ids": [
+        "mana_awakening_manasteel"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_manasteel"
+      ],
+      "to_ids": [
+        "mana_awakening_mana_ore_harvesting_iii",
+        "mana_awakening_mana_ore_storage_iii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_mana_ore_harvesting_iii",
+        "mana_awakening_mana_ore_storage_iii"
+      ],
+      "to_ids": [
+        "mana_awakening_manasteel_boon"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "from_ids": [
+        "mana_awakening_manasteel_boon"
+      ],
+      "to_ids": [
+        "mana_awakening_crafting_speed_iii",
+        "mana_awakening_crafting_capacity_ii"
+      ],
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved from the current desktop loader's visual connection groups; not yet accepted as canonical game evidence.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "document_type": "RLMResearchData.tree",
+  "legacy_compatibility": {
+    "notes": "研究名・配置・接続・最大レベル・レベル別効果を参照元から収録する。日本語名はGamerchと公開の日本語研究一覧、その他の値はCC BY-SAのLords Mobile Wikiを参照。",
+    "scope": "all_names_layout_only",
+    "source_type": "community_catalog",
+    "verification_status": "sourced_layout_levels_effects_prerequisites"
+  },
+  "nodes": [
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_shelter_expansion_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "500",
+              "level": 1,
+              "value": "500"
+            },
+            {
+              "display_fallback": "1,000",
+              "level": 2,
+              "value": "1,000"
+            },
+            {
+              "display_fallback": "2,000",
+              "level": 3,
+              "value": "2,000"
+            },
+            {
+              "display_fallback": "3,000",
+              "level": 4,
+              "value": "3,000"
+            },
+            {
+              "display_fallback": "4,500",
+              "level": 5,
+              "value": "4,500"
+            },
+            {
+              "display_fallback": "6,000",
+              "level": 6,
+              "value": "6,000"
+            },
+            {
+              "display_fallback": "8,000",
+              "level": 7,
+              "value": "8,000"
+            },
+            {
+              "display_fallback": "11,000",
+              "level": 8,
+              "value": "11,000"
+            },
+            {
+              "display_fallback": "20,000",
+              "level": 9,
+              "value": "20,000"
+            },
+            {
+              "display_fallback": "50,000",
+              "level": 10,
+              "value": "50,000"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_shelter_expansion_ii",
+      "layout": {
+        "column": 1,
+        "row": 0
+      },
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 349440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 7,
+            "mana_ore": 8232
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 26535,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1222920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 14,
+            "mana_ore": 20579
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 88890,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1485000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": 3,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1747020,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 34,
+            "mana_ore": 57622
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 133998,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2795280,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {},
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 218908,
+          "prerequisites": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3668760,
+          "buildings": {
+            "mana_academy": 2
+          },
+          "costs": {
+            "ancient_tomes": 84,
+            "mana_ore": 144053
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 289223,
+          "prerequisites": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 9608640,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 171,
+            "mana_ore": 271643
+          },
+          "legacy_verification_status": "sourced",
+          "level": 10,
+          "power": 729692,
+          "prerequisites": [],
+          "technolabe_count": 13
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_ore_harvesting_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_ore_harvesting_i",
+      "layout": {
+        "column": 0,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 454260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 297154,
+            "gold": 216550,
+            "mana_ore": 9878,
+            "ore": 118862,
+            "stone": 178293,
+            "timber": 148577
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 34495,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1589820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 1248047,
+            "gold": 757923,
+            "mana_ore": 24695,
+            "ore": 624024,
+            "stone": 312012,
+            "timber": 520020
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 115557,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1930500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 31,
+            "food": 1515485,
+            "gold": 920335,
+            "mana_ore": 44451,
+            "ore": 757743,
+            "stone": 378872,
+            "timber": 631452
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 144877,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1485770,
+            "gold": 1082747,
+            "mana_ore": 69146,
+            "ore": 594308,
+            "stone": 891462,
+            "timber": 742885
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": 174197,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3633840,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 80,
+            "food": 2377231,
+            "gold": 1732395,
+            "mana_ore": 133352,
+            "ore": 950893,
+            "stone": 1426339,
+            "timber": 1188616
+          },
+          "legacy_verification_status": "sourced",
+          "level": 6,
+          "power": 284580,
+          "prerequisites": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4769400,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 109,
+            "food": 3120000,
+            "gold": 2270000,
+            "mana_ore": 172000,
+            "ore": 1240000,
+            "stone": 1870000,
+            "timber": 1560000
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 375991,
+          "prerequisites": [],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 222,
+            "food": 8171732,
+            "gold": 5955108,
+            "mana_ore": 325972,
+            "ore": 3268693,
+            "stone": 4903039,
+            "timber": 4085866
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": 948600,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_ore_storage_i",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_ore_storage_i",
+      "layout": {
+        "column": 2,
+        "row": 1
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 454260,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 9,
+            "food": 356585,
+            "gold": 216550,
+            "mana_ore": 9878,
+            "ore": 178293,
+            "stone": 89147,
+            "timber": 148577
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 34495,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1589820,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 19,
+            "food": 1248047,
+            "gold": 757923,
+            "mana_ore": 24695,
+            "ore": 624024,
+            "stone": 312012,
+            "timber": 520020
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 115557,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 1930500,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 31,
+            "food": 1515485,
+            "gold": 920335,
+            "mana_ore": 44451,
+            "ore": 757743,
+            "stone": 378872,
+            "timber": 631452
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 144877,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 44,
+            "food": 1782924,
+            "gold": 1082747,
+            "mana_ore": 69146,
+            "ore": 891462,
+            "stone": 445931,
+            "timber": 742885
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": 174197,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 109,
+            "food": 3120000,
+            "gold": 2270000,
+            "mana_ore": 172000,
+            "ore": 1240000,
+            "stone": 1870000,
+            "timber": 1560000
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": 375991,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 222,
+            "food": 9806078,
+            "gold": 5955108,
+            "mana_ore": 325972,
+            "ore": 4903039,
+            "stone": 2451520,
+            "timber": 4085866
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": 948600,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_ration_run_v",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_ration_run_v",
+      "layout": {
+        "column": 0,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 594000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 466303,
+            "gold": 283180,
+            "mana_ore": 10702,
+            "ore": 233152,
+            "stone": 194293,
+            "timber": 116576
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 45109,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2079000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 1632061,
+            "gold": 991130,
+            "mana_ore": 26753,
+            "ore": 816031,
+            "stone": 680026,
+            "timber": 408016
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 151112,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2524440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 1981788,
+            "gold": 1203515,
+            "mana_ore": 48155,
+            "ore": 990894,
+            "stone": 825745,
+            "timber": 495447
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 189455,
+          "prerequisites": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 2331515,
+            "gold": 1415900,
+            "mana_ore": 74908,
+            "ore": 1165758,
+            "stone": 971465,
+            "timber": 582879
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": 227797,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6236880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 143,
+            "food": 4896182,
+            "gold": 2973390,
+            "mana_ore": 187269,
+            "ore": 2448091,
+            "stone": 2040076,
+            "timber": 1224046
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 491680,
+          "prerequisites": [],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 290,
+            "food": 12823332,
+            "gold": 7787449,
+            "mana_ore": 353136,
+            "ore": 6411666,
+            "stone": 5343055,
+            "timber": 3205833
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": 1240477,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_alchemy_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.1%",
+              "level": 1,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.1%",
+              "level": 2,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.1%",
+              "level": 3,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.1%",
+              "level": 4,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.1%",
+              "level": 5,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 6,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 7,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 8,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 9,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2.5%",
+              "level": 10,
+              "value": "2.5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_alchemy_ii",
+      "layout": {
+        "column": 1,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 594000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "food": 466303,
+            "gold": 283180,
+            "mana_ore": 10702,
+            "ore": 233152,
+            "stone": 194293,
+            "timber": 116576
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 45109,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2079000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "food": 1632061,
+            "gold": 991130,
+            "mana_ore": 26753,
+            "ore": 816031,
+            "stone": 680026,
+            "timber": 408016
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 151112,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2524440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 1981788,
+            "gold": 1203515,
+            "mana_ore": 48155,
+            "ore": 990894,
+            "stone": 825745,
+            "timber": 495447
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 189455,
+          "prerequisites": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 57,
+            "food": 2331515,
+            "gold": 1415900,
+            "mana_ore": 74908,
+            "ore": 1165758,
+            "stone": 971465,
+            "timber": 582879
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6236880,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 143,
+            "food": 4896182,
+            "gold": 2973390,
+            "mana_ore": 187269,
+            "ore": 2040076,
+            "stone": 1224046,
+            "timber": 2448091
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 491680,
+          "prerequisites": [],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 290,
+            "food": 12823332,
+            "gold": 7787449,
+            "mana_ore": 353136,
+            "ore": 6411666,
+            "stone": 5343055,
+            "timber": 3205833
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": 1240477,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_forced_march_iv",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_forced_march_iv",
+      "layout": {
+        "column": 2,
+        "row": 2
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 594000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 11,
+            "mana_ore": 10702
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 45109,
+          "prerequisites": [],
+          "technolabe_count": 1
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2079000,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 24,
+            "mana_ore": 26753
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 151112,
+          "prerequisites": [],
+          "technolabe_count": 3
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 2524440,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "mana_ore": 48155
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 189455,
+          "prerequisites": [],
+          "technolabe_count": 4
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 57,
+            "mana_ore": 74908
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": 227797,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 6236880,
+          "buildings": {
+            "mana_academy": 2
+          },
+          "costs": {
+            "ancient_tomes": 143,
+            "mana_ore": 187269
+          },
+          "legacy_verification_status": "sourced",
+          "level": 7,
+          "power": 491680,
+          "prerequisites": [],
+          "technolabe_count": 9
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 290,
+            "mana_ore": 353136
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": 1240477,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_crystal_boon",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1",
+              "level": 1,
+              "value": "1"
+            },
+            {
+              "display_fallback": "2",
+              "level": 2,
+              "value": "2"
+            },
+            {
+              "display_fallback": "3",
+              "level": 3,
+              "value": "3"
+            },
+            {
+              "display_fallback": "4",
+              "level": 4,
+              "value": "4"
+            },
+            {
+              "display_fallback": "5",
+              "level": 5,
+              "value": "5"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_crystal_boon",
+      "layout": {
+        "column": 1,
+        "row": 3
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 3459120,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 45,
+            "mana_ore": 20168
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 253933,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7069080,
+          "buildings": {
+            "mana_academy": 1
+          },
+          "costs": {
+            "ancient_tomes": 125,
+            "mana_ore": 66265
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 539973,
+          "prerequisites": [],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 2
+          },
+          "costs": {
+            "ancient_tomes": 235,
+            "mana_ore": 135000
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": 843524,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 19601520,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 423,
+            "mana_ore": 227604
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 1532353,
+          "prerequisites": [
+            {
+              "level": 9,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 9,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 9,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": 27
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 4
+          },
+          "costs": {
+            "ancient_tomes": 671,
+            "mana_ore": 345728
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": 2837043,
+          "prerequisites": [
+            {
+              "level": 10,
+              "research_id": "mana_awakening_forced_march_iv"
+            },
+            {
+              "level": 10,
+              "research_id": "mana_awakening_ration_run_v"
+            },
+            {
+              "level": 10,
+              "research_id": "mana_awakening_alchemy_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 5
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_field_triage_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.5%",
+              "level": 1,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 2,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 3,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 4,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 5,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 6,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 7,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "7%",
+              "level": 10,
+              "value": "7%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_field_triage_iii",
+      "layout": {
+        "column": 0,
+        "row": 4
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 937095,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 768,
+            "gold": 466,
+            "mana_ore": 115,
+            "ore": 192,
+            "stone": 320,
+            "timber": 384
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 74296,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3382920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 268,
+            "gold": 163,
+            "mana_ore": 288,
+            "ore": 672,
+            "stone": 112,
+            "timber": 134
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 248892,
+          "prerequisites": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4157940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 3264121,
+            "gold": 1982260,
+            "mana_ore": 51860,
+            "ore": 816031,
+            "stone": 1360051,
+            "timber": 1632061
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 312043,
+          "prerequisites": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5869980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 128,
+            "food": 4608171,
+            "gold": 2798485,
+            "mana_ore": 115243,
+            "ore": 1152043,
+            "stone": 1920072,
+            "timber": 2304086
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 460635,
+          "prerequisites": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_barracks_expansion_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_barracks_expansion_iii",
+      "layout": {
+        "column": 1,
+        "row": 4
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 937095,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 640,
+            "gold": 466,
+            "mana_ore": 115,
+            "stone": 320
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 74296,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3382920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 224,
+            "gold": 163,
+            "mana_ore": 288,
+            "stone": 112
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 248892,
+          "prerequisites": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4157940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 2720101,
+            "gold": 1982260,
+            "mana_ore": 51860,
+            "stone": 1360051
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 312043,
+          "prerequisites": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5869980,
+          "buildings": {
+            "mana_academy": 3
+          },
+          "costs": {
+            "ancient_tomes": 128,
+            "food": 3840143,
+            "gold": 2798485,
+            "mana_ore": 115243,
+            "stone": 1920072
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 460635,
+          "prerequisites": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_bigger_infirmary_iv",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.1%",
+              "level": 1,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.1%",
+              "level": 2,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.1%",
+              "level": 3,
+              "value": "0.1%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 5,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 6,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 7,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.6%",
+              "level": 8,
+              "value": "0.6%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_bigger_infirmary_iv",
+      "layout": {
+        "column": 2,
+        "row": 4
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 937095,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 18,
+            "food": 640,
+            "gold": 466,
+            "mana_ore": 115,
+            "stone": 320
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 74296,
+          "prerequisites": [],
+          "technolabe_count": 2
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 3382920,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 40,
+            "food": 224,
+            "gold": 163,
+            "mana_ore": 288,
+            "stone": 112
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 248892,
+          "prerequisites": [],
+          "technolabe_count": 5
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 4157940,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 66,
+            "food": 2720101,
+            "gold": 1982260,
+            "mana_ore": 51860,
+            "stone": 1360051
+          },
+          "legacy_verification_status": "sourced",
+          "level": 3,
+          "power": 312043,
+          "prerequisites": [],
+          "technolabe_count": 6
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5869980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 128,
+            "food": 3840143,
+            "gold": 2798485,
+            "mana_ore": 115243,
+            "stone": 1920072
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 460635,
+          "prerequisites": [],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_crystal_breakthrough",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "1",
+              "level": 1,
+              "value": "1"
+            },
+            {
+              "display_fallback": "1",
+              "level": 2,
+              "value": "1"
+            },
+            {
+              "display_fallback": "1",
+              "level": 3,
+              "value": "1"
+            },
+            {
+              "display_fallback": "1",
+              "level": 4,
+              "value": "1"
+            },
+            {
+              "display_fallback": "1",
+              "level": 5,
+              "value": "1"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_crystal_breakthrough",
+      "layout": {
+        "column": 1,
+        "row": 5
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 5483640,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 71,
+            "food": 432,
+            "gold": 262,
+            "mana_ore": 23,
+            "ore": 18,
+            "stone": 108,
+            "timber": 216
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 403985,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_barracks_expansion_iii"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_bigger_infirmary_iv"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_field_triage_iii"
+            }
+          ],
+          "technolabe_count": 8
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 11311980,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 199,
+            "food": 8880329,
+            "gold": 5392913,
+            "mana_ore": 75731,
+            "ore": 3700137,
+            "stone": 2220083,
+            "timber": 4440165
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 859046,
+          "prerequisites": [],
+          "technolabe_count": 15
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 374,
+            "food": 13440498,
+            "gold": 8162246,
+            "mana_ore": 154755,
+            "ore": 5600208,
+            "stone": 3360125,
+            "timber": 6720249
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": 1341971,
+          "prerequisites": [
+            {
+              "level": 8,
+              "research_id": "mana_awakening_barracks_expansion_iii"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_bigger_infirmary_iv"
+            },
+            {
+              "level": 8,
+              "research_id": "mana_awakening_field_triage_iii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 5
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_ore_harvesting_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_ore_harvesting_ii",
+      "layout": {
+        "column": 0,
+        "row": 6
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 786,
+            "gold": 716,
+            "mana_ore": 131,
+            "ore": 294,
+            "stone": 491,
+            "timber": 786
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 114098,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7512180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 144,
+            "food": 3932575,
+            "gold": 3581394,
+            "mana_ore": 92194,
+            "ore": 1474341,
+            "stone": 2457234,
+            "timber": 3931575
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 576191,
+          "prerequisites": [],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_ore_storage_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_ore_storage_ii",
+      "layout": {
+        "column": 2,
+        "row": 6
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 27,
+            "food": 117,
+            "gold": 716,
+            "mana_ore": 131,
+            "stone": 393,
+            "timber": 589
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 114098,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 5258520,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 60,
+            "food": 4128153,
+            "gold": 2506976,
+            "mana_ore": 32927,
+            "stone": 1376051,
+            "timber": 2064077
+          },
+          "legacy_verification_status": "sourced",
+          "level": 2,
+          "power": 382226,
+          "prerequisites": [],
+          "technolabe_count": 7
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 7512180,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 144,
+            "food": 5897362,
+            "gold": 3581394,
+            "mana_ore": 92194,
+            "stone": 1965788,
+            "timber": 2948681
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 576191,
+          "prerequisites": [],
+          "technolabe_count": 10
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_lunite_harvesting_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_lunite_harvesting_ii",
+      "layout": {
+        "column": 0,
+        "row": 7
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 33,
+            "food": 19,
+            "gold": 866,
+            "mana_ore": 148,
+            "ore": 475,
+            "stone": 356,
+            "timber": 594
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 137979,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 9084540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 174,
+            "food": 9508924,
+            "gold": 4330988,
+            "mana_ore": 103719,
+            "ore": 2377231,
+            "stone": 1782924,
+            "timber": 2971539
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 696789,
+          "prerequisites": [],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_lunite_storage_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_lunite_storage_ii",
+      "layout": {
+        "column": 2,
+        "row": 7
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 33,
+            "food": 118,
+            "gold": 866,
+            "mana_ore": 148,
+            "ore": 475,
+            "stone": 594,
+            "timber": 713
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 137979,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 9084540,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 174,
+            "food": 5943078,
+            "gold": 4330988,
+            "mana_ore": 103719,
+            "ore": 2377231,
+            "stone": 2971539,
+            "timber": 3565847
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 696789,
+          "prerequisites": [],
+          "technolabe_count": 12
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_manasteel",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Unlocks Manasteel Refinement",
+              "level": 1,
+              "value": "Unlocks Manasteel Refinement"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_manasteel",
+      "layout": {
+        "column": 1,
+        "row": 8
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {
+            "mana_academy": 5
+          },
+          "costs": {
+            "ancient_tomes": 1157,
+            "food": 31630886,
+            "gold": 28813560,
+            "mana_ore": 193114,
+            "ore": 31630886,
+            "stone": 19769304,
+            "timber": 11861582
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 4641639,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_lunite_harvesting_ii"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_lunite_storage_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_ore_harvesting_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0,4%",
+              "level": 2,
+              "value": "0,4%"
+            },
+            {
+              "display_fallback": "0,6%",
+              "level": 3,
+              "value": "0,6%"
+            },
+            {
+              "display_fallback": "0,8%",
+              "level": 4,
+              "value": "0,8%"
+            },
+            {
+              "display_fallback": "1,1%",
+              "level": 5,
+              "value": "1,1%"
+            },
+            {
+              "display_fallback": "1,5%",
+              "level": 6,
+              "value": "1,5%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_ore_harvesting_iii",
+      "layout": {
+        "column": 0,
+        "row": 9
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 2194367,
+            "gold": 1332612,
+            "mana_ore": 15641,
+            "ore": 731456,
+            "stone": 731456,
+            "timber": 1097184
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 212275,
+          "prerequisites": [],
+          "technolabe_count": 4,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 112,
+            "food": 7680285,
+            "gold": 4664141,
+            "mana_ore": 39101,
+            "ore": 2560095,
+            "stone": 2560095,
+            "timber": 3840143
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": 711118,
+          "prerequisites": [],
+          "technolabe_count": 13,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 365,
+            "food": 13166202,
+            "gold": 7995670,
+            "mana_ore": 156401,
+            "ore": 4388734,
+            "stone": 4388734,
+            "timber": 6583101
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": 1316099,
+          "prerequisites": [],
+          "technolabe_count": 22,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_mana_ore_storage_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0,4%",
+              "level": 2,
+              "value": "0,4%"
+            },
+            {
+              "display_fallback": "0,6%",
+              "level": 3,
+              "value": "0,6%"
+            },
+            {
+              "display_fallback": "0,8%",
+              "level": 4,
+              "value": "0,8%"
+            },
+            {
+              "display_fallback": "1,10%",
+              "level": 5,
+              "value": "1,10%"
+            },
+            {
+              "display_fallback": "1,50%",
+              "level": 6,
+              "value": "1,50%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 7,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "3%",
+              "level": 8,
+              "value": "3%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 9,
+              "value": "5%"
+            },
+            {
+              "display_fallback": "10%",
+              "level": 10,
+              "value": "10%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_mana_ore_storage_iii",
+      "layout": {
+        "column": 2,
+        "row": 9
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 50,
+            "food": 1462912,
+            "gold": 1332612,
+            "mana_ore": 15641,
+            "ore": 548592,
+            "stone": 914320
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 212275,
+          "prerequisites": [],
+          "technolabe_count": 4,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 112,
+            "food": 5120190,
+            "gold": 4664141,
+            "mana_ore": 39101,
+            "ore": 1920072,
+            "stone": 3200119
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": 711118,
+          "prerequisites": [],
+          "technolabe_count": 13,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 186,
+            "food": 6217373,
+            "gold": 5663599,
+            "mana_ore": 70381,
+            "ore": 2331515,
+            "stone": 3885859
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": 891551,
+          "prerequisites": [],
+          "technolabe_count": 16,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 268,
+            "food": 7314557,
+            "gold": 6663058,
+            "mana_ore": 109481,
+            "ore": 2742959,
+            "stone": 4571598
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": 1071984,
+          "prerequisites": [],
+          "technolabe_count": 19,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_manasteel_boon",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "Manasteel Refinement Bonus +1",
+              "level": 1,
+              "value": "Manasteel Refinement Bonus +1"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_manasteel_boon",
+      "layout": {
+        "column": 1,
+        "row": 10
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 85324260,
+          "buildings": {
+            "mana_academy": 6
+          },
+          "costs": {
+            "ancient_tomes": 1837,
+            "food": 111638419,
+            "gold": 50847458,
+            "mana_ore": 454385,
+            "ore": 13954803,
+            "stone": 55819210,
+            "timber": 13954803
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 6552902,
+          "prerequisites": [
+            {
+              "level": 1,
+              "research_id": "mana_awakening_mana_ore_harvesting_iii"
+            },
+            {
+              "level": 1,
+              "research_id": "mana_awakening_mana_ore_storage_iii"
+            }
+          ],
+          "technolabe_count": 112
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 1
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_crafting_speed_iii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "0.2%",
+              "level": 1,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 2,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 3,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.2%",
+              "level": 4,
+              "value": "0.2%"
+            },
+            {
+              "display_fallback": "0.3%",
+              "level": 5,
+              "value": "0.3%"
+            },
+            {
+              "display_fallback": "0.4%",
+              "level": 6,
+              "value": "0.4%"
+            },
+            {
+              "display_fallback": "0.5%",
+              "level": 7,
+              "value": "0.5%"
+            },
+            {
+              "display_fallback": "1%",
+              "level": 8,
+              "value": "1%"
+            },
+            {
+              "display_fallback": "2%",
+              "level": 9,
+              "value": "2%"
+            },
+            {
+              "display_fallback": "5%",
+              "level": 10,
+              "value": "5%"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_crafting_speed_iii",
+      "layout": {
+        "column": 0,
+        "row": 11
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 4754462,
+            "gold": 2165494,
+            "mana_ore": 16464,
+            "ore": 1188616,
+            "stone": 891462,
+            "timber": 1485770
+          },
+          "legacy_verification_status": "sourced_partial",
+          "level": 1,
+          "power": 344946,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 22711260,
+          "buildings": {},
+          "costs": {
+            "food": 23772390,
+            "gold": 10827469,
+            "ore": 5943078,
+            "stone": 4457308
+          },
+          "legacy_verification_status": "sourced",
+          "level": 4,
+          "power": 1714974,
+          "prerequisites": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 27218688,
+          "buildings": {},
+          "costs": {
+            "food": 28526771,
+            "gold": 12992963,
+            "ore": 7131693,
+            "stone": 5348770
+          },
+          "legacy_verification_status": "sourced",
+          "level": 5,
+          "power": 2138661,
+          "prerequisites": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    },
+    {
+      "effects": [
+        {
+          "metric_id": "mana_awakening_crafting_capacity_ii",
+          "parsed": false,
+          "unit": "text",
+          "values": [
+            {
+              "display_fallback": "20",
+              "level": 1,
+              "value": "20"
+            },
+            {
+              "display_fallback": "20",
+              "level": 2,
+              "value": "20"
+            },
+            {
+              "display_fallback": "20",
+              "level": 3,
+              "value": "20"
+            },
+            {
+              "display_fallback": "20",
+              "level": 4,
+              "value": "20"
+            },
+            {
+              "display_fallback": "30",
+              "level": 5,
+              "value": "30"
+            },
+            {
+              "display_fallback": "40",
+              "level": 6,
+              "value": "40"
+            },
+            {
+              "display_fallback": "50",
+              "level": 7,
+              "value": "50"
+            },
+            {
+              "display_fallback": "100",
+              "level": 8,
+              "value": "100"
+            },
+            {
+              "display_fallback": "200",
+              "level": 9,
+              "value": "200"
+            },
+            {
+              "display_fallback": "500",
+              "level": 10,
+              "value": "500"
+            }
+          ]
+        }
+      ],
+      "id": "mana_awakening_crafting_capacity_ii",
+      "layout": {
+        "column": 2,
+        "row": 11
+      },
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 4542300,
+          "buildings": {},
+          "costs": {
+            "ancient_tomes": 81,
+            "food": 4754462,
+            "gold": 2165494,
+            "mana_ore": 16464,
+            "ore": 1188616,
+            "stone": 1485770,
+            "timber": 891462
+          },
+          "legacy_verification_status": "sourced",
+          "level": 1,
+          "power": 344946,
+          "prerequisites": [],
+          "technolabe_count": null
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 2,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 3,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 4,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 5,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 6,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 7,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 8,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 9,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {},
+          "legacy_verification_status": "sourced_partial",
+          "level": 10,
+          "power": null,
+          "prerequisites": [],
+          "technolabe_count": null,
+          "verification": {
+            "checked_on": "2026-08-07",
+            "notes": "Legacy source data is partial; migrated values remain provisional.",
+            "source_ids": [
+              "src_fandom_mana_awakening"
+            ],
+            "status": "provisional"
+          }
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      },
+      "max_level": 10
+    }
+  ],
+  "schema_version": 2,
+  "source_edges": [
+    {
+      "prerequisite_id": "mana_awakening_alchemy_ii",
+      "research_id": "mana_awakening_mana_crystal_boon",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_barracks_expansion_iii",
+      "research_id": "mana_awakening_mana_crystal_breakthrough",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_bigger_infirmary_iv",
+      "research_id": "mana_awakening_mana_crystal_breakthrough",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_field_triage_iii",
+      "research_id": "mana_awakening_mana_crystal_breakthrough",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_forced_march_iv",
+      "research_id": "mana_awakening_mana_crystal_boon",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_lunite_harvesting_ii",
+      "research_id": "mana_awakening_manasteel",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_lunite_storage_ii",
+      "research_id": "mana_awakening_manasteel",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_crystal_boon",
+      "research_id": "mana_awakening_barracks_expansion_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_crystal_boon",
+      "research_id": "mana_awakening_bigger_infirmary_iv",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_crystal_boon",
+      "research_id": "mana_awakening_field_triage_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_crystal_breakthrough",
+      "research_id": "mana_awakening_mana_ore_harvesting_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_crystal_breakthrough",
+      "research_id": "mana_awakening_mana_ore_storage_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_harvesting_i",
+      "research_id": "mana_awakening_alchemy_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_harvesting_i",
+      "research_id": "mana_awakening_forced_march_iv",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_harvesting_i",
+      "research_id": "mana_awakening_ration_run_v",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_harvesting_ii",
+      "research_id": "mana_awakening_lunite_harvesting_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_harvesting_iii",
+      "research_id": "mana_awakening_manasteel_boon",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_storage_i",
+      "research_id": "mana_awakening_alchemy_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_storage_i",
+      "research_id": "mana_awakening_forced_march_iv",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_storage_i",
+      "research_id": "mana_awakening_ration_run_v",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_storage_ii",
+      "research_id": "mana_awakening_lunite_storage_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_mana_ore_storage_iii",
+      "research_id": "mana_awakening_manasteel_boon",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_manasteel",
+      "research_id": "mana_awakening_mana_ore_harvesting_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_manasteel",
+      "research_id": "mana_awakening_mana_ore_storage_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_manasteel_boon",
+      "research_id": "mana_awakening_crafting_capacity_ii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_manasteel_boon",
+      "research_id": "mana_awakening_crafting_speed_iii",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_ration_run_v",
+      "research_id": "mana_awakening_mana_crystal_boon",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_shelter_expansion_ii",
+      "research_id": "mana_awakening_mana_ore_harvesting_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    },
+    {
+      "prerequisite_id": "mana_awakening_shelter_expansion_ii",
+      "research_id": "mana_awakening_mana_ore_storage_i",
+      "verification": {
+        "checked_on": "2026-08-07",
+        "notes": "Preserved verbatim from the legacy category edge list because the desktop UI consumes it independently from planning prerequisites and display connection groups.",
+        "source_ids": [
+          "src_fandom_mana_awakening"
+        ],
+        "status": "provisional"
+      }
+    }
+  ],
+  "tree_id": "mana_awakening"
+}

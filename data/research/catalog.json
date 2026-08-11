@@ -49144,8 +49144,20 @@
             "base_time_seconds": 5171460,
             "technolabe_count": 2,
             "power": 544024,
-            "costs": {},
-            "costs_verified": false,
+            "costs": {
+              "food": 8137320,
+              "stone": 4068660,
+              "timber": 4068660,
+              "ore": 1356220,
+              "gold": 3904320,
+              "ancient_tomes": 96
+            },
+            "costs_verified": true,
+            "source_urls": {
+              "time": "https://lordsmobile.fandom.com/wiki/Helmet_Sigil",
+              "costs": "https://lordsmobile.fandom.com/wiki/Helmet_Sigil",
+              "requirements": "https://lordsmobile.fandom.com/wiki/Helmet_Sigil"
+            },
             "requirements": [
               {
                 "research": "Leadership (Infantry DEF) I",
@@ -49165,7 +49177,7 @@
               }
             ],
             "buildings": {},
-            "verification_status": "sourced_partial"
+            "verification_status": "sourced"
           }
         },
         "Furious Defense (Infantry)": {
@@ -49224,6 +49236,9 @@
               "ancient_tomes": 29
             },
             "costs_verified": true,
+            "source_urls": {
+              "costs": "https://lordsmobile.fandom.com/wiki/Furious_Defense_%28Infantry%29"
+            },
             "requirements": [],
             "buildings": {},
             "verification_status": "sourced"
@@ -63438,32 +63453,44 @@
         ],
         [
           "Infantry Durability (Wonder) III",
+          null,
           "Ranged Durability (Wonder) III",
+          null,
           "Cavalry Durability (Wonder) III"
         ],
         [
           "Infantry Offense (Wonder) III",
+          null,
           "Ranged Offense (Wonder) III",
+          null,
           "Cavalry Offense (Wonder) III"
         ],
         [
           "Infantry Defense (Wonder) III",
+          null,
           "Ranged Defense (Wonder) III",
+          null,
           "Cavalry Defense (Wonder) III"
         ],
         [
           "Infantry DEF Curse (Wonder)",
+          null,
           "Ranged DEF Curse (Wonder)",
+          null,
           "Cavalry DEF Curse (Wonder)"
         ],
         [
           "Infantry HP Curse (Wonder)",
+          null,
           "Ranged HP Curse (Wonder)",
+          null,
           "Cavalry HP Curse (Wonder)"
         ],
         [
           "Infantry ATK Curse (Wonder)",
+          null,
           "Ranged ATK Curse (Wonder)",
+          null,
           "Cavalry ATK Curse (Wonder)"
         ]
       ],
@@ -73506,9 +73533,9 @@
         "en-US": "Guild Duel"
       },
       "source_url": "https://www.youtube.com/watch?v=QKP5dGy1IHs",
-      "verification_status": "video_verified_layout_levels_effects",
-      "scope": "full_tree_from_public_gameplay_video",
-      "notes": "公開プレイ映像で全26ノードの配置、接続、最大レベル、効果を確認。英語・日本語名は映像内ポルトガル語名からの表示用翻訳。",
+      "verification_status": "structure_only_numeric_level_data_unavailable",
+      "scope": "tree_structure_reference_only",
+      "notes": "公開情報で全26ノードの配置、接続、最大レベル、効果を確認。英語・日本語名は表示用翻訳。各レベルの時間・資源・専用素材は、信頼できる公開数値表を確認できていないため未収録。",
       "rows": [
         [
           null,
@@ -74292,6 +74319,22 @@
       "changes": "Normalized and adapted into project-specific structured records."
     },
     {
+      "name": "Lords Mobile Wiki (Fandom): Furious Defense (Infantry)",
+      "url": "https://lordsmobile.fandom.com/wiki/Furious_Defense_%28Infantry%29",
+      "license": "CC BY-SA 3.0 Unported",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "licensing_terms_url": "https://www.fandom.com/licensing",
+      "scope": "Exact level 3 resource values for Furious Defense (Infantry)"
+    },
+    {
+      "name": "Lords Mobile Wiki (Fandom): Helmet Sigil",
+      "url": "https://lordsmobile.fandom.com/wiki/Helmet_Sigil",
+      "license": "CC BY-SA 3.0 Unported",
+      "license_url": "https://creativecommons.org/licenses/by-sa/3.0/",
+      "licensing_terms_url": "https://www.fandom.com/licensing",
+      "scope": "Level 1 time, prerequisites, power, and resource values for Helmet Sigil"
+    },
+    {
       "name": "Gamerch ロードモバイル攻略Wiki 研究一覧",
       "url": "https://lords-mobile.gamerch.com/%E7%A0%94%E7%A9%B6-%E7%A0%94%E7%A9%B6%E4%B8%80%E8%A6%A7",
       "scope": "Japanese research names and tree layout"
@@ -74309,7 +74352,7 @@
     {
       "name": "BigSoneca Guild Duel gameplay video",
       "url": "https://www.youtube.com/watch?v=QKP5dGy1IHs",
-      "scope": "Guild Duel tree layout, levels, and effects"
+      "scope": "Guild Duel tree structure, maximum levels, and effects only; no per-level time or cost values"
     }
   ],
   "data_license": {

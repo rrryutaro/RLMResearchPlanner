@@ -1,0 +1,60 @@
+{
+  "document_type": "RLMResearchData.tree",
+  "schema_version": 2,
+  "tree_id": "economy",
+  "coverage": "partial",
+  "default_verification": {
+    "status": "provisional",
+    "source_ids": [
+      "src_fandom_economy"
+    ],
+    "checked_on": "2026-08-07"
+  },
+  "nodes": [
+    {
+      "id": "economy_construction_speed",
+      "max_level": 10,
+      "layout": {
+        "row": 0,
+        "column": 0
+      },
+      "levels": [
+        {
+          "level": 1,
+          "academy_level": 1,
+          "base_time_seconds": 420,
+          "technolabe_count": 1,
+          "power": 180,
+          "costs": {
+            "food": 571,
+            "stone": 714,
+            "timber": 1142,
+            "ore": 429,
+            "gold": 794
+          },
+          "prerequisites": [],
+          "buildings": {}
+        }
+      ],
+      "effects": [
+        {
+          "metric_id": "construction_speed",
+          "unit": "percent",
+          "parsed": true,
+          "values": [
+            {
+              "level": 1,
+              "value": 1,
+              "display_fallback": "1%"
+            }
+          ]
+        }
+      ],
+      "lifecycle": {
+        "state": "active"
+      }
+    }
+  ],
+  "source_edges": [],
+  "display_connections": []
+}

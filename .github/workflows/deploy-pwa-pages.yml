@@ -1,14 +1,14 @@
 name: Deploy PWA to GitHub Pages
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
+      - pwa-preview
     paths:
       - "tools/RLMResearchPlannerPWA/**"
-      - "scripts/check_pwa_release.mjs"
       - ".github/workflows/deploy-pwa-pages.yml"
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -25,27 +25,44 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Verify PWA release
+      - name: Check out candidate
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Check out production for preview deployment
+        if: github.ref_name == 'pwa-preview'
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: main
+          path: _production
+
+      - name: Verify candidate PWA
         shell: bash
         run: |
-          node --check tools/RLMResearchPlannerPWA/src/app.js
-          node --check tools/RLMResearchPlannerPWA/src/catalog.js
-          node --check tools/RLMResearchPlannerPWA/src/planning.js
-          node --check tools/RLMResearchPlannerPWA/src/castle-planning.js
-          node --check tools/RLMResearchPlannerPWA/src/state.js
-          node --check tools/RLMResearchPlannerPWA/src/language-pack.js
-          node --check tools/RLMResearchPlannerPWA/src/paid-value.js
-          node --check tools/RLMResearchPlannerPWA/sw.js
-          node scripts/check_pwa_release.mjs
+          node --test tools/RLMResearchPlannerPWA/tests/*.test.mjs
+          node tools/RLMResearchPlannerPWA/scripts/check-release.mjs
+
+      - name: Prepare production and preview paths
+        shell: bash
+        run: |
+          mkdir -p _site/preview
+          if [[ "${GITHUB_REF_NAME}" == "pwa-preview" ]]; then
+            cp -a _production/tools/RLMResearchPlannerPWA/. _site/
+          else
+            cp -a tools/RLMResearchPlannerPWA/. _site/
+          fi
+          cp -a tools/RLMResearchPlannerPWA/. _site/preview/
+          touch _site/.nojekyll
+
       - name: Configure Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
+
       - name: Upload PWA
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
-          path: tools/RLMResearchPlannerPWA
+          path: _site
+
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4

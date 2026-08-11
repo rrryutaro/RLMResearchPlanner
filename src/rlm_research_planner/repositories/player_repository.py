@@ -13,6 +13,7 @@ from rlm_research_planner.domain.models import (
     PlayerState,
     ResearchPlanTask,
     RESOURCE_KEYS,
+    SpeedupInventoryItem,
     max_guild_helps_for_castle,
 )
 from rlm_research_planner.services.calculation import (
@@ -22,6 +23,55 @@ from rlm_research_planner.services.calculation import (
 
 
 SCHEMA_VERSION = 1
+
+
+def _speedup_inventory_from_raw(
+    raw: object,
+    legacy_seconds: int = 0,
+) -> list[SpeedupInventoryItem]:
+    entries: list[SpeedupInventoryItem] = []
+    if isinstance(raw, list):
+        for value in raw:
+            if not isinstance(value, dict):
+                continue
+            kind = str(value.get("kind", "general")).strip() or "general"
+            duration = max(0, int(value.get("duration_seconds", 0)))
+            quantity = max(0, int(value.get("quantity", 0)))
+            if duration > 0 and quantity > 0:
+                entries.append(SpeedupInventoryItem(kind, duration, quantity))
+    if not entries and legacy_seconds > 0:
+        entries.append(SpeedupInventoryItem("general", 1, legacy_seconds))
+    return entries
+
+
+def _speedup_inventory_payload(
+    entries: list[SpeedupInventoryItem],
+) -> list[dict[str, object]]:
+    return [
+        {
+            "kind": entry.kind,
+            "duration_seconds": max(0, int(entry.duration_seconds)),
+            "quantity": max(0, int(entry.quantity)),
+        }
+        for entry in entries
+        if entry.duration_seconds > 0 and entry.quantity > 0
+    ]
+
+
+def _legacy_general_speedup_seconds(entries: list[SpeedupInventoryItem]) -> int:
+    return sum(
+        max(0, int(entry.duration_seconds)) * max(0, int(entry.quantity))
+        for entry in entries
+        if entry.kind == "general"
+    )
+
+
+def _effective_speedup_inventory(settings: PlayerSettings) -> list[SpeedupInventoryItem]:
+    if settings.speedup_inventory:
+        return list(settings.speedup_inventory)
+    if settings.speedup_seconds > 0:
+        return [SpeedupInventoryItem("general", 1, settings.speedup_seconds)]
+    return []
 
 
 def _paid_item_from_raw(raw: object) -> PaidItem | None:
@@ -217,7 +267,14 @@ class PlayerRepository:
                     int(values.get("max_guild_helps", 0)),
                 ),
             ),
-            speedup_seconds=int(values.get("speedup_seconds", 0)),
+            speedup_seconds=0,
+            speedup_inventory=_speedup_inventory_from_raw(
+                values.get("speedup_inventory"),
+                int(values.get("speedup_seconds", 0)),
+            ),
+            use_gems_for_speedups=bool(
+                values.get("use_gems_for_speedups", False)
+            ),
             resource_display_mode=(
                 "short"
                 if values.get("resource_display_mode") == "short"
@@ -296,7 +353,13 @@ class PlayerRepository:
                 state.settings.vip_level
             ),
             "max_guild_helps": state.settings.max_guild_helps,
-            "speedup_seconds": state.settings.speedup_seconds,
+            "speedup_seconds": _legacy_general_speedup_seconds(
+                _effective_speedup_inventory(state.settings)
+            ),
+            "speedup_inventory": _speedup_inventory_payload(
+                _effective_speedup_inventory(state.settings)
+            ),
+            "use_gems_for_speedups": state.settings.use_gems_for_speedups,
             "resource_display_mode": state.settings.resource_display_mode,
             "building_levels": state.building_levels,
             "plan_tasks": [
@@ -373,7 +436,15 @@ class PlayerRepository:
                             int(state.settings.max_guild_helps),
                         ),
                     ),
-                    "speedup_seconds": state.settings.speedup_seconds,
+                    "speedup_seconds": _legacy_general_speedup_seconds(
+                        _effective_speedup_inventory(state.settings)
+                    ),
+                    "speedup_inventory": _speedup_inventory_payload(
+                        _effective_speedup_inventory(state.settings)
+                    ),
+                    "use_gems_for_speedups": (
+                        state.settings.use_gems_for_speedups
+                    ),
                     "resource_display_mode": state.settings.resource_display_mode,
                     "resources": state.settings.resources,
                     "observed_stats": state.observed_stats,
@@ -459,7 +530,14 @@ class PlayerRepository:
                     int(raw_settings["max_guild_helps"]),  # type: ignore[index]
                 ),
             ),
-            speedup_seconds=int(raw_settings["speedup_seconds"]),  # type: ignore[index]
+            speedup_seconds=0,
+            speedup_inventory=_speedup_inventory_from_raw(
+                raw_settings.get("speedup_inventory"),  # type: ignore[union-attr]
+                int(raw_settings.get("speedup_seconds", 0)),  # type: ignore[union-attr]
+            ),
+            use_gems_for_speedups=bool(
+                raw_settings.get("use_gems_for_speedups", False)  # type: ignore[union-attr]
+            ),
             resource_display_mode=(
                 "short"
                 if raw_settings.get("resource_display_mode") == "short"  # type: ignore[union-attr]

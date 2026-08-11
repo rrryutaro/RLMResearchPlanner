@@ -1,0 +1,5546 @@
+{
+  "category_id": "familiars",
+  "display_connection_groups": [
+    {
+      "prerequisite_ids": [
+        "familiars_anima_harvesting_i"
+      ],
+      "research_ids": [
+        "familiars_food_harvesting_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_merging_cost_pact_1"
+      ],
+      "research_ids": [
+        "familiars_gym_training_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_food_harvesting_ii",
+        "familiars_gym_training_i"
+      ],
+      "research_ids": [
+        "familiars_pact_2"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_pact_2"
+      ],
+      "research_ids": [
+        "familiars_stone_harvesting_ii",
+        "familiars_timber_harvesting_ii",
+        "familiars_metal_harvesting_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_stone_harvesting_ii"
+      ],
+      "research_ids": [
+        "familiars_anima_storage_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_timber_harvesting_ii"
+      ],
+      "research_ids": [
+        "familiars_pact_merging_speed_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_metal_harvesting_ii"
+      ],
+      "research_ids": [
+        "familiars_merging_cost_pact_2"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_anima_storage_i",
+        "familiars_pact_merging_speed_i",
+        "familiars_merging_cost_pact_2"
+      ],
+      "research_ids": [
+        "familiars_pact_3"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_pact_3"
+      ],
+      "research_ids": [
+        "familiars_anima_harvesting_ii",
+        "familiars_gold_harvesting_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_anima_harvesting_ii"
+      ],
+      "research_ids": [
+        "familiars_gym_membership_i"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_gold_harvesting_ii"
+      ],
+      "research_ids": [
+        "familiars_gym_training_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_gym_membership_i",
+        "familiars_gym_training_ii"
+      ],
+      "research_ids": [
+        "familiars_anima_storage_ii",
+        "familiars_pact_merging_speed_ii",
+        "familiars_merging_cost_pact_3"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_anima_storage_ii",
+        "familiars_pact_merging_speed_ii",
+        "familiars_merging_cost_pact_3"
+      ],
+      "research_ids": [
+        "familiars_pact_4"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_pact_4"
+      ],
+      "research_ids": [
+        "familiars_skillstone_merging_speed_i",
+        "familiars_durable_wards",
+        "familiars_merging_cost_pact_4"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "familiars_skillstone_merging_speed_i",
+        "familiars_durable_wards",
+        "familiars_merging_cost_pact_4"
+      ],
+      "research_ids": [
+        "familiars_skill_exp_boost"
+      ]
+    }
+  ],
+  "display_connections": [
+    [
+      "familiars_anima_harvesting_i",
+      "familiars_food_harvesting_ii"
+    ],
+    [
+      "familiars_anima_harvesting_ii",
+      "familiars_gym_membership_i"
+    ],
+    [
+      "familiars_anima_storage_i",
+      "familiars_pact_3"
+    ],
+    [
+      "familiars_anima_storage_ii",
+      "familiars_pact_4"
+    ],
+    [
+      "familiars_durable_wards",
+      "familiars_skill_exp_boost"
+    ],
+    [
+      "familiars_food_harvesting_ii",
+      "familiars_pact_2"
+    ],
+    [
+      "familiars_gold_harvesting_ii",
+      "familiars_gym_training_ii"
+    ],
+    [
+      "familiars_gym_membership_i",
+      "familiars_anima_storage_ii"
+    ],
+    [
+      "familiars_gym_membership_i",
+      "familiars_merging_cost_pact_3"
+    ],
+    [
+      "familiars_gym_membership_i",
+      "familiars_pact_merging_speed_ii"
+    ],
+    [
+      "familiars_gym_training_i",
+      "familiars_pact_2"
+    ],
+    [
+      "familiars_gym_training_ii",
+      "familiars_anima_storage_ii"
+    ],
+    [
+      "familiars_gym_training_ii",
+      "familiars_merging_cost_pact_3"
+    ],
+    [
+      "familiars_gym_training_ii",
+      "familiars_pact_merging_speed_ii"
+    ],
+    [
+      "familiars_merging_cost_pact_1",
+      "familiars_gym_training_i"
+    ],
+    [
+      "familiars_merging_cost_pact_2",
+      "familiars_pact_3"
+    ],
+    [
+      "familiars_merging_cost_pact_3",
+      "familiars_pact_4"
+    ],
+    [
+      "familiars_merging_cost_pact_4",
+      "familiars_skill_exp_boost"
+    ],
+    [
+      "familiars_metal_harvesting_ii",
+      "familiars_merging_cost_pact_2"
+    ],
+    [
+      "familiars_pact_2",
+      "familiars_metal_harvesting_ii"
+    ],
+    [
+      "familiars_pact_2",
+      "familiars_stone_harvesting_ii"
+    ],
+    [
+      "familiars_pact_2",
+      "familiars_timber_harvesting_ii"
+    ],
+    [
+      "familiars_pact_3",
+      "familiars_anima_harvesting_ii"
+    ],
+    [
+      "familiars_pact_3",
+      "familiars_gold_harvesting_ii"
+    ],
+    [
+      "familiars_pact_4",
+      "familiars_durable_wards"
+    ],
+    [
+      "familiars_pact_4",
+      "familiars_merging_cost_pact_4"
+    ],
+    [
+      "familiars_pact_4",
+      "familiars_skillstone_merging_speed_i"
+    ],
+    [
+      "familiars_pact_merging_speed_i",
+      "familiars_pact_3"
+    ],
+    [
+      "familiars_pact_merging_speed_ii",
+      "familiars_pact_4"
+    ],
+    [
+      "familiars_skillstone_merging_speed_i",
+      "familiars_skill_exp_boost"
+    ],
+    [
+      "familiars_stone_harvesting_ii",
+      "familiars_anima_storage_i"
+    ],
+    [
+      "familiars_timber_harvesting_ii",
+      "familiars_pact_merging_speed_i"
+    ]
+  ],
+  "document_type": "RLMResearchPlanner.research-baseline",
+  "nodes": [
+    {
+      "column": 0,
+      "effect_label": "Anima Production",
+      "effect_values": {
+        "1": "1%",
+        "10": "80%",
+        "2": "3%",
+        "3": "6%",
+        "4": "10%",
+        "5": "15%",
+        "6": "22%",
+        "7": "31%",
+        "8": "43%",
+        "9": "58%"
+      },
+      "id": "familiars_anima_harvesting_i",
+      "levels": [
+        {
+          "academy_level": 15,
+          "base_time_seconds": 19260,
+          "buildings": {},
+          "costs": {
+            "food": 11737,
+            "gold": 12108,
+            "ore": 11737,
+            "stone": 7336,
+            "timber": 4402
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 1558,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 67380,
+          "buildings": {},
+          "costs": {
+            "food": 41079,
+            "gold": 42376,
+            "ore": 41079,
+            "stone": 25674,
+            "timber": 15405
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 5450,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 81840,
+          "buildings": {},
+          "costs": {
+            "food": 49881,
+            "gold": 51456,
+            "ore": 49881,
+            "stone": 31176,
+            "timber": 18706
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 6618,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 96240,
+          "buildings": {},
+          "costs": {
+            "food": 58684,
+            "gold": 60537,
+            "ore": 58684,
+            "stone": 36677,
+            "timber": 22007
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 7787,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 115500,
+          "buildings": {},
+          "costs": {
+            "food": 70420,
+            "gold": 72644,
+            "ore": 70420,
+            "stone": 44013,
+            "timber": 26408
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 9343,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 153960,
+          "buildings": {},
+          "costs": {
+            "food": 93894,
+            "gold": 96859,
+            "ore": 93894,
+            "stone": 58684,
+            "timber": 35210
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 12458,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 202080,
+          "buildings": {},
+          "costs": {
+            "food": 123235,
+            "gold": 127127,
+            "ore": 123235,
+            "stone": 77022,
+            "timber": 46213
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 16351,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 288660,
+          "buildings": {},
+          "costs": {
+            "food": 176050,
+            "gold": 181609,
+            "ore": 176050,
+            "stone": 110031,
+            "timber": 66019
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 23359,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 404160,
+          "buildings": {},
+          "costs": {
+            "food": 246470,
+            "gold": 254253,
+            "ore": 246470,
+            "stone": 154044,
+            "timber": 92426
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 32702,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 529260,
+          "buildings": {},
+          "costs": {
+            "food": 322758,
+            "gold": 332950,
+            "ore": 322758,
+            "stone": 201724,
+            "timber": 121035
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 42824,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Anima Harvesting I",
+        "ja-JP": "獣晶石生産量I"
+      },
+      "row": 0
+    },
+    {
+      "column": 2,
+      "effect_label": "Reduction for Pact 1",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "2.5%",
+        "6": "3.5%",
+        "7": "5%",
+        "8": "7.5%",
+        "9": "10%"
+      },
+      "id": "familiars_merging_cost_pact_1",
+      "levels": [
+        {
+          "academy_level": 15,
+          "base_time_seconds": 27000,
+          "buildings": {},
+          "costs": {
+            "food": 20540,
+            "gold": 16951,
+            "ore": 12324,
+            "stone": 10270,
+            "timber": 8216
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2181,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 94320,
+          "buildings": {},
+          "costs": {
+            "food": 71887,
+            "gold": 59326,
+            "ore": 43133,
+            "stone": 35944,
+            "timber": 28755
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 7630,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 114540,
+          "buildings": {},
+          "costs": {
+            "food": 87292,
+            "gold": 72039,
+            "ore": 52375,
+            "stone": 43646,
+            "timber": 34917
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 9266,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 134760,
+          "buildings": {},
+          "costs": {
+            "food": 102696,
+            "gold": 84751,
+            "ore": 61618,
+            "stone": 51348,
+            "timber": 41079
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 10900,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 161700,
+          "buildings": {},
+          "costs": {
+            "food": 123235,
+            "gold": 101701,
+            "ore": 73941,
+            "stone": 61618,
+            "timber": 49294
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 13081,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 215580,
+          "buildings": {},
+          "costs": {
+            "food": 164313,
+            "gold": 135602,
+            "ore": 98588,
+            "stone": 82157,
+            "timber": 65726
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 17441,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 282900,
+          "buildings": {},
+          "costs": {
+            "food": 215661,
+            "gold": 177977,
+            "ore": 129397,
+            "stone": 107831,
+            "timber": 86265
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 22892,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 404160,
+          "buildings": {},
+          "costs": {
+            "food": 308087,
+            "gold": 254253,
+            "ore": 184852,
+            "stone": 154044,
+            "timber": 123235
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 32702,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 565800,
+          "buildings": {},
+          "costs": {
+            "food": 431322,
+            "gold": 355954,
+            "ore": 258793,
+            "stone": 215661,
+            "timber": 172529
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 45783,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 740940,
+          "buildings": {},
+          "costs": {
+            "food": 564826,
+            "gold": 466130,
+            "ore": 338896,
+            "stone": 282413,
+            "timber": 225931
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 59953,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Merging Cost (Pact 1)",
+        "ja-JP": "Lv1召喚の書コスト低下"
+      },
+      "row": 0
+    },
+    {
+      "column": 0,
+      "effect_label": "Food Production+%",
+      "effect_values": {
+        "1": "1%",
+        "10": "30%",
+        "2": "2%",
+        "3": "3%",
+        "4": "4,5%",
+        "5": "6%",
+        "6": "8%",
+        "7": "10%",
+        "8": "13%",
+        "9": "17%"
+      },
+      "id": "familiars_food_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": 15,
+          "base_time_seconds": 38520,
+          "buildings": {},
+          "costs": {
+            "food": 29342,
+            "gold": 24215,
+            "ore": 14671,
+            "stone": 14671,
+            "timber": 14671
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 3115,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 134760,
+          "buildings": {},
+          "costs": {
+            "food": 102696,
+            "gold": 84751,
+            "ore": 51348,
+            "stone": 51348,
+            "timber": 51348
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 10901,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 163620,
+          "buildings": {},
+          "costs": {
+            "food": 124702,
+            "gold": 102912,
+            "ore": 62351,
+            "stone": 62351,
+            "timber": 62351
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 13236,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 192480,
+          "buildings": {},
+          "costs": {
+            "food": 146708,
+            "gold": 121073,
+            "ore": 73354,
+            "stone": 73354,
+            "timber": 73354
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 15573,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 230940,
+          "buildings": {},
+          "costs": {
+            "food": 176050,
+            "gold": 145288,
+            "ore": 88025,
+            "stone": 88025,
+            "timber": 88025
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 18687,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 307920,
+          "buildings": {},
+          "costs": {
+            "food": 234733,
+            "gold": 193717,
+            "ore": 117367,
+            "stone": 117367,
+            "timber": 117367
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 24915,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 404160,
+          "buildings": {},
+          "costs": {
+            "food": 308087,
+            "gold": 254253,
+            "ore": 154044,
+            "stone": 154044,
+            "timber": 154044
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 32702,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 577320,
+          "buildings": {},
+          "costs": {
+            "food": 440124,
+            "gold": 363218,
+            "ore": 220062,
+            "stone": 220062,
+            "timber": 220062
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 46718,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 808260,
+          "buildings": {},
+          "costs": {
+            "food": 616174,
+            "gold": 508505,
+            "ore": 308087,
+            "stone": 308087,
+            "timber": 308087
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 65404,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1058460,
+          "buildings": {},
+          "costs": {
+            "food": 806894,
+            "gold": 665900,
+            "ore": 403447,
+            "stone": 403447,
+            "timber": 403447
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 85684,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Food Harvesting II",
+        "ja-JP": "食糧収穫II"
+      },
+      "row": 1
+    },
+    {
+      "column": 2,
+      "effect_label": "Lv EXP Boost",
+      "effect_values": {
+        "1": "1%",
+        "10": "25%",
+        "2": "2%",
+        "3": "3%",
+        "4": "4%",
+        "5": "6%",
+        "6": "8%",
+        "7": "10%",
+        "8": "12%",
+        "9": "15%"
+      },
+      "id": "familiars_gym_training_i",
+      "levels": [
+        {
+          "academy_level": 15,
+          "base_time_seconds": 38520,
+          "buildings": {},
+          "costs": {
+            "food": 11737,
+            "gold": 24215,
+            "ore": 17605,
+            "stone": 17605,
+            "timber": 17605
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 3115,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 134760,
+          "buildings": {},
+          "costs": {
+            "food": 41079,
+            "gold": 84751,
+            "ore": 61618,
+            "stone": 61618,
+            "timber": 61618
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 10901,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 163620,
+          "buildings": {},
+          "costs": {
+            "food": 49881,
+            "gold": 102912,
+            "ore": 74822,
+            "stone": 74822,
+            "timber": 74822
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 13236,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 192480,
+          "buildings": {},
+          "costs": {
+            "food": 58684,
+            "gold": 121073,
+            "ore": 88025,
+            "stone": 88025,
+            "timber": 88025
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 15573,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 230940,
+          "buildings": {},
+          "costs": {
+            "food": 70420,
+            "gold": 145288,
+            "ore": 105630,
+            "stone": 105630,
+            "timber": 105630
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 18687,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 15,
+          "base_time_seconds": 307920,
+          "buildings": {},
+          "costs": {
+            "food": 93894,
+            "gold": 193717,
+            "ore": 140840,
+            "stone": 140840,
+            "timber": 140840
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 24915,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 404160,
+          "buildings": {},
+          "costs": {
+            "food": 123235,
+            "gold": 254253,
+            "ore": 184852,
+            "stone": 184852,
+            "timber": 184852
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 32702,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 577320,
+          "buildings": {},
+          "costs": {
+            "food": 176050,
+            "gold": 363218,
+            "ore": 264075,
+            "stone": 264075,
+            "timber": 264075
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 46718,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 808260,
+          "buildings": {},
+          "costs": {
+            "food": 246470,
+            "gold": 508505,
+            "ore": 369704,
+            "stone": 369704,
+            "timber": 369704
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 65404,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1058460,
+          "buildings": {},
+          "costs": {
+            "food": 322758,
+            "gold": 665900,
+            "ore": 484137,
+            "stone": 484137,
+            "timber": 484137
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 85684,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gym Training I",
+        "ja-JP": "調教経験値I"
+      },
+      "row": 1
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Pact 2"
+      },
+      "id": "familiars_pact_2",
+      "levels": [
+        {
+          "academy_level": 16,
+          "base_time_seconds": 2492280,
+          "buildings": {},
+          "costs": {
+            "food": 1900000,
+            "gold": 1568000,
+            "ore": 950000,
+            "stone": 950000,
+            "timber": 950000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 201677,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiars_merging_cost_pact_1"
+            },
+            {
+              "level": 3,
+              "research_id": "familiars_anima_harvesting_i"
+            },
+            {
+              "level": 3,
+              "research_id": "familiars_food_harvesting_ii"
+            },
+            {
+              "level": 3,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Pact 2",
+        "ja-JP": "Lv2召喚の書"
+      },
+      "row": 2
+    },
+    {
+      "column": 0,
+      "effect_label": "Stone Production+%",
+      "effect_values": {
+        "1": "1%",
+        "10": "30%",
+        "2": "2%",
+        "3": "3%",
+        "4": "4.5%",
+        "5": "6%",
+        "6": "8%",
+        "7": "10%",
+        "8": "13%",
+        "9": "17%"
+      },
+      "id": "familiars_stone_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": 16,
+          "base_time_seconds": 53940,
+          "buildings": {},
+          "costs": {
+            "food": 41079,
+            "gold": 33901,
+            "ore": 32863,
+            "stone": 16432,
+            "timber": 12324
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4361,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_2"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 188640,
+          "buildings": {},
+          "costs": {
+            "food": 143774,
+            "gold": 118652,
+            "ore": 155019,
+            "stone": 57510,
+            "timber": 43133
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 15261,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 229020,
+          "buildings": {},
+          "costs": {
+            "food": 174583,
+            "gold": 144077,
+            "ore": 139666,
+            "stone": 69833,
+            "timber": 52375
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 18531,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 269460,
+          "buildings": {},
+          "costs": {
+            "food": 205392,
+            "gold": 169502,
+            "ore": 164313,
+            "stone": 82157,
+            "timber": 61618
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 21801,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 323340,
+          "buildings": {},
+          "costs": {
+            "food": 246470,
+            "gold": 203402,
+            "ore": 197176,
+            "stone": 98588,
+            "timber": 73941
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 26162,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_food_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 431100,
+          "buildings": {},
+          "costs": {
+            "food": 328626,
+            "gold": 271203,
+            "ore": 262901,
+            "stone": 131451,
+            "timber": 98588
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 34882,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 565800,
+          "buildings": {},
+          "costs": {
+            "food": 431322,
+            "gold": 355954,
+            "ore": 345057,
+            "stone": 172529,
+            "timber": 129397
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 45783,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 808260,
+          "buildings": {},
+          "costs": {
+            "food": 616174,
+            "gold": 508505,
+            "ore": 492939,
+            "stone": 246470,
+            "timber": 184852
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 65404,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_food_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1131600,
+          "buildings": {},
+          "costs": {
+            "food": 862643,
+            "gold": 711907,
+            "ore": 690114,
+            "stone": 345057,
+            "timber": 258793
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 91566,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_food_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1481820,
+          "buildings": {},
+          "costs": {
+            "food": 1129651,
+            "gold": 932260,
+            "ore": 903721,
+            "stone": 451861,
+            "timber": 338896
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 119907,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_food_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Stone Harvesting II",
+        "ja-JP": "石材収穫II"
+      },
+      "row": 3
+    },
+    {
+      "column": 1,
+      "effect_label": "Timber Production+%",
+      "effect_values": {
+        "1": "1%",
+        "10": "30%",
+        "2": "2%",
+        "3": "3%",
+        "4": "4.5%",
+        "5": "6%",
+        "6": "8%",
+        "7": "10%",
+        "8": "13%",
+        "9": "17%"
+      },
+      "id": "familiars_timber_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": 16,
+          "base_time_seconds": 53940,
+          "buildings": {},
+          "costs": {
+            "food": 32863,
+            "gold": 33901,
+            "ore": 32863,
+            "stone": 20540,
+            "timber": 12324
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4361,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_2"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 188640,
+          "buildings": {},
+          "costs": {
+            "food": 115019,
+            "gold": 118652,
+            "ore": 115019,
+            "stone": 71887,
+            "timber": 43133
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 15261,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 229020,
+          "buildings": {},
+          "costs": {
+            "food": 139666,
+            "gold": 144077,
+            "ore": 139666,
+            "stone": 87292,
+            "timber": 52375
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 18531,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 269460,
+          "buildings": {},
+          "costs": {
+            "food": 164313,
+            "gold": 169502,
+            "ore": 164313,
+            "stone": 102696,
+            "timber": 61618
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 21801,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 323340,
+          "buildings": {},
+          "costs": {
+            "food": 197176,
+            "gold": 203402,
+            "ore": 197176,
+            "stone": 123235,
+            "timber": 73941
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 26162,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_food_harvesting_ii"
+            },
+            {
+              "level": 5,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 431100,
+          "buildings": {},
+          "costs": {
+            "food": 262901,
+            "gold": 271203,
+            "ore": 262901,
+            "stone": 164313,
+            "timber": 98588
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 34882,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 565800,
+          "buildings": {},
+          "costs": {
+            "food": 345057,
+            "gold": 355954,
+            "ore": 345057,
+            "stone": 215661,
+            "timber": 129397
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 45783,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 808260,
+          "buildings": {},
+          "costs": {
+            "food": 492939,
+            "gold": 508505,
+            "ore": 492939,
+            "stone": 308087,
+            "timber": 184852
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 65404,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_food_harvesting_ii"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1131600,
+          "buildings": {},
+          "costs": {
+            "food": 690114,
+            "gold": 711907,
+            "ore": 690114,
+            "stone": 431322,
+            "timber": 258793
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 91566,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_food_harvesting_ii"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1481820,
+          "buildings": {},
+          "costs": {
+            "food": 903721,
+            "gold": 932260,
+            "ore": 903721,
+            "stone": 564826,
+            "timber": 338896
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 119907,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_food_harvesting_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Timber Harvesting II",
+        "ja-JP": "木材収穫II"
+      },
+      "row": 3
+    },
+    {
+      "column": 2,
+      "effect_label": "Ore Production+%",
+      "effect_values": {
+        "1": "1%",
+        "10": "30%",
+        "2": "2%",
+        "3": "3%",
+        "4": "4.5%",
+        "5": "6%",
+        "6": "8%",
+        "7": "10%",
+        "8": "13%",
+        "9": "17%"
+      },
+      "id": "familiars_metal_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": 16,
+          "base_time_seconds": 53940,
+          "buildings": {},
+          "costs": {
+            "food": 65726,
+            "gold": 33901,
+            "ore": 8216,
+            "stone": 32863,
+            "timber": 8216
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 4361,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_2"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 188640,
+          "buildings": {},
+          "costs": {
+            "food": 230038,
+            "gold": 118652,
+            "ore": 28755,
+            "stone": 115019,
+            "timber": 28755
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 15261,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 229020,
+          "buildings": {},
+          "costs": {
+            "food": 279332,
+            "gold": 144077,
+            "ore": 34917,
+            "stone": 139666,
+            "timber": 34917
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 18531,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 269460,
+          "buildings": {},
+          "costs": {
+            "food": 328626,
+            "gold": 169502,
+            "ore": 41079,
+            "stone": 164313,
+            "timber": 41079
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 21801,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 323340,
+          "buildings": {},
+          "costs": {
+            "food": 394351,
+            "gold": 203402,
+            "ore": 49294,
+            "stone": 197176,
+            "timber": 49294
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 26162,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 431100,
+          "buildings": {},
+          "costs": {
+            "food": 525802,
+            "gold": 271203,
+            "ore": 65726,
+            "stone": 262901,
+            "timber": 65726
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 34882,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 565800,
+          "buildings": {},
+          "costs": {
+            "food": 690114,
+            "gold": 355954,
+            "ore": 86265,
+            "stone": 345057,
+            "timber": 86265
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 45783,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 808260,
+          "buildings": {},
+          "costs": {
+            "food": 985877,
+            "gold": 508505,
+            "ore": 123235,
+            "stone": 492939,
+            "timber": 123235
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 65404,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1131600,
+          "buildings": {},
+          "costs": {
+            "food": 1380228,
+            "gold": 711907,
+            "ore": 172529,
+            "stone": 690114,
+            "timber": 172529
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 91566,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1481820,
+          "buildings": {},
+          "costs": {
+            "food": 1807442,
+            "gold": 932260,
+            "ore": 225931,
+            "stone": 903721,
+            "timber": 225931
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 119907,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Metal Harvesting II",
+        "ja-JP": "鉱石収穫II"
+      },
+      "row": 3
+    },
+    {
+      "column": 0,
+      "effect_label": "Max Anima Storage boost",
+      "effect_values": {
+        "1": "1%",
+        "10": "40%",
+        "2": "2%",
+        "3": "3%",
+        "4": "5%",
+        "5": "7%",
+        "6": "10%",
+        "7": "14%",
+        "8": "19%",
+        "9": "25%"
+      },
+      "id": "familiars_anima_storage_i",
+      "levels": [
+        {
+          "academy_level": 16,
+          "base_time_seconds": 69300,
+          "buildings": {},
+          "costs": {
+            "food": 84504,
+            "gold": 43587,
+            "ore": 10563,
+            "stone": 42252,
+            "timber": 10563
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 5607,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_stone_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 242520,
+          "buildings": {},
+          "costs": {
+            "food": 295764,
+            "gold": 152552,
+            "ore": 36971,
+            "stone": 147882,
+            "timber": 36971
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 19621,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 294480,
+          "buildings": {},
+          "costs": {
+            "food": 359141,
+            "gold": 185242,
+            "ore": 44893,
+            "stone": 179571,
+            "timber": 44893
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 23826,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 346440,
+          "buildings": {},
+          "costs": {
+            "food": 422519,
+            "gold": 217931,
+            "ore": 52815,
+            "stone": 211260,
+            "timber": 52815
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 28030,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 415680,
+          "buildings": {},
+          "costs": {
+            "food": 507023,
+            "gold": 261517,
+            "ore": 63378,
+            "stone": 253512,
+            "timber": 63378
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 33636,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_stone_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 554280,
+          "buildings": {},
+          "costs": {
+            "food": 676030,
+            "gold": 348690,
+            "ore": 84504,
+            "stone": 338015,
+            "timber": 84504
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 44849,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 727440,
+          "buildings": {},
+          "costs": {
+            "food": 887290,
+            "gold": 457655,
+            "ore": 110912,
+            "stone": 443645,
+            "timber": 110912
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 58864,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1039200,
+          "buildings": {},
+          "costs": {
+            "food": 1267557,
+            "gold": 653793,
+            "ore": 158445,
+            "stone": 633779,
+            "timber": 158445
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 84091,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_stone_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1454880,
+          "buildings": {},
+          "costs": {
+            "food": 1774579,
+            "gold": 915309,
+            "ore": 221823,
+            "stone": 887290,
+            "timber": 221823
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 117727,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_stone_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 1905180,
+          "buildings": {},
+          "costs": {
+            "food": 2323853,
+            "gold": 1198619,
+            "ore": 290482,
+            "stone": 1161927,
+            "timber": 290482
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 154167,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_stone_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Anima Storage I",
+        "ja-JP": "獣晶石生産上限I"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Merging Speed Boost (Pacts)",
+      "effect_values": {
+        "1": "1%",
+        "10": "25%",
+        "2": "2%",
+        "3": "3%",
+        "4": "4%",
+        "5": "6%",
+        "6": "8%",
+        "7": "10%",
+        "8": "12%",
+        "9": "15%"
+      },
+      "id": "familiars_pact_merging_speed_i",
+      "levels": [
+        {
+          "academy_level": 16,
+          "base_time_seconds": 92400,
+          "buildings": {},
+          "costs": {
+            "food": 70420,
+            "gold": 58115,
+            "ore": 56336,
+            "stone": 28168,
+            "timber": 21126
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 7475,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_timber_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 323340,
+          "buildings": {},
+          "costs": {
+            "food": 246470,
+            "gold": 203402,
+            "ore": 197176,
+            "stone": 98588,
+            "timber": 73941
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 26162,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 392580,
+          "buildings": {},
+          "costs": {
+            "food": 299285,
+            "gold": 246989,
+            "ore": 239428,
+            "stone": 119714,
+            "timber": 89786
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 31768,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 16,
+          "base_time_seconds": 461880,
+          "buildings": {},
+          "costs": {
+            "food": 352099,
+            "gold": 290575,
+            "ore": 281680,
+            "stone": 140840,
+            "timber": 105630
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 37373,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 554280,
+          "buildings": {},
+          "costs": {
+            "food": 422519,
+            "gold": 348690,
+            "ore": 338015,
+            "stone": 169008,
+            "timber": 126756
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 44849,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_timber_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 739020,
+          "buildings": {},
+          "costs": {
+            "food": 563359,
+            "gold": 464919,
+            "ore": 450687,
+            "stone": 225344,
+            "timber": 169008
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 59798,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 969900,
+          "buildings": {},
+          "costs": {
+            "food": 739408,
+            "gold": 610206,
+            "ore": 591527,
+            "stone": 295764,
+            "timber": 221823
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 78485,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 1385580,
+          "buildings": {},
+          "costs": {
+            "food": 1056297,
+            "gold": 871723,
+            "ore": 845038,
+            "stone": 422519,
+            "timber": 316890
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 112121,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_timber_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 1939800,
+          "buildings": {},
+          "costs": {
+            "food": 1478816,
+            "gold": 1220412,
+            "ore": 1183053,
+            "stone": 591527,
+            "timber": 443645
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 156970,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_timber_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2540220,
+          "buildings": {},
+          "costs": {
+            "food": 1936545,
+            "gold": 1598159,
+            "ore": 1549236,
+            "stone": 774618,
+            "timber": 580964
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 205556,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_timber_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Pact Merging Speed I",
+        "ja-JP": "召喚の書精製速度I"
+      },
+      "row": 4
+    },
+    {
+      "column": 2,
+      "effect_label": "Reduction for Pact 2",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "2.5%",
+        "6": "3.5%",
+        "7": "5%",
+        "8": "7.5%",
+        "9": "10%"
+      },
+      "id": "familiars_merging_cost_pact_2",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 84720,
+          "buildings": {},
+          "costs": {
+            "food": 64552,
+            "gold": 53272,
+            "ore": 51642,
+            "stone": 25821,
+            "timber": 19366
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 6852,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_metal_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 296400,
+          "buildings": {},
+          "costs": {
+            "food": 225931,
+            "gold": 186452,
+            "ore": 180745,
+            "stone": 90373,
+            "timber": 67780
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 23982,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 359880,
+          "buildings": {},
+          "costs": {
+            "food": 274344,
+            "gold": 226406,
+            "ore": 219475,
+            "stone": 109738,
+            "timber": 82304
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 29120,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 423420,
+          "buildings": {},
+          "costs": {
+            "food": 322758,
+            "gold": 266360,
+            "ore": 258206,
+            "stone": 129103,
+            "timber": 96828
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 34260,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 508080,
+          "buildings": {},
+          "costs": {
+            "food": 387309,
+            "gold": 319632,
+            "ore": 309848,
+            "stone": 154924,
+            "timber": 116193
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 41111,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_metal_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 677400,
+          "buildings": {},
+          "costs": {
+            "food": 516412,
+            "gold": 426176,
+            "ore": 413130,
+            "stone": 206565,
+            "timber": 154924
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 54815,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 889080,
+          "buildings": {},
+          "costs": {
+            "food": 677791,
+            "gold": 559356,
+            "ore": 542233,
+            "stone": 271117,
+            "timber": 203338
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 71944,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_merging_cost_pact_1"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1270140,
+          "buildings": {},
+          "costs": {
+            "food": 968273,
+            "gold": 799080,
+            "ore": 774618,
+            "stone": 387309,
+            "timber": 290482
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 102778,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_metal_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 1778160,
+          "buildings": {},
+          "costs": {
+            "food": 1355581,
+            "gold": 1118711,
+            "ore": 1084465,
+            "stone": 542233,
+            "timber": 406675
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 143889,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_metal_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 2328540,
+          "buildings": {},
+          "costs": {
+            "food": 1775166,
+            "gold": 1464979,
+            "ore": 1420133,
+            "stone": 710067,
+            "timber": 532550
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 188426,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_metal_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Merging Cost (Pact 2)",
+        "ja-JP": "Lv2召喚の書コスト低下"
+      },
+      "row": 4
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Pact 3"
+      },
+      "id": "familiars_pact_3",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 6230700,
+          "buildings": {},
+          "costs": {
+            "food": 4750000,
+            "gold": 3920000,
+            "ore": 2375000,
+            "stone": 2375000,
+            "timber": 2375000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 504192,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_merging_cost_pact_2"
+            },
+            {
+              "level": 5,
+              "research_id": "familiars_pact_merging_speed_i"
+            },
+            {
+              "level": 5,
+              "research_id": "familiars_anima_storage_i"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Pact 3",
+        "ja-JP": "Lv3召喚の書"
+      },
+      "row": 5
+    },
+    {
+      "column": 0,
+      "effect_label": "Anima Production+%",
+      "effect_values": {
+        "1": "1%",
+        "10": "40%",
+        "2": "2%",
+        "3": "3%",
+        "4": "5%",
+        "5": "7%",
+        "6": "10%",
+        "7": "14%",
+        "8": "19%",
+        "9": "25%"
+      },
+      "id": "familiars_anima_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 269460,
+          "buildings": {},
+          "costs": {
+            "food": 205392,
+            "gold": 169502,
+            "ore": 164313,
+            "stone": 82157,
+            "timber": 61618
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 21802,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_3"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 942960,
+          "buildings": {},
+          "costs": {
+            "food": 718869,
+            "gold": 593256,
+            "ore": 575095,
+            "stone": 287548,
+            "timber": 215661
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 76305,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 1145040,
+          "buildings": {},
+          "costs": {
+            "food": 872912,
+            "gold": 720383,
+            "ore": 698330,
+            "stone": 349165,
+            "timber": 261874
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 92656,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1347120,
+          "buildings": {},
+          "costs": {
+            "food": 1026956,
+            "gold": 847509,
+            "ore": 821565,
+            "stone": 410783,
+            "timber": 308087
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 109006,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1616520,
+          "buildings": {},
+          "costs": {
+            "food": 1232347,
+            "gold": 1017010,
+            "ore": 985877,
+            "stone": 492939,
+            "timber": 369704
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 130809,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2155320,
+          "buildings": {},
+          "costs": {
+            "food": 1643129,
+            "gold": 1356014,
+            "ore": 1314503,
+            "stone": 657252,
+            "timber": 492939
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 174411,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 2828880,
+          "buildings": {},
+          "costs": {
+            "food": 2156606,
+            "gold": 1779768,
+            "ore": 1725285,
+            "stone": 862643,
+            "timber": 646982
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 228914,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 4041240,
+          "buildings": {},
+          "costs": {
+            "food": 3080866,
+            "gold": 2542525,
+            "ore": 2464693,
+            "stone": 1232347,
+            "timber": 924260
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 327021,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_anima_storage_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 5657760,
+          "buildings": {},
+          "costs": {
+            "food": 4313212,
+            "gold": 3559535,
+            "ore": 3450570,
+            "stone": 1725285,
+            "timber": 1293964
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 457828,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_anima_harvesting_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 7408920,
+          "buildings": {},
+          "costs": {
+            "food": 5648254,
+            "gold": 4661296,
+            "ore": 4518603,
+            "stone": 2259302,
+            "timber": 1694477
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 599538,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_anima_storage_i"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Anima Harvesting II",
+        "ja-JP": "獣晶石生産量II"
+      },
+      "row": 6
+    },
+    {
+      "column": 2,
+      "effect_label": "Gold Production+%",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "familiars_gold_harvesting_ii",
+      "levels": [
+        {
+          "academy_level": 17,
+          "base_time_seconds": 230940,
+          "buildings": {},
+          "costs": {
+            "food": 211260,
+            "gold": 145288,
+            "ore": 35210,
+            "stone": 105630,
+            "timber": 105630
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 18687,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_3"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 17,
+          "base_time_seconds": 808260,
+          "buildings": {},
+          "costs": {
+            "food": 739408,
+            "gold": 508505,
+            "ore": 123235,
+            "stone": 369704,
+            "timber": 369704
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 65405,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 981480,
+          "buildings": {},
+          "costs": {
+            "food": 897853,
+            "gold": 617471,
+            "ore": 149643,
+            "stone": 448927,
+            "timber": 448927
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 79419,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1154640,
+          "buildings": {},
+          "costs": {
+            "food": 1056297,
+            "gold": 726436,
+            "ore": 176050,
+            "stone": 528149,
+            "timber": 528149
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 93434,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 1385580,
+          "buildings": {},
+          "costs": {
+            "food": 1267557,
+            "gold": 871723,
+            "ore": 211260,
+            "stone": 633779,
+            "timber": 633779
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 112122,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 1847460,
+          "buildings": {},
+          "costs": {
+            "food": 1690075,
+            "gold": 1162298,
+            "ore": 281680,
+            "stone": 845038,
+            "timber": 845038
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 149495,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 2424780,
+          "buildings": {},
+          "costs": {
+            "food": 2218224,
+            "gold": 1525515,
+            "ore": 369704,
+            "stone": 1109112,
+            "timber": 1109112
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 196212,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 3463920,
+          "buildings": {},
+          "costs": {
+            "food": 3168891,
+            "gold": 2179307,
+            "ore": 528149,
+            "stone": 1584446,
+            "timber": 1584446
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 280303,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_pact_merging_speed_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 4849500,
+          "buildings": {},
+          "costs": {
+            "food": 4436447,
+            "gold": 3051030,
+            "ore": 739408,
+            "stone": 2218224,
+            "timber": 2218224
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 392425,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_pact_merging_speed_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 6350520,
+          "buildings": {},
+          "costs": {
+            "food": 5809633,
+            "gold": 3995397,
+            "ore": 968273,
+            "stone": 2904817,
+            "timber": 2904817
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 513890,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_pact_merging_speed_i"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gold Harvesting II",
+        "ja-JP": "ゴールド生産量II"
+      },
+      "row": 6
+    },
+    {
+      "column": 0,
+      "effect_label": "Training Time Boost",
+      "effect_values": {
+        "1": "5 min",
+        "10": "120 min",
+        "2": "10 min",
+        "3": "15 min",
+        "4": "20 min",
+        "5": "30 min",
+        "6": "40 min",
+        "7": "50 min",
+        "8": "60 min",
+        "9": "80 min"
+      },
+      "id": "familiars_gym_membership_i",
+      "levels": [
+        {
+          "academy_level": 18,
+          "base_time_seconds": 423420,
+          "buildings": {},
+          "costs": {
+            "food": 387309,
+            "gold": 266360,
+            "ore": 193655,
+            "stone": 64552,
+            "timber": 193655
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34260,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_anima_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 1481820,
+          "buildings": {},
+          "costs": {
+            "food": 1355581,
+            "gold": 932260,
+            "ore": 677791,
+            "stone": 225931,
+            "timber": 677791
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 119907,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1799340,
+          "buildings": {},
+          "costs": {
+            "food": 1646063,
+            "gold": 1132029,
+            "ore": 823032,
+            "stone": 274344,
+            "timber": 823032
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 145602,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 2116860,
+          "buildings": {},
+          "costs": {
+            "food": 1936545,
+            "gold": 1331799,
+            "ore": 968273,
+            "stone": 322758,
+            "timber": 968273
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 171297,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2540220,
+          "buildings": {},
+          "costs": {
+            "food": 2323853,
+            "gold": 1598159,
+            "ore": 1161927,
+            "stone": 387309,
+            "timber": 1161927
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 205556,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 3386940,
+          "buildings": {},
+          "costs": {
+            "food": 3098471,
+            "gold": 2130878,
+            "ore": 1549236,
+            "stone": 516412,
+            "timber": 1549236
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 274074,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 4445400,
+          "buildings": {},
+          "costs": {
+            "food": 4066743,
+            "gold": 2796778,
+            "ore": 2033372,
+            "stone": 677791,
+            "timber": 2033372
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 359723,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6350520,
+          "buildings": {},
+          "costs": {
+            "food": 5809633,
+            "gold": 3995397,
+            "ore": 2904817,
+            "stone": 968273,
+            "timber": 2904817
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 513889,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_anima_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8890740,
+          "buildings": {},
+          "costs": {
+            "food": 8133485,
+            "gold": 5593555,
+            "ore": 4066743,
+            "stone": 1355581,
+            "timber": 4066743
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 719445,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_anima_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11642580,
+          "buildings": {},
+          "costs": {
+            "food": 10650993,
+            "gold": 7324893,
+            "ore": 5325497,
+            "stone": 1775166,
+            "timber": 5325497
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 942131,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_anima_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gym Membership I",
+        "ja-JP": "調教時間上限"
+      },
+      "row": 7
+    },
+    {
+      "column": 2,
+      "effect_label": "Lv EXP Boost",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "15%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "3%",
+        "6": "4%",
+        "7": "5%",
+        "8": "6%",
+        "9": "8%"
+      },
+      "id": "familiars_gym_training_ii",
+      "levels": [
+        {
+          "academy_level": 18,
+          "base_time_seconds": 423420,
+          "buildings": {},
+          "costs": {
+            "food": 387309,
+            "gold": 266360,
+            "ore": 193655,
+            "stone": 193655,
+            "timber": 64552
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 34260,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_gold_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 18,
+          "base_time_seconds": 1481820,
+          "buildings": {},
+          "costs": {
+            "food": 1355581,
+            "gold": 932260,
+            "ore": 677791,
+            "stone": 677791,
+            "timber": 225931
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 119907,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 1799340,
+          "buildings": {},
+          "costs": {
+            "food": 1646063,
+            "gold": 1132029,
+            "ore": 823032,
+            "stone": 823032,
+            "timber": 274344
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 145602,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 2116860,
+          "buildings": {},
+          "costs": {
+            "food": 1936545,
+            "gold": 1331799,
+            "ore": 968273,
+            "stone": 968273,
+            "timber": 322758
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 171297,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 2540220,
+          "buildings": {},
+          "costs": {
+            "food": 2323853,
+            "gold": 1598159,
+            "ore": 1161927,
+            "stone": 1161927,
+            "timber": 387309
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 205556,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 3386940,
+          "buildings": {},
+          "costs": {
+            "food": 3098471,
+            "gold": 2130878,
+            "ore": 1549236,
+            "stone": 1549236,
+            "timber": 516412
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 274074,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 4445400,
+          "buildings": {},
+          "costs": {
+            "food": 4066743,
+            "gold": 2796778,
+            "ore": 2033372,
+            "stone": 2033372,
+            "timber": 677791
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 359723,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_gym_training_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 6350520,
+          "buildings": {},
+          "costs": {
+            "food": 5809633,
+            "gold": 3995397,
+            "ore": 2904817,
+            "stone": 2904817,
+            "timber": 968273
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 513889,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_gold_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8890740,
+          "buildings": {},
+          "costs": {
+            "food": 8133485,
+            "gold": 5593555,
+            "ore": 4066743,
+            "stone": 4066743,
+            "timber": 1355581
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 719445,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_gold_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11642580,
+          "buildings": {},
+          "costs": {
+            "food": 10650993,
+            "gold": 7324893,
+            "ore": 5353497,
+            "stone": 5325497,
+            "timber": 1775166
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 942131,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_gold_harvesting_ii"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Gym Training II",
+        "ja-JP": "調教経験値II"
+      },
+      "row": 7
+    },
+    {
+      "column": 0,
+      "effect_label": "Max Anima Storage boost",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "familiars_anima_storage_ii",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 577320,
+          "buildings": {},
+          "costs": {
+            "food": 440124,
+            "gold": 363218,
+            "ore": 264075,
+            "stone": 220062,
+            "timber": 176050
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 46718,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 1,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2020620,
+          "buildings": {},
+          "costs": {
+            "food": 1540433,
+            "gold": 1271263,
+            "ore": 924260,
+            "stone": 770217,
+            "timber": 616174
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 163510,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2453640,
+          "buildings": {},
+          "costs": {
+            "food": 1870526,
+            "gold": 1543676,
+            "ore": 1122316,
+            "stone": 935263,
+            "timber": 748211
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 198548,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 2886600,
+          "buildings": {},
+          "costs": {
+            "food": 2200619,
+            "gold": 1816090,
+            "ore": 1320371,
+            "stone": 1100310,
+            "timber": 880248
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 233586,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 3463920,
+          "buildings": {},
+          "costs": {
+            "food": 2640742,
+            "gold": 2179307,
+            "ore": 1584446,
+            "stone": 1320371,
+            "timber": 1056297
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 280304,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 4618560,
+          "buildings": {},
+          "costs": {
+            "food": 3520990,
+            "gold": 2905743,
+            "ore": 2112594,
+            "stone": 1760495,
+            "timber": 1408396
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 373738,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_anima_storage_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 6061860,
+          "buildings": {},
+          "costs": {
+            "food": 4621299,
+            "gold": 3813788,
+            "ore": 2772779,
+            "stone": 2310650,
+            "timber": 1848520
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 490530,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_anima_storage_i"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 8659800,
+          "buildings": {},
+          "costs": {
+            "food": 6601855,
+            "gold": 5448268,
+            "ore": 3961113,
+            "stone": 3300928,
+            "timber": 2640742
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 700759,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12123660,
+          "buildings": {},
+          "costs": {
+            "food": 9242597,
+            "gold": 7627575,
+            "ore": 5545558,
+            "stone": 4621299,
+            "timber": 3697039
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 981061,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 15876240,
+          "buildings": {},
+          "costs": {
+            "food": 12103401,
+            "gold": 9988491,
+            "ore": 7262041,
+            "stone": 6051701,
+            "timber": 4841361
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1284724,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Anima Storage II",
+        "ja-JP": "獣晶石生産上限II"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "Lv EXP Boost",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "15%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2%",
+        "5": "3%",
+        "6": "4%",
+        "7": "5%",
+        "8": "6%",
+        "9": "8%"
+      },
+      "id": "familiars_pact_merging_speed_ii",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 654300,
+          "buildings": {},
+          "costs": {
+            "food": 498807,
+            "gold": 411647,
+            "ore": 199523,
+            "stone": 299285,
+            "timber": 249404
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 52947,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 1,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2290080,
+          "buildings": {},
+          "costs": {
+            "food": 1745824,
+            "gold": 1440765,
+            "ore": 698330,
+            "stone": 1047495,
+            "timber": 872912
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 185311,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2780760,
+          "buildings": {},
+          "costs": {
+            "food": 2119929,
+            "gold": 1749500,
+            "ore": 847972,
+            "stone": 1271958,
+            "timber": 1059965
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 225022,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 3271500,
+          "buildings": {},
+          "costs": {
+            "food": 2494034,
+            "gold": 2058235,
+            "ore": 997614,
+            "stone": 1496421,
+            "timber": 1247017
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 264731,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 3925800,
+          "buildings": {},
+          "costs": {
+            "food": 2992841,
+            "gold": 2469882,
+            "ore": 1197137,
+            "stone": 1795705,
+            "timber": 1496421
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 317677,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 5234400,
+          "buildings": {},
+          "costs": {
+            "food": 3990455,
+            "gold": 3293175,
+            "ore": 1596182,
+            "stone": 2394273,
+            "timber": 1955228
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 423569,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_pact_merging_speed_i"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 6870120,
+          "buildings": {},
+          "costs": {
+            "food": 5237472,
+            "gold": 4322293,
+            "ore": 2094989,
+            "stone": 3142483,
+            "timber": 2618736
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 555935,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_pact_merging_speed_i"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 9814440,
+          "buildings": {},
+          "costs": {
+            "food": 7482102,
+            "gold": 6174705,
+            "ore": 2992841,
+            "stone": 4489262,
+            "timber": 3741051
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 794193,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13740180,
+          "buildings": {},
+          "costs": {
+            "food": 10474943,
+            "gold": 8544585,
+            "ore": 4189978,
+            "stone": 6284966,
+            "timber": 5237472
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1111870,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 17993100,
+          "buildings": {},
+          "costs": {
+            "food": 13717187,
+            "gold": 11320289,
+            "ore": 5486875,
+            "stone": 8230313,
+            "timber": 6858594
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1456020,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Pact Merging Speed II",
+        "ja-JP": "召喚の書精製速度II"
+      },
+      "row": 8
+    },
+    {
+      "column": 2,
+      "effect_label": "Reduction for Pact 3",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "familiars_merging_cost_pact_3",
+      "levels": [
+        {
+          "academy_level": 19,
+          "base_time_seconds": 654300,
+          "buildings": {},
+          "costs": {
+            "food": 498807,
+            "gold": 411647,
+            "ore": 199523,
+            "stone": 299285,
+            "timber": 249404
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 52947,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 1,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2290080,
+          "buildings": {},
+          "costs": {
+            "food": 1745824,
+            "gold": 1440765,
+            "ore": 698330,
+            "stone": 1074495,
+            "timber": 872912
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 185311,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 19,
+          "base_time_seconds": 2780760,
+          "buildings": {},
+          "costs": {
+            "food": 2119929,
+            "gold": 1749500,
+            "ore": 847972,
+            "stone": 1271958,
+            "timber": 1059965
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 225022,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 20,
+          "base_time_seconds": 3271500,
+          "buildings": {},
+          "costs": {
+            "food": 2494034,
+            "gold": 2058235,
+            "ore": 997614,
+            "stone": 1496421,
+            "timber": 1247017
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 264731,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 21,
+          "base_time_seconds": 3925800,
+          "buildings": {},
+          "costs": {
+            "food": 2992841,
+            "gold": 2469882,
+            "ore": 1197137,
+            "stone": 1795705,
+            "timber": 1496421
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 317677,
+          "requirements": [],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 22,
+          "base_time_seconds": 5234400,
+          "buildings": {},
+          "costs": {
+            "food": 3990455,
+            "gold": 3293175,
+            "ore": 1596182,
+            "stone": 2394273,
+            "timber": 1995228
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 423569,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_merging_cost_pact_2"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 23,
+          "base_time_seconds": 6870120,
+          "buildings": {},
+          "costs": {
+            "food": 5237472,
+            "gold": 4322293,
+            "ore": 2094989,
+            "stone": 3142483,
+            "timber": 2618736
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 555935,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_merging_cost_pact_2"
+            }
+          ],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 24,
+          "base_time_seconds": 9814440,
+          "buildings": {},
+          "costs": {
+            "food": 7482102,
+            "gold": 6174704,
+            "ore": 2992841,
+            "stone": 4489262,
+            "timber": 3741051
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 794193,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_merging_cost_pact_2"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13740180,
+          "buildings": {},
+          "costs": {
+            "food": 10474943,
+            "gold": 8644585,
+            "ore": 4189978,
+            "stone": 6284966,
+            "timber": 5237472
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 1111870,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_merging_cost_pact_2"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 17993100,
+          "buildings": {},
+          "costs": {
+            "food": 13717187,
+            "gold": 11320289,
+            "ore": 5486875,
+            "stone": 8230313,
+            "timber": 6858594
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 1456020,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_merging_cost_pact_2"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_gym_membership_i"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_gym_training_ii"
+            }
+          ],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Merging Cost (Pact 3)",
+        "ja-JP": "Lv3召喚の書コスト低下"
+      },
+      "row": 8
+    },
+    {
+      "column": 1,
+      "effect_label": "Unlock",
+      "effect_values": {
+        "1": "Unlocks Pact 4"
+      },
+      "id": "familiars_pact_4",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 22430340,
+          "buildings": {},
+          "costs": {
+            "food": 17100000,
+            "gold": 14112000,
+            "ore": 8550000,
+            "stone": 8550000,
+            "timber": 8550000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 1815092,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_pact_merging_speed_ii"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_merging_cost_pact_3"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_anima_storage_ii"
+            }
+          ],
+          "technolabe_count": 8,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 1,
+      "names": {
+        "en-US": "Pact 4",
+        "ja-JP": "Lv4召喚の書"
+      },
+      "row": 9
+    },
+    {
+      "column": 0,
+      "effect_label": "Merging Speed Boost (Skillstones)",
+      "effect_values": {
+        "1": "0.5%",
+        "10": "20%",
+        "2": "1%",
+        "3": "1.5%",
+        "4": "2.5%",
+        "5": "3.5%",
+        "6": "4.5%",
+        "7": "6%",
+        "8": "8%",
+        "9": "11%"
+      },
+      "id": "familiars_skillstone_merging_speed_i",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2309280,
+          "buildings": {},
+          "costs": {
+            "food": 2112594,
+            "gold": 1452872,
+            "ore": 1056297,
+            "stone": 352099,
+            "timber": 1056297
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 186869,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_4"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 8082480,
+          "buildings": {},
+          "costs": {
+            "food": 7394078,
+            "gold": 5085050,
+            "ore": 3697039,
+            "stone": 1232347,
+            "timber": 3697039
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 654042,
+          "requirements": [],
+          "technolabe_count": 3,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9814440,
+          "buildings": {},
+          "costs": {
+            "food": 8978523,
+            "gold": 6174704,
+            "ore": 4489262,
+            "stone": 1489262,
+            "timber": 1489262
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 794192,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11546400,
+          "buildings": {},
+          "costs": {
+            "food": 10562968,
+            "gold": 7264357,
+            "ore": 5281484,
+            "stone": 1760495,
+            "timber": 5281484
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 934345,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13855620,
+          "buildings": {},
+          "costs": {
+            "food": 12675561,
+            "gold": 8717228,
+            "ore": 6337781,
+            "stone": 2112594,
+            "timber": 6337781
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1121213,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 18474180,
+          "buildings": {},
+          "costs": {
+            "food": 16900748,
+            "gold": 11622971,
+            "ore": 8450374,
+            "stone": 2816792,
+            "timber": 8450374
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1494952,
+          "requirements": [],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 24247320,
+          "buildings": {},
+          "costs": {
+            "food": 22182232,
+            "gold": 15255149,
+            "ore": 11091116,
+            "stone": 3697039,
+            "timber": 11091116
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 1962123,
+          "requirements": [],
+          "technolabe_count": 9,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 34639080,
+          "buildings": {},
+          "costs": {
+            "food": 31688903,
+            "gold": 21793070,
+            "ore": 15844452,
+            "stone": 5281484,
+            "timber": 15844452
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 2803034,
+          "requirements": [],
+          "technolabe_count": 13,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 48494640,
+          "buildings": {},
+          "costs": {
+            "food": 44364464,
+            "gold": 30510298,
+            "ore": 22182232,
+            "stone": 7394078,
+            "timber": 22182232
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 3924246,
+          "requirements": [],
+          "technolabe_count": 17,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 63504900,
+          "buildings": {},
+          "costs": {
+            "food": 58096322,
+            "gold": 39953962,
+            "ore": 29048161,
+            "stone": 9682721,
+            "timber": 29048161
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 5138895,
+          "requirements": [],
+          "technolabe_count": 23,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Skillstone Merging Speed I",
+        "ja-JP": "スキル核精製速度"
+      },
+      "row": 10
+    },
+    {
+      "column": 1,
+      "effect_label": "Ward Duration +",
+      "effect_values": {
+        "1": "5 min",
+        "10": "120 min",
+        "2": "10 min",
+        "3": "15 min",
+        "4": "20 min",
+        "5": "30 min",
+        "6": "40 min",
+        "7": "50 min",
+        "8": "60 min",
+        "9": "80 min"
+      },
+      "id": "familiars_durable_wards",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2771160,
+          "buildings": {},
+          "costs": {
+            "food": 2535113,
+            "gold": 1743446,
+            "ore": 422519,
+            "stone": 1267557,
+            "timber": 1267557
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 224243,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_4"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9698940,
+          "buildings": {},
+          "costs": {
+            "food": 8872893,
+            "gold": 6102060,
+            "ore": 1478816,
+            "stone": 4436447,
+            "timber": 4436447
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 784850,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11777280,
+          "buildings": {},
+          "costs": {
+            "food": 10774227,
+            "gold": 7409644,
+            "ore": 1795705,
+            "stone": 5387114,
+            "timber": 5387114
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 953031,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13855620,
+          "buildings": {},
+          "costs": {
+            "food": 12675561,
+            "gold": 8717228,
+            "ore": 2112594,
+            "stone": 6337781,
+            "timber": 6337781
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1121213,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 16626780,
+          "buildings": {},
+          "costs": {
+            "food": 15210674,
+            "gold": 10460674,
+            "ore": 2535113,
+            "stone": 7605337,
+            "timber": 7605337
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1345456,
+          "requirements": [],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 22168980,
+          "buildings": {},
+          "costs": {
+            "food": 20280898,
+            "gold": 13947565,
+            "ore": 3380150,
+            "stone": 10140449,
+            "timber": 10140449
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1793942,
+          "requirements": [],
+          "technolabe_count": 8,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 29096820,
+          "buildings": {},
+          "costs": {
+            "food": 26618679,
+            "gold": 18306179,
+            "ore": 4436447,
+            "stone": 13309340,
+            "timber": 13309340
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 2354548,
+          "requirements": [],
+          "technolabe_count": 11,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 41566860,
+          "buildings": {},
+          "costs": {
+            "food": 38026683,
+            "gold": 26151684,
+            "ore": 6337781,
+            "stone": 19013342,
+            "timber": 19013342
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 3363640,
+          "requirements": [],
+          "technolabe_count": 15,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 58193580,
+          "buildings": {},
+          "costs": {
+            "food": 53237357,
+            "gold": 36612358,
+            "ore": 8872893,
+            "stone": 26618679,
+            "timber": 26618679
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 4709097,
+          "requirements": [],
+          "technolabe_count": 21,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 76205880,
+          "buildings": {},
+          "costs": {
+            "food": 69715586,
+            "gold": 47944754,
+            "ore": 11619265,
+            "stone": 34857793,
+            "timber": 34857793
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 6166673,
+          "requirements": [],
+          "technolabe_count": 27,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Durable Wards",
+        "ja-JP": "退獣陣継続時間"
+      },
+      "row": 10
+    },
+    {
+      "column": 2,
+      "effect_label": "Reduction for Pact 4",
+      "effect_values": {
+        "1": "0.2%",
+        "10": "10%",
+        "2": "0.4%",
+        "3": "0.6%",
+        "4": "0.8%",
+        "5": "1.1%",
+        "6": "1.5%",
+        "7": "2%",
+        "8": "3%",
+        "9": "5%"
+      },
+      "id": "familiars_merging_cost_pact_4",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 2694180,
+          "buildings": {},
+          "costs": {
+            "food": 821565,
+            "gold": 1695017,
+            "ore": 1232347,
+            "stone": 1232347,
+            "timber": 1232347
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 218014,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_pact_4"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 9429540,
+          "buildings": {},
+          "costs": {
+            "food": 2875475,
+            "gold": 5932558,
+            "ore": 4313212,
+            "stone": 4313212,
+            "timber": 4313212
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 763048,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 11450160,
+          "buildings": {},
+          "costs": {
+            "food": 3491648,
+            "gold": 7203821,
+            "ore": 5237472,
+            "stone": 5237472,
+            "timber": 5237472
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 926559,
+          "requirements": [],
+          "technolabe_count": 4,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 13470780,
+          "buildings": {},
+          "costs": {
+            "food": 4107821,
+            "gold": 8475083,
+            "ore": 6161732,
+            "stone": 6161732,
+            "timber": 6161732
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1090068,
+          "requirements": [],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 16164900,
+          "buildings": {},
+          "costs": {
+            "food": 4929385,
+            "gold": 10170100,
+            "ore": 7394078,
+            "stone": 7349078,
+            "timber": 7394078
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1308082,
+          "requirements": [],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 21553200,
+          "buildings": {},
+          "costs": {
+            "food": 6572514,
+            "gold": 13560133,
+            "ore": 9858770,
+            "stone": 9858770,
+            "timber": 9858770
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 1744110,
+          "requirements": [],
+          "technolabe_count": 8,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 28288560,
+          "buildings": {},
+          "costs": {
+            "food": 8626424,
+            "gold": 17797674,
+            "ore": 12939636,
+            "stone": 12939636,
+            "timber": 12939636
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 2289144,
+          "requirements": [],
+          "technolabe_count": 10,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 40412220,
+          "buildings": {},
+          "costs": {
+            "food": 12323463,
+            "gold": 25425249,
+            "ore": 18485194,
+            "stone": 18485194,
+            "timber": 18485194
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 3270206,
+          "requirements": [],
+          "technolabe_count": 15,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 56577120,
+          "buildings": {},
+          "costs": {
+            "food": 17252847,
+            "gold": 35595348,
+            "ore": 25879371,
+            "stone": 25879371,
+            "timber": 25879371
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 4578288,
+          "requirements": [],
+          "technolabe_count": 20,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 74089080,
+          "buildings": {},
+          "costs": {
+            "food": 22593014,
+            "gold": 46612955,
+            "ore": 33889521,
+            "stone": 33889521,
+            "timber": 33889521
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 5995377,
+          "requirements": [],
+          "technolabe_count": 26,
+          "verification_status": "sourced"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Merging Cost (Pact 4)",
+        "ja-JP": "Lv4召喚の書コスト低下"
+      },
+      "row": 10
+    },
+    {
+      "column": 1,
+      "effect_label": "Skill EXP Boost",
+      "effect_values": {
+        "1": "0.1%",
+        "10": "5%",
+        "2": "0.2%",
+        "3": "0.3%",
+        "4": "0.4%",
+        "5": "0.55%",
+        "6": "0.75%",
+        "7": "1%",
+        "8": "1.5%",
+        "9": "2.5%"
+      },
+      "id": "familiars_skill_exp_boost",
+      "levels": [
+        {
+          "academy_level": 25,
+          "base_time_seconds": 3463920,
+          "buildings": {},
+          "costs": {
+            "food": 3168891,
+            "gold": 2179307,
+            "ore": 1584446,
+            "stone": 1584446,
+            "timber": 528149
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 280304,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 1,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 1,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 2,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 12123660,
+          "buildings": {},
+          "costs": {
+            "food": 11091116,
+            "gold": 7627575,
+            "ore": 5545558,
+            "stone": 5545558,
+            "timber": 1848520
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 981062,
+          "requirements": [
+            {
+              "level": 2,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 2,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 2,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 5,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 14721600,
+          "buildings": {},
+          "costs": {
+            "food": 13467784,
+            "gold": 9262055,
+            "ore": 6733892,
+            "stone": 6733892,
+            "timber": 2244631
+          },
+          "costs_verified": true,
+          "level": 3,
+          "power": 1191289,
+          "requirements": [
+            {
+              "level": 3,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 3,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 3,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 6,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 17319540,
+          "buildings": {},
+          "costs": {
+            "food": 15844452,
+            "gold": 10896535,
+            "ore": 7922226,
+            "stone": 7922226,
+            "timber": 2640742
+          },
+          "costs_verified": true,
+          "level": 4,
+          "power": 1401517,
+          "requirements": [
+            {
+              "level": 4,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 4,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 4,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 7,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 20783460,
+          "buildings": {},
+          "costs": {
+            "food": 19013342,
+            "gold": 13075842,
+            "ore": 9506671,
+            "stone": 9506671,
+            "timber": 3168891
+          },
+          "costs_verified": true,
+          "level": 5,
+          "power": 1681820,
+          "requirements": [
+            {
+              "level": 5,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 5,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 5,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 8,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 27711240,
+          "buildings": {},
+          "costs": {
+            "food": 25351122,
+            "gold": 17434456,
+            "ore": 12675561,
+            "stone": 12675561,
+            "timber": 4225187
+          },
+          "costs_verified": true,
+          "level": 6,
+          "power": 2242427,
+          "requirements": [
+            {
+              "level": 6,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 6,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 6,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 10,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 36370980,
+          "buildings": {},
+          "costs": {
+            "food": 33273348,
+            "gold": 22882724,
+            "ore": 16636674,
+            "stone": 16636674,
+            "timber": 5545558
+          },
+          "costs_verified": true,
+          "level": 7,
+          "power": 2943185,
+          "requirements": [
+            {
+              "level": 7,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 7,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 7,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 13,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 51958560,
+          "buildings": {},
+          "costs": {
+            "food": 47533354,
+            "gold": 32689605,
+            "ore": 23766677,
+            "stone": 23766677,
+            "timber": 7922226
+          },
+          "costs_verified": true,
+          "level": 8,
+          "power": 4204550,
+          "requirements": [
+            {
+              "level": 8,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 8,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 19,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": 72741960,
+          "buildings": {},
+          "costs": {
+            "food": 66546696,
+            "gold": 45765447,
+            "ore": 33273348,
+            "stone": 33273348,
+            "timber": 11091116
+          },
+          "costs_verified": true,
+          "level": 9,
+          "power": 5886370,
+          "requirements": [
+            {
+              "level": 9,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 9,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 26,
+          "verification_status": "sourced"
+        },
+        {
+          "academy_level": 25,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 87144482,
+            "gold": 59930942,
+            "ore": 43572241,
+            "stone": 43572241,
+            "timber": 14524081
+          },
+          "costs_verified": true,
+          "level": 10,
+          "power": 7708343,
+          "requirements": [
+            {
+              "level": 10,
+              "research_id": "familiars_skillstone_merging_speed_i"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_merging_cost_pact_4"
+            },
+            {
+              "level": 10,
+              "research_id": "familiars_durable_wards"
+            }
+          ],
+          "technolabe_count": 34,
+          "verification_status": "sourced_partial"
+        }
+      ],
+      "max_level": 10,
+      "names": {
+        "en-US": "Skill EXP Boost",
+        "ja-JP": "スキル経験値"
+      },
+      "row": 11
+    }
+  ],
+  "platform": "pc",
+  "schema_version": 1,
+  "scope": "all_names_layout_only",
+  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "source_edges": [
+    [
+      "familiars_anima_harvesting_i",
+      "familiars_anima_harvesting_ii"
+    ],
+    [
+      "familiars_anima_harvesting_i",
+      "familiars_food_harvesting_ii"
+    ],
+    [
+      "familiars_anima_harvesting_i",
+      "familiars_pact_2"
+    ],
+    [
+      "familiars_anima_harvesting_ii",
+      "familiars_gym_membership_i"
+    ],
+    [
+      "familiars_anima_storage_i",
+      "familiars_anima_storage_ii"
+    ],
+    [
+      "familiars_anima_storage_i",
+      "familiars_pact_3"
+    ],
+    [
+      "familiars_anima_storage_ii",
+      "familiars_pact_4"
+    ],
+    [
+      "familiars_durable_wards",
+      "familiars_skill_exp_boost"
+    ],
+    [
+      "familiars_food_harvesting_ii",
+      "familiars_pact_2"
+    ],
+    [
+      "familiars_food_harvesting_ii",
+      "familiars_stone_harvesting_ii"
+    ],
+    [
+      "familiars_food_harvesting_ii",
+      "familiars_timber_harvesting_ii"
+    ],
+    [
+      "familiars_gold_harvesting_ii",
+      "familiars_gym_training_ii"
+    ],
+    [
+      "familiars_gym_membership_i",
+      "familiars_anima_storage_ii"
+    ],
+    [
+      "familiars_gym_membership_i",
+      "familiars_merging_cost_pact_3"
+    ],
+    [
+      "familiars_gym_membership_i",
+      "familiars_pact_merging_speed_ii"
+    ],
+    [
+      "familiars_gym_training_i",
+      "familiars_gym_training_ii"
+    ],
+    [
+      "familiars_gym_training_i",
+      "familiars_metal_harvesting_ii"
+    ],
+    [
+      "familiars_gym_training_i",
+      "familiars_pact_2"
+    ],
+    [
+      "familiars_gym_training_i",
+      "familiars_timber_harvesting_ii"
+    ],
+    [
+      "familiars_gym_training_ii",
+      "familiars_anima_storage_ii"
+    ],
+    [
+      "familiars_gym_training_ii",
+      "familiars_merging_cost_pact_3"
+    ],
+    [
+      "familiars_gym_training_ii",
+      "familiars_pact_merging_speed_ii"
+    ],
+    [
+      "familiars_merging_cost_pact_1",
+      "familiars_gym_training_i"
+    ],
+    [
+      "familiars_merging_cost_pact_1",
+      "familiars_merging_cost_pact_2"
+    ],
+    [
+      "familiars_merging_cost_pact_1",
+      "familiars_pact_2"
+    ],
+    [
+      "familiars_merging_cost_pact_2",
+      "familiars_merging_cost_pact_3"
+    ],
+    [
+      "familiars_merging_cost_pact_2",
+      "familiars_pact_3"
+    ],
+    [
+      "familiars_merging_cost_pact_3",
+      "familiars_pact_4"
+    ],
+    [
+      "familiars_merging_cost_pact_4",
+      "familiars_skill_exp_boost"
+    ],
+    [
+      "familiars_metal_harvesting_ii",
+      "familiars_merging_cost_pact_2"
+    ],
+    [
+      "familiars_pact_2",
+      "familiars_metal_harvesting_ii"
+    ],
+    [
+      "familiars_pact_2",
+      "familiars_stone_harvesting_ii"
+    ],
+    [
+      "familiars_pact_2",
+      "familiars_timber_harvesting_ii"
+    ],
+    [
+      "familiars_pact_3",
+      "familiars_anima_harvesting_ii"
+    ],
+    [
+      "familiars_pact_3",
+      "familiars_gold_harvesting_ii"
+    ],
+    [
+      "familiars_pact_4",
+      "familiars_durable_wards"
+    ],
+    [
+      "familiars_pact_4",
+      "familiars_merging_cost_pact_4"
+    ],
+    [
+      "familiars_pact_4",
+      "familiars_skillstone_merging_speed_i"
+    ],
+    [
+      "familiars_pact_merging_speed_i",
+      "familiars_gold_harvesting_ii"
+    ],
+    [
+      "familiars_pact_merging_speed_i",
+      "familiars_pact_3"
+    ],
+    [
+      "familiars_pact_merging_speed_ii",
+      "familiars_pact_4"
+    ],
+    [
+      "familiars_skillstone_merging_speed_i",
+      "familiars_skill_exp_boost"
+    ],
+    [
+      "familiars_stone_harvesting_ii",
+      "familiars_anima_storage_i"
+    ],
+    [
+      "familiars_timber_harvesting_ii",
+      "familiars_pact_merging_speed_i"
+    ]
+  ],
+  "titles": {
+    "en-US": "Familiars",
+    "ja-JP": "召喚獣"
+  },
+  "verification_status": "sourced_layout_levels_effects_prerequisites"
+}

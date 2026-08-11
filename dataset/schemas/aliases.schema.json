@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/rrryutaro/RLMResearchData/schemas/aliases.schema.json",
+  "title": "RLM research dataset ID aliases",
+  "type": "object",
+  "required": ["document_type", "schema_version", "aliases"],
+  "properties": {
+    "document_type": { "const": "RLMResearchData.aliases" },
+    "schema_version": { "const": 2 },
+    "aliases": {
+      "type": "object",
+      "propertyNames": { "$ref": "common.schema.json#/$defs/id" },
+      "additionalProperties": { "$ref": "common.schema.json#/$defs/id" }
+    }
+  },
+  "additionalProperties": false
+}
