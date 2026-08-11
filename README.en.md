@@ -4,6 +4,8 @@
 
 RLMResearchPlanner is an unofficial research and construction planner for *Lords Mobile*. It is available as a Windows desktop application and a browser-based mobile version. Both versions use the same research and building data and exchange compatible JSON files.
 
+The current `v0.1.0` release is an alpha version. Its main features are usable, but its features, interface, and bundled data remain under active verification and improvement.
+
 This project is not affiliated with IGG or the game operator. Game names, trademarks, and other rights belong to their respective owners.
 
 ## Use the application
@@ -32,6 +34,14 @@ Backups, research directives, paid-offer comparisons, and translations have diff
 - The mobile version stores data in the current browser.
 - Data is not synchronized to a cloud service automatically. Export a backup before changing devices.
 - OCR captures the screen only after a user action. The application does not attach to the game process, read game memory, or automate game input.
+
+## Current limitations
+
+- OCR is an input aid and does not yet recognize every environment, screen, or research item reliably. OCR verification currently covers Japanese and English. Show the same research category in the game and the tool, and always verify recognized values.
+- Operation has been verified with game version `v2.200.309`; later game updates may change values or layouts.
+- Research time or resource values that cannot be confirmed from a published source remain explicitly unrecorded rather than being estimated.
+- The Guild Duel tree structure is included, but its level-by-level time, resource, and dedicated-material data is not yet recorded.
+- The unsigned Windows executable may trigger a Microsoft SmartScreen warning.
 
 ## Important notice and disclaimer
 
