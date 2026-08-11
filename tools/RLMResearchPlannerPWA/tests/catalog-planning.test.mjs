@@ -59,7 +59,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.0");
+  assert.equal(publicVersion, "0.1.1");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -70,7 +70,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.0 確認版/u);
+  assert.match(indexHtml, /v0\.1\.1 確認版/u);
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -461,6 +461,29 @@ test("tree connection state follows level-one research prerequisites", () => {
   assert.equal(isResearchConnectionUnlocked(target, state), true);
   assert.match(stylesSource, /\.tree-lines path\.is-inactive \{ stroke: #35505a; \}/);
   assert.match(stylesSource, /\.tree-lines path\.is-active \{ stroke: #dca51e; \}/);
+});
+
+test("level edits update only affected tree elements and defer hidden plans", () => {
+  const dialogBinding = appSource.slice(
+    appSource.indexOf("function bindDialog()"),
+    appSource.indexOf("function openNodeDialog("),
+  );
+  const bulkRendering = appSource.slice(
+    appSource.indexOf("function renderBulkLevels()"),
+    appSource.indexOf("function updateBulkProgress("),
+  );
+  assert.match(appSource, /function updateVisibleResearchState\(changedNode\)/u);
+  assert.match(appSource, /function updateLineStates\(\)/u);
+  assert.match(appSource, /path\.dataset\.toId = toId/u);
+  assert.match(appSource, /function markResearchPlansDirty\(\)/u);
+  assert.match(appSource, /if \(activeTab !== "plan"\) return/u);
+  assert.match(dialogBinding, /updateVisibleResearchState\(node\)/u);
+  assert.match(dialogBinding, /updateBulkLevelValue\(node\.id, level\)/u);
+  assert.match(dialogBinding, /markResearchPlansDirty\(\)/u);
+  assert.doesNotMatch(dialogBinding, /renderTree\(\)|renderBulkLevels\(\)|refreshCurrentPlan\(\)/u);
+  assert.match(bulkRendering, /updateVisibleResearchState\(node\)/u);
+  assert.match(bulkRendering, /markResearchPlansDirty\(\)/u);
+  assert.doesNotMatch(bulkRendering, /renderTree\(\)|refreshCurrentPlan\(\)|renderShortest\(\)/u);
 });
 
 test("target planning returns the recorded prerequisites", () => {

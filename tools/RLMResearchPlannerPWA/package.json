@@ -1,7 +1,7 @@
 {
   "name": "rlm-research-planner-pwa",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "serve": "node scripts/serve.mjs",

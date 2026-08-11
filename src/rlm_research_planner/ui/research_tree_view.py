@@ -4,7 +4,7 @@ import math
 from dataclasses import dataclass
 from typing import Iterable
 
-from PySide6.QtCore import QPoint, QPointF, Qt, Signal, QTimer
+from PySide6.QtCore import QEvent, QPoint, QPointF, Qt, Signal
 from PySide6.QtGui import (
     QColor,
     QFont,
@@ -239,6 +239,75 @@ class _ResearchNodeItem(QGraphicsRectItem):
         )
         self.update()
 
+    def update_node(self, node: ResearchTreeNode) -> None:
+        if node.research_id != self.research_id:
+            raise ValueError("Cannot replace a research card with a different ID")
+        self._node = node
+        self._current_level = 0 if node.current_level is None else node.current_level
+        self._max_level = node.max_level
+        self.setToolTip(f"{node.name}\n{node.status}\n{node.recommendation}")
+        progress = 0.0
+        if (
+            node.current_level is not None
+            and node.max_level is not None
+            and node.max_level > 0
+        ):
+            progress = max(0.0, min(1.0, node.current_level / node.max_level))
+        self._progress = progress
+        self.meter_fill.setRect(
+            17.0,
+            69.0,
+            max(0.0, (NODE_WIDTH - 34.0) * progress),
+            10.0,
+        )
+        title_font = QFont()
+        title_font.setPointSizeF(26.0)
+        title_font.setBold(True)
+        level_font = QFont()
+        level_font.setPointSizeF(20.0)
+        level_font.setBold(True)
+        effect_font = QFont()
+        effect_font.setPointSizeF(20.0)
+        current_level = "0" if node.current_level is None else str(node.current_level)
+        maximum = "-" if node.max_level is None else str(node.max_level)
+        self._fit_text_item(
+            self.title_item,
+            node.name,
+            title_font,
+            x=12.0,
+            y=8.0,
+            width=NODE_WIDTH - 24.0,
+            height=43.0,
+        )
+        self._fit_text_item(
+            self.level_item,
+            f"{current_level} / {maximum}",
+            level_font,
+            x=12.0,
+            y=84.0,
+            width=NODE_WIDTH - 24.0,
+            height=24.0,
+        )
+        self._fit_text_item(
+            self.current_effect_item,
+            node.current_effect,
+            effect_font,
+            x=12.0,
+            y=112.0,
+            width=NODE_WIDTH - 24.0,
+            height=48.0,
+        )
+        self._fit_text_item(
+            self.next_effect_item,
+            node.next_effect,
+            effect_font,
+            x=12.0,
+            y=164.0,
+            width=NODE_WIDTH - 24.0,
+            height=48.0,
+        )
+        self.set_visual_style(self._visual_style)
+
     def paint(self, painter, option, widget=None) -> None:
         painter.save()
         if self.isSelected():
@@ -273,6 +342,30 @@ class _ResearchNodeItem(QGraphicsRectItem):
         item.document().setDefaultTextOption(text_option)
         item.setZValue(3.0)
         item.setAcceptedMouseButtons(Qt.NoButton)
+        self._fit_text_item(
+            item,
+            text,
+            font,
+            x=x,
+            y=y,
+            width=width,
+            height=height,
+        )
+        return item
+
+    @staticmethod
+    def _fit_text_item(
+        item: QGraphicsTextItem,
+        text: str,
+        font: QFont,
+        *,
+        x: float,
+        y: float,
+        width: float,
+        height: float,
+    ) -> None:
+        item.setPlainText(" ".join(text.splitlines()).strip())
+        item.setTextWidth(width)
         maximum_point_size = font.pointSizeF()
         low = 1.0
         high = maximum_point_size
@@ -295,7 +388,6 @@ class _ResearchNodeItem(QGraphicsRectItem):
         fitted_font.setPointSizeF(best)
         item.setFont(fitted_font)
         item.setPos(x, y + max(0.0, (height - item.boundingRect().height()) / 2.0))
-        return item
 
     def itemChange(self, change, value):
         if change == QGraphicsRectItem.ItemSelectedHasChanged and bool(value):
@@ -350,14 +442,13 @@ class ResearchTreeView(QGraphicsView):
         self._pointer_last: QPoint | None = None
         self._pointer_node: _ResearchNodeItem | None = None
         self._pointer_dragging = False
-        self._pending_level_research_id = ""
-        self._pending_level_editor_kind = ""
-        self._level_edit_timer = QTimer(self)
-        self._level_edit_timer.setSingleShot(True)
-        self._level_edit_timer.timeout.connect(self._open_pending_level_editor)
         self._level_editor: QWidget | None = None
         self._level_value_editor: QSlider | VisibleSpinBox | None = None
+        self._level_editor_research_id = ""
         self._level_editor_commit = None
+        self._node_items: dict[str, _ResearchNodeItem] = {}
+        self._edge_pairs: set[tuple[str, str]] = set()
+        self._edge_pair_paths: dict[tuple[str, str], QPainterPath] = {}
 
     @property
     def zoom_factor(self) -> float:
@@ -377,6 +468,9 @@ class ResearchTreeView(QGraphicsView):
                 item.set_visual_style(self._visual_style)
             elif isinstance(item, QGraphicsPathItem):
                 active = bool(item.data(2))
+                if bool(item.data(4)) and not active:
+                    item.setPen(Qt.NoPen)
+                    continue
                 color = (
                     "#F2B632"
                     if active and self._visual_style == "mobile"
@@ -425,7 +519,6 @@ class ResearchTreeView(QGraphicsView):
         super().wheelEvent(event)
 
     def mousePressEvent(self, event) -> None:
-        self._cancel_pending_level_edit()
         self._finish_level_edit()
         if event.button() != Qt.LeftButton:
             super().mousePressEvent(event)
@@ -477,7 +570,7 @@ class ResearchTreeView(QGraphicsView):
             if editor_kind:
                 self._scene.clearSelection()
                 pressed_node.setSelected(True)
-                self._schedule_level_edit(pressed_node.research_id, editor_kind)
+                self._show_level_editor(pressed_node, editor_kind)
             else:
                 self._scene.clearSelection()
                 pressed_node.setSelected(True)
@@ -487,7 +580,7 @@ class ResearchTreeView(QGraphicsView):
         if event.button() == Qt.LeftButton:
             node = self._node_at(event.position().toPoint())
             if node is not None:
-                self._cancel_pending_level_edit()
+                self._cancel_level_editor()
                 self._reset_pointer_state()
                 self.researchActivated.emit(node.research_id)
                 event.accept()
@@ -506,41 +599,19 @@ class ResearchTreeView(QGraphicsView):
 
     def _cancel_level_editor(self) -> None:
         editor = self._level_editor
+        research_id = self._level_editor_research_id
         self._level_editor = None
         self._level_value_editor = None
+        self._level_editor_research_id = ""
         self._level_editor_commit = None
         if editor is not None:
             editor.blockSignals(True)
             editor.hide()
             editor.setParent(None)
             editor.deleteLater()
-
-    def _schedule_level_edit(self, research_id: str, editor_kind: str) -> None:
-        self._pending_level_research_id = research_id
-        self._pending_level_editor_kind = editor_kind
-        app = QApplication.instance()
-        interval = app.doubleClickInterval() if app is not None else 400
-        self._level_edit_timer.start(max(1, interval))
-
-    def _cancel_pending_level_edit(self) -> None:
-        self._level_edit_timer.stop()
-        self._pending_level_research_id = ""
-        self._pending_level_editor_kind = ""
-
-    def _open_pending_level_editor(self) -> None:
-        research_id = self._pending_level_research_id
-        editor_kind = self._pending_level_editor_kind
-        self._pending_level_research_id = ""
-        self._pending_level_editor_kind = ""
-        if not research_id or editor_kind not in {"number", "slider"}:
-            return
-        for item in self._scene.items():
-            if (
-                isinstance(item, _ResearchNodeItem)
-                and item.research_id == research_id
-            ):
-                self._show_level_editor(item, editor_kind)
-                return
+        item = self._node_items.get(research_id)
+        if item is not None:
+            item.update_node(item._node)
 
     def _show_level_editor(
         self, item: _ResearchNodeItem, editor_kind: str = "number"
@@ -637,6 +708,7 @@ class ResearchTreeView(QGraphicsView):
         editor.setGeometry(x, y, width, height)
         self._level_editor = editor
         self._level_value_editor = value_editor
+        self._level_editor_research_id = item.research_id
         committed = False
 
         def commit() -> None:
@@ -648,6 +720,7 @@ class ResearchTreeView(QGraphicsView):
             research_id = item.research_id
             self._level_editor = None
             self._level_value_editor = None
+            self._level_editor_research_id = ""
             self._level_editor_commit = None
             editor.hide()
             editor.setParent(None)
@@ -664,9 +737,26 @@ class ResearchTreeView(QGraphicsView):
             )
         editor.show()
         editor.raise_()
+        editor.installEventFilter(self)
+        for child in editor.findChildren(QWidget):
+            child.installEventFilter(self)
         value_editor.setFocus(Qt.MouseFocusReason)
         if isinstance(value_editor, VisibleSpinBox):
             value_editor.selectAll()
+
+    def eventFilter(self, watched, event) -> bool:
+        editor = self._level_editor
+        if (
+            editor is not None
+            and event.type() == QEvent.Type.MouseButtonDblClick
+            and (watched is editor or editor.isAncestorOf(watched))
+        ):
+            research_id = self._level_editor_research_id
+            self._cancel_level_editor()
+            if research_id:
+                self.researchActivated.emit(research_id)
+            return True
+        return super().eventFilter(watched, event)
 
     def hideEvent(self, event) -> None:
         self._finish_level_edit()
@@ -735,11 +825,13 @@ class ResearchTreeView(QGraphicsView):
         ] = (),
         active_edges: Iterable[tuple[str, str]] | None = None,
     ) -> None:
-        self._cancel_pending_level_edit()
         self._cancel_level_editor()
         self._reset_pointer_state()
         node_list = list(nodes)
         edge_list = list(prerequisite_edges)
+        self._node_items = {}
+        self._edge_pairs = set(edge_list)
+        self._edge_pair_paths = {}
         active_edge_set = set(edge_list if active_edges is None else active_edges)
         connection_group_list = [
             (tuple(prerequisites), tuple(research))
@@ -852,13 +944,20 @@ class ResearchTreeView(QGraphicsView):
             prerequisites: tuple[str, ...],
             research: tuple[str, ...],
             z_value: float = -1.0,
+            pair_overlay: bool = False,
+            visible: bool = True,
         ) -> None:
             edge = QGraphicsPathItem(path)
-            edge.setPen(QPen(active_color if active else inactive_color, 2.5))
+            edge.setPen(
+                QPen(active_color if active else inactive_color, 2.5)
+                if visible
+                else Qt.NoPen
+            )
             edge.setZValue(z_value)
             edge.setData(0, prerequisites)
             edge.setData(1, research)
-            edge.setData(2, active)
+            edge.setData(2, active and visible)
+            edge.setData(4, pair_overlay)
             self._scene.addItem(edge)
 
         edge_pair_set = set(edge_list)
@@ -911,8 +1010,8 @@ class ResearchTreeView(QGraphicsView):
                     prerequisites=prerequisites,
                     research=research,
                 )
-                if active_pairs and not all_active:
-                    for prerequisite_id, research_id in sorted(active_pairs):
+                if len(group_pairs) > 1:
+                    for prerequisite_id, research_id in sorted(group_pairs):
                         active_path = QPainterPath()
                         active_path.moveTo(
                             coordinates[prerequisite_id][0] + NODE_WIDTH / 2.0,
@@ -922,13 +1021,17 @@ class ResearchTreeView(QGraphicsView):
                             coordinates[research_id][0] + NODE_WIDTH / 2.0,
                             center_y,
                         )
-                        add_edge_item(
-                            active_path,
-                            active=True,
-                            prerequisites=(prerequisite_id,),
-                            research=(research_id,),
-                            z_value=-0.9,
-                        )
+                        pair = (prerequisite_id, research_id)
+                        self._edge_pair_paths[pair] = active_path
+                        if pair in active_pairs and not all_active:
+                            add_edge_item(
+                                active_path,
+                                active=True,
+                                prerequisites=(prerequisite_id,),
+                                research=(research_id,),
+                                z_value=-0.9,
+                                pair_overlay=True,
+                            )
                 continue
             # Route the bus through the final gap before the destination row.
             # For adjacent rows this is their midpoint.  For a long branch it
@@ -950,8 +1053,8 @@ class ResearchTreeView(QGraphicsView):
                 prerequisites=prerequisites,
                 research=research,
             )
-            if active_pairs and not all_active:
-                for prerequisite_id, research_id in sorted(active_pairs):
+            if len(group_pairs) > 1:
+                for prerequisite_id, research_id in sorted(group_pairs):
                     start_x = coordinates[prerequisite_id][0] + NODE_WIDTH / 2.0
                     start_y = coordinates[prerequisite_id][1] + NODE_HEIGHT
                     end_x = coordinates[research_id][0] + NODE_WIDTH / 2.0
@@ -961,13 +1064,17 @@ class ResearchTreeView(QGraphicsView):
                     active_path.lineTo(start_x, middle_y)
                     active_path.lineTo(end_x, middle_y)
                     active_path.lineTo(end_x, end_y)
-                    add_edge_item(
-                        active_path,
-                        active=True,
-                        prerequisites=(prerequisite_id,),
-                        research=(research_id,),
-                        z_value=-0.9,
-                    )
+                    pair = (prerequisite_id, research_id)
+                    self._edge_pair_paths[pair] = active_path
+                    if pair in active_pairs and not all_active:
+                        add_edge_item(
+                            active_path,
+                            active=True,
+                            prerequisites=(prerequisite_id,),
+                            research=(research_id,),
+                            z_value=-0.9,
+                            pair_overlay=True,
+                        )
 
         by_id = {node.research_id: node for node in node_list}
         for research_id, (x, y) in coordinates.items():
@@ -980,6 +1087,7 @@ class ResearchTreeView(QGraphicsView):
             )
             item.setPos(x, y)
             self._scene.addItem(item)
+            self._node_items[research_id] = item
             if research_id == selected_research_id:
                 item.setSelected(True)
 
@@ -988,3 +1096,61 @@ class ResearchTreeView(QGraphicsView):
                 -SCENE_MARGIN, -SCENE_MARGIN, SCENE_MARGIN, SCENE_MARGIN
             )
         )
+
+    def update_research_state(
+        self,
+        node: ResearchTreeNode,
+        active_edges: Iterable[tuple[str, str]],
+    ) -> bool:
+        item = self._node_items.get(node.research_id)
+        if item is None:
+            return False
+        item.update_node(node)
+        active_edge_set = set(active_edges)
+        active_color = QColor(
+            "#F2B632" if self._visual_style == "mobile" else "#D2A51B"
+        )
+        inactive_color = QColor(
+            "#35505A" if self._visual_style == "mobile" else "#46545D"
+        )
+        for edge in tuple(self._scene.items()):
+            if isinstance(edge, QGraphicsPathItem) and bool(edge.data(4)):
+                self._scene.removeItem(edge)
+        overlays: list[tuple[tuple[str, str], QPainterPath]] = []
+        for edge in tuple(self._scene.items()):
+            if not isinstance(edge, QGraphicsPathItem):
+                continue
+            prerequisites = tuple(edge.data(0) or ())
+            research = tuple(edge.data(1) or ())
+            group_pairs = {
+                (prerequisite_id, research_id)
+                for prerequisite_id in prerequisites
+                for research_id in research
+                if (prerequisite_id, research_id) in self._edge_pairs
+            }
+            if not group_pairs:
+                group_pairs = {
+                    (prerequisite_id, research_id)
+                    for prerequisite_id in prerequisites
+                    for research_id in research
+                }
+            active_pairs = group_pairs & active_edge_set
+            active = bool(group_pairs) and active_pairs == group_pairs
+            edge.setPen(QPen(active_color if active else inactive_color, 2.5))
+            edge.setData(2, active)
+            if len(group_pairs) > 1 and not active:
+                for pair in active_pairs:
+                    pair_path = self._edge_pair_paths.get(pair)
+                    if pair_path is not None:
+                        overlays.append((pair, pair_path))
+        for (prerequisite_id, research_id), path in overlays:
+            overlay = QGraphicsPathItem(path)
+            overlay.setPen(QPen(active_color, 2.5))
+            overlay.setZValue(-0.9)
+            overlay.setData(0, (prerequisite_id,))
+            overlay.setData(1, (research_id,))
+            overlay.setData(2, True)
+            overlay.setData(4, True)
+            self._scene.addItem(overlay)
+        self.viewport().update()
+        return True

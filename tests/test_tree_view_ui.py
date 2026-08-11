@@ -606,7 +606,7 @@ def test_meter_click_opens_inline_level_editor_and_emits_change() -> None:
     QTest.mouseClick(
         view.viewport(), Qt.LeftButton, Qt.NoModifier, meter_position
     )
-    QTest.qWait(app.doubleClickInterval() + 100)
+    app.processEvents()
     editor = view._level_editor
     assert editor is not None
     assert isinstance(editor, QWidget)
@@ -677,7 +677,7 @@ def test_level_number_click_uses_numeric_input_without_maximum_suffix() -> None:
     QTest.mouseClick(
         view.viewport(), Qt.LeftButton, Qt.NoModifier, level_position
     )
-    QTest.qWait(app.doubleClickInterval() + 100)
+    app.processEvents()
 
     editor = view._level_editor
     assert isinstance(editor, QSpinBox)
@@ -720,14 +720,85 @@ def test_level_area_double_click_opens_plan_without_hiding_the_card() -> None:
     QTest.mouseClick(
         view.viewport(), Qt.LeftButton, Qt.NoModifier, level_position
     )
+    app.processEvents()
+    editor = view._level_editor
+    assert editor is not None
     QTest.mouseDClick(
-        view.viewport(), Qt.LeftButton, Qt.NoModifier, level_position
+        editor, Qt.LeftButton, Qt.NoModifier, editor.rect().center()
     )
-    QTest.qWait(app.doubleClickInterval() + 20)
+    app.processEvents()
 
     assert activated == ["test"]
     assert view._level_editor is None
     assert card.level_item.isVisible()
+    view.close()
+
+
+def test_incremental_level_update_keeps_cards_and_updates_connection_state() -> None:
+    app = QApplication.instance() or QApplication([])
+    view = ResearchTreeView(level_editing_enabled=True)
+    nodes = [
+        ResearchTreeNode(
+            research_id="parent",
+            name="Parent",
+            current_level=1,
+            max_level=10,
+            status="in progress",
+            recommendation="test",
+            display_order=0,
+            layout_row=0,
+            layout_column=0,
+        ),
+        ResearchTreeNode(
+            research_id="child",
+            name="Child",
+            current_level=0,
+            max_level=10,
+            status="not started",
+            recommendation="test",
+            display_order=1,
+            layout_row=1,
+            layout_column=0,
+        ),
+    ]
+    view.set_research(nodes, [("parent", "child")], active_edges=[])
+    child_card = next(
+        item
+        for item in view.scene().items()
+        if getattr(item, "research_id", "") == "child"
+    )
+    scene_items = tuple(view.scene().items())
+    assert not any(
+        bool(item.data(2))
+        for item in scene_items
+        if isinstance(item, QGraphicsPathItem)
+    )
+
+    changed = ResearchTreeNode(
+        research_id="child",
+        name="Child",
+        current_level=1,
+        max_level=10,
+        status="in progress",
+        recommendation="test",
+        display_order=1,
+        current_effect="+1%",
+        next_effect="+2%",
+        layout_row=1,
+        layout_column=0,
+    )
+    assert view.update_research_state(changed, [("parent", "child")])
+    app.processEvents()
+
+    assert child_card in view.scene().items()
+    assert tuple(view.scene().items()) == scene_items
+    assert child_card.level_item.toPlainText() == "1 / 10"
+    assert child_card.current_effect_item.toPlainText() == "+1%"
+    assert any(
+        bool(item.data(2))
+        for item in view.scene().items()
+        if isinstance(item, QGraphicsPathItem)
+    )
     view.close()
 
 

@@ -656,6 +656,7 @@ class MainWindow(QMainWindow):
         self._ocr_card_groups: list[tuple[QRect, tuple[OcrLine, ...]]] = []
         self._tree_levels_dirty = False
         self._player_settings_dirty = False
+        self._plan_dirty = False
         self._paid_current_offer_id = ""
         self.update_controller = UpdateController(
             self, self.settings_repository, self.app_settings
@@ -859,6 +860,7 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self._build_paid_tab(self.tabs), self.t("tab.paid"))
         self.tabs.addTab(self._build_ocr_tab(self.tabs), self.t("tab.ocr"))
         self.tabs.addTab(self._build_help_tab(self.tabs), self.t("tab.help"))
+        self.tabs.currentChanged.connect(self._tab_changed)
         layout.addWidget(self.tabs, 1)
 
     def _build_tree_tab(self, parent: QWidget) -> QWidget:
@@ -1189,6 +1191,31 @@ class MainWindow(QMainWindow):
             for requirement in level_one.requirements
         )
 
+    def _observed_tree_display_node(
+        self, node: ObservedResearchNode, observation: ResearchTreeObservation
+    ) -> ResearchTreeNode:
+        current = self._tree_level_draft.get(node.id, 0)
+        if current <= 0:
+            status = self.t("status.not_started")
+        elif node.max_level is not None and current >= node.max_level:
+            status = self.t("status.complete")
+        else:
+            status = self.t("status.in_progress")
+        current_effect, next_effect = self._observed_tree_effect_lines(node, current)
+        return ResearchTreeNode(
+            research_id=node.id,
+            name=self._research_name(node.id),
+            current_level=current,
+            max_level=node.max_level,
+            status=status,
+            recommendation=observation.verification_status,
+            display_order=node.row * 10_000 + node.column,
+            current_effect=current_effect,
+            next_effect=next_effect,
+            layout_row=node.row,
+            layout_column=node.column,
+        )
+
     def _master_connection_unlocked(self, research_id: str) -> bool:
         if self._tree_level_draft.get(research_id, 0) > 0:
             return True
@@ -1216,36 +1243,11 @@ class MainWindow(QMainWindow):
             for node in sorted(
                 observation.nodes, key=lambda item: (item.row, item.column)
             ):
-                name = self._research_name(node.id)
                 if not self._tree_node_matches_query(node, query):
                     continue
                 if instant_only and not self._tree_node_is_instant_finish(node):
                     continue
-                current = self._tree_level_draft.get(node.id, 0)
-                if current <= 0:
-                    status = self.t("status.not_started")
-                elif node.max_level is not None and current >= node.max_level:
-                    status = self.t("status.complete")
-                else:
-                    status = self.t("status.in_progress")
-                current_effect, next_effect = self._observed_tree_effect_lines(
-                    node, current
-                )
-                visible.append(
-                    ResearchTreeNode(
-                        research_id=node.id,
-                        name=name,
-                        current_level=current,
-                        max_level=node.max_level,
-                        status=status,
-                        recommendation=observation.verification_status,
-                        display_order=node.row * 10_000 + node.column,
-                        current_effect=current_effect,
-                        next_effect=next_effect,
-                        layout_row=node.row,
-                        layout_column=node.column,
-                    )
-                )
+                visible.append(self._observed_tree_display_node(node, observation))
             visible_ids = {node.research_id for node in visible}
             edges = {
                 (edge.prerequisite_id, edge.research_id)
@@ -1377,13 +1379,62 @@ class MainWindow(QMainWindow):
             return
         node = self._observed_nodes[research_id]
         maximum = node.max_level if node.max_level is not None else 99
+        normalized_level = max(0, min(int(level), maximum))
         self._selected_tree_node_id = research_id
-        self._tree_level_draft[research_id] = max(0, min(int(level), maximum))
+        if self._tree_level_draft.get(research_id, 0) == normalized_level:
+            return
+        self._tree_level_draft[research_id] = normalized_level
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree_after_level_change(preserve_view=True)
+        self._update_tree_level_display(research_id, preserve_view=True)
         self._sync_progress_editor(research_id)
-        self._calculate_plan()
+        self._mark_plan_dirty()
+
+    def _update_tree_level_display(
+        self, research_id: str, *, preserve_view: bool = False
+    ) -> None:
+        if not hasattr(self, "tree_view"):
+            return
+        if (
+            hasattr(self, "tree_instant_finish_check")
+            and self.tree_instant_finish_check.isChecked()
+        ):
+            self._refresh_tree_after_level_change(preserve_view=preserve_view)
+            return
+        observation = self._active_observation()
+        node = self._observed_nodes.get(research_id)
+        if (
+            observation is None
+            or node is None
+            or research_id not in observation.node_by_id()
+        ):
+            return
+        edges = {
+            (edge.prerequisite_id, edge.research_id)
+            for edge in observation.edges
+        }
+        node_by_id = observation.node_by_id()
+        active_edges = {
+            edge
+            for edge in edges
+            if edge[1] in node_by_id
+            and self._observed_connection_unlocked(node_by_id[edge[1]])
+        }
+        self.tree_view.update_research_state(
+            self._observed_tree_display_node(node, observation),
+            active_edges,
+        )
+
+    def _mark_plan_dirty(self) -> None:
+        self._plan_dirty = True
+        if hasattr(self, "tabs") and self.tabs.currentIndex() == 1:
+            self._plan_dirty = False
+            self._calculate_plan()
+
+    def _tab_changed(self, index: int) -> None:
+        if index == 1 and self._plan_dirty:
+            self._plan_dirty = False
+            self._calculate_plan()
 
     def _refresh_tree_preserving_view(self) -> None:
         if not hasattr(self, "tree_view"):
@@ -2852,12 +2903,14 @@ class MainWindow(QMainWindow):
         )
 
     def _progress_changed(self, research_id: str, value: int) -> None:
+        if self._tree_level_draft.get(research_id, 0) == value:
+            return
         self._tree_level_draft[research_id] = value
         self._tree_levels_dirty = True
         self._update_player_save_button()
-        self._refresh_tree_after_level_change()
+        self._update_tree_level_display(research_id)
         self._refresh_detail()
-        self._calculate_plan()
+        self._mark_plan_dirty()
 
     def _sync_progress_editor(self, research_id: str) -> None:
         if not hasattr(self, "_progress_editors"):
@@ -3221,6 +3274,7 @@ class MainWindow(QMainWindow):
     def _calculate_plan(self, *_args: object) -> None:
         if not hasattr(self, "plan_level_spin"):
             return
+        self._plan_dirty = False
         if self._plan_mode == "shortest":
             self._current_catalog_plan = None
             self.plan_complete_button.setEnabled(False)

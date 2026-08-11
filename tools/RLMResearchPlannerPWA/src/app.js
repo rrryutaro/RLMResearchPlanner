@@ -1,17 +1,17 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.0-b13";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.0-b13";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.0-b13";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.1.0-b13";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.0-b13";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.0-b13";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.0-b13";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.0-b13";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.0-b13";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.0-b13";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.1-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.1-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.1-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.1.1-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.1-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.1-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.1-b1";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.1-b1";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.1-b1";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.1-b1";
 
-const RELEASE_VERSION = "0.1.0";
-const DEVELOPMENT_BUILD = 13;
-const ASSET_VERSION = "0.1.0-b13";
+const RELEASE_VERSION = "0.1.1";
+const DEVELOPMENT_BUILD = 1;
+const ASSET_VERSION = "0.1.1-b1";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const RESOURCE_NAMES = {
@@ -47,7 +47,9 @@ let selectedCategoryId = "";
 let selectedBulkCategoryId = "";
 let selectedNodeId = "";
 let zoom = window.innerWidth < 650 ? 0.72 : 1;
+let activeTab = "tree";
 let planMode = "target";
+let planDirty = false;
 let shortestPage = 0;
 let currentPlan = null;
 let castleTargetLevel = 0;
@@ -163,11 +165,17 @@ function bindNavigation() {
 }
 
 function showTab(tab) {
+  activeTab = tab;
   document.querySelectorAll(".tab-button").forEach((button) => button.classList.toggle("is-active", button.dataset.tab === tab));
   document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.toggle("is-active", panel.id === `tab-${tab}`));
   if (tab === "tree") requestAnimationFrame(renderTree);
-  if (tab === "plan" && planMode === "shortest") renderShortest();
-  if (tab === "plan" && planMode === "tasks") renderTasks();
+  if (tab === "plan") {
+    planDirty = false;
+    if (planMode === "target") refreshCurrentPlan();
+    if (planMode === "shortest") renderShortest();
+    if (planMode === "tasks") renderTasks();
+  }
+  if (tab === "player") renderBulkLevels();
   if (tab === "castle") renderCastle();
   if (tab === "paid") renderPaid();
 }
@@ -949,6 +957,7 @@ function renderLines(category, visibleIds, positions, width, height) {
     const from = positions.get(fromId); const to = positions.get(toId);
     if (!from || !to) continue;
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.dataset.toId = toId;
     const unlocked = isResearchConnectionUnlocked(catalog.nodes.get(toId), state);
     path.classList.add(unlocked ? "is-active" : "is-inactive");
     if (Math.abs(from.y - to.y) < 2) {
@@ -966,6 +975,68 @@ function renderLines(category, visibleIds, positions, width, height) {
     (unlocked ? activePaths : inactivePaths).push(path);
   }
   svg.replaceChildren(...inactivePaths, ...activePaths);
+}
+
+function updateLineStates() {
+  const svg = byId("tree-lines");
+  if (!svg) return;
+  const activePaths = [];
+  svg.querySelectorAll("path[data-to-id]").forEach((path) => {
+    const target = catalog.nodes.get(path.dataset.toId);
+    const unlocked = Boolean(target && isResearchConnectionUnlocked(target, state));
+    path.classList.toggle("is-active", unlocked);
+    path.classList.toggle("is-inactive", !unlocked);
+    if (unlocked) activePaths.push(path);
+  });
+  activePaths.forEach((path) => svg.append(path));
+}
+
+function updateVisibleResearchState(changedNode) {
+  if (!catalog || !changedNode) return;
+  if (byId("instant-only")?.checked) {
+    renderCategoryOptions();
+    renderTree();
+    return;
+  }
+  const category = catalog.categories.find((item) => item.id === selectedCategoryId);
+  if (!category || changedNode.categoryId !== category.id) return;
+  const visibleIds = new Set(matchingNodes(category).map((node) => node.id));
+  const affectedIds = new Set([changedNode.id]);
+  for (const [fromId, toId] of category.edges) {
+    if (fromId === changedNode.id) affectedIds.add(toId);
+  }
+  const layout = layoutForCategory(category);
+  for (const researchId of affectedIds) {
+    if (!visibleIds.has(researchId)) continue;
+    const node = catalog.nodes.get(researchId);
+    const existing = byId("tree-cards")?.querySelector(`[data-node-id="${CSS.escape(researchId)}"]`);
+    if (!node || !existing) continue;
+    const slot = layout.slots.get(node.id) ?? node.column;
+    const position = {
+      x: (PADDING + slot * (CARD_WIDTH + GAP_X)) * zoom,
+      y: (PADDING + node.row * (CARD_HEIGHT + GAP_Y)) * zoom,
+      width: CARD_WIDTH * zoom,
+      height: CARD_HEIGHT * zoom,
+    };
+    existing.replaceWith(renderCard(node, position));
+  }
+  updateLineStates();
+}
+
+function updateBulkLevelValue(nodeId, level) {
+  const input = byId("bulk-level-list")?.querySelector(`[data-node-id="${CSS.escape(nodeId)}"] input[type="number"]`);
+  if (input) input.value = String(level);
+  const category = catalog.categories.find((item) => item.id === selectedBulkCategoryId);
+  if (category) updateBulkProgress(category);
+}
+
+function markResearchPlansDirty() {
+  planDirty = true;
+  if (activeTab !== "plan") return;
+  planDirty = false;
+  if (planMode === "target") refreshCurrentPlan();
+  if (planMode === "shortest") renderShortest();
+  if (planMode === "tasks") renderTasks();
 }
 
 function renderCard(node, position) {
@@ -1017,9 +1088,15 @@ function bindDialog() {
   const update = (value) => {
     const node = catalog.nodes.get(selectedNodeId); if (!node) return;
     const level = Math.max(0, Math.min(node.maxLevel, Math.trunc(Number(value) || 0)));
+    const previousLevel = Math.min(node.maxLevel, Number(state.researchLevels[node.id] || 0));
     number.value = level; range.value = level; state.researchLevels[node.id] = level;
     updateStepButtons(level);
-    renderDialogEffects(node, level); populateTargetLevels(node, level); scheduleSave(); renderTree(); renderBulkLevels(); refreshCurrentPlan();
+    renderDialogEffects(node, level); populateTargetLevels(node, level);
+    if (level === previousLevel) return;
+    scheduleSave();
+    updateVisibleResearchState(node);
+    updateBulkLevelValue(node.id, level);
+    markResearchPlansDirty();
   };
   number.addEventListener("input", (event) => update(event.target.value));
   range.addEventListener("input", (event) => update(event.target.value));
@@ -1350,13 +1427,17 @@ function renderBulkLevels() {
   });
   list.replaceChildren(...nodes.map((node) => {
     const row = create("div", "bulk-level-row");
+    row.dataset.nodeId = node.id;
     const open = create("button", "", catalog.nodeName(node, state.locale)); open.type = "button";
     open.addEventListener("click", () => { jumpToNode(node); requestAnimationFrame(() => openNodeDialog(node.id)); });
     const input = create("input"); input.type = "number"; input.inputMode = "numeric"; input.min = "0"; input.max = String(node.maxLevel); input.value = String(Math.min(node.maxLevel, Number(state.researchLevels[node.id] || 0))); input.setAttribute("aria-label", t("pwa.current_level_aria", "{name}の現在レベル", { name: catalog.nodeName(node, state.locale) }));
     input.addEventListener("input", () => {
       const level = Math.max(0, Math.min(node.maxLevel, Math.trunc(Number(input.value) || 0)));
       state.researchLevels[node.id] = level;
-      updateBulkProgress(category); scheduleSave(); renderTree(); refreshCurrentPlan(); if (planMode === "shortest") renderShortest();
+      updateBulkProgress(category);
+      scheduleSave();
+      updateVisibleResearchState(node);
+      markResearchPlansDirty();
     });
     row.append(open, numberStepper(input), create("span", "max-label", `/ ${node.maxLevel}`)); return row;
   }));

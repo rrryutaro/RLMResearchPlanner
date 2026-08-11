@@ -1581,9 +1581,61 @@ def test_tree_level_editor_uses_staged_inline_card_input() -> None:
             Qt.NoModifier,
             level_position,
         )
-        QTest.qWait(app.doubleClickInterval() + 20)
+        app.processEvents()
         assert window.tabs.currentIndex() == 1
         assert window._plan_target_research_id == "economy_vault_management"
+        window.close()
+    finally:
+        player_repository.close()
+
+
+def test_tree_level_change_updates_in_place_and_defers_hidden_plan() -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    master = JsonMasterRepository(paths.research_data).load()
+    catalog = JsonResearchCatalogRepository(paths.research_catalog).load_all()
+    player_repository = PlayerRepository(":memory:")
+    try:
+        window = MainWindow(
+            paths=paths,
+            master=master,
+            observations=catalog,
+            player_repository=player_repository,
+            player_state=player_repository.load(),
+            settings_repository=SettingsRepository(None),
+            app_settings=AppSettings(),
+            translator=Translator(paths.translations, "ja-JP"),
+        )
+        research_id = "economy_vault_management"
+        original_card = next(
+            item
+            for item in window.tree_view.scene().items()
+            if getattr(item, "research_id", "") == research_id
+        )
+        plan_calculations: list[bool] = []
+        original_calculate_plan = window._calculate_plan
+        window._calculate_plan = lambda *_args: plan_calculations.append(True)
+
+        window._set_tree_level(research_id, 7)
+        app.processEvents()
+
+        updated_card = next(
+            item
+            for item in window.tree_view.scene().items()
+            if getattr(item, "research_id", "") == research_id
+        )
+        assert updated_card is original_card
+        assert updated_card.level_item.toPlainText() == "7 / 10"
+        assert plan_calculations == []
+        assert window._plan_dirty
+
+        window.tabs.setCurrentIndex(1)
+        app.processEvents()
+        assert plan_calculations == [True]
+        assert not window._plan_dirty
+        window._calculate_plan = original_calculate_plan
+        window._ask_unsaved_close_action = lambda: "discard"
         window.close()
     finally:
         player_repository.close()
