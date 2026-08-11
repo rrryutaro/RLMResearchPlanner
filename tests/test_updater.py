@@ -15,13 +15,32 @@ def test_version_comparison_uses_numeric_components() -> None:
     assert not updater.is_newer_version("v0.0.1", "0.0.1")
 
 
-def test_release_parser_selects_latest_public_release_and_assets() -> None:
+def test_release_parser_selects_latest_non_draft_release_including_prerelease() -> None:
     payload = [
+        {
+            "tag_name": "v0.0.5",
+            "draft": True,
+            "prerelease": False,
+            "assets": [],
+        },
         {
             "tag_name": "v0.0.4",
             "draft": False,
             "prerelease": True,
-            "assets": [],
+            "body": "Latest Alpha release",
+            "html_url": "https://example.invalid/releases/v0.0.4",
+            "assets": [
+                {
+                    "name": updater.APP_EXECUTABLE_NAME,
+                    "browser_download_url": "https://example.invalid/app.exe",
+                    "size": 123,
+                },
+                {
+                    "name": updater.CHECKSUM_ASSET_NAME,
+                    "browser_download_url": "https://example.invalid/app.sha256",
+                    "size": 100,
+                },
+            ],
         },
         {
             "tag_name": "v0.0.3",
@@ -53,9 +72,9 @@ def test_release_parser_selects_latest_public_release_and_assets() -> None:
     release = updater.parse_releases_payload(payload)
 
     assert release is not None
-    assert release.version == "0.0.3"
-    assert release.tag == "v0.0.3"
-    assert release.body == "Latest stable release"
+    assert release.version == "0.0.4"
+    assert release.tag == "v0.0.4"
+    assert release.body == "Latest Alpha release"
     assert release.asset(updater.APP_EXECUTABLE_NAME).size == 123
     assert not updater.auto_update_unavailable_reason(release) or (
         updater.distribution_type() != "onefile"

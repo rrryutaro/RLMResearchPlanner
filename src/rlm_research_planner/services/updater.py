@@ -87,7 +87,7 @@ def parse_releases_payload(payload: object) -> ReleaseInfo | None:
         tag = str(candidate.get("tag_name", ""))
         if not tag.startswith(RELEASE_TAG_PREFIX):
             continue
-        if candidate.get("draft") or candidate.get("prerelease"):
+        if candidate.get("draft"):
             continue
         version = parse_version(tag)
         if version > best_version:
