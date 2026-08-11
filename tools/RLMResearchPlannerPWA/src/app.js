@@ -1,17 +1,17 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.1-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.1-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.1-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.1.1-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.1-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.1-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.1-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.1-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.1-b1";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.1-b1";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.1-b2";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.1-b2";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.1-b2";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.1.1-b2";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.1-b2";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.1-b2";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.1-b2";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.1-b2";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.1-b2";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.1-b2";
 
 const RELEASE_VERSION = "0.1.1";
-const DEVELOPMENT_BUILD = 1;
-const ASSET_VERSION = "0.1.1-b1";
+const DEVELOPMENT_BUILD = 2;
+const ASSET_VERSION = "0.1.1-b2";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const RESOURCE_NAMES = {
@@ -1023,6 +1023,14 @@ function updateVisibleResearchState(changedNode) {
   updateLineStates();
 }
 
+function updateResearchCardSelection() {
+  const cards = byId("tree-cards")?.querySelectorAll(".research-card");
+  if (!cards) return;
+  for (const card of cards) {
+    card.classList.toggle("is-selected", card.dataset.nodeId === selectedNodeId);
+  }
+}
+
 function updateBulkLevelValue(nodeId, level) {
   const input = byId("bulk-level-list")?.querySelector(`[data-node-id="${CSS.escape(nodeId)}"] input[type="number"]`);
   if (input) input.value = String(level);
@@ -1113,6 +1121,7 @@ function bindDialog() {
 function openNodeDialog(nodeId) {
   const node = catalog.nodes.get(nodeId); if (!node) return;
   selectedNodeId = nodeId;
+  updateResearchCardSelection();
   const category = catalog.categories.find((item) => item.id === node.categoryId);
   const level = Math.min(node.maxLevel, Number(state.researchLevels[node.id] || 0));
   byId("node-dialog-category").textContent = catalog.categoryTitle(category, state.locale);

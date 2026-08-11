@@ -486,6 +486,20 @@ test("level edits update only affected tree elements and defer hidden plans", ()
   assert.doesNotMatch(bulkRendering, /renderTree\(\)|refreshCurrentPlan\(\)|renderShortest\(\)/u);
 });
 
+test("research selection is synchronized across every visible card", () => {
+  const selectionSync = appSource.slice(
+    appSource.indexOf("function updateResearchCardSelection()"),
+    appSource.indexOf("function updateBulkLevelValue("),
+  );
+  const dialogOpening = appSource.slice(
+    appSource.indexOf("function openNodeDialog("),
+    appSource.indexOf("function populateTargetLevels("),
+  );
+  assert.match(selectionSync, /querySelectorAll\("\.research-card"\)/u);
+  assert.match(selectionSync, /classList\.toggle\("is-selected", card\.dataset\.nodeId === selectedNodeId\)/u);
+  assert.match(dialogOpening, /selectedNodeId = nodeId;\s+updateResearchCardSelection\(\);/u);
+});
+
 test("target planning returns the recorded prerequisites", () => {
   const state = defaultState();
   state.settings.academyLevel = 25;
