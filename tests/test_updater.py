@@ -2,11 +2,12 @@ from __future__ import annotations
 
 from rlm_research_planner.services import updater
 from rlm_research_planner.settings import AppSettings
-from rlm_research_planner.version import version_string
+from rlm_research_planner.version import __build__, __dev__, __version__, version_string
 
 
-def test_current_development_version_includes_internal_build_number() -> None:
-    assert version_string() == "0.1.3+b10"
+def test_version_string_hides_internal_build_number_from_public_builds() -> None:
+    expected = f"{__version__}+b{__build__}" if __dev__ else __version__
+    assert version_string() == expected
 
 
 def test_version_comparison_uses_numeric_components() -> None:
