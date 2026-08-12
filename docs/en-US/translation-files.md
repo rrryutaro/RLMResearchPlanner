@@ -72,6 +72,7 @@ Renaming or removing a placeholder causes an import error.
 | `messages` | Buttons, labels, guidance, and error messages |
 | `categories` | Research category names |
 | `research` | Research names |
+| `talents` | Talent names |
 | `buildings` | Building names |
 | `effects` | Research effect names |
 | `resources` | Resource and special-material names |
@@ -92,7 +93,7 @@ Set `direction` to `rtl` to change the reading direction of the interface. The p
 ## Checks before distribution
 
 - The file imports into both desktop and mobile versions.
-- Main tabs, research, buildings, and resources are translated.
+- Main tabs, research, talents, buildings, and resources are translated.
 - Long labels are not clipped.
 - All placeholders are preserved.
 - Inputs and dialogs remain readable in RTL mode.

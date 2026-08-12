@@ -1,17 +1,18 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.2-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.2-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.2-b1";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.1.2-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.2-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.2-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.2-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.2-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.2-b1";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.2-b1";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.3-b10";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.3-b10";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.3-b10";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.3-b10";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.3-b10";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.3-b10";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.3-b10";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.3-b10";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.3-b10";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.3-b10";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement } from "./talent-planning.js?v=0.1.3-b10";
 
-const RELEASE_VERSION = "0.1.2";
-const DEVELOPMENT_BUILD = 1;
-const ASSET_VERSION = "0.1.2-b1";
+const RELEASE_VERSION = "0.1.3";
+const DEVELOPMENT_BUILD = 10;
+const ASSET_VERSION = "0.1.3-b10";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const RESOURCE_NAMES = {
@@ -26,6 +27,7 @@ const PADDING = 36;
 
 let catalog;
 let castleCatalog;
+let talentCatalog;
 let effectLabels = {};
 let messages = {};
 let localeDataById = {};
@@ -48,6 +50,7 @@ let selectedBulkCategoryId = "";
 let selectedNodeId = "";
 let zoom = window.innerWidth < 650 ? 0.72 : 1;
 let activeTab = "tree";
+let playerView = "level";
 let planMode = "target";
 let planDirty = false;
 let shortestPage = 0;
@@ -64,6 +67,7 @@ let paidEditingId = "";
 let paidView = "input";
 let paidItemEditingIndex = -1;
 let speedupEditingIndex = -1;
+let talentAutoFollowPending = false;
 const categoryLayouts = new Map();
 
 const byId = (id) => document.getElementById(id);
@@ -74,16 +78,27 @@ const create = (tag, className = "", text = "") => {
   return node;
 };
 
+function ensureTalentPlan() {
+  if (!talentCatalog || state.talentPlan.length) return;
+  const preset = talentCatalog.presetById.get(state.talentPresetId) || talentCatalog.presets[0];
+  state.talentPresetId = preset.id;
+  state.talentPlan = expandTalentTargets(talentCatalog, preset.targets);
+  if (!state.talentPlanName) state.talentPlanName = talentCatalog.presetName(preset, state.locale);
+}
+
 async function start() {
   try {
-    const [loadedCatalog, loadedCastleCatalog, japaneseLocaleData, englishLocaleData] = await Promise.all([
+    const [loadedCatalog, loadedCastleCatalog, loadedTalentCatalog, japaneseLocaleData, englishLocaleData] = await Promise.all([
       loadCatalog("./data/research-dataset", ASSET_VERSION),
       loadCastleCatalog(`./data/buildings/castle_catalog.json?v=${ASSET_VERSION}`),
+      loadTalentCatalog(`./data/talents/catalog.json?v=${ASSET_VERSION}`),
       loadLocaleData(`./data/i18n/ja-JP.json?v=${ASSET_VERSION}`),
       loadLocaleData(`./data/i18n/en-US.json?v=${ASSET_VERSION}`),
     ]);
     catalog = loadedCatalog;
     castleCatalog = loadedCastleCatalog;
+    talentCatalog = loadedTalentCatalog;
+    ensureTalentPlan();
     localeDataById = { "ja-JP": japaneseLocaleData, "en-US": englishLocaleData };
     activateLanguage(state.locale, { save: false, render: false });
     selectedCategoryId = catalog.categories[0]?.id || "";
@@ -93,6 +108,7 @@ async function start() {
     bindDialog();
     bindSettings();
     bindPlans();
+    bindTalent();
     bindCastle();
     bindPaid();
     installStaticNumberSteppers();
@@ -102,6 +118,7 @@ async function start() {
     renderTree();
     renderShortest();
     renderTasks();
+    renderTalent();
     renderCastle();
     renderPaid();
     renderCatalogStatus();
@@ -130,10 +147,12 @@ async function start() {
 function renderCommonHelp() {
   const required = byId("pwa-help-required");
   const plan = byId("help-plan-body");
+  const talent = byId("help-talent-body");
   const construction = byId("help-construction-body");
   const files = byId("help-files-body");
   if (required) required.innerHTML = messages["help.required_setup.body_v003"] || "";
   if (plan) plan.innerHTML = messages["help.plan.body"] || "";
+  if (talent) talent.innerHTML = messages["help.talent.body"] || "";
   if (construction) construction.innerHTML = messages["help.castle.body"] || "";
   if (files) files.innerHTML = messages["help.files.body"] || "";
 }
@@ -175,9 +194,225 @@ function showTab(tab) {
     if (planMode === "shortest") renderShortest();
     if (planMode === "tasks") renderTasks();
   }
-  if (tab === "player") renderBulkLevels();
+  if (tab === "settings") {
+    setPlayerView(playerView);
+  }
   if (tab === "castle") renderCastle();
   if (tab === "paid") renderPaid();
+}
+
+function setPlayerView(view) {
+  playerView = ["level", "talent", "resources", "acceleration"].includes(view) ? view : "level";
+  byId("player-view-level-button")?.classList.toggle("is-active", playerView === "level");
+  byId("player-view-acceleration-button")?.classList.toggle("is-active", playerView === "acceleration");
+  byId("player-view-resources-button")?.classList.toggle("is-active", playerView === "resources");
+  byId("player-view-talent-button")?.classList.toggle("is-active", playerView === "talent");
+  if (byId("player-view-level")) byId("player-view-level").hidden = playerView === "talent";
+  if (byId("player-view-talent")) byId("player-view-talent").hidden = playerView !== "talent";
+  document.querySelectorAll("[data-player-section]").forEach((section) => {
+    section.hidden = section.dataset.playerSection !== playerView;
+  });
+  document.querySelectorAll("#player-view-level .settings-card:not([data-player-section])").forEach((section) => {
+    section.hidden = playerView !== "level";
+  });
+  if (playerView === "level") renderBulkLevels();
+  else if (playerView === "acceleration") renderSpeedupInventory();
+  else if (playerView === "talent") renderTalent();
+}
+
+function bindTalent() {
+  byId("player-view-level-button")?.addEventListener("click", () => setPlayerView("level"));
+  byId("player-view-acceleration-button")?.addEventListener("click", () => setPlayerView("acceleration"));
+  byId("player-view-resources-button")?.addEventListener("click", () => setPlayerView("resources"));
+  byId("player-view-talent-button")?.addEventListener("click", () => setPlayerView("talent"));
+  byId("talent-preset")?.addEventListener("change", (event) => {
+    const preset = talentCatalog.presetById.get(event.target.value);
+    if (!preset) return;
+    state.talentPresetId = preset.id;
+    state.talentPriorityId = "";
+    state.talentPlan = expandTalentTargets(talentCatalog, preset.targets);
+    state.talentPlanName = talentCatalog.presetName(preset, state.locale);
+    saveNow(); renderTalent();
+  });
+  byId("talent-available-points")?.addEventListener("input", (event) => {
+    state.talentAvailablePoints = Math.max(0, Math.min(9999, Math.trunc(Number(event.target.value) || 0)));
+    scheduleSave(); renderTalent();
+  });
+  byId("talent-priority")?.addEventListener("change", (event) => {
+    state.talentPriorityId = String(event.target.value || "");
+    talentAutoFollowPending = true;
+    saveNow(); renderTalent();
+  });
+  const cycleSelect = (id, direction) => {
+    const select = byId(id);
+    if (!select?.options.length) return;
+    const current = Math.max(0, select.selectedIndex);
+    select.selectedIndex = (current + direction + select.options.length) % select.options.length;
+    select.dispatchEvent(new Event("change", { bubbles: true }));
+  };
+  byId("talent-priority-previous")?.addEventListener("click", () => cycleSelect("talent-priority", -1));
+  byId("talent-priority-next")?.addEventListener("click", () => cycleSelect("talent-priority", 1));
+  byId("talent-auto-follow")?.addEventListener("change", (event) => {
+    state.talentAutoFollow = event.target.checked;
+    talentAutoFollowPending = state.talentAutoFollow;
+    saveNow(); renderTalent();
+  });
+  byId("talent-directive-name")?.addEventListener("input", (event) => {
+    state.talentPlanName = String(event.target.value || "").trim().slice(0, 100); scheduleSave();
+  });
+  byId("export-talent-directive")?.addEventListener("click", exportTalentDirective);
+  byId("import-talent-directive")?.addEventListener("change", importTalentDirective);
+}
+
+function renderTalent() {
+  if (!talentCatalog || !byId("talent-tree-cards")) return;
+  const presetSelect = byId("talent-preset");
+  const presetOptions = talentCatalog.presets.map((preset) => {
+    const option = create("option", "", talentCatalog.presetName(preset, state.locale)); option.value = preset.id; return option;
+  });
+  if (state.talentPresetId === "custom") {
+    const custom = create("option", "", t("talent.custom", "読み込んだ指示")); custom.value = "custom"; presetOptions.push(custom);
+  }
+  presetSelect.replaceChildren(...presetOptions); presetSelect.value = state.talentPresetId;
+  byId("talent-available-points").value = state.talentAvailablePoints;
+  byId("talent-directive-name").value = state.talentPlanName;
+  byId("talent-auto-follow").checked = state.talentAutoFollow !== false;
+  const prioritySelect = byId("talent-priority");
+  const priorityOptions = [create("option", "", t("talent.priority.default", "プリセット順"))];
+  priorityOptions[0].value = "";
+  const priorityTargets = new Map();
+  for (const step of state.talentPlan) {
+    if (!talentCatalog.talents.has(step.talentId)) continue;
+    priorityTargets.set(step.talentId, Math.max(priorityTargets.get(step.talentId) || 0, step.targetLevel));
+  }
+  for (const [talentId, targetLevel] of priorityTargets) {
+    const talent = talentCatalog.talents.get(talentId);
+    const option = create("option", "", `${talentCatalog.talentName(talent, state.locale)} Lv.${targetLevel}`);
+    option.value = talentId; priorityOptions.push(option);
+  }
+  if (!priorityTargets.has(state.talentPriorityId)) state.talentPriorityId = "";
+  prioritySelect.replaceChildren(...priorityOptions); prioritySelect.value = state.talentPriorityId;
+  byId("talent-priority-label").textContent = prioritySelect.selectedOptions[0]?.textContent || t("talent.priority.default", "プリセット順");
+  const preset = talentCatalog.presetById.get(state.talentPresetId);
+  byId("talent-description").textContent = preset
+    ? talentCatalog.presetDescription(preset, state.locale)
+    : t("talent.imported_description", "読み込んだ才能指示を、現在の使用可能ポイントで割り当てます。");
+  let allocation;
+  try { allocation = allocateTalentPlan(talentCatalog, state.talentPlan, state.talentAvailablePoints, state.talentPriorityId); }
+  catch (error) {
+    byId("talent-level-summary").textContent = "";
+    byId("talent-tree-cards").replaceChildren(create("p", "empty-state", error.message));
+    return;
+  }
+  byId("talent-required-points").textContent = allocation.requiredPoints.toLocaleString(state.locale);
+  byId("talent-used-points").textContent = allocation.usedPoints.toLocaleString(state.locale);
+  byId("talent-remaining-points").textContent = allocation.remainingPoints.toLocaleString(state.locale);
+  const bonusPoints = Math.max(0, Number(state.researchLevels.military_command_hidden_talent || 0));
+  const planRequirement = talentPlayerLevelRequirement(talentCatalog, allocation.requiredPoints, bonusPoints);
+  const levelText = (requirement) => requirement.playerLevel !== null
+    ? `Lv.${requirement.playerLevel}`
+    : t("talent.level_over_max", `Lv.60でも${requirement.shortageAtMaxLevel}ポイント不足`, { shortage: requirement.shortageAtMaxLevel });
+  byId("talent-level-summary").textContent = t(
+    "talent.required_player_level",
+    `プリセット必要プレイヤーレベル: ${levelText(planRequirement)}（研究追加 +${bonusPoints}）`,
+    { level: levelText(planRequirement), bonus: bonusPoints },
+  );
+  renderTalentTree(allocation);
+}
+
+function renderTalentTree(allocation) {
+  const talents = [...talentCatalog.talents.values()].sort((left, right) => left.order - right.order);
+  const rows = new Map();
+  for (const talent of talents) {
+    if (!rows.has(talent.row)) rows.set(talent.row, []);
+    rows.get(talent.row).push(talent);
+  }
+  const layout = talentLayoutColumns(talentCatalog);
+  const columnCount = layout.columnCount;
+  const cardWidth = 210; const cardHeight = 132; const gapX = 30; const gapY = 46; const padding = 28;
+  const width = padding * 2 + columnCount * cardWidth + (columnCount - 1) * gapX;
+  const height = padding * 2 + rows.size * cardHeight + Math.max(0, rows.size - 1) * gapY;
+  const stage = byId("talent-tree-stage"); stage.style.width = `${width}px`; stage.style.height = `${height}px`;
+  const positions = new Map();
+  for (const [rowNumber, row] of [...rows.entries()].sort((left, right) => left[0] - right[0])) {
+    row.forEach((talent) => positions.set(talent.id, {
+      x: padding + layout.columns.get(talent.id) * (cardWidth + gapX), y: padding + (rowNumber - 1) * (cardHeight + gapY), width: cardWidth, height: cardHeight,
+    }));
+  }
+  const allocatedById = new Map(allocation.steps.map((step) => [step.talentId, step]));
+  const svg = byId("talent-tree-lines"); svg.setAttribute("viewBox", `0 0 ${width} ${height}`); svg.setAttribute("width", width); svg.setAttribute("height", height);
+  const inactive = []; const active = [];
+  for (const talent of talents) {
+    if (!talent.prerequisite) continue;
+    const from = positions.get(talent.prerequisite.talentId); const to = positions.get(talent.id); if (!from || !to) continue;
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    const parent = allocatedById.get(talent.prerequisite.talentId);
+    const unlocked = Boolean(parent && parent.allocatedLevel >= talent.prerequisite.level);
+    path.classList.add(unlocked ? "is-active" : "is-inactive");
+    if (from.y === to.y) {
+      const y = from.y + from.height / 2;
+      const x1 = from.x < to.x ? from.x + from.width : from.x;
+      const x2 = from.x < to.x ? to.x : to.x + to.width;
+      path.setAttribute("d", `M ${x1} ${y} H ${x2}`);
+    } else {
+      const x1 = from.x + from.width / 2; const y1 = from.y + from.height; const x2 = to.x + to.width / 2; const y2 = to.y; const mid = y1 + (y2 - y1) / 2;
+      path.setAttribute("d", `M ${x1} ${y1} V ${mid} H ${x2} V ${y2}`);
+    }
+    (unlocked ? active : inactive).push(path);
+  }
+  svg.replaceChildren(...inactive, ...active);
+  byId("talent-tree-cards").replaceChildren(...talents.map((talent) => {
+    const position = positions.get(talent.id); const step = allocatedById.get(talent.id); const level = step?.allocatedLevel || 0; const target = step?.targetLevel || 0;
+    const card = create("button", "talent-tree-card"); card.type = "button"; card.style.left = `${position.x}px`; card.style.top = `${position.y}px`; card.style.width = `${position.width}px`; card.style.height = `${position.height}px`;
+    if (target && level >= target) card.classList.add("is-complete"); else if (target) card.classList.add("is-short"); else card.classList.add("is-unplanned");
+    if (talent.id === state.talentPriorityId) card.classList.add("is-priority");
+    card.append(
+      create("strong", "talent-tree-name", talentCatalog.talentName(talent, state.locale)),
+      create("span", "talent-tree-meter", ""),
+      create("span", "talent-tree-level", `${level} / ${talent.maxLevel}`),
+      create("span", "talent-tree-effect", `${talentCatalog.effectName(talent, state.locale)} +${talent.maxEffect}%`),
+      create("span", "talent-tree-target", target ? t("talent.target_level", `目標 Lv.${target}`, { level: target }) : t("talent.status.not_planned", "計画外")),
+    );
+    card.querySelector(".talent-tree-meter").style.setProperty("--talent-progress", `${talent.maxLevel ? level / talent.maxLevel * 100 : 0}%`);
+    card.addEventListener("click", () => {
+      const priority = byId("talent-priority"); if (![...priority.options].some((option) => option.value === talent.id)) return;
+      talentAutoFollowPending = true;
+      state.talentPriorityId = talent.id; saveNow(); renderTalent();
+    });
+    return card;
+  }));
+  if (talentAutoFollowPending && state.talentAutoFollow !== false && state.talentPriorityId) {
+    const position = positions.get(state.talentPriorityId);
+    const viewport = byId("talent-tree-viewport");
+    if (position && viewport) {
+      requestAnimationFrame(() => viewport.scrollTo({
+        left: Math.max(0, position.x + position.width / 2 - viewport.clientWidth / 2),
+        top: Math.max(0, position.y + position.height / 2 - viewport.clientHeight / 2),
+        behavior: "smooth",
+      }));
+    }
+  }
+  talentAutoFollowPending = false;
+}
+
+function exportTalentDirective() {
+  if (!state.talentPlan.length) { toast(t("talent.directive_empty", "書き出す才能計画がありません。")); return; }
+  downloadJson(talentDirectivePayload(state.talentPlan, {
+    name: state.talentPlanName, catalogVersion: talentCatalog.version,
+  }), `RLMResearchPlanner-talent-${new Date().toISOString().slice(0, 10)}.json`);
+  toast(t("talent.exported", "才能指示データを書き出しました。"));
+}
+
+async function importTalentDirective(event) {
+  const file = event.target.files?.[0];
+  if (!file) return;
+  try {
+    const directive = talentDirectiveFromPayload(JSON.parse(await file.text()));
+    state.talentPlan = expandTalentTargets(talentCatalog, directive.steps);
+    state.talentPlanName = directive.name; state.talentPresetId = "custom"; state.talentPriorityId = "";
+    saveNow(); renderTalent(); toast(t("talent.imported", `${directive.name} を読み込みました。`, { name: directive.name }));
+  } catch (error) { toast(t("talent.import_failed", `才能指示データを読み込めませんでした: ${error.message}`, { error: error.message })); }
+  finally { event.target.value = ""; }
 }
 
 function paidKindLabel(kind) {
@@ -712,7 +947,14 @@ function bindTreeControls() {
     byId("category-drawer")?.showModal();
   });
   byId("tree-search").addEventListener("input", () => { renderCategoryOptions(); renderTree(true); });
-  byId("instant-only").addEventListener("change", () => { renderCategoryOptions(); renderTree(true); });
+  byId("instant-only").addEventListener("change", (event) => {
+    if (event.target.checked) byId("technolabe-only").checked = false;
+    renderCategoryOptions(); renderTree(true);
+  });
+  byId("technolabe-only").addEventListener("change", (event) => {
+    if (event.target.checked) byId("instant-only").checked = false;
+    renderCategoryOptions(); renderTree(true);
+  });
   byId("zoom-out").addEventListener("click", () => setZoom(zoom - 0.1));
   byId("zoom-in").addEventListener("click", () => setZoom(zoom + 0.1));
   byId("zoom-fit").addEventListener("click", fitWholeTree);
@@ -828,17 +1070,17 @@ function layoutForCategory(category) {
   return categoryLayouts.get(category.id);
 }
 
-function treeContentSize(category) {
-  const layout = layoutForCategory(category);
+function treeContentSize(category, nodes = category.nodes) {
+  const layout = visibleTreeLayout(nodes);
   return {
     width: PADDING * 2 + layout.columnCount * CARD_WIDTH + Math.max(0, layout.columnCount - 1) * GAP_X,
     height: PADDING * 2 + layout.rowCount * CARD_HEIGHT + Math.max(0, layout.rowCount - 1) * GAP_Y,
   };
 }
 
-function fittedZoom(category) {
+function fittedZoom(category, nodes = category.nodes) {
   const viewport = byId("tree-viewport");
-  const size = treeContentSize(category);
+  const size = treeContentSize(category, nodes);
   const bounds = viewport.getBoundingClientRect();
   return fitTreeZoom(bounds.width, bounds.height, size.width, size.height);
 }
@@ -852,7 +1094,8 @@ function setZoom(value, anchor = null) {
   const localY = anchor?.clientY == null ? viewport.clientHeight / 2 : anchor.clientY - rect.top;
   const contentX = anchor?.contentX ?? (viewport.scrollLeft + localX) / zoom;
   const contentY = anchor?.contentY ?? (viewport.scrollTop + localY) / zoom;
-  zoom = clampTreeZoom(value, fittedZoom(category));
+  const nodes = matchingNodes(category);
+  zoom = clampTreeZoom(value, fittedZoom(category, nodes.length ? nodes : category.nodes));
   renderTree();
   viewport.scrollLeft = contentX * zoom - localX;
   viewport.scrollTop = contentY * zoom - localY;
@@ -861,17 +1104,33 @@ function setZoom(value, anchor = null) {
 function fitWholeTree() {
   const category = catalog?.categories.find((item) => item.id === selectedCategoryId) || catalog?.categories[0];
   if (!category) return;
-  zoom = fittedZoom(category);
+  const nodes = matchingNodes(category);
+  zoom = fittedZoom(category, nodes.length ? nodes : category.nodes);
   renderTree(true);
 }
 
 function matchingNodes(category) {
   const term = byId("tree-search")?.value.trim().toLocaleLowerCase(state.locale) || "";
   const instantOnly = Boolean(byId("instant-only")?.checked);
+  const technolabeOnly = Boolean(byId("technolabe-only")?.checked);
   return category.nodes.filter((node) => {
     const name = catalog.nodeName(node, state.locale).toLocaleLowerCase(state.locale);
-    return (!term || name.includes(term) || node.id.includes(term)) && (!instantOnly || isInstantNextLevel(node, state));
+    return (!term || name.includes(term) || node.id.includes(term))
+      && (!instantOnly || isInstantNextLevel(node, state))
+      && (!technolabeOnly || isTechnolabeNextLevel(node));
   });
+}
+
+function isTechnolabeNextLevel(node) {
+  const current = Math.max(0, Number(state.researchLevels[node.id] || 0));
+  if (current >= Number(node.maxLevel || 0)) return false;
+  const data = node.levels.get(current + 1);
+  if (!data) return false;
+  const usage = technolabeUsage(data.baseTimeSeconds, data.technolabeCount);
+  return Number(usage.count) > 0 && isTechnolabeRecommended(
+    usage.efficiencyPercent,
+    state.settings.technolabeRecommendationThresholdPercent,
+  );
 }
 
 function renderCategoryOptions() {
@@ -916,11 +1175,17 @@ function renderTree(resetScroll = false) {
   const category = catalog.categories.find((item) => item.id === selectedCategoryId) || catalog.categories[0];
   if (!category) return;
   selectedCategoryId = category.id;
-  zoom = clampTreeZoom(zoom, fittedZoom(category));
   const nodes = matchingNodes(category);
+  if (!nodes.length) {
+    byId("tree-empty").hidden = false;
+    byId("tree-viewport").hidden = true;
+    return;
+  }
+  byId("tree-viewport").hidden = false;
+  const layout = visibleTreeLayout(nodes);
+  zoom = clampTreeZoom(zoom, fittedZoom(category, nodes));
   const visibleIds = new Set(nodes.map((node) => node.id));
-  const layout = layoutForCategory(category);
-  const contentSize = treeContentSize(category);
+  const contentSize = treeContentSize(category, nodes);
   const width = Math.max(byId("tree-viewport").clientWidth - 2, contentSize.width * zoom);
   const height = Math.max(byId("tree-viewport").clientHeight - 2, contentSize.height * zoom);
   const stage = byId("tree-stage");
@@ -939,10 +1204,14 @@ function renderTree(resetScroll = false) {
   renderLines(category, visibleIds, positions, width, height);
   const cards = byId("tree-cards");
   cards.replaceChildren(...nodes.map((node) => renderCard(node, positions.get(node.id))));
-  byId("tree-empty").hidden = nodes.length > 0;
-  byId("tree-viewport").hidden = nodes.length === 0;
+  byId("tree-empty").hidden = true;
+  byId("tree-viewport").hidden = false;
   byId("zoom-output").textContent = `${Math.round(zoom * 100)}%`;
-  if (resetScroll) { byId("tree-viewport").scrollLeft = 0; byId("tree-viewport").scrollTop = 0; }
+  if (resetScroll) {
+    const viewport = byId("tree-viewport");
+    viewport.scrollLeft = Math.max(0, (width - viewport.clientWidth) / 2);
+    viewport.scrollTop = 0;
+  }
 }
 
 function renderLines(category, visibleIds, positions, width, height) {
@@ -1005,7 +1274,8 @@ function updateVisibleResearchState(changedNode) {
   for (const [fromId, toId] of category.edges) {
     if (fromId === changedNode.id) affectedIds.add(toId);
   }
-  const layout = layoutForCategory(category);
+  const matching = matchingNodes(category);
+  const layout = visibleTreeLayout(matching.length ? matching : category.nodes);
   for (const researchId of affectedIds) {
     if (!visibleIds.has(researchId)) continue;
     const node = catalog.nodes.get(researchId);
@@ -1014,7 +1284,7 @@ function updateVisibleResearchState(changedNode) {
     const slot = layout.slots.get(node.id) ?? node.column;
     const position = {
       x: (PADDING + slot * (CARD_WIDTH + GAP_X)) * zoom,
-      y: (PADDING + node.row * (CARD_HEIGHT + GAP_Y)) * zoom,
+      y: (PADDING + (layout.rowSlots.get(node.row) ?? node.row) * (CARD_HEIGHT + GAP_Y)) * zoom,
       width: CARD_WIDTH * zoom,
       height: CARD_HEIGHT * zoom,
     };
@@ -1216,6 +1486,8 @@ function bindSettings() {
     "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-castle-mana": ["castleManaStage", true], "setting-academy": ["academyLevel", true],
     "setting-construction-speed": ["constructionSpeedPercent", false], "setting-construction-boost": ["constructionSpeedBoostPercent", false],
     "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-helps": ["maxGuildHelps", true],
+    "setting-technolabe-count": ["technolabeCount", true],
+    "setting-technolabe-threshold": ["technolabeRecommendationThresholdPercent", false],
   };
   for (const [id, [key, integer]] of Object.entries(inputs)) {
     byId(id).addEventListener("input", (event) => {
@@ -1229,13 +1501,18 @@ function bindSettings() {
         state.settings.maxGuildHelps = guildHelpCount(state.settings);
       }
       if (key === "maxGuildHelps") state.settings.maxGuildHelps = guildHelpCount(state.settings);
+      if (key === "technolabeRecommendationThresholdPercent") {
+        state.settings[key] = Math.max(0, Math.min(100, state.settings[key]));
+      }
       if (key === "castleLevel" || key === "castleManaStage") {
         castleTargetManaStage = state.settings.castleLevel === 25 && state.settings.castleManaStage < 5
           ? state.settings.castleManaStage + 1
           : state.settings.castleManaStage;
         state.settings.castleTargetManaStage = castleTargetManaStage;
       }
-      updateGuildHelpLimit(); updateVipHint(); scheduleSave(); renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
+      updateGuildHelpLimit(); updateVipHint(); scheduleSave();
+      if (key === "technolabeRecommendationThresholdPercent" && byId("technolabe-only")?.checked) renderCategoryOptions();
+      renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
     });
   }
   const resourceInputs = byId("resource-inputs");
@@ -1262,7 +1539,7 @@ function bindSettings() {
   byId("remove-language-pack")?.addEventListener("click", removeCustomLanguagePack);
   byId("reset-player").addEventListener("click", () => {
     if (!window.confirm(t("pwa.clear_confirm", "プレイヤー設定と全研究レベルをクリアしますか？"))) return;
-    const locale = state.locale; state = defaultState(); state.locale = locale; paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderPaid(); toast(t("pwa.cleared", "設定をクリアしました"));
+    const locale = state.locale; state = defaultState(); state.locale = locale; ensureTalentPlan(); paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderTalent(); renderCastle(); renderPaid(); toast(t("pwa.cleared", "設定をクリアしました"));
   });
 }
 
@@ -1276,6 +1553,8 @@ function populateSettings() {
   byId("setting-academy").value = state.settings.academyLevel;
   byId("setting-speed").value = state.settings.researchSpeedPercent;
   byId("setting-boost").value = state.settings.researchSpeedBoostPercent;
+  byId("setting-technolabe-count").value = state.settings.technolabeCount;
+  byId("setting-technolabe-threshold").value = state.settings.technolabeRecommendationThresholdPercent;
   updateGuildHelpLimit();
   byId("language-select").value = state.locale;
   byId("resource-display-mode").value = state.settings.resourceDisplayMode;
@@ -1711,7 +1990,7 @@ function exportBackup() {
 async function importBackup(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try {
-    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderCastle(); renderPaid(); toast(t("player.backup_restored", "バックアップを読み込みました"));
+    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; ensureTalentPlan(); paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderTalent(); renderCastle(); renderPaid(); toast(t("player.backup_restored", "バックアップを読み込みました"));
   } catch (error) { toast(error.message); }
   finally { event.target.value = ""; }
 }
@@ -1765,6 +2044,7 @@ function activateLanguage(locale, { save = true, render = true } = {}) {
   effectLabels = { ...(fallbackData.effect_labels || {}), ...(localeData.effect_labels || {}) };
   catalog?.setLanguagePack(activeLanguagePack);
   castleCatalog?.setLanguagePack(activeLanguagePack);
+  talentCatalog?.setLanguagePack(activeLanguagePack);
   applyDocumentLanguage(locale, activeLanguagePack?.direction);
   translateStatic(document, messages);
   renderConnectivity();
@@ -1778,6 +2058,7 @@ function activateLanguage(locale, { save = true, render = true } = {}) {
   renderPlan();
   renderShortest();
   renderTasks();
+  renderTalent();
   renderCastle();
   renderPaid();
   renderCatalogStatus();
@@ -1795,7 +2076,7 @@ function downloadJson(payload, filename) {
 function exportLanguageTemplate() {
   const englishMessages = localeDataById["en-US"]?.messages || {};
   downloadJson(
-    languagePackTemplate({ catalog, castleCatalog, messages: englishMessages }),
+    languagePackTemplate({ catalog, castleCatalog, talentCatalog, messages: englishMessages }),
     "RLMResearchPlanner-language-template.json",
   );
   toast(t("language.pack_exported", "翻訳ひな形を書き出しました"));
@@ -1959,7 +2240,9 @@ function renderPlan() {
   totalHelpTime.textContent = helpCount > 0
     ? `${t("plan.after_help", "ヘルプ後")} ${formatDuration(currentPlan.totals.afterHelpSeconds)}${partialTime}`
     : "";
-  byId("plan-wisdom-summary").textContent = wisdomText(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe);
+  const wisdomSummary = byId("plan-wisdom-summary");
+  wisdomSummary.textContent = wisdomText(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe);
+  wisdomSummary.classList.toggle("is-recommended", technolabeRecommended(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe));
   const resources = Object.fromEntries(RESOURCE_KEYS.map((key) => [key, resourceName(key)]));
   const usedResources = RESOURCE_KEYS.filter((key) => Number(currentPlan.totals.costs[key] || 0) > 0);
   byId("resource-summary").replaceChildren(...usedResources.map((key) => {
@@ -2144,6 +2427,7 @@ function renderTasks() {
       : "";
     const currentLevel = Math.min(node.maxLevel, Number(state.researchLevels[task.researchId] || 0));
     const meta = create("p", "muted", t("pwa.task_meta", "現在 Lv.{current} / 残り {steps}手順{help} / {wisdom}", { current: currentLevel, steps: plan.steps.length, help: helpSummary, wisdom: wisdomText(plan.totals.technolabeCount, plan.totals.technolabeEfficiencyPercent, plan.totals.unknownTechnolabe) }));
+    meta.classList.toggle("wisdom-recommended", technolabeRecommended(plan.totals.technolabeCount, plan.totals.technolabeEfficiencyPercent, plan.totals.unknownTechnolabe));
     const source = task.sourceName ? create("p", "task-source", t("pwa.directive_source", "指示: {name}", { name: task.sourceName })) : null;
     const resources = create("div", "task-resources");
     const used = RESOURCE_KEYS.filter((key) => Number(plan.totals.costs[key] || 0) > 0);
@@ -2180,7 +2464,9 @@ function planRow(step, { showCategory = true, selected = false } = {}) {
   if (helpCount > 0) {
     timing.append(create("span", "plan-row-help", step.afterHelpSeconds == null ? `${t("plan.after_help", "ヘルプ後")} ${t("common.unknown", "未確認")}` : `${t("plan.after_help", "ヘルプ後")} ${formatDuration(step.afterHelpSeconds)}`));
   }
-  timing.append(create("span", "plan-row-wisdom", wisdomText(step.technolabeCount, step.technolabeEfficiencyPercent)));
+  const wisdom = create("span", "plan-row-wisdom", wisdomText(step.technolabeCount, step.technolabeEfficiencyPercent));
+  wisdom.classList.toggle("is-recommended", technolabeRecommended(step.technolabeCount, step.technolabeEfficiencyPercent));
+  timing.append(wisdom);
   const complete = create("button", "step-complete", t("plan.complete_step", "研究完了")); complete.type = "button"; complete.addEventListener("click", () => completePlanStep(step));
   footer.append(timing, complete);
   row.append(main, footer); return row;
@@ -2221,8 +2507,23 @@ function wisdomText(count, efficiencyPercent, unknownCount = 0) {
   const label = t("plan.technolabe", "叡智の輪");
   if (count == null) return `${label} ${t("common.unknown", "未確認")}`;
   if (!count) return unknownCount ? t("pwa.wisdom_unknown_count", "{label} 未確認（{count}件）", { label, count: unknownCount }) : `${label} -`;
-  const text = t("pwa.wisdom_efficiency", "{label} {count}個 / 効率{efficiency}%", { label, count, efficiency: Number(efficiencyPercent || 0).toFixed(1) });
+  let text = t("pwa.wisdom_efficiency", "{label} {count}個 / 効率{efficiency}%", { label, count, efficiency: Number(efficiencyPercent || 0).toFixed(1) });
+  if (technolabeRecommended(count, efficiencyPercent, unknownCount)) {
+    text = t("plan.technolabe_recommended", "★ 叡智の輪推奨 — {detail}", { detail: text });
+  }
+  text = t("plan.technolabe_owned", "{detail}（所持 {owned} / 必要 {required}）", {
+    detail: text,
+    owned: Math.max(0, Math.trunc(Number(state.settings.technolabeCount) || 0)),
+    required: count,
+  });
   return unknownCount ? t("pwa.wisdom_with_unknown", "{text}（{count}件未確認）", { text, count: unknownCount }) : text;
+}
+
+function technolabeRecommended(count, efficiencyPercent, unknownCount = 0) {
+  return Number(unknownCount) <= 0 && Number(count) > 0 && isTechnolabeRecommended(
+    efficiencyPercent,
+    state.settings.technolabeRecommendationThresholdPercent,
+  );
 }
 
 function completePlanStep(step) {
@@ -2239,7 +2540,7 @@ function formatResource(value) {
 
 function jumpToNode(node) {
   selectedNodeId = node.id;
-  selectedCategoryId = node.categoryId; byId("tree-search").value = ""; byId("instant-only").checked = false;
+  selectedCategoryId = node.categoryId; byId("tree-search").value = ""; byId("instant-only").checked = false; byId("technolabe-only").checked = false;
   renderCategoryOptions(); renderTree(); showTab("tree");
   renderShortest();
   requestAnimationFrame(() => {

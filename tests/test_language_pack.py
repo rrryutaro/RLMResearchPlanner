@@ -42,6 +42,7 @@ def _pack(**overrides: object) -> dict[str, object]:
         "buildings": {},
         "effects": {},
         "resources": {},
+        "talents": {},
     }
     value.update(overrides)
     return value

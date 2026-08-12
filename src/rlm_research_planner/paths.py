@@ -31,6 +31,10 @@ class AppPaths:
         return self.bundled_root / "data" / "buildings" / "castle_catalog.json"
 
     @property
+    def talent_catalog(self) -> Path:
+        return self.bundled_root / "data" / "talents" / "catalog.json"
+
+    @property
     def ocr_profiles(self) -> Path:
         return self.bundled_root / "data" / "ocr" / "profiles"
 

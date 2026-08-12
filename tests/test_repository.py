@@ -8,6 +8,7 @@ from rlm_research_planner.domain.models import (
     PlayerState,
     ResearchPlanTask,
     SpeedupInventoryItem,
+    TalentPlanStep,
 )
 from rlm_research_planner.repositories.player_repository import PlayerRepository
 
@@ -24,6 +25,8 @@ def test_player_state_round_trip_in_memory() -> None:
                 research_speed_boost_percent=10.0,
                 max_guild_helps=30,
                 speedup_seconds=3600,
+                technolabe_count=17,
+                technolabe_recommendation_threshold_percent=92.5,
                 resource_display_mode="short",
                 resources={
                     "food": 10,
@@ -40,6 +43,14 @@ def test_player_state_round_trip_in_memory() -> None:
                     "econ_research_speed", 3, "test-date", "共有研究計画"
                 )
             ],
+            talent_plan_name="研究・建設用",
+            talent_preset_id="growth_speed",
+            talent_priority_id="research_i",
+            talent_available_points=278,
+            talent_plan=[
+                TalentPlanStep("food_production_i", 2),
+                TalentPlanStep("construction_speed_i", 10),
+            ],
             observed_stats={"研究速度": "+167.84%"},
         )
         repository.save(state)
@@ -53,6 +64,8 @@ def test_player_state_round_trip_in_memory() -> None:
         assert loaded.observed_stats == {"研究速度": "+167.84%"}
         assert loaded.settings.resources["special"] == 60
         assert loaded.settings.resource_display_mode == "short"
+        assert loaded.settings.technolabe_recommendation_threshold_percent == 92.5
+        assert loaded.settings.technolabe_count == 17
         assert loaded.settings.speedup_inventory == [
             SpeedupInventoryItem("general", 1, 3600)
         ]
@@ -61,6 +74,10 @@ def test_player_state_round_trip_in_memory() -> None:
                 "econ_research_speed", 3, "test-date", "共有研究計画"
             )
         ]
+        assert loaded.talent_plan_name == "研究・建設用"
+        assert loaded.talent_available_points == 278
+        assert loaded.talent_priority_id == "research_i"
+        assert loaded.talent_plan == state.talent_plan
     finally:
         repository.close()
 
@@ -75,6 +92,8 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
                     SpeedupInventoryItem("research", 1800, 4),
                 ],
                 use_gems_for_speedups=True,
+                technolabe_count=23,
+                technolabe_recommendation_threshold_percent=97.5,
             ),
             research_levels={"mil_infantry_attack": 1},
             plan_tasks=[
@@ -82,6 +101,11 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
                     "mil_infantry_attack", 2, "test-date", "共有研究計画"
                 )
             ],
+            talent_plan_name="共有才能",
+            talent_preset_id="custom",
+            talent_priority_id="squad_offense_i",
+            talent_available_points=300,
+            talent_plan=[TalentPlanStep("squad_offense_i", 5)],
             observed_stats={"建設速度": "+299.75%"},
         )
         raw = repository.backup_payload(state)
@@ -92,16 +116,26 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
             {"kind": "research", "duration_seconds": 1800, "quantity": 4},
         ]
         assert raw["player"]["plan_tasks"][0]["source_name"] == "共有研究計画"
+        assert raw["player"]["talent_plan"][0] == {
+            "talent_id": "squad_offense_i",
+            "target_level": 5,
+        }
         restored = repository.restore_payload(raw)
         assert restored.research_levels == {"mil_infantry_attack": 1}
         assert restored.settings.speedup_inventory == state.settings.speedup_inventory
         assert restored.settings.use_gems_for_speedups is True
+        assert restored.settings.technolabe_recommendation_threshold_percent == 97.5
+        assert restored.settings.technolabe_count == 23
         assert restored.observed_stats == {"建設速度": "+299.75%"}
         assert restored.plan_tasks == [
             ResearchPlanTask(
                 "mil_infantry_attack", 2, "test-date", "共有研究計画"
             )
         ]
+        assert restored.talent_plan_name == "共有才能"
+        assert restored.talent_available_points == 300
+        assert restored.talent_priority_id == "squad_offense_i"
+        assert restored.talent_plan == state.talent_plan
     finally:
         repository.close()
 

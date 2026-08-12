@@ -12,6 +12,7 @@ The following files contain research or building data:
 - `data/research/master.json`
 - `data/research/locales/*.json`
 - `data/buildings/castle_catalog.json`
+- `data/talents/catalog.json`
 - the corresponding copies below `tools/RLMResearchPlannerPWA/data/`
 
 To the extent that copyright or database rights apply, portions adapted from
@@ -90,6 +91,16 @@ Credit belongs to the contributors of the Lords Mobile Wiki pages below.
 - Lumber Mill: https://lordsmobile.fandom.com/wiki/Lumber_Mill
 - Watchtower: https://lordsmobile.fandom.com/wiki/Watchtower
 
+## Fandom talent attribution
+
+Credit belongs to the contributors of the Lords Mobile Wiki talent pages.
+The talent catalog uses stable project IDs and normalized prerequisite and
+effect records; wiki prose and images are not redistributed.
+
+- Talent: https://lordsmobile.fandom.com/wiki/Talent
+- Player EXP (talent-point rewards by Player Level):
+  https://lordsmobile.fandom.com/wiki/Player_EXP
+
 ## Other factual verification references
 
 The following pages were used to cross-check short in-game names, factual
@@ -99,6 +110,8 @@ redistributed.
 
 - Gamerch research list:
   https://lords-mobile.gamerch.com/%E7%A0%94%E7%A9%B6-%E7%A0%94%E7%A9%B6%E4%B8%80%E8%A6%A7
+- Gamerch talent list (Japanese names and tree order):
+  https://lords-mobile.gamerch.com/%E6%89%8D%E8%83%BD/
 - Retry YN Wonder Battles research list:
   https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-12/
 - Retry YN Advanced Wonder Battles research list:
@@ -114,6 +127,12 @@ redistributed.
   https://lordsgems.com/gem-calculator/
 - LM Harus mana-upgrade reference:
   https://lm-harus.com/mana/
+- Games Guide Info talent-tree reference (factual cross-check only):
+  https://www.gamesguideinfo.com/lords-mobile/commander-skill-tree/830000015-Talent-Tree
+- LordsMobile.org leader-mode guide (advisory preset priorities only):
+  https://lordsmobile.org/knowledge-is-power-leader-modes/
+- Appliv Games talent guide (Japanese advisory priorities only):
+  https://games.app-liv.jp/archives/243630
 
 ## Game names and trademarks
 

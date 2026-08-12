@@ -159,6 +159,8 @@ class PlayerSettings:
     speedup_seconds: int = 0
     speedup_inventory: list[SpeedupInventoryItem] = field(default_factory=list)
     use_gems_for_speedups: bool = False
+    technolabe_count: int = 0
+    technolabe_recommendation_threshold_percent: float = 95.0
     resource_display_mode: str = "exact"
     resources: dict[str, int] = field(
         default_factory=lambda: {key: 0 for key in RESOURCE_KEYS}
@@ -195,6 +197,12 @@ class ResearchPlanTask:
         default_factory=lambda: datetime.now(timezone.utc).isoformat()
     )
     source_name: str = ""
+
+
+@dataclass(frozen=True)
+class TalentPlanStep:
+    talent_id: str
+    target_level: int
 
 
 @dataclass(frozen=True)
@@ -251,6 +259,11 @@ class PlayerState:
     research_levels: dict[str, int] = field(default_factory=dict)
     building_levels: dict[str, int] = field(default_factory=dict)
     plan_tasks: list[ResearchPlanTask] = field(default_factory=list)
+    talent_plan_name: str = ""
+    talent_preset_id: str = "growth_speed"
+    talent_priority_id: str = ""
+    talent_available_points: int = 278
+    talent_plan: list[TalentPlanStep] = field(default_factory=list)
     paid_offers: list[PaidOffer] = field(default_factory=list)
     paid_valuation: PaidValuation = field(default_factory=PaidValuation)
     observed_stats: dict[str, str] = field(default_factory=dict)

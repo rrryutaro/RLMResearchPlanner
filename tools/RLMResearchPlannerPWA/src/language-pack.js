@@ -1,6 +1,6 @@
 export const LANGUAGE_PACK_DOCUMENT_TYPE = "RLMResearchPlanner.language-pack";
 export const LANGUAGE_PACK_SCHEMA_VERSION = 1;
-export const LANGUAGE_PACK_SECTIONS = ["messages", "categories", "research", "buildings", "effects", "resources"];
+export const LANGUAGE_PACK_SECTIONS = ["messages", "categories", "research", "buildings", "effects", "resources", "talents"];
 export const PROTECTED_MESSAGE_KEYS = new Set(["app.disclaimer"]);
 const STORAGE_KEY = "rlm-research-planner-pwa.language-packs.v1";
 const LOCALE_PATTERN = /^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$/;
@@ -137,12 +137,13 @@ export function packText(pack, section, key, fallback = "") {
 
 const entry = (source) => ({ source: String(source || ""), text: "" });
 
-export function languagePackTemplate({ catalog, castleCatalog, messages }) {
+export function languagePackTemplate({ catalog, castleCatalog, talentCatalog, messages }) {
   const categories = Object.fromEntries(catalog.categories.map((category) => [category.id, entry(catalog.sourceCategoryTitle(category, "en-US"))]));
   const research = Object.fromEntries([...catalog.nodes.values()].map((node) => [node.id, entry(catalog.sourceNodeName(node, "en-US"))]));
   const effects = Object.fromEntries([...catalog.nodes.values()].filter((node) => node.effectLabel).map((node) => [node.id, entry(node.effectLabel)]));
   const buildings = Object.fromEntries(castleCatalog.order.map((buildingId) => [buildingId, entry(castleCatalog.sourceBuildingName(buildingId, "en-US"))]));
   const resources = Object.fromEntries(Object.entries(messages).filter(([key]) => key.startsWith("resource.")).map(([key, value]) => [key.slice("resource.".length), entry(value)]));
+  const talents = Object.fromEntries([...(talentCatalog?.talents?.values?.() || [])].map((talent) => [talent.id, entry(talentCatalog.talentName(talent, "en-US"))]));
   return {
     document_type: LANGUAGE_PACK_DOCUMENT_TYPE,
     schema_version: LANGUAGE_PACK_SCHEMA_VERSION,
@@ -159,6 +160,7 @@ export function languagePackTemplate({ catalog, castleCatalog, messages }) {
     buildings,
     effects,
     resources,
+    talents,
   };
 }
 

@@ -1,6 +1,13 @@
-import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.2-b1";
+import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.3-b10";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
+
+export function isTechnolabeRecommended(efficiencyPercent, thresholdPercent = 95) {
+  if (efficiencyPercent == null) return false;
+  const efficiency = Number(efficiencyPercent);
+  const threshold = Math.min(100, Math.max(0, Number(thresholdPercent) || 0));
+  return Number.isFinite(efficiency) && efficiency >= threshold;
+}
 
 export function technolabeUsage(baseSeconds, sourcedCount = null) {
   if (baseSeconds == null) return { count: null, efficiencyPercent: null };

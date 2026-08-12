@@ -17,6 +17,7 @@ from rlm_research_planner.services.ocr import (
     pair_ocr_research_card_levels,
     parse_ocr_card_level,
     parse_ocr_percentage,
+    parse_research_candidates,
     parse_research_level_fields,
 )
 from rlm_research_planner.repositories.observation_repository import (
@@ -48,14 +49,16 @@ def test_visual_style_defaults_validates_and_persists(tmp_path: Path) -> None:
     repository = SettingsRepository(path)
     assert repository.load().visual_style == "desktop"
 
-    settings = AppSettings(visual_style="mobile")
+    settings = AppSettings(visual_style="mobile", talent_auto_follow=False)
     repository.save(settings)
     assert repository.load().visual_style == "mobile"
+    assert repository.load().talent_auto_follow is False
 
     raw = json.loads(path.read_text(encoding="utf-8"))
     raw["visual_style"] = "unsupported"
     path.write_text(json.dumps(raw), encoding="utf-8")
     assert repository.load().visual_style == "desktop"
+    assert repository.load().talent_auto_follow is False
 
 
 def test_localization_falls_back_to_english() -> None:
@@ -112,6 +115,48 @@ def test_japanese_ocr_ignores_spaces_inserted_between_characters() -> None:
     assert [(item.research_id, item.level) for item in candidates] == [
         ("economy_construction_speed", 2)
     ]
+
+
+def test_japanese_ocr_distinguishes_a_recognized_zero_from_a_missing_level() -> None:
+    profiles = load_ocr_profiles(
+        Path(__file__).resolve().parents[1] / "data" / "ocr" / "profiles"
+    )
+    recognized = parse_research_level_fields(
+        pair_ocr_research_card_levels(
+            [
+                OcrLine("建設速度", 100, 100, 100, 20),
+                OcrLine("0 / 10", 125, 140, 50, 20),
+            ],
+            profiles["ja-JP"],
+        ),
+        [("economy_construction_speed", "建設速度", 10)],
+        profiles["ja-JP"],
+    )
+
+    assert [(item.level, item.level_recognized) for item in recognized] == [
+        (0, True)
+    ]
+
+
+def test_label_only_ocr_is_not_treated_as_a_recognized_zero(
+    planning_master,
+) -> None:
+    profiles = load_ocr_profiles(
+        Path(__file__).resolve().parents[1] / "data" / "ocr" / "profiles"
+    )
+    candidates = parse_research_candidates(
+        "econ construction speed",
+        planning_master,
+        profiles["ja-JP"],
+    )
+    construction = next(
+        item
+        for item in candidates
+        if item.research_id == "econ_construction_speed"
+    )
+
+    assert construction.level == 0
+    assert construction.level_recognized is False
 
 
 def test_card_level_is_parsed_from_a_cropped_tree_card() -> None:

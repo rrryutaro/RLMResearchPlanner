@@ -29,6 +29,7 @@ class AppSettings:
     visual_style: str = DEFAULT_VISUAL_STYLE
     ocr_window_title: str = DEFAULT_OCR_WINDOW_TITLE
     help_font_size: int = 12
+    talent_auto_follow: bool = True
     update_check_on_startup: bool = True
     update_skipped_version: str = ""
     window: WindowGeometry = field(default_factory=WindowGeometry)
@@ -53,6 +54,7 @@ class SettingsRepository:
                     raw.get("ocr_window_title", DEFAULT_OCR_WINDOW_TITLE)
                 ),
                 help_font_size=max(9, min(24, int(raw.get("help_font_size", 12)))),
+                talent_auto_follow=bool(raw.get("talent_auto_follow", True)),
                 update_check_on_startup=bool(
                     raw.get("update_check_on_startup", True)
                 ),

@@ -8,6 +8,7 @@ from PySide6.QtCore import QEvent, QPoint, QPointF, Qt, Signal
 from PySide6.QtGui import (
     QColor,
     QFont,
+    QFontMetricsF,
     QPainter,
     QPainterPath,
     QPen,
@@ -56,7 +57,7 @@ class ResearchTreeNode:
     current_effect: str = "-"
     next_effect: str = "-"
     layout_row: int | None = None
-    layout_column: int | None = None
+    layout_column: float | None = None
     shortage_levels: int = 0
 
 
@@ -187,6 +188,11 @@ class _ResearchNodeItem(QGraphicsRectItem):
             height=48.0,
         )
         self.set_visual_style(visual_style)
+
+    def boundingRect(self):
+        # The selected outline is wider than the normal card pen.  Reserve its
+        # full paint area so Qt never clips the outer edge of a selected card.
+        return super().boundingRect().adjusted(-3.0, -3.0, 3.0, 3.0)
 
     def set_visual_style(self, visual_style: str) -> None:
         self._visual_style = "mobile" if visual_style == "mobile" else "desktop"
@@ -375,10 +381,10 @@ class _ResearchNodeItem(QGraphicsRectItem):
             fitted_font = QFont(font)
             fitted_font.setPointSizeF(point_size)
             item.setFont(fitted_font)
-            rendered_bounds = item.boundingRect()
+            metrics = QFontMetricsF(fitted_font)
             if (
-                rendered_bounds.width() <= width + 0.5
-                and rendered_bounds.height() <= height + 0.5
+                metrics.horizontalAdvance(item.toPlainText()) <= width - 1.0
+                and metrics.height() <= height - 1.0
             ):
                 best = point_size
                 low = point_size
@@ -412,6 +418,9 @@ class _ResearchNodeItem(QGraphicsRectItem):
         return bool(self.level_control_kind_at(scene_position))
 
     def mouseDoubleClickEvent(self, event) -> None:
+        if self.is_level_control_at(event.scenePos()):
+            event.accept()
+            return
         self._activated_callback(self.research_id)
         event.accept()
 
@@ -580,6 +589,12 @@ class ResearchTreeView(QGraphicsView):
         if event.button() == Qt.LeftButton:
             node = self._node_at(event.position().toPoint())
             if node is not None:
+                if node.is_level_control_at(
+                    self.mapToScene(event.position().toPoint())
+                ):
+                    self._reset_pointer_state()
+                    event.accept()
+                    return
                 self._cancel_level_editor()
                 self._reset_pointer_state()
                 self.researchActivated.emit(node.research_id)
@@ -745,17 +760,9 @@ class ResearchTreeView(QGraphicsView):
             value_editor.selectAll()
 
     def eventFilter(self, watched, event) -> bool:
-        editor = self._level_editor
-        if (
-            editor is not None
-            and event.type() == QEvent.Type.MouseButtonDblClick
-            and (watched is editor or editor.isAncestorOf(watched))
-        ):
-            research_id = self._level_editor_research_id
-            self._cancel_level_editor()
-            if research_id:
-                self.researchActivated.emit(research_id)
-            return True
+        # The editor is a real viewport child, so its click and double-click
+        # gestures belong to its buttons, slider, or number field.  Do not
+        # reinterpret them as activation of the card behind the editor.
         return super().eventFilter(watched, event)
 
     def hideEvent(self, event) -> None:
@@ -824,6 +831,7 @@ class ResearchTreeView(QGraphicsView):
             tuple[Iterable[str], Iterable[str]]
         ] = (),
         active_edges: Iterable[tuple[str, str]] | None = None,
+        preserve_explicit_columns: bool = False,
     ) -> None:
         self._cancel_level_editor()
         self._reset_pointer_state()
@@ -870,15 +878,19 @@ class ResearchTreeView(QGraphicsView):
             for node in node_list:
                 rows.setdefault(int(node.layout_row or 0), []).append(node)
             source_column_count = (
-                max(int(node.layout_column or 0) for node in node_list) + 1
+                max(float(node.layout_column or 0) for node in node_list) + 1
             )
             target_column_count = max(len(row) for row in rows.values())
             for row_index, row_nodes in rows.items():
-                row_nodes.sort(key=lambda node: int(node.layout_column or 0))
-                slots = compact_explicit_row_slots(
-                    (int(node.layout_column or 0) for node in row_nodes),
-                    source_column_count=source_column_count,
-                    target_column_count=target_column_count,
+                row_nodes.sort(key=lambda node: float(node.layout_column or 0))
+                slots = (
+                    tuple(float(node.layout_column or 0) for node in row_nodes)
+                    if preserve_explicit_columns
+                    else compact_explicit_row_slots(
+                        (float(node.layout_column or 0) for node in row_nodes),
+                        source_column_count=source_column_count,
+                        target_column_count=target_column_count,
+                    )
                 )
                 for node, slot in zip(row_nodes, slots):
                     coordinates[node.research_id] = (
@@ -993,46 +1005,48 @@ class ResearchTreeView(QGraphicsView):
                     for research_id in research
                 }
             active_pairs = group_pairs & active_edge_set
-            path = QPainterPath()
             if len(connection_rows) == 1:
                 center_y = coordinates[prerequisites[0]][1] + NODE_HEIGHT / 2.0
-                horizontal_points = sorted({
-                    coordinates[research_id][0] + NODE_WIDTH / 2.0
-                    for research_id in (*prerequisites, *research)
-                })
-                path.moveTo(horizontal_points[0], center_y)
-                for point in horizontal_points[1:]:
-                    path.lineTo(point, center_y)
-                all_active = active_pairs == group_pairs
-                add_edge_item(
-                    path,
-                    active=all_active,
-                    prerequisites=prerequisites,
-                    research=research,
-                )
                 if len(group_pairs) > 1:
-                    for prerequisite_id, research_id in sorted(group_pairs):
-                        active_path = QPainterPath()
-                        active_path.moveTo(
-                            coordinates[prerequisite_id][0] + NODE_WIDTH / 2.0,
-                            center_y,
-                        )
-                        active_path.lineTo(
-                            coordinates[research_id][0] + NODE_WIDTH / 2.0,
-                            center_y,
-                        )
-                        pair = (prerequisite_id, research_id)
-                        self._edge_pair_paths[pair] = active_path
-                        if pair in active_pairs and not all_active:
-                            add_edge_item(
-                                active_path,
-                                active=True,
-                                prerequisites=(prerequisite_id,),
-                                research=(research_id,),
-                                z_value=-0.9,
-                                pair_overlay=True,
-                            )
+                    horizontal_points = sorted(
+                        {
+                            coordinates[research_id][0] + NODE_WIDTH / 2.0
+                            for research_id in (*prerequisites, *research)
+                        }
+                    )
+                    group_path = QPainterPath()
+                    group_path.moveTo(horizontal_points[0], center_y)
+                    for point in horizontal_points[1:]:
+                        group_path.lineTo(point, center_y)
+                    add_edge_item(
+                        group_path,
+                        active=active_pairs == group_pairs,
+                        prerequisites=prerequisites,
+                        research=research,
+                    )
+                    continue
+                for prerequisite_id, research_id in sorted(group_pairs):
+                    parent_x = coordinates[prerequisite_id][0]
+                    child_x = coordinates[research_id][0]
+                    start_x = (
+                        parent_x + NODE_WIDTH if parent_x < child_x else parent_x
+                    )
+                    end_x = (
+                        child_x if parent_x < child_x else child_x + NODE_WIDTH
+                    )
+                    pair_path = QPainterPath()
+                    pair_path.moveTo(start_x, center_y)
+                    pair_path.lineTo(end_x, center_y)
+                    pair = (prerequisite_id, research_id)
+                    self._edge_pair_paths[pair] = pair_path
+                    add_edge_item(
+                        pair_path,
+                        active=pair in active_pairs,
+                        prerequisites=(prerequisite_id,),
+                        research=(research_id,),
+                    )
                 continue
+            path = QPainterPath()
             # Route the bus through the final gap before the destination row.
             # For adjacent rows this is their midpoint.  For a long branch it
             # avoids drawing the horizontal bus through an intermediate card.

@@ -5,8 +5,10 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
+import pytest
+
 from PySide6.QtCore import QPoint, QPointF, Qt
-from PySide6.QtGui import QImage, QPainter, QTextOption, QWheelEvent
+from PySide6.QtGui import QFontMetricsF, QImage, QPainter, QTextOption, QWheelEvent
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import (
     QApplication,
@@ -18,6 +20,8 @@ from PySide6.QtWidgets import (
 )
 
 from rlm_research_planner.ui.research_tree_view import (
+    HORIZONTAL_GAP,
+    NODE_WIDTH,
     ResearchTreeNode,
     ResearchTreeView,
 )
@@ -71,6 +75,40 @@ def test_research_node_renders_label_meter_and_effects_inside_scene() -> None:
         assert option.wrapMode() == QTextOption.NoWrap
     assert node.meter_fill.rect().width() > 0
     assert view.sceneRect().contains(view.scene().itemsBoundingRect())
+
+
+def test_long_tree_text_fits_its_single_line_regions() -> None:
+    _app = QApplication.instance() or QApplication([])
+    view = ResearchTreeView()
+    view.set_research(
+        [
+            ResearchTreeNode(
+                research_id="long",
+                name="ワンダー騎兵遠距離攻撃力強化III",
+                current_level=9,
+                max_level=10,
+                status="進行中",
+                recommendation="test",
+                display_order=0,
+                current_effect="ワンダー騎兵遠距離攻撃力+123.45%",
+                next_effect="ワンダー騎兵遠距離攻撃力+150.00%",
+                layout_row=0,
+                layout_column=0,
+            )
+        ],
+        [],
+    )
+    node = next(item for item in view.scene().items() if hasattr(item, "research_id"))
+    for item, width, height in (
+        (node.title_item, NODE_WIDTH - 24.0, 43.0),
+        (node.level_item, NODE_WIDTH - 24.0, 24.0),
+        (node.current_effect_item, NODE_WIDTH - 24.0, 48.0),
+        (node.next_effect_item, NODE_WIDTH - 24.0, 48.0),
+    ):
+        metrics = QFontMetricsF(item.font())
+        assert metrics.horizontalAdvance(item.toPlainText()) <= width
+        assert metrics.height() <= height
+    view.close()
 
 
 def test_mobile_visual_style_uses_pwa_tree_palette() -> None:
@@ -298,7 +336,43 @@ def test_same_row_connection_is_horizontal_without_dangling_stems() -> None:
     ]
     assert len(points) == 3
     assert len({y for _x, y in points}) == 1
-    assert [x for x, _y in points] == sorted(x for x, _y in points)
+
+
+def test_single_same_row_connection_stays_between_card_edges() -> None:
+    _app = QApplication.instance() or QApplication([])
+    view = ResearchTreeView()
+    nodes = [
+        ResearchTreeNode(
+            research_id=research_id,
+            name=research_id,
+            current_level=0,
+            max_level=10,
+            status="not started",
+            recommendation="test",
+            display_order=index,
+            layout_row=0,
+            layout_column=index,
+        )
+        for index, research_id in enumerate(("parent", "child"))
+    ]
+    view.set_research(nodes, [("parent", "child")])
+
+    path = next(
+        item.path()
+        for item in view.scene().items()
+        if isinstance(item, QGraphicsPathItem)
+    )
+    start = path.elementAt(0)
+    end = path.elementAt(path.elementCount() - 1)
+    cards = {
+        item.research_id: item
+        for item in view.scene().items()
+        if getattr(item, "research_id", "")
+    }
+    assert start.x == pytest.approx(cards["parent"].x() + NODE_WIDTH)
+    assert end.x == pytest.approx(cards["child"].x())
+    assert start.y == pytest.approx(end.y)
+    view.close()
 
 
 def test_long_vertical_connection_uses_an_empty_column_between_cards() -> None:
@@ -687,7 +761,7 @@ def test_level_number_click_uses_numeric_input_without_maximum_suffix() -> None:
     view.close()
 
 
-def test_level_area_double_click_opens_plan_without_hiding_the_card() -> None:
+def test_level_area_double_click_stays_in_the_level_editor() -> None:
     app = QApplication.instance() or QApplication([])
     view = ResearchTreeView(level_editing_enabled=True)
     view.resize(420, 320)
@@ -728,9 +802,48 @@ def test_level_area_double_click_opens_plan_without_hiding_the_card() -> None:
     )
     app.processEvents()
 
-    assert activated == ["test"]
-    assert view._level_editor is None
+    assert activated == []
+    assert view._level_editor is editor
     assert card.level_item.isVisible()
+    view.close()
+
+
+def test_title_double_click_still_opens_the_research_plan() -> None:
+    app = QApplication.instance() or QApplication([])
+    view = ResearchTreeView(level_editing_enabled=True)
+    view.resize(420, 320)
+    view.set_research(
+        [
+            ResearchTreeNode(
+                research_id="test",
+                name="研究項目",
+                current_level=4,
+                max_level=10,
+                status="進行中",
+                recommendation="test",
+                display_order=0,
+                layout_row=0,
+                layout_column=0,
+            )
+        ],
+        [],
+    )
+    activated: list[str] = []
+    view.researchActivated.connect(activated.append)
+    view.show()
+    app.processEvents()
+    card = next(
+        item
+        for item in view.scene().items()
+        if getattr(item, "research_id", "") == "test"
+    )
+    title_position = view.mapFromScene(card.mapToScene(QPointF(122.0, 30.0)))
+    QTest.mouseDClick(
+        view.viewport(), Qt.LeftButton, Qt.NoModifier, title_position
+    )
+    app.processEvents()
+
+    assert activated == ["test"]
     view.close()
 
 
@@ -802,6 +915,45 @@ def test_incremental_level_update_keeps_cards_and_updates_connection_state() -> 
     view.close()
 
 
+def test_explicit_columns_can_preserve_a_deliberate_center_lane() -> None:
+    view = ResearchTreeView()
+    nodes = [
+        ResearchTreeNode(
+            research_id="military",
+            name="Military",
+            current_level=0,
+            max_level=1,
+            status="not started",
+            recommendation="test",
+            display_order=0,
+            layout_row=0,
+            layout_column=1,
+        ),
+        ResearchTreeNode(
+            research_id="economy",
+            name="Economy",
+            current_level=0,
+            max_level=1,
+            status="not started",
+            recommendation="test",
+            display_order=1,
+            layout_row=0,
+            layout_column=3,
+        ),
+    ]
+    view.set_research(nodes, [], preserve_explicit_columns=True)
+
+    cards = {
+        item.research_id: item
+        for item in view.scene().items()
+        if getattr(item, "research_id", "")
+    }
+    assert cards["economy"].x() - cards["military"].x() == pytest.approx(
+        2 * (NODE_WIDTH + HORIZONTAL_GAP)
+    )
+    view.close()
+
+
 def test_drag_starting_on_meter_pans_without_opening_editor() -> None:
     app = QApplication.instance() or QApplication([])
     view = ResearchTreeView(level_editing_enabled=True)
@@ -843,4 +995,43 @@ def test_drag_starting_on_meter_pans_without_opening_editor() -> None:
 
     assert view.verticalScrollBar().value() != before_scroll
     assert view._level_editor is None
+    view.close()
+
+
+def test_focus_research_selects_and_scrolls_a_distant_card_into_view() -> None:
+    app = QApplication.instance() or QApplication([])
+    view = ResearchTreeView()
+    view.resize(360, 260)
+    view.set_research(
+        [
+            ResearchTreeNode(
+                research_id=f"talent_{index}",
+                name=f"Talent {index}",
+                current_level=0,
+                max_level=10,
+                status="not planned",
+                recommendation="test",
+                display_order=index,
+                layout_row=index,
+                layout_column=0,
+            )
+            for index in range(12)
+        ],
+        [],
+        preserve_explicit_columns=True,
+    )
+    view.show()
+    app.processEvents()
+
+    before_scroll = view.verticalScrollBar().value()
+    assert view.focus_research("talent_11")
+    app.processEvents()
+
+    selected = [
+        item
+        for item in view.scene().selectedItems()
+        if getattr(item, "research_id", "") == "talent_11"
+    ]
+    assert selected
+    assert view.verticalScrollBar().value() > before_scroll
     view.close()

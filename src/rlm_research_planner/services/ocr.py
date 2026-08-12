@@ -48,6 +48,7 @@ class OcrCandidate:
     research_id: str
     level: int
     evidence: str
+    level_recognized: bool = True
 
 
 @dataclass(frozen=True)
@@ -759,19 +760,18 @@ def parse_research_candidates(
         nearby = lines[index]
         if index + 1 < len(lines):
             nearby += " " + lines[index + 1]
-        level = next(
-            (
-                value
-                for value in levels_in(nearby)
-                if 0 <= value <= research.max_level
-            ),
-            0,
-        )
+        recognized_levels = [
+            value
+            for value in levels_in(nearby)
+            if 0 <= value <= research.max_level
+        ]
+        level = recognized_levels[0] if recognized_levels else 0
         candidates.append(
             OcrCandidate(
                 research_id=research.id,
                 level=level,
                 evidence=f"Matched '{matched_name}'" + (f" and level {level}" if level else ""),
+                level_recognized=bool(recognized_levels),
             )
         )
     return candidates

@@ -4,10 +4,10 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { currentEffect, loadJsonResource, normalizeCatalog } from "../src/catalog.js";
-import { TECHNOLABE_CAPACITY_SECONDS, adjustedTime, afterGuildHelps, createPlan, defaultTargetLevel, formatDuration, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "../src/planning.js";
+import { TECHNOLABE_CAPACITY_SECONDS, adjustedTime, afterGuildHelps, createPlan, defaultTargetLevel, formatDuration, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "../src/planning.js";
 import { RESOURCE_KEYS, backupPayload, defaultState, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, playerStorageKey, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "../src/state.js";
 import { formatResourceAmount } from "../src/resource-format.js";
-import { compactExplicitRowSlots, explicitTreeLayout } from "../src/tree-layout.js";
+import { compactExplicitRowSlots, explicitTreeLayout, visibleTreeLayout } from "../src/tree-layout.js";
 import { clampTreeZoom, fitTreeZoom } from "../src/tree-zoom.js";
 import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, createCastlePlan, minimumBuildingLevels, minimumGemsForAmount, normalizeCastleCatalog } from "../src/castle-planning.js";
 
@@ -59,7 +59,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.2");
+  assert.equal(publicVersion, "0.1.3");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -70,7 +70,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.2 確認版/u);
+  assert.match(indexHtml, /v0\.1\.3 確認版/u);
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -368,7 +368,7 @@ test("category selector has a static fallback before JavaScript starts", () => {
   const markup = indexHtml.match(/<select id="category-select"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
   assert.equal([...markup.matchAll(/<option value=/g)].length, 16);
   assert.match(indexHtml, /id="category-drawer"/);
-  assert.equal([...indexHtml.matchAll(/<details class="settings-card/g)].length, 10);
+  assert.equal([...indexHtml.matchAll(/<details class="settings-card/g)].length, 11);
   assert.match(indexHtml, /data-tab="castle"[^>]*data-i18n="tab\.castle"[^>]*>建設<\/button>/);
   assert.match(indexHtml, /id="construction-target"/);
   assert.match(indexHtml, /id="construction-selection"/);
@@ -461,6 +461,57 @@ test("tree connection state follows level-one research prerequisites", () => {
   assert.equal(isResearchConnectionUnlocked(target, state), true);
   assert.match(stylesSource, /\.tree-lines path\.is-inactive \{ stroke: #35505a; \}/);
   assert.match(stylesSource, /\.tree-lines path\.is-active \{ stroke: #dca51e; \}/);
+});
+
+test("player settings use level, talent, resources, and acceleration subviews", () => {
+  assert.doesNotMatch(indexHtml, /data-tab="talent"/);
+  assert.doesNotMatch(indexHtml, /id="tab-talent"/);
+  assert.match(indexHtml, /id="player-view-level-button"/);
+  assert.match(indexHtml, /id="player-view-acceleration-button"/);
+  assert.match(indexHtml, /id="player-view-resources-button"/);
+  assert.match(indexHtml, /id="player-view-talent-button"/);
+  const playerTabs = [...indexHtml.matchAll(/id="player-view-(level|talent|resources|acceleration)-button"/gu)].map((match) => match[1]);
+  assert.deepEqual(playerTabs, ["level", "talent", "resources", "acceleration"]);
+  assert.match(indexHtml, /data-player-section="acceleration"/);
+  assert.match(indexHtml, /data-player-section="resources"/);
+  assert.match(indexHtml, /id="player-view-talent" class="player-subview" hidden/);
+});
+
+test("talent planning uses a preset list and an integrated priority stepper", () => {
+  assert.match(indexHtml, /<select id="talent-preset"><\/select>/u);
+  assert.match(indexHtml, /id="talent-priority"/u);
+  assert.match(indexHtml, /id="talent-priority-previous"/u);
+  assert.match(indexHtml, /id="talent-priority-next"/u);
+  assert.match(indexHtml, /id="talent-auto-follow"/u);
+  assert.match(indexHtml, /class="talent-primary-toolbar"/u);
+  assert.match(indexHtml, /class="talent-focus-toolbar"/u);
+  assert.match(indexHtml, /class="talent-summary-inline"/u);
+  assert.match(indexHtml, /<details class="settings-card talent-directive-card">\s*<summary data-i18n="talent\.details"/u);
+  assert.ok(indexHtml.indexOf('id="talent-tree-viewport"') < indexHtml.indexOf('id="talent-description"'));
+  assert.doesNotMatch(indexHtml, /player-talent-heading/u);
+  assert.doesNotMatch(indexHtml, /id="talent-preset-previous"/u);
+  assert.doesNotMatch(indexHtml, /id="talent-preset-next"/u);
+  assert.match(indexHtml, /id="talent-tree-viewport"/u);
+  assert.match(indexHtml, /id="talent-tree-lines"/u);
+  assert.match(indexHtml, /id="talent-tree-cards"/u);
+  assert.doesNotMatch(indexHtml, /id="talent-plan-list"/u);
+  assert.match(appSource, /function renderTalentTree\(allocation\)/u);
+  assert.match(appSource, /talentAutoFollowPending/u);
+  assert.match(appSource, /viewport\.scrollTo/u);
+  assert.match(appSource, /military_command_hidden_talent/u);
+  assert.match(stylesSource, /\.talent-tree-card\.is-priority/u);
+  assert.match(stylesSource, /\.talent-choice-stepper[^}]*gap:\s*0/u);
+});
+
+test("filtered tree layouts compact visible row gaps", () => {
+  const nodes = [
+    { id: "first", row: 7, column: 1 },
+    { id: "second", row: 18, column: 3 },
+  ];
+  const layout = visibleTreeLayout(nodes);
+  assert.equal(layout.rowCount, 2);
+  assert.equal(layout.rowSlots.get(7), 0);
+  assert.equal(layout.rowSlots.get(18), 1);
 });
 
 test("level edits update only affected tree elements and defer hidden plans", () => {
@@ -568,6 +619,26 @@ test("Technolabe efficiency uses original time and sourced item counts", () => {
   assert.ok(sourcedLevels.length > 2900);
 });
 
+test("Technolabe recommendation uses the configured efficiency boundary", () => {
+  assert.equal(isTechnolabeRecommended(95), true);
+  assert.equal(isTechnolabeRecommended(94.9), false);
+  assert.equal(isTechnolabeRecommended(92.5, 92.5), true);
+  assert.equal(isTechnolabeRecommended(null, 0), false);
+  const state = defaultState();
+  assert.equal(state.settings.technolabeRecommendationThresholdPercent, 95);
+  assert.equal(state.settings.technolabeCount, 0);
+  state.settings.technolabeCount = 19;
+  state.settings.technolabeRecommendationThresholdPercent = 97.5;
+  const restored = stateFromBackup(backupPayload(state));
+  assert.equal(restored.settings.technolabeRecommendationThresholdPercent, 97.5);
+  assert.equal(restored.settings.technolabeCount, 19);
+  assert.match(indexHtml, /id="setting-technolabe-threshold"/u);
+  assert.match(indexHtml, /id="setting-technolabe-count"/u);
+  assert.match(indexHtml, /id="technolabe-only"/u);
+  assert.match(appSource, /plan\.technolabe_recommended/u);
+  assert.match(stylesSource, /\.plan-row-wisdom\.is-recommended/u);
+});
+
 test("marking a target plan complete applies every prerequisite step", () => {
   const state = defaultState();
   state.settings.academyLevel = 25;
@@ -610,6 +681,7 @@ test("backup payload round-trips with desktop schema", () => {
     { kind: "research", durationSeconds: 1800, quantity: 4 },
   ];
   state.settings.useGemsForSpeedups = true;
+  state.talentAutoFollow = false;
   state.planTasks.push({ researchId: "economy_construction_speed", targetLevel: 8, createdAt: "test-date" });
   const restored = stateFromBackup(backupPayload(state));
   assert.equal(restored.settings.vipLevel, 11);
@@ -624,6 +696,7 @@ test("backup payload round-trips with desktop schema", () => {
   assert.equal(restored.settings.resourceDisplayMode, "short");
   assert.deepEqual(restored.settings.speedupInventory, state.settings.speedupInventory);
   assert.equal(restored.settings.useGemsForSpeedups, true);
+  assert.equal(restored.talentAutoFollow, false);
   assert.deepEqual(restored.planTasks, [{ researchId: "economy_construction_speed", targetLevel: 8, createdAt: "test-date", sourceName: "" }]);
 });
 

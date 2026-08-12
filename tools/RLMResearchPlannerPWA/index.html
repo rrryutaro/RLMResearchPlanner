@@ -9,8 +9,8 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.2-b1">
-    <title>RLM Research Planner v0.1.2</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.3-b10">
+    <title>RLM Research Planner v0.1.3</title>
   </head>
   <body>
     <header class="app-header">
@@ -18,7 +18,7 @@
         <p class="eyebrow">Lords Mobile unofficial tool</p>
         <div class="app-title-line">
           <h1>RLM Research Planner</h1>
-          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="バージョン">v0.1.2</span>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="バージョン">v0.1.3</span>
         </div>
       </div>
       <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
@@ -65,6 +65,10 @@
               <label class="check-field">
                 <input id="instant-only" type="checkbox">
                 <span data-i18n="tree.instant_finish_only">即時終了のみ</span>
+              </label>
+              <label class="check-field">
+                <input id="technolabe-only" type="checkbox">
+                <span data-i18n="tree.technolabe_only">叡智の輪推奨のみ</span>
               </label>
               <div class="zoom-controls" aria-label="ツリーの拡大縮小">
                 <button id="zoom-out" type="button" aria-label="縮小">−</button>
@@ -217,7 +221,14 @@
           </div>
           <span id="save-indicator" class="muted" aria-live="polite" data-i18n="pwa.saved">保存済み</span>
         </div>
-        <div class="settings-grid">
+        <div class="segmented player-view-tabs" role="group" aria-label="プレイヤー設定画面">
+          <button id="player-view-level-button" class="is-active" type="button" data-i18n="player.subtab.level">レベル</button>
+          <button id="player-view-talent-button" type="button" data-i18n="player.subtab.talent">才能</button>
+          <button id="player-view-resources-button" type="button" data-i18n="player.subtab.resources">資源</button>
+          <button id="player-view-acceleration-button" type="button" data-i18n="player.subtab.acceleration">加速</button>
+        </div>
+        <div id="player-view-level" class="player-subview">
+          <div class="settings-grid">
           <details class="settings-card">
             <summary data-i18n="player.common_settings">共通設定</summary>
             <div class="settings-card-body">
@@ -251,7 +262,7 @@
             <p class="hint" data-i18n="player.research_speed_boost_hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
             </div>
           </details>
-          <details class="settings-card speedup-inventory-card">
+          <details class="settings-card speedup-inventory-card" data-player-section="acceleration">
             <summary data-i18n="player.speedup_inventory">所持スピードアップ</summary>
             <div class="settings-card-body">
               <p class="settings-description" data-i18n="player.speedup_inventory_hint">登録内容を一覧から選び、共通の入力欄で追加・編集します。</p>
@@ -277,9 +288,21 @@
               </div>
             </div>
           </details>
-          <details class="settings-card">
+          <details class="settings-card" data-player-section="resources">
             <summary data-i18n="player.resources">所持資源</summary>
             <div class="settings-card-body">
+            <label class="field technolabe-threshold-field">
+              <span data-i18n="player.technolabe_threshold">叡智の輪 推奨効率</span>
+              <span class="number-with-unit">
+                <input id="setting-technolabe-threshold" type="number" inputmode="decimal" min="0" max="100" step="0.1" value="95">
+                <span>%</span>
+              </span>
+              <small data-i18n="player.technolabe_threshold_hint">この効率以上の研究を研究計画で「叡智の輪推奨」として強調します。</small>
+            </label>
+            <label class="field technolabe-count-field">
+              <span data-i18n="player.technolabe_count">所持している叡智の輪</span>
+              <input id="setting-technolabe-count" type="number" inputmode="numeric" min="0" step="1" value="0">
+            </label>
             <div id="resource-inputs" class="form-grid"></div>
             </div>
           </details>
@@ -328,6 +351,52 @@
               <label class="file-button"><span data-i18n="pwa.import">読み込む</span><input id="import-backup" type="file" accept="application/json,.json"></label>
               <button id="reset-player" class="danger" type="button" data-i18n="pwa.clear_settings">設定をクリア</button>
             </div>
+            </div>
+          </details>
+          </div>
+        </div>
+        <div id="player-view-talent" class="player-subview" hidden>
+          <div class="talent-primary-toolbar">
+            <label class="field grow talent-preset-field">
+              <span data-i18n="talent.preset">用途プリセット</span>
+              <select id="talent-preset"></select>
+            </label>
+            <label class="field compact"><span data-i18n="talent.available_points">使用可能ポイント</span><input id="talent-available-points" type="number" inputmode="numeric" min="0" max="9999"></label>
+          </div>
+          <div class="talent-focus-toolbar">
+            <div class="field grow talent-choice-field">
+              <span data-i18n="talent.priority">先に伸ばす才能</span>
+              <div class="talent-choice-stepper talent-priority-stepper">
+                <button id="talent-priority-previous" type="button" data-i18n-aria="talent.previous_priority" aria-label="前の優先項目">＜</button>
+                <output id="talent-priority-label">-</output>
+                <button id="talent-priority-next" type="button" data-i18n-aria="talent.next_priority" aria-label="次の優先項目">＞</button>
+              </div>
+              <select id="talent-priority" hidden aria-hidden="true" tabindex="-1"></select>
+            </div>
+            <label class="check-field talent-auto-follow-field"><input id="talent-auto-follow" type="checkbox" checked><span data-i18n="talent.auto_follow">選択を自動表示</span></label>
+            <div class="talent-summary-inline" aria-live="polite">
+              <span><span data-i18n="talent.required_points">必要</span> <strong id="talent-required-points">0</strong></span>
+              <span><span data-i18n="talent.allocated_points">使用</span> <strong id="talent-used-points">0</strong></span>
+              <span><span data-i18n="talent.remaining_points">残り</span> <strong id="talent-remaining-points">0</strong></span>
+            </div>
+          </div>
+          <div id="talent-tree-viewport" class="talent-tree-viewport">
+            <div id="talent-tree-stage" class="talent-tree-stage">
+              <svg id="talent-tree-lines" class="talent-tree-lines" aria-hidden="true"></svg>
+              <div id="talent-tree-cards"></div>
+            </div>
+          </div>
+          <details class="settings-card talent-directive-card">
+            <summary data-i18n="talent.details">説明・共有</summary>
+            <div class="settings-card-body">
+              <p id="talent-description" class="hint talent-description"></p>
+              <p id="talent-level-summary" class="talent-level-summary"></p>
+              <p class="hint" data-i18n="talent.directive_description">取得順だけを共有します。受け取る側の使用可能ポイント、研究レベル、プレイヤー設定は変更しません。</p>
+              <label class="field"><span data-i18n="talent.directive_name">指示名</span><input id="talent-directive-name" type="text" maxlength="100"></label>
+              <div class="button-row">
+                <button id="export-talent-directive" class="primary" type="button" data-i18n="talent.export">才能指示を書き出す</button>
+                <label class="file-button"><span data-i18n="talent.import">才能指示を読み込む</span><input id="import-talent-directive" type="file" accept="application/json,.json"></label>
+              </div>
             </div>
           </details>
         </div>
@@ -453,6 +522,10 @@
             <p id="help-plan-body"></p>
           </article>
           <article>
+            <h3 data-i18n="help.talent.title">才能計画</h3>
+            <p id="help-talent-body"></p>
+          </article>
+          <article>
             <h3 data-i18n="help.castle.title">建設計画</h3>
             <p id="help-construction-body"></p>
           </article>
@@ -538,7 +611,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.2-b1";
+      const startupVersion = "0.1.3-b10";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -552,8 +625,8 @@
       const mainElement = document.querySelector("main");
       const prefersJapanese = (navigator.languages || [navigator.language || ""]).some((locale) => String(locale).toLowerCase().startsWith("ja"));
       const startupVersionLabel = isPreviewScope
-        ? (prefersJapanese ? "v0.1.2 確認版" : "v0.1.2 Preview")
-        : "v0.1.2";
+        ? (prefersJapanese ? "v0.1.3 確認版" : "v0.1.3 Preview")
+        : "v0.1.3";
       document.getElementById("header-version").textContent = startupVersionLabel;
       document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
       document.title = `RLM Research Planner ${startupVersionLabel}`;
@@ -641,6 +714,6 @@
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.2-b1"></script>
+    <script type="module" src="./src/app.js?v=0.1.3-b10"></script>
   </body>
 </html>

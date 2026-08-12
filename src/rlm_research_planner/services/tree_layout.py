@@ -11,9 +11,9 @@ class TreePosition:
 
 
 def compact_explicit_row_slots(
-    columns: Iterable[int],
+    columns: Iterable[float],
     *,
-    source_column_count: int,
+    source_column_count: float,
     target_column_count: int,
 ) -> tuple[float, ...]:
     """Compress empty grid columns without changing left-to-right order."""

@@ -33,6 +33,7 @@
     },
     "categories": { "$ref": "#/$defs/section" },
     "research": { "$ref": "#/$defs/section" },
+    "talents": { "$ref": "#/$defs/section" },
     "buildings": { "$ref": "#/$defs/section" },
     "effects": { "$ref": "#/$defs/section" },
     "resources": { "$ref": "#/$defs/section" }

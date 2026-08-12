@@ -70,6 +70,7 @@ from rlm_research_planner.domain.models import (
     ResearchPlanTask,
     RESOURCE_KEYS,
     SpeedupInventoryItem,
+    TalentPlanStep,
     max_guild_helps_for_castle,
 )
 from rlm_research_planner.domain.observations import (
@@ -156,6 +157,17 @@ from rlm_research_planner.services.speedup_inventory import (
     normalize_speedup_inventory,
     recommend_paid_offers,
     speedup_coverage,
+)
+from rlm_research_planner.services.talent_planning import (
+    TalentCatalog,
+    TalentCatalogError,
+    TalentDirectiveFormatError,
+    talent_directive_from_payload,
+    talent_directive_payload,
+)
+from rlm_research_planner.services.technolabe import (
+    is_technolabe_recommended,
+    technolabe_usage,
 )
 from rlm_research_planner.services.window_capture import (
     CapturableWindow,
@@ -620,6 +632,8 @@ class MainWindow(QMainWindow):
         self.translator = translator
         self.catalog_planner = CatalogResearchPlanner(observations)
         self.castle_catalog = CastleCatalog.load(paths.castle_catalog)
+        self.talent_catalog = TalentCatalog.load(paths.talent_catalog)
+        self._ensure_talent_plan()
         self._building_level_draft = dict(player_state.building_levels)
         self._research = master.research_by_id()
         self._observation_by_id = {
@@ -656,6 +670,8 @@ class MainWindow(QMainWindow):
         self._ocr_card_groups: list[tuple[QRect, tuple[OcrLine, ...]]] = []
         self._tree_levels_dirty = False
         self._player_settings_dirty = False
+        self._talent_dirty = False
+        self._talent_auto_follow_pending = False
         self._plan_dirty = False
         self._paid_current_offer_id = ""
         self.update_controller = UpdateController(
@@ -666,6 +682,22 @@ class MainWindow(QMainWindow):
         self._apply_visual_style()
         self._restore_geometry()
         self.update_controller.schedule_startup_check()
+
+    def _ensure_talent_plan(self) -> None:
+        """Populate a usable default without replacing an existing talent plan."""
+        if self.player_state.talent_plan:
+            return
+        preset_id = self.player_state.talent_preset_id
+        if preset_id not in self.talent_catalog.presets:
+            preset_id = self.talent_catalog.preset_order[0]
+        self.player_state.talent_preset_id = preset_id
+        self.player_state.talent_plan = list(
+            self.talent_catalog.plan_for_preset(preset_id)
+        )
+        if not self.player_state.talent_plan_name:
+            self.player_state.talent_plan_name = self.talent_catalog.presets[
+                preset_id
+            ].localized_name(self.translator.content_locale)
 
     def t(self, key: str, **values: object) -> str:
         return self.translator.text(key, **values)
@@ -914,6 +946,16 @@ class MainWindow(QMainWindow):
             self._tree_instant_finish_changed
         )
         filters.addWidget(self.tree_instant_finish_check)
+        self.tree_technolabe_check = QCheckBox(
+            self.t("tree.technolabe_only"), tree_panel
+        )
+        self.tree_technolabe_check.setToolTip(
+            self.t("tree.technolabe_only_hint")
+        )
+        self.tree_technolabe_check.toggled.connect(
+            self._tree_technolabe_changed
+        )
+        filters.addWidget(self.tree_technolabe_check)
         self.tree_capture_button = QPushButton(
             self.t("tree.capture_levels"), tree_panel
         )
@@ -965,17 +1007,29 @@ class MainWindow(QMainWindow):
     def _tree_search_changed(self, text: str) -> None:
         self._tree_filters_changed()
 
-    def _tree_instant_finish_changed(self, _checked: bool) -> None:
+    def _tree_instant_finish_changed(self, checked: bool) -> None:
+        if checked and self.tree_technolabe_check.isChecked():
+            self.tree_technolabe_check.blockSignals(True)
+            self.tree_technolabe_check.setChecked(False)
+            self.tree_technolabe_check.blockSignals(False)
+        self._tree_filters_changed()
+
+    def _tree_technolabe_changed(self, checked: bool) -> None:
+        if checked and self.tree_instant_finish_check.isChecked():
+            self.tree_instant_finish_check.blockSignals(True)
+            self.tree_instant_finish_check.setChecked(False)
+            self.tree_instant_finish_check.blockSignals(False)
         self._tree_filters_changed()
 
     def _tree_filters_changed(self) -> None:
         query = self.search_edit.text().strip().casefold()
         instant_only = self.tree_instant_finish_check.isChecked()
+        technolabe_only = self.tree_technolabe_check.isChecked()
         current = self.tree_dataset_list.currentItem()
         current_value = (
             str(current.data(Qt.UserRole) or "") if current is not None else ""
         )
-        filter_active = bool(query) or instant_only
+        filter_active = bool(query) or instant_only or technolabe_only
         if filter_active and not self._tree_dataset_search_active:
             self._tree_dataset_search_restore = current_value
         preferred_value = (
@@ -990,13 +1044,18 @@ class MainWindow(QMainWindow):
         self.tree_dataset_list.blockSignals(True)
         self.tree_dataset_list.clear()
         instant_only = self.tree_instant_finish_check.isChecked()
+        technolabe_only = self.tree_technolabe_check.isChecked()
         for observation in self.observations:
             title = self._category_name(observation)
-            if (query or instant_only) and not any(
+            if (query or instant_only or technolabe_only) and not any(
                 self._tree_node_matches_query(node, query)
                 and (
                     not instant_only
                     or self._tree_node_is_instant_finish(node)
+                )
+                and (
+                    not technolabe_only
+                    or self._tree_node_is_technolabe_candidate(node)
                 )
                 for node in observation.nodes
             ):
@@ -1034,6 +1093,26 @@ class MainWindow(QMainWindow):
         self, node: ObservedResearchNode
     ) -> bool:
         return self._research_is_instant_finish(node.id, node.max_level)
+
+    def _tree_node_is_technolabe_candidate(
+        self, node: ObservedResearchNode
+    ) -> bool:
+        if node.max_level is None or node.max_level <= 0:
+            return False
+        current_level = max(0, self._tree_level_draft.get(node.id, 0))
+        if current_level >= node.max_level:
+            return False
+        level_data = node.level_data(current_level + 1)
+        if level_data is None:
+            return False
+        count, efficiency = technolabe_usage(
+            level_data.base_time_seconds,
+            level_data.technolabe_count,
+        )
+        return bool(count and count > 0) and is_technolabe_recommended(
+            efficiency,
+            self.player_state.settings.technolabe_recommendation_threshold_percent,
+        )
 
     def _research_is_instant_finish(
         self, research_id: str, max_level: int | None
@@ -1239,6 +1318,7 @@ class MainWindow(QMainWindow):
         if observation is not None:
             query = self.search_edit.text().strip().casefold()
             instant_only = self.tree_instant_finish_check.isChecked()
+            technolabe_only = self.tree_technolabe_check.isChecked()
             visible = []
             for node in sorted(
                 observation.nodes, key=lambda item: (item.row, item.column)
@@ -1246,6 +1326,8 @@ class MainWindow(QMainWindow):
                 if not self._tree_node_matches_query(node, query):
                     continue
                 if instant_only and not self._tree_node_is_instant_finish(node):
+                    continue
+                if technolabe_only and not self._tree_node_is_technolabe_candidate(node):
                     continue
                 visible.append(self._observed_tree_display_node(node, observation))
             visible_ids = {node.research_id for node in visible}
@@ -1289,6 +1371,11 @@ class MainWindow(QMainWindow):
             if hasattr(self, "tree_instant_finish_check")
             else False
         )
+        technolabe_only = (
+            self.tree_technolabe_check.isChecked()
+            if hasattr(self, "tree_technolabe_check")
+            else False
+        )
         visible: list[ResearchTreeNode] = []
         category_order = {
             item.id: item.display_order for item in self.master.categories
@@ -1309,6 +1396,13 @@ class MainWindow(QMainWindow):
                 research.id, research.max_level
             ):
                 continue
+            if technolabe_only:
+                observed_node = self._observed_nodes.get(research.id)
+                if (
+                    observed_node is None
+                    or not self._tree_node_is_technolabe_candidate(observed_node)
+                ):
+                    continue
             current = self._tree_level_draft.get(research.id, 0)
             if current <= 0:
                 status = self.t("status.not_started")
@@ -1396,8 +1490,14 @@ class MainWindow(QMainWindow):
         if not hasattr(self, "tree_view"):
             return
         if (
-            hasattr(self, "tree_instant_finish_check")
-            and self.tree_instant_finish_check.isChecked()
+            (
+                hasattr(self, "tree_instant_finish_check")
+                and self.tree_instant_finish_check.isChecked()
+            )
+            or (
+                hasattr(self, "tree_technolabe_check")
+                and self.tree_technolabe_check.isChecked()
+            )
         ):
             self._refresh_tree_after_level_change(preserve_view=preserve_view)
             return
@@ -1448,8 +1548,14 @@ class MainWindow(QMainWindow):
         self, *, preserve_view: bool = False
     ) -> None:
         if (
-            hasattr(self, "tree_instant_finish_check")
-            and self.tree_instant_finish_check.isChecked()
+            (
+                hasattr(self, "tree_instant_finish_check")
+                and self.tree_instant_finish_check.isChecked()
+            )
+            or (
+                hasattr(self, "tree_technolabe_check")
+                and self.tree_technolabe_check.isChecked()
+            )
         ):
             self._refresh_tree_filter_results()
         elif preserve_view:
@@ -1499,7 +1605,9 @@ class MainWindow(QMainWindow):
         candidates_by_id = {
             candidate.research_id: candidate
             for candidate in self._ocr_candidates
-            if candidate.research_id in active_ids and candidate.level > 0
+            if candidate.research_id in active_ids
+            and candidate.level_recognized
+            and candidate.level >= 0
         }
         if not candidates_by_id:
             self._show_info(self.t("tree.capture_no_levels"))
@@ -1626,6 +1734,500 @@ class MainWindow(QMainWindow):
             f"{level.source} / {level.checked_on} / {level.game_version}"
         )
         self.detail_values["verification"].setText(level.verification_status)
+
+    def _build_talent_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
+        layout = QVBoxLayout(page)
+        layout.setContentsMargins(8, 8, 8, 8)
+        layout.setSpacing(6)
+
+        controls = QHBoxLayout()
+        controls.setSpacing(8)
+        controls.addWidget(QLabel(self.t("talent.preset"), page))
+        self.talent_preset_combo = QComboBox(page)
+        for preset_id in self.talent_catalog.preset_order:
+            preset = self.talent_catalog.presets[preset_id]
+            self.talent_preset_combo.addItem(
+                preset.localized_name(self.translator.content_locale), preset_id
+            )
+        preset_index = self.talent_preset_combo.findData(
+            self.player_state.talent_preset_id
+        )
+        self.talent_preset_combo.setCurrentIndex(max(0, preset_index))
+        self.talent_preset_combo.currentIndexChanged.connect(
+            self._talent_preset_changed
+        )
+        if self.player_state.talent_preset_id == "custom":
+            self.talent_preset_combo.addItem(self.t("talent.custom"), "custom")
+            self.talent_preset_combo.setCurrentIndex(
+                self.talent_preset_combo.findData("custom")
+            )
+        self.talent_preset_combo.setMinimumWidth(240)
+        controls.addWidget(self.talent_preset_combo, 1)
+        controls.addWidget(QLabel(self.t("talent.available_points"), page))
+        self.talent_points_spin = VisibleSpinBox(page)
+        self.talent_points_spin.setRange(0, 9999)
+        self.talent_points_spin.setFixedWidth(92)
+        self.talent_points_spin.setValue(
+            max(0, int(self.player_state.talent_available_points))
+        )
+        self.talent_points_spin.valueChanged.connect(self._talent_points_changed)
+        controls.addWidget(self.talent_points_spin)
+        save_button = QPushButton(self.t("common.save"), page)
+        save_button.clicked.connect(self._save_talent_plan)
+        controls.addWidget(save_button)
+        talent_fit_button = QPushButton(self.t("tree.fit_all"), page)
+        talent_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"), page)
+        controls.addWidget(talent_fit_button)
+        controls.addWidget(talent_reset_zoom_button)
+        layout.addLayout(controls)
+
+        priority = QHBoxLayout()
+        priority.setSpacing(8)
+        priority.addWidget(QLabel(self.t("talent.priority"), page))
+        self.talent_priority_combo = QComboBox(page)
+        self.talent_priority_combo.currentIndexChanged.connect(
+            self._talent_priority_changed
+        )
+        self.talent_priority_combo.hide()
+        self.talent_priority_selector = QFrame(page)
+        self.talent_priority_selector.setObjectName("TalentPrioritySelector")
+        priority_selector_layout = QHBoxLayout(self.talent_priority_selector)
+        priority_selector_layout.setContentsMargins(0, 0, 0, 0)
+        priority_selector_layout.setSpacing(0)
+        self.talent_priority_previous_button = QPushButton(
+            "\uFF1C", self.talent_priority_selector
+        )
+        self.talent_priority_previous_button.setObjectName(
+            "TalentPriorityPrevious"
+        )
+        self.talent_priority_previous_button.setAccessibleName(
+            self.t("talent.previous_priority")
+        )
+        self.talent_priority_previous_button.clicked.connect(
+            lambda: self._cycle_talent_combo(self.talent_priority_combo, -1)
+        )
+        self.talent_priority_previous_button.setFixedWidth(38)
+        priority_selector_layout.addWidget(self.talent_priority_previous_button)
+        self.talent_priority_label = QLabel(self.talent_priority_selector)
+        self.talent_priority_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.talent_priority_label.setMinimumWidth(240)
+        self.talent_priority_label.setContentsMargins(10, 0, 10, 0)
+        priority_selector_layout.addWidget(self.talent_priority_label, 1)
+        self.talent_priority_next_button = QPushButton(
+            "\uFF1E", self.talent_priority_selector
+        )
+        self.talent_priority_next_button.setObjectName("TalentPriorityNext")
+        self.talent_priority_next_button.setAccessibleName(
+            self.t("talent.next_priority")
+        )
+        self.talent_priority_next_button.clicked.connect(
+            lambda: self._cycle_talent_combo(self.talent_priority_combo, 1)
+        )
+        self.talent_priority_next_button.setFixedWidth(38)
+        priority_selector_layout.addWidget(self.talent_priority_next_button)
+        priority.addWidget(self.talent_priority_selector, 1)
+        self.talent_auto_follow_check = QCheckBox(
+            self.t("talent.auto_follow"), page
+        )
+        self.talent_auto_follow_check.setChecked(
+            self.app_settings.talent_auto_follow
+        )
+        self.talent_auto_follow_check.toggled.connect(
+            self._talent_auto_follow_changed
+        )
+        priority.addWidget(self.talent_auto_follow_check)
+        self.talent_summary_label = QLabel(page)
+        self.talent_summary_label.setAlignment(
+            Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
+        )
+        self.talent_summary_label.setStyleSheet("font-weight:700;")
+        priority.addWidget(self.talent_summary_label, 1)
+        self.talent_details_toggle = QToolButton(page)
+        self.talent_details_toggle.setCheckable(True)
+        self.talent_details_toggle.setArrowType(Qt.ArrowType.RightArrow)
+        self.talent_details_toggle.setToolButtonStyle(
+            Qt.ToolButtonStyle.ToolButtonTextBesideIcon
+        )
+        self.talent_details_toggle.setText(self.t("talent.details"))
+        priority.addWidget(self.talent_details_toggle)
+        layout.addLayout(priority)
+
+        self.talent_details_panel = QFrame(page)
+        self.talent_details_panel.setObjectName("TalentDetailsPanel")
+        details_layout = QVBoxLayout(self.talent_details_panel)
+        details_layout.setContentsMargins(10, 8, 10, 8)
+        details_layout.setSpacing(6)
+        self.talent_description_label = QLabel(self.talent_details_panel)
+        self.talent_description_label.setWordWrap(True)
+        details_layout.addWidget(self.talent_description_label)
+        self.talent_level_requirement_label = QLabel(self.talent_details_panel)
+        self.talent_level_requirement_label.setStyleSheet("font-weight:700;")
+        details_layout.addWidget(self.talent_level_requirement_label)
+        identity = QHBoxLayout()
+        identity.addWidget(
+            QLabel(self.t("talent.directive_name"), self.talent_details_panel)
+        )
+        self.talent_plan_name_edit = QLineEdit(self.talent_details_panel)
+        self.talent_plan_name_edit.setMaxLength(100)
+        self.talent_plan_name_edit.setText(self.player_state.talent_plan_name)
+        self.talent_plan_name_edit.textChanged.connect(self._talent_name_changed)
+        identity.addWidget(self.talent_plan_name_edit, 1)
+        import_button = QPushButton(self.t("talent.import"), self.talent_details_panel)
+        import_button.clicked.connect(self._import_talent_directive)
+        identity.addWidget(import_button)
+        export_button = QPushButton(self.t("talent.export"), self.talent_details_panel)
+        export_button.clicked.connect(self._export_talent_directive)
+        identity.addWidget(export_button)
+        details_layout.addLayout(identity)
+        self.talent_details_panel.hide()
+        self.talent_details_toggle.toggled.connect(
+            self._talent_details_visibility_changed
+        )
+        layout.addWidget(self.talent_details_panel)
+        self.talent_tree_view = ResearchTreeView(page)
+        self.talent_tree_view.setMinimumHeight(430)
+        self.talent_tree_view.researchSelected.connect(
+            self._talent_priority_selected
+        )
+        talent_fit_button.clicked.connect(self.talent_tree_view.fit_all)
+        talent_reset_zoom_button.clicked.connect(
+            self.talent_tree_view.reset_zoom
+        )
+        layout.addWidget(self.talent_tree_view, 1)
+        self._refresh_talent_priority_options()
+        self._render_talent_plan()
+        return page
+
+    def _talent_details_visibility_changed(self, visible: bool) -> None:
+        self.talent_details_panel.setVisible(visible)
+        self.talent_details_toggle.setArrowType(
+            Qt.ArrowType.DownArrow if visible else Qt.ArrowType.RightArrow
+        )
+
+    @staticmethod
+    def _cycle_talent_combo(combo: QComboBox, direction: int) -> None:
+        count = combo.count()
+        if count <= 0:
+            return
+        current = max(0, combo.currentIndex())
+        combo.setCurrentIndex((current + direction) % count)
+
+    @staticmethod
+    def _sync_talent_choice_label(combo: QComboBox, label: QLabel) -> None:
+        label.setText(combo.currentText() or "-")
+
+    def _talent_branch_name(self, branch: str) -> str:
+        return self.t(f"talent.branch.{branch}")
+
+    def _talent_name(self, talent_id: str) -> str:
+        talent = self.talent_catalog.talents[talent_id]
+        return self.translator.talent_name(
+            talent_id,
+            talent.localized_name(self.translator.content_locale),
+        )
+
+    def _talent_preset_changed(self) -> None:
+        preset_id = str(self.talent_preset_combo.currentData() or "")
+        if preset_id not in self.talent_catalog.presets:
+            return
+        preset = self.talent_catalog.presets[preset_id]
+        self.player_state.talent_preset_id = preset_id
+        self.player_state.talent_priority_id = ""
+        self.player_state.talent_plan = list(
+            self.talent_catalog.plan_for_preset(preset_id)
+        )
+        self.player_state.talent_plan_name = preset.localized_name(
+            self.translator.content_locale
+        )
+        self.talent_plan_name_edit.blockSignals(True)
+        self.talent_plan_name_edit.setText(self.player_state.talent_plan_name)
+        self.talent_plan_name_edit.blockSignals(False)
+        self._talent_dirty = True
+        custom_index = self.talent_preset_combo.findData("custom")
+        if custom_index >= 0:
+            self.talent_preset_combo.blockSignals(True)
+            self.talent_preset_combo.removeItem(custom_index)
+            self.talent_preset_combo.blockSignals(False)
+        self._refresh_talent_priority_options()
+        self._render_talent_plan()
+
+    def _talent_priority_candidates(self) -> tuple[TalentPlanStep, ...]:
+        return tuple(self.player_state.talent_plan)
+
+    def _refresh_talent_priority_options(self) -> None:
+        if not hasattr(self, "talent_priority_combo"):
+            return
+        current = self.player_state.talent_priority_id
+        self.talent_priority_combo.blockSignals(True)
+        self.talent_priority_combo.clear()
+        self.talent_priority_combo.addItem(self.t("talent.priority.default"), "")
+        target_levels: dict[str, int] = {}
+        order: list[str] = []
+        for step in self._talent_priority_candidates():
+            if step.talent_id not in self.talent_catalog.talents:
+                continue
+            if step.talent_id not in target_levels:
+                order.append(step.talent_id)
+            target_levels[step.talent_id] = max(
+                target_levels.get(step.talent_id, 0), step.target_level
+            )
+        for talent_id in order:
+            self.talent_priority_combo.addItem(
+                f"{self._talent_name(talent_id)} Lv.{target_levels[talent_id]}",
+                talent_id,
+            )
+        index = self.talent_priority_combo.findData(current)
+        if index < 0:
+            self.player_state.talent_priority_id = ""
+            index = 0
+        self.talent_priority_combo.setCurrentIndex(index)
+        self.talent_priority_combo.blockSignals(False)
+        self._sync_talent_choice_label(
+            self.talent_priority_combo, self.talent_priority_label
+        )
+
+    def _talent_priority_changed(self) -> None:
+        if not hasattr(self, "talent_priority_combo"):
+            return
+        self.player_state.talent_priority_id = str(
+            self.talent_priority_combo.currentData() or ""
+        )
+        self._sync_talent_choice_label(
+            self.talent_priority_combo, self.talent_priority_label
+        )
+        self._talent_dirty = True
+        self._talent_auto_follow_pending = True
+        self._render_talent_plan()
+
+    def _talent_auto_follow_changed(self, enabled: bool) -> None:
+        self.app_settings.talent_auto_follow = bool(enabled)
+        self.settings_repository.save(self.app_settings)
+        if enabled and self.player_state.talent_priority_id:
+            self.talent_tree_view.focus_research(
+                self.player_state.talent_priority_id
+            )
+
+    def _talent_priority_selected(self, talent_id: str) -> None:
+        if not hasattr(self, "talent_priority_combo"):
+            return
+        index = self.talent_priority_combo.findData(talent_id)
+        if index >= 0 and index != self.talent_priority_combo.currentIndex():
+            self.talent_priority_combo.setCurrentIndex(index)
+
+    def _talent_points_changed(self, value: int) -> None:
+        self.player_state.talent_available_points = max(0, int(value))
+        self._talent_dirty = True
+        self._render_talent_plan()
+
+    def _talent_name_changed(self, value: str) -> None:
+        self.player_state.talent_plan_name = value.strip()[:100]
+        self._talent_dirty = True
+
+    def _render_talent_plan(self) -> None:
+        if not hasattr(self, "talent_tree_view"):
+            return
+        try:
+            allocation = self.talent_catalog.allocate(
+                self.player_state.talent_plan,
+                self.player_state.talent_available_points,
+                self.player_state.talent_priority_id,
+            )
+        except TalentCatalogError as exc:
+            self.talent_summary_label.setText(str(exc))
+            self.talent_level_requirement_label.clear()
+            self.talent_tree_view.set_research((), (), empty_message=str(exc))
+            return
+        preset = self.talent_catalog.presets.get(
+            self.player_state.talent_preset_id
+        )
+        self.talent_description_label.setText(
+            preset.localized_description(self.translator.content_locale)
+            if preset is not None
+            else self.t("talent.imported_description")
+        )
+        self.talent_summary_label.setText(
+            self.t(
+                "talent.summary_compact",
+                required=allocation.required_points,
+                used=allocation.used_points,
+                remaining=allocation.remaining_points,
+            )
+        )
+        bonus_points = max(
+            0, int(self._tree_level_draft.get("military_command_hidden_talent", 0))
+        )
+        plan_requirement = self.talent_catalog.player_level_requirement(
+            allocation.required_points,
+            bonus_points,
+        )
+
+        def requirement_text(requirement) -> str:
+            if requirement.player_level is not None:
+                return f"Lv.{requirement.player_level}"
+            return self.t(
+                "talent.level_over_max",
+                shortage=requirement.shortage_at_max_level,
+            )
+
+        self.talent_level_requirement_label.setText(
+            self.t(
+                "talent.required_player_level",
+                level=requirement_text(plan_requirement),
+                bonus=bonus_points,
+            )
+        )
+        allocated_by_id = {step.talent_id: step for step in allocation.steps}
+        target_by_id = {
+            step.talent_id: step.target_level for step in allocation.steps
+        }
+        talent_columns = self.talent_catalog.layout_columns()
+        nodes: list[ResearchTreeNode] = []
+        for talent in sorted(
+            self.talent_catalog.talents.values(), key=lambda item: item.order
+        ):
+            allocated = allocated_by_id.get(talent.id)
+            allocated_level = allocated.allocated_level if allocated is not None else 0
+            target_level = target_by_id.get(talent.id, 0)
+            is_priority = talent.id == self.player_state.talent_priority_id
+            status = (
+                self.t("talent.status.priority")
+                if is_priority
+                else self.t("talent.status.complete")
+                if target_level and allocated_level >= target_level
+                else self.t("talent.status.insufficient")
+                if target_level
+                else self.t("talent.status.not_planned")
+            )
+            plan_text = (
+                self.t("talent.target_level", level=target_level)
+                if target_level
+                else self.t("talent.status.not_planned")
+            )
+            nodes.append(
+                ResearchTreeNode(
+                    research_id=talent.id,
+                    name=self._talent_name(talent.id),
+                    current_level=allocated_level,
+                    max_level=talent.max_level,
+                    status=status,
+                    recommendation=plan_text,
+                    display_order=talent.order,
+                    current_effect=(
+                        f"{talent.localized_effect(self.translator.content_locale)} "
+                        f"+{talent.max_effect:g}% ({self.t('talent.at_max')})"
+                    ),
+                    next_effect=status,
+                    layout_row=talent.row - 1,
+                    layout_column=talent_columns[talent.id],
+                    shortage_levels=max(0, target_level - allocated_level),
+                )
+            )
+        edges = [
+            (talent.prerequisite.talent_id, talent.id)
+            for talent in self.talent_catalog.talents.values()
+            if talent.prerequisite is not None
+        ]
+        active_edges = [
+            (talent.prerequisite.talent_id, talent.id)
+            for talent in self.talent_catalog.talents.values()
+            if talent.prerequisite is not None
+            and allocated_by_id.get(talent.prerequisite.talent_id) is not None
+            and allocated_by_id[
+                talent.prerequisite.talent_id
+            ].allocated_level >= talent.prerequisite.level
+        ]
+        self.talent_tree_view.set_research(
+            nodes,
+            edges,
+            selected_research_id=self.player_state.talent_priority_id,
+            active_edges=active_edges,
+            preserve_explicit_columns=True,
+        )
+        if (
+            self._talent_auto_follow_pending
+            and self.app_settings.talent_auto_follow
+            and self.player_state.talent_priority_id
+        ):
+            self.talent_tree_view.focus_research(
+                self.player_state.talent_priority_id
+            )
+        self._talent_auto_follow_pending = False
+
+    def _save_talent_plan(self) -> None:
+        self.player_state.talent_plan_name = (
+            self.talent_plan_name_edit.text().strip()[:100]
+        )
+        self.player_repository.save(self.player_state)
+        self._talent_dirty = False
+        self._show_info(self.t("talent.saved"))
+
+    def _export_talent_directive(self) -> None:
+        if not self.player_state.talent_plan:
+            self._show_error(self.t("talent.directive_empty"))
+            return
+        path, _ = QFileDialog.getSaveFileName(
+            self,
+            self.t("talent.export"),
+            str(self.paths.tool_root / "RLMResearchPlanner-talent-directive.json"),
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            payload = talent_directive_payload(
+                self.player_state.talent_plan,
+                name=self.talent_plan_name_edit.text(),
+                catalog_version=self.talent_catalog.version,
+            )
+            Path(path).write_text(
+                json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
+                encoding="utf-8",
+            )
+        except (OSError, ValueError) as exc:
+            self._show_error(str(exc))
+            return
+        self._show_info(self.t("talent.exported"))
+
+    def _import_talent_directive(self) -> None:
+        path, _ = QFileDialog.getOpenFileName(
+            self,
+            self.t("talent.import"),
+            str(self.paths.tool_root),
+            "JSON (*.json)",
+        )
+        if not path:
+            return
+        try:
+            raw = json.loads(Path(path).read_text(encoding="utf-8"))
+            directive = talent_directive_from_payload(raw)
+            plan = self.talent_catalog.expand_targets(directive.steps)
+        except (
+            OSError,
+            json.JSONDecodeError,
+            TalentCatalogError,
+            TalentDirectiveFormatError,
+        ) as exc:
+            self._show_error(self.t("talent.import_failed", error=exc))
+            return
+        self.player_state.talent_plan_name = directive.name
+        self.player_state.talent_preset_id = "custom"
+        self.player_state.talent_priority_id = ""
+        self.player_state.talent_plan = list(plan)
+        self.talent_plan_name_edit.blockSignals(True)
+        self.talent_plan_name_edit.setText(directive.name)
+        self.talent_plan_name_edit.blockSignals(False)
+        self.talent_preset_combo.blockSignals(True)
+        custom_index = self.talent_preset_combo.findData("custom")
+        if custom_index < 0:
+            self.talent_preset_combo.addItem(self.t("talent.custom"), "custom")
+            custom_index = self.talent_preset_combo.findData("custom")
+        self.talent_preset_combo.setCurrentIndex(custom_index)
+        self.talent_preset_combo.blockSignals(False)
+        self._talent_dirty = True
+        self._refresh_talent_priority_options()
+        self._render_talent_plan()
+        self._show_info(self.t("talent.imported", name=directive.name))
 
     def _build_castle_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
@@ -2317,7 +2919,11 @@ class MainWindow(QMainWindow):
     def _build_player_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
         layout = QVBoxLayout(page)
-        splitter = QSplitter(Qt.Horizontal, page)
+
+        self.player_workspace_tabs = QTabWidget(page)
+        settings_page = QWidget(self.player_workspace_tabs)
+        player_layout = QVBoxLayout(settings_page)
+        splitter = QSplitter(Qt.Horizontal, settings_page)
 
         settings_panel = QWidget(splitter)
         settings_form = QFormLayout(settings_panel)
@@ -2430,8 +3036,10 @@ class MainWindow(QMainWindow):
         )
         settings_form.addRow(research_group)
 
+        speedup_page = QWidget(self.player_workspace_tabs)
+        speedup_page_layout = QVBoxLayout(speedup_page)
         speedup_group = QGroupBox(
-            self.t("player.speedup_inventory"), settings_panel
+            self.t("player.speedup_inventory"), speedup_page
         )
         speedup_layout = QVBoxLayout(speedup_group)
         speedup_hint = QLabel(
@@ -2484,10 +3092,38 @@ class MainWindow(QMainWindow):
         if not initial_inventory:
             self._add_speedup_inventory_row(notify=False)
         self._update_speedup_inventory_summary()
-        settings_form.addRow(speedup_group)
+        speedup_page_layout.addWidget(speedup_group, 1)
 
-        resources_group = QGroupBox(self.t("player.resources"), settings_panel)
+        resources_page = QWidget(self.player_workspace_tabs)
+        resources_page_layout = QVBoxLayout(resources_page)
+        resources_group = QGroupBox(self.t("player.resources"), resources_page)
         resources_form = QFormLayout(resources_group)
+        self.technolabe_count_spin = self._integer_spin(
+            0,
+            2_000_000_000,
+            self.player_state.settings.technolabe_count,
+            resources_group,
+        )
+        self.technolabe_count_spin.setObjectName("TechnolabeCountSpin")
+        resources_form.addRow(
+            self.t("player.technolabe_count"),
+            self.technolabe_count_spin,
+        )
+        self.technolabe_threshold_spin = VisibleDoubleSpinBox(resources_group)
+        self.technolabe_threshold_spin.setObjectName("TechnolabeThresholdSpin")
+        self.technolabe_threshold_spin.setRange(0.0, 100.0)
+        self.technolabe_threshold_spin.setDecimals(1)
+        self.technolabe_threshold_spin.setSuffix("%")
+        self.technolabe_threshold_spin.setValue(
+            self.player_state.settings.technolabe_recommendation_threshold_percent
+        )
+        self.technolabe_threshold_spin.setToolTip(
+            self.t("player.technolabe_threshold_hint")
+        )
+        resources_form.addRow(
+            self.t("player.technolabe_threshold"),
+            self.technolabe_threshold_spin,
+        )
         self.resource_spins: dict[str, QSpinBox] = {}
         for key in RESOURCE_KEYS:
             spin = self._integer_spin(
@@ -2498,7 +3134,8 @@ class MainWindow(QMainWindow):
             )
             self.resource_spins[key] = spin
             resources_form.addRow(self._resource_label(key), spin)
-        settings_form.addRow(resources_group)
+        resources_page_layout.addWidget(resources_group)
+        resources_page_layout.addStretch(1)
         settings_scroll = QScrollArea(splitter)
         settings_scroll.setObjectName("PlayerSettingsScroll")
         settings_scroll.setFrameShape(QFrame.Shape.NoFrame)
@@ -2592,7 +3229,7 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(0, 1)
         splitter.setStretchFactor(1, 1)
         splitter.setSizes([480, 480])
-        layout.addWidget(splitter, 1)
+        player_layout.addWidget(splitter, 1)
 
         actions = QHBoxLayout()
         self.player_save_status_label = QLabel(page)
@@ -2615,6 +3252,20 @@ class MainWindow(QMainWindow):
         actions.addWidget(self.tree_save_levels_button)
         actions.addWidget(import_button)
         actions.addWidget(export_button)
+        self.player_workspace_tabs.addTab(
+            settings_page, self.t("player.subtab.level")
+        )
+        self.player_workspace_tabs.addTab(
+            self._build_talent_tab(self.player_workspace_tabs),
+            self.t("player.subtab.talent"),
+        )
+        self.player_workspace_tabs.addTab(
+            resources_page, self.t("player.subtab.resources")
+        )
+        self.player_workspace_tabs.addTab(
+            speedup_page, self.t("player.subtab.acceleration")
+        )
+        layout.addWidget(self.player_workspace_tabs, 1)
         layout.addLayout(actions)
 
         self.vip_level_spin.valueChanged.connect(self._vip_level_changed)
@@ -2631,6 +3282,10 @@ class MainWindow(QMainWindow):
             self._settings_changed
         )
         self.guild_help_spin.valueChanged.connect(self._settings_changed)
+        self.technolabe_count_spin.valueChanged.connect(self._settings_changed)
+        self.technolabe_threshold_spin.valueChanged.connect(
+            self._settings_changed
+        )
         for spin in self.resource_spins.values():
             spin.valueChanged.connect(self._settings_changed)
         return page
@@ -2837,6 +3492,10 @@ class MainWindow(QMainWindow):
         )
         settings.speedup_inventory = self._speedup_inventory_from_table()
         settings.speedup_seconds = 0
+        settings.technolabe_count = self.technolabe_count_spin.value()
+        settings.technolabe_recommendation_threshold_percent = (
+            self.technolabe_threshold_spin.value()
+        )
         settings.resources = {key: spin.value() for key, spin in self.resource_spins.items()}
         self._player_settings_dirty = True
         self._update_player_save_button()
@@ -2883,8 +3542,14 @@ class MainWindow(QMainWindow):
             self._refresh_castle_level_inputs()
             self._construction_target_changed()
         if (
-            hasattr(self, "tree_instant_finish_check")
-            and self.tree_instant_finish_check.isChecked()
+            (
+                hasattr(self, "tree_instant_finish_check")
+                and self.tree_instant_finish_check.isChecked()
+            )
+            or (
+                hasattr(self, "tree_technolabe_check")
+                and self.tree_technolabe_check.isChecked()
+            )
         ):
             self._refresh_tree_filter_results()
 
@@ -2911,6 +3576,11 @@ class MainWindow(QMainWindow):
         self._update_tree_level_display(research_id)
         self._refresh_detail()
         self._mark_plan_dirty()
+        if (
+            research_id == "military_command_hidden_talent"
+            and hasattr(self, "talent_tree_view")
+        ):
+            self._render_talent_plan()
 
     def _sync_progress_editor(self, research_id: str) -> None:
         if not hasattr(self, "_progress_editors"):
@@ -2935,6 +3605,7 @@ class MainWindow(QMainWindow):
         self.player_state.building_levels = dict(self._building_level_draft)
         self.player_repository.save(self.player_state)
         self._player_settings_dirty = False
+        self._talent_dirty = False
         self._update_player_save_button()
         for research_id in changed_ids:
             self._sync_progress_editor(research_id)
@@ -2970,10 +3641,12 @@ class MainWindow(QMainWindow):
             return
         try:
             self.player_state = self.player_repository.import_json(Path(path))
+            self._ensure_talent_plan()
             self._tree_level_draft = dict(self.player_state.research_levels)
             self._building_level_draft = dict(self.player_state.building_levels)
             self._tree_levels_dirty = False
             self._player_settings_dirty = False
+            self._talent_dirty = False
             self._build_ui()
             QMessageBox.information(
                 self, self.t("info.title"), self.t("player.backup_restored")
@@ -3449,6 +4122,7 @@ class MainWindow(QMainWindow):
                 self._technolabe_text(
                     result.total_technolabes,
                     result.technolabe_efficiency_percent,
+                    result.unknown_technolabe_steps,
                 )
                 + self._partial_note(result.unknown_technolabe_steps),
             ]
@@ -3475,6 +4149,13 @@ class MainWindow(QMainWindow):
                 font = item.font()
                 font.setBold(True)
                 item.setFont(font)
+                if column == 5:
+                    self._style_technolabe_item(
+                        item,
+                        result.total_technolabes,
+                        result.technolabe_efficiency_percent,
+                        result.unknown_technolabe_steps,
+                    )
                 self.plan_table.setItem(total_row, column, item)
 
     def _register_current_plan(self) -> None:
@@ -3703,6 +4384,7 @@ class MainWindow(QMainWindow):
                 self._technolabe_text(
                     result.total_technolabes,
                     result.technolabe_efficiency_percent,
+                    result.unknown_technolabe_steps,
                 )
                 + self._partial_note(result.unknown_technolabe_steps),
             ]
@@ -3735,6 +4417,13 @@ class MainWindow(QMainWindow):
                         )
                     )
                     item.setToolTip(self.t("plan.open_task"))
+                elif column == 5:
+                    self._style_technolabe_item(
+                        item,
+                        result.total_technolabes,
+                        result.technolabe_efficiency_percent,
+                        result.unknown_technolabe_steps,
+                    )
                 self.plan_table.setItem(row, column, item)
             actions = QWidget(self.plan_table)
             action_layout = QHBoxLayout(actions)
@@ -3843,6 +4532,12 @@ class MainWindow(QMainWindow):
                     item.setToolTip(self.t("plan.open_in_tree"))
             elif column == 3:
                 item.setData(Qt.UserRole, step.adjusted_time_seconds)
+            elif column == 5:
+                self._style_technolabe_item(
+                    item,
+                    step.technolabe_count,
+                    step.technolabe_efficiency_percent,
+                )
             self.plan_table.setItem(row, column, item)
         complete_button = QPushButton(
             self.t("plan.complete_step"), self.plan_table
@@ -3899,6 +4594,9 @@ class MainWindow(QMainWindow):
         self.tree_instant_finish_check.blockSignals(True)
         self.tree_instant_finish_check.setChecked(False)
         self.tree_instant_finish_check.blockSignals(False)
+        self.tree_technolabe_check.blockSignals(True)
+        self.tree_technolabe_check.setChecked(False)
+        self.tree_technolabe_check.blockSignals(False)
         self._tree_dataset_search_active = False
         self._tree_dataset_search_restore = dataset_value
         self._filter_tree_datasets("", dataset_value)
@@ -3916,6 +4614,7 @@ class MainWindow(QMainWindow):
         self,
         count: int | None,
         efficiency_percent: float | None,
+        unknown_count: int = 0,
     ) -> str:
         if count is None:
             return self.t("common.unknown")
@@ -3923,10 +4622,60 @@ class MainWindow(QMainWindow):
             return "-"
         if efficiency_percent is None:
             return self.t("plan.technolabe_count", count=count)
-        return self.t(
+        detail = self.t(
             "plan.technolabe_efficiency",
             count=count,
             efficiency=efficiency_percent,
+        )
+        if self._technolabe_recommended(
+            count, efficiency_percent, unknown_count
+        ):
+            detail = self.t(
+                "plan.technolabe_recommended",
+                detail=detail,
+            )
+        return self.t(
+            "plan.technolabe_owned",
+            detail=detail,
+            owned=max(0, int(self.player_state.settings.technolabe_count)),
+            required=count,
+        )
+
+    def _technolabe_recommended(
+        self,
+        count: int | None,
+        efficiency_percent: float | None,
+        unknown_count: int = 0,
+    ) -> bool:
+        return (
+            unknown_count <= 0
+            and bool(count and count > 0)
+            and is_technolabe_recommended(
+                efficiency_percent,
+                self.player_state.settings.technolabe_recommendation_threshold_percent,
+            )
+        )
+
+    def _style_technolabe_item(
+        self,
+        item: QTableWidgetItem,
+        count: int | None,
+        efficiency_percent: float | None,
+        unknown_count: int = 0,
+    ) -> None:
+        if not self._technolabe_recommended(
+            count, efficiency_percent, unknown_count
+        ):
+            return
+        font = item.font()
+        font.setBold(True)
+        item.setFont(font)
+        item.setForeground(QBrush(QColor("#4b3200")))
+        item.setBackground(QBrush(QColor("#ffe29a")))
+        item.setToolTip(
+            self.t(
+                "player.technolabe_threshold_hint",
+            )
         )
 
     def _material_amount(self, amount: int) -> str:
@@ -5205,6 +5954,7 @@ class MainWindow(QMainWindow):
             ("help.tree.title", "help.tree.body"),
             ("help.levels.title", "help.levels.body_v003"),
             ("help.plan.title", "help.plan.body"),
+            ("help.talent.title", "help.talent.body"),
             ("help.castle.title", "help.castle.body"),
             ("help.player.title", "help.player.body_v003"),
             ("help.ocr.title", "help.ocr.body_v003"),
@@ -5241,10 +5991,73 @@ class MainWindow(QMainWindow):
             panel = getattr(self, panel_name, None)
             if panel is not None:
                 panel.setStyleSheet(speedup_panel_style_sheet(visual_style))
-        for tree_view_name in ("tree_view", "plan_tree_view"):
+        for tree_view_name in ("tree_view", "plan_tree_view", "talent_tree_view"):
             tree_view = getattr(self, tree_view_name, None)
             if tree_view is not None:
                 tree_view.set_visual_style(visual_style)
+        if hasattr(self, "talent_priority_selector"):
+            if visual_style == "mobile":
+                border = "#315B67"
+                surface = "#071822"
+                button_surface = "#173541"
+                button_hover = "#1B414E"
+                foreground = "#F4F8F8"
+            else:
+                border = "#8A959B"
+                surface = "#FFFFFF"
+                button_surface = "#E9EEF0"
+                button_hover = "#DDE8EC"
+                foreground = "#18252B"
+            self.talent_priority_selector.setStyleSheet(
+                f"""
+                QFrame#TalentPrioritySelector {{
+                    min-height: 34px;
+                    border: 1px solid {border};
+                    border-radius: 7px;
+                    background-color: {surface};
+                }}
+                QFrame#TalentPrioritySelector QLabel {{
+                    border: 0;
+                    color: {foreground};
+                    background-color: transparent;
+                    font-weight: 700;
+                }}
+                QFrame#TalentPrioritySelector QPushButton {{
+                    min-height: 32px;
+                    margin: 0;
+                    padding: 0;
+                    border: 0;
+                    border-radius: 0;
+                    color: {foreground};
+                    background-color: {button_surface};
+                    font-size: 17px;
+                    font-weight: 800;
+                }}
+                QFrame#TalentPrioritySelector QPushButton:hover {{
+                    background-color: {button_hover};
+                }}
+                QPushButton#TalentPriorityPrevious {{
+                    border-right: 1px solid {border};
+                }}
+                QPushButton#TalentPriorityNext {{
+                    border-left: 1px solid {border};
+                }}
+                """
+            )
+            self.talent_details_panel.setStyleSheet(
+                f"""
+                QFrame#TalentDetailsPanel {{
+                    border: 1px solid {border};
+                    border-radius: 7px;
+                    background-color: {surface};
+                }}
+                QFrame#TalentDetailsPanel QLabel {{
+                    border: 0;
+                    color: {foreground};
+                    background-color: transparent;
+                }}
+                """
+            )
         if hasattr(self, "plan_table"):
             link_brush = QBrush(QColor(table_link_color(visual_style)))
             for row in range(self.plan_table.rowCount()):
@@ -6250,9 +7063,13 @@ class MainWindow(QMainWindow):
 
     def _parse_ocr_text(self) -> None:
         profile = self._selected_ocr_profile()
-        self._ocr_candidates = parse_research_candidates(
-            self._ocr_raw_text, self.master, profile
-        )
+        self._ocr_candidates = [
+            candidate
+            for candidate in parse_research_candidates(
+                self._ocr_raw_text, self.master, profile
+            )
+            if candidate.level_recognized
+        ]
         existing_ids = {candidate.research_id for candidate in self._ocr_candidates}
         entries = [
             (
@@ -6443,7 +7260,7 @@ class MainWindow(QMainWindow):
         if not rows:
             return
         candidate = self._ocr_candidates[rows[0].row()]
-        if candidate.level <= 0:
+        if not candidate.level_recognized or candidate.level < 0:
             self._show_info(self.t("ocr.no_candidates"))
             return
         name = self._catalog_research_name(candidate.research_id)
@@ -6467,7 +7284,9 @@ class MainWindow(QMainWindow):
 
     def _apply_all_ocr_candidates(self) -> None:
         candidates = [
-            candidate for candidate in self._ocr_candidates if candidate.level > 0
+            candidate
+            for candidate in self._ocr_candidates
+            if candidate.level_recognized and candidate.level >= 0
         ]
         if not candidates:
             self._show_info(self.t("ocr.no_candidates"))
@@ -6546,6 +7365,10 @@ class MainWindow(QMainWindow):
                 master=self.master,
                 observations=self.observations,
                 castle_catalog=self.castle_catalog,
+                talent_names={
+                    talent_id: talent.localized_name("en-US")
+                    for talent_id, talent in self.talent_catalog.talents.items()
+                },
             )
             Path(path).write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
@@ -6613,7 +7436,11 @@ class MainWindow(QMainWindow):
         QMessageBox.information(self, self.t("info.title"), message)
 
     def _has_unsaved_player_changes(self) -> bool:
-        return self._tree_levels_dirty or self._player_settings_dirty
+        return (
+            self._tree_levels_dirty
+            or self._player_settings_dirty
+            or self._talent_dirty
+        )
 
     def _ask_unsaved_close_action(self) -> str:
         dialog = QMessageBox(self)

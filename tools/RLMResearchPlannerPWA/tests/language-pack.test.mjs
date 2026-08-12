@@ -36,6 +36,7 @@ function payload(overrides = {}) {
     buildings: {},
     effects: {},
     resources: {},
+    talents: {},
     ...overrides,
   };
 }
@@ -96,6 +97,7 @@ test("language pack cannot override or export the official disclaimer", () => {
   const template = languagePackTemplate({
     catalog: { categories: [], nodes: new Map(), datasetId: "test" },
     castleCatalog: { order: [] },
+    talentCatalog: { talents: new Map(), talentName() { return ""; } },
     messages: { "tab.tree": "Research Tree", "app.disclaimer": "Official disclaimer" },
   });
   assert.equal(Object.hasOwn(template.messages, "app.disclaimer"), false);

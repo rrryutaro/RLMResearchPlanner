@@ -14,6 +14,7 @@ from rlm_research_planner.domain.models import (
     ResearchPlanTask,
     RESOURCE_KEYS,
     SpeedupInventoryItem,
+    TalentPlanStep,
     max_guild_helps_for_castle,
 )
 from rlm_research_planner.services.calculation import (
@@ -193,6 +194,46 @@ def _paid_valuation_payload(value: PaidValuation) -> dict[str, object]:
     }
 
 
+def _talent_plan_from_raw(raw: object) -> list[TalentPlanStep]:
+    steps: list[TalentPlanStep] = []
+    latest_levels: dict[str, int] = {}
+    if not isinstance(raw, list):
+        return steps
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        talent_id = str(
+            item.get("talent_id", item.get("talentId", ""))
+        ).strip()
+        target_level = max(
+            0, int(item.get("target_level", item.get("targetLevel", 0)))
+        )
+        if not talent_id or target_level < 1:
+            continue
+        if target_level <= latest_levels.get(talent_id, 0):
+            continue
+        steps.append(TalentPlanStep(talent_id, target_level))
+        latest_levels[talent_id] = target_level
+    return steps
+
+
+def _talent_plan_payload(
+    steps: list[TalentPlanStep],
+) -> list[dict[str, object]]:
+    return [
+        {"talent_id": step.talent_id, "target_level": step.target_level}
+        for step in _talent_plan_from_raw(
+            [
+                {
+                    "talent_id": step.talent_id,
+                    "target_level": step.target_level,
+                }
+                for step in steps
+            ]
+        )
+    ]
+
+
 class PlayerRepository:
     def __init__(self, database: Path | str = ":memory:") -> None:
         self.database = database
@@ -275,6 +316,18 @@ class PlayerRepository:
             use_gems_for_speedups=bool(
                 values.get("use_gems_for_speedups", False)
             ),
+            technolabe_count=max(0, int(values.get("technolabe_count", 0))),
+            technolabe_recommendation_threshold_percent=max(
+                0.0,
+                min(
+                    100.0,
+                    float(
+                        values.get(
+                            "technolabe_recommendation_threshold_percent", 95.0
+                        )
+                    ),
+                ),
+            ),
             resource_display_mode=(
                 "short"
                 if values.get("resource_display_mode") == "short"
@@ -305,6 +358,15 @@ class PlayerRepository:
                 for item in values.get("plan_tasks", [])
                 if isinstance(item, dict) and item.get("research_id")
             ],
+            talent_plan_name=str(values.get("talent_plan_name", ""))[:100],
+            talent_preset_id=str(
+                values.get("talent_preset_id", "growth_speed")
+            )[:100],
+            talent_priority_id=str(values.get("talent_priority_id", ""))[:100],
+            talent_available_points=max(
+                0, min(9999, int(values.get("talent_available_points", 278)))
+            ),
+            talent_plan=_talent_plan_from_raw(values.get("talent_plan", [])),
             paid_offers=[
                 offer
                 for offer in (
@@ -360,6 +422,16 @@ class PlayerRepository:
                 _effective_speedup_inventory(state.settings)
             ),
             "use_gems_for_speedups": state.settings.use_gems_for_speedups,
+            "technolabe_count": max(0, int(state.settings.technolabe_count)),
+            "technolabe_recommendation_threshold_percent": max(
+                0.0,
+                min(
+                    100.0,
+                    float(
+                        state.settings.technolabe_recommendation_threshold_percent
+                    ),
+                ),
+            ),
             "resource_display_mode": state.settings.resource_display_mode,
             "building_levels": state.building_levels,
             "plan_tasks": [
@@ -371,6 +443,13 @@ class PlayerRepository:
                 }
                 for task in state.plan_tasks
             ],
+            "talent_plan_name": state.talent_plan_name[:100],
+            "talent_preset_id": state.talent_preset_id[:100],
+            "talent_priority_id": state.talent_priority_id[:100],
+            "talent_available_points": max(
+                0, min(9999, int(state.talent_available_points))
+            ),
+            "talent_plan": _talent_plan_payload(state.talent_plan),
             "paid_offers": [
                 _paid_offer_payload(offer) for offer in state.paid_offers
             ],
@@ -445,6 +524,18 @@ class PlayerRepository:
                     "use_gems_for_speedups": (
                         state.settings.use_gems_for_speedups
                     ),
+                    "technolabe_count": max(
+                        0, int(state.settings.technolabe_count)
+                    ),
+                    "technolabe_recommendation_threshold_percent": max(
+                        0.0,
+                        min(
+                            100.0,
+                            float(
+                                state.settings.technolabe_recommendation_threshold_percent
+                            ),
+                        ),
+                    ),
                     "resource_display_mode": state.settings.resource_display_mode,
                     "resources": state.settings.resources,
                     "observed_stats": state.observed_stats,
@@ -460,6 +551,13 @@ class PlayerRepository:
                     }
                     for task in state.plan_tasks
                 ],
+                "talent_plan_name": state.talent_plan_name[:100],
+                "talent_preset_id": state.talent_preset_id[:100],
+                "talent_priority_id": state.talent_priority_id[:100],
+                "talent_available_points": max(
+                    0, min(9999, int(state.talent_available_points))
+                ),
+                "talent_plan": _talent_plan_payload(state.talent_plan),
                 "paid_offers": [
                     _paid_offer_payload(offer) for offer in state.paid_offers
                 ],
@@ -538,6 +636,21 @@ class PlayerRepository:
             use_gems_for_speedups=bool(
                 raw_settings.get("use_gems_for_speedups", False)  # type: ignore[union-attr]
             ),
+            technolabe_count=max(
+                0,
+                int(raw_settings.get("technolabe_count", 0)),  # type: ignore[union-attr]
+            ),
+            technolabe_recommendation_threshold_percent=max(
+                0.0,
+                min(
+                    100.0,
+                    float(
+                        raw_settings.get(  # type: ignore[union-attr]
+                            "technolabe_recommendation_threshold_percent", 95.0
+                        )
+                    ),
+                ),
+            ),
             resource_display_mode=(
                 "short"
                 if raw_settings.get("resource_display_mode") == "short"  # type: ignore[union-attr]
@@ -568,6 +681,19 @@ class PlayerRepository:
                 for item in player.get("plan_tasks", [])  # type: ignore[union-attr]
                 if isinstance(item, dict) and item.get("research_id")
             ],
+            talent_plan_name=str(player.get("talent_plan_name", ""))[:100],  # type: ignore[union-attr]
+            talent_preset_id=str(  # type: ignore[union-attr]
+                player.get("talent_preset_id", "growth_speed")
+            )[:100],
+            talent_priority_id=str(  # type: ignore[union-attr]
+                player.get("talent_priority_id", "")
+            )[:100],
+            talent_available_points=max(  # type: ignore[union-attr]
+                0, min(9999, int(player.get("talent_available_points", 278)))
+            ),
+            talent_plan=_talent_plan_from_raw(  # type: ignore[union-attr]
+                player.get("talent_plan", [])
+            ),
             paid_offers=[
                 offer
                 for offer in (

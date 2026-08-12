@@ -126,6 +126,9 @@ class Translator:
     def resource_name(self, key: str, fallback: str) -> str:
         return self.term("resources", key, fallback)
 
+    def talent_name(self, talent_id: str, fallback: str) -> str:
+        return self.term("talents", talent_id, fallback)
+
     def english_messages(self) -> dict[str, str]:
         path = self.resources_directory / "en-US.json"
         raw = json.loads(path.read_text(encoding="utf-8"))

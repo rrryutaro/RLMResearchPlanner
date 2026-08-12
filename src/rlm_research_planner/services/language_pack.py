@@ -21,6 +21,7 @@ LANGUAGE_PACK_SECTIONS = (
     "buildings",
     "effects",
     "resources",
+    "talents",
 )
 PROTECTED_MESSAGE_KEYS = frozenset(("app.disclaimer",))
 _LOCALE_PATTERN = re.compile(r"^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$")
@@ -266,6 +267,7 @@ def build_language_pack_template(
     master: MasterData,
     observations: Iterable[ResearchTreeObservation],
     castle_catalog: CastleCatalog,
+    talent_names: Mapping[str, str] | None = None,
 ) -> dict[str, object]:
     category_sources: dict[str, str] = {}
     research_sources: dict[str, str] = {}
@@ -325,5 +327,9 @@ def build_language_pack_template(
         },
         "resources": {
             key: _entry(value) for key, value in sorted(resource_sources.items())
+        },
+        "talents": {
+            key: _entry(value)
+            for key, value in sorted((talent_names or {}).items())
         },
     }

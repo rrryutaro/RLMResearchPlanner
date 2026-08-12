@@ -1,0 +1,110 @@
+{
+  "document_type": "RLMResearchPlanner.talent-catalog",
+  "schema_version": 1,
+  "catalog_version": "1.1.0",
+  "checked_on": "2026-08-12",
+  "verification": {
+    "tree_structure": "cross_checked",
+    "maximum_levels_and_effects": "cross_checked",
+    "en-US_labels": "cross_checked",
+    "ja-JP_labels": "cross_checked",
+    "presets": "provisional"
+  },
+  "default_available_points": 278,
+  "talent_point_bonus_by_level": [0,1,1,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,5,5,5,5,5,5,5,5,5,5,6,6,6,6,6,6,6,6,6,6,7,7,7,7,7,8,8,8,8,8,9],
+  "sources": [
+    {
+      "id": "fandom_talent",
+      "url": "https://lordsmobile.fandom.com/wiki/Talent",
+      "license": "CC BY-SA 3.0",
+      "purpose": "talent names, tree order, prerequisites and effects"
+    },
+    {
+      "id": "fandom_player_exp",
+      "url": "https://lordsmobile.fandom.com/wiki/Player_EXP",
+      "license": "CC BY-SA 3.0",
+      "purpose": "talent-point rewards for Player Lv.1 through Lv.60"
+    },
+    {
+      "id": "gamesguide_talent_tree",
+      "url": "https://www.gamesguideinfo.com/lords-mobile/commander-skill-tree/830000015-Talent-Tree",
+      "license": "factual cross-check only",
+      "purpose": "maximum levels and maximum effects"
+    },
+    {
+      "id": "gamerch_talent_list",
+      "url": "https://lords-mobile.gamerch.com/%E6%89%8D%E8%83%BD/",
+      "license": "factual cross-check only",
+      "purpose": "Japanese in-game labels and talent-tree order"
+    },
+    {
+      "id": "lordsmobile_org_talent_guides",
+      "url": "https://lordsmobile.org/knowledge-is-power-leader-modes/",
+      "license": "recommendation reference only",
+      "purpose": "advisory preset priorities; no source prose or images redistributed"
+    },
+    {
+      "id": "appliv_talent_guide",
+      "url": "https://games.app-liv.jp/archives/243630",
+      "license": "recommendation reference only",
+      "purpose": "Japanese advisory priorities for construction and research; no source prose or images redistributed"
+    }
+  ],
+  "talents": [
+    {"id":"squad_offense_i","branch":"military","row":1,"order":1,"max_level":5,"name":{"ja-JP":"軍隊攻撃力 I","en-US":"Squad Offense I"},"effect":{"ja-JP":"軍隊攻撃力","en-US":"Army ATK","max":5},"prerequisite":null},
+    {"id":"food_production_i","branch":"economy","row":1,"order":2,"max_level":5,"name":{"ja-JP":"食糧生産量 I","en-US":"Food Production I"},"effect":{"ja-JP":"食糧生産量","en-US":"Food Production","max":12},"prerequisite":null},
+    {"id":"trap_building_i","branch":"military","row":2,"order":3,"max_level":15,"name":{"ja-JP":"罠の配置速度 I","en-US":"Trap Building I"},"effect":{"ja-JP":"罠の配置速度","en-US":"Trap Building Speed","max":30},"prerequisite":{"talent_id":"cavalry_offense_i","level":3}},
+    {"id":"cavalry_offense_i","branch":"military","row":2,"order":4,"max_level":15,"name":{"ja-JP":"騎兵攻撃力 I","en-US":"Cavalry Offense I"},"effect":{"ja-JP":"騎兵攻撃力","en-US":"Cavalry ATK","max":7},"prerequisite":{"talent_id":"squad_offense_i","level":2}},
+    {"id":"stone_production_i","branch":"economy","row":2,"order":5,"max_level":15,"name":{"ja-JP":"石材生産量 I","en-US":"Stone Production I"},"effect":{"ja-JP":"石材生産量","en-US":"Stone Production","max":32},"prerequisite":{"talent_id":"food_production_i","level":2}},
+    {"id":"construction_speed_i","branch":"economy","row":2,"order":6,"max_level":10,"name":{"ja-JP":"建設速度 I","en-US":"Construction Speed I"},"effect":{"ja-JP":"建設速度","en-US":"Construction Speed","max":40},"prerequisite":{"talent_id":"stone_production_i","level":2}},
+    {"id":"training_speed_i","branch":"military","row":3,"order":7,"max_level":15,"name":{"ja-JP":"訓練速度 I","en-US":"Training Speed I"},"effect":{"ja-JP":"訓練速度","en-US":"Training Speed","max":30},"prerequisite":{"talent_id":"trap_building_i","level":3}},
+    {"id":"ranged_offense_i","branch":"military","row":3,"order":8,"max_level":15,"name":{"ja-JP":"弓兵攻撃力 I","en-US":"Ranged Offense I"},"effect":{"ja-JP":"弓兵攻撃力","en-US":"Ranged ATK","max":7},"prerequisite":{"talent_id":"cavalry_offense_i","level":3}},
+    {"id":"timber_production_i","branch":"economy","row":3,"order":9,"max_level":15,"name":{"ja-JP":"木材生産量 I","en-US":"Timber Production I"},"effect":{"ja-JP":"木材生産量","en-US":"Timber Production","max":32},"prerequisite":{"talent_id":"stone_production_i","level":2}},
+    {"id":"research_i","branch":"economy","row":3,"order":10,"max_level":10,"name":{"ja-JP":"研究速度 I","en-US":"Research I"},"effect":{"ja-JP":"研究速度","en-US":"Research Speed","max":40},"prerequisite":{"talent_id":"construction_speed_i","level":3}},
+    {"id":"siege_engine_offense_i","branch":"military","row":4,"order":11,"max_level":15,"name":{"ja-JP":"攻城兵器攻撃力 I","en-US":"Siege Engine Offense I"},"effect":{"ja-JP":"攻城兵器攻撃力","en-US":"Siege Engine ATK","max":7},"prerequisite":{"talent_id":"infantry_offense_i","level":3}},
+    {"id":"infantry_offense_i","branch":"military","row":4,"order":12,"max_level":15,"name":{"ja-JP":"歩兵攻撃力 I","en-US":"Infantry Offense I"},"effect":{"ja-JP":"歩兵攻撃力","en-US":"Infantry ATK","max":7},"prerequisite":{"talent_id":"ranged_offense_i","level":3}},
+    {"id":"ore_production_i","branch":"economy","row":4,"order":13,"max_level":15,"name":{"ja-JP":"鉱石生産量 I","en-US":"Ore Production I"},"effect":{"ja-JP":"鉱石生産量","en-US":"Ore Production","max":32},"prerequisite":{"talent_id":"timber_production_i","level":2}},
+    {"id":"gold_production_i","branch":"economy","row":4,"order":14,"max_level":15,"name":{"ja-JP":"ゴールド生産量 I","en-US":"Gold Production I"},"effect":{"ja-JP":"ゴールド生産量","en-US":"Gold Production","max":32},"prerequisite":{"talent_id":"ore_production_i","level":2}},
+    {"id":"trap_offense_i","branch":"military","row":5,"order":15,"max_level":15,"name":{"ja-JP":"罠の攻撃力 I","en-US":"Trap Offense I"},"effect":{"ja-JP":"罠の攻撃力","en-US":"Trap ATK","max":7},"prerequisite":{"talent_id":"squad_defense_i","level":3}},
+    {"id":"squad_defense_i","branch":"military","row":5,"order":16,"max_level":15,"name":{"ja-JP":"軍隊防御力 I","en-US":"Squad Defense I"},"effect":{"ja-JP":"軍隊防御力","en-US":"Army DEF","max":13},"prerequisite":{"talent_id":"infantry_offense_i","level":3}},
+    {"id":"food_production_ii","branch":"economy","row":5,"order":17,"max_level":20,"name":{"ja-JP":"食糧生産量 II","en-US":"Food Production II"},"effect":{"ja-JP":"食糧生産量","en-US":"Food Production","max":70},"prerequisite":{"talent_id":"ore_production_i","level":2}},
+    {"id":"max_load_i","branch":"economy","row":5,"order":18,"max_level":15,"name":{"ja-JP":"資源所持量 I","en-US":"Max Load I"},"effect":{"ja-JP":"資源所持量","en-US":"Army Capacity","max":17},"prerequisite":{"talent_id":"food_production_ii","level":5}},
+    {"id":"squad_health_i","branch":"military","row":6,"order":19,"max_level":15,"name":{"ja-JP":"軍隊HP I","en-US":"Squad Health I"},"effect":{"ja-JP":"軍隊HP","en-US":"Army Max HP","max":13},"prerequisite":{"talent_id":"squad_defense_i","level":3}},
+    {"id":"stone_production_ii","branch":"economy","row":6,"order":20,"max_level":20,"name":{"ja-JP":"石材生産量 II","en-US":"Stone Production II"},"effect":{"ja-JP":"石材生産量","en-US":"Stone Production","max":48},"prerequisite":{"talent_id":"food_production_ii","level":5}},
+    {"id":"gathering_i","branch":"economy","row":6,"order":21,"max_level":15,"name":{"ja-JP":"採取速度 I","en-US":"Gathering I"},"effect":{"ja-JP":"採取速度","en-US":"Gathering Speed","max":17},"prerequisite":{"talent_id":"max_load_i","level":5}},
+    {"id":"siege_engine_offense_ii","branch":"military","row":7,"order":22,"max_level":20,"name":{"ja-JP":"攻城兵器攻撃力 II","en-US":"Siege Engine Offense II"},"effect":{"ja-JP":"攻城兵器攻撃力","en-US":"Siege Engine ATK","max":10},"prerequisite":{"talent_id":"ranged_offense_ii","level":5}},
+    {"id":"ranged_offense_ii","branch":"military","row":7,"order":23,"max_level":20,"name":{"ja-JP":"弓兵攻撃力 II","en-US":"Ranged Offense II"},"effect":{"ja-JP":"弓兵攻撃力","en-US":"Ranged ATK","max":10},"prerequisite":{"talent_id":"squad_health_i","level":3}},
+    {"id":"ore_production_ii","branch":"economy","row":7,"order":24,"max_level":20,"name":{"ja-JP":"鉱石生産量 II","en-US":"Ore Production II"},"effect":{"ja-JP":"鉱石生産量","en-US":"Ore Production","max":48},"prerequisite":{"talent_id":"stone_production_ii","level":5}},
+    {"id":"timber_production_ii","branch":"economy","row":7,"order":25,"max_level":20,"name":{"ja-JP":"木材生産量 II","en-US":"Timber Production II"},"effect":{"ja-JP":"木材生産量","en-US":"Timber Production","max":48},"prerequisite":{"talent_id":"ore_production_ii","level":5}},
+    {"id":"trap_building_ii","branch":"military","row":8,"order":26,"max_level":35,"name":{"ja-JP":"罠の配置速度 II","en-US":"Trap Building II"},"effect":{"ja-JP":"罠の配置速度","en-US":"Trap Building Speed","max":92},"prerequisite":{"talent_id":"infantry_offense_ii","level":5}},
+    {"id":"infantry_offense_ii","branch":"military","row":8,"order":27,"max_level":20,"name":{"ja-JP":"歩兵攻撃力 II","en-US":"Infantry Offense II"},"effect":{"ja-JP":"歩兵攻撃力","en-US":"Infantry ATK","max":10},"prerequisite":{"talent_id":"ranged_offense_ii","level":5}},
+    {"id":"construction_speed_ii","branch":"economy","row":8,"order":28,"max_level":20,"name":{"ja-JP":"建設速度 II","en-US":"Construction Speed II"},"effect":{"ja-JP":"建設速度","en-US":"Construction Speed","max":65},"prerequisite":{"talent_id":"ore_production_ii","level":5}},
+    {"id":"gold_production_ii","branch":"economy","row":8,"order":29,"max_level":20,"name":{"ja-JP":"ゴールド生産量 II","en-US":"Gold Production II"},"effect":{"ja-JP":"ゴールド生産量","en-US":"Gold Production","max":48},"prerequisite":{"talent_id":"timber_production_ii","level":5}},
+    {"id":"trap_offense_ii","branch":"military","row":9,"order":30,"max_level":20,"name":{"ja-JP":"罠の攻撃力 II","en-US":"Trap Offense II"},"effect":{"ja-JP":"罠の攻撃力","en-US":"Trap ATK","max":10},"prerequisite":{"talent_id":"trap_building_ii","level":5}},
+    {"id":"cavalry_offense_ii","branch":"military","row":9,"order":31,"max_level":20,"name":{"ja-JP":"騎兵攻撃力 II","en-US":"Cavalry Offense II"},"effect":{"ja-JP":"騎兵攻撃力","en-US":"Cavalry ATK","max":10},"prerequisite":{"talent_id":"infantry_offense_ii","level":5}},
+    {"id":"research_ii","branch":"economy","row":9,"order":32,"max_level":20,"name":{"ja-JP":"研究速度 II","en-US":"Research II"},"effect":{"ja-JP":"研究速度","en-US":"Research Speed","max":65},"prerequisite":{"talent_id":"construction_speed_ii","level":5}},
+    {"id":"training_speed_ii","branch":"military","row":10,"order":33,"max_level":35,"name":{"ja-JP":"訓練速度 II","en-US":"Training Speed II"},"effect":{"ja-JP":"訓練速度","en-US":"Training Speed","max":92},"prerequisite":{"talent_id":"infantry_offense_iii","level":5}},
+    {"id":"infantry_offense_iii","branch":"military","row":10,"order":34,"max_level":50,"name":{"ja-JP":"歩兵攻撃力 III","en-US":"Infantry Offense III"},"effect":{"ja-JP":"歩兵攻撃力","en-US":"Infantry ATK","max":53},"prerequisite":{"talent_id":"cavalry_offense_ii","level":5}},
+    {"id":"gathering_ii","branch":"economy","row":10,"order":35,"max_level":50,"name":{"ja-JP":"採取速度 II","en-US":"Gathering II"},"effect":{"ja-JP":"採取速度","en-US":"Gathering Speed","max":100},"prerequisite":{"talent_id":"research_ii","level":5}},
+    {"id":"max_load_ii","branch":"economy","row":10,"order":36,"max_level":50,"name":{"ja-JP":"資源所持量 II","en-US":"Max Load II"},"effect":{"ja-JP":"資源所持量","en-US":"Army Capacity","max":100},"prerequisite":{"talent_id":"gathering_ii","level":5}},
+    {"id":"siege_engine_offense_iii","branch":"military","row":11,"order":37,"max_level":50,"name":{"ja-JP":"攻城兵器攻撃力 III","en-US":"Siege Engine Offense III"},"effect":{"ja-JP":"攻城兵器攻撃力","en-US":"Siege Engine ATK","max":53},"prerequisite":{"talent_id":"cavalry_offense_iii","level":5}},
+    {"id":"cavalry_offense_iii","branch":"military","row":11,"order":38,"max_level":50,"name":{"ja-JP":"騎兵攻撃力 III","en-US":"Cavalry Offense III"},"effect":{"ja-JP":"騎兵攻撃力","en-US":"Cavalry ATK","max":53},"prerequisite":{"talent_id":"infantry_offense_iii","level":5}},
+    {"id":"food_production_iii","branch":"economy","row":11,"order":39,"max_level":50,"name":{"ja-JP":"食糧生産量 III","en-US":"Food Production III"},"effect":{"ja-JP":"食糧生産量","en-US":"Food Production","max":518},"prerequisite":{"talent_id":"gathering_ii","level":5}},
+    {"id":"trap_offense_iii","branch":"military","row":12,"order":40,"max_level":50,"name":{"ja-JP":"罠の攻撃力 III","en-US":"Trap Offense III"},"effect":{"ja-JP":"罠の攻撃力","en-US":"Trap ATK","max":53},"prerequisite":{"talent_id":"ranged_offense_iii","level":5}},
+    {"id":"ranged_offense_iii","branch":"military","row":12,"order":41,"max_level":50,"name":{"ja-JP":"弓兵攻撃力 III","en-US":"Ranged Offense III"},"effect":{"ja-JP":"弓兵攻撃力","en-US":"Ranged ATK","max":53},"prerequisite":{"talent_id":"cavalry_offense_iii","level":5}},
+    {"id":"timber_production_iii","branch":"economy","row":12,"order":42,"max_level":50,"name":{"ja-JP":"木材生産量 III","en-US":"Timber Production III"},"effect":{"ja-JP":"木材生産量","en-US":"Timber Production","max":288},"prerequisite":{"talent_id":"food_production_iii","level":5}},
+    {"id":"ore_production_iii","branch":"economy","row":12,"order":43,"max_level":50,"name":{"ja-JP":"鉱石生産量 III","en-US":"Ore Production III"},"effect":{"ja-JP":"鉱石生産量","en-US":"Ore Production","max":288},"prerequisite":{"talent_id":"timber_production_iii","level":5}},
+    {"id":"squad_defense_ii","branch":"military","row":13,"order":44,"max_level":50,"name":{"ja-JP":"軍隊防御力 II","en-US":"Squad Defense II"},"effect":{"ja-JP":"軍隊防御力","en-US":"Army DEF","max":87},"prerequisite":{"talent_id":"squad_health_ii","level":5}},
+    {"id":"squad_health_ii","branch":"military","row":13,"order":45,"max_level":50,"name":{"ja-JP":"軍隊HP II","en-US":"Squad Health II"},"effect":{"ja-JP":"軍隊HP","en-US":"Army Max HP","max":87},"prerequisite":{"talent_id":"ranged_offense_iii","level":5}},
+    {"id":"stone_production_iii","branch":"economy","row":13,"order":46,"max_level":50,"name":{"ja-JP":"石材生産量 III","en-US":"Stone Production III"},"effect":{"ja-JP":"石材生産量","en-US":"Stone Production","max":288},"prerequisite":{"talent_id":"timber_production_iii","level":5}},
+    {"id":"gold_production_iii","branch":"economy","row":13,"order":47,"max_level":50,"name":{"ja-JP":"ゴールド生産量 III","en-US":"Gold Production III"},"effect":{"ja-JP":"ゴールド生産量","en-US":"Gold Production","max":288},"prerequisite":{"talent_id":"ore_production_iii","level":5}}
+  ],
+  "presets": [
+    {"id":"growth_speed","name":{"ja-JP":"成長（建設・研究・訓練）","en-US":"Growth (Construction, Research, Training)"},"description":{"ja-JP":"建設・研究を優先し、続いて訓練速度へ振る参考順です。","en-US":"Advisory order prioritizing construction and research, followed by training."},"verification_status":"provisional","targets":[{"talent_id":"construction_speed_i","target_level":10},{"talent_id":"research_i","target_level":10},{"talent_id":"construction_speed_ii","target_level":20},{"talent_id":"research_ii","target_level":20},{"talent_id":"training_speed_i","target_level":15},{"talent_id":"training_speed_ii","target_level":35}]},
+    {"id":"gathering","name":{"ja-JP":"資源採取・所持量","en-US":"Gathering and Max Load"},"description":{"ja-JP":"採取速度と資源所持量を優先する参考順です。","en-US":"Advisory order prioritizing gathering speed and army capacity."},"verification_status":"provisional","targets":[{"talent_id":"gathering_i","target_level":15},{"talent_id":"max_load_i","target_level":15},{"talent_id":"gathering_ii","target_level":50},{"talent_id":"max_load_ii","target_level":50}]},
+    {"id":"army_general","name":{"ja-JP":"戦闘・軍隊汎用","en-US":"War - General Army"},"description":{"ja-JP":"兵種を限定せず、軍隊HP・軍隊攻撃力・軍隊防御力を優先する参考順です。","en-US":"Advisory general-war order prioritizing army HP, ATK, and DEF without focusing on one troop type."},"verification_status":"provisional","targets":[{"talent_id":"squad_health_i","target_level":15},{"talent_id":"squad_health_ii","target_level":50},{"talent_id":"squad_offense_i","target_level":5},{"talent_id":"squad_defense_i","target_level":15},{"talent_id":"squad_defense_ii","target_level":50}]},
+    {"id":"infantry_war","name":{"ja-JP":"戦闘・歩兵重視","en-US":"War - Infantry Focus"},"description":{"ja-JP":"軍隊HPと歩兵攻撃力を優先する参考順です。","en-US":"Advisory order prioritizing army HP and infantry ATK."},"verification_status":"provisional","targets":[{"talent_id":"squad_health_i","target_level":15},{"talent_id":"squad_health_ii","target_level":50},{"talent_id":"squad_offense_i","target_level":5},{"talent_id":"infantry_offense_iii","target_level":50},{"talent_id":"infantry_offense_ii","target_level":20},{"talent_id":"infantry_offense_i","target_level":15}]},
+    {"id":"ranged_war","name":{"ja-JP":"戦闘・弓兵重視","en-US":"War - Ranged Focus"},"description":{"ja-JP":"軍隊HPと弓兵攻撃力を優先する参考順です。","en-US":"Advisory order prioritizing army HP and ranged ATK."},"verification_status":"provisional","targets":[{"talent_id":"squad_health_i","target_level":15},{"talent_id":"squad_health_ii","target_level":50},{"talent_id":"squad_offense_i","target_level":5},{"talent_id":"ranged_offense_iii","target_level":50},{"talent_id":"ranged_offense_ii","target_level":20},{"talent_id":"ranged_offense_i","target_level":15}]},
+    {"id":"cavalry_war","name":{"ja-JP":"戦闘・騎兵重視","en-US":"War - Cavalry Focus"},"description":{"ja-JP":"軍隊HPと騎兵攻撃力を優先する参考順です。","en-US":"Advisory order prioritizing army HP and cavalry ATK."},"verification_status":"provisional","targets":[{"talent_id":"squad_health_i","target_level":15},{"talent_id":"squad_health_ii","target_level":50},{"talent_id":"squad_offense_i","target_level":5},{"talent_id":"cavalry_offense_iii","target_level":50},{"talent_id":"cavalry_offense_ii","target_level":20},{"talent_id":"cavalry_offense_i","target_level":15}]}
+  ]
+}

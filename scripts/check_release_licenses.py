@@ -109,19 +109,32 @@ def check(
 
     research_path = PRODUCT_ROOT / "data" / "research" / "catalog.json"
     castle_path = PRODUCT_ROOT / "data" / "buildings" / "castle_catalog.json"
+    talent_path = PRODUCT_ROOT / "data" / "talents" / "catalog.json"
     research = _load_json(research_path)
     castle = _load_json(castle_path)
-    urls = _source_urls(research, "categories") | _source_urls(castle, "buildings")
+    talent = _load_json(talent_path)
+    urls = (
+        _source_urls(research, "categories")
+        | _source_urls(castle, "buildings")
+        | {
+            str(source.get("url", "")).strip()
+            for source in talent.get("sources", [])
+            if str(source.get("url", "")).strip()
+        }
+    )
     for url in sorted(urls):
         if url not in data_license:
             errors.append(f"DATA_LICENSE.md is missing source attribution: {url}")
 
     pwa_research = PWA_ROOT / "data" / "research" / "catalog.json"
     pwa_castle = PWA_ROOT / "data" / "buildings" / "castle_catalog.json"
+    pwa_talent = PWA_ROOT / "data" / "talents" / "catalog.json"
     if _load_json(pwa_research) != research:
         errors.append("The PWA research catalog is not synchronized.")
     if _load_json(pwa_castle) != castle:
         errors.append("The PWA castle catalog is not synchronized.")
+    if _load_json(pwa_talent) != talent:
+        errors.append("The PWA talent catalog is not synchronized.")
 
     package_versions = {
         "PySide6": importlib.metadata.version("PySide6"),
@@ -208,6 +221,7 @@ def check(
         r'data\research\catalog.json;data\research',
         r'data\research\master.json;data\research',
         r'data\research\locales;data\research\locales',
+        r'data\talents;data\talents',
     )
     for entry in required_public_data:
         if entry not in build_script:

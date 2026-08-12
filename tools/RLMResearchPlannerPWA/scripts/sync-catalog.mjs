@@ -22,6 +22,8 @@ const datasetDestination = join(project, "data", "research-dataset");
 const localeDirectory = join(desktop, "resources", "i18n");
 const castleSource = join(desktop, "data", "buildings", "castle_catalog.json");
 const castleDestination = join(project, "data", "buildings", "castle_catalog.json");
+const talentSource = join(desktop, "data", "talents", "catalog.json");
+const talentDestination = join(project, "data", "talents", "catalog.json");
 
 function copyFileIfChanged(sourcePath, destinationPath) {
   try {
@@ -67,7 +69,10 @@ for (const locale of ["ja-JP", "en-US"]) {
 }
 mkdirSync(dirname(castleDestination), { recursive: true });
 copyFileIfChanged(castleSource, castleDestination);
+mkdirSync(dirname(talentDestination), { recursive: true });
+copyFileIfChanged(talentSource, talentDestination);
 process.stdout.write(`Synced ${source} -> ${destination}\n`);
 process.stdout.write(`Synced ${datasetSource} -> ${datasetDestination}\n`);
 process.stdout.write(`Synced ja-JP and en-US locale data\n`);
 process.stdout.write(`Synced ${castleSource} -> ${castleDestination}\n`);
+process.stdout.write(`Synced ${talentSource} -> ${talentDestination}\n`);

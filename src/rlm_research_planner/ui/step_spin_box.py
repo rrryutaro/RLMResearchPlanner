@@ -145,6 +145,18 @@ class _VisibleStepButtons:
         self._decrease_button.setEnabled(self.isEnabled() and value > self.minimum())
         self._increase_button.setEnabled(self.isEnabled() and value < self.maximum())
 
+    def setRange(self, minimum, maximum) -> None:
+        super().setRange(minimum, maximum)
+        self._update_step_buttons()
+
+    def setMinimum(self, minimum) -> None:
+        super().setMinimum(minimum)
+        self._update_step_buttons()
+
+    def setMaximum(self, maximum) -> None:
+        super().setMaximum(maximum)
+        self._update_step_buttons()
+
     def set_visual_style(self, visual_style: str) -> None:
         set_step_button_visual_style(self._decrease_button, visual_style)
         set_step_button_visual_style(self._increase_button, visual_style)

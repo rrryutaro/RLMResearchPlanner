@@ -16,8 +16,8 @@ export function hasSavedState(storage = globalThis.localStorage, pathname = glob
   } catch { return false; }
 }
 export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
-import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.2-b1";
-import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.2-b1";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.3-b10";
+import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.3-b10";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
@@ -50,12 +50,20 @@ export function defaultState() {
       speedupSeconds: 0,
       speedupInventory: [],
       useGemsForSpeedups: false,
+      technolabeCount: 0,
+      technolabeRecommendationThresholdPercent: 95,
       resourceDisplayMode: "exact",
       resources: Object.fromEntries(RESOURCE_KEYS.map((key) => [key, 0])),
     },
     researchLevels: {},
     buildingLevels: {},
     planTasks: [],
+    talentPlanName: "",
+    talentPresetId: "growth_speed",
+    talentPriorityId: "",
+    talentAutoFollow: true,
+    talentAvailablePoints: 278,
+    talentPlan: [],
     paidOffers: [],
     paidValuation: defaultPaidValuation(),
     observedStats: {},
@@ -105,6 +113,21 @@ export function sanitizeState(value) {
   }
   base.settings.speedupSeconds = 0;
   base.settings.useGemsForSpeedups = (settings.useGemsForSpeedups ?? settings.use_gems_for_speedups) === true;
+  base.settings.technolabeCount = Math.max(
+    0,
+    Math.trunc(number(settings.technolabeCount ?? settings.technolabe_count)),
+  );
+  base.settings.technolabeRecommendationThresholdPercent = Math.min(
+    100,
+    Math.max(
+      0,
+      number(
+        settings.technolabeRecommendationThresholdPercent
+          ?? settings.technolabe_recommendation_threshold_percent,
+        95,
+      ),
+    ),
+  );
   base.settings.resourceDisplayMode = (settings.resourceDisplayMode ?? settings.resource_display_mode) === "short" ? "short" : "exact";
   const resources = settings.resources || {};
   for (const key of RESOURCE_KEYS) base.settings.resources[key] = Math.max(0, Math.trunc(number(resources[key])));
@@ -119,6 +142,19 @@ export function sanitizeState(value) {
     createdAt: String(task.createdAt || task.created_at || new Date().toISOString()),
     sourceName: String(task.sourceName || task.source_name || ""),
   }));
+  base.talentPlanName = String(source.talentPlanName ?? source.talent_plan_name ?? "").trim().slice(0, 100);
+  base.talentPresetId = String(source.talentPresetId ?? source.talent_preset_id ?? "growth_speed").trim().slice(0, 100);
+  base.talentPriorityId = String(source.talentPriorityId ?? source.talent_priority_id ?? "").trim().slice(0, 100);
+  base.talentAutoFollow = (source.talentAutoFollow ?? source.talent_auto_follow) !== false;
+  base.talentAvailablePoints = Math.max(0, Math.min(9999, Math.trunc(number(source.talentAvailablePoints ?? source.talent_available_points, 278))));
+  const talentPlan = source.talentPlan || source.talent_plan || [];
+  const talentLevels = new Map();
+  base.talentPlan = (Array.isArray(talentPlan) ? talentPlan : []).flatMap((step) => {
+    const talentId = String(step?.talentId || step?.talent_id || "").trim();
+    const targetLevel = Math.max(0, Math.trunc(number(step?.targetLevel ?? step?.target_level)));
+    if (!talentId || targetLevel < 1 || targetLevel <= (talentLevels.get(talentId) || 0)) return [];
+    talentLevels.set(talentId, targetLevel); return [{ talentId, targetLevel }];
+  });
   base.paidOffers = (source.paidOffers || source.paid_offers || []).map(sanitizePaidOffer).filter((offer) => offer.offerId);
   base.paidValuation = sanitizePaidValuation(source.paidValuation || source.paid_valuation);
   base.observedStats = { ...(source.observedStats || source.observed_stats || {}) };
@@ -171,6 +207,11 @@ export function backupPayload(state) {
           quantity: item.quantity,
         })),
         use_gems_for_speedups: state.settings.useGemsForSpeedups === true,
+        technolabe_count: Math.max(0, Math.trunc(Number(state.settings.technolabeCount) || 0)),
+        technolabe_recommendation_threshold_percent: Math.min(
+          100,
+          Math.max(0, Number(state.settings.technolabeRecommendationThresholdPercent) || 0),
+        ),
         resource_display_mode: state.settings.resourceDisplayMode,
         resources: { ...state.settings.resources },
         observed_stats: { ...state.observedStats },
@@ -183,6 +224,12 @@ export function backupPayload(state) {
         created_at: task.createdAt,
         source_name: task.sourceName || "",
       })),
+      talent_plan_name: state.talentPlanName,
+      talent_preset_id: state.talentPresetId,
+      talent_priority_id: state.talentPriorityId,
+      talent_auto_follow: state.talentAutoFollow !== false,
+      talent_available_points: state.talentAvailablePoints,
+      talent_plan: state.talentPlan.map((step) => ({ talent_id: step.talentId, target_level: step.targetLevel })),
       paid_offers: state.paidOffers.map((offer) => ({
         offer_id: offer.offerId,
         title: offer.title,
@@ -309,7 +356,7 @@ export function mergeResearchDirectiveTasks(existingTasks, directiveTasks, sourc
 
 export function stateFromBackup(raw) {
   if (Number(raw?.schema_version) !== 1 || !raw?.player?.settings || !raw?.player?.research_levels) throw new Error("対応していないバックアップ形式です");
-  return sanitizeState({ settings: raw.player.settings, research_levels: raw.player.research_levels, building_levels: raw.player.building_levels, plan_tasks: raw.player.plan_tasks, paid_offers: raw.player.paid_offers, paid_valuation: raw.player.paid_valuation, observed_stats: raw.player.settings.observed_stats, updated_at: raw.player.updated_at });
+  return sanitizeState({ settings: raw.player.settings, research_levels: raw.player.research_levels, building_levels: raw.player.building_levels, plan_tasks: raw.player.plan_tasks, talent_plan_name: raw.player.talent_plan_name, talent_preset_id: raw.player.talent_preset_id, talent_priority_id: raw.player.talent_priority_id, talent_auto_follow: raw.player.talent_auto_follow, talent_available_points: raw.player.talent_available_points, talent_plan: raw.player.talent_plan, paid_offers: raw.player.paid_offers, paid_valuation: raw.player.paid_valuation, observed_stats: raw.player.settings.observed_stats, updated_at: raw.player.updated_at });
 }
 
 const VIP_MINUTES = { 1: 10, 2: 24, 3: 26, 4: 30, 5: 40, 6: 50, 7: 60, 8: 70, 9: 80, 10: 90, 11: 100, 12: 110, 13: 120, 14: 130, 15: 150 };

@@ -24,6 +24,7 @@ if errorlevel 1 exit /b %ERRORLEVEL%
   --specpath "%~dp0..\..\build" ^
   --paths "%~dp0src" ^
   --add-data "%~dp0data\buildings;data\buildings" ^
+  --add-data "%~dp0data\talents;data\talents" ^
   --add-data "%~dp0data\ocr;data\ocr" ^
   --add-data "%~dp0data\research\catalog.json;data\research" ^
   --add-data "%~dp0data\research\master.json;data\research" ^

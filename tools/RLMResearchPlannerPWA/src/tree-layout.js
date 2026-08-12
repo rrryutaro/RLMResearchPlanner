@@ -42,3 +42,13 @@ export function explicitTreeLayout(nodes) {
     rowCount: Math.max(1, ...nodes.map((node) => node.row + 1)),
   };
 }
+
+export function visibleTreeLayout(nodes) {
+  const layout = explicitTreeLayout(nodes);
+  const rows = [...new Set(nodes.map((node) => node.row))].sort((left, right) => left - right);
+  return {
+    ...layout,
+    rowCount: Math.max(1, rows.length),
+    rowSlots: new Map(rows.map((row, index) => [row, index])),
+  };
+}

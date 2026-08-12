@@ -18,6 +18,7 @@ from rlm_research_planner.repositories.catalog_repository import (
 from rlm_research_planner.services.catalog_planning import CatalogResearchPlanner
 from rlm_research_planner.services.technolabe import (
     TECHNOLABE_CAPACITY_SECONDS,
+    is_technolabe_recommended,
     technolabe_usage,
 )
 
@@ -201,6 +202,13 @@ def test_technolabe_efficiency_uses_original_time_and_sourced_count() -> None:
     )
     assert screenshot_count == 6
     assert screenshot_efficiency == pytest.approx(31.57, abs=0.001)
+
+
+def test_technolabe_recommendation_uses_player_threshold_boundary() -> None:
+    assert is_technolabe_recommended(95.0) is True
+    assert is_technolabe_recommended(94.9) is False
+    assert is_technolabe_recommended(92.5, 92.5) is True
+    assert is_technolabe_recommended(None, 0.0) is False
 
 
 def test_catalog_plan_omits_satisfied_prerequisites_from_dependency_tree() -> None:

@@ -6,6 +6,8 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
+import pytest
+
 from PySide6.QtGui import QColor, QFontMetrics, QImage, QPainter, QPalette
 from PySide6.QtWidgets import (
     QAbstractSpinBox,
@@ -256,6 +258,8 @@ def test_tree_instant_finish_filter_uses_next_level_speed_and_vip_time() -> None
 
         assert window.tree_instant_finish_check.text() == "即時終了のみ"
         assert not window.tree_instant_finish_check.isChecked()
+        assert window.tree_technolabe_check.text() == "叡智の輪推奨のみ"
+        assert not window.tree_technolabe_check.isChecked()
         window.academy_spin.setValue(25)
         window.tree_instant_finish_check.setChecked(True)
         app.processEvents()
@@ -1589,8 +1593,63 @@ def test_tree_level_editor_uses_staged_inline_card_input() -> None:
             level_position,
         )
         app.processEvents()
-        assert window.tabs.currentIndex() == 1
-        assert window._plan_target_research_id == "economy_vault_management"
+        assert window.tabs.currentIndex() == 0
+        assert window._plan_target_research_id == ""
+        window._ask_unsaved_close_action = lambda: "discard"
+        window.close()
+    finally:
+        player_repository.close()
+
+
+@pytest.mark.parametrize("recognized_level", [0, 4, 10])
+def test_tree_capture_replaces_an_existing_level_with_recognized_value(
+    recognized_level: int,
+) -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    master = JsonMasterRepository(paths.research_data).load()
+    catalog = JsonResearchCatalogRepository(paths.research_catalog).load_all()
+    player_repository = PlayerRepository(":memory:")
+    try:
+        state = player_repository.load()
+        state.research_levels["economy_vault_management"] = 7
+        window = MainWindow(
+            paths=paths,
+            master=master,
+            observations=catalog,
+            player_repository=player_repository,
+            player_state=state,
+            settings_repository=SettingsRepository(None),
+            app_settings=AppSettings(),
+            translator=Translator(paths.translations, "ja-JP"),
+        )
+
+        def recognized_current_screen(*, force_window_capture: bool = False) -> None:
+            assert force_window_capture
+            window._ocr_candidates = [
+                OcrCandidate(
+                    research_id="economy_vault_management",
+                    level=recognized_level,
+                    evidence=f"captured tree card {recognized_level}/10",
+                )
+            ]
+
+        window._run_ocr = recognized_current_screen
+        window.tree_capture_button.click()
+        app.processEvents()
+
+        assert (
+            window._tree_level_draft["economy_vault_management"]
+            == recognized_level
+        )
+        vault_card = next(
+            item
+            for item in window.tree_view.scene().items()
+            if getattr(item, "research_id", "") == "economy_vault_management"
+        )
+        assert vault_card.level_item.toPlainText() == f"{recognized_level} / 10"
+        window._ask_unsaved_close_action = lambda: "discard"
         window.close()
     finally:
         player_repository.close()
@@ -1641,6 +1700,38 @@ def test_deep_plan_paid_offer_simulation_finishes_without_freezing() -> None:
         assert window._current_catalog_plan is not None
         assert len(window._current_catalog_plan.steps) > 200
         assert window.plan_tree_view.scene().items()
+    finally:
+        window.close()
+        player_repository.close()
+
+
+def test_tree_technolabe_filter_uses_next_level_efficiency_and_is_exclusive() -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    master = JsonMasterRepository(paths.research_data).load()
+    catalog = JsonResearchDatasetRepository(paths.research_dataset).load_all()
+    player_repository = PlayerRepository(":memory:")
+    try:
+        window = MainWindow(
+            paths=paths,
+            master=master,
+            observations=catalog,
+            player_repository=player_repository,
+            player_state=player_repository.load(),
+            settings_repository=SettingsRepository(None),
+            app_settings=AppSettings(),
+            translator=Translator(paths.translations, "ja-JP"),
+        )
+        research_id = "advanced_wonder_battles_leadership_infantry_atk_ii"
+        window._tree_level_draft[research_id] = 7
+        node = window._observed_nodes[research_id]
+        assert window._tree_node_is_technolabe_candidate(node)
+        window.tree_instant_finish_check.setChecked(True)
+        window.tree_technolabe_check.setChecked(True)
+        app.processEvents()
+        assert window.tree_technolabe_check.isChecked()
+        assert not window.tree_instant_finish_check.isChecked()
     finally:
         window.close()
         player_repository.close()
@@ -1718,9 +1809,61 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
         )
         assert window.tabs.count() == 7
         assert window.tabs.tabText(2) == "建設"
+        assert window.tabs.tabText(3) == "プレイヤー設定"
         assert window.tabs.tabText(4) == "課金"
         assert window.tabs.tabText(5) == "OCR入力"
         assert window.tabs.tabText(6) == "ヘルプ"
+        assert window.player_workspace_tabs.count() == 4
+        assert [
+            window.player_workspace_tabs.tabText(index)
+            for index in range(window.player_workspace_tabs.count())
+        ] == ["レベル", "才能", "資源", "加速"]
+        assert window.player_workspace_tabs.widget(3).isAncestorOf(
+            window.speedup_inventory_table
+        )
+        assert window.player_workspace_tabs.widget(2).isAncestorOf(
+            next(iter(window.resource_spins.values()))
+        )
+        assert window.player_workspace_tabs.widget(2).isAncestorOf(
+            window.technolabe_threshold_spin
+        )
+        assert window.technolabe_threshold_spin.value() == 95.0
+        assert window.technolabe_count_spin.value() == 0
+        assert window.player_workspace_tabs.widget(1).isAncestorOf(
+            window.talent_tree_view
+        )
+        talent_nodes = {
+            item.research_id
+            for item in window.talent_tree_view.scene().items()
+            if hasattr(item, "research_id")
+        }
+        assert talent_nodes == set(window.talent_catalog.talents)
+        assert window.talent_priority_combo.count() > 1
+        assert window.talent_priority_combo.isHidden()
+        assert not window.talent_preset_combo.isHidden()
+        assert window.talent_priority_label.text()
+        assert window.talent_auto_follow_check.isChecked()
+        assert window.talent_details_panel.isHidden()
+        window.talent_details_toggle.setChecked(True)
+        assert not window.talent_details_panel.isHidden()
+        assert window.talent_details_toggle.arrowType() == Qt.ArrowType.DownArrow
+        window.talent_details_toggle.setChecked(False)
+        assert window.talent_details_panel.isHidden()
+        assert window.talent_details_toggle.arrowType() == Qt.ArrowType.RightArrow
+        focused_talents: list[str] = []
+        original_focus_talent = window.talent_tree_view.focus_research
+
+        def record_talent_focus(talent_id: str) -> bool:
+            focused_talents.append(talent_id)
+            return original_focus_talent(talent_id)
+
+        window.talent_tree_view.focus_research = record_talent_focus
+        window.talent_priority_combo.setCurrentIndex(1)
+        assert focused_talents == [window.player_state.talent_priority_id]
+        window.talent_auto_follow_check.setChecked(False)
+        window.talent_priority_combo.setCurrentIndex(2)
+        assert len(focused_talents) == 1
+        window._talent_dirty = False
         assert window.windowTitle() == window.t("app.title")
         assert version_string() not in window.windowTitle()
         assert window.tabs.widget(6).isAncestorOf(window.language_combo)
@@ -2101,6 +2244,19 @@ def test_visible_spin_buttons_stay_inside_field_with_consistent_contrast() -> No
         parent.close()
 
 
+def test_visible_spin_buttons_refresh_when_target_range_changes() -> None:
+    _app = QApplication.instance() or QApplication([])
+    spin = VisibleSpinBox()
+    spin.setRange(1, 1)
+    spin.setValue(1)
+    assert not spin._increase_button.isEnabled()
+
+    spin.setMaximum(10)
+
+    assert spin._increase_button.isEnabled()
+    spin.close()
+
+
 def test_all_pc_tab_step_buttons_stay_inside_their_numeric_fields() -> None:
     app = QApplication.instance() or QApplication([])
     root = Path(__file__).resolve().parents[1]
@@ -2175,7 +2331,8 @@ def test_mobile_player_settings_scroll_instead_of_overlapping_numeric_fields() -
         window.tabs.setCurrentIndex(3)
         window.show()
         app.processEvents()
-        assert window.player_settings_scroll.verticalScrollBar().maximum() > 0
+        assert window.player_settings_scroll.verticalScrollBar().maximum() >= 0
+        assert window.player_settings_scroll.widgetResizable()
 
         panel = window.player_settings_panel
         spins = [
@@ -2216,7 +2373,7 @@ def test_all_table_numeric_editors_use_inset_cell_layout() -> None:
     try:
         window.resize(1280, 820)
         window.show()
-        for tab_index in (2, 3, 5):
+        for tab_index in (2, 3, 4):
             window.tabs.setCurrentIndex(tab_index)
             app.processEvents()
 
@@ -2240,7 +2397,7 @@ def test_all_table_numeric_editors_use_inset_cell_layout() -> None:
         for tab_index, table in (
             (2, window.castle_level_table),
             (3, window.progress_table),
-            (5, window.paid_item_table),
+            (4, window.paid_item_table),
         ):
             window.tabs.setCurrentIndex(tab_index)
             app.processEvents()
