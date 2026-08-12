@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from functools import lru_cache
 from math import ceil, gcd
 from typing import Iterable
 
@@ -123,7 +124,17 @@ def _allocate_without_overrun(
             ),
         )
     )
-    quantities = [max(0, int(entry.quantity)) for entry in candidates]
+    # A duration can never be used more often than the sum of the per-task
+    # capacities.  Paid-offer simulations may multiply an offer thousands of
+    # times while looking for a completing purchase count; retaining those
+    # impossible excess quantities makes the subset solver needlessly huge.
+    quantities = [
+        min(
+            max(0, int(entry.quantity)),
+            sum(task // entry.duration_seconds for task in remaining),
+        )
+        for entry in candidates
+    ]
     used_quantities = [0] * len(candidates)
 
     for task_index in sorted(range(len(remaining)), key=remaining.__getitem__):
@@ -189,6 +200,47 @@ def _allocate_without_overrun(
         if count > 0
     )
     return tuple(remaining), used
+
+
+@lru_cache(maxsize=4096)
+def _unlimited_exact_duration(
+    seconds: int,
+    durations: tuple[int, ...],
+) -> bool:
+    """Whether unlimited items can fill one task without exceeding it.
+
+    This inexpensive feasibility gate prevents paid-offer recommendation from
+    repeatedly running the bounded allocator when no number of purchases can
+    ever fill a task exactly (for example, only five-minute items for a timer
+    with a non-five-minute remainder).
+    """
+
+    target = max(0, int(seconds))
+    normalized = tuple(sorted({max(0, int(value)) for value in durations} - {0}))
+    if target <= 0:
+        return True
+    if not normalized:
+        return False
+    scale = 0
+    for duration in normalized:
+        scale = gcd(scale, duration)
+    scale = max(1, scale)
+    if target % scale:
+        return False
+    target //= scale
+    units = tuple(duration // scale for duration in normalized)
+    if 1 in units:
+        return True
+    reachable = bytearray(target + 1)
+    reachable[0] = 1
+    for value in range(target + 1):
+        if not reachable[value]:
+            continue
+        for unit in units:
+            next_value = value + unit
+            if next_value <= target:
+                reachable[next_value] = 1
+    return bool(reachable[target])
 
 
 def speedup_coverage(
@@ -317,6 +369,15 @@ def _minimum_offer_purchases(
         and int(item.duration_seconds) > 0
         and int(item.quantity) > 0
     ]
+    if (
+        (not use_gems or gems_per_purchase <= 0)
+        and eligible_durations
+        and any(
+            not _unlimited_exact_duration(seconds, tuple(eligible_durations))
+            for seconds in task_seconds
+        )
+    ):
+        return None
     if use_gems and gems_per_purchase > 0:
         gems_without_speedups = sum(
             minimum_gems_for_speedup_seconds(seconds).gems

@@ -195,3 +195,51 @@ def test_partial_paid_offer_is_shown_with_its_remaining_time() -> None:
     assert result[0].purchases == 1
     assert result[0].applied_speedup_seconds == 3_600
     assert result[0].remaining_seconds == 2_700
+
+
+def test_impossible_exact_paid_offer_falls_back_without_huge_search() -> None:
+    result = recommend_paid_offers(
+        20_108,
+        [
+            PaidOffer(
+                "five-minute",
+                "Five-minute pack",
+                diamond_cost=100,
+                items=(
+                    PaidItem("research", quantity=40, duration_seconds=300),
+                ),
+            )
+        ],
+        "research",
+        task_seconds=(20_108,),
+    )
+
+    assert len(result) == 1
+    assert result[0].purchases == 1
+    assert result[0].applied_speedup_seconds == 12_000
+    assert result[0].remaining_seconds == 8_108
+
+
+def test_paid_offer_simulation_caps_unusable_repeated_quantities() -> None:
+    tasks = (20_108,) * 220
+    result = recommend_paid_offers(
+        sum(tasks),
+        [
+            PaidOffer(
+                "research-pack",
+                "Research pack",
+                diamond_cost=1_999,
+                items=(
+                    PaidItem("research", quantity=60, duration_seconds=86_400),
+                    PaidItem("research", quantity=40, duration_seconds=28_800),
+                    PaidItem("research", quantity=40, duration_seconds=300),
+                ),
+            )
+        ],
+        "research",
+        task_seconds=tasks,
+    )
+
+    assert len(result) == 1
+    assert result[0].purchases == 1
+    assert result[0].remaining_seconds > 0

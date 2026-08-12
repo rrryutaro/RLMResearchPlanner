@@ -30,13 +30,20 @@ from PySide6.QtWidgets import (
 from PySide6.QtCore import QPoint, QPointF, QRect, Qt
 from PySide6.QtTest import QTest
 
-from rlm_research_planner.domain.models import PaidItem
+from rlm_research_planner.domain.models import (
+    PaidItem,
+    PaidOffer,
+    SpeedupInventoryItem,
+)
 from rlm_research_planner.paths import AppPaths
 from rlm_research_planner.repositories.catalog_repository import (
     JsonResearchCatalogRepository,
 )
 from rlm_research_planner.repositories.master_repository import JsonMasterRepository
 from rlm_research_planner.repositories.player_repository import PlayerRepository
+from rlm_research_planner.repositories.research_dataset_repository import (
+    JsonResearchDatasetRepository,
+)
 from rlm_research_planner.services.localization import Translator
 from rlm_research_planner.services.ocr import OcrCandidate, OcrLine, OcrResult
 from rlm_research_planner.services.paid_pack import SpeedupEntry
@@ -1586,6 +1593,56 @@ def test_tree_level_editor_uses_staged_inline_card_input() -> None:
         assert window._plan_target_research_id == "economy_vault_management"
         window.close()
     finally:
+        player_repository.close()
+
+
+def test_deep_plan_paid_offer_simulation_finishes_without_freezing() -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    player_repository = PlayerRepository(":memory:")
+    player_state = player_repository.load()
+    player_state.settings.speedup_inventory = [
+        SpeedupInventoryItem("general", 60, 100),
+        SpeedupInventoryItem("research", 86_400, 60),
+        SpeedupInventoryItem("research", 28_800, 40),
+        SpeedupInventoryItem("research", 300, 40),
+    ]
+    player_state.paid_offers = [
+        PaidOffer(
+            "research-pack",
+            "Research pack",
+            diamond_cost=1_999,
+            items=(
+                PaidItem("research", quantity=60, duration_seconds=86_400),
+                PaidItem("research", quantity=40, duration_seconds=28_800),
+                PaidItem("research", quantity=40, duration_seconds=300),
+            ),
+        )
+    ]
+    try:
+        window = MainWindow(
+            paths=paths,
+            master=JsonMasterRepository(paths.research_data).load(),
+            observations=JsonResearchDatasetRepository(
+                paths.research_dataset
+            ).load_all(),
+            player_repository=player_repository,
+            player_state=player_state,
+            settings_repository=SettingsRepository(None),
+            app_settings=AppSettings(),
+            translator=Translator(paths.translations, "ja-JP"),
+        )
+
+        window._open_tree_detail("gear_luminary_marksman")
+        app.processEvents()
+
+        assert window.tabs.currentIndex() == 1
+        assert window._current_catalog_plan is not None
+        assert len(window._current_catalog_plan.steps) > 200
+        assert window.plan_tree_view.scene().items()
+    finally:
+        window.close()
         player_repository.close()
 
 

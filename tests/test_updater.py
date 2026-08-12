@@ -6,7 +6,7 @@ from rlm_research_planner.version import version_string
 
 
 def test_current_release_version_hides_internal_build_number() -> None:
-    assert version_string() == "0.1.1"
+    assert version_string() == "0.1.2"
 
 
 def test_version_comparison_uses_numeric_components() -> None:

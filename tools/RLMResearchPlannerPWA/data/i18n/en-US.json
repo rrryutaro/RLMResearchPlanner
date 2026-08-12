@@ -490,6 +490,8 @@
     "plan.directive_imported": "{name}: {added} added / {updated} targets updated / {unchanged} already registered / {skipped} unsupported",
     "plan.directive_invalid": "This research directive cannot be used with the current research data.",
     "plan.graph_hint": "Only unmet research required for the target is shown. Check each card's required and missing levels and the totals below. Drag to pan and use Ctrl + mouse wheel to zoom.",
+    "plan.dependency_tree": "Prerequisite tree",
+    "plan.dependency_tree_hint": "Shows only unmet research and connections required for the target.",
     "plan.base_time": "Original time",
     "plan.calculate": "Calculate plan",
     "plan.step": "Step",

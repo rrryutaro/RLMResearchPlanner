@@ -1,4 +1,4 @@
-import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.1-b2";
+import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.2-b1";
 
 export const SPEEDUP_KINDS = [
   "general", "research", "training", "construction", "healing", "merging", "crafting",
@@ -71,7 +71,16 @@ function allocateWithoutOverrun(entries, targetKind, taskSeconds) {
     .filter((entry) => eligible.has(entry.kind))
     .sort((left, right) => right.durationSeconds - left.durationSeconds
       || Number(left.kind === "general") - Number(right.kind === "general"));
-  const quantities = candidates.map((entry) => entry.quantity);
+  // Ignore quantities that cannot fit into the individual tasks. Paid-offer
+  // simulations can otherwise create enormous, unusable inventories while
+  // searching for a purchase count.
+  const quantities = candidates.map((entry) => Math.min(
+    entry.quantity,
+    remainingTaskSeconds.reduce(
+      (total, seconds) => total + Math.floor(seconds / entry.durationSeconds),
+      0,
+    ),
+  ));
   const usedQuantities = candidates.map(() => 0);
   const taskOrder = remainingTaskSeconds
     .map((seconds, index) => ({ seconds, index }))
@@ -143,6 +152,29 @@ function allocateWithoutOverrun(entries, targetKind, taskSeconds) {
     .map((entry, index) => ({ ...entry, quantity: usedQuantities[index] }))
     .filter((entry) => entry.quantity > 0);
   return { remainingTaskSeconds, usedItems };
+}
+
+function hasUnlimitedExactDuration(seconds, durations) {
+  let target = integer(seconds);
+  const normalized = [...new Set(durations.map(integer).filter((value) => value > 0))]
+    .sort((left, right) => left - right);
+  if (!target) return true;
+  if (!normalized.length) return false;
+  const scale = normalized.reduce(greatestCommonDivisor, 0) || 1;
+  if (target % scale) return false;
+  target = Math.floor(target / scale);
+  const units = normalized.map((duration) => Math.floor(duration / scale));
+  if (units.includes(1)) return true;
+  const reachable = new Uint8Array(target + 1);
+  reachable[0] = 1;
+  for (let value = 0; value <= target; value += 1) {
+    if (!reachable[value]) continue;
+    for (const unit of units) {
+      const next = value + unit;
+      if (next <= target) reachable[next] = 1;
+    }
+  }
+  return reachable[target] === 1;
 }
 
 export function speedupCoverage(requiredSeconds, entries, targetKind, taskSeconds = null) {
@@ -220,6 +252,11 @@ function minimumOfferPurchases(shortfall, secondsPerPurchase, gemsPerPurchase, c
       && integer(item.durationSeconds ?? item.duration_seconds) > 0
       && integer(item.quantity) > 0)
     .map((item) => integer(item.durationSeconds ?? item.duration_seconds));
+  if ((!context.useGems || gemsPerPurchase <= 0)
+    && eligibleDurations.length
+    && context.taskSeconds.some((seconds) => !hasUnlimitedExactDuration(seconds, eligibleDurations))) {
+    return null;
+  }
   let high;
   if (context.useGems && gemsPerPurchase > 0) {
     const gemsWithoutSpeedups = context.taskSeconds.reduce(

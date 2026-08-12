@@ -59,7 +59,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.1");
+  assert.equal(publicVersion, "0.1.2");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -70,7 +70,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.1 確認版/u);
+  assert.match(indexHtml, /v0\.1\.2 確認版/u);
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -725,6 +725,23 @@ test("an imported research task is complete or recalculated from the recipient's
   const completedPlan = createPlan(catalog, completedState, targetId, 1);
   assert.equal(completedPlan.steps.length, 0);
   assert.equal(completedPlan.totals.adjustedSeconds, 0);
+});
+
+test("target plans expose the unmet dependency graph for the mobile plan tree", () => {
+  const state = defaultState();
+  state.settings.academyLevel = 25;
+  const plan = createPlan(catalog, state, "military_heroic_fighter", 1);
+
+  assert.ok(Object.keys(plan.requiredLevels).length > 1);
+  assert.equal(plan.requiredLevels.military_heroic_fighter, 1);
+  assert.ok(plan.edges.length > 0);
+  assert.ok(plan.edges.every(([fromId, toId]) => (
+    Object.hasOwn(plan.requiredLevels, fromId)
+    && Object.hasOwn(plan.requiredLevels, toId)
+  )));
+  assert.match(indexHtml, /id="plan-tree-viewport"/u);
+  assert.match(appSource, /function renderPlanTree\(\)/u);
+  assert.match(stylesSource, /\.plan-tree-viewport/u);
 });
 
 test("castle planning traces prerequisite facilities and totals costs", () => {

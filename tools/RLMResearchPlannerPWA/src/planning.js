@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.1-b2";
+import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.2-b1";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 
@@ -104,6 +104,7 @@ export function createPlan(catalog, state, targetId, targetLevel) {
   if (!target) throw new Error("研究項目が見つかりません");
   const normalizedTarget = Math.min(target.maxLevel, Math.max(1, Number(targetLevel) || 1));
   const required = new Map([[targetId, normalizedTarget]]);
+  const researchEdges = new Map();
   const pending = [targetId];
   const issues = [];
   while (pending.length) {
@@ -118,6 +119,7 @@ export function createPlan(catalog, state, targetId, targetLevel) {
       for (const requirement of data.requirements) {
         if (!catalog.nodes.has(requirement.researchId) || requirement.researchId === researchId) continue;
         if (Number(state.researchLevels[requirement.researchId] || 0) >= requirement.level) continue;
+        researchEdges.set(`${requirement.researchId}\0${researchId}`, [requirement.researchId, researchId]);
         const prerequisite = catalog.nodes.get(requirement.researchId);
         const nextRequired = Math.min(prerequisite.maxLevel, requirement.level);
         if (nextRequired > Number(required.get(requirement.researchId) || 0)) {
@@ -215,7 +217,15 @@ export function createPlan(catalog, state, targetId, targetLevel) {
   if (totals.baseSeconds > 0 && totals.technolabeCount > 0) {
     totals.technolabeEfficiencyPercent = Math.min(100, totals.technolabeBaseSeconds / (totals.technolabeCount * TECHNOLABE_CAPACITY_SECONDS) * 100);
   }
-  return { targetId, targetLevel: normalizedTarget, steps, totals, issues };
+  return {
+    targetId,
+    targetLevel: normalizedTarget,
+    requiredLevels: Object.fromEntries(required),
+    edges: [...researchEdges.values()].filter(([fromId, toId]) => required.has(fromId) && required.has(toId)),
+    steps,
+    totals,
+    issues,
+  };
 }
 
 export function researchLevelsAfterPlan(plan, currentLevels) {

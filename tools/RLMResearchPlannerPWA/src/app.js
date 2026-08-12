@@ -1,17 +1,17 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.1-b2";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.1-b2";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.1-b2";
-import { explicitTreeLayout } from "./tree-layout.js?v=0.1.1-b2";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.1-b2";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.1-b2";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.1-b2";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.1-b2";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.1-b2";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.1-b2";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.2-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, paginateItems, researchLevelsAfterPlan, shortestAvailable } from "./planning.js?v=0.1.2-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.2-b1";
+import { explicitTreeLayout } from "./tree-layout.js?v=0.1.2-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.2-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.2-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.2-b1";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.2-b1";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.2-b1";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.2-b1";
 
-const RELEASE_VERSION = "0.1.1";
-const DEVELOPMENT_BUILD = 2;
-const ASSET_VERSION = "0.1.1-b2";
+const RELEASE_VERSION = "0.1.2";
+const DEVELOPMENT_BUILD = 1;
+const ASSET_VERSION = "0.1.2-b1";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const RESOURCE_NAMES = {
@@ -1944,6 +1944,7 @@ function renderPlan() {
   byId("plan-result").hidden = !currentPlan;
   if (!currentPlan) {
     byId("plan-speedup-summary").hidden = true;
+    renderPlanTree();
     return;
   }
   const target = catalog.nodes.get(currentPlan.targetId);
@@ -1984,6 +1985,7 @@ function renderPlan() {
     currentPlan.totals.unknownTime,
     currentPlan.steps.map((step) => step.afterHelpSeconds || 0),
   );
+  renderPlanTree();
   byId("plan-steps").replaceChildren(...currentPlan.steps.map((step) => planRow(step, { showCategory: false })));
   byId("complete-plan").disabled = currentPlan.steps.length === 0;
   byId("register-plan").disabled = currentPlan.steps.length === 0;
@@ -1992,6 +1994,110 @@ function renderPlan() {
   if (currentPlan.totals.unknownCosts) issueParts.push(t("pwa.unknown_cost_count", "資源未確認 {count}件", { count: currentPlan.totals.unknownCosts }));
   issueParts.push(...currentPlan.issues);
   byId("plan-issues").textContent = issueParts.join(" / ");
+}
+
+function renderPlanTree() {
+  const viewport = byId("plan-tree-viewport");
+  const stage = byId("plan-tree-stage");
+  const cards = byId("plan-tree-cards");
+  const svg = byId("plan-tree-lines");
+  const empty = byId("plan-tree-empty");
+  if (!viewport || !stage || !cards || !svg || !empty) return;
+  if (!currentPlan?.steps.length) {
+    cards.replaceChildren();
+    svg.replaceChildren();
+    viewport.hidden = true;
+    empty.hidden = false;
+    return;
+  }
+
+  const required = Object.entries(currentPlan.requiredLevels || {})
+    .map(([researchId, requiredLevel]) => ({ node: catalog.nodes.get(researchId), requiredLevel: Number(requiredLevel) }))
+    .filter((item) => item.node);
+  const categoryOrder = new Map(catalog.categories.map((category, index) => [category.id, index]));
+  const rowKeys = [...new Set(required.map(({ node }) => `${categoryOrder.get(node.categoryId) ?? 999}\0${node.row}`))]
+    .sort((left, right) => {
+      const [leftCategory, leftRow] = left.split("\0").map(Number);
+      const [rightCategory, rightRow] = right.split("\0").map(Number);
+      return leftCategory - rightCategory || leftRow - rightRow;
+    });
+  const compactRows = new Map(rowKeys.map((key, index) => [key, index]));
+  const layoutNodes = required.map(({ node, requiredLevel }) => ({
+    ...node,
+    row: compactRows.get(`${categoryOrder.get(node.categoryId) ?? 999}\0${node.row}`),
+    requiredLevel,
+  }));
+  const layout = explicitTreeLayout(layoutNodes);
+  const unscaledWidth = PADDING * 2 + layout.columnCount * CARD_WIDTH + Math.max(0, layout.columnCount - 1) * GAP_X;
+  const unscaledHeight = PADDING * 2 + layout.rowCount * CARD_HEIGHT + Math.max(0, layout.rowCount - 1) * GAP_Y;
+  const scale = Math.max(0.48, Math.min(0.86, (Math.max(320, viewport.clientWidth) - 18) / unscaledWidth));
+  const width = Math.max(viewport.clientWidth - 2, unscaledWidth * scale);
+  const height = Math.max(viewport.clientHeight - 2, unscaledHeight * scale);
+  stage.style.width = `${width}px`;
+  stage.style.height = `${height}px`;
+  const positions = new Map(layoutNodes.map((node) => [node.id, {
+    x: (PADDING + (layout.slots.get(node.id) ?? node.column) * (CARD_WIDTH + GAP_X)) * scale,
+    y: (PADDING + node.row * (CARD_HEIGHT + GAP_Y)) * scale,
+    width: CARD_WIDTH * scale,
+    height: CARD_HEIGHT * scale,
+  }]));
+  renderPlanTreeLines(currentPlan.edges || [], positions, width, height, scale);
+  cards.replaceChildren(...layoutNodes.map((node) => renderPlanTreeCard(node, positions.get(node.id), scale)));
+  viewport.hidden = false;
+  empty.hidden = true;
+}
+
+function renderPlanTreeLines(edges, positions, width, height, scale) {
+  const svg = byId("plan-tree-lines");
+  svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
+  svg.setAttribute("width", width);
+  svg.setAttribute("height", height);
+  const paths = [];
+  for (const [fromId, toId] of edges) {
+    const from = positions.get(fromId);
+    const to = positions.get(toId);
+    if (!from || !to) continue;
+    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+    path.classList.add("is-inactive");
+    const x1 = from.x + from.width / 2;
+    const y1 = from.y + from.height;
+    const x2 = to.x + to.width / 2;
+    const y2 = to.y;
+    const middle = y1 + Math.max(10 * scale, (y2 - y1) / 2);
+    path.setAttribute("d", `M ${x1} ${y1} V ${middle} H ${x2} V ${y2}`);
+    paths.push(path);
+  }
+  svg.replaceChildren(...paths);
+}
+
+function renderPlanTreeCard(node, position, scale) {
+  const current = Math.min(node.maxLevel, Number(state.researchLevels[node.id] || 0));
+  const required = Math.min(node.maxLevel, Math.max(current, Number(node.requiredLevel) || 0));
+  const missing = Math.max(0, required - current);
+  const card = create("button", "research-card plan-research-card");
+  card.type = "button";
+  card.style.left = `${position.x}px`;
+  card.style.top = `${position.y}px`;
+  card.style.width = `${position.width}px`;
+  card.style.height = `${position.height}px`;
+  card.style.setProperty("--node-scale", scale);
+  if (node.id === currentPlan.targetId) card.classList.add("is-target");
+  const name = create("span", "research-name", catalog.nodeName(node, state.locale));
+  const nameLength = [...name.textContent].reduce((sum, character) => sum + (character.charCodeAt(0) > 255 ? 1 : .58), 0);
+  name.style.fontSize = `${Math.max(13, Math.min(25, 215 / Math.max(5, nameLength))) * scale}px`;
+  const meter = create("span", "research-meter");
+  const fill = create("span");
+  fill.style.width = `${node.maxLevel ? current / node.maxLevel * 100 : 0}%`;
+  meter.append(fill);
+  card.append(
+    name,
+    meter,
+    create("span", "research-level", `${current} / ${node.maxLevel}`),
+    create("span", "plan-research-required", t("plan.required_level", "必要 Lv.{level}", { level: required })),
+    create("span", "plan-research-missing", t("plan.missing_levels", "不足 {count}レベル", { count: missing })),
+  );
+  card.addEventListener("click", () => jumpToNode(node));
+  return card;
 }
 
 function renderShortest() {

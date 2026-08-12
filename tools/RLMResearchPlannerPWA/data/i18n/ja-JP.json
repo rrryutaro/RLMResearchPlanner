@@ -490,6 +490,8 @@
     "plan.directive_imported": "{name}: 追加{added}件 / 目標更新{updated}件 / 登録済み{unchanged}件 / 対象外{skipped}件",
     "plan.directive_invalid": "現在の研究データで利用できる研究指示データではありません。",
     "plan.graph_hint": "目標までに不足している研究だけを表示します。カードの「必要Lv」と「不足レベル」、下部の合計を確認してください。ドラッグで移動、Ctrl＋マウスホイールで拡大縮小できます。",
+    "plan.dependency_tree": "前提研究ツリー",
+    "plan.dependency_tree_hint": "目標までに不足している研究と接続だけを表示します。",
     "plan.base_time": "元時間",
     "plan.calculate": "計画を計算",
     "plan.step": "手順",

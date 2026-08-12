@@ -149,3 +149,33 @@ test("partial paid offers remain visible with their remaining time", () => {
   assert.equal(result.appliedSpeedupSeconds, 3_600);
   assert.equal(result.remainingSeconds, 2_700);
 });
+
+test("an impossible exact paid offer falls back without an unbounded search", () => {
+  const [result] = recommendPaidOffers(20_108, [{
+    offerId: "five-minute",
+    title: "Five-minute pack",
+    diamondCost: 100,
+    items: [{ kind: "research", quantity: 40, durationSeconds: 300 }],
+  }], "research", 3, { taskSeconds: [20_108] });
+
+  assert.equal(result.purchases, 1);
+  assert.equal(result.appliedSpeedupSeconds, 12_000);
+  assert.equal(result.remainingSeconds, 8_108);
+});
+
+test("paid offer simulation caps unusable repeated quantities", () => {
+  const tasks = Array(220).fill(20_108);
+  const [result] = recommendPaidOffers(tasks.reduce((sum, value) => sum + value, 0), [{
+    offerId: "research-pack",
+    title: "Research pack",
+    diamondCost: 1_999,
+    items: [
+      { kind: "research", quantity: 60, durationSeconds: 86_400 },
+      { kind: "research", quantity: 40, durationSeconds: 28_800 },
+      { kind: "research", quantity: 40, durationSeconds: 300 },
+    ],
+  }], "research", 3, { taskSeconds: tasks });
+
+  assert.equal(result.purchases, 1);
+  assert.ok(result.remainingSeconds > 0);
+});
