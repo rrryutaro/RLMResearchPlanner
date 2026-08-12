@@ -1,18 +1,18 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.3-b10";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.3-b10";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.3-b10";
-import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.3-b10";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.3-b10";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.3-b10";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.3-b10";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.3-b10";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.3-b10";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.3-b10";
-import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement } from "./talent-planning.js?v=0.1.3-b10";
+import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.3-b12";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.3-b12";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.3-b12";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.3-b12";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.3-b12";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.3-b12";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.3-b12";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.3-b12";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.3-b12";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.3-b12";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.3-b12";
 
 const RELEASE_VERSION = "0.1.3";
-const DEVELOPMENT_BUILD = 10;
-const ASSET_VERSION = "0.1.3-b10";
+const DEVELOPMENT_BUILD = 12;
+const ASSET_VERSION = "0.1.3-b12";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const RESOURCE_NAMES = {
@@ -86,6 +86,24 @@ function ensureTalentPlan() {
   if (!state.talentPlanName) state.talentPlanName = talentCatalog.presetName(preset, state.locale);
 }
 
+function syncTalentPointCapacity() {
+  if (!talentCatalog) return { levelPoints: 0, researchPoints: 0, totalPoints: 0 };
+  const levelPoints = talentPointsForPlayerLevel(talentCatalog, state.settings.playerLevel);
+  const researchPoints = Math.max(0, Math.trunc(Number(state.researchLevels.military_command_hidden_talent) || 0));
+  const totalPoints = levelPoints + researchPoints;
+  state.talentAvailablePoints = totalPoints;
+  return { levelPoints, researchPoints, totalPoints };
+}
+
+function renderTalentPointCapacity() {
+  const points = syncTalentPointCapacity();
+  if (byId("talent-level-points")) byId("talent-level-points").textContent = points.levelPoints.toLocaleString(state.locale);
+  if (byId("talent-research-points")) byId("talent-research-points").textContent = `+${points.researchPoints.toLocaleString(state.locale)}`;
+  if (byId("talent-total-points")) byId("talent-total-points").textContent = points.totalPoints.toLocaleString(state.locale);
+  if (byId("talent-available-points")) byId("talent-available-points").textContent = points.totalPoints.toLocaleString(state.locale);
+  return points;
+}
+
 async function start() {
   try {
     const [loadedCatalog, loadedCastleCatalog, loadedTalentCatalog, japaneseLocaleData, englishLocaleData] = await Promise.all([
@@ -98,6 +116,7 @@ async function start() {
     catalog = loadedCatalog;
     castleCatalog = loadedCastleCatalog;
     talentCatalog = loadedTalentCatalog;
+    syncTalentPointCapacity();
     ensureTalentPlan();
     localeDataById = { "ja-JP": japaneseLocaleData, "en-US": englishLocaleData };
     activateLanguage(state.locale, { save: false, render: false });
@@ -180,12 +199,44 @@ function renderCatalogStatus() {
 
 function bindNavigation() {
   document.querySelectorAll(".tab-button").forEach((button) => button.addEventListener("click", () => showTab(button.dataset.tab)));
+  const bar = byId("tab-bar");
+  const previous = byId("tab-scroll-previous");
+  const next = byId("tab-scroll-next");
+  const update = () => {
+    if (!bar || !previous || !next) return;
+    const clippedLabel = [...bar.querySelectorAll(".tab-button")].some(
+      (button) => button.scrollWidth > button.clientWidth + 1,
+    );
+    const overflowing = bar.scrollWidth > bar.clientWidth + 1 || clippedLabel;
+    bar.classList.toggle("is-overflowing", overflowing);
+    previous.hidden = !overflowing;
+    next.hidden = !overflowing;
+    previous.disabled = bar.scrollLeft <= 1;
+    next.disabled = bar.scrollLeft + bar.clientWidth >= bar.scrollWidth - 1;
+  };
+  const scrollPage = (direction) => {
+    const buttons = [...bar.querySelectorAll(".tab-button")];
+    if (!buttons.length) return;
+    const firstOffset = buttons[0].offsetLeft;
+    const currentIndex = buttons.reduce((closest, button, index) => (
+      Math.abs(button.offsetLeft - firstOffset - bar.scrollLeft)
+        < Math.abs(buttons[closest].offsetLeft - firstOffset - bar.scrollLeft) ? index : closest
+    ), 0);
+    const targetIndex = Math.max(0, Math.min(buttons.length - 1, currentIndex + direction * 3));
+    bar.scrollTo({ left: Math.max(0, buttons[targetIndex].offsetLeft - firstOffset), behavior: "smooth" });
+  };
+  previous?.addEventListener("click", () => scrollPage(-1));
+  next?.addEventListener("click", () => scrollPage(1));
+  bar?.addEventListener("scroll", update, { passive: true });
+  if (bar && "ResizeObserver" in window) new ResizeObserver(update).observe(bar);
+  requestAnimationFrame(update);
   byId("startup-retry")?.addEventListener("click", () => location.reload());
 }
 
 function showTab(tab) {
   activeTab = tab;
   document.querySelectorAll(".tab-button").forEach((button) => button.classList.toggle("is-active", button.dataset.tab === tab));
+  document.querySelector(`.tab-button[data-tab="${CSS.escape(tab)}"]`)?.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
   document.querySelectorAll(".tab-panel").forEach((panel) => panel.classList.toggle("is-active", panel.id === `tab-${tab}`));
   if (tab === "tree") requestAnimationFrame(renderTree);
   if (tab === "plan") {
@@ -234,10 +285,6 @@ function bindTalent() {
     state.talentPlanName = talentCatalog.presetName(preset, state.locale);
     saveNow(); renderTalent();
   });
-  byId("talent-available-points")?.addEventListener("input", (event) => {
-    state.talentAvailablePoints = Math.max(0, Math.min(9999, Math.trunc(Number(event.target.value) || 0)));
-    scheduleSave(); renderTalent();
-  });
   byId("talent-priority")?.addEventListener("change", (event) => {
     state.talentPriorityId = String(event.target.value || "");
     talentAutoFollowPending = true;
@@ -252,6 +299,13 @@ function bindTalent() {
   };
   byId("talent-priority-previous")?.addEventListener("click", () => cycleSelect("talent-priority", -1));
   byId("talent-priority-next")?.addEventListener("click", () => cycleSelect("talent-priority", 1));
+  byId("talent-settings-toggle")?.addEventListener("click", () => {
+    const button = byId("talent-settings-toggle");
+    const panel = byId("talent-settings-panel");
+    const expanded = button?.getAttribute("aria-expanded") !== "true";
+    button?.setAttribute("aria-expanded", String(expanded));
+    if (panel) panel.hidden = !expanded;
+  });
   byId("talent-auto-follow")?.addEventListener("change", (event) => {
     state.talentAutoFollow = event.target.checked;
     talentAutoFollowPending = state.talentAutoFollow;
@@ -266,6 +320,7 @@ function bindTalent() {
 
 function renderTalent() {
   if (!talentCatalog || !byId("talent-tree-cards")) return;
+  renderTalentPointCapacity();
   const presetSelect = byId("talent-preset");
   const presetOptions = talentCatalog.presets.map((preset) => {
     const option = create("option", "", talentCatalog.presetName(preset, state.locale)); option.value = preset.id; return option;
@@ -274,7 +329,6 @@ function renderTalent() {
     const custom = create("option", "", t("talent.custom", "読み込んだ指示")); custom.value = "custom"; presetOptions.push(custom);
   }
   presetSelect.replaceChildren(...presetOptions); presetSelect.value = state.talentPresetId;
-  byId("talent-available-points").value = state.talentAvailablePoints;
   byId("talent-directive-name").value = state.talentPlanName;
   byId("talent-auto-follow").checked = state.talentAutoFollow !== false;
   const prioritySelect = byId("talent-priority");
@@ -293,6 +347,7 @@ function renderTalent() {
   if (!priorityTargets.has(state.talentPriorityId)) state.talentPriorityId = "";
   prioritySelect.replaceChildren(...priorityOptions); prioritySelect.value = state.talentPriorityId;
   byId("talent-priority-label").textContent = prioritySelect.selectedOptions[0]?.textContent || t("talent.priority.default", "プリセット順");
+  byId("talent-controls-selection").textContent = `${presetSelect.selectedOptions[0]?.textContent || "-"} / ${prioritySelect.selectedOptions[0]?.textContent || "-"}`;
   const preset = talentCatalog.presetById.get(state.talentPresetId);
   byId("talent-description").textContent = preset
     ? talentCatalog.presetDescription(preset, state.locale)
@@ -1291,6 +1346,10 @@ function updateVisibleResearchState(changedNode) {
     existing.replaceWith(renderCard(node, position));
   }
   updateLineStates();
+  if (changedNode.id === "military_command_hidden_talent") {
+    renderTalentPointCapacity();
+    renderTalent();
+  }
 }
 
 function updateResearchCardSelection() {
@@ -1483,7 +1542,7 @@ function renderNodeNextDetails(node, level) {
 
 function bindSettings() {
   const inputs = {
-    "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-castle-mana": ["castleManaStage", true], "setting-academy": ["academyLevel", true],
+    "setting-player-level": ["playerLevel", true], "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-castle-mana": ["castleManaStage", true], "setting-academy": ["academyLevel", true],
     "setting-construction-speed": ["constructionSpeedPercent", false], "setting-construction-boost": ["constructionSpeedBoostPercent", false],
     "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-helps": ["maxGuildHelps", true],
     "setting-technolabe-count": ["technolabeCount", true],
@@ -1492,6 +1551,7 @@ function bindSettings() {
   for (const [id, [key, integer]] of Object.entries(inputs)) {
     byId(id).addEventListener("input", (event) => {
       state.settings[key] = Math.max(0, integer ? Math.trunc(Number(event.target.value) || 0) : Number(event.target.value) || 0);
+      if (key === "playerLevel") state.settings[key] = Math.max(1, Math.min(60, state.settings[key]));
       if (key === "vipLevel") state.settings[key] = Math.max(1, Math.min(15, state.settings[key]));
       if (key === "castleLevel" || key === "academyLevel") state.settings[key] = Math.max(1, Math.min(25, state.settings[key]));
       if (key === "castleManaStage") state.settings[key] = state.settings.castleLevel === 25 ? Math.max(0, Math.min(5, state.settings[key])) : 0;
@@ -1511,6 +1571,7 @@ function bindSettings() {
         state.settings.castleTargetManaStage = castleTargetManaStage;
       }
       updateGuildHelpLimit(); updateVipHint(); scheduleSave();
+      if (key === "playerLevel") { renderTalentPointCapacity(); renderTalent(); }
       if (key === "technolabeRecommendationThresholdPercent" && byId("technolabe-only")?.checked) renderCategoryOptions();
       renderTree(); refreshCurrentPlan(); renderCastle(); if (planMode === "shortest") renderShortest();
     });
@@ -1544,6 +1605,7 @@ function bindSettings() {
 }
 
 function populateSettings() {
+  byId("setting-player-level").value = state.settings.playerLevel;
   byId("setting-vip").value = state.settings.vipLevel;
   byId("setting-castle").value = state.settings.castleLevel;
   byId("setting-castle-mana").value = state.settings.castleManaStage;
@@ -1565,6 +1627,7 @@ function populateSettings() {
     if (caption) caption.textContent = resourceName(key);
   });
   updateVipHint();
+  renderTalentPointCapacity();
   renderSpeedupInventory();
   populateBulkCategoryOptions();
   renderBulkLevels();

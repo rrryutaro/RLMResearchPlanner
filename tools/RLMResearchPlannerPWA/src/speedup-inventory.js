@@ -1,4 +1,4 @@
-import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.3-b10";
+import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.3-b12";
 
 export const SPEEDUP_KINDS = [
   "general", "research", "training", "construction", "healing", "merging", "crafting",

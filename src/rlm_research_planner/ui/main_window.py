@@ -634,6 +634,7 @@ class MainWindow(QMainWindow):
         self.castle_catalog = CastleCatalog.load(paths.castle_catalog)
         self.talent_catalog = TalentCatalog.load(paths.talent_catalog)
         self._ensure_talent_plan()
+        self._sync_talent_point_capacity()
         self._building_level_draft = dict(player_state.building_levels)
         self._research = master.research_by_id()
         self._observation_by_id = {
@@ -698,6 +699,28 @@ class MainWindow(QMainWindow):
             self.player_state.talent_plan_name = self.talent_catalog.presets[
                 preset_id
             ].localized_name(self.translator.content_locale)
+
+    def _sync_talent_point_capacity(self) -> tuple[int, int, int]:
+        """Keep talent capacity derived from player level and research bonus."""
+
+        base_points = self.talent_catalog.points_for_player_level(
+            self.player_state.settings.player_level
+        )
+        research_points = max(
+            0,
+            int(self._tree_level_draft.get("military_command_hidden_talent", 0)),
+        )
+        total_points = base_points + research_points
+        self.player_state.talent_available_points = total_points
+        if hasattr(self, "talent_level_points_label"):
+            self.talent_level_points_label.setText(f"{base_points:,}")
+            self.talent_research_points_label.setText(f"+{research_points:,}")
+            self.talent_total_points_label.setText(f"{total_points:,}")
+        if hasattr(self, "talent_points_label"):
+            self.talent_points_label.setText(
+                self.t("talent.available_compact", points=total_points)
+            )
+        return base_points, research_points, total_points
 
     def t(self, key: str, **values: object) -> str:
         return self.translator.text(key, **values)
@@ -1483,6 +1506,12 @@ class MainWindow(QMainWindow):
         self._update_tree_level_display(research_id, preserve_view=True)
         self._sync_progress_editor(research_id)
         self._mark_plan_dirty()
+        if (
+            research_id == "military_command_hidden_talent"
+            and hasattr(self, "talent_tree_view")
+        ):
+            self._sync_talent_point_capacity()
+            self._render_talent_plan()
 
     def _update_tree_level_display(
         self, research_id: str, *, preserve_view: bool = False
@@ -1741,10 +1770,80 @@ class MainWindow(QMainWindow):
         layout.setContentsMargins(8, 8, 8, 8)
         layout.setSpacing(6)
 
-        controls = QHBoxLayout()
+        self.talent_quick_bar = QFrame(page)
+        self.talent_quick_bar.setObjectName("TalentQuickBar")
+        quick_controls = QHBoxLayout(self.talent_quick_bar)
+        quick_controls.setContentsMargins(8, 5, 8, 5)
+        quick_controls.setSpacing(8)
+        quick_label = QLabel(self.t("talent.priority"), self.talent_quick_bar)
+        quick_controls.addWidget(quick_label)
+
+        self.talent_priority_combo = QComboBox(self.talent_quick_bar)
+        self.talent_priority_combo.currentIndexChanged.connect(
+            self._talent_priority_changed
+        )
+        self.talent_priority_combo.hide()
+        self.talent_priority_selector = QFrame(self.talent_quick_bar)
+        self.talent_priority_selector.setObjectName("TalentPrioritySelector")
+        priority_selector_layout = QHBoxLayout(self.talent_priority_selector)
+        priority_selector_layout.setContentsMargins(0, 0, 0, 0)
+        priority_selector_layout.setSpacing(0)
+        self.talent_priority_previous_button = QPushButton(
+            "\uFF1C", self.talent_priority_selector
+        )
+        self.talent_priority_previous_button.setObjectName(
+            "TalentPriorityPrevious"
+        )
+        self.talent_priority_previous_button.setAccessibleName(
+            self.t("talent.previous_priority")
+        )
+        self.talent_priority_previous_button.clicked.connect(
+            lambda: self._cycle_talent_combo(self.talent_priority_combo, -1)
+        )
+        self.talent_priority_previous_button.setFixedWidth(42)
+        priority_selector_layout.addWidget(self.talent_priority_previous_button)
+        self.talent_priority_label = QLabel(self.talent_priority_selector)
+        self.talent_priority_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.talent_priority_label.setMinimumWidth(220)
+        self.talent_priority_label.setContentsMargins(10, 0, 10, 0)
+        priority_selector_layout.addWidget(self.talent_priority_label, 1)
+        self.talent_priority_next_button = QPushButton(
+            "\uFF1E", self.talent_priority_selector
+        )
+        self.talent_priority_next_button.setObjectName("TalentPriorityNext")
+        self.talent_priority_next_button.setAccessibleName(
+            self.t("talent.next_priority")
+        )
+        self.talent_priority_next_button.clicked.connect(
+            lambda: self._cycle_talent_combo(self.talent_priority_combo, 1)
+        )
+        self.talent_priority_next_button.setFixedWidth(42)
+        priority_selector_layout.addWidget(self.talent_priority_next_button)
+        quick_controls.addWidget(self.talent_priority_selector, 1)
+
+        self.talent_controls_toggle = QToolButton(self.talent_quick_bar)
+        self.talent_controls_toggle.setCheckable(True)
+        self.talent_controls_toggle.setChecked(False)
+        self.talent_controls_toggle.setArrowType(Qt.ArrowType.RightArrow)
+        self.talent_controls_toggle.setToolButtonStyle(
+            Qt.ToolButtonStyle.ToolButtonTextBesideIcon
+        )
+        self.talent_controls_toggle.setText(self.t("talent.settings"))
+        self.talent_controls_toggle.setSizePolicy(
+            QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed
+        )
+        quick_controls.addWidget(self.talent_controls_toggle)
+        layout.addWidget(self.talent_quick_bar)
+
+        self.talent_controls_panel = QFrame(page)
+        self.talent_controls_panel.setObjectName("TalentControlsPanel")
+        controls = QGridLayout(self.talent_controls_panel)
+        controls.setContentsMargins(8, 6, 8, 6)
         controls.setSpacing(8)
-        controls.addWidget(QLabel(self.t("talent.preset"), page))
-        self.talent_preset_combo = QComboBox(page)
+        controls.addWidget(
+            QLabel(self.t("talent.preset"), self.talent_controls_panel), 0, 0
+        )
+        self.talent_preset_combo = QComboBox(self.talent_controls_panel)
         for preset_id in self.talent_catalog.preset_order:
             preset = self.talent_catalog.presets[preset_id]
             self.talent_preset_combo.addItem(
@@ -1762,73 +1861,10 @@ class MainWindow(QMainWindow):
             self.talent_preset_combo.setCurrentIndex(
                 self.talent_preset_combo.findData("custom")
             )
-        self.talent_preset_combo.setMinimumWidth(240)
-        controls.addWidget(self.talent_preset_combo, 1)
-        controls.addWidget(QLabel(self.t("talent.available_points"), page))
-        self.talent_points_spin = VisibleSpinBox(page)
-        self.talent_points_spin.setRange(0, 9999)
-        self.talent_points_spin.setFixedWidth(92)
-        self.talent_points_spin.setValue(
-            max(0, int(self.player_state.talent_available_points))
-        )
-        self.talent_points_spin.valueChanged.connect(self._talent_points_changed)
-        controls.addWidget(self.talent_points_spin)
-        save_button = QPushButton(self.t("common.save"), page)
-        save_button.clicked.connect(self._save_talent_plan)
-        controls.addWidget(save_button)
-        talent_fit_button = QPushButton(self.t("tree.fit_all"), page)
-        talent_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"), page)
-        controls.addWidget(talent_fit_button)
-        controls.addWidget(talent_reset_zoom_button)
-        layout.addLayout(controls)
-
-        priority = QHBoxLayout()
-        priority.setSpacing(8)
-        priority.addWidget(QLabel(self.t("talent.priority"), page))
-        self.talent_priority_combo = QComboBox(page)
-        self.talent_priority_combo.currentIndexChanged.connect(
-            self._talent_priority_changed
-        )
-        self.talent_priority_combo.hide()
-        self.talent_priority_selector = QFrame(page)
-        self.talent_priority_selector.setObjectName("TalentPrioritySelector")
-        priority_selector_layout = QHBoxLayout(self.talent_priority_selector)
-        priority_selector_layout.setContentsMargins(0, 0, 0, 0)
-        priority_selector_layout.setSpacing(0)
-        self.talent_priority_previous_button = QPushButton(
-            "\uFF1C", self.talent_priority_selector
-        )
-        self.talent_priority_previous_button.setObjectName(
-            "TalentPriorityPrevious"
-        )
-        self.talent_priority_previous_button.setAccessibleName(
-            self.t("talent.previous_priority")
-        )
-        self.talent_priority_previous_button.clicked.connect(
-            lambda: self._cycle_talent_combo(self.talent_priority_combo, -1)
-        )
-        self.talent_priority_previous_button.setFixedWidth(38)
-        priority_selector_layout.addWidget(self.talent_priority_previous_button)
-        self.talent_priority_label = QLabel(self.talent_priority_selector)
-        self.talent_priority_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.talent_priority_label.setMinimumWidth(240)
-        self.talent_priority_label.setContentsMargins(10, 0, 10, 0)
-        priority_selector_layout.addWidget(self.talent_priority_label, 1)
-        self.talent_priority_next_button = QPushButton(
-            "\uFF1E", self.talent_priority_selector
-        )
-        self.talent_priority_next_button.setObjectName("TalentPriorityNext")
-        self.talent_priority_next_button.setAccessibleName(
-            self.t("talent.next_priority")
-        )
-        self.talent_priority_next_button.clicked.connect(
-            lambda: self._cycle_talent_combo(self.talent_priority_combo, 1)
-        )
-        self.talent_priority_next_button.setFixedWidth(38)
-        priority_selector_layout.addWidget(self.talent_priority_next_button)
-        priority.addWidget(self.talent_priority_selector, 1)
+        self.talent_preset_combo.setMinimumWidth(190)
+        controls.addWidget(self.talent_preset_combo, 0, 1, 1, 3)
         self.talent_auto_follow_check = QCheckBox(
-            self.t("talent.auto_follow"), page
+            self.t("talent.auto_follow"), self.talent_controls_panel
         )
         self.talent_auto_follow_check.setChecked(
             self.app_settings.talent_auto_follow
@@ -1836,22 +1872,37 @@ class MainWindow(QMainWindow):
         self.talent_auto_follow_check.toggled.connect(
             self._talent_auto_follow_changed
         )
-        priority.addWidget(self.talent_auto_follow_check)
-        self.talent_summary_label = QLabel(page)
+        controls.addWidget(self.talent_auto_follow_check, 0, 4)
+        self.talent_points_label = QLabel(self.talent_controls_panel)
+        self.talent_points_label.setStyleSheet("font-weight:700;")
+        controls.addWidget(self.talent_points_label, 0, 5)
+        self.talent_summary_label = QLabel(self.talent_controls_panel)
         self.talent_summary_label.setAlignment(
             Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
         )
         self.talent_summary_label.setStyleSheet("font-weight:700;")
-        priority.addWidget(self.talent_summary_label, 1)
-        self.talent_details_toggle = QToolButton(page)
+        controls.addWidget(self.talent_summary_label, 0, 6)
+        save_button = QPushButton(self.t("common.save"), self.talent_controls_panel)
+        save_button.clicked.connect(self._save_talent_plan)
+        controls.addWidget(save_button, 1, 1)
+        talent_fit_button = QPushButton(self.t("tree.fit_all"), self.talent_controls_panel)
+        talent_reset_zoom_button = QPushButton(self.t("tree.reset_zoom"), self.talent_controls_panel)
+        controls.addWidget(talent_fit_button, 1, 2)
+        controls.addWidget(talent_reset_zoom_button, 1, 3)
+        self.talent_details_toggle = QToolButton(self.talent_controls_panel)
         self.talent_details_toggle.setCheckable(True)
         self.talent_details_toggle.setArrowType(Qt.ArrowType.RightArrow)
         self.talent_details_toggle.setToolButtonStyle(
             Qt.ToolButtonStyle.ToolButtonTextBesideIcon
         )
         self.talent_details_toggle.setText(self.t("talent.details"))
-        priority.addWidget(self.talent_details_toggle)
-        layout.addLayout(priority)
+        controls.addWidget(self.talent_details_toggle, 1, 4, 1, 3)
+        controls.setColumnStretch(1, 1)
+        self.talent_controls_panel.hide()
+        self.talent_controls_toggle.toggled.connect(
+            self._talent_controls_visibility_changed
+        )
+        layout.addWidget(self.talent_controls_panel)
 
         self.talent_details_panel = QFrame(page)
         self.talent_details_panel.setObjectName("TalentDetailsPanel")
@@ -1898,6 +1949,14 @@ class MainWindow(QMainWindow):
         self._refresh_talent_priority_options()
         self._render_talent_plan()
         return page
+
+    def _talent_controls_visibility_changed(self, visible: bool) -> None:
+        self.talent_controls_panel.setVisible(visible)
+        self.talent_controls_toggle.setArrowType(
+            Qt.ArrowType.DownArrow if visible else Qt.ArrowType.RightArrow
+        )
+        if not visible and self.talent_details_toggle.isChecked():
+            self.talent_details_toggle.setChecked(False)
 
     def _talent_details_visibility_changed(self, visible: bool) -> None:
         self.talent_details_panel.setVisible(visible)
@@ -2015,11 +2074,6 @@ class MainWindow(QMainWindow):
         if index >= 0 and index != self.talent_priority_combo.currentIndex():
             self.talent_priority_combo.setCurrentIndex(index)
 
-    def _talent_points_changed(self, value: int) -> None:
-        self.player_state.talent_available_points = max(0, int(value))
-        self._talent_dirty = True
-        self._render_talent_plan()
-
     def _talent_name_changed(self, value: str) -> None:
         self.player_state.talent_plan_name = value.strip()[:100]
         self._talent_dirty = True
@@ -2027,6 +2081,7 @@ class MainWindow(QMainWindow):
     def _render_talent_plan(self) -> None:
         if not hasattr(self, "talent_tree_view"):
             return
+        self._sync_talent_point_capacity()
         try:
             allocation = self.talent_catalog.allocate(
                 self.player_state.talent_plan,
@@ -2930,6 +2985,9 @@ class MainWindow(QMainWindow):
         settings_form.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
         self.player_settings_panel = settings_panel
         self.player_settings_form = settings_form
+        self.player_level_spin = self._integer_spin(
+            1, 60, self.player_state.settings.player_level, settings_panel
+        )
         self.vip_level_spin = self._integer_spin(
             1, 15, self.player_state.settings.vip_level, settings_panel
         )
@@ -3003,6 +3061,30 @@ class MainWindow(QMainWindow):
         )
         common_form = QFormLayout(common_group)
         self.player_settings_form = common_form
+        common_form.addRow(
+            self.t("player.player_level"), self.player_level_spin
+        )
+        talent_points_row = QWidget(common_group)
+        talent_points_layout = QHBoxLayout(talent_points_row)
+        talent_points_layout.setContentsMargins(0, 0, 0, 0)
+        talent_points_layout.setSpacing(12)
+        self.talent_level_points_label = QLabel(talent_points_row)
+        self.talent_research_points_label = QLabel(talent_points_row)
+        self.talent_total_points_label = QLabel(talent_points_row)
+        talent_points_layout.addWidget(
+            QLabel(self.t("talent.level_points"), talent_points_row)
+        )
+        talent_points_layout.addWidget(self.talent_level_points_label)
+        talent_points_layout.addWidget(
+            QLabel(self.t("talent.research_points"), talent_points_row)
+        )
+        talent_points_layout.addWidget(self.talent_research_points_label)
+        talent_points_layout.addStretch(1)
+        talent_points_layout.addWidget(
+            QLabel(self.t("talent.available_points"), talent_points_row)
+        )
+        talent_points_layout.addWidget(self.talent_total_points_label)
+        common_form.addRow(self.t("talent.points"), talent_points_row)
         common_form.addRow(self.t("player.vip_level"), vip_row)
         common_form.addRow(self.t("player.castle_level"), self.castle_spin)
         common_form.addRow(
@@ -3269,6 +3351,7 @@ class MainWindow(QMainWindow):
         layout.addLayout(actions)
 
         self.vip_level_spin.valueChanged.connect(self._vip_level_changed)
+        self.player_level_spin.valueChanged.connect(self._player_level_changed)
         self._update_vip_free_speedup_label()
         self.castle_spin.valueChanged.connect(self._settings_changed)
         self.castle_mana_stage_spin.valueChanged.connect(self._settings_changed)
@@ -3288,6 +3371,7 @@ class MainWindow(QMainWindow):
         )
         for spin in self.resource_spins.values():
             spin.valueChanged.connect(self._settings_changed)
+        self._sync_talent_point_capacity()
         return page
 
     def _speedup_inventory_kind_combo(self, kind: str = "general") -> QComboBox:
@@ -3453,6 +3537,7 @@ class MainWindow(QMainWindow):
         settings = self.player_state.settings
         previous_castle_level = settings.castle_level
         previous_mana_stage = settings.castle_mana_stage
+        settings.player_level = self.player_level_spin.value()
         settings.vip_level = self.vip_level_spin.value()
         settings.castle_level = self.castle_spin.value()
         guild_help_limit = max_guild_helps_for_castle(settings.castle_level)
@@ -3497,6 +3582,7 @@ class MainWindow(QMainWindow):
             self.technolabe_threshold_spin.value()
         )
         settings.resources = {key: spin.value() for key, spin in self.resource_spins.items()}
+        self._sync_talent_point_capacity()
         self._player_settings_dirty = True
         self._update_player_save_button()
         self._refresh_detail()
@@ -3553,6 +3639,11 @@ class MainWindow(QMainWindow):
         ):
             self._refresh_tree_filter_results()
 
+    def _player_level_changed(self, *_args) -> None:
+        self._settings_changed()
+        if hasattr(self, "talent_tree_view"):
+            self._render_talent_plan()
+
     def _vip_level_changed(self, *_args) -> None:
         self._update_vip_free_speedup_label()
         self._settings_changed()
@@ -3580,6 +3671,7 @@ class MainWindow(QMainWindow):
             research_id == "military_command_hidden_talent"
             and hasattr(self, "talent_tree_view")
         ):
+            self._sync_talent_point_capacity()
             self._render_talent_plan()
 
     def _sync_progress_editor(self, research_id: str) -> None:
@@ -3643,6 +3735,7 @@ class MainWindow(QMainWindow):
             self.player_state = self.player_repository.import_json(Path(path))
             self._ensure_talent_plan()
             self._tree_level_draft = dict(self.player_state.research_levels)
+            self._sync_talent_point_capacity()
             self._building_level_draft = dict(self.player_state.building_levels)
             self._tree_levels_dirty = False
             self._player_settings_dirty = False
@@ -6041,6 +6134,46 @@ class MainWindow(QMainWindow):
                 }}
                 QPushButton#TalentPriorityNext {{
                     border-left: 1px solid {border};
+                }}
+                """
+            )
+            self.talent_quick_bar.setStyleSheet(
+                f"""
+                QFrame#TalentQuickBar {{
+                    border: 1px solid {border};
+                    border-radius: 7px;
+                    background-color: {surface};
+                }}
+                QFrame#TalentQuickBar > QLabel {{
+                    border: 0;
+                    color: {foreground};
+                    background-color: transparent;
+                    font-weight: 700;
+                }}
+                QFrame#TalentQuickBar > QToolButton {{
+                    min-height: 32px;
+                    padding: 0 10px;
+                    color: {foreground};
+                    background-color: {button_surface};
+                    font-weight: 700;
+                }}
+                QFrame#TalentQuickBar > QToolButton:hover {{
+                    background-color: {button_hover};
+                }}
+                """
+            )
+            self.talent_controls_panel.setStyleSheet(
+                f"""
+                QFrame#TalentControlsPanel {{
+                    border: 1px solid {border};
+                    border-radius: 7px;
+                    background-color: {surface};
+                }}
+                QFrame#TalentControlsPanel QLabel,
+                QFrame#TalentControlsPanel QCheckBox {{
+                    border: 0;
+                    color: {foreground};
+                    background-color: transparent;
                 }}
                 """
             )

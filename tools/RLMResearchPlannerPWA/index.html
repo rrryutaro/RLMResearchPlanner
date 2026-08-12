@@ -9,7 +9,7 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.3-b10">
+    <link rel="stylesheet" href="./styles.css?v=0.1.3-b12">
     <title>RLM Research Planner v0.1.3</title>
   </head>
   <body>
@@ -24,14 +24,18 @@
       <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
     </header>
 
-    <nav class="tab-bar" aria-label="メインメニュー">
-      <button class="tab-button is-active" data-tab="tree" type="button" data-i18n="tab.tree">研究ツリー</button>
-      <button class="tab-button" data-tab="plan" type="button" data-i18n="tab.plan">研究計画</button>
-      <button class="tab-button" data-tab="castle" type="button" data-i18n="tab.castle">建設</button>
-      <button class="tab-button" data-tab="settings" type="button" data-i18n="tab.player">プレイヤー</button>
-      <button class="tab-button" data-tab="paid" type="button" data-i18n="tab.paid">課金</button>
-      <button class="tab-button" data-tab="help" type="button" data-i18n="tab.help">ヘルプ</button>
-    </nav>
+    <div class="tab-navigation">
+      <button id="tab-scroll-previous" class="tab-scroll-button" type="button" aria-label="前のタブ" hidden>◀</button>
+      <nav id="tab-bar" class="tab-bar" aria-label="メインメニュー">
+        <button class="tab-button is-active" data-tab="tree" type="button" data-i18n="tab.tree">研究ツリー</button>
+        <button class="tab-button" data-tab="plan" type="button" data-i18n="tab.plan">研究計画</button>
+        <button class="tab-button" data-tab="castle" type="button" data-i18n="tab.castle">建設</button>
+        <button class="tab-button" data-tab="settings" type="button" data-i18n="tab.player">プレイヤー</button>
+        <button class="tab-button" data-tab="paid" type="button" data-i18n="tab.paid">課金</button>
+        <button class="tab-button" data-tab="help" type="button" data-i18n="tab.help">ヘルプ</button>
+      </nav>
+      <button id="tab-scroll-next" class="tab-scroll-button" type="button" aria-label="次のタブ" hidden>▶</button>
+    </div>
 
     <div id="startup-loading" class="startup-loading" role="status" aria-live="polite">
       <span class="startup-loading-spinner" aria-hidden="true"></span>
@@ -107,25 +111,20 @@
       </section>
 
       <section id="tab-plan" class="tab-panel" aria-labelledby="plan-title">
-        <div class="section-heading">
-          <div class="plan-title-block">
-            <p class="eyebrow">必要時間と資源</p>
-            <div class="plan-title-row">
-              <h2 id="plan-title" data-i18n="tab.plan">研究計画</h2>
-              <label class="resource-mode-compact">
-                <span data-i18n="plan.resource_display">資源</span>
-                <select id="resource-display-mode" aria-label="資源の表示形式">
-                  <option value="exact" data-i18n="plan.resource_exact">通常</option>
-                  <option value="short" data-i18n="plan.resource_short">短縮</option>
-                </select>
-              </label>
-            </div>
-          </div>
+        <h2 id="plan-title" class="sr-only" data-i18n="tab.plan">研究計画</h2>
+        <div class="panel-toolbar plan-panel-toolbar">
           <div class="segmented" role="group" aria-label="計画方法">
             <button class="is-active" id="plan-target-mode" type="button" data-i18n="plan.mode.target">目標研究</button>
             <button id="plan-shortest-mode" type="button" data-i18n="plan.mode.shortest">短時間順</button>
             <button id="plan-tasks-mode" type="button" data-i18n="plan.mode.tasks">登録タスク</button>
           </div>
+          <label class="resource-mode-compact">
+            <span data-i18n="plan.resource_display">資源</span>
+            <select id="resource-display-mode" aria-label="資源の表示形式">
+              <option value="exact" data-i18n="plan.resource_exact">通常</option>
+              <option value="short" data-i18n="plan.resource_short">短縮</option>
+            </select>
+          </label>
         </div>
         <div id="target-plan-view">
           <div id="plan-placeholder" class="callout" data-i18n="pwa.plan_placeholder">研究ツリーでカードを開き、「この研究を計画」を選択してください。</div>
@@ -182,12 +181,7 @@
       </section>
 
       <section id="tab-castle" class="tab-panel" aria-labelledby="castle-title">
-        <div class="section-heading castle-heading">
-          <div>
-            <p class="eyebrow" data-i18n="pwa.current_construction">現在の建設タスク</p>
-            <h2 id="castle-title" data-i18n="help.castle.title">建設計画</h2>
-          </div>
-        </div>
+        <h2 id="castle-title" class="sr-only" data-i18n="help.castle.title">建設計画</h2>
         <section class="construction-selector" aria-labelledby="construction-selector-title">
           <h3 id="construction-selector-title" data-i18n="castle.selection_title">計算する施設</h3>
           <div class="castle-target-controls">
@@ -214,13 +208,8 @@
       </section>
 
       <section id="tab-settings" class="tab-panel" aria-labelledby="settings-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow" data-i18n="pwa.auto_save">端末内に自動保存</p>
-            <h2 id="settings-title" data-i18n="tab.player">プレイヤー設定</h2>
-          </div>
-          <span id="save-indicator" class="muted" aria-live="polite" data-i18n="pwa.saved">保存済み</span>
-        </div>
+        <h2 id="settings-title" class="sr-only" data-i18n="tab.player">プレイヤー設定</h2>
+        <span id="save-indicator" class="sr-only" aria-live="polite" data-i18n="pwa.saved">保存済み</span>
         <div class="segmented player-view-tabs" role="group" aria-label="プレイヤー設定画面">
           <button id="player-view-level-button" class="is-active" type="button" data-i18n="player.subtab.level">レベル</button>
           <button id="player-view-talent-button" type="button" data-i18n="player.subtab.talent">才能</button>
@@ -233,11 +222,17 @@
             <summary data-i18n="player.common_settings">共通設定</summary>
             <div class="settings-card-body">
             <div class="form-grid">
+              <label class="field"><span data-i18n="player.player_level">プレイヤーレベル</span><input id="setting-player-level" type="number" inputmode="numeric" min="1" max="60"></label>
               <label class="field"><span data-i18n="player.vip_level">VIPレベル</span><input id="setting-vip" type="number" inputmode="numeric" min="1" max="15"></label>
               <label class="field"><span data-i18n="player.castle_level">城レベル</span><input id="setting-castle" type="number" inputmode="numeric" min="1" max="25"></label>
               <label class="field"><span data-i18n="player.castle_mana_stage">城Lv.25後のマナ強化段階</span><input id="setting-castle-mana" type="number" inputmode="numeric" min="0" max="5"></label>
               <label class="field"><span data-i18n="player.academy_level">アカデミーレベル</span><input id="setting-academy" type="number" inputmode="numeric" min="1" max="25"></label>
               <label class="field"><span data-i18n="player.guild_helps">ギルドヘルプ回数</span><input id="setting-helps" type="number" inputmode="numeric" min="0" max="6"><small id="guild-help-limit" class="field-hint"></small></label>
+            </div>
+            <div class="talent-point-breakdown" aria-live="polite">
+              <span><span data-i18n="talent.level_points">レベル分</span> <strong id="talent-level-points">0</strong></span>
+              <span><span data-i18n="talent.research_points">研究追加</span> <strong id="talent-research-points">0</strong></span>
+              <span><span data-i18n="talent.available_points">使用可能ポイント</span> <strong id="talent-total-points">0</strong></span>
             </div>
             <p id="vip-free-time" class="hint"></p>
             </div>
@@ -356,29 +351,30 @@
           </div>
         </div>
         <div id="player-view-talent" class="player-subview" hidden>
-          <div class="talent-primary-toolbar">
-            <label class="field grow talent-preset-field">
-              <span data-i18n="talent.preset">用途プリセット</span>
-              <select id="talent-preset"></select>
-            </label>
-            <label class="field compact"><span data-i18n="talent.available_points">使用可能ポイント</span><input id="talent-available-points" type="number" inputmode="numeric" min="0" max="9999"></label>
-          </div>
-          <div class="talent-focus-toolbar">
-            <div class="field grow talent-choice-field">
-              <span data-i18n="talent.priority">先に伸ばす才能</span>
-              <div class="talent-choice-stepper talent-priority-stepper">
-                <button id="talent-priority-previous" type="button" data-i18n-aria="talent.previous_priority" aria-label="前の優先項目">＜</button>
-                <output id="talent-priority-label">-</output>
-                <button id="talent-priority-next" type="button" data-i18n-aria="talent.next_priority" aria-label="次の優先項目">＞</button>
+          <div id="talent-plan-controls" class="talent-plan-controls">
+            <div class="talent-quick-controls">
+              <button id="talent-priority-previous" type="button" data-i18n-aria="talent.previous_priority" aria-label="前の優先項目">＜</button>
+              <output id="talent-priority-label">-</output>
+              <button id="talent-priority-next" type="button" data-i18n-aria="talent.next_priority" aria-label="次の優先項目">＞</button>
+              <button id="talent-settings-toggle" class="talent-settings-toggle" type="button" aria-expanded="false" aria-controls="talent-settings-panel" data-i18n="talent.settings">設定</button>
+            </div>
+            <div id="talent-settings-panel" class="talent-settings-panel" hidden>
+              <div class="talent-control-row">
+                <label class="field talent-preset-field">
+                  <span data-i18n="talent.preset">用途プリセット</span>
+                  <select id="talent-preset"></select>
+                </label>
+                <label class="check-field talent-auto-follow-field"><input id="talent-auto-follow" type="checkbox" checked><span data-i18n="talent.auto_follow_short">自動追従</span></label>
               </div>
-              <select id="talent-priority" hidden aria-hidden="true" tabindex="-1"></select>
+              <span id="talent-controls-selection"></span>
+              <span class="talent-summary-inline" aria-live="polite">
+                <span><span data-i18n="talent.available_points">使用可能</span> <strong id="talent-available-points">0</strong></span>
+                <span><span data-i18n="talent.required_points">必要</span> <strong id="talent-required-points">0</strong></span>
+                <span><span data-i18n="talent.remaining_points">残り</span> <strong id="talent-remaining-points">0</strong></span>
+              </span>
             </div>
-            <label class="check-field talent-auto-follow-field"><input id="talent-auto-follow" type="checkbox" checked><span data-i18n="talent.auto_follow">選択を自動表示</span></label>
-            <div class="talent-summary-inline" aria-live="polite">
-              <span><span data-i18n="talent.required_points">必要</span> <strong id="talent-required-points">0</strong></span>
-              <span><span data-i18n="talent.allocated_points">使用</span> <strong id="talent-used-points">0</strong></span>
-              <span><span data-i18n="talent.remaining_points">残り</span> <strong id="talent-remaining-points">0</strong></span>
-            </div>
+            <select id="talent-priority" hidden aria-hidden="true" tabindex="-1"></select>
+            <span id="talent-used-points" hidden>0</span>
           </div>
           <div id="talent-tree-viewport" class="talent-tree-viewport">
             <div id="talent-tree-stage" class="talent-tree-stage">
@@ -403,14 +399,11 @@
       </section>
 
       <section id="tab-paid" class="tab-panel" aria-labelledby="paid-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow" data-i18n="paid.workspace">課金候補を記録・比較</p>
-            <h2 id="paid-title" data-i18n="tab.paid">課金</h2>
-          </div>
+        <h2 id="paid-title" class="sr-only" data-i18n="tab.paid">課金</h2>
+        <div class="paid-quick-actions">
+          <p class="hint" data-i18n="paid.value_hint">ポイントとジェム換算は比較用の任意設定です。ゲーム公式の交換比率ではありません。</p>
           <button id="paid-new" type="button" data-i18n="paid.new_offer">新規</button>
         </div>
-        <p class="hint" data-i18n="paid.value_hint">ポイントとジェム換算は比較用の任意設定です。ゲーム公式の交換比率ではありません。</p>
         <div class="segmented paid-view-tabs" role="group" aria-label="課金画面">
           <button id="paid-view-input-button" class="is-active" type="button" data-i18n="paid.view.input">入力</button>
           <button id="paid-view-saved-button" type="button" data-i18n="paid.view.saved">保存一覧</button>
@@ -501,11 +494,8 @@
       </section>
 
       <section id="tab-help" class="tab-panel" aria-labelledby="help-title">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow" data-i18n="pwa.usage">使い方</p>
-            <h2 id="help-title" data-i18n="tab.help">ヘルプ</h2>
-          </div>
+        <h2 id="help-title" class="sr-only" data-i18n="tab.help">ヘルプ</h2>
+        <div class="help-toolbar">
           <label class="field compact"><span data-i18n="language.label">表示言語</span><select id="language-select"><option value="ja-JP">日本語</option><option value="en-US">English</option></select></label>
         </div>
         <div class="help-content">
@@ -611,7 +601,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.3-b10";
+      const startupVersion = "0.1.3-b12";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -714,6 +704,6 @@
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.3-b10"></script>
+    <script type="module" src="./src/app.js?v=0.1.3-b12"></script>
   </body>
 </html>

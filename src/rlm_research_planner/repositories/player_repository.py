@@ -281,6 +281,7 @@ class PlayerRepository:
         )
         castle_level = max(1, min(25, int(values.get("castle_level", 1))))
         settings = PlayerSettings(
+            player_level=max(1, min(60, int(values.get("player_level", 60)))),
             vip_level=max(1, min(15, vip_level)),
             castle_level=castle_level,
             castle_target_level=max(0, int(values.get("castle_target_level", 0))),
@@ -395,6 +396,7 @@ class PlayerRepository:
             ),
         )
         values: dict[str, object] = {
+            "player_level": max(1, min(60, int(state.settings.player_level))),
             "vip_level": state.settings.vip_level,
             "castle_level": state.settings.castle_level,
             "castle_target_level": state.settings.castle_target_level,
@@ -485,6 +487,9 @@ class PlayerRepository:
             "exported_at": datetime.now(timezone.utc).isoformat(),
             "player": {
                 "settings": {
+                    "player_level": max(
+                        1, min(60, int(state.settings.player_level))
+                    ),
                     "vip_level": state.settings.vip_level,
                     "castle_level": state.settings.castle_level,
                     "castle_target_level": state.settings.castle_target_level,
@@ -590,6 +595,13 @@ class PlayerRepository:
             min(25, int(raw_settings["castle_level"])),  # type: ignore[index]
         )
         settings = PlayerSettings(
+            player_level=max(
+                1,
+                min(
+                    60,
+                    int(raw_settings.get("player_level", 60)),  # type: ignore[union-attr]
+                ),
+            ),
             vip_level=max(1, min(15, vip_level)),
             castle_level=castle_level,
             castle_target_level=max(

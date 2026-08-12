@@ -42,6 +42,7 @@ const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf
 const planningSource = await readFile(new URL("../src/planning.js", import.meta.url), "utf8");
 const stylesSource = await readFile(new URL("../styles.css", import.meta.url), "utf8");
 const serviceWorkerSource = await readFile(new URL("../sw.js", import.meta.url), "utf8");
+const webManifest = JSON.parse(await readFile(new URL("../manifest.webmanifest", import.meta.url), "utf8"));
 const versionSource = await readFile(new URL("../version.py", import.meta.url), "utf8");
 const packageMetadata = JSON.parse(await readFile(new URL("../package.json", import.meta.url), "utf8"));
 const japaneseDataGuide = await readFile(desktopUrl("docs/ja-JP/data-files.md"), "utf8");
@@ -477,15 +478,23 @@ test("player settings use level, talent, resources, and acceleration subviews", 
   assert.match(indexHtml, /id="player-view-talent" class="player-subview" hidden/);
 });
 
-test("talent planning uses a preset list and an integrated priority stepper", () => {
+test("talent planning keeps priority navigation available while settings are collapsed", () => {
   assert.match(indexHtml, /<select id="talent-preset"><\/select>/u);
   assert.match(indexHtml, /id="talent-priority"/u);
   assert.match(indexHtml, /id="talent-priority-previous"/u);
   assert.match(indexHtml, /id="talent-priority-next"/u);
   assert.match(indexHtml, /id="talent-auto-follow"/u);
-  assert.match(indexHtml, /class="talent-primary-toolbar"/u);
-  assert.match(indexHtml, /class="talent-focus-toolbar"/u);
+  assert.match(indexHtml, /id="talent-plan-controls" class="talent-plan-controls"/u);
+  assert.match(indexHtml, /id="talent-settings-toggle"[^>]*aria-expanded="false"/u);
+  assert.match(indexHtml, /id="talent-settings-panel" class="talent-settings-panel" hidden/u);
+  assert.match(indexHtml, /class="talent-control-row"/u);
   assert.match(indexHtml, /class="talent-summary-inline"/u);
+  assert.match(indexHtml, /id="setting-player-level"/u);
+  assert.match(indexHtml, /id="tab-scroll-previous"/u);
+  assert.match(indexHtml, /id="tab-scroll-next"/u);
+  assert.match(indexHtml, /data-i18n="talent\.auto_follow_short"/u);
+  assert.doesNotMatch(indexHtml, /id="talent-available-points"[^>]*type="number"/u);
+  assert.match(appSource, /function syncTalentPointCapacity\(\)/u);
   assert.match(indexHtml, /<details class="settings-card talent-directive-card">\s*<summary data-i18n="talent\.details"/u);
   assert.ok(indexHtml.indexOf('id="talent-tree-viewport"') < indexHtml.indexOf('id="talent-description"'));
   assert.doesNotMatch(indexHtml, /player-talent-heading/u);
@@ -497,6 +506,7 @@ test("talent planning uses a preset list and an integrated priority stepper", ()
   assert.doesNotMatch(indexHtml, /id="talent-plan-list"/u);
   assert.match(appSource, /function renderTalentTree\(allocation\)/u);
   assert.match(appSource, /talentAutoFollowPending/u);
+  assert.match(appSource, /button\?\.setAttribute\("aria-expanded", String\(expanded\)\)/u);
   assert.match(appSource, /viewport\.scrollTo/u);
   assert.match(appSource, /military_command_hidden_talent/u);
   assert.match(stylesSource, /\.talent-tree-card\.is-priority/u);
@@ -665,6 +675,7 @@ test("shortest list contains only startable next levels", () => {
 
 test("backup payload round-trips with desktop schema", () => {
   const state = defaultState();
+  state.settings.playerLevel = 42;
   state.settings.vipLevel = 11;
   state.settings.researchSpeedPercent = 228;
   state.settings.constructionSpeedPercent = 176.25;
@@ -684,6 +695,7 @@ test("backup payload round-trips with desktop schema", () => {
   state.talentAutoFollow = false;
   state.planTasks.push({ researchId: "economy_construction_speed", targetLevel: 8, createdAt: "test-date" });
   const restored = stateFromBackup(backupPayload(state));
+  assert.equal(restored.settings.playerLevel, 42);
   assert.equal(restored.settings.vipLevel, 11);
   assert.equal(restored.settings.researchSpeedPercent, 228);
   assert.equal(restored.settings.constructionSpeedPercent, 176.25);
@@ -798,6 +810,12 @@ test("an imported research task is complete or recalculated from the recipient's
   const completedPlan = createPlan(catalog, completedState, targetId, 1);
   assert.equal(completedPlan.steps.length, 0);
   assert.equal(completedPlan.totals.adjustedSeconds, 0);
+});
+
+test("installed PWA stays portrait-first and pages crowded tabs", () => {
+  assert.equal(webManifest.orientation, "portrait-primary");
+  assert.match(stylesSource, /\.tab-bar\.is-overflowing[^}]*grid-auto-columns: calc\(\(100% - 8px\) \/ 3\)/u);
+  assert.match(appSource, /currentIndex \+ direction \* 3/u);
 });
 
 test("target plans expose the unmet dependency graph for the mobile plan tree", () => {

@@ -207,7 +207,7 @@ def check(
     build_script = (PRODUCT_ROOT / "build_exe.bat").read_text(encoding="utf-8")
     if '--version-file "%~dp0resources\\windows_version_info.txt"' not in build_script:
         errors.append("The executable build does not include Windows version metadata.")
-    if 'PYINSTALLER_CONFIG_DIR=%~dp0..\\..\\build\\PyInstallerCache' not in build_script:
+    if 'PYINSTALLER_CONFIG_DIR=%~dp0build\\PyInstallerCache' not in build_script:
         errors.append("The executable build does not keep the PyInstaller cache local.")
     if "scripts\\write_release_checksum.py" not in build_script:
         errors.append("The executable build does not create the SHA-256 asset.")

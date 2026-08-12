@@ -18,6 +18,7 @@ def test_player_state_round_trip_in_memory() -> None:
     try:
         state = PlayerState(
             settings=PlayerSettings(
+                player_level=42,
                 vip_level=11,
                 castle_level=25,
                 academy_level=24,
@@ -56,6 +57,7 @@ def test_player_state_round_trip_in_memory() -> None:
         repository.save(state)
         loaded = repository.load()
         assert loaded.settings.castle_level == 25
+        assert loaded.settings.player_level == 42
         assert loaded.settings.research_speed_percent == 123.45
         assert loaded.settings.research_speed_boost_percent == 10.0
         assert loaded.settings.effective_research_speed_percent == 133.45
@@ -87,6 +89,7 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
     try:
         state = PlayerState(
             settings=PlayerSettings(
+                player_level=37,
                 speedup_inventory=[
                     SpeedupInventoryItem("general", 3600, 2),
                     SpeedupInventoryItem("research", 1800, 4),
@@ -111,6 +114,7 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
         raw = repository.backup_payload(state)
         assert raw["schema_version"] == 1
         assert "play_style" not in raw["player"]["settings"]
+        assert raw["player"]["settings"]["player_level"] == 37
         assert raw["player"]["settings"]["speedup_inventory"] == [
             {"kind": "general", "duration_seconds": 3600, "quantity": 2},
             {"kind": "research", "duration_seconds": 1800, "quantity": 4},
@@ -122,6 +126,7 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
         }
         restored = repository.restore_payload(raw)
         assert restored.research_levels == {"mil_infantry_attack": 1}
+        assert restored.settings.player_level == 37
         assert restored.settings.speedup_inventory == state.settings.speedup_inventory
         assert restored.settings.use_gems_for_speedups is True
         assert restored.settings.technolabe_recommendation_threshold_percent == 97.5

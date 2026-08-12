@@ -2,14 +2,13 @@
 setlocal
 cd /d "%~dp0"
 
-set "PYTHON_EXE=%~dp0..\..\.venv\Scripts\python.exe"
-if not exist "%PYTHON_EXE%" set "PYTHON_EXE=%~dp0.venv\Scripts\python.exe"
+set "PYTHON_EXE=%~dp0.venv\Scripts\python.exe"
 if not exist "%PYTHON_EXE%" (
   echo A repository or product .venv\Scripts\python.exe was not found.
   echo Create the development environment before building.
   exit /b 1
 )
-set "PYINSTALLER_CONFIG_DIR=%~dp0..\..\build\PyInstallerCache"
+set "PYINSTALLER_CONFIG_DIR=%~dp0build\PyInstallerCache"
 
 "%PYTHON_EXE%" -B "%~dp0scripts\check_release_licenses.py" --final --exact-runtime
 if errorlevel 1 exit /b %ERRORLEVEL%
@@ -19,9 +18,9 @@ if errorlevel 1 exit /b %ERRORLEVEL%
   --onefile ^
   --windowed ^
   --version-file "%~dp0resources\windows_version_info.txt" ^
-  --distpath "%~dp0..\..\dist" ^
-  --workpath "%~dp0..\..\build\RLMResearchPlanner" ^
-  --specpath "%~dp0..\..\build" ^
+  --distpath "%~dp0dist" ^
+  --workpath "%~dp0build\RLMResearchPlanner" ^
+  --specpath "%~dp0build" ^
   --paths "%~dp0src" ^
   --add-data "%~dp0data\buildings;data\buildings" ^
   --add-data "%~dp0data\talents;data\talents" ^
@@ -38,5 +37,5 @@ if errorlevel 1 exit /b %ERRORLEVEL%
 if errorlevel 1 exit /b %ERRORLEVEL%
 
 "%PYTHON_EXE%" -B "%~dp0scripts\write_release_checksum.py" ^
-  "%~dp0..\..\dist\RLMResearchPlanner.exe"
+  "%~dp0dist\RLMResearchPlanner.exe"
 exit /b %ERRORLEVEL%

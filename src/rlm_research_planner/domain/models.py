@@ -145,6 +145,7 @@ def locale_fallbacks(locale: str) -> tuple[str, ...]:
 
 @dataclass
 class PlayerSettings:
+    player_level: int = 60
     vip_level: int = 1
     castle_level: int = 1
     castle_target_level: int = 0
