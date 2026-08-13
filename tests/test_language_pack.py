@@ -15,6 +15,7 @@ from rlm_research_planner.services.language_pack import (
     build_language_pack_template,
     default_direction,
     language_pack_from_dict,
+    load_bundled_locale_manifest,
     normalize_locale,
     select_preferred_locale,
 )
@@ -161,3 +162,78 @@ def test_template_contains_all_catalog_terms(master) -> None:
     assert template["research"]["economy_construction_speed"]["text"] == ""
     assert "tab.tree" in template["messages"]
     assert "app.disclaimer" not in template["messages"]
+    assert "talent_effects" in template
+    assert "talent_presets" in template
+    assert "talent_preset_descriptions" in template
+    assert "effect_labels" in template
+    assert "effect_values" in template
+
+
+def test_bundled_locale_manifest_registers_complete_language_packs() -> None:
+    paths = resolve_paths()
+    manifest = load_bundled_locale_manifest(paths.translations)
+
+    assert manifest.fallback_locale == "en-US"
+    assert {entry.locale for entry in manifest.locales} == {"ja-JP", "en-US"}
+    for entry in manifest.locales:
+        assert entry.pack.locale == entry.locale
+        assert entry.pack.name == entry.name
+        assert entry.pack.text("research", "economy_construction_speed")
+        assert entry.pack.text("talents", "construction_speed_i")
+        assert entry.pack.text("talent_effects", "construction_speed_i")
+
+
+def test_custom_same_locale_overlays_bundled_pack_without_erasing_terms() -> None:
+    raw = _pack(
+        locale="ja-JP",
+        name="日本語（利用者修正）",
+        direction="ltr",
+        messages={"tab.tree": {"source": "Research Tree", "text": "研究一覧"}},
+        research={},
+    )
+    pack = language_pack_from_dict(raw)
+
+    class StubLanguagePackRepository:
+        @staticmethod
+        def load_all():
+            return {pack.locale: pack}
+
+    translator = Translator(
+        resolve_paths().translations,
+        "ja-JP",
+        StubLanguagePackRepository(),
+    )
+
+    assert translator.text("tab.tree") == "研究一覧"
+    assert translator.text("tab.help") == "ヘルプ"
+    assert translator.research_name("economy_construction_speed", "") == "建設速度"
+    assert translator.talent_effect("construction_speed_i", "") == "建設速度"
+
+
+def test_translator_uses_manifest_fallback_chain_for_arbitrary_locale() -> None:
+    french = language_pack_from_dict(
+        _pack(
+            locale="fr-FR",
+            name="Français",
+            direction="ltr",
+            fallback_locale="en-US",
+            messages={"tab.tree": {"source": "Research Tree", "text": "Recherches"}},
+            research={},
+        )
+    )
+
+    class StubLanguagePackRepository:
+        @staticmethod
+        def load_all():
+            return {french.locale: french}
+
+    translator = Translator(
+        resolve_paths().translations,
+        "fr-CA",
+        StubLanguagePackRepository(),
+    )
+
+    assert translator.locale == "fr-FR"
+    assert translator.text("tab.tree") == "Recherches"
+    assert translator.text("tab.help") == "Help"
+    assert translator.research_name("economy_construction_speed", "") == "Construction Speed"

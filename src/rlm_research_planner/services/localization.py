@@ -1,12 +1,14 @@
 from __future__ import annotations
 
-import json
 from pathlib import Path
 
 from rlm_research_planner.services.language_pack import (
+    BundledLocaleManifest,
     LanguagePack,
     LanguagePackRepository,
     default_direction,
+    load_bundled_locale_manifest,
+    normalize_locale,
 )
 
 
@@ -14,18 +16,24 @@ class Translator:
     def __init__(
         self,
         resources_directory: Path,
-        locale: str = "ja-JP",
+        locale: str = "",
         language_pack_repository: LanguagePackRepository | None = None,
     ) -> None:
         self.resources_directory = Path(resources_directory)
+        self._manifest: BundledLocaleManifest = load_bundled_locale_manifest(
+            self.resources_directory
+        )
+        self._bundled_locales = self._manifest.by_locale
         self.language_pack_repository = language_pack_repository
-        self.locale = locale
+        self.locale = locale or self._manifest.fallback_locale
         self._messages: dict[str, str] = {}
         self._effect_labels: dict[str, str] = {}
         self._packs: dict[str, LanguagePack] = {}
+        self._bundled_pack: LanguagePack | None = None
         self._active_pack: LanguagePack | None = None
+        self._term_layers: tuple[LanguagePack, ...] = ()
         self.reload_language_packs()
-        self.set_locale(locale)
+        self.set_locale(self.locale)
 
     def reload_language_packs(self) -> None:
         self._packs = (
@@ -36,15 +44,15 @@ class Translator:
 
     def available_locales(self) -> tuple[tuple[str, str, str, bool], ...]:
         locales = {
-            "ja-JP": ("日本語", "ltr", False),
-            "en-US": ("English", "ltr", False),
+            entry.locale: (entry.name, entry.direction, entry.locale in self._packs)
+            for entry in self._manifest.locales
         }
-        locales.update(
-            {
-                locale: (pack.name, pack.direction, True)
-                for locale, pack in self._packs.items()
-            }
-        )
+        for locale, pack in self._packs.items():
+            if locale in locales:
+                _name, _direction, _custom = locales[locale]
+                locales[locale] = (pack.name, pack.direction, True)
+            else:
+                locales[locale] = (pack.name, pack.direction, True)
         return tuple(
             (locale, name, direction, custom)
             for locale, (name, direction, custom) in locales.items()
@@ -55,61 +63,109 @@ class Translator:
         return (
             self._active_pack.direction
             if self._active_pack is not None
+            else self._bundled_locales.get(
+                self.locale,
+                None,
+            ).direction
+            if self.locale in self._bundled_locales
             else default_direction(self.locale)
         )
 
     @property
     def content_locale(self) -> str:
         return (
-            self._active_pack.fallback_locale
+            self.locale
+            if self.locale in self._bundled_locales
+            else self._active_pack.fallback_locale
             if self._active_pack is not None
-            else self.locale
+            else self._manifest.fallback_locale
         )
 
+    @property
+    def fallback_locale(self) -> str:
+        return self._manifest.fallback_locale
+
+    def available_locale_ids(self) -> tuple[str, ...]:
+        return tuple(locale for locale, _name, _direction, _custom in self.available_locales())
+
     def set_locale(self, locale: str) -> None:
-        normalized = locale.replace("_", "-")
-        active_pack = self._packs.get(normalized)
-        candidates = [
-            normalized,
-            normalized.split("-", 1)[0],
-            active_pack.fallback_locale if active_pack is not None else "en-US",
-            "en-US",
-        ]
-        messages: dict[str, str] = {}
-        effect_labels: dict[str, str] = {}
-        selected = "en-US"
-        for candidate in reversed(list(dict.fromkeys(candidates))):
-            path = self.resources_directory / f"{candidate}.json"
-            if not path.is_file():
-                continue
-            raw = json.loads(path.read_text(encoding="utf-8"))
-            messages.update({str(key): str(value) for key, value in raw["messages"].items()})
-            effect_labels.update(
-                {
-                    str(key): str(value)
-                    for key, value in raw.get("effect_labels", {}).items()
-                    if str(value).strip()
-                }
+        requested = normalize_locale(locale)
+        available = (*self._bundled_locales, *self._packs)
+        normalized = (
+            requested
+            if requested in available
+            else next(
+                (
+                    candidate
+                    for candidate in available
+                    if candidate.split("-", 1)[0]
+                    == requested.split("-", 1)[0]
+                ),
+                self._manifest.fallback_locale,
             )
-            selected = candidate if candidate == normalized else selected
-        if active_pack is not None:
-            messages.update(active_pack.sections.get("messages", {}))
-        self.locale = normalized if messages else selected
+        )
+        active_pack = self._packs.get(normalized)
+        bundled_pack = (
+            self._bundled_locales[normalized].pack
+            if normalized in self._bundled_locales
+            else None
+        )
+        layers: list[LanguagePack] = []
+        visiting: set[str] = set()
+
+        def add_locale(candidate: str) -> None:
+            if candidate in visiting:
+                return
+            visiting.add(candidate)
+            custom = self._packs.get(candidate)
+            bundled = self._bundled_locales.get(candidate)
+            selected = custom or (bundled.pack if bundled is not None else None)
+            if selected is not None and selected.fallback_locale != candidate:
+                add_locale(selected.fallback_locale)
+            if bundled is not None and bundled.pack not in layers:
+                layers.append(bundled.pack)
+            if custom is not None and custom not in layers:
+                layers.append(custom)
+
+        add_locale(self._manifest.fallback_locale)
+        add_locale(normalized)
+        messages: dict[str, str] = {}
+        for layer in layers:
+            messages.update(layer.sections.get("messages", {}))
+        self.locale = normalized
         self._messages = messages
-        self._effect_labels = effect_labels
+        self._effect_labels = {}
+        self._bundled_pack = bundled_pack
         self._active_pack = active_pack
+        self._term_layers = tuple(layers)
 
     def text(self, key: str, **values: object) -> str:
         template = self._messages.get(key, key)
         return template.format(**values) if values else template
 
     def effect_label(self, source_label: str) -> str:
-        return self._effect_labels.get(source_label.strip(), "")
+        return self.term("effect_labels", source_label.strip(), "")
 
     def term(self, section: str, key: str, fallback: str) -> str:
-        if self._active_pack is None:
-            return fallback
-        return self._active_pack.text(section, key) or fallback
+        return next(
+            (
+                value
+                for layer in reversed(self._term_layers)
+                if (value := layer.text(section, key))
+            ),
+            fallback,
+        )
+
+    @property
+    def effect_separator(self) -> str:
+        return next(
+            (
+                layer.effect_separator
+                for layer in reversed(self._term_layers)
+                if layer.effect_separator is not None
+            ),
+            " ",
+        )
 
     def research_name(self, research_id: str, fallback: str) -> str:
         return self.term("research", research_id, fallback)
@@ -129,7 +185,34 @@ class Translator:
     def talent_name(self, talent_id: str, fallback: str) -> str:
         return self.term("talents", talent_id, fallback)
 
+    def talent_effect(self, talent_id: str, fallback: str) -> str:
+        return self.term("talent_effects", talent_id, fallback)
+
+    def talent_preset(self, preset_id: str, fallback: str) -> str:
+        return self.term("talent_presets", preset_id, fallback)
+
+    def talent_preset_description(self, preset_id: str, fallback: str) -> str:
+        return self.term("talent_preset_descriptions", preset_id, fallback)
+
+    def effect_value(self, key: str, fallback: str, **values: object) -> str:
+        template = self.term("effect_values", key, fallback)
+        return template.format(**values) if values else template
+
     def english_messages(self) -> dict[str, str]:
-        path = self.resources_directory / "en-US.json"
-        raw = json.loads(path.read_text(encoding="utf-8"))
-        return {str(key): str(value) for key, value in raw.get("messages", {}).items()}
+        return dict(
+            self._bundled_locales[self._manifest.fallback_locale].pack.sections.get(
+                "messages", {}
+            )
+        )
+
+    def fallback_terms(self, section: str) -> dict[str, str]:
+        return dict(
+            self._bundled_locales[self._manifest.fallback_locale].pack.sections.get(
+                section, {}
+            )
+        )
+
+    def fallback_term(self, section: str, key: str, fallback: str = "") -> str:
+        return self._bundled_locales[self._manifest.fallback_locale].pack.text(
+            section, key
+        ) or fallback

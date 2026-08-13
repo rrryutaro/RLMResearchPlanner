@@ -25,8 +25,7 @@ const [
   speedupInventorySource,
   castlePlanningSource,
   castleSource,
-  japaneseSource,
-  englishSource,
+  localeManifestSource,
 ] = await Promise.all([
   text("package.json"),
   text("version.py"),
@@ -38,8 +37,7 @@ const [
   text("src/speedup-inventory.js"),
   text("src/castle-planning.js"),
   text("data/buildings/castle_catalog.json"),
-  text("data/i18n/ja-JP.json"),
-  text("data/i18n/en-US.json"),
+  text("data/i18n/manifest.json"),
 ]);
 
 const packageVersion = JSON.parse(packageSource).version;
@@ -71,7 +69,7 @@ for (const source of [appSource, planningSource, stateSource, speedupInventorySo
 
 const shellSource = workerSource.match(/const APP_SHELL\s*=\s*\[([\s\S]*?)\];/u)?.[1] || "";
 const shellPaths = [...shellSource.matchAll(/"(\.\/[^"\n]*)"/gu)].map((match) => match[1]);
-assert.ok(shellPaths.length >= 41, "オフライン配信対象ファイルが不足しています");
+assert.ok(shellPaths.length >= 20, "オフライン配信対象ファイルが不足しています");
 for (const shellPath of shellPaths) {
   const relative = shellPath.split("?", 1)[0].replace(/^\.\//u, "");
   if (relative) await access(fileURLToPath(new URL(relative, pwaRoot)));
@@ -85,6 +83,8 @@ assert.match(workerSource, /key\.startsWith\(CACHE_PREFIX\)/u, "キャッシュ�
 assert.match(workerSource, /SCOPE_KEY/u, "Service Workerキャッシュが配信先ごとに分離されていません");
 assert.match(workerSource, /rlm-research-planner-preview/u, "確認版のキャッシュ名前空間が分離されていません");
 assert.match(workerSource, /new Request\(url, \{ cache: "reload" \}\)/u, "PWA更新時にHTTPキャッシュを再利用しています");
+assert.match(workerSource, /async function manifestAssets\(\)/u, "研究・翻訳マニフェストからオフライン対象を展開していません");
+assert.match(workerSource, /locales\.locales/u, "全内蔵言語をオフライン対象にしていません");
 assert.match((await text("src/catalog.js")), /JSONの代わりにHTMLが返されました/u, "古いキャッシュがHTMLを返した場合の検出がありません");
 assert.doesNotMatch(workerSource, /\(await caches\.match\(event\.request\)\) \|\| caches\.match\("\.\/index\.html"\)/u, "データ取得失敗時にHTMLを返す処理が残っています");
 assert.match(indexHtml, /id="shortest-previous"/u, "短時間順の前ページ操作がありません");
@@ -101,6 +101,21 @@ const elementIds = [...indexHtml.matchAll(/\sid="([^"]+)"/gu)].map((match) => ma
 assert.equal(new Set(elementIds).size, elementIds.length, "画面内に重複したidがあります");
 
 const datasetManifest = JSON.parse(await text("data/research-dataset/manifest.json"));
+const localeManifest = JSON.parse(localeManifestSource);
+assert.equal(localeManifest.document_type, "RLMResearchPlanner.locale-manifest", "表示言語一覧の形式が正しくありません");
+assert.equal(Number(localeManifest.schema_version), 1, "表示言語一覧の版に対応していません");
+assert.ok((localeManifest.locales || []).some((entry) => entry.locale === localeManifest.fallback_locale), "表示言語のフォールバックが登録されていません");
+const bundledLocales = Object.fromEntries(await Promise.all((localeManifest.locales || []).map(async (entry) => [
+  entry.locale,
+  JSON.parse(await text(`data/i18n/${entry.path}`)),
+])));
+for (const entry of localeManifest.locales || []) {
+  const pack = bundledLocales[entry.locale];
+  assert.equal(pack.document_type, "RLMResearchPlanner.language-pack", `${entry.locale}の言語パック形式が正しくありません`);
+  assert.equal(pack.locale, entry.locale, `${entry.locale}の言語IDが一致しません`);
+  assert.equal(pack.name, entry.name, `${entry.locale}の表示名が一致しません`);
+  assert.equal(pack.direction, entry.direction, `${entry.locale}の文字方向が一致しません`);
+}
 const datasetDocuments = {
   manifest: datasetManifest,
   sources: JSON.parse(await text(`data/research-dataset/${datasetManifest.sources_path}`)),
@@ -117,8 +132,7 @@ const datasetDocuments = {
 };
 const research = normalizeCatalog(datasetDocuments);
 const castle = normalizeCastleCatalog(JSON.parse(castleSource));
-const japanese = JSON.parse(japaneseSource);
-const english = JSON.parse(englishSource);
+const fallbackLanguage = bundledLocales[localeManifest.fallback_locale];
 assert.equal(research.categories.length, 16, "研究分野数が一致しません");
 assert.equal(research.nodes.size, 399, "研究項目数が一致しません");
 assert.equal([...research.nodes.values()].reduce((sum, node) => sum + node.maxLevel, 0), 3385, "研究の全レベル数が一致しません");
@@ -126,7 +140,11 @@ assert.equal([...research.nodes.values()].reduce((sum, node) => sum + node.level
 assert.doesNotMatch(await text("src/catalog.js"), /function\s+(?:slugify|nearestVisibleEdges)\b/u, "旧ID生成または旧接続推定処理が残っています");
 assert.match(appSource, /loadCatalog\("\.\/data\/research-dataset"/u, "PWAが共通研究データを読み込んでいません");
 assert.equal(castle.buildings.size, 18, "施設数が一致しません");
-assert.equal(Object.keys(japanese.messages || {}).length, Object.keys(english.messages || {}).length, "日本語と英語のUI項目数が一致しません");
+for (const [locale, pack] of Object.entries(bundledLocales)) {
+  const missingMessages = Object.keys(fallbackLanguage.messages || {}).filter((key) => !Object.hasOwn(pack.messages || {}, key));
+  assert.deepEqual(missingMessages, [], `${locale}に未収録のUI項目があります`);
+}
+assert.doesNotMatch(appSource, /\[\s*"ja-JP"\s*,\s*"en-US"/u, "内蔵言語一覧がコードへ固定されています");
 
 const oldState = {
   locale: "ja-JP",
@@ -164,4 +182,4 @@ const valuationOnly = paidOffersFromExchangePayload(paidOfferExchangePayload([],
 assert.equal(valuationOnly.offers.length, 0, "課金比較設定だけのファイルを読み込めません");
 assert.equal(valuationOnly.valuation.pointsPerGem, 2.5, "課金比較設定を維持できません");
 
-console.log(`PWA release checks passed: ${packageVersion}, ${shellPaths.length} files, ${research.nodes.size} research nodes.`);
+console.log(`PWA release checks passed: ${packageVersion}, ${shellPaths.length} shell files, ${Object.keys(bundledLocales).length} locales, ${research.nodes.size} research nodes.`);

@@ -696,9 +696,11 @@ class MainWindow(QMainWindow):
             self.talent_catalog.plan_for_preset(preset_id)
         )
         if not self.player_state.talent_plan_name:
-            self.player_state.talent_plan_name = self.talent_catalog.presets[
-                preset_id
-            ].localized_name(self.translator.content_locale)
+            preset = self.talent_catalog.presets[preset_id]
+            self.player_state.talent_plan_name = self.translator.talent_preset(
+                preset_id,
+                preset.localized_name(self.translator.content_locale),
+            )
 
     def _sync_talent_point_capacity(self) -> tuple[int, int, int]:
         """Keep talent capacity derived from player level and research bonus."""
@@ -817,7 +819,7 @@ class MainWindow(QMainWindow):
                 "Upgrade Result",
                 "Upgrade Results",
             }
-            if self.translator.locale.startswith("ja") or source_label in generic_labels:
+            if source_label in generic_labels:
                 label = self._effect_label_from_research_name(
                     self._research_name(node.id)
                 )
@@ -847,8 +849,6 @@ class MainWindow(QMainWindow):
     @staticmethod
     def _effect_label_from_research_name(name: str) -> str:
         label = re.sub(r"\s*(?:I|II|III|IV|V)$", "", name.strip()).strip()
-        if label.endswith("補助"):
-            label = f"{label.removesuffix('補助')}コスト低下"
         return label
 
     @staticmethod
@@ -864,35 +864,30 @@ class MainWindow(QMainWindow):
         decimal_comma = re.fullmatch(r"(\d+),(\d{1,2})%", normalized_value)
         if decimal_comma:
             normalized_value = f"{decimal_comma.group(1)}.{decimal_comma.group(2)}%"
-        if re.fullmatch(r"\d[\d,.]*(?:%|分)?", normalized_value):
-            normalized_value = f"+{normalized_value}"
+        if re.fullmatch(r"\d[\d,.]*%?", normalized_value):
+            normalized_value = self.translator.effect_value(
+                "number", "+{value}", value=normalized_value
+            )
         if not normalized_label:
             return normalized_value
-        separator = "" if self.translator.locale.startswith("ja") else " "
+        separator = self.translator.effect_separator
         return f"{normalized_label}{separator}{normalized_value}"
 
     def _localized_observed_effect_value(self, value: str) -> str:
-        if not self.translator.locale.startswith("ja"):
-            return value
         normalized = value.strip()
         if normalized == "Unlocked" or normalized.startswith(("Unlock ", "Unlocks ")):
-            return "解放"
+            return self.translator.effect_value("unlocked", normalized)
         minutes = re.fullmatch(r"(\d+)\s+(?:min|minutes)", normalized)
         if minutes:
-            return f"{minutes.group(1)}分"
+            return self.translator.effect_value(
+                "minutes", normalized, count=minutes.group(1)
+            )
         hunt_level = re.fullmatch(r"Hunt Level (\d+) monsters", normalized)
         if hunt_level:
-            return f"Lv.{hunt_level.group(1)}魔獣を討伐可能"
-        battle_slots = {
-            "3rd Familiar Battle Slot": "召喚獣編成枠3",
-            "4th Battle Slot": "召喚獣編成枠4",
-            "Battle Slot V": "召喚獣編成枠5",
-        }
-        if normalized in battle_slots:
-            return battle_slots[normalized]
-        if normalized == "Manasteel Refinement Bonus +1":
-            return "マナスチール精製ボーナス+1"
-        return normalized
+            return self.translator.effect_value(
+                "hunt_level", normalized, level=hunt_level.group(1)
+            )
+        return self.translator.effect_value(f"literal.{normalized}", normalized)
 
     def _build_ui(self) -> None:
         self.setWindowTitle(self.t("app.title"))
@@ -1696,7 +1691,9 @@ class MainWindow(QMainWindow):
             return
         self._selected_research_id = str(research_id)
         research = self._research[self._selected_research_id]
-        localized = self.master.localized_research(research.id, self.translator.locale)
+        localized = self.master.localized_research(
+            research.id, self.translator.content_locale
+        )
         current = self._tree_level_draft.get(research.id, 0)
         self.detail_description.setText(
             f"{localized.description}\n{localized.recommendation_reason}"
@@ -1847,7 +1844,11 @@ class MainWindow(QMainWindow):
         for preset_id in self.talent_catalog.preset_order:
             preset = self.talent_catalog.presets[preset_id]
             self.talent_preset_combo.addItem(
-                preset.localized_name(self.translator.content_locale), preset_id
+                self.translator.talent_preset(
+                    preset_id,
+                    preset.localized_name(self.translator.content_locale),
+                ),
+                preset_id,
             )
         preset_index = self.talent_preset_combo.findData(
             self.player_state.talent_preset_id
@@ -1986,6 +1987,13 @@ class MainWindow(QMainWindow):
             talent.localized_name(self.translator.content_locale),
         )
 
+    def _talent_effect(self, talent_id: str) -> str:
+        talent = self.talent_catalog.talents[talent_id]
+        return self.translator.talent_effect(
+            talent_id,
+            talent.localized_effect(self.translator.content_locale),
+        )
+
     def _talent_preset_changed(self) -> None:
         preset_id = str(self.talent_preset_combo.currentData() or "")
         if preset_id not in self.talent_catalog.presets:
@@ -1996,8 +2004,9 @@ class MainWindow(QMainWindow):
         self.player_state.talent_plan = list(
             self.talent_catalog.plan_for_preset(preset_id)
         )
-        self.player_state.talent_plan_name = preset.localized_name(
-            self.translator.content_locale
+        self.player_state.talent_plan_name = self.translator.talent_preset(
+            preset_id,
+            preset.localized_name(self.translator.content_locale),
         )
         self.talent_plan_name_edit.blockSignals(True)
         self.talent_plan_name_edit.setText(self.player_state.talent_plan_name)
@@ -2097,7 +2106,10 @@ class MainWindow(QMainWindow):
             self.player_state.talent_preset_id
         )
         self.talent_description_label.setText(
-            preset.localized_description(self.translator.content_locale)
+            self.translator.talent_preset_description(
+                preset.id,
+                preset.localized_description(self.translator.content_locale),
+            )
             if preset is not None
             else self.t("talent.imported_description")
         )
@@ -2169,7 +2181,7 @@ class MainWindow(QMainWindow):
                     recommendation=plan_text,
                     display_order=talent.order,
                     current_effect=(
-                        f"{talent.localized_effect(self.translator.content_locale)} "
+                        f"{self._talent_effect(talent.id)} "
                         f"+{talent.max_effect:g}% ({self.t('talent.at_max')})"
                     ),
                     next_effect=status,
@@ -7502,6 +7514,20 @@ class MainWindow(QMainWindow):
                     talent_id: talent.localized_name("en-US")
                     for talent_id, talent in self.talent_catalog.talents.items()
                 },
+                talent_effects={
+                    talent_id: talent.localized_effect("en-US")
+                    for talent_id, talent in self.talent_catalog.talents.items()
+                },
+                talent_presets={
+                    preset_id: preset.localized_name("en-US")
+                    for preset_id, preset in self.talent_catalog.presets.items()
+                },
+                talent_preset_descriptions={
+                    preset_id: preset.localized_description("en-US")
+                    for preset_id, preset in self.talent_catalog.presets.items()
+                },
+                effect_labels=self.translator.fallback_terms("effect_labels"),
+                effect_values=self.translator.fallback_terms("effect_values"),
             )
             Path(path).write_text(
                 json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
@@ -7559,7 +7585,14 @@ class MainWindow(QMainWindow):
             self._show_error(self.t("language.pack_remove_failed", error=exc))
             return
         if removed:
-            self._activate_locale("en-US")
+            bundled_locales = {
+                item_locale
+                for item_locale, _name, _direction, custom in self.translator.available_locales()
+                if not custom
+            }
+            self._activate_locale(
+                locale if locale in bundled_locales else self.translator.fallback_locale
+            )
             self._show_info(self.t("language.pack_removed"))
 
     def _show_error(self, message: str) -> None:

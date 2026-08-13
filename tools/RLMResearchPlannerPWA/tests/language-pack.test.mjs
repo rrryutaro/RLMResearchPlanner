@@ -7,10 +7,13 @@ import {
   installLanguagePack,
   languagePackTemplate,
   languagePackFromPayload,
+  localeManifestFromPayload,
   loadLanguagePacks,
+  mergeLanguagePacks,
   normalizeLocale,
   packText,
   removeLanguagePack,
+  resolveLanguagePack,
   selectPreferredLocale,
 } from "../src/language-pack.js";
 
@@ -101,4 +104,61 @@ test("language pack cannot override or export the official disclaimer", () => {
     messages: { "tab.tree": "Research Tree", "app.disclaimer": "Official disclaimer" },
   });
   assert.equal(Object.hasOwn(template.messages, "app.disclaimer"), false);
+});
+
+test("locale manifest drives bundled locale registration without a coded language list", () => {
+  const manifest = localeManifestFromPayload({
+    document_type: "RLMResearchPlanner.locale-manifest",
+    schema_version: 1,
+    fallback_locale: "en-US",
+    locales: [
+      { locale: "en-US", name: "English", direction: "ltr", path: "en-US.json" },
+      { locale: "ar", name: "العربية", direction: "rtl", path: "ar.json" },
+    ],
+  });
+  assert.equal(manifest.fallbackLocale, "en-US");
+  assert.deepEqual(manifest.locales.map((entry) => entry.locale), ["en-US", "ar"]);
+  assert.equal(manifest.byLocale.ar.direction, "rtl");
+});
+
+test("custom translation overlays its bundled locale and preserves fallback text", () => {
+  const english = languagePackFromPayload(payload({
+    locale: "en-US", name: "English", direction: "ltr",
+    messages: { "tab.tree": "Research Tree", "tab.help": "Help" },
+  }), { trusted: true });
+  const bundledArabic = languagePackFromPayload(payload({
+    messages: { "tab.tree": "شجرة الأبحاث" },
+    resources: { food: "الطعام" },
+  }), { trusted: true });
+  const customArabic = languagePackFromPayload(payload({
+    messages: { "tab.tree": { source: "Research Tree", text: "الأبحاث" } },
+    research: {},
+  }));
+  const resolved = resolveLanguagePack(
+    "ar",
+    { "en-US": english, ar: bundledArabic },
+    { ar: customArabic },
+    "en-US",
+  );
+  assert.equal(packText(resolved, "messages", "tab.tree"), "الأبحاث");
+  assert.equal(packText(resolved, "messages", "tab.help"), "Help");
+  assert.equal(packText(resolved, "resources", "food"), "الطعام");
+  assert.equal(mergeLanguagePacks(english, bundledArabic).direction, "rtl");
+});
+
+test("arbitrary regional locale resolves to an installed base-language pack", () => {
+  const english = languagePackFromPayload(payload({
+    locale: "en-US", name: "English", direction: "ltr",
+    messages: { "tab.tree": "Research Tree", "tab.help": "Help" },
+  }), { trusted: true });
+  const french = languagePackFromPayload(payload({
+    locale: "fr-FR", name: "Français", direction: "ltr", fallback_locale: "en-US",
+    messages: { "tab.tree": { source: "Research Tree", text: "Recherches" } },
+    research: {},
+  }));
+  const selected = selectPreferredLocale(["fr-CA"], ["en-US", "fr-FR"], "en-US");
+  const resolved = resolveLanguagePack(selected, { "en-US": english }, { "fr-FR": french }, "en-US");
+  assert.equal(selected, "fr-FR");
+  assert.equal(packText(resolved, "messages", "tab.tree"), "Recherches");
+  assert.equal(packText(resolved, "messages", "tab.help"), "Help");
 });

@@ -25,7 +25,7 @@ class WindowGeometry:
 
 @dataclass
 class AppSettings:
-    locale: str = "ja-JP"
+    locale: str = ""
     visual_style: str = DEFAULT_VISUAL_STYLE
     ocr_window_title: str = DEFAULT_OCR_WINDOW_TITLE
     help_font_size: int = 12
@@ -46,7 +46,7 @@ class SettingsRepository:
             raw = json.loads(self.path.read_text(encoding="utf-8"))
             window = raw.get("window", {})
             return AppSettings(
-                locale=str(raw.get("locale", "ja-JP")),
+                locale=str(raw.get("locale", "")),
                 visual_style=normalize_visual_style(
                     raw.get("visual_style", DEFAULT_VISUAL_STYLE)
                 ),

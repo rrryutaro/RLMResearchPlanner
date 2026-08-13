@@ -4,7 +4,7 @@ const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(
 const localized = (values, locale, fallback = "") => {
   const normalized = String(locale || "").replaceAll("_", "-");
   const language = normalized.split("-", 1)[0];
-  for (const candidate of [normalized, language, "en-US", "ja-JP"]) {
+  for (const candidate of [normalized, language, "en-US"]) {
     if (String(values?.[candidate] || "").trim()) return String(values[candidate]);
   }
   return fallback;
@@ -45,9 +45,9 @@ export function normalizeTalentCatalog(raw) {
     talents, presets, presetById: new Map(presets.map((preset) => [preset.id, preset])), languagePack: null,
     setLanguagePack(pack) { this.languagePack = pack || null; },
     talentName(talent, locale) { return String(this.languagePack?.sections?.talents?.[talent.id] || localized(talent.names, locale, talent.id)); },
-    effectName(talent, locale) { return localized(talent.effectNames, locale, talent.id); },
-    presetName(preset, locale) { return localized(preset.names, locale, preset.id); },
-    presetDescription(preset, locale) { return localized(preset.descriptions, locale, ""); },
+    effectName(talent, locale) { return String(this.languagePack?.sections?.talent_effects?.[talent.id] || localized(talent.effectNames, locale, talent.id)); },
+    presetName(preset, locale) { return String(this.languagePack?.sections?.talent_presets?.[preset.id] || localized(preset.names, locale, preset.id)); },
+    presetDescription(preset, locale) { return String(this.languagePack?.sections?.talent_preset_descriptions?.[preset.id] || localized(preset.descriptions, locale, "")); },
   };
   if (catalog.pointRewardsByLevel.length !== 60 || catalog.pointRewardsByLevel.reduce((sum, value) => sum + value, 0) !== catalog.defaultAvailablePoints) {
     throw new Error("才能ポイントのレベル配分が不正です");

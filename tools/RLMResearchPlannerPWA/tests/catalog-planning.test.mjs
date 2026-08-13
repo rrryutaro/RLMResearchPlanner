@@ -10,6 +10,7 @@ import { formatResourceAmount } from "../src/resource-format.js";
 import { compactExplicitRowSlots, explicitTreeLayout, visibleTreeLayout } from "../src/tree-layout.js";
 import { clampTreeZoom, fitTreeZoom } from "../src/tree-zoom.js";
 import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, createCastlePlan, minimumBuildingLevels, minimumGemsForAmount, normalizeCastleCatalog } from "../src/castle-planning.js";
+import { languagePackFromPayload } from "../src/language-pack.js";
 
 async function loadGeneratedResearchDocuments() {
   const root = new URL("../data/research-dataset/", import.meta.url);
@@ -37,6 +38,8 @@ const castleRaw = JSON.parse(await readFile(new URL("../data/buildings/castle_ca
 const castleCatalog = normalizeCastleCatalog(castleRaw);
 const pwaLocale = JSON.parse(await readFile(new URL("../data/i18n/ja-JP.json", import.meta.url), "utf8"));
 const desktopLocale = JSON.parse(await readFile(desktopUrl("resources/i18n/ja-JP.json"), "utf8"));
+const desktopEnglishLocale = JSON.parse(await readFile(desktopUrl("resources/i18n/en-US.json"), "utf8"));
+const desktopJapaneseLocale = desktopLocale;
 const indexHtml = await readFile(new URL("../index.html", import.meta.url), "utf8");
 const appSource = await readFile(new URL("../src/app.js", import.meta.url), "utf8");
 const planningSource = await readFile(new URL("../src/planning.js", import.meta.url), "utf8");
@@ -60,7 +63,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.3");
+  assert.equal(publicVersion, "0.1.4");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -71,7 +74,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.3 確認版/u);
+  assert.match(indexHtml, /v0\.1\.4 Preview/u);
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -173,7 +176,7 @@ test("Japanese and English data-file and translation guides stay publishable", (
 
 test("startup shows progress and postpones service worker installation until content is ready", () => {
   assert.match(indexHtml, /id="startup-loading"[^>]*role="status"/u);
-  assert.match(indexHtml, /研究データを読み込んでいます/u);
+  assert.match(indexHtml, /id="startup-loading-message"[^>]*>Loading…/u);
   assert.match(stylesSource, /\.startup-loading-spinner/u);
   assert.match(indexHtml, /window\.rlmMarkStartupComplete\s*=\s*\(\)\s*=>[\s\S]*startupLoading\.hidden\s*=\s*true/u);
   assert.match(indexHtml, /setTimeout\(registerServiceWorker, 0\)/u);
@@ -243,9 +246,11 @@ test("help exposes application, data, and third-party licenses", () => {
   assert.match(indexHtml, /data-i18n="help\.disclaimer\.title">重要な注意・免責</u);
   assert.match(indexHtml, /data-i18n="app\.disclaimer"[^>]*>[^<]*無償の非公式ツール/u);
   assert.match(indexHtml, />ライセンス・出典</);
-  assert.match(indexHtml, /href="https:\/\/github\.com\/rrryutaro\/RLMResearchPlanner\/blob\/main\/LICENSE"/);
-  assert.match(indexHtml, /href="https:\/\/github\.com\/rrryutaro\/RLMResearchPlanner\/blob\/main\/DATA_LICENSE\.md"/);
-  assert.match(indexHtml, /href="https:\/\/github\.com\/rrryutaro\/RLMResearchPlanner\/blob\/main\/licenses\/THIRD_PARTY_NOTICES\.md"/);
+  for (const pack of [desktopEnglishLocale, desktopJapaneseLocale]) {
+    assert.match(pack.messages["help.license.body"], /href="https:\/\/github\.com\/rrryutaro\/RLMResearchPlanner\/blob\/main\/LICENSE"/);
+    assert.match(pack.messages["help.license.body"], /href="https:\/\/github\.com\/rrryutaro\/RLMResearchPlanner\/blob\/main\/DATA_LICENSE\.md"/);
+    assert.match(pack.messages["help.license.body"], /href="https:\/\/github\.com\/rrryutaro\/RLMResearchPlanner\/blob\/main\/licenses\/THIRD_PARTY_NOTICES\.md"/);
+  }
 });
 
 test("help reports the verified game version without making it a requirement", () => {
@@ -379,7 +384,7 @@ test("category selector has a static fallback before JavaScript starts", () => {
   assert.match(indexHtml, /<summary data-i18n="player\.construction_time_settings">建設時間<\/summary>/);
   assert.match(indexHtml, /<summary data-i18n="player\.research_time_settings">研究時間<\/summary>/);
   assert.ok(indexHtml.indexOf("serviceWorker.register") < indexHtml.indexOf("src=\"./src/app.js"));
-  assert.match(indexHtml, /HTMLを直接開いたため研究データを読み込めません/);
+  assert.match(indexHtml, /The data cannot be loaded when this HTML file is opened directly/);
   assert.match(indexHtml, /id="node-level-down"[^>]*>−<\/button>/);
   assert.match(indexHtml, /id="node-level-up"[^>]*>＋<\/button>/);
   assert.match(indexHtml, /id="complete-plan"/);
@@ -414,7 +419,13 @@ test("all catalog resource types are included in planning and backup state", () 
 
 test("Japanese effect text is normalized without game labels", () => {
   const food = catalog.nodes.get("economy_food_harvest_1");
-  assert.equal(currentEffect(food, 9, { locale: "ja-JP", labels: { "Food Production+%": "食糧生産量" }, name: "食糧収穫I" }), "食糧生産量+58%");
+  const languagePack = languagePackFromPayload(pwaLocale, { trusted: true });
+  assert.equal(currentEffect(food, 9, {
+    locale: "ja-JP",
+    name: "食糧収穫I",
+    translatedLabel: languagePack.sections.effects[food.id],
+    languagePack,
+  }), "食糧生産量+58%");
 });
 
 test("research speed, VIP free time, and duration use game format", () => {

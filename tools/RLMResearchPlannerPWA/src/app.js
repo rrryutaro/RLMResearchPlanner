@@ -1,24 +1,20 @@
-import { currentEffect, loadCatalog, loadLocaleData } from "./catalog.js?v=0.1.3-b12";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.3-b12";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.3-b12";
-import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.3-b12";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.3-b12";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.3-b12";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.3-b12";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadLanguagePacks, packText, removeLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.3-b12";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.3-b12";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.3-b12";
-import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.3-b12";
+import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.4-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.4-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.4-b1";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.4-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.4-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.4-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.4-b1";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.4-b1";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.4-b1";
+import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.4-b1";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.4-b1";
 
-const RELEASE_VERSION = "0.1.3";
-const DEVELOPMENT_BUILD = 12;
-const ASSET_VERSION = "0.1.3-b12";
+const RELEASE_VERSION = "0.1.4";
+const DEVELOPMENT_BUILD = 1;
+const ASSET_VERSION = "0.1.4-b1";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
-const RESOURCE_NAMES = {
-  "ja-JP": { food: "食糧", stone: "石材", timber: "木材", ore: "鉱石", gold: "ゴールド", gold_hammer: "ゴールドハンマー", war_tome: "戦典", steel_cuffs: "鋼鉄の手枷", soul_crystal: "霊魂石", ancient_tomes: "古代の書物", lunite: "月晶", mana_ore: "マナ鉱石", mana_crystal: "マナクリスタル", mana_steel: "マナスチール", special: "特殊資材" },
-  "en-US": { food: "Food", stone: "Stone", timber: "Timber", ore: "Ore", gold: "Gold", gold_hammer: "Gold Hammer", war_tome: "War Tome", steel_cuffs: "Steel Cuffs", soul_crystal: "Soul Crystal", ancient_tomes: "Ancient Tomes", lunite: "Lunite", mana_ore: "Mana Ore", mana_crystal: "Mana Crystal", mana_steel: "Manasteel", special: "Special" },
-};
 const CARD_WIDTH = 250;
 const CARD_HEIGHT = 174;
 const GAP_X = 42;
@@ -30,21 +26,12 @@ let castleCatalog;
 let talentCatalog;
 let effectLabels = {};
 let messages = {};
-let localeDataById = {};
+let localeManifest = null;
+let bundledLanguagePacks = {};
 let languagePacks = loadLanguagePacks();
 let activeLanguagePack = null;
 const hadSavedState = hasSavedState();
 let state = loadState();
-if (!hadSavedState) {
-  const browserLanguages = globalThis.navigator?.languages?.length
-    ? [...globalThis.navigator.languages]
-    : [globalThis.navigator?.language || ""];
-  state.locale = selectPreferredLocale(
-    browserLanguages,
-    ["ja-JP", "en-US", ...Object.keys(languagePacks)],
-  );
-  try { saveState(state); } catch { /* Keep the selected language for this session. */ }
-}
 let selectedCategoryId = "";
 let selectedBulkCategoryId = "";
 let selectedNodeId = "";
@@ -106,19 +93,30 @@ function renderTalentPointCapacity() {
 
 async function start() {
   try {
-    const [loadedCatalog, loadedCastleCatalog, loadedTalentCatalog, japaneseLocaleData, englishLocaleData] = await Promise.all([
+    const [loadedCatalog, loadedCastleCatalog, loadedTalentCatalog, bundledLanguages] = await Promise.all([
       loadCatalog("./data/research-dataset", ASSET_VERSION),
       loadCastleCatalog(`./data/buildings/castle_catalog.json?v=${ASSET_VERSION}`),
       loadTalentCatalog(`./data/talents/catalog.json?v=${ASSET_VERSION}`),
-      loadLocaleData(`./data/i18n/ja-JP.json?v=${ASSET_VERSION}`),
-      loadLocaleData(`./data/i18n/en-US.json?v=${ASSET_VERSION}`),
+      loadBundledLanguagePacks("./data/i18n/manifest.json", ASSET_VERSION),
     ]);
     catalog = loadedCatalog;
     castleCatalog = loadedCastleCatalog;
     talentCatalog = loadedTalentCatalog;
     syncTalentPointCapacity();
     ensureTalentPlan();
-    localeDataById = { "ja-JP": japaneseLocaleData, "en-US": englishLocaleData };
+    localeManifest = bundledLanguages.manifest;
+    bundledLanguagePacks = bundledLanguages.packs;
+    if (!hadSavedState) {
+      const browserLanguages = globalThis.navigator?.languages?.length
+        ? [...globalThis.navigator.languages]
+        : [globalThis.navigator?.language || ""];
+      state.locale = selectPreferredLocale(
+        browserLanguages,
+        [...Object.keys(bundledLanguagePacks), ...Object.keys(languagePacks)],
+        localeManifest.fallbackLocale,
+      );
+      try { saveState(state); } catch { /* Keep the selected language for this session. */ }
+    }
     activateLanguage(state.locale, { save: false, render: false });
     selectedCategoryId = catalog.categories[0]?.id || "";
     selectedBulkCategoryId = selectedCategoryId;
@@ -169,11 +167,13 @@ function renderCommonHelp() {
   const talent = byId("help-talent-body");
   const construction = byId("help-construction-body");
   const files = byId("help-files-body");
+  const license = byId("help-license-body");
   if (required) required.innerHTML = messages["help.required_setup.body_v003"] || "";
   if (plan) plan.innerHTML = messages["help.plan.body"] || "";
   if (talent) talent.innerHTML = messages["help.talent.body"] || "";
   if (construction) construction.innerHTML = messages["help.castle.body"] || "";
   if (files) files.innerHTML = messages["help.files.body"] || "";
+  if (license) license.innerHTML = messages["help.license.body"] || "";
 }
 
 function renderCatalogStatus() {
@@ -2058,10 +2058,6 @@ async function importBackup(event) {
   finally { event.target.value = ""; }
 }
 
-function activeLocaleData(locale) {
-  return localeDataById[locale] || localeDataById[locale?.split("-", 1)[0]] || localeDataById["en-US"] || { messages: {}, effect_labels: {} };
-}
-
 function formatMessage(template, values = {}) {
   return String(template || "").replace(/\{([A-Za-z0-9_]+)\}/g, (match, key) => (key in values ? String(values[key]) : match));
 }
@@ -2071,18 +2067,20 @@ function t(key, fallback = key, values = {}) {
 }
 
 function resourceName(key) {
-  const fallback = RESOURCE_NAMES[state.locale]?.[key] || RESOURCE_NAMES["en-US"]?.[key] || key;
-  return packText(activeLanguagePack, "resources", key, messages[`resource.${key}`] || fallback);
+  return packText(activeLanguagePack, "resources", key, messages[`resource.${key}`] || key);
 }
 
 function populateLanguageOptions() {
   const select = byId("language-select");
   if (!select) return;
-  const options = [
-    { locale: "ja-JP", name: "日本語", custom: false },
-    { locale: "en-US", name: "English", custom: false },
-    ...Object.values(languagePacks).map((pack) => ({ locale: pack.locale, name: pack.name, custom: true })),
-  ];
+  const options = (localeManifest?.locales || []).map((entry) => ({
+    locale: entry.locale,
+    name: languagePacks[entry.locale]?.name || entry.name,
+    custom: Boolean(languagePacks[entry.locale]),
+  }));
+  for (const pack of Object.values(languagePacks)) {
+    if (!options.some((entry) => entry.locale === pack.locale)) options.push({ locale: pack.locale, name: pack.name, custom: true });
+  }
   select.replaceChildren(...options.map((item) => {
     const option = create("option", "", item.custom ? `${item.name} (${item.locale})` : item.name);
     option.value = item.locale;
@@ -2094,21 +2092,21 @@ function populateLanguageOptions() {
 }
 
 function activateLanguage(locale, { save = true, render = true } = {}) {
-  activeLanguagePack = languagePacks[locale] || null;
-  if (!activeLanguagePack && !localeDataById[locale]) locale = "en-US";
+  const available = [...Object.keys(bundledLanguagePacks), ...Object.keys(languagePacks)];
+  locale = selectPreferredLocale([locale], available, localeManifest?.fallbackLocale || "en-US");
   state.locale = locale;
-  const fallbackData = localeDataById["en-US"] || { messages: {}, effect_labels: {} };
-  const localeData = activeLocaleData(activeLanguagePack?.fallbackLocale || locale);
-  messages = {
-    ...(fallbackData.messages || {}),
-    ...(localeData.messages || {}),
-    ...(activeLanguagePack?.sections?.messages || {}),
-  };
-  effectLabels = { ...(fallbackData.effect_labels || {}), ...(localeData.effect_labels || {}) };
+  activeLanguagePack = resolveLanguagePack(
+    locale,
+    bundledLanguagePacks,
+    languagePacks,
+    localeManifest?.fallbackLocale || "en-US",
+  );
+  messages = { ...(activeLanguagePack?.sections?.messages || {}) };
+  effectLabels = {};
   catalog?.setLanguagePack(activeLanguagePack);
   castleCatalog?.setLanguagePack(activeLanguagePack);
   talentCatalog?.setLanguagePack(activeLanguagePack);
-  applyDocumentLanguage(locale, activeLanguagePack?.direction);
+  applyDocumentLanguage(locale, activeLanguagePack?.direction || localeManifest?.byLocale?.[locale]?.direction);
   translateStatic(document, messages);
   renderConnectivity();
   populateLanguageOptions();
@@ -2137,9 +2135,10 @@ function downloadJson(payload, filename) {
 }
 
 function exportLanguageTemplate() {
-  const englishMessages = localeDataById["en-US"]?.messages || {};
+  const fallbackPack = bundledLanguagePacks[localeManifest?.fallbackLocale] || null;
+  const englishMessages = fallbackPack?.sections?.messages || {};
   downloadJson(
-    languagePackTemplate({ catalog, castleCatalog, talentCatalog, messages: englishMessages }),
+    languagePackTemplate({ catalog, castleCatalog, talentCatalog, messages: englishMessages, fallbackPack }),
     "RLMResearchPlanner-language-template.json",
   );
   toast(t("language.pack_exported", "翻訳ひな形を書き出しました"));
@@ -2165,7 +2164,7 @@ function removeCustomLanguagePack() {
   if (!window.confirm(t("language.pack_remove_confirm", `追加翻訳 ${state.locale} を削除しますか？`, { locale: state.locale }))) return;
   if (!removeLanguagePack(state.locale)) return;
   languagePacks = loadLanguagePacks();
-  activateLanguage("en-US");
+  activateLanguage(bundledLanguagePacks[state.locale] ? state.locale : localeManifest.fallbackLocale);
   toast(t("language.pack_removed", "追加翻訳を削除しました"));
 }
 
@@ -2678,6 +2677,7 @@ function effectFor(node, level) {
     labels: effectLabels,
     name: catalog.nodeName(node, state.locale),
     translatedLabel: packText(activeLanguagePack, "effects", node.id),
+    languagePack: activeLanguagePack,
   });
 }
 

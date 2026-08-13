@@ -1,5 +1,5 @@
-import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.3-b12";
-import { loadJsonResource } from "./catalog.js?v=0.1.3-b12";
+import { freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.4-b1";
+import { loadJsonResource } from "./catalog.js?v=0.1.4-b1";
 
 export const CASTLE_RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "mana_ore", "mana_crystal", "mana_steel"];
 
@@ -50,7 +50,7 @@ export function normalizeCastleCatalog(raw) {
     setLanguagePack(pack) { languagePack = pack || null; },
     sourceBuildingName(buildingId, locale) { const building = buildings.get(buildingId); return building ? localText(building.names, locale) : buildingId; },
     buildingName(buildingId, locale) { const building = buildings.get(buildingId); return languagePack?.sections?.buildings?.[buildingId] || (building ? localText(building.names, languagePack?.fallbackLocale || locale) : buildingId); },
-    manaName(locale) { return localText(this.manaNames, locale) || this.buildingName("castle", locale); },
+    manaName(locale) { return languagePack?.sections?.buildings?.castle_mana || localText(this.manaNames, languagePack?.fallbackLocale || locale) || this.buildingName("castle", locale); },
   };
 }
 

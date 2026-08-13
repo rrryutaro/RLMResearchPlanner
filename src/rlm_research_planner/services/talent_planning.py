@@ -481,7 +481,7 @@ def _text_mapping(value: object) -> dict[str, str]:
 def _localized(values: Mapping[str, str], locale: str, fallback: str) -> str:
     normalized = str(locale).replace("_", "-")
     language = normalized.split("-", 1)[0]
-    for candidate in (normalized, language, "en-US", "ja-JP"):
+    for candidate in (normalized, language, "en-US"):
         if candidate in values and str(values[candidate]).strip():
             return str(values[candidate])
     return fallback

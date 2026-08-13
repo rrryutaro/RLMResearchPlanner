@@ -16,6 +16,7 @@ from rlm_research_planner.repositories.player_repository import PlayerRepository
 from rlm_research_planner.services.localization import Translator
 from rlm_research_planner.services.language_pack import (
     LanguagePackRepository,
+    load_bundled_locale_manifest,
     select_preferred_locale,
 )
 from rlm_research_planner.services.validation import MasterDataValidator
@@ -79,6 +80,12 @@ def main(argv: list[str] | None = None) -> int:
     language_pack_repository = LanguagePackRepository(
         None if args.smoke_test else paths.language_packs
     )
+    bundled_locale_manifest = load_bundled_locale_manifest(paths.translations)
+    translator = Translator(
+        paths.translations,
+        app_settings.locale or bundled_locale_manifest.fallback_locale,
+        language_pack_repository,
+    )
     if not args.smoke_test and not paths.settings_file.exists():
         system_locale = QLocale.system()
         preferred_locales = list(system_locale.uiLanguages())
@@ -86,13 +93,10 @@ def main(argv: list[str] | None = None) -> int:
             preferred_locales = [system_locale.name()]
         app_settings.locale = select_preferred_locale(
             preferred_locales,
-            ("ja-JP", "en-US", *language_pack_repository.load_all().keys()),
+            translator.available_locale_ids(),
+            translator.fallback_locale,
         )
-    translator = Translator(
-        paths.translations,
-        app_settings.locale,
-        language_pack_repository,
-    )
+        translator.set_locale(app_settings.locale)
     app.setLayoutDirection(
         Qt.LayoutDirection.RightToLeft
         if translator.direction == "rtl"

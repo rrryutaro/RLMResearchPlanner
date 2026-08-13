@@ -52,14 +52,6 @@ export async function loadCatalog(root = "./data/research-dataset", version = ""
   });
 }
 
-export async function loadEffectLabels(url = "./data/i18n/ja-JP.json") {
-  return (await loadJsonResource(url, "効果ラベル")).effect_labels || {};
-}
-
-export async function loadLocaleData(url = "./data/i18n/ja-JP.json") {
-  return loadJsonResource(url, "表示言語データ");
-}
-
 export async function loadJsonResource(url, label = "データ") {
   let lastError;
   for (let attempt = 0; attempt < 2; attempt += 1) {
@@ -176,26 +168,25 @@ export function normalizeCatalog(documents) {
   };
 }
 
-export function currentEffect(node, level, { locale = "en-US", labels = {}, name = "", translatedLabel = "" } = {}) {
+export function currentEffect(node, level, { locale = "en-US", labels = {}, name = "", translatedLabel = "", languagePack = null } = {}) {
   const rawFirst = String(node.effectValues["1"] || "").trim();
-  let value = level <= 0 ? (isUnlock(rawFirst) ? (locale.startsWith("ja") ? "未解放" : "Not unlocked") : "0") : String(node.effectValues[String(level)] || "").trim();
+  const effectValue = (key, fallback, values = {}) => String(languagePack?.sections?.effect_values?.[key] || fallback).replace(/\{([A-Za-z0-9_]+)\}/g, (match, field) => field in values ? String(values[field]) : match);
+  let value = level <= 0 ? (isUnlock(rawFirst) ? effectValue("not_unlocked", "Not unlocked") : "0") : String(node.effectValues[String(level)] || "").trim();
   if (!value) return "";
-  if (locale.startsWith("ja")) {
-    if (isUnlock(value)) value = "解放";
-    const minutes = value.match(/^(\d+)\s+(?:min|minutes)$/i);
-    if (minutes) value = `${minutes[1]}分`;
-    const hunt = value.match(/^Hunt Level (\d+) monsters$/i);
-    if (hunt) value = `Lv.${hunt[1]}魔獣を討伐可能`;
-  }
-  let label = String(translatedLabel || labels[node.effectLabel] || node.effectLabel || "").trim();
+  if (isUnlock(value)) value = effectValue("unlocked", value);
+  const minutes = value.match(/^(\d+)\s+(?:min|minutes)$/i);
+  if (minutes) value = effectValue("minutes", value, { count: minutes[1] });
+  const hunt = value.match(/^Hunt Level (\d+) monsters$/i);
+  if (hunt) value = effectValue("hunt_level", value, { level: hunt[1] });
+  value = effectValue(`literal.${value}`, value);
+  let label = String(languagePack?.sections?.effect_labels?.[node.effectLabel] || translatedLabel || labels[node.effectLabel] || node.effectLabel || "").trim();
   const generic = new Set(["", "ATK+", "Boost", "Cost Reduction", "DEF+", "Def. Boost", "Effect", "HP+", "Reduction", "Result", "Speed+", "Unlock", "Unlocks", "Upgrade Result", "Upgrade Results"]);
-  if ((locale.startsWith("ja") && !labels[node.effectLabel]) || generic.has(node.effectLabel)) {
+  if (!translatedLabel || generic.has(node.effectLabel)) {
     label = String(name || "").replace(/\s*(?:I|II|III|IV|V)$/u, "").trim();
-    if (label.endsWith("補助")) label = `${label.slice(0, -2)}コスト低下`;
   }
   label = label.replace(/\+%?$/, "").trim();
-  if (/^\d[\d,.]*(?:%|分)?$/.test(value)) value = `+${value}`;
-  return label ? `${label}${locale.startsWith("ja") ? "" : " "}${value}` : value;
+  if (/^\d[\d,.]*%?$/.test(value)) value = effectValue("number", "+{value}", { value });
+  return label ? `${label}${languagePack?.effectSeparator ?? " "}${value}` : value;
 }
 
 function isUnlock(value) { return value === "Unlocked" || /^Unlocks?\s/.test(value); }

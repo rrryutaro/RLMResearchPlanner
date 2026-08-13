@@ -60,19 +60,13 @@ function copyDirectoryFiles(sourceDirectory, destinationDirectory) {
 mkdirSync(dirname(destination), { recursive: true });
 copyFileIfChanged(source, destination);
 copyDirectoryFiles(datasetSource, datasetDestination);
-mkdirSync(join(project, "data", "i18n"), { recursive: true });
-for (const locale of ["ja-JP", "en-US"]) {
-  copyFileIfChanged(
-    join(localeDirectory, `${locale}.json`),
-    join(project, "data", "i18n", `${locale}.json`),
-  );
-}
+copyDirectoryFiles(localeDirectory, join(project, "data", "i18n"));
 mkdirSync(dirname(castleDestination), { recursive: true });
 copyFileIfChanged(castleSource, castleDestination);
 mkdirSync(dirname(talentDestination), { recursive: true });
 copyFileIfChanged(talentSource, talentDestination);
 process.stdout.write(`Synced ${source} -> ${destination}\n`);
 process.stdout.write(`Synced ${datasetSource} -> ${datasetDestination}\n`);
-process.stdout.write(`Synced ja-JP and en-US locale data\n`);
+process.stdout.write(`Synced locale manifest and bundled language packs\n`);
 process.stdout.write(`Synced ${castleSource} -> ${castleDestination}\n`);
 process.stdout.write(`Synced ${talentSource} -> ${talentDestination}\n`);

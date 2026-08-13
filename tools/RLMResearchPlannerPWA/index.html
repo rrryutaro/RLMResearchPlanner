@@ -1,32 +1,32 @@
 <!doctype html>
-<html lang="ja">
+<html lang="und">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0a3542">
-    <meta name="description" content="ロードモバイル向け非公式研究計画ツールのモバイル版">
+    <meta name="description" content="RLM Research Planner">
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/LICENSE" title="Application source license">
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.3-b12">
-    <title>RLM Research Planner v0.1.3</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.4-b1">
+    <title>RLM Research Planner v0.1.4</title>
   </head>
   <body>
     <header class="app-header">
       <div class="app-title">
-        <p class="eyebrow">Lords Mobile unofficial tool</p>
+        <p class="eyebrow" data-i18n="app.subtitle">Lords Mobile unofficial tool</p>
         <div class="app-title-line">
           <h1>RLM Research Planner</h1>
-          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="バージョン">v0.1.3</span>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.4</span>
         </div>
       </div>
-      <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="ブラウザーの通信状態（ゲーム接続や同期状態ではありません）">オンライン</span>
+      <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="Browser network status">Online</span>
     </header>
 
     <div class="tab-navigation">
-      <button id="tab-scroll-previous" class="tab-scroll-button" type="button" aria-label="前のタブ" hidden>◀</button>
-      <nav id="tab-bar" class="tab-bar" aria-label="メインメニュー">
+      <button id="tab-scroll-previous" class="tab-scroll-button" type="button" aria-label="前のタブ" data-i18n-aria="pwa.previous_tab" hidden>◀</button>
+      <nav id="tab-bar" class="tab-bar" aria-label="メインメニュー" data-i18n-aria="pwa.main_menu">
         <button class="tab-button is-active" data-tab="tree" type="button" data-i18n="tab.tree">研究ツリー</button>
         <button class="tab-button" data-tab="plan" type="button" data-i18n="tab.plan">研究計画</button>
         <button class="tab-button" data-tab="castle" type="button" data-i18n="tab.castle">建設</button>
@@ -34,25 +34,25 @@
         <button class="tab-button" data-tab="paid" type="button" data-i18n="tab.paid">課金</button>
         <button class="tab-button" data-tab="help" type="button" data-i18n="tab.help">ヘルプ</button>
       </nav>
-      <button id="tab-scroll-next" class="tab-scroll-button" type="button" aria-label="次のタブ" hidden>▶</button>
+      <button id="tab-scroll-next" class="tab-scroll-button" type="button" aria-label="次のタブ" data-i18n-aria="pwa.next_tab" hidden>▶</button>
     </div>
 
     <div id="startup-loading" class="startup-loading" role="status" aria-live="polite">
       <span class="startup-loading-spinner" aria-hidden="true"></span>
-      <span id="startup-loading-message">研究データを読み込んでいます…</span>
+      <span id="startup-loading-message" data-i18n="pwa.startup_loading">Loading…</span>
     </div>
 
     <div id="startup-error" class="startup-error" role="alert" hidden>
       <span id="startup-error-message"></span>
       <div class="startup-error-actions">
-        <button id="startup-retry" type="button">再読み込み</button>
-        <button id="startup-recover" type="button">最新版を再取得</button>
+        <button id="startup-retry" type="button" data-i18n="pwa.startup_retry">Reload</button>
+        <button id="startup-recover" type="button" data-i18n="pwa.startup_recover">Retrieve latest version</button>
       </div>
     </div>
 
     <main>
       <section id="tab-tree" class="tab-panel is-active" aria-labelledby="tree-title">
-        <h2 id="tree-title" class="sr-only">研究ツリー</h2>
+        <h2 id="tree-title" class="sr-only" data-i18n="tab.tree">研究ツリー</h2>
         <div class="tree-primary-actions">
           <button id="category-drawer-open" class="category-trigger" type="button">
             <span data-i18n="tree.category">研究分野</span>
@@ -74,10 +74,10 @@
                 <input id="technolabe-only" type="checkbox">
                 <span data-i18n="tree.technolabe_only">叡智の輪推奨のみ</span>
               </label>
-              <div class="zoom-controls" aria-label="ツリーの拡大縮小">
-                <button id="zoom-out" type="button" aria-label="縮小">−</button>
+              <div class="zoom-controls" aria-label="ツリーの拡大縮小" data-i18n-aria="pwa.tree_zoom_controls">
+                <button id="zoom-out" type="button" aria-label="縮小" data-i18n-aria="pwa.zoom_out">−</button>
                 <output id="zoom-output">100%</output>
-                <button id="zoom-in" type="button" aria-label="拡大">＋</button>
+                <button id="zoom-in" type="button" aria-label="拡大" data-i18n-aria="pwa.zoom_in">＋</button>
                 <button id="zoom-fit" type="button" aria-label="ツリー全体を表示" data-i18n="tree.fit_all" data-i18n-aria="tree.fit_all">全体</button>
               </div>
             </div>
@@ -101,7 +101,7 @@
               <option value="guild_duel">ギルド決闘</option>
           </select>
         </div>
-        <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="研究ツリー。ドラッグで移動、ピンチ操作で拡大縮小できます">
+        <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="研究ツリー。ドラッグで移動、ピンチ操作で拡大縮小できます" data-i18n-aria="pwa.tree_viewport_aria">
           <div id="tree-stage" class="tree-stage">
             <svg id="tree-lines" class="tree-lines" aria-hidden="true"></svg>
             <div id="tree-cards"></div>
@@ -113,14 +113,14 @@
       <section id="tab-plan" class="tab-panel" aria-labelledby="plan-title">
         <h2 id="plan-title" class="sr-only" data-i18n="tab.plan">研究計画</h2>
         <div class="panel-toolbar plan-panel-toolbar">
-          <div class="segmented" role="group" aria-label="計画方法">
+          <div class="segmented" role="group" aria-label="計画方法" data-i18n-aria="pwa.plan_method">
             <button class="is-active" id="plan-target-mode" type="button" data-i18n="plan.mode.target">目標研究</button>
             <button id="plan-shortest-mode" type="button" data-i18n="plan.mode.shortest">短時間順</button>
             <button id="plan-tasks-mode" type="button" data-i18n="plan.mode.tasks">登録タスク</button>
           </div>
           <label class="resource-mode-compact">
             <span data-i18n="plan.resource_display">資源</span>
-            <select id="resource-display-mode" aria-label="資源の表示形式">
+            <select id="resource-display-mode" aria-label="資源の表示形式" data-i18n-aria="pwa.resource_display_aria">
               <option value="exact" data-i18n="plan.resource_exact">通常</option>
               <option value="short" data-i18n="plan.resource_short">短縮</option>
             </select>
@@ -210,7 +210,7 @@
       <section id="tab-settings" class="tab-panel" aria-labelledby="settings-title">
         <h2 id="settings-title" class="sr-only" data-i18n="tab.player">プレイヤー設定</h2>
         <span id="save-indicator" class="sr-only" aria-live="polite" data-i18n="pwa.saved">保存済み</span>
-        <div class="segmented player-view-tabs" role="group" aria-label="プレイヤー設定画面">
+        <div class="segmented player-view-tabs" role="group" aria-label="プレイヤー設定画面" data-i18n-aria="pwa.player_views">
           <button id="player-view-level-button" class="is-active" type="button" data-i18n="player.subtab.level">レベル</button>
           <button id="player-view-talent-button" type="button" data-i18n="player.subtab.talent">才能</button>
           <button id="player-view-resources-button" type="button" data-i18n="player.subtab.resources">資源</button>
@@ -404,7 +404,7 @@
           <p class="hint" data-i18n="paid.value_hint">ポイントとジェム換算は比較用の任意設定です。ゲーム公式の交換比率ではありません。</p>
           <button id="paid-new" type="button" data-i18n="paid.new_offer">新規</button>
         </div>
-        <div class="segmented paid-view-tabs" role="group" aria-label="課金画面">
+        <div class="segmented paid-view-tabs" role="group" aria-label="課金画面" data-i18n-aria="pwa.paid_views">
           <button id="paid-view-input-button" class="is-active" type="button" data-i18n="paid.view.input">入力</button>
           <button id="paid-view-saved-button" type="button" data-i18n="paid.view.saved">保存一覧</button>
           <button id="paid-view-comparison-button" type="button" data-i18n="paid.view.comparison">比較</button>
@@ -552,7 +552,7 @@
           </article>
           <article>
             <h3 data-i18n="help.license.title">ライセンス・出典</h3>
-            <p><a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/LICENSE">MIT License</a>／<a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md">データのライセンスと出典</a>／<a href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/licenses/THIRD_PARTY_NOTICES.md">第三者ライセンス</a></p>
+            <p id="help-license-body"></p>
           </article>
           <p class="version-line"><span data-i18n="pwa.version">バージョン</span> <span id="app-version"></span></p>
         </div>
@@ -563,9 +563,9 @@
       <form method="dialog">
         <header>
           <h2 data-i18n="tree.category">研究分野</h2>
-          <button value="cancel" aria-label="研究分野を閉じる">×</button>
+          <button value="cancel" aria-label="研究分野を閉じる" data-i18n-aria="pwa.close_categories">×</button>
         </header>
-        <nav id="category-drawer-list" aria-label="研究分野一覧"></nav>
+        <nav id="category-drawer-list" aria-label="研究分野一覧" data-i18n-aria="pwa.category_list"></nav>
       </form>
     </dialog>
 
@@ -576,20 +576,20 @@
             <p id="node-dialog-category" class="eyebrow"></p>
             <h2 id="node-dialog-name"></h2>
           </div>
-          <button class="dialog-close" value="cancel" aria-label="閉じる">×</button>
+          <button class="dialog-close" value="cancel" aria-label="閉じる" data-i18n-aria="common.close">×</button>
         </header>
         <div class="node-dialog-body">
           <div class="level-editor">
             <label class="field"><span data-i18n="player.current_level">現在レベル</span><input id="node-level-number" type="number" inputmode="numeric" min="0"></label>
             <span id="node-level-max" class="max-label"></span>
             <div class="level-slider-row">
-              <button id="node-level-down" type="button" aria-label="現在レベルを1下げる">−</button>
-              <input id="node-level-range" type="range" min="0" step="1" aria-label="現在レベルのスライダー">
-              <button id="node-level-up" type="button" aria-label="現在レベルを1上げる">＋</button>
+              <button id="node-level-down" type="button" aria-label="現在レベルを1下げる" data-i18n-aria="pwa.level_down">−</button>
+              <input id="node-level-range" type="range" min="0" step="1" aria-label="現在レベルのスライダー" data-i18n-aria="pwa.level_slider">
+              <button id="node-level-up" type="button" aria-label="現在レベルを1上げる" data-i18n-aria="pwa.level_up">＋</button>
             </div>
           </div>
           <div id="node-effects" class="effect-box"></div>
-          <section id="node-next-detail" class="node-next-detail" aria-label="次レベルの詳細"></section>
+          <section id="node-next-detail" class="node-next-detail" aria-label="次レベルの詳細" data-i18n-aria="pwa.next_level_detail"></section>
           <label class="field"><span data-i18n="plan.target_level">目標レベル</span><select id="node-target-level"></select></label>
           <div class="button-row dialog-actions">
             <button id="open-plan" class="primary" type="button" data-i18n="pwa.plan_this_research">この研究を計画</button>
@@ -601,7 +601,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.3-b12";
+      const startupVersion = "0.1.4-b1";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -613,14 +613,13 @@
       const startupLoading = document.getElementById("startup-loading");
       const startupLoadingMessage = document.getElementById("startup-loading-message");
       const mainElement = document.querySelector("main");
-      const prefersJapanese = (navigator.languages || [navigator.language || ""]).some((locale) => String(locale).toLowerCase().startsWith("ja"));
       const startupVersionLabel = isPreviewScope
-        ? (prefersJapanese ? "v0.1.3 確認版" : "v0.1.3 Preview")
-        : "v0.1.3";
+        ? "v0.1.4 Preview"
+        : "v0.1.4";
       document.getElementById("header-version").textContent = startupVersionLabel;
       document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
       document.title = `RLM Research Planner ${startupVersionLabel}`;
-      startupLoadingMessage.textContent = prefersJapanese ? "研究データを読み込んでいます…" : "Loading research data…";
+      startupLoadingMessage.textContent = "Loading…";
       mainElement.setAttribute("aria-busy", "true");
       const clearAppShell = async () => {
         if ("serviceWorker" in navigator) {
@@ -637,17 +636,17 @@
         mainElement.setAttribute("aria-busy", "false");
         const target = document.getElementById("startup-error");
         const message = document.getElementById("startup-error-message");
-        message.textContent = `起動に必要なデータを読み込めませんでした: ${error?.message || error || "不明なエラー"}`;
+        message.textContent = `Required data could not be loaded: ${error?.message || error || "Unknown error"}`;
         target.hidden = false;
       };
       window.rlmRecoverPwa = async () => {
         const button = document.getElementById("startup-recover");
         if (!navigator.onLine) {
-          showStartupError("最新版の再取得にはインターネット接続が必要です");
+          showStartupError("An internet connection is required to retrieve the latest version.");
           return;
         }
         button.disabled = true;
-        button.textContent = "再取得しています…";
+        button.textContent = "Retrieving…";
         try { await clearAppShell(); }
         finally {
           const url = new URL(location.href);
@@ -698,12 +697,12 @@
         const message = document.getElementById("startup-error-message");
         const retry = document.getElementById("startup-retry");
         const recover = document.getElementById("startup-recover");
-        message.textContent = "HTMLを直接開いたため研究データを読み込めません。StartRLMResearchPlannerPWA.bat、またはリポジトリのランチャーから起動してください。";
+        message.textContent = "The data cannot be loaded when this HTML file is opened directly. Use StartRLMResearchPlannerPWA.bat or the repository launcher.";
         retry.hidden = true;
         recover.hidden = true;
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.3-b12"></script>
+    <script type="module" src="./src/app.js?v=0.1.4-b1"></script>
   </body>
 </html>

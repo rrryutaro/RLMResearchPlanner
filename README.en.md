@@ -4,7 +4,7 @@
 
 RLMResearchPlanner is an unofficial research and construction planner for *Lords Mobile*. It is available as a Windows desktop application and a browser-based mobile version. Both versions use the same research and building data and exchange compatible JSON files.
 
-The current `v0.1.3` release is an alpha version. Its main features are usable, but its features, interface, and bundled data remain under active verification and improvement.
+The current public `v0.1.4` release is an alpha version. Its main features are usable, but its features, interface, and bundled data remain under active verification and improvement.
 
 This project is not affiliated with IGG or the game operator. Game names, trademarks, and other rights belong to their respective owners.
 

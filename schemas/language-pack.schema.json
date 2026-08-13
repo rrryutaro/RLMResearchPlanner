@@ -27,15 +27,21 @@
     "author": { "type": "string", "maxLength": 200 },
     "license": { "type": "string", "maxLength": 200 },
     "catalog_dataset_id": { "type": "string", "maxLength": 200 },
+    "effect_separator": { "type": "string", "maxLength": 20 },
     "messages": {
-      "description": "UI messages. The reserved app.disclaimer entry is ignored and is not exported.",
-      "$ref": "#/$defs/section"
+      "description": "UI messages. Bundled help messages may contain trusted HTML. User imports still reject all HTML, and the reserved app.disclaimer entry is ignored.",
+      "$ref": "#/$defs/messageSection"
     },
     "categories": { "$ref": "#/$defs/section" },
     "research": { "$ref": "#/$defs/section" },
     "talents": { "$ref": "#/$defs/section" },
+    "talent_effects": { "$ref": "#/$defs/section" },
+    "talent_presets": { "$ref": "#/$defs/section" },
+    "talent_preset_descriptions": { "$ref": "#/$defs/section" },
     "buildings": { "$ref": "#/$defs/section" },
     "effects": { "$ref": "#/$defs/section" },
+    "effect_labels": { "$ref": "#/$defs/section" },
+    "effect_values": { "$ref": "#/$defs/section" },
     "resources": { "$ref": "#/$defs/section" }
   },
   "additionalProperties": true,
@@ -70,6 +76,24 @@
       "type": "object",
       "propertyNames": { "minLength": 1, "maxLength": 300 },
       "additionalProperties": { "$ref": "#/$defs/entry" }
+    },
+    "messageSection": {
+      "type": "object",
+      "propertyNames": { "minLength": 1, "maxLength": 300 },
+      "additionalProperties": {
+        "oneOf": [
+          {
+            "type": "object",
+            "required": ["source", "text"],
+            "properties": {
+              "source": { "type": "string" },
+              "text": { "type": "string", "maxLength": 20000 }
+            },
+            "additionalProperties": false
+          },
+          { "type": "string", "maxLength": 20000 }
+        ]
+      }
     }
   }
 }

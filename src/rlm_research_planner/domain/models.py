@@ -135,11 +135,7 @@ class MasterData:
 def locale_fallbacks(locale: str) -> tuple[str, ...]:
     normalized = locale.replace("_", "-")
     language = normalized.split("-", 1)[0]
-    candidates = [normalized]
-    if language == "ja":
-        candidates.extend(("ja-JP", "en-US"))
-    else:
-        candidates.extend((language, "en-US", "ja-JP"))
+    candidates = [normalized, language, "en-US"]
     return tuple(dict.fromkeys(candidates))
 
 

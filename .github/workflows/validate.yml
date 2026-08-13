@@ -43,6 +43,14 @@ jobs:
         shell: pwsh
         run: python -B dataset/scripts/check_distribution.py dataset/generated
 
+      - name: Synchronize bundled language packs
+        shell: pwsh
+        run: python -B scripts/sync_bundled_language_packs.py
+
+      - name: Check multilingual coverage
+        shell: pwsh
+        run: python -B scripts/check_language_coverage.py
+
       - name: Synchronize PWA data
         shell: pwsh
         working-directory: tools/RLMResearchPlannerPWA

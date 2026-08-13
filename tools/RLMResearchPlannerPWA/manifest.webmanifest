@@ -1,8 +1,7 @@
 {
-  "name": "RLM Research Planner モバイル版",
+  "name": "RLM Research Planner",
   "short_name": "RLM Planner",
-  "description": "ロードモバイル向け非公式研究計画ツール",
-  "lang": "ja",
+  "description": "RLM Research Planner",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
