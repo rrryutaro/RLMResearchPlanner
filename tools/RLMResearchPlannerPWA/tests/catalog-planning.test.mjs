@@ -63,7 +63,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.4");
+  assert.equal(publicVersion, "0.1.5");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -74,7 +74,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.4 Preview/u);
+  assert.match(indexHtml, /v0\.1\.5 Preview/u);
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -111,17 +111,25 @@ test("first launch is distinguishable from saved player data", () => {
   assert.equal(hasSavedState(storage, "/RLMResearchPlanner/preview/"), false);
 });
 
-test("owned speedups use a list and one shared add-edit form", () => {
-  assert.match(indexHtml, /id="speedup-inventory-list"/u);
-  assert.match(indexHtml, /id="speedup-inventory-editor"[^>]*hidden/u);
-  for (const id of ["kind", "duration", "unit", "quantity", "save", "cancel", "delete"]) {
-    assert.equal([...indexHtml.matchAll(new RegExp(`id="speedup-inventory-${id}"`, "gu"))].length, 1);
-  }
-  assert.match(appSource, /function openSpeedupInventoryEditor\(index = -1\)/u);
-  assert.match(appSource, /function saveSpeedupInventoryEntry\(\)/u);
-  assert.match(appSource, /row = create\("button", "speedup-inventory-row"\)/u);
-  assert.match(stylesSource, /\.speedup-inventory-row\.is-selected/u);
-  assert.doesNotMatch(appSource, /speedup-quantity-field/u);
+test("owned speedups use collapsed category groups and fixed durations", () => {
+  assert.match(indexHtml, /id="speedup-inventory-groups"/u);
+  assert.doesNotMatch(indexHtml, /id="speedup-inventory-duration"/u);
+  assert.match(appSource, /create\("details", "speedup-inventory-kind"\)/u);
+  assert.match(appSource, /SPEEDUP_DURATION_GROUPS\.map/u);
+  assert.match(appSource, /speedupDurationGroup\(durationSeconds\)/u);
+  assert.match(appSource, /input\.dataset\.speedupKind = kind/u);
+  assert.match(appSource, /input\.dataset\.speedupDuration = String\(durationSeconds\)/u);
+  assert.match(appSource, /numberStepper\(input\)/u);
+  assert.match(stylesSource, /\.speedup-inventory-duration-grid/u);
+  assert.match(stylesSource, /\.speedup-inventory-duration-sections/u);
+  assert.match(stylesSource, /\.speedup-inventory-kind\[open\]/u);
+  assert.doesNotMatch(indexHtml, /id="speedup-inventory-summary"/u);
+  assert.doesNotMatch(indexHtml, /speedup-inventory-card/u);
+  assert.doesNotMatch(indexHtml, /data-i18n="player\.speedup_inventory_hint"/u);
+  assert.match(appSource, /SPEEDUP_DURATION_SECONDS\.includes\(durationSeconds\)/u);
+  assert.match(appSource, /minutes: 60, hours: 60 \* 60, days: 24 \* 60 \* 60/u);
+  assert.match(indexHtml, /id="help-player-body"/u);
+  assert.match(appSource, /messages\["help\.player\.body_v003"\]/u);
 });
 
 test("paid pack contents use a list and one shared add-edit form", () => {
@@ -312,10 +320,10 @@ test("desktop mouse click is not captured until the tree is actually dragged", (
 test("desktop catalog is fully available to the PWA", () => {
   assert.equal(catalog.categories.length, 16);
   assert.equal(catalog.nodes.size, 399);
-  assert.equal([...catalog.nodes.values()].reduce((count, node) => count + node.levels.size, 0), 3143);
+  assert.equal([...catalog.nodes.values()].reduce((count, node) => count + node.levels.size, 0), 3179);
   assert.equal([...catalog.nodes.values()].reduce((count, node) => count + node.maxLevel, 0), 3385);
-  assert.equal(catalog.categories.reduce((count, category) => count + category.dataStats.times, 0), 2923);
-  assert.equal(catalog.categories.reduce((count, category) => count + category.dataStats.costs, 0), 3022);
+  assert.equal(catalog.categories.reduce((count, category) => count + category.dataStats.times, 0), 2945);
+  assert.equal(catalog.categories.reduce((count, category) => count + category.dataStats.costs, 0), 3058);
   assert.equal(catalog.categoryTitle(catalog.categories[0], "ja-JP"), "経済");
   assert.equal(catalog.datasetVersion, "0.1.0");
   assert.match(indexHtml, /id="dataset-version"/u);
@@ -374,7 +382,7 @@ test("category selector has a static fallback before JavaScript starts", () => {
   const markup = indexHtml.match(/<select id="category-select"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
   assert.equal([...markup.matchAll(/<option value=/g)].length, 16);
   assert.match(indexHtml, /id="category-drawer"/);
-  assert.equal([...indexHtml.matchAll(/<details class="settings-card/g)].length, 11);
+  assert.equal([...indexHtml.matchAll(/<details class="settings-card/g)].length, 10);
   assert.match(indexHtml, /data-tab="castle"[^>]*data-i18n="tab\.castle"[^>]*>建設<\/button>/);
   assert.match(indexHtml, /id="construction-target"/);
   assert.match(indexHtml, /id="construction-selection"/);
@@ -582,17 +590,70 @@ test("target planning returns the recorded prerequisites", () => {
   assert.equal(plan.totals.afterHelpSeconds, plan.steps.reduce((sum, step) => sum + Number(step.afterHelpSeconds || 0), 0));
 });
 
-test("Guild Duel plans expose unavailable time and dedicated material data", () => {
+test("Guild Duel plans use clearly provisional sibling-level estimates", () => {
   const target = catalog.nodes.get("guild_duel_gathering_incentive");
   const plan = createPlan(catalog, defaultState(), target.id, 1);
 
   assert.equal(plan.steps.length, 1);
-  assert.equal(plan.steps[0].baseSeconds, null);
+  assert.equal(plan.steps[0].baseSeconds, 7745);
+  assert.deepEqual(plan.steps[0].costs, {
+    food: 78600,
+    stone: 32600,
+    timber: 39100,
+    ore: 19600,
+    gold: 32600,
+    special: 10,
+  });
   assert.equal(plan.steps[0].costsVerified, false);
-  assert.equal(plan.totals.unknownTime, 1);
+  assert.equal(plan.totals.unknownTime, 0);
   assert.equal(plan.totals.unknownCosts, 1);
   assert.match(appSource, /unknown_special_material/u);
   assert.match(appSource, /speedup_unknown_time/u);
+
+  const research = catalog.nodes.get("guild_duel_research_incentive");
+  const levelOne = research.levels.get(1);
+  assert.equal(catalog.nodeName(research, "ja-JP"), "研究奨励");
+  assert.equal(levelOne.baseTimeSeconds, 7745);
+  assert.equal(levelOne.technolabeCount, 1);
+  assert.equal(levelOne.power, 2306);
+  assert.equal(levelOne.costs.special, 10);
+  assert.equal(Math.ceil(levelOne.baseTimeSeconds / (1 + 255.95 / 100)), 2176);
+  const state = defaultState();
+  state.settings.researchSpeedPercent = 255.95;
+  state.researchLevels.guild_duel_gathering_incentive = 1;
+  const researchPlan = createPlan(catalog, state, research.id, 1);
+  assert.equal(researchPlan.steps.length, 1);
+  assert.equal(researchPlan.totals.baseSeconds, 7745);
+  assert.equal(researchPlan.totals.costs.food, 85100);
+  assert.equal(researchPlan.totals.costs.special, 10);
+  const languagePack = languagePackFromPayload(pwaLocale, { trusted: true });
+  assert.equal(currentEffect(research, 1, {
+    locale: "ja-JP",
+    name: "研究奨励",
+    translatedLabel: languagePack.sections.effects[research.id],
+    languagePack,
+  }), "研究デュエルポイント+5%");
+
+  const speedUp = catalog.nodes.get("guild_duel_speed_up_incentive");
+  const speedUpLevel = speedUp.levels.get(1);
+  assert.equal(catalog.nodeName(speedUp, "ja-JP"), "スピードアップ奨励");
+  assert.equal(speedUpLevel.baseTimeSeconds, 6372);
+  assert.equal(speedUpLevel.costs.special, 20);
+  assert.equal(Math.ceil(speedUpLevel.baseTimeSeconds / (1 + 278.85 / 100)), 1682);
+  assert.equal(currentEffect(speedUp, 1, {
+    locale: "ja-JP",
+    name: "スピードアップ奨励",
+    translatedLabel: languagePack.sections.effects[speedUp.id],
+    languagePack,
+  }), "スピードアップデュエルポイント+5%");
+
+  const rewardTwo = catalog.nodes.get("guild_duel_reward_incentive_ii");
+  const rewardTwoLevel = rewardTwo.levels.get(1);
+  assert.equal(catalog.nodeName(rewardTwo, "ja-JP"), "報酬奨励 II");
+  assert.equal(rewardTwoLevel.baseTimeSeconds, 669731);
+  assert.equal(rewardTwoLevel.costs.food, 12000000);
+  assert.equal(rewardTwoLevel.costs.special, 550);
+  assert.equal(Math.ceil(rewardTwoLevel.baseTimeSeconds / (1 + 278.85 / 100)), 176780);
 });
 
 test("target planning lists all lower dependency layers first", () => {

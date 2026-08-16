@@ -104,7 +104,9 @@ def observations_from_research_dataset(
                         for item in raw_level.get("prerequisites", [])
                     ),
                     building_requirements=dict(raw_level.get("buildings") or {}),
-                    costs_verified=costs is not None,
+                    costs_verified=bool(
+                        raw_level.get("costs_complete", costs is not None)
+                    ),
                     verification_status=_verification_status(raw_level, tree),
                 )
             node_id = str(raw_node["id"])

@@ -4,10 +4,40 @@ from rlm_research_planner.domain.models import (
     SpeedupInventoryItem,
 )
 from rlm_research_planner.services.speedup_inventory import (
+    SPEEDUP_DURATION_GROUPS,
+    SPEEDUP_DURATION_SECONDS,
     add_paid_items_to_inventory,
     recommend_paid_offers,
+    speedup_duration_group,
     speedup_coverage,
 )
+
+
+def test_speedup_inventory_uses_game_duration_presets() -> None:
+    assert SPEEDUP_DURATION_SECONDS == (
+        60,
+        180,
+        300,
+        600,
+        900,
+        1800,
+        3600,
+        10800,
+        28800,
+        54000,
+        86400,
+        259200,
+        604800,
+        2592000,
+    )
+    assert SPEEDUP_DURATION_GROUPS == (
+        ("minutes", (60, 180, 300, 600, 900, 1800, 3600)),
+        ("hours", (10800, 28800, 54000, 86400)),
+        ("days", (259200, 604800, 2592000)),
+    )
+    assert speedup_duration_group(3600) == "minutes"
+    assert speedup_duration_group(3601) == "hours"
+    assert speedup_duration_group(86401) == "days"
 
 
 def test_research_uses_general_and_research_speedups_only() -> None:

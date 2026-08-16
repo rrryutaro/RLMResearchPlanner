@@ -119,19 +119,19 @@ def test_official_japanese_research_category_names_are_present() -> None:
         "upgrade_defenses": "上級防城",
         "upgrade_military": "上級軍事",
         "army_leadership": "軍隊戦術",
-        "military_command": "軍事司令",
+        "military_command": "軍事指令",
         "familiars": "召喚獣",
         "familiar_battles": "召喚獣の出陣",
         "sigils": "シギル",
-        "wonder_battles": "ワンダー戦争",
+        "wonder_battles": "ワンダー",
         "gear": "部隊武装",
         "advanced_wonder_battles": "上級ワンダー軍事",
         "mana_awakening": "マナ覚醒",
-        "guild_duel": "ギルド決闘",
+        "guild_duel": "ギルドデュエル",
     }
 
 
-def test_guild_duel_unknown_time_and_special_material_are_visible_in_plan() -> None:
+def test_guild_duel_provisional_time_and_unverified_special_cost_are_visible_in_plan() -> None:
     app = QApplication.instance() or QApplication([])
     root = Path(__file__).resolve().parents[1]
     paths = AppPaths(tool_root=root, bundled_root=root)
@@ -155,7 +155,7 @@ def test_guild_duel_unknown_time_and_special_material_are_visible_in_plan() -> N
 
         special_column = window._plan_resource_columns["special"]
         assert window.plan_table.rowCount() == 2
-        assert window.plan_table.item(0, 2).text() == window.t("common.unknown")
+        assert window.plan_table.item(0, 2).text() == "02:09:05"
         assert window.plan_table.item(0, special_column).text() == window.t(
             "common.unknown"
         )
@@ -163,7 +163,7 @@ def test_guild_duel_unknown_time_and_special_material_are_visible_in_plan() -> N
             "common.unknown"
         )
         assert not window.plan_table.isColumnHidden(special_column)
-        assert window.t("plan.speedup_unknown_time") in (
+        assert window.t("plan.speedup_unknown_time") not in (
             window.plan_speedup_panel.status_label.text()
         )
         assert not window.plan_speedup_panel.toggle_button.isChecked()
@@ -373,10 +373,8 @@ def test_every_catalog_category_renders_complete_level_zero_cards() -> None:
             window.tree_dataset_list.item(index).text()
             for index in range(window.tree_dataset_list.count())
         }
-        assert "ワンダー戦争" in displayed_categories
-        assert "ギルド決闘" in displayed_categories
-        assert "ワンダー" not in displayed_categories
-        assert "ギルドデュエル" not in displayed_categories
+        assert "ワンダー" in displayed_categories
+        assert "ギルドデュエル" in displayed_categories
         for category in catalog:
             index = window._dataset_list_row(
                 f"observation:{category.observation_id}"
@@ -1819,8 +1817,39 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
             for index in range(window.player_workspace_tabs.count())
         ] == ["レベル", "才能", "資源", "加速"]
         assert window.player_workspace_tabs.widget(3).isAncestorOf(
-            window.speedup_inventory_table
+            window.speedup_inventory_groups_host
         )
+        assert len(window.speedup_inventory_group_toggles) == 7
+        assert all(
+            not toggle.isChecked()
+            for toggle in window.speedup_inventory_group_toggles.values()
+        )
+        assert all(
+            body.isHidden()
+            for body in window.speedup_inventory_group_bodies.values()
+        )
+        assert ("general", 60) in window.speedup_inventory_inputs
+        assert ("research", 30 * 24 * 60 * 60) in window.speedup_inventory_inputs
+        assert [
+            window.speedup_inventory_duration_sections[("general", unit)].title()
+            for unit in ("minutes", "hours", "days")
+        ] == ["分", "時間", "日"]
+        assert window._speedup_duration_label(60 * 60) == "60分"
+        assert window._speedup_duration_label(24 * 60 * 60) == "24時間"
+        assert not hasattr(window, "speedup_inventory_summary_label")
+        assert all(
+            label.text() != window.t("player.speedup_inventory_hint")
+            for label in window.player_workspace_tabs.widget(3).findChildren(QLabel)
+        )
+        window.speedup_inventory_group_toggles["general"].setChecked(True)
+        assert not window.speedup_inventory_group_bodies["general"].isHidden()
+        window.speedup_inventory_inputs[("general", 60)].setValue(2)
+        assert window.player_state.settings.speedup_inventory == [
+            SpeedupInventoryItem("general", 60, 2)
+        ]
+        assert "00:02:00" in window.speedup_inventory_group_toggles[
+            "general"
+        ].text()
         assert window.player_workspace_tabs.widget(2).isAncestorOf(
             next(iter(window.resource_spins.values()))
         )
@@ -2221,6 +2250,11 @@ def test_visible_spin_buttons_stay_inside_field_with_consistent_contrast() -> No
             button.text(): button for button in spin.findChildren(QToolButton)
         }
         assert set(buttons) == {"−", "+"}
+        assert all(
+            "max-width" not in button.styleSheet()
+            and "max-height" not in button.styleSheet()
+            for button in buttons.values()
+        )
         assert spin.minimumWidth() >= 104
         assert not buttons["−"].geometry().intersects(buttons["+"].geometry())
         for button in buttons.values():

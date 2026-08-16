@@ -119,7 +119,7 @@ export function normalizeCatalog(documents) {
           power: levelSource.power == null ? null : Number(levelSource.power),
           requirements,
           buildings: { ...(levelSource.buildings || {}) },
-          costsVerified: levelSource.costs != null,
+          costsVerified: Boolean(levelSource.costs_complete ?? (levelSource.costs != null)),
           verificationStatus: String(levelSource.legacy_verification_status || levelSource.verification?.status || source.default_verification?.status || "provisional"),
         });
       }
@@ -179,7 +179,9 @@ export function currentEffect(node, level, { locale = "en-US", labels = {}, name
   const hunt = value.match(/^Hunt Level (\d+) monsters$/i);
   if (hunt) value = effectValue("hunt_level", value, { level: hunt[1] });
   value = effectValue(`literal.${value}`, value);
-  let label = String(languagePack?.sections?.effect_labels?.[node.effectLabel] || translatedLabel || labels[node.effectLabel] || node.effectLabel || "").trim();
+  // A research-specific translation is more precise than a reusable effect-label term.
+  // This matters when the game gives otherwise similar effects distinct names.
+  let label = String(translatedLabel || languagePack?.sections?.effect_labels?.[node.effectLabel] || labels[node.effectLabel] || node.effectLabel || "").trim();
   const generic = new Set(["", "ATK+", "Boost", "Cost Reduction", "DEF+", "Def. Boost", "Effect", "HP+", "Reduction", "Result", "Speed+", "Unlock", "Unlocks", "Upgrade Result", "Upgrade Results"]);
   if (!translatedLabel || generic.has(node.effectLabel)) {
     label = String(name || "").replace(/\s*(?:I|II|III|IV|V)$/u, "").trim();

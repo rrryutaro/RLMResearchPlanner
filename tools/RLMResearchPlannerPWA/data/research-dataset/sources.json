@@ -261,6 +261,18 @@
       "url": "https://lords-mobile.gamerch.com/%E7%A0%94%E7%A9%B6-%E7%A0%94%E7%A9%B6%E4%B8%80%E8%A6%A7"
     },
     {
+      "id": "src_neovis_guild_duel_research",
+      "license": {
+        "attribution": "ねおブログ ギルドデュエル研究情報",
+        "name": "Reference only; no redistribution license asserted"
+      },
+      "name": "ねおブログ ギルドデュエル研究情報",
+      "notes": "報酬奨励I・IIまでに必要なデュエルの書の合計数 retrieved_on is inherited from the legacy catalog checked_on date; the original per-source retrieval date was not recorded.",
+      "retrieved_on": "2026-08-07",
+      "type": "community",
+      "url": "https://neovis99.com/lords-mobile-capture-part151/"
+    },
+    {
       "id": "src_retry_advanced_wonder_battles",
       "license": {
         "attribution": "Retry YN 上級ワンダー軍事研究一覧",

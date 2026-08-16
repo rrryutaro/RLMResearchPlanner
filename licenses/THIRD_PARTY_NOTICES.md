@@ -64,7 +64,7 @@ attribution, and all factual verification references are listed in
 - Fandom licensing: https://www.fandom.com/licensing
 
 The verification references include Gamerch, Retry YN, public Guild Duel
-gameplay, Games Guide Info, and LM Harus. No license to redistribute their
+gameplay, ねおブログ, Games Guide Info, and LM Harus. No license to redistribute their
 article prose, tables, images, video frames, or audio is asserted. Those
 materials are not bundled.
 

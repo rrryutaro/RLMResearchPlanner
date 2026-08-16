@@ -317,6 +317,23 @@ h1 { flex: 0 1 auto; min-width: 0; margin-bottom: 0; overflow: hidden; font-size
 .settings-card-body { padding: 16px; }
 .settings-description { margin-bottom: 14px; color: var(--muted); font-size: .84rem; }
 .settings-card h3 { margin-bottom: 16px; }
+.speedup-inventory-groups { display: grid; gap: 8px; }
+.speedup-inventory-kind { overflow: hidden; border: 1px solid #2c5360; border-radius: 10px; background: #0b202a; }
+.speedup-inventory-kind > summary { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 10px; min-height: 48px; padding: 9px 12px; color: var(--text); cursor: pointer; list-style: none; }
+.speedup-inventory-kind > summary::-webkit-details-marker { display: none; }
+.speedup-inventory-kind > summary::before { content: "＋"; grid-column: 2; grid-row: 1; color: var(--accent-2); font-weight: 900; }
+.speedup-inventory-kind[open] > summary::before { content: "−"; }
+.speedup-inventory-kind-summary { display: grid; grid-column: 1; grid-row: 1; min-width: 0; gap: 2px; }
+.speedup-inventory-kind-summary span { color: var(--muted); font-size: .78rem; }
+.speedup-inventory-duration-sections { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; padding: 10px 12px 12px; border-top: 1px solid #2c5360; }
+.speedup-inventory-duration-section { min-width: 0; padding: 8px; border: 1px solid #294b57; border-radius: 8px; background: #0d2530; }
+.speedup-inventory-duration-section h4 { margin: 0 0 7px; color: var(--accent-2); font-size: .82rem; }
+.speedup-inventory-duration-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.speedup-inventory-duration { display: grid; min-width: 0; gap: 4px; }
+.speedup-inventory-duration > span { color: var(--muted); font-size: .78rem; white-space: nowrap; }
+.speedup-inventory-duration .number-stepper { grid-template-columns: 32px minmax(38px, 1fr) 32px; }
+.speedup-inventory-duration .number-stepper button { min-width: 32px; min-height: 38px; }
+.speedup-inventory-duration input { min-width: 0; width: 100%; }
 .speedup-inventory-list { display: grid; gap: 8px; }
 .speedup-inventory-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 8px 14px; width: 100%; padding: 11px 12px; color: var(--text); background: #0b202a; text-align: start; }
 .speedup-inventory-row:hover, .speedup-inventory-row.is-selected { border-color: var(--accent-2); background: #123441; }
@@ -350,6 +367,8 @@ h1 { flex: 0 1 auto; min-width: 0; margin-bottom: 0; overflow: hidden; font-size
 .speedup-recommendation-breakdown { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
 .speedup-breakdown-part { min-width: 0; padding: 7px 8px; border-radius: 5px; background: #153844; overflow-wrap: anywhere; }
 @media (max-width: 620px) { .speedup-recommendation-breakdown { grid-template-columns: 1fr; } }
+@media (max-width: 760px) { .speedup-inventory-duration-sections { grid-template-columns: 1fr; } }
+@media (max-width: 340px) { .speedup-inventory-duration-grid { grid-template-columns: 1fr; } }
 .resource-chip.is-unknown { border-color: #9f7930; background: #302713; }
 .castle-speedup-simulation { grid-column: 1 / -1; margin: 0; }
 .card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 14px; }

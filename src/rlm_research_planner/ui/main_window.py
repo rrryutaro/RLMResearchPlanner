@@ -151,11 +151,14 @@ from rlm_research_planner.services.paid_offer_exchange import (
 )
 from rlm_research_planner.services.speedup_inventory import (
     PaidOfferRecommendation,
+    SPEEDUP_DURATION_GROUPS,
+    SPEEDUP_DURATION_SECONDS,
     SPEEDUP_KINDS,
     SpeedupCoverage,
     add_paid_items_to_inventory,
     normalize_speedup_inventory,
     recommend_paid_offers,
+    speedup_duration_group,
     speedup_coverage,
 )
 from rlm_research_planner.services.talent_planning import (
@@ -923,9 +926,6 @@ class MainWindow(QMainWindow):
         dataset_panel.setMaximumWidth(360)
         dataset_layout = QVBoxLayout(dataset_panel)
         dataset_layout.setContentsMargins(0, 0, 8, 0)
-        dataset_heading = QLabel(self.t("tree.dataset"), dataset_panel)
-        dataset_heading.setStyleSheet("font-weight:700;")
-        dataset_layout.addWidget(dataset_heading)
         self.tree_dataset_list = _AutoFitListWidget(dataset_panel)
         self.tree_dataset_list.setStyleSheet(
             dataset_style_sheet(self.app_settings.visual_style)
@@ -3132,48 +3132,16 @@ class MainWindow(QMainWindow):
 
         speedup_page = QWidget(self.player_workspace_tabs)
         speedup_page_layout = QVBoxLayout(speedup_page)
-        speedup_group = QGroupBox(
-            self.t("player.speedup_inventory"), speedup_page
-        )
+        speedup_group = QWidget(speedup_page)
         speedup_layout = QVBoxLayout(speedup_group)
-        speedup_hint = QLabel(
-            self.t("player.speedup_inventory_hint"), speedup_group
+        speedup_layout.setContentsMargins(0, 0, 0, 0)
+        self.speedup_inventory_groups_host = QWidget(speedup_group)
+        self.speedup_inventory_groups_layout = QVBoxLayout(
+            self.speedup_inventory_groups_host
         )
-        speedup_hint.setWordWrap(True)
-        speedup_layout.addWidget(speedup_hint)
-        self.speedup_inventory_table = QTableWidget(0, 4, speedup_group)
-        self.speedup_inventory_table.setHorizontalHeaderLabels(
-            [
-                self.t("paid.kind"),
-                self.t("paid.duration"),
-                self.t("paid.unit"),
-                self.t("paid.quantity"),
-            ]
-        )
-        self.speedup_inventory_table.setSelectionBehavior(QTableWidget.SelectRows)
-        self.speedup_inventory_table.setSelectionMode(QTableWidget.ExtendedSelection)
-        self.speedup_inventory_table.verticalHeader().setVisible(False)
-        speedup_header = self.speedup_inventory_table.horizontalHeader()
-        speedup_header.setSectionResizeMode(0, QHeaderView.Stretch)
-        for column in (1, 2, 3):
-            speedup_header.setSectionResizeMode(column, QHeaderView.ResizeToContents)
-        speedup_layout.addWidget(self.speedup_inventory_table)
-        speedup_actions = QHBoxLayout()
-        speedup_add_button = QPushButton(self.t("player.speedup_add"), speedup_group)
-        speedup_add_button.clicked.connect(
-            lambda: self._add_speedup_inventory_row(focus=True)
-        )
-        speedup_actions.addWidget(speedup_add_button)
-        speedup_delete_button = QPushButton(
-            self.t("player.speedup_delete"), speedup_group
-        )
-        speedup_delete_button.clicked.connect(
-            self._remove_selected_speedup_inventory_rows
-        )
-        speedup_actions.addWidget(speedup_delete_button)
-        self.speedup_inventory_summary_label = QLabel(speedup_group)
-        speedup_actions.addWidget(self.speedup_inventory_summary_label, 1)
-        speedup_layout.addLayout(speedup_actions)
+        self.speedup_inventory_groups_layout.setContentsMargins(0, 0, 0, 0)
+        self.speedup_inventory_groups_layout.setSpacing(8)
+        speedup_layout.addWidget(self.speedup_inventory_groups_host)
         initial_inventory = list(self.player_state.settings.speedup_inventory)
         if not initial_inventory and self.player_state.settings.speedup_seconds > 0:
             initial_inventory = [
@@ -3181,11 +3149,7 @@ class MainWindow(QMainWindow):
                     "general", 1, self.player_state.settings.speedup_seconds
                 )
             ]
-        for entry in initial_inventory:
-            self._add_speedup_inventory_row(entry, notify=False)
-        if not initial_inventory:
-            self._add_speedup_inventory_row(notify=False)
-        self._update_speedup_inventory_summary()
+        self._rebuild_speedup_inventory_groups(initial_inventory)
         speedup_page_layout.addWidget(speedup_group, 1)
 
         resources_page = QWidget(self.player_workspace_tabs)
@@ -3386,126 +3350,177 @@ class MainWindow(QMainWindow):
         self._sync_talent_point_capacity()
         return page
 
-    def _speedup_inventory_kind_combo(self, kind: str = "general") -> QComboBox:
-        combo = QComboBox(self.speedup_inventory_table)
-        for key in SPEEDUP_KINDS:
-            combo.addItem(self.t(f"paid.kind.{key}"), key)
-        combo.setCurrentIndex(max(0, combo.findData(kind)))
-        combo.currentIndexChanged.connect(self._speedup_inventory_changed)
-        return combo
-
-    def _speedup_inventory_unit_combo(self, unit: str = "hours") -> QComboBox:
-        combo = QComboBox(self.speedup_inventory_table)
-        for key in ("seconds", "minutes", "hours", "days"):
-            combo.addItem(self.t(f"paid.unit.{key}"), key)
-        combo.setCurrentIndex(max(0, combo.findData(unit)))
-        combo.currentIndexChanged.connect(self._speedup_inventory_changed)
-        return combo
-
-    def _add_speedup_inventory_row(
-        self,
-        entry: SpeedupInventoryItem | None = None,
-        *,
-        focus: bool = False,
-        notify: bool = True,
-    ) -> None:
-        table = self.speedup_inventory_table
-        row = table.rowCount()
-        table.insertRow(row)
-        kind = entry.kind if entry is not None else "general"
-        duration_seconds = entry.duration_seconds if entry is not None else 3600
-        duration, unit = self._paid_duration_value(duration_seconds)
-        quantity = entry.quantity if entry is not None else 0
-        set_table_cell_widget(
-            table, row, 0, self._speedup_inventory_kind_combo(kind)
-        )
-        duration_spin = VisibleSpinBox(table)
-        duration_spin.setRange(1, 99_999_999)
-        duration_spin.setGroupSeparatorShown(True)
-        duration_spin.setValue(max(1, duration))
-        duration_spin.valueChanged.connect(self._speedup_inventory_changed)
-        set_table_cell_widget(table, row, 1, duration_spin)
-        set_table_cell_widget(
-            table, row, 2, self._speedup_inventory_unit_combo(unit)
-        )
-        quantity_spin = VisibleSpinBox(table)
-        quantity_spin.setRange(0, 99_999_999)
-        quantity_spin.setGroupSeparatorShown(True)
-        quantity_spin.setValue(max(0, quantity))
-        quantity_spin.valueChanged.connect(self._speedup_inventory_changed)
-        set_table_cell_widget(table, row, 3, quantity_spin)
-        if notify:
-            self._speedup_inventory_changed()
-        if focus:
-            table.scrollToBottom()
-            table.setCurrentCell(row, 1)
-            duration_spin.setFocus(Qt.OtherFocusReason)
-            duration_spin.selectAll()
-
-    def _speedup_inventory_from_table(self) -> list[SpeedupInventoryItem]:
-        if not hasattr(self, "speedup_inventory_table"):
-            return list(self.player_state.settings.speedup_inventory)
-        entries: list[SpeedupInventoryItem] = []
-        for row in range(self.speedup_inventory_table.rowCount()):
-            kind_combo = self.speedup_inventory_table.cellWidget(row, 0)
-            duration_spin = self.speedup_inventory_table.cellWidget(row, 1)
-            unit_combo = self.speedup_inventory_table.cellWidget(row, 2)
-            quantity_spin = self.speedup_inventory_table.cellWidget(row, 3)
-            if not (
-                isinstance(kind_combo, QComboBox)
-                and isinstance(duration_spin, QSpinBox)
-                and isinstance(unit_combo, QComboBox)
-                and isinstance(quantity_spin, QSpinBox)
-            ):
-                continue
-            entries.append(
-                SpeedupInventoryItem(
-                    kind=str(kind_combo.currentData()),
-                    duration_seconds=(
-                        duration_spin.value()
-                        * self._paid_unit_seconds(str(unit_combo.currentData()))
-                    ),
-                    quantity=quantity_spin.value(),
-                )
+    def _speedup_duration_label(self, duration_seconds: int) -> str:
+        if duration_seconds in SPEEDUP_DURATION_SECONDS:
+            unit = speedup_duration_group(duration_seconds)
+            divisor = {
+                "minutes": 60,
+                "hours": 60 * 60,
+                "days": 24 * 60 * 60,
+            }[unit]
+            return (
+                f"{duration_seconds // divisor:g}"
+                f"{self.t(f'paid.unit.{unit}')}"
             )
-        return list(normalize_speedup_inventory(entries))
+        value, unit = self._paid_duration_value(duration_seconds)
+        return f"{value:g}{self.t(f'paid.unit.{unit}')}"
 
-    def _replace_speedup_inventory_table(
+    def _speedup_group_total_text(self, kind: str, total: int) -> str:
+        return self.t(
+            "player.speedup_kind_total",
+            kind=self.t(f"paid.kind.{kind}"),
+            time=format_duration(total),
+        )
+
+    def _set_speedup_group_expanded(
+        self, kind: str, expanded: bool
+    ) -> None:
+        body = self.speedup_inventory_group_bodies.get(kind)
+        toggle = self.speedup_inventory_group_toggles.get(kind)
+        if body is not None:
+            body.setVisible(expanded)
+        if toggle is not None:
+            toggle.setArrowType(
+                Qt.ArrowType.DownArrow
+                if expanded
+                else Qt.ArrowType.RightArrow
+            )
+
+    def _rebuild_speedup_inventory_groups(
         self, entries: Iterable[SpeedupInventoryItem]
     ) -> None:
-        self.speedup_inventory_table.setRowCount(0)
         normalized = list(normalize_speedup_inventory(entries))
-        for entry in normalized:
-            self._add_speedup_inventory_row(entry, notify=False)
-        if not normalized:
-            self._add_speedup_inventory_row(notify=False)
-        self._speedup_inventory_changed()
+        quantities = {
+            (entry.kind, entry.duration_seconds): entry.quantity
+            for entry in normalized
+        }
+        while self.speedup_inventory_groups_layout.count():
+            item = self.speedup_inventory_groups_layout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+        self.speedup_inventory_inputs: dict[tuple[str, int], QSpinBox] = {}
+        self.speedup_inventory_group_toggles: dict[str, QToolButton] = {}
+        self.speedup_inventory_group_bodies: dict[str, QFrame] = {}
+        self.speedup_inventory_duration_sections: dict[
+            tuple[str, str], QGroupBox
+        ] = {}
+        for kind in SPEEDUP_KINDS:
+            card = QFrame(self.speedup_inventory_groups_host)
+            card.setObjectName("SpeedupInventoryKindCard")
+            card_layout = QVBoxLayout(card)
+            card_layout.setContentsMargins(0, 0, 0, 0)
+            card_layout.setSpacing(0)
+            toggle = QToolButton(card)
+            toggle.setObjectName("SpeedupInventoryKindToggle")
+            toggle.setCheckable(True)
+            toggle.setChecked(False)
+            toggle.setToolButtonStyle(Qt.ToolButtonStyle.ToolButtonTextBesideIcon)
+            toggle.setArrowType(Qt.ArrowType.RightArrow)
+            toggle.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+            card_layout.addWidget(toggle)
+            body = QFrame(card)
+            body.setObjectName("SpeedupInventoryKindBody")
+            grid = QGridLayout(body)
+            grid.setContentsMargins(12, 8, 12, 12)
+            grid.setHorizontalSpacing(8)
+            grid.setVerticalSpacing(0)
+            durations = sorted(
+                set(SPEEDUP_DURATION_SECONDS)
+                | {
+                    entry.duration_seconds
+                    for entry in normalized
+                    if entry.kind == kind
+                }
+            )
+            duration_groups = {
+                unit: [
+                    duration
+                    for duration in durations
+                    if speedup_duration_group(duration) == unit
+                ]
+                for unit, _fixed_durations in SPEEDUP_DURATION_GROUPS
+            }
+            for column, (unit, _fixed_durations) in enumerate(
+                SPEEDUP_DURATION_GROUPS
+            ):
+                section = QGroupBox(self.t(f"paid.unit.{unit}"), body)
+                section_grid = QGridLayout(section)
+                section_grid.setContentsMargins(8, 6, 8, 8)
+                section_grid.setHorizontalSpacing(6)
+                section_grid.setVerticalSpacing(5)
+                for row, duration_seconds in enumerate(duration_groups[unit]):
+                    section_grid.addWidget(
+                        QLabel(
+                            self._speedup_duration_label(duration_seconds),
+                            section,
+                        ),
+                        row,
+                        0,
+                    )
+                    quantity_spin = VisibleSpinBox(section)
+                    quantity_spin.setRange(0, 99_999_999)
+                    quantity_spin.setGroupSeparatorShown(True)
+                    quantity_spin.setValue(
+                        quantities.get((kind, duration_seconds), 0)
+                    )
+                    quantity_spin.valueChanged.connect(
+                        self._speedup_inventory_changed
+                    )
+                    section_grid.addWidget(quantity_spin, row, 1)
+                    self.speedup_inventory_inputs[(kind, duration_seconds)] = (
+                        quantity_spin
+                    )
+                section_grid.setColumnStretch(1, 1)
+                grid.addWidget(section, 0, column)
+                grid.setColumnStretch(column, 1)
+                self.speedup_inventory_duration_sections[(kind, unit)] = section
+            body.setVisible(False)
+            card_layout.addWidget(body)
+            toggle.toggled.connect(
+                lambda checked, selected_kind=kind: self._set_speedup_group_expanded(
+                    selected_kind, checked
+                )
+            )
+            self.speedup_inventory_group_toggles[kind] = toggle
+            self.speedup_inventory_group_bodies[kind] = body
+            self.speedup_inventory_groups_layout.addWidget(card)
+        self.speedup_inventory_groups_layout.addStretch(1)
+        self._update_speedup_inventory_summary()
 
-    def _remove_selected_speedup_inventory_rows(self) -> None:
-        rows = sorted(
-            {
-                index.row()
-                for index in self.speedup_inventory_table.selectedIndexes()
-            },
-            reverse=True,
-        )
-        for row in rows:
-            self.speedup_inventory_table.removeRow(row)
-        if self.speedup_inventory_table.rowCount() == 0:
-            self._add_speedup_inventory_row(notify=False)
+    def _speedup_inventory_from_table(self) -> list[SpeedupInventoryItem]:
+        if not hasattr(self, "speedup_inventory_inputs"):
+            return list(self.player_state.settings.speedup_inventory)
+        entries = [
+            SpeedupInventoryItem(kind, duration_seconds, spin.value())
+            for (kind, duration_seconds), spin in self.speedup_inventory_inputs.items()
+            if spin.value() > 0
+        ]
+        return list(normalize_speedup_inventory(entries))
+
+    def _replace_speedup_inventory_groups(
+        self, entries: Iterable[SpeedupInventoryItem]
+    ) -> None:
+        self._rebuild_speedup_inventory_groups(entries)
         self._speedup_inventory_changed()
 
     def _update_speedup_inventory_summary(self) -> None:
-        if not hasattr(self, "speedup_inventory_summary_label"):
+        if not hasattr(self, "speedup_inventory_group_toggles"):
             return
         entries = self._speedup_inventory_from_table()
-        total = sum(item.duration_seconds * item.quantity for item in entries)
-        self.speedup_inventory_summary_label.setText(
-            self.t("player.speedup_total", time=format_duration(total))
-        )
+        by_kind = {
+            kind: sum(
+                item.duration_seconds * item.quantity
+                for item in entries
+                if item.kind == kind
+            )
+            for kind in SPEEDUP_KINDS
+        }
+        for kind, toggle in self.speedup_inventory_group_toggles.items():
+            toggle.setText(self._speedup_group_total_text(kind, by_kind[kind]))
 
     def _speedup_inventory_changed(self, *_args: object) -> None:
-        if not hasattr(self, "speedup_inventory_table"):
+        if not hasattr(self, "speedup_inventory_inputs"):
             return
         self.player_state.settings.speedup_inventory = (
             self._speedup_inventory_from_table()
@@ -5693,7 +5708,7 @@ class MainWindow(QMainWindow):
             return
         self.player_state.settings.speedup_inventory = list(updated)
         self.player_state.settings.speedup_seconds = 0
-        self._replace_speedup_inventory_table(updated)
+        self._replace_speedup_inventory_groups(updated)
         self.player_repository.save(self.player_state)
         self._player_settings_dirty = False
         self._update_player_save_button()

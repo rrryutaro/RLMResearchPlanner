@@ -1,18 +1,18 @@
-import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.4-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.4-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.4-b1";
-import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.4-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.4-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.4-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.4-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.4-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.4-b1";
-import { SPEEDUP_KINDS, addPaidItemsToInventory, deleteSpeedupInventoryEntry as deleteOwnedSpeedupEntry, normalizeSpeedupInventory, recommendPaidOffers, saveSpeedupInventoryEntry as saveOwnedSpeedupEntry, speedupCoverage } from "./speedup-inventory.js?v=0.1.4-b1";
-import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.4-b1";
+import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.5-b2";
+import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.5-b2";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.5-b2";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.5-b2";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.5-b2";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.5-b2";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.5-b2";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.5-b2";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.5-b2";
+import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.5-b2";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.5-b2";
 
-const RELEASE_VERSION = "0.1.4";
-const DEVELOPMENT_BUILD = 1;
-const ASSET_VERSION = "0.1.4-b1";
+const RELEASE_VERSION = "0.1.5";
+const DEVELOPMENT_BUILD = 2;
+const ASSET_VERSION = "0.1.5-b2";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const CARD_WIDTH = 250;
@@ -53,7 +53,6 @@ let paidDraft = emptyPaidOffer();
 let paidEditingId = "";
 let paidView = "input";
 let paidItemEditingIndex = -1;
-let speedupEditingIndex = -1;
 let talentAutoFollowPending = false;
 const categoryLayouts = new Map();
 
@@ -166,12 +165,14 @@ function renderCommonHelp() {
   const plan = byId("help-plan-body");
   const talent = byId("help-talent-body");
   const construction = byId("help-construction-body");
+  const player = byId("help-player-body");
   const files = byId("help-files-body");
   const license = byId("help-license-body");
   if (required) required.innerHTML = messages["help.required_setup.body_v003"] || "";
   if (plan) plan.innerHTML = messages["help.plan.body"] || "";
   if (talent) talent.innerHTML = messages["help.talent.body"] || "";
   if (construction) construction.innerHTML = messages["help.castle.body"] || "";
+  if (player) player.innerHTML = messages["help.player.body_v003"] || "";
   if (files) files.innerHTML = messages["help.files.body"] || "";
   if (license) license.innerHTML = messages["help.license.body"] || "";
 }
@@ -792,7 +793,7 @@ function addPaidOfferToInventory(offer) {
   state.settings.speedupInventory = updated;
   state.settings.speedupSeconds = 0;
   saveNow();
-  closeSpeedupInventoryEditor();
+  renderSpeedupInventory();
   refreshCurrentPlan();
   renderCastle();
   toast(t("paid.added_to_inventory", "課金項目の時短を所持数へ追加しました。"));
@@ -1584,10 +1585,6 @@ function bindSettings() {
     input.addEventListener("input", () => { state.settings.resources[key] = Math.max(0, Math.trunc(Number(input.value) || 0)); scheduleSave(); refreshCurrentPlan(); });
     label.append(input); resourceInputs.append(label);
   }
-  byId("speedup-inventory-add")?.addEventListener("click", () => openSpeedupInventoryEditor());
-  byId("speedup-inventory-save")?.addEventListener("click", saveSpeedupInventoryEntry);
-  byId("speedup-inventory-cancel")?.addEventListener("click", closeSpeedupInventoryEditor);
-  byId("speedup-inventory-delete")?.addEventListener("click", deleteSpeedupInventoryEntry);
   byId("bulk-category-select")?.addEventListener("change", (event) => { selectedBulkCategoryId = event.target.value; renderBulkLevels(); });
   byId("bulk-level-search")?.addEventListener("input", renderBulkLevels);
   byId("language-select").addEventListener("change", (event) => activateLanguage(event.target.value));
@@ -1643,103 +1640,93 @@ function speedupInventoryChanged() {
   if (planMode === "tasks") renderTasks();
 }
 
-function speedupInventoryEntryLabel(entry) {
-  const [durationValue, durationUnit] = paidDurationParts(entry.durationSeconds);
-  return t(
-    "player.speedup_entry",
-    "{duration}{unit} × {quantity}個",
-    {
-      duration: durationValue.toLocaleString(state.locale),
-      unit: t(`paid.unit.${durationUnit}`, durationUnit),
-      quantity: entry.quantity.toLocaleString(state.locale),
-    },
+function speedupDurationLabel(durationSeconds) {
+  if (SPEEDUP_DURATION_SECONDS.includes(durationSeconds)) {
+    const unit = speedupDurationGroup(durationSeconds);
+    const divisor = { minutes: 60, hours: 60 * 60, days: 24 * 60 * 60 }[unit];
+    return `${(durationSeconds / divisor).toLocaleString(state.locale)}${t(`paid.unit.${unit}`, unit)}`;
+  }
+  const [durationValue, durationUnit] = paidDurationParts(durationSeconds);
+  return `${durationValue.toLocaleString(state.locale)}${t(`paid.unit.${durationUnit}`, durationUnit)}`;
+}
+
+function speedupInventoryFromInputs() {
+  return normalizeSpeedupInventory(
+    [...document.querySelectorAll("[data-speedup-kind][data-speedup-duration]")]
+      .map((input) => ({
+        kind: input.dataset.speedupKind,
+        durationSeconds: Number(input.dataset.speedupDuration),
+        quantity: Math.max(0, Math.trunc(Number(input.value) || 0)),
+      })),
   );
 }
 
-function openSpeedupInventoryEditor(index = -1) {
-  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
-  speedupEditingIndex = Number.isInteger(index) && index >= 0 && index < entries.length ? index : -1;
-  const entry = speedupEditingIndex >= 0
-    ? entries[speedupEditingIndex]
-    : { kind: "general", durationSeconds: 3600, quantity: 1 };
-  const kind = byId("speedup-inventory-kind");
-  kind.replaceChildren(...SPEEDUP_KINDS.map((key) => {
-    const option = create("option", "", paidKindLabel(key));
-    option.value = key;
-    return option;
-  }));
-  kind.value = entry.kind;
-  const [durationValue, durationUnit] = paidDurationParts(entry.durationSeconds);
-  byId("speedup-inventory-duration").value = String(Math.max(1, durationValue));
-  const unit = byId("speedup-inventory-unit");
-  unit.replaceChildren(...["seconds", "minutes", "hours", "days"].map((key) => {
-    const option = create("option", "", t(`paid.unit.${key}`, key));
-    option.value = key;
-    return option;
-  }));
-  unit.value = durationUnit;
-  byId("speedup-inventory-quantity").value = String(Math.max(1, entry.quantity));
-  byId("speedup-inventory-editor-title").textContent = speedupEditingIndex >= 0
-    ? t("player.speedup_edit", "スピードアップを編集")
-    : t("player.speedup_new", "スピードアップを追加");
-  byId("speedup-inventory-delete").hidden = speedupEditingIndex < 0;
-  byId("speedup-inventory-editor").hidden = false;
-  renderSpeedupInventory();
-}
-
-function closeSpeedupInventoryEditor() {
-  speedupEditingIndex = -1;
-  byId("speedup-inventory-editor").hidden = true;
-  renderSpeedupInventory();
-}
-
-function saveSpeedupInventoryEntry() {
-  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
-  const entry = {
-    kind: byId("speedup-inventory-kind").value,
-    durationSeconds: Math.max(1, Math.trunc(Number(byId("speedup-inventory-duration").value) || 1))
-      * paidUnitSeconds(byId("speedup-inventory-unit").value),
-    quantity: Math.max(1, Math.trunc(Number(byId("speedup-inventory-quantity").value) || 1)),
-  };
-  state.settings.speedupInventory = saveOwnedSpeedupEntry(entries, speedupEditingIndex, entry);
-  closeSpeedupInventoryEditor();
-  speedupInventoryChanged();
-}
-
-function deleteSpeedupInventoryEntry() {
-  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
-  if (speedupEditingIndex < 0 || speedupEditingIndex >= entries.length) return;
-  state.settings.speedupInventory = deleteOwnedSpeedupEntry(entries, speedupEditingIndex);
-  closeSpeedupInventoryEditor();
-  speedupInventoryChanged();
-}
-
 function renderSpeedupInventory() {
-  const list = byId("speedup-inventory-list");
-  if (!list) return;
+  const groups = byId("speedup-inventory-groups");
+  if (!groups) return;
   const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
   state.settings.speedupInventory = entries;
-  list.replaceChildren(...entries.map((entry, index) => {
-    const row = create("button", "speedup-inventory-row");
-    row.type = "button";
-    row.classList.toggle("is-selected", speedupEditingIndex === index && !byId("speedup-inventory-editor").hidden);
-    row.setAttribute("aria-pressed", String(speedupEditingIndex === index && !byId("speedup-inventory-editor").hidden));
-    const main = create("span", "speedup-inventory-row-main");
-    main.append(create("strong", "", paidKindLabel(entry.kind)), create("span", "", speedupInventoryEntryLabel(entry)));
-    row.append(main, create("span", "speedup-inventory-row-total", formatDuration(entry.durationSeconds * entry.quantity)));
-    row.addEventListener("click", () => openSpeedupInventoryEditor(index));
-    return row;
+  const quantities = new Map(entries.map((entry) => [
+    `${entry.kind}\u0000${entry.durationSeconds}`,
+    entry.quantity,
+  ]));
+  groups.replaceChildren(...SPEEDUP_KINDS.map((kind) => {
+    const details = create("details", "speedup-inventory-kind");
+    const summary = create("summary");
+    const summaryText = create("span", "speedup-inventory-kind-summary");
+    const kindTotal = create("span", "", formatDuration(0));
+    kindTotal.dataset.speedupKindTotal = kind;
+    summaryText.append(create("strong", "", paidKindLabel(kind)), kindTotal);
+    summary.append(summaryText);
+    const durations = [...new Set([
+      ...SPEEDUP_DURATION_SECONDS,
+      ...entries.filter((entry) => entry.kind === kind).map((entry) => entry.durationSeconds),
+    ])].sort((left, right) => left - right);
+    const sections = create("div", "speedup-inventory-duration-sections");
+    sections.append(...SPEEDUP_DURATION_GROUPS.map(([unit]) => {
+      const section = create("section", "speedup-inventory-duration-section");
+      section.append(create("h4", "", t(`paid.unit.${unit}`, unit)));
+      const durationGrid = create("div", "speedup-inventory-duration-grid");
+      durationGrid.append(...durations
+        .filter((durationSeconds) => speedupDurationGroup(durationSeconds) === unit)
+        .map((durationSeconds) => {
+          const field = create("div", "speedup-inventory-duration");
+          const label = speedupDurationLabel(durationSeconds);
+          const input = create("input");
+          input.type = "number";
+          input.inputMode = "numeric";
+          input.min = "0";
+          input.max = "99999999";
+          input.step = "1";
+          input.setAttribute("aria-label", `${paidKindLabel(kind)} ${label}`);
+          input.dataset.speedupKind = kind;
+          input.dataset.speedupDuration = String(durationSeconds);
+          input.value = String(quantities.get(`${kind}\u0000${durationSeconds}`) || 0);
+          input.addEventListener("input", () => {
+            state.settings.speedupInventory = speedupInventoryFromInputs();
+            speedupInventoryChanged();
+          });
+          field.append(create("span", "", label), numberStepper(input));
+          return field;
+        }));
+      section.append(durationGrid);
+      return section;
+    }));
+    details.append(summary, sections);
+    return details;
   }));
-  byId("speedup-inventory-empty").hidden = entries.length > 0;
   updateSpeedupInventorySummary();
 }
 
 function updateSpeedupInventorySummary() {
-  const summary = byId("speedup-inventory-summary");
-  if (!summary) return;
-  const total = normalizeSpeedupInventory(state.settings.speedupInventory)
-    .reduce((value, item) => value + item.durationSeconds * item.quantity, 0);
-  summary.textContent = t("player.speedup_total", "全種類の合計: {time}", { time: formatDuration(total) });
+  const entries = normalizeSpeedupInventory(state.settings.speedupInventory);
+  for (const kind of SPEEDUP_KINDS) {
+    const kindTotal = entries
+      .filter((entry) => entry.kind === kind)
+      .reduce((value, item) => value + item.durationSeconds * item.quantity, 0);
+    const label = document.querySelector(`[data-speedup-kind-total="${kind}"]`);
+    if (label) label.textContent = formatDuration(kindTotal);
+  }
 }
 
 function updateGuildHelpLimit() {

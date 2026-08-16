@@ -6,6 +6,7 @@ from rlm_research_planner.domain.models import PlayerState
 from rlm_research_planner.repositories.catalog_repository import (
     JsonResearchCatalogRepository,
 )
+from rlm_research_planner.services.calculation import apply_research_speed
 from rlm_research_planner.services.catalog_planning import CatalogResearchPlanner
 
 
@@ -659,21 +660,132 @@ def test_wonder_infantry_second_tier_uses_forward_visual_dependency() -> None:
     ) not in visible_pairs
 
 
-def test_guild_duel_public_tree_keeps_structure_without_claiming_numeric_data() -> None:
+def test_guild_duel_tree_keeps_structure_and_provisional_level_one_data() -> None:
     categories = JsonResearchCatalogRepository(_catalog_path()).load_all()
     guild_duel = next(item for item in categories if item.category_id == "guild_duel")
     assert len(guild_duel.nodes) == 26
-    assert len(guild_duel.edges) == 44
+    assert len(guild_duel.edges) == 32
     assert (
         guild_duel.verification_status
-        == "structure_only_numeric_level_data_unavailable"
+        == "structure_verified_numeric_level_data_partial"
     )
     gathering = guild_duel.node_by_id()["guild_duel_gathering_incentive"]
     reward = guild_duel.node_by_id()["guild_duel_reward_incentive_i"]
-    assert gathering.localized_name("ja-JP") == "採取インセンティブ"
+    assert gathering.localized_name("ja-JP") == "採取奨励"
     assert gathering.max_level == 10
     assert gathering.effect_at(10) == "+50%"
+    gathering_level_two = gathering.level_data(2)
+    assert gathering_level_two is not None
+    assert gathering_level_two.base_time_seconds == 35_651
+    assert gathering_level_two.costs["special"] == 20
+    research = guild_duel.node_by_id()["guild_duel_research_incentive"]
+    assert guild_duel.localized_title("ja-JP") == "ギルドデュエル"
+    assert research.localized_name("ja-JP") == "研究奨励"
+    research_level_one = research.level_data(1)
+    assert research_level_one is not None
+    assert research_level_one.base_time_seconds == 7_745
+    assert apply_research_speed(7_745, 255.95) == 2_176
+    assert research_level_one.technolabe_count == 1
+    assert research_level_one.power == 2_306
+    assert research_level_one.costs == {
+        "food": 85_100,
+        "stone": 42_500,
+        "timber": 42_500,
+        "ore": 42_500,
+        "gold": 42_500,
+        "special": 10,
+    }
     assert reward.max_level == 1
     assert reward.effect_at(1) == "Unlocked"
+    assert reward.localized_name("ja-JP") == "報酬奨励 I"
+    reward_level_one = reward.level_data(1)
+    assert reward_level_one is not None
+    assert reward_level_one.base_time_seconds is None
+    assert reward_level_one.power == 33_820
+    assert reward_level_one.costs["food"] == 6_660_000
+    assert reward_level_one.costs["special"] == 150
+    assert {
+        requirement.research_id
+        for requirement in reward_level_one.requirements
+    } == {
+        "guild_duel_hero_incentive",
+        "guild_duel_construction_incentive",
+        "guild_duel_research_incentive",
+        "guild_duel_training_incentive",
+    }
     army_attack = guild_duel.node_by_id()["guild_duel_army_atk_iii"]
     assert army_attack.effect_label == "Army ATK"
+
+    speed_up = guild_duel.node_by_id()["guild_duel_speed_up_incentive"]
+    speed_up_level_one = speed_up.level_data(1)
+    assert speed_up.localized_name("ja-JP") == "スピードアップ奨励"
+    assert speed_up_level_one is not None
+    assert speed_up_level_one.base_time_seconds == 6_372
+    assert apply_research_speed(6_372, 278.85) == 1_682
+    assert speed_up_level_one.costs == {
+        "food": 172_000,
+        "stone": 43_200,
+        "timber": 86_400,
+        "ore": 72_000,
+        "gold": 72_000,
+        "special": 20,
+    }
+
+    hunting = guild_duel.node_by_id()["guild_duel_hunting_incentive"]
+    hunting_level_one = hunting.level_data(1)
+    assert hunting.localized_name("ja-JP") == "魔獣討伐奨励"
+    assert hunting_level_one is not None
+    assert hunting_level_one.costs["stone"] == 72_000
+    assert hunting_level_one.costs["ore"] == 43_200
+
+    reward_two = guild_duel.node_by_id()["guild_duel_reward_incentive_ii"]
+    reward_two_level_one = reward_two.level_data(1)
+    assert reward_two.localized_name("ja-JP") == "報酬奨励 II"
+    assert reward_two_level_one is not None
+    assert reward_two_level_one.base_time_seconds == 669_731
+    assert apply_research_speed(669_731, 278.85) == 176_780
+    assert reward_two_level_one.power == 54_957
+    assert reward_two_level_one.costs == {
+        "food": 12_000_000,
+        "stone": 5_000_000,
+        "timber": 6_000_000,
+        "ore": 3_000_000,
+        "gold": 5_000_000,
+        "special": 550,
+    }
+
+    level_one_special = {
+        node.id: node.level_data(1).costs.get("special", 0)
+        for node in guild_duel.nodes
+        if node.level_data(1) is not None
+    }
+    assert sum(
+        level_one_special[research_id]
+        for research_id in (
+            "guild_duel_gathering_incentive",
+            "guild_duel_hero_incentive",
+            "guild_duel_construction_incentive",
+            "guild_duel_research_incentive",
+            "guild_duel_training_incentive",
+            "guild_duel_reward_incentive_i",
+        )
+    ) == 200
+    assert level_one_special["guild_duel_army_colosseum_def_i"] == 50
+    assert level_one_special["guild_duel_army_colosseum_hp_i"] == 50
+    late_edges = {
+        (edge.prerequisite_id, edge.research_id) for edge in guild_duel.edges
+    }
+    assert (
+        "guild_duel_reward_incentive_ii",
+        "guild_duel_army_atk_ii",
+    ) in late_edges
+    assert (
+        "guild_duel_army_atk_ii",
+        "guild_duel_army_def_ii",
+    ) in late_edges
+    assert (
+        "guild_duel_reward_incentive_ii",
+        "guild_duel_army_def_ii",
+    ) not in late_edges
+    assert gathering.level_data(1) is not None
+    assert gathering.level_data(1).costs_verified is False

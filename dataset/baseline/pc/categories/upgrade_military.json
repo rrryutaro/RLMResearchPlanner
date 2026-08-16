@@ -6336,7 +6336,7 @@
   "platform": "pc",
   "schema_version": 1,
   "scope": "all_names_layout_only",
-  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "source_catalog_sha256": "9860f293870216de0eb99e13f35a12370f60e1c64e79e4ac8eff66f67efebfed",
   "source_edges": [
     [
       "upgrade_military_ancient_drake_rider_subsidy",

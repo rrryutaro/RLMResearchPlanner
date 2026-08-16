@@ -119,6 +119,10 @@ redistributed.
 - BigSoneca Guild Duel gameplay (tree structure, maximum levels, and effects
   only; no per-level time or cost values were adopted):
   https://www.youtube.com/watch?v=QKP5dGy1IHs
+- ねおブログ Guild Duel research information (aggregate Duel Tome totals up
+  to Reward Incentive I and from there to Reward Incentive II; factual
+  cross-check only):
+  https://neovis99.com/lords-mobile-capture-part151/
 - Games Guide Info building overview:
   https://www.gamesguideinfo.com/lords-mobile/overview/buildings
 - Official IGG building/material level table:

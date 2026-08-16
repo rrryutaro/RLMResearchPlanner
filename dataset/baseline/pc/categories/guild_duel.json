@@ -68,16 +68,21 @@
         "guild_duel_reward_incentive_ii"
       ],
       "research_ids": [
+        "guild_duel_army_atk_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_atk_ii"
+      ],
+      "research_ids": [
         "guild_duel_army_def_ii",
-        "guild_duel_army_atk_ii",
         "guild_duel_army_hp_ii"
       ]
     },
     {
       "prerequisite_ids": [
-        "guild_duel_army_def_ii",
-        "guild_duel_army_atk_ii",
-        "guild_duel_army_hp_ii"
+        "guild_duel_army_atk_ii"
       ],
       "research_ids": [
         "guild_duel_familiar_incentive"
@@ -88,28 +93,38 @@
         "guild_duel_familiar_incentive"
       ],
       "research_ids": [
+        "guild_duel_army_colosseum_atk_ii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_colosseum_atk_ii"
+      ],
+      "research_ids": [
         "guild_duel_army_colosseum_def_ii",
-        "guild_duel_army_colosseum_atk_ii",
         "guild_duel_army_colosseum_hp_ii"
       ]
     },
     {
       "prerequisite_ids": [
-        "guild_duel_army_colosseum_def_ii",
-        "guild_duel_army_colosseum_atk_ii",
-        "guild_duel_army_colosseum_hp_ii"
+        "guild_duel_army_colosseum_atk_ii"
+      ],
+      "research_ids": [
+        "guild_duel_army_atk_iii"
+      ]
+    },
+    {
+      "prerequisite_ids": [
+        "guild_duel_army_atk_iii"
       ],
       "research_ids": [
         "guild_duel_army_def_iii",
-        "guild_duel_army_atk_iii",
         "guild_duel_army_hp_iii"
       ]
     },
     {
       "prerequisite_ids": [
-        "guild_duel_army_def_iii",
-        "guild_duel_army_atk_iii",
-        "guild_duel_army_hp_iii"
+        "guild_duel_army_atk_iii"
       ],
       "research_ids": [
         "guild_duel_master_incentive",
@@ -120,7 +135,23 @@
   "display_connections": [
     [
       "guild_duel_army_atk_ii",
+      "guild_duel_army_def_ii"
+    ],
+    [
+      "guild_duel_army_atk_ii",
+      "guild_duel_army_hp_ii"
+    ],
+    [
+      "guild_duel_army_atk_ii",
       "guild_duel_familiar_incentive"
+    ],
+    [
+      "guild_duel_army_atk_iii",
+      "guild_duel_army_def_iii"
+    ],
+    [
+      "guild_duel_army_atk_iii",
+      "guild_duel_army_hp_iii"
     ],
     [
       "guild_duel_army_atk_iii",
@@ -140,67 +171,19 @@
     ],
     [
       "guild_duel_army_colosseum_atk_ii",
-      "guild_duel_army_def_iii"
+      "guild_duel_army_colosseum_def_ii"
     ],
     [
       "guild_duel_army_colosseum_atk_ii",
-      "guild_duel_army_hp_iii"
+      "guild_duel_army_colosseum_hp_ii"
     ],
     [
       "guild_duel_army_colosseum_def_i",
       "guild_duel_artifact_incentive"
     ],
     [
-      "guild_duel_army_colosseum_def_ii",
-      "guild_duel_army_atk_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_def_ii",
-      "guild_duel_army_def_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_def_ii",
-      "guild_duel_army_hp_iii"
-    ],
-    [
       "guild_duel_army_colosseum_hp_i",
       "guild_duel_artifact_incentive"
-    ],
-    [
-      "guild_duel_army_colosseum_hp_ii",
-      "guild_duel_army_atk_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_hp_ii",
-      "guild_duel_army_def_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_hp_ii",
-      "guild_duel_army_hp_iii"
-    ],
-    [
-      "guild_duel_army_def_ii",
-      "guild_duel_familiar_incentive"
-    ],
-    [
-      "guild_duel_army_def_iii",
-      "guild_duel_crafting_incentive"
-    ],
-    [
-      "guild_duel_army_def_iii",
-      "guild_duel_master_incentive"
-    ],
-    [
-      "guild_duel_army_hp_ii",
-      "guild_duel_familiar_incentive"
-    ],
-    [
-      "guild_duel_army_hp_iii",
-      "guild_duel_crafting_incentive"
-    ],
-    [
-      "guild_duel_army_hp_iii",
-      "guild_duel_master_incentive"
     ],
     [
       "guild_duel_artifact_incentive",
@@ -221,14 +204,6 @@
     [
       "guild_duel_familiar_incentive",
       "guild_duel_army_colosseum_atk_ii"
-    ],
-    [
-      "guild_duel_familiar_incentive",
-      "guild_duel_army_colosseum_def_ii"
-    ],
-    [
-      "guild_duel_familiar_incentive",
-      "guild_duel_army_colosseum_hp_ii"
     ],
     [
       "guild_duel_gathering_incentive",
@@ -275,14 +250,6 @@
       "guild_duel_army_atk_ii"
     ],
     [
-      "guild_duel_reward_incentive_ii",
-      "guild_duel_army_def_ii"
-    ],
-    [
-      "guild_duel_reward_incentive_ii",
-      "guild_duel_army_hp_ii"
-    ],
-    [
       "guild_duel_speed_up_incentive",
       "guild_duel_reward_incentive_ii"
     ],
@@ -313,11 +280,50 @@
         "9": "+45%"
       },
       "id": "guild_duel_gathering_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 7745,
+          "buildings": {},
+          "costs": {
+            "food": 78600,
+            "gold": 32600,
+            "ore": 19600,
+            "special": 10,
+            "stone": 32600,
+            "timber": 39100
+          },
+          "costs_verified": false,
+          "level": 1,
+          "power": 2306,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_sibling_level_inference"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 275000,
+            "gold": 114000,
+            "ore": 68700,
+            "special": 20,
+            "stone": 114000,
+            "timber": 137000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Gathering Incentive",
-        "ja-JP": "採取インセンティブ"
+        "ja-JP": "採取奨励"
       },
       "row": 0
     },
@@ -337,11 +343,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_hero_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 7745,
+          "buildings": {},
+          "costs": {
+            "food": 102000,
+            "gold": 42600,
+            "ore": 42600,
+            "special": 10,
+            "stone": 25500,
+            "timber": 50900
+          },
+          "costs_verified": false,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_gathering_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_sibling_level_inference"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 357000,
+            "gold": 149000,
+            "ore": 149000,
+            "special": 20,
+            "stone": 89400,
+            "timber": 178000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Hero Incentive",
-        "ja-JP": "ヒーローインセンティブ"
+        "ja-JP": "ヒーロー奨励"
       },
       "row": 1
     },
@@ -361,11 +411,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_construction_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 7745,
+          "buildings": {},
+          "costs": {
+            "food": 102000,
+            "gold": 42600,
+            "ore": 25500,
+            "special": 10,
+            "stone": 42600,
+            "timber": 50900
+          },
+          "costs_verified": false,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_gathering_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_sibling_level_inference"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 357000,
+            "gold": 149000,
+            "ore": 89400,
+            "special": 20,
+            "stone": 149000,
+            "timber": 178000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Construction Incentive",
-        "ja-JP": "建設インセンティブ"
+        "ja-JP": "建設奨励"
       },
       "row": 1
     },
@@ -385,11 +479,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_research_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 7745,
+          "buildings": {},
+          "costs": {
+            "food": 85100,
+            "gold": 42500,
+            "ore": 42500,
+            "special": 10,
+            "stone": 42500,
+            "timber": 42500
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_gathering_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 298000,
+            "gold": 149000,
+            "ore": 149000,
+            "special": 20,
+            "stone": 149000,
+            "timber": 149000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Research Incentive",
-        "ja-JP": "研究インセンティブ"
+        "ja-JP": "研究奨励"
       },
       "row": 1
     },
@@ -409,11 +547,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_training_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 7745,
+          "buildings": {},
+          "costs": {
+            "food": 85100,
+            "gold": 42500,
+            "ore": 42500,
+            "special": 10,
+            "stone": 42500,
+            "timber": 42500
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_gathering_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 298000,
+            "gold": 149000,
+            "ore": 149000,
+            "special": 20,
+            "stone": 149000,
+            "timber": 149000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Training Incentive",
-        "ja-JP": "訓練インセンティブ"
+        "ja-JP": "訓練奨励"
       },
       "row": 1
     },
@@ -424,11 +606,48 @@
         "1": "Unlocked"
       },
       "id": "guild_duel_reward_incentive_i",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 6660000,
+            "gold": 3330000,
+            "ore": 3330000,
+            "special": 150,
+            "stone": 3330000,
+            "timber": 3330000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 33820,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_hero_incentive"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_construction_incentive"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_research_incentive"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_training_incentive"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 1,
       "names": {
         "en-US": "Reward Incentive I",
-        "ja-JP": "報酬インセンティブ I"
+        "ja-JP": "報酬奨励 I"
       },
       "row": 2
     },
@@ -448,11 +667,36 @@
         "9": "+45%"
       },
       "id": "guild_duel_army_colosseum_def_i",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 171250,
+          "buildings": {},
+          "costs": {
+            "food": 133000,
+            "gold": 55600,
+            "ore": 44500,
+            "special": 50,
+            "stone": 44500,
+            "timber": 66800
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 15373,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_reward_incentive_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army Colosseum DEF I",
-        "ja-JP": "軍隊コロシアム防御力 I"
+        "ja-JP": "コロシアム軍隊防御力 I"
       },
       "row": 3
     },
@@ -472,11 +716,50 @@
         "9": "+45%"
       },
       "id": "guild_duel_army_colosseum_atk_i",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "special": 20
+          },
+          "costs_verified": false,
+          "level": 1,
+          "power": null,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_reward_incentive_i"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_public_total_inference"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 461770,
+          "buildings": {},
+          "costs": {
+            "food": 623000,
+            "gold": 194000,
+            "ore": 116000,
+            "special": 120,
+            "stone": 194000,
+            "timber": 311000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 38431,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army Colosseum ATK I",
-        "ja-JP": "軍隊コロシアム攻撃力 I"
+        "ja-JP": "コロシアム軍隊攻撃力 I"
       },
       "row": 3
     },
@@ -496,11 +779,36 @@
         "9": "+45%"
       },
       "id": "guild_duel_army_colosseum_hp_i",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 171250,
+          "buildings": {},
+          "costs": {
+            "food": 133000,
+            "gold": 55600,
+            "ore": 44500,
+            "special": 50,
+            "stone": 33400,
+            "timber": 55600
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 15373,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_reward_incentive_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army Colosseum HP I",
-        "ja-JP": "軍隊コロシアムHP I"
+        "ja-JP": "コロシアム軍隊HP I"
       },
       "row": 3
     },
@@ -520,11 +828,63 @@
         "9": "+45%"
       },
       "id": "guild_duel_artifact_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 6372,
+          "buildings": {},
+          "costs": {
+            "food": 144000,
+            "gold": 72000,
+            "ore": 57600,
+            "special": 20,
+            "stone": 72000,
+            "timber": 86400
+          },
+          "costs_verified": false,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_colosseum_def_i"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_colosseum_atk_i"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_colosseum_hp_i"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_sibling_level_inference"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 504000,
+            "gold": 252000,
+            "ore": 201000,
+            "special": 40,
+            "stone": 252000,
+            "timber": 302000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Artifact Incentive",
-        "ja-JP": "アーティファクトインセンティブ"
+        "ja-JP": "アーティファクト奨励"
       },
       "row": 4
     },
@@ -544,11 +904,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_speed_up_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 6372,
+          "buildings": {},
+          "costs": {
+            "food": 172000,
+            "gold": 72000,
+            "ore": 72000,
+            "special": 20,
+            "stone": 43200,
+            "timber": 86400
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_artifact_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 605000,
+            "gold": 252000,
+            "ore": 252000,
+            "special": 40,
+            "stone": 151000,
+            "timber": 302000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Speed-Up Incentive",
-        "ja-JP": "加速インセンティブ"
+        "ja-JP": "スピードアップ奨励"
       },
       "row": 5
     },
@@ -568,11 +972,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_stage_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 6372,
+          "buildings": {},
+          "costs": {
+            "food": 115000,
+            "gold": 72000,
+            "ore": 115000,
+            "special": 20,
+            "stone": 72000,
+            "timber": 43200
+          },
+          "costs_verified": false,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_artifact_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_sibling_level_inference"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 403000,
+            "gold": 252000,
+            "ore": 403000,
+            "special": 40,
+            "stone": 252000,
+            "timber": 151000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Stage Incentive",
-        "ja-JP": "冒険インセンティブ"
+        "ja-JP": "冒険奨励"
       },
       "row": 5
     },
@@ -592,11 +1040,55 @@
         "9": "+45%"
       },
       "id": "guild_duel_hunting_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 6372,
+          "buildings": {},
+          "costs": {
+            "food": 172000,
+            "gold": 72000,
+            "ore": 43200,
+            "special": 20,
+            "stone": 72000,
+            "timber": 86400
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_artifact_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        },
+        {
+          "academy_level": null,
+          "base_time_seconds": 35651,
+          "buildings": {},
+          "costs": {
+            "food": 605000,
+            "gold": 252000,
+            "ore": 151000,
+            "special": 40,
+            "stone": 252000,
+            "timber": 302000
+          },
+          "costs_verified": true,
+          "level": 2,
+          "power": 4612,
+          "requirements": [],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Hunting Incentive",
-        "ja-JP": "討伐インセンティブ"
+        "ja-JP": "魔獣討伐奨励"
       },
       "row": 5
     },
@@ -607,11 +1099,44 @@
         "1": "Unlocked"
       },
       "id": "guild_duel_reward_incentive_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": 669731,
+          "buildings": {},
+          "costs": {
+            "food": 12000000,
+            "gold": 5000000,
+            "ore": 3000000,
+            "special": 550,
+            "stone": 5000000,
+            "timber": 6000000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 54957,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_speed_up_incentive"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_stage_incentive"
+            },
+            {
+              "level": 1,
+              "research_id": "guild_duel_hunting_incentive"
+            }
+          ],
+          "technolabe_count": 1,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 1,
       "names": {
         "en-US": "Reward Incentive II",
-        "ja-JP": "報酬インセンティブ II"
+        "ja-JP": "報酬奨励 II"
       },
       "row": 6
     },
@@ -631,7 +1156,32 @@
         "9": "+9%"
       },
       "id": "guild_duel_army_def_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 220000,
+            "gold": 91700,
+            "ore": 91700,
+            "special": 110,
+            "stone": 91700,
+            "timber": 91700
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 30745,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army DEF II",
@@ -655,7 +1205,32 @@
         "9": "+9%"
       },
       "id": "guild_duel_army_atk_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 293000,
+            "gold": 91700,
+            "ore": 91700,
+            "special": 130,
+            "stone": 91700,
+            "timber": 91700
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 38432,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_reward_incentive_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army ATK II",
@@ -679,7 +1254,32 @@
         "9": "+9%"
       },
       "id": "guild_duel_army_hp_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 220000,
+            "gold": 91700,
+            "ore": 91700,
+            "special": 110,
+            "stone": 91700,
+            "timber": 91700
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 30745,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army HP II",
@@ -703,11 +1303,36 @@
         "9": "+45%"
       },
       "id": "guild_duel_familiar_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 366000,
+            "gold": 114000,
+            "ore": 91700,
+            "special": 20,
+            "stone": 114000,
+            "timber": 68700
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Familiar Incentive",
-        "ja-JP": "召喚獣インセンティブ"
+        "ja-JP": "召喚獣奨励"
       },
       "row": 8
     },
@@ -727,11 +1352,36 @@
         "9": "+45%"
       },
       "id": "guild_duel_army_colosseum_def_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 338000,
+            "gold": 140000,
+            "ore": 112000,
+            "special": 60,
+            "stone": 112000,
+            "timber": 169000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 19216,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_colosseum_atk_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army Colosseum DEF II",
-        "ja-JP": "軍隊コロシアム防御力 II"
+        "ja-JP": "コロシアム軍隊防御力 II"
       },
       "row": 9
     },
@@ -751,11 +1401,36 @@
         "9": "+45%"
       },
       "id": "guild_duel_army_colosseum_atk_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 450000,
+            "gold": 140000,
+            "ore": 84500,
+            "special": 70,
+            "stone": 140000,
+            "timber": 225000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 23059,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_familiar_incentive"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army Colosseum ATK II",
-        "ja-JP": "軍隊コロシアム攻撃力 II"
+        "ja-JP": "コロシアム軍隊攻撃力 II"
       },
       "row": 9
     },
@@ -775,11 +1450,36 @@
         "9": "+45%"
       },
       "id": "guild_duel_army_colosseum_hp_ii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 338000,
+            "gold": 140000,
+            "ore": 112000,
+            "special": 60,
+            "stone": 84500,
+            "timber": 140000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 19216,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_colosseum_atk_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army Colosseum HP II",
-        "ja-JP": "軍隊コロシアムHP II"
+        "ja-JP": "コロシアム軍隊HP II"
       },
       "row": 9
     },
@@ -799,7 +1499,32 @@
         "9": "+9%"
       },
       "id": "guild_duel_army_def_iii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 408000,
+            "gold": 170000,
+            "ore": 170000,
+            "special": 130,
+            "stone": 170000,
+            "timber": 170000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 38432,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_iii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army DEF III",
@@ -823,7 +1548,32 @@
         "9": "+9%"
       },
       "id": "guild_duel_army_atk_iii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 545000,
+            "gold": 170000,
+            "ore": 170000,
+            "special": 150,
+            "stone": 170000,
+            "timber": 170000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 46118,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_colosseum_atk_ii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army ATK III",
@@ -847,7 +1597,32 @@
         "9": "+9%"
       },
       "id": "guild_duel_army_hp_iii",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 408000,
+            "gold": 170000,
+            "ore": 170000,
+            "special": 130,
+            "stone": 170000,
+            "timber": 170000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 38432,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_iii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Army HP III",
@@ -859,23 +1634,48 @@
       "column": 1,
       "effect_label": "Master Guild Duel points",
       "effect_values": {
-        "1": "+5%",
-        "10": "+50%",
-        "2": "+10%",
-        "3": "+15%",
-        "4": "+20%",
-        "5": "+25%",
-        "6": "+30%",
-        "7": "+35%",
-        "8": "+40%",
-        "9": "+45%"
+        "1": "+10%",
+        "10": "+100%",
+        "2": "+20%",
+        "3": "+30%",
+        "4": "+40%",
+        "5": "+50%",
+        "6": "+60%",
+        "7": "+70%",
+        "8": "+80%",
+        "9": "+90%"
       },
       "id": "guild_duel_master_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 471000,
+            "gold": 196000,
+            "ore": 196000,
+            "special": 90,
+            "stone": 117000,
+            "timber": 235000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_iii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Master Incentive",
-        "ja-JP": "マスターインセンティブ"
+        "ja-JP": "奨励マスター"
       },
       "row": 11
     },
@@ -895,19 +1695,44 @@
         "9": "+45%"
       },
       "id": "guild_duel_crafting_incentive",
-      "levels": [],
+      "levels": [
+        {
+          "academy_level": null,
+          "base_time_seconds": null,
+          "buildings": {},
+          "costs": {
+            "food": 471000,
+            "gold": 196000,
+            "ore": 117000,
+            "special": 20,
+            "stone": 196000,
+            "timber": 235000
+          },
+          "costs_verified": true,
+          "level": 1,
+          "power": 2306,
+          "requirements": [
+            {
+              "level": 1,
+              "research_id": "guild_duel_army_atk_iii"
+            }
+          ],
+          "technolabe_count": null,
+          "verification_status": "provisional_game_capture_rounded"
+        }
+      ],
       "max_level": 10,
       "names": {
         "en-US": "Crafting Incentive",
-        "ja-JP": "製作インセンティブ"
+        "ja-JP": "錬成奨励"
       },
       "row": 11
     }
   ],
   "platform": "pc",
   "schema_version": 1,
-  "scope": "tree_structure_reference_only",
-  "source_catalog_sha256": "7e2f80aa7fee532c57dc3e8fc0bcc05d829b5074108a1a64686fccc48207c6ed",
+  "scope": "tree_structure_and_selected_level_data",
+  "source_catalog_sha256": "9860f293870216de0eb99e13f35a12370f60e1c64e79e4ac8eff66f67efebfed",
   "source_edges": [
     [
       "guild_duel_gathering_incentive",
@@ -991,83 +1816,43 @@
     ],
     [
       "guild_duel_reward_incentive_ii",
-      "guild_duel_army_def_ii"
-    ],
-    [
-      "guild_duel_reward_incentive_ii",
       "guild_duel_army_atk_ii"
     ],
     [
-      "guild_duel_reward_incentive_ii",
-      "guild_duel_army_hp_ii"
+      "guild_duel_army_atk_ii",
+      "guild_duel_army_def_ii"
     ],
     [
-      "guild_duel_army_def_ii",
-      "guild_duel_familiar_incentive"
+      "guild_duel_army_atk_ii",
+      "guild_duel_army_hp_ii"
     ],
     [
       "guild_duel_army_atk_ii",
       "guild_duel_familiar_incentive"
     ],
     [
-      "guild_duel_army_hp_ii",
-      "guild_duel_familiar_incentive"
-    ],
-    [
-      "guild_duel_familiar_incentive",
-      "guild_duel_army_colosseum_def_ii"
-    ],
-    [
       "guild_duel_familiar_incentive",
       "guild_duel_army_colosseum_atk_ii"
     ],
     [
-      "guild_duel_familiar_incentive",
+      "guild_duel_army_colosseum_atk_ii",
+      "guild_duel_army_colosseum_def_ii"
+    ],
+    [
+      "guild_duel_army_colosseum_atk_ii",
       "guild_duel_army_colosseum_hp_ii"
     ],
     [
-      "guild_duel_army_colosseum_def_ii",
-      "guild_duel_army_def_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_def_ii",
-      "guild_duel_army_atk_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_def_ii",
-      "guild_duel_army_hp_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_atk_ii",
-      "guild_duel_army_def_iii"
-    ],
-    [
       "guild_duel_army_colosseum_atk_ii",
       "guild_duel_army_atk_iii"
     ],
     [
-      "guild_duel_army_colosseum_atk_ii",
-      "guild_duel_army_hp_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_atk_iii",
       "guild_duel_army_def_iii"
     ],
     [
-      "guild_duel_army_colosseum_hp_ii",
-      "guild_duel_army_atk_iii"
-    ],
-    [
-      "guild_duel_army_colosseum_hp_ii",
+      "guild_duel_army_atk_iii",
       "guild_duel_army_hp_iii"
-    ],
-    [
-      "guild_duel_army_def_iii",
-      "guild_duel_master_incentive"
-    ],
-    [
-      "guild_duel_army_def_iii",
-      "guild_duel_crafting_incentive"
     ],
     [
       "guild_duel_army_atk_iii",
@@ -1075,20 +1860,12 @@
     ],
     [
       "guild_duel_army_atk_iii",
-      "guild_duel_crafting_incentive"
-    ],
-    [
-      "guild_duel_army_hp_iii",
-      "guild_duel_master_incentive"
-    ],
-    [
-      "guild_duel_army_hp_iii",
       "guild_duel_crafting_incentive"
     ]
   ],
   "titles": {
     "en-US": "Guild Duel",
-    "ja-JP": "ギルド決闘"
+    "ja-JP": "ギルドデュエル"
   },
-  "verification_status": "structure_only_numeric_level_data_unavailable"
+  "verification_status": "structure_verified_numeric_level_data_partial"
 }

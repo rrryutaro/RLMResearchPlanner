@@ -22,6 +22,20 @@ PRIVATE_OBSERVATION_PATH = (
     / "observations"
     / "economy_tree_ja-JP_2026-08-06.json"
 )
+GUILD_DUEL_OBSERVATION_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "research"
+    / "observations"
+    / "guild_duel_levels_ja-JP_2026-08-11.json"
+)
+GUILD_DUEL_ADDITIONAL_OBSERVATION_PATH = (
+    PROJECT_ROOT
+    / "data"
+    / "research"
+    / "observations"
+    / "guild_duel_levels_ja-JP_2026-08-15.json"
+)
 
 
 def _load_module(name: str, path: Path) -> ModuleType:
@@ -77,7 +91,7 @@ def test_generated_dataset_is_valid_and_has_frozen_identity_counts() -> None:
     assert len(documents["trees"]) == 16
     assert research_ids == frozen_ids
     assert len(research_ids) == 399
-    assert level_count == 3143
+    assert level_count == 3179
 
 
 def test_checked_in_generated_files_equal_fresh_in_memory_conversion() -> None:
@@ -163,7 +177,7 @@ def test_generated_values_and_representative_plans_match_legacy_behavior() -> No
     } == {
         "categories": 16,
         "research": 399,
-        "levels": 3143,
+        "levels": 3179,
         "representative_plans": 16,
         "validation_differences": 0,
         "structural_differences": 0,
@@ -193,6 +207,81 @@ def test_legacy_source_edges_and_guild_duel_license_are_preserved() -> None:
     guild_source = sources["src_bigsoneca_guild_duel_video"]
     assert guild_source["license"]["name"] == (
         "Public gameplay reference (facts transcribed)"
+    )
+
+
+def test_guild_duel_capture_is_private_evidence_for_provisional_level_data() -> None:
+    converter = _converter()
+    generated = converter.build_generated_dataset()
+    evidence_id = "evidence_guild_duel_levels_ja_jp_2026_08_11_01"
+    evidence = {
+        item["id"]: item for item in generated["evidence"]["evidence"]
+    }[evidence_id]
+    assert GUILD_DUEL_OBSERVATION_PATH.is_file()
+    assert evidence["captured_on"] == "2026-08-11"
+    assert evidence["locale"] == "ja-JP"
+    assert evidence["redistribution_allowed"] is False
+    assert "path" not in evidence
+
+    guild_duel = generated["trees"]["guild_duel"]
+    research = next(
+        item
+        for item in guild_duel["nodes"]
+        if item["id"] == "guild_duel_research_incentive"
+    )
+    level_one = research["levels"][0]
+    assert level_one["base_time_seconds"] == 7_745
+    assert level_one["costs"]["special"] == 10
+    assert level_one["verification"]["status"] == "provisional"
+    assert level_one["verification"]["checked_on"] == "2026-08-11"
+    assert level_one["verification"]["evidence_ids"] == [evidence_id]
+    assert generated["locales"]["ja-JP"]["metrics"][research["id"]] == (
+        "研究デュエルポイント"
+    )
+
+
+def test_additional_guild_duel_capture_and_tome_inference_keep_provenance() -> None:
+    converter = _converter()
+    generated = converter.build_generated_dataset()
+    evidence_id = "evidence_guild_duel_levels_ja_jp_2026_08_15_01"
+    evidence = {
+        item["id"]: item for item in generated["evidence"]["evidence"]
+    }[evidence_id]
+    assert GUILD_DUEL_ADDITIONAL_OBSERVATION_PATH.is_file()
+    assert evidence["captured_on"] == "2026-08-15"
+    assert evidence["redistribution_allowed"] is False
+    assert "path" not in evidence
+
+    guild_duel = generated["trees"]["guild_duel"]
+    nodes = {item["id"]: item for item in guild_duel["nodes"]}
+    speed_up = nodes["guild_duel_speed_up_incentive"]["levels"][0]
+    assert speed_up["base_time_seconds"] == 6_372
+    assert speed_up["costs"]["special"] == 20
+    assert speed_up["verification"]["evidence_ids"] == [evidence_id]
+    reward_two = nodes["guild_duel_reward_incentive_ii"]["levels"][0]
+    assert reward_two["base_time_seconds"] == 669_731
+    assert reward_two["costs"]["food"] == 12_000_000
+    assert reward_two["verification"]["evidence_ids"] == [evidence_id]
+
+    gathering = nodes["guild_duel_gathering_incentive"]["levels"][0]
+    assert gathering["base_time_seconds"] == 7_745
+    assert gathering["costs"] == {
+        "food": 78_600,
+        "stone": 32_600,
+        "timber": 39_100,
+        "ore": 19_600,
+        "gold": 32_600,
+        "special": 10,
+    }
+    assert gathering["verification"]["status"] == "provisional"
+    assert gathering["verification"]["evidence_ids"] == [
+        "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+        "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+    ]
+    assert "verification_overrides" not in gathering
+    sources = {item["id"]: item for item in generated["sources"]["sources"]}
+    assert sources["src_neovis_guild_duel_research"]["url"] == (
+        "https://neovis99.com/lords-mobile-capture-part151/"
     )
 
 

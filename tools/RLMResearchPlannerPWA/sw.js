@@ -4,23 +4,23 @@ const IS_PREVIEW_SCOPE = /\/preview\/$/u.test(SCOPE_PATH);
 const CACHE_NAMESPACE = IS_PREVIEW_SCOPE ? "rlm-research-planner-preview" : "rlm-research-planner-pwa";
 const CACHE_PREFIX = `${CACHE_NAMESPACE}-${SCOPE_KEY}-`;
 const LEGACY_CACHE_PREFIX = "rlm-research-planner-pwa-v";
-const CACHE_NAME = `${CACHE_PREFIX}v0.1.4-b1`;
+const CACHE_NAME = `${CACHE_PREFIX}v0.1.5-b2`;
 const APP_SHELL = [
-  "./", "./index.html", "./styles.css?v=0.1.4-b1", "./manifest.webmanifest", "./icons/app-icon.svg",
-  "./src/app.js?v=0.1.4-b1", "./src/catalog.js?v=0.1.4-b1", "./src/planning.js?v=0.1.4-b1", "./src/castle-planning.js?v=0.1.4-b1", "./src/talent-planning.js?v=0.1.4-b1", "./src/state.js?v=0.1.4-b1", "./src/language-pack.js?v=0.1.4-b1", "./src/paid-value.js?v=0.1.4-b1", "./src/speedup-inventory.js?v=0.1.4-b1", "./src/resource-format.js?v=0.1.4-b1", "./src/tree-layout.js?v=0.1.4-b1", "./src/tree-zoom.js?v=0.1.4-b1",
-  "./data/research-dataset/manifest.json?v=0.1.4-b1", "./data/i18n/manifest.json?v=0.1.4-b1",
-  "./data/buildings/castle_catalog.json?v=0.1.4-b1", "./data/talents/catalog.json?v=0.1.4-b1",
+  "./", "./index.html", "./styles.css?v=0.1.5-b2", "./manifest.webmanifest", "./icons/app-icon.svg",
+  "./src/app.js?v=0.1.5-b2", "./src/catalog.js?v=0.1.5-b2", "./src/planning.js?v=0.1.5-b2", "./src/castle-planning.js?v=0.1.5-b2", "./src/talent-planning.js?v=0.1.5-b2", "./src/state.js?v=0.1.5-b2", "./src/language-pack.js?v=0.1.5-b2", "./src/paid-value.js?v=0.1.5-b2", "./src/speedup-inventory.js?v=0.1.5-b2", "./src/resource-format.js?v=0.1.5-b2", "./src/tree-layout.js?v=0.1.5-b2", "./src/tree-zoom.js?v=0.1.5-b2",
+  "./data/research-dataset/manifest.json?v=0.1.5-b2", "./data/i18n/manifest.json?v=0.1.5-b2",
+  "./data/buildings/castle_catalog.json?v=0.1.5-b2", "./data/talents/catalog.json?v=0.1.5-b2",
 ];
 
 async function manifestAssets() {
   const [researchResponse, localeResponse] = await Promise.all([
-    fetch("./data/research-dataset/manifest.json?v=0.1.4-b1", { cache: "reload" }),
-    fetch("./data/i18n/manifest.json?v=0.1.4-b1", { cache: "reload" }),
+    fetch("./data/research-dataset/manifest.json?v=0.1.5-b2", { cache: "reload" }),
+    fetch("./data/i18n/manifest.json?v=0.1.5-b2", { cache: "reload" }),
   ]);
   if (!researchResponse.ok || !localeResponse.ok) throw new Error("Data manifest could not be loaded");
   const research = await researchResponse.json();
   const locales = await localeResponse.json();
-  const versioned = (root, path) => `${root}${path}?v=0.1.4-b1`;
+  const versioned = (root, path) => `${root}${path}?v=0.1.5-b2`;
   return [
     versioned("./data/research-dataset/", research.sources_path),
     versioned("./data/research-dataset/", research.evidence_path),

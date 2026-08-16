@@ -109,6 +109,7 @@
             }
           ]
         },
+        "costs_complete": { "type": "boolean" },
         "prerequisites": {
           "type": "array",
           "items": { "$ref": "#/$defs/requirement" }

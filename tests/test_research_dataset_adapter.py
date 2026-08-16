@@ -42,7 +42,7 @@ def test_shared_adapter_preserves_current_observation_behavior() -> None:
 
     assert len(observations) == 16
     assert sum(len(item.nodes) for item in observations) == 399
-    assert sum(len(item.edges) for item in observations) == 631
+    assert sum(len(item.edges) for item in observations) == 619
     assert all(
         item.observation_id == f"catalog-{item.category_id}"
         for item in observations
@@ -54,6 +54,23 @@ def test_shared_adapter_preserves_current_observation_behavior() -> None:
     )
     assert guild_duel.source_url == "https://www.youtube.com/watch?v=QKP5dGy1IHs"
     assert guild_duel.license_name == "Public gameplay reference (facts transcribed)"
+    gathering = guild_duel.node_by_id()["guild_duel_gathering_incentive"].level_data(1)
+    assert gathering is not None
+    assert gathering.costs == {
+        "food": 78_600,
+        "stone": 32_600,
+        "timber": 39_100,
+        "ore": 19_600,
+        "gold": 32_600,
+        "special": 10,
+    }
+    assert gathering.base_time_seconds == 7_745
+    assert gathering.power == 2_306
+    assert gathering.costs_verified is False
+    speed_up = guild_duel.node_by_id()["guild_duel_speed_up_incentive"].level_data(1)
+    assert speed_up is not None
+    assert speed_up.costs["special"] == 20
+    assert speed_up.costs_verified is True
 
 
 def test_shared_adapter_uses_explicit_display_fallback() -> None:

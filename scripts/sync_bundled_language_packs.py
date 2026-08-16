@@ -88,8 +88,16 @@ def canonical_sections(locale: str, current: Mapping[str, object]) -> dict[str, 
             research_id = str((category.get("id_overrides", {}) or {}).get(source_name, ""))
             if not research_id:
                 continue
+            localized_labels = effect.get("localized_labels", {})
+            localized_label = (
+                str(localized_labels.get(locale, "")).strip()
+                if isinstance(localized_labels, Mapping)
+                else ""
+            )
             translated = sections["effect_labels"].get(str(effect.get("label", "")), "")
-            if translated:
+            if localized_label:
+                legacy_effect_labels[research_id] = localized_label
+            elif translated:
                 legacy_effect_labels[research_id] = translated
     for tree_entry in dataset_manifest.get("trees", []):
         if not isinstance(tree_entry, Mapping):

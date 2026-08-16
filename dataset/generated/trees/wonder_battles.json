@@ -428,6 +428,7 @@
             "stone": 39829,
             "timber": 39829
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 7903,
@@ -446,6 +447,7 @@
             "stone": 139401,
             "timber": 139401
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 26475,
@@ -464,6 +466,7 @@
             "stone": 169273,
             "timber": 169273
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 33192,
@@ -482,6 +485,7 @@
             "stone": 199144,
             "timber": 199144
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 39909,
@@ -500,6 +504,7 @@
             "stone": 238973,
             "timber": 238973
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 48603,
@@ -518,6 +523,7 @@
             "stone": 318631,
             "timber": 318631
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 65199,
@@ -536,6 +542,7 @@
             "stone": 418203,
             "timber": 418203
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 86141,
@@ -554,6 +561,7 @@
             "stone": 597432,
             "timber": 597432
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 121309,
@@ -572,6 +580,7 @@
             "stone": 836405,
             "timber": 836405
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 166750,
@@ -590,6 +599,7 @@
             "stone": 1095292,
             "timber": 1095292
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 217329,
@@ -680,6 +690,7 @@
             "stone": 51778,
             "timber": 51778
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 10274,
@@ -703,6 +714,7 @@
             "stone": 181221,
             "timber": 181221
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 34417,
@@ -721,6 +733,7 @@
             "stone": 220055,
             "timber": 220055
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 43150,
@@ -739,6 +752,7 @@
             "stone": 258888,
             "timber": 258888
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 51882,
@@ -757,6 +771,7 @@
             "stone": 310665,
             "timber": 310665
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 63184,
@@ -775,6 +790,7 @@
             "stone": 414220,
             "timber": 414220
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 84758,
@@ -793,6 +809,7 @@
             "stone": 543663,
             "timber": 543663
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 111983,
@@ -811,6 +828,7 @@
             "stone": 776662,
             "timber": 776662
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 157702,
@@ -834,6 +852,7 @@
             "stone": 1087326,
             "timber": 1087326
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 216776,
@@ -857,6 +876,7 @@
             "stone": 1423880,
             "timber": 1423880
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 282527,
@@ -952,6 +972,7 @@
             "stone": 64722,
             "timber": 64722
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 10274,
@@ -975,6 +996,7 @@
             "stone": 226527,
             "timber": 226527
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 34417,
@@ -993,6 +1015,7 @@
             "stone": 275068,
             "timber": 275068
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 43150,
@@ -1011,6 +1034,7 @@
             "stone": 323609,
             "timber": 323609
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 51882,
@@ -1029,6 +1053,7 @@
             "stone": 388331,
             "timber": 388331
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 63184,
@@ -1047,6 +1072,7 @@
             "stone": 517775,
             "timber": 517775
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 84758,
@@ -1065,6 +1091,7 @@
             "stone": 679579,
             "timber": 679579
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 111983,
@@ -1083,6 +1110,7 @@
             "stone": 970827,
             "timber": 970827
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 157702,
@@ -1106,6 +1134,7 @@
             "stone": 1359158,
             "timber": 1359158
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 216776,
@@ -1129,6 +1158,7 @@
             "stone": 1779850,
             "timber": 1779850
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 282527,
@@ -1224,6 +1254,7 @@
             "stone": 63727,
             "timber": 63727
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 12645,
@@ -1247,6 +1278,7 @@
             "stone": 223042,
             "timber": 223042
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 42359,
@@ -1265,6 +1297,7 @@
             "stone": 270836,
             "timber": 270836
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 53108,
@@ -1283,6 +1316,7 @@
             "stone": 318631,
             "timber": 318631
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 63855,
@@ -1301,6 +1335,7 @@
             "stone": 382357,
             "timber": 382357
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 77764,
@@ -1319,6 +1354,7 @@
             "stone": 509809,
             "timber": 509809
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 104318,
@@ -1337,6 +1373,7 @@
             "stone": 669124,
             "timber": 669124
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 137826,
@@ -1355,6 +1392,7 @@
             "stone": 955891,
             "timber": 955891
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 194094,
@@ -1378,6 +1416,7 @@
             "stone": 1338248,
             "timber": 1338248
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 266801,
@@ -1401,6 +1440,7 @@
             "stone": 1752467,
             "timber": 1752467
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 347726,
@@ -1496,6 +1536,7 @@
             "stone": 79658,
             "timber": 79658
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 12645,
@@ -1519,6 +1560,7 @@
             "stone": 278802,
             "timber": 278802
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 42359,
@@ -1537,6 +1579,7 @@
             "stone": 338545,
             "timber": 338545
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 53108,
@@ -1555,6 +1598,7 @@
             "stone": 398288,
             "timber": 398288
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 63855,
@@ -1573,6 +1617,7 @@
             "stone": 477946,
             "timber": 477946
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 77764,
@@ -1591,6 +1636,7 @@
             "stone": 637261,
             "timber": 637261
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 104318,
@@ -1609,6 +1655,7 @@
             "stone": 836405,
             "timber": 836405
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 137826,
@@ -1627,6 +1674,7 @@
             "stone": 1194864,
             "timber": 1194864
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 194094,
@@ -1650,6 +1698,7 @@
             "stone": 1672810,
             "timber": 1672810
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 266801,
@@ -1673,6 +1722,7 @@
             "stone": 2190584,
             "timber": 2190584
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 347726,
@@ -1768,6 +1818,7 @@
             "stone": 109530,
             "timber": 109530
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 17387,
@@ -1795,6 +1846,7 @@
             "stone": 383353,
             "timber": 383353
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 58244,
@@ -1813,6 +1865,7 @@
             "stone": 465499,
             "timber": 465499
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 73022,
@@ -1831,6 +1884,7 @@
             "stone": 547646,
             "timber": 547646
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 87801,
@@ -1849,6 +1903,7 @@
             "stone": 657176,
             "timber": 657176
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 106926,
@@ -1867,6 +1922,7 @@
             "stone": 876234,
             "timber": 876234
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 143437,
@@ -1885,6 +1941,7 @@
             "stone": 1150057,
             "timber": 1150057
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 189511,
@@ -1903,6 +1960,7 @@
             "stone": 1642938,
             "timber": 1642938
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 266879,
@@ -1930,6 +1988,7 @@
             "stone": 2300113,
             "timber": 2300113
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 366851,
@@ -1948,6 +2007,7 @@
           "costs": {
             "ancient_tomes": 96
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 478123,
@@ -2038,6 +2098,7 @@
             "stone": 109530,
             "timber": 109530
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 1,
           "power": 17387,
@@ -2073,6 +2134,7 @@
             "stone": 383353,
             "timber": 383353
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 2,
           "power": 58244,
@@ -2099,6 +2161,7 @@
             "stone": 465499,
             "timber": 465499
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 3,
           "power": 73022,
@@ -2125,6 +2188,7 @@
             "stone": 547646,
             "timber": 547646
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 4,
           "power": 87801,
@@ -2151,6 +2215,7 @@
             "stone": 657176,
             "timber": 657176
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 5,
           "power": 106926,
@@ -2177,6 +2242,7 @@
             "stone": 876234,
             "timber": 876234
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 6,
           "power": 143437,
@@ -2203,6 +2269,7 @@
             "stone": 1150057,
             "timber": 1150057
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 7,
           "power": 189511,
@@ -2229,6 +2296,7 @@
             "stone": 1642938,
             "timber": 1642938
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 8,
           "power": 266879,
@@ -2264,6 +2332,7 @@
             "stone": 2300113,
             "timber": 2300113
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 9,
           "power": 366851,
@@ -2290,6 +2359,7 @@
           "costs": {
             "ancient_tomes": 96
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 10,
           "power": 478123,
@@ -2388,6 +2458,7 @@
             "stone": 109530,
             "timber": 109530
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 17387,
@@ -2415,6 +2486,7 @@
             "stone": 383353,
             "timber": 383353
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 58244,
@@ -2433,6 +2505,7 @@
             "stone": 465499,
             "timber": 465499
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 73022,
@@ -2451,6 +2524,7 @@
             "stone": 547646,
             "timber": 547646
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 87801,
@@ -2469,6 +2543,7 @@
             "stone": 657176,
             "timber": 657176
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 106926,
@@ -2487,6 +2562,7 @@
             "stone": 876234,
             "timber": 876234
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 143437,
@@ -2505,6 +2581,7 @@
             "stone": 1150057,
             "timber": 1150057
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 189511,
@@ -2523,6 +2600,7 @@
             "stone": 1642938,
             "timber": 1642938
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 266879,
@@ -2550,6 +2628,7 @@
             "stone": 2300113,
             "timber": 2300113
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 366851,
@@ -2568,6 +2647,7 @@
           "costs": {
             "ancient_tomes": 96
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 478123,
@@ -2658,6 +2738,7 @@
             "stone": 149358,
             "timber": 89615
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 23709,
@@ -2681,6 +2762,7 @@
             "stone": 522753,
             "timber": 313652
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 79424,
@@ -2699,6 +2781,7 @@
             "stone": 634772,
             "timber": 380863
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 99576,
@@ -2717,6 +2800,7 @@
             "stone": 746790,
             "timber": 448074
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 119728,
@@ -2735,6 +2819,7 @@
             "stone": 896148,
             "timber": 537689
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 145808,
@@ -2753,6 +2838,7 @@
             "stone": 1194864,
             "timber": 716919
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 195596,
@@ -2771,6 +2857,7 @@
             "stone": 1568259,
             "timber": 940956
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 258424,
@@ -2789,6 +2876,7 @@
             "stone": 2240370,
             "timber": 1344222
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 363927,
@@ -2807,6 +2895,7 @@
             "stone": 3136518,
             "timber": 1881911
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 500251,
@@ -2825,6 +2914,7 @@
           "costs": {
             "ancient_tomes": 144
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 651986,
@@ -2915,6 +3005,7 @@
             "stone": 149358,
             "timber": 89615
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 23709,
@@ -2938,6 +3029,7 @@
             "stone": 522753,
             "timber": 313652
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 79424,
@@ -2956,6 +3048,7 @@
             "stone": 634772,
             "timber": 380863
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 99576,
@@ -2974,6 +3067,7 @@
             "stone": 746790,
             "timber": 448074
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 119728,
@@ -2992,6 +3086,7 @@
             "stone": 896148,
             "timber": 537689
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 145808,
@@ -3010,6 +3105,7 @@
             "stone": 1194864,
             "timber": 716919
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 195596,
@@ -3028,6 +3124,7 @@
             "stone": 1568259,
             "timber": 940956
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 258424,
@@ -3046,6 +3143,7 @@
             "stone": 2240370,
             "timber": 1344222
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 363927,
@@ -3064,6 +3162,7 @@
             "stone": 3136518,
             "timber": 1881911
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 500251,
@@ -3082,6 +3181,7 @@
           "costs": {
             "ancient_tomes": 144
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 651986,
@@ -3172,6 +3272,7 @@
             "stone": 89615,
             "timber": 149358
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 23709,
@@ -3195,6 +3296,7 @@
             "stone": 313652,
             "timber": 522753
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 79424,
@@ -3213,6 +3315,7 @@
             "stone": 380863,
             "timber": 634772
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 99576,
@@ -3231,6 +3334,7 @@
             "stone": 448074,
             "timber": 746790
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 119728,
@@ -3249,6 +3353,7 @@
             "stone": 537689,
             "timber": 896148
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 145808,
@@ -3267,6 +3372,7 @@
             "stone": 716919,
             "timber": 1194864
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 195596,
@@ -3285,6 +3391,7 @@
             "stone": 940956,
             "timber": 1568259
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 258424,
@@ -3303,6 +3410,7 @@
             "stone": 1344222,
             "timber": 2240370
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 363927,
@@ -3321,6 +3429,7 @@
             "stone": 1881911,
             "timber": 3136518
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 500251,
@@ -3339,6 +3448,7 @@
           "costs": {
             "ancient_tomes": 144
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 651986,
@@ -3429,6 +3539,7 @@
             "stone": 119487,
             "timber": 199144
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 31612,
@@ -3452,6 +3563,7 @@
             "stone": 418203,
             "timber": 697004
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 105898,
@@ -3470,6 +3582,7 @@
             "stone": 507818,
             "timber": 846362
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 132768,
@@ -3488,6 +3601,7 @@
             "stone": 597432,
             "timber": 995720
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 159638,
@@ -3506,6 +3620,7 @@
             "stone": 716919,
             "timber": 1194864
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 194411,
@@ -3524,6 +3639,7 @@
             "stone": 955891,
             "timber": 1593152
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 260974,
@@ -3542,6 +3658,7 @@
             "stone": 1254607,
             "timber": 2091012
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 344565,
@@ -3560,6 +3677,7 @@
             "stone": 1792296,
             "timber": 2987160
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 485236,
@@ -3583,6 +3701,7 @@
             "stone": 2509214,
             "timber": 4182023
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 667002,
@@ -3606,6 +3725,7 @@
             "stone": 3285876,
             "timber": 5476459
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 869315,
@@ -3701,6 +3821,7 @@
             "stone": 119487,
             "timber": 199144
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 31612,
@@ -3724,6 +3845,7 @@
             "stone": 418203,
             "timber": 697004
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 105898,
@@ -3737,6 +3859,7 @@
           "costs": {
             "ancient_tomes": 27
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 132768,
@@ -3750,6 +3873,7 @@
           "costs": {
             "ancient_tomes": 39
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 159638,
@@ -3763,6 +3887,7 @@
           "costs": {
             "ancient_tomes": 51
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 194411,
@@ -3776,6 +3901,7 @@
           "costs": {
             "ancient_tomes": 69
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 260974,
@@ -3789,6 +3915,7 @@
           "costs": {
             "ancient_tomes": 94
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 344565,
@@ -3807,6 +3934,7 @@
             "stone": 1792296,
             "timber": 2987160
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 485236,
@@ -3825,6 +3953,7 @@
           "costs": {
             "ancient_tomes": 152
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 667002,
@@ -3843,6 +3972,7 @@
           "costs": {
             "ancient_tomes": 192
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 869315,
@@ -3938,6 +4068,7 @@
             "stone": 199144,
             "timber": 119487
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 31612,
@@ -3961,6 +4092,7 @@
             "stone": 697004,
             "timber": 418203
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 105898,
@@ -3979,6 +4111,7 @@
             "stone": 846362,
             "timber": 507818
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 132768,
@@ -3992,6 +4125,7 @@
           "costs": {
             "ancient_tomes": 39
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 159638,
@@ -4005,6 +4139,7 @@
           "costs": {
             "ancient_tomes": 51
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 194411,
@@ -4018,6 +4153,7 @@
           "costs": {
             "ancient_tomes": 69
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 260974,
@@ -4031,6 +4167,7 @@
           "costs": {
             "ancient_tomes": 94
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 344565,
@@ -4049,6 +4186,7 @@
             "stone": 2987160,
             "timber": 1792296
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 485236,
@@ -4067,6 +4205,7 @@
           "costs": {
             "ancient_tomes": 152
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 667002,
@@ -4090,6 +4229,7 @@
             "stone": 5476459,
             "timber": 3285876
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 869315,
@@ -4185,6 +4325,7 @@
             "stone": 248930,
             "timber": 149358
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 39515,
@@ -4216,6 +4357,7 @@
             "stone": 871255,
             "timber": 522753
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 132373,
@@ -4234,6 +4376,7 @@
             "stone": 1057953,
             "timber": 634772
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 165960,
@@ -4252,6 +4395,7 @@
             "stone": 1244650,
             "timber": 746790
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 199547,
@@ -4270,6 +4414,7 @@
             "stone": 1493580,
             "timber": 896148
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 243013,
@@ -4288,6 +4433,7 @@
             "stone": 1991440,
             "timber": 1194864
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 325993,
@@ -4306,6 +4452,7 @@
             "stone": 2613765,
             "timber": 1568259
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 430706,
@@ -4324,6 +4471,7 @@
             "stone": 3733950,
             "timber": 2240370
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 606545,
@@ -4355,6 +4503,7 @@
             "stone": 5227529,
             "timber": 3136518
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 833752,
@@ -4386,6 +4535,7 @@
             "stone": 6845574,
             "timber": 4107344
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1086644,
@@ -4489,6 +4639,7 @@
             "stone": 248930,
             "timber": 149358
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 39515,
@@ -4520,6 +4671,7 @@
             "stone": 871255,
             "timber": 522753
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 132373,
@@ -4538,6 +4690,7 @@
             "stone": 1057953,
             "timber": 634772
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 165960,
@@ -4556,6 +4709,7 @@
             "stone": 1244650,
             "timber": 746790
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 199547,
@@ -4574,6 +4728,7 @@
             "stone": 1493580,
             "timber": 896148
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 243013,
@@ -4592,6 +4747,7 @@
             "stone": 1991440,
             "timber": 1194864
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 325993,
@@ -4610,6 +4766,7 @@
             "stone": 2613765,
             "timber": 1568259
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 430706,
@@ -4628,6 +4785,7 @@
             "stone": 3733950,
             "timber": 2240370
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 606545,
@@ -4659,6 +4817,7 @@
             "stone": 5227529,
             "timber": 3136518
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 833752,
@@ -4690,6 +4849,7 @@
             "stone": 6845574,
             "timber": 4107344
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1086644,
@@ -4793,6 +4953,7 @@
             "stone": 179230,
             "timber": 298716
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 47418,
@@ -4820,6 +4981,7 @@
             "stone": 627304,
             "timber": 1045506
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 158847,
@@ -4847,6 +5009,7 @@
             "stone": 761726,
             "timber": 1269981
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 199152,
@@ -4874,6 +5037,7 @@
             "stone": 896148,
             "timber": 1493580
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 239457,
@@ -4901,6 +5065,7 @@
             "stone": 1075378,
             "timber": 1792296
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 291616,
@@ -4919,6 +5084,7 @@
             "stone": 1433837,
             "timber": 2389728
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 391192,
@@ -4937,6 +5103,7 @@
             "stone": 1881911,
             "timber": 3136518
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 516847,
@@ -4955,6 +5122,7 @@
             "stone": 2688444,
             "timber": 4480739
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 727854,
@@ -4973,6 +5141,7 @@
             "stone": 3763821,
             "timber": 6273035
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 1000502,
@@ -4991,6 +5160,7 @@
             "stone": 4928813,
             "timber": 8214688
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1303973,
@@ -5081,6 +5251,7 @@
             "stone": 173715,
             "timber": 289525
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 45959,
@@ -5104,6 +5275,7 @@
             "stone": 608002,
             "timber": 1013337
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 153960,
@@ -5122,6 +5294,7 @@
             "stone": 738288,
             "timber": 1230480
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 193024,
@@ -5140,6 +5313,7 @@
             "stone": 868574,
             "timber": 1447624
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 232089,
@@ -5158,6 +5332,7 @@
             "stone": 1042289,
             "timber": 1737148
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 282643,
@@ -5176,6 +5351,7 @@
             "stone": 1389719,
             "timber": 2389198
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 379155,
@@ -5194,6 +5370,7 @@
             "stone": 1824006,
             "timber": 3040009
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 500944,
@@ -5212,6 +5389,7 @@
             "stone": 2605722,
             "timber": 4342870
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 705458,
@@ -5230,6 +5408,7 @@
             "stone": 3648011,
             "timber": 6080018
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 969718,
@@ -5248,6 +5427,7 @@
             "stone": 4777157,
             "timber": 7961929
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1263850,
@@ -5338,6 +5518,7 @@
             "stone": 173715,
             "timber": 289525
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 45959,
@@ -5361,6 +5542,7 @@
             "stone": 1013337,
             "timber": 608002
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 153960,
@@ -5379,6 +5561,7 @@
             "stone": 738288,
             "timber": 1230480
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 193024,
@@ -5397,6 +5580,7 @@
             "stone": 868574,
             "timber": 1447624
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 232089,
@@ -5415,6 +5599,7 @@
             "stone": 1042289,
             "timber": 1737148
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 282643,
@@ -5433,6 +5618,7 @@
             "stone": 1389719,
             "timber": 2316198
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 379155,
@@ -5451,6 +5637,7 @@
             "stone": 1824006,
             "timber": 3040009
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 500944,
@@ -5469,6 +5656,7 @@
             "stone": 2605722,
             "timber": 4342870
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 705458,
@@ -5487,6 +5675,7 @@
             "stone": 3648011,
             "timber": 6080018
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 969718,
@@ -5505,6 +5694,7 @@
             "stone": 4777157,
             "timber": 7961929
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1263850,
@@ -5595,6 +5785,7 @@
             "stone": 289525,
             "timber": 173715
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 45959,
@@ -5618,6 +5809,7 @@
             "stone": 1013337,
             "timber": 608002
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 153960,
@@ -5636,6 +5828,7 @@
             "stone": 1230480,
             "timber": 738288
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 193024,
@@ -5654,6 +5847,7 @@
             "stone": 1447624,
             "timber": 868574
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 232089,
@@ -5672,6 +5866,7 @@
             "stone": 1737148,
             "timber": 1042289
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 282643,
@@ -5690,6 +5885,7 @@
             "stone": 1389719,
             "timber": 2316198
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 379155,
@@ -5708,6 +5904,7 @@
             "stone": 1824006,
             "timber": 3040009
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 500944,
@@ -5726,6 +5923,7 @@
             "stone": 2605722,
             "timber": 4342870
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 705458,
@@ -5744,6 +5942,7 @@
             "stone": 3648011,
             "timber": 6080018
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 969718,
@@ -5762,6 +5961,7 @@
             "stone": 4777157,
             "timber": 7961929
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1263850,
@@ -5852,6 +6052,7 @@
             "stone": 318478,
             "timber": 191087
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_conflict_corrected",
           "level": 1,
           "power": 50555,
@@ -5883,6 +6084,7 @@
             "stone": 1114670,
             "timber": 668802
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_conflict_corrected",
           "level": 2,
           "power": 169355,
@@ -5914,6 +6116,7 @@
             "stone": 1353528,
             "timber": 812117
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_conflict_corrected",
           "level": 3,
           "power": 212327,
@@ -5945,6 +6148,7 @@
             "stone": 1592386,
             "timber": 955432
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_conflict_corrected",
           "level": 4,
           "power": 255298,
@@ -5976,6 +6180,7 @@
             "stone": 1910863,
             "timber": 1146518
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 310907,
@@ -5994,6 +6199,7 @@
             "stone": 2547818,
             "timber": 1528691
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 417071,
@@ -6012,6 +6218,7 @@
             "stone": 3344010,
             "timber": 2006406
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 551039,
@@ -6030,6 +6237,7 @@
             "stone": 4777157,
             "timber": 2866295
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 776004,
@@ -6053,6 +6261,7 @@
             "stone": 6688020,
             "timber": 4012812
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 1066689,
@@ -6076,6 +6285,7 @@
             "stone": 8758122,
             "timber": 5254873
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1390235,
@@ -6171,6 +6381,7 @@
             "stone": 318478,
             "timber": 191087
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 50555,
@@ -6194,6 +6405,7 @@
             "stone": 1114670,
             "timber": 668802
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 169355,
@@ -6217,6 +6429,7 @@
             "stone": 1353528,
             "timber": 812117
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 212327,
@@ -6240,6 +6453,7 @@
             "stone": 1592386,
             "timber": 955432
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 255298,
@@ -6263,6 +6477,7 @@
             "stone": 1910863,
             "timber": 1146518
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 310907,
@@ -6286,6 +6501,7 @@
             "stone": 2547818,
             "timber": 1528691
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 417071,
@@ -6309,6 +6525,7 @@
             "stone": 3344010,
             "timber": 2006406
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 551039,
@@ -6332,6 +6549,7 @@
             "stone": 4777157,
             "timber": 2866295
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 776004,
@@ -6355,6 +6573,7 @@
             "stone": 6688020,
             "timber": 4012812
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 1066689,
@@ -6378,6 +6597,7 @@
             "stone": 8758122,
             "timber": 5254873
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1390235,
@@ -6473,6 +6693,7 @@
             "stone": 191087,
             "timber": 318478
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 50550,
@@ -6496,6 +6717,7 @@
             "stone": 668802,
             "timber": 1114670
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 169355,
@@ -6512,6 +6734,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 3,
           "power": null,
@@ -6536,6 +6759,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 4,
           "power": null,
@@ -6560,6 +6784,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 5,
           "power": null,
@@ -6584,6 +6809,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 6,
           "power": null,
@@ -6608,6 +6834,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 7,
           "power": null,
@@ -6639,6 +6866,7 @@
             "stone": 2866295,
             "timber": 4777157
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 776004,
@@ -6655,6 +6883,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 9,
           "power": null,
@@ -6679,6 +6908,7 @@
           "base_time_seconds": null,
           "buildings": {},
           "costs": {},
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 10,
           "power": null,
@@ -6782,6 +7012,7 @@
             "stone": 376383,
             "timber": 376383
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 1,
           "power": 59746,
@@ -6813,6 +7044,7 @@
             "stone": 1317338,
             "timber": 1317338
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 200148,
@@ -6836,6 +7068,7 @@
             "stone": 1599624,
             "timber": 1599624
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 3,
           "power": 250932,
@@ -6867,6 +7100,7 @@
             "stone": 1881911,
             "timber": 1881911
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 301715,
@@ -6890,6 +7124,7 @@
             "stone": 2258293,
             "timber": 2258293
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 367436,
@@ -6913,6 +7148,7 @@
             "stone": 3011057,
             "timber": 3011057
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 492902,
@@ -6931,6 +7167,7 @@
           "costs": {
             "ancient_tomes": 186
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 7,
           "power": 651227,
@@ -6962,6 +7199,7 @@
             "stone": 5645731,
             "timber": 5645731
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 917096,
@@ -6985,6 +7223,7 @@
             "stone": 7904024,
             "timber": 7904024
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 1260633,
@@ -7008,6 +7247,7 @@
             "stone": 10350507,
             "timber": 10350507
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1643005,
@@ -7103,6 +7343,7 @@
             "stone": 376383,
             "timber": 376383
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 59746,
@@ -7121,6 +7362,7 @@
           "costs": {
             "ancient_tomes": 32
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 2,
           "power": null,
@@ -7147,6 +7389,7 @@
           "costs": {
             "ancient_tomes": 53
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 3,
           "power": null,
@@ -7173,6 +7416,7 @@
           "costs": {
             "ancient_tomes": 76
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 4,
           "power": null,
@@ -7204,6 +7448,7 @@
             "stone": 2258293,
             "timber": 2258293
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 5,
           "power": null,
@@ -7230,6 +7475,7 @@
           "costs": {
             "ancient_tomes": 136
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 6,
           "power": null,
@@ -7256,6 +7502,7 @@
           "costs": {
             "ancient_tomes": 186
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 7,
           "power": null,
@@ -7287,6 +7534,7 @@
             "stone": 5645731,
             "timber": 5645731
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 917096,
@@ -7305,6 +7553,7 @@
           "costs": {
             "ancient_tomes": 299
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 9,
           "power": null,
@@ -7331,6 +7580,7 @@
           "costs": {
             "ancient_tomes": 378
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 10,
           "power": null,
@@ -7434,6 +7684,7 @@
             "stone": 376383,
             "timber": 376383
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 1,
           "power": 59746,
@@ -7465,6 +7716,7 @@
             "stone": 1317338,
             "timber": 1317338
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 200148,
@@ -7483,6 +7735,7 @@
             "stone": 1599624,
             "timber": 1599624
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 3,
           "power": 250932,
@@ -7509,6 +7762,7 @@
             "stone": 1881911,
             "timber": 1881911
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 4,
           "power": null,
@@ -7535,6 +7789,7 @@
             "stone": 2258293,
             "timber": 2258293
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 5,
           "power": null,
@@ -7561,6 +7816,7 @@
             "stone": 3011057,
             "timber": 3011057
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 6,
           "power": null,
@@ -7587,6 +7843,7 @@
             "stone": 3952012,
             "timber": 3952012
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 651227,
@@ -7605,6 +7862,7 @@
             "stone": 5645731,
             "timber": 5645731
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 917096,
@@ -7623,6 +7881,7 @@
           "costs": {
             "ancient_tomes": 299
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 9,
           "power": null,
@@ -7644,6 +7903,7 @@
           "costs": {
             "ancient_tomes": 378
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced_partial",
           "level": 10,
           "power": null,
@@ -7742,6 +8002,7 @@
             "stone": 260573,
             "timber": 434287
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 1,
           "power": 47418,
@@ -7773,6 +8034,7 @@
             "stone": 912003,
             "timber": 1520005
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 2,
           "power": 230940,
@@ -7804,6 +8066,7 @@
             "stone": 1107432,
             "timber": 1845720
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 3,
           "power": 289536,
@@ -7835,6 +8098,7 @@
             "stone": 1302861,
             "timber": 2171435
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 4,
           "power": 348134,
@@ -7866,6 +8130,7 @@
             "stone": 1563434,
             "timber": 2605722
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 5,
           "power": 423964,
@@ -7884,6 +8149,7 @@
             "stone": 2084578,
             "timber": 3474296
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 6,
           "power": 568733,
@@ -7897,6 +8163,7 @@
           "costs": {
             "ancient_tomes": 226
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 7,
           "power": 751416,
@@ -7910,6 +8177,7 @@
           "costs": {
             "ancient_tomes": 292
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 8,
           "power": 1058187,
@@ -7923,6 +8191,7 @@
           "costs": {
             "ancient_tomes": 363
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 9,
           "power": 1454577,
@@ -7937,6 +8206,7 @@
             "ancient_tomes": 459,
             "food": 14592044
           },
+          "costs_complete": true,
           "legacy_verification_status": "sourced",
           "level": 10,
           "power": 1895775,

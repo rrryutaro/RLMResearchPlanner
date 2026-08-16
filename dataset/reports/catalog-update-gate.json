@@ -38,6 +38,54 @@
       "levels": 3143,
       "representative_plans": 16,
       "review_warnings": 180
+    },
+    {
+      "sequence": 4,
+      "catalog_sha256": "a3739c728ef4d4dc3f2ad1518f5b74abbfe889b9e92cca5548a0cd65a508e1a8",
+      "summary": "Added provisional Guild Duel level 1 names, resources, power, prerequisites, and inferred base times from private in-game screenshot evidence, with observed Japanese category names.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3146,
+      "representative_plans": 16,
+      "review_warnings": 180
+    },
+    {
+      "sequence": 5,
+      "catalog_sha256": "0932fac586e83e6beb7d370a310c3352b83424414bb24164929ad4efda66157a",
+      "summary": "Added additional provisional Guild Duel level 1 values from private game captures and clearly separated inferred partial tome costs from complete resource records.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3157,
+      "representative_plans": 16,
+      "review_warnings": 180
+    },
+    {
+      "sequence": 6,
+      "catalog_sha256": "1ecd342d4b179a7f5f65703bad7bee3af5f807a7573afb7bca4742057a204fef",
+      "summary": "Added provisional Guild Duel level 1 and level 2 values, corrected observed Japanese names, and replaced generic late-tree connections with directly observed prerequisites.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3179,
+      "representative_plans": 16,
+      "review_warnings": 180
+    },
+    {
+      "sequence": 7,
+      "catalog_sha256": "9860f293870216de0eb99e13f35a12370f60e1c64e79e4ac8eff66f67efebfed",
+      "summary": "Added clearly marked sibling-pattern estimates for five incomplete Guild Duel level 1 records and corrected the observed Japanese Stage Incentive name.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3179,
+      "representative_plans": 16,
+      "review_warnings": 180
     }
   ]
 }

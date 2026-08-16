@@ -25,6 +25,44 @@ SPEEDUP_KINDS = (
     "crafting",
 )
 
+# Speed-up items use fixed denominations in the game.  The player-settings UI
+# presents these values as quantity fields instead of accepting arbitrary time
+# values.  Imported legacy/package data with another positive duration remains
+# valid and is added to the UI as an extra read-only denomination.
+SPEEDUP_DURATION_SECONDS = (
+    60,
+    3 * 60,
+    5 * 60,
+    10 * 60,
+    15 * 60,
+    30 * 60,
+    60 * 60,
+    3 * 60 * 60,
+    8 * 60 * 60,
+    15 * 60 * 60,
+    24 * 60 * 60,
+    3 * 24 * 60 * 60,
+    7 * 24 * 60 * 60,
+    30 * 24 * 60 * 60,
+)
+
+SPEEDUP_DURATION_GROUPS = (
+    ("minutes", SPEEDUP_DURATION_SECONDS[:7]),
+    ("hours", SPEEDUP_DURATION_SECONDS[7:11]),
+    ("days", SPEEDUP_DURATION_SECONDS[11:]),
+)
+
+
+def speedup_duration_group(duration_seconds: int) -> str:
+    """Return the display group for a fixed or legacy speed-up duration."""
+
+    duration_seconds = max(0, int(duration_seconds))
+    if duration_seconds <= 60 * 60:
+        return "minutes"
+    if duration_seconds <= 24 * 60 * 60:
+        return "hours"
+    return "days"
+
 
 @dataclass(frozen=True)
 class SpeedupCoverage:

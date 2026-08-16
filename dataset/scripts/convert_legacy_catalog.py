@@ -66,6 +66,7 @@ def _source_id(name: str, url: str, category_id: str = "") -> str:
         "https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-12/": "src_retry_wonder_battles",
         "https://retry0907yn.com/%E3%80%90%E3%83%AD%E3%83%BC%E3%83%A2%E3%83%90%E7%A0%94%E7%A9%B6%E3%80%91%E7%A0%94%E7%A9%B6%E3%83%91%E3%83%AF%E3%83%BC%E3%83%87%E3%83%BC%E3%82%BF%E5%AE%8C%E5%85%A8%E3%82%AC%E3%82%A4%E3%83%89-14/": "src_retry_advanced_wonder_battles",
         "https://www.youtube.com/watch?v=QKP5dGy1IHs": "src_bigsoneca_guild_duel_video",
+        "https://neovis99.com/lords-mobile-capture-part151/": "src_neovis_guild_duel_research",
         "https://lordsmobile.fandom.com/wiki/Furious_Defense_%28Infantry%29": "src_fandom_sigils_furious_defense_infantry",
         "https://lordsmobile.fandom.com/wiki/Helmet_Sigil": "src_fandom_sigils_helmet_sigil",
     }
@@ -276,6 +277,7 @@ def _level_payload(level: Any, source_ids: list[str], checked_on: str) -> dict[s
         "technolabe_count": level.technolabe_count,
         "power": level.power,
         "costs": costs,
+        "costs_complete": bool(level.costs_verified),
         "prerequisites": [
             {
                 "research_id": requirement.research_id,
@@ -329,6 +331,24 @@ def _level_payload_with_provenance(
     source_ids_by_url: dict[str, str],
 ) -> dict[str, Any]:
     result = _level_payload(level, source_ids, checked_on)
+    raw_evidence_ids = raw_level.get("evidence_ids", [])
+    if isinstance(raw_evidence_ids, str):
+        raw_evidence_ids = [raw_evidence_ids]
+    if not isinstance(raw_evidence_ids, list) or not all(
+        isinstance(evidence_id, str) and evidence_id
+        for evidence_id in raw_evidence_ids
+    ):
+        raise ValueError("legacy level evidence_ids must be a string or list")
+    if raw_evidence_ids:
+        result["verification"] = {
+            "status": "provisional",
+            "evidence_ids": sorted(set(raw_evidence_ids)),
+            "checked_on": str(raw_level.get("checked_on") or checked_on),
+            "notes": str(
+                raw_level.get("verification_notes")
+                or "Direct game evidence is retained, but rounded or inferred values remain provisional."
+            ),
+        }
     overrides: dict[str, Any] = {}
     for fact_name in ("time", "costs", "requirements"):
         fact_sources = _fact_source_ids(
@@ -543,8 +563,19 @@ def build_generated_dataset() -> dict[str, Any]:
                         if isinstance(raw_effect, dict)
                         else ""
                     )
+                    localized_labels = (
+                        raw_effect.get("localized_labels", {})
+                        if isinstance(raw_effect, dict)
+                        else {}
+                    )
+                    localized_label = (
+                        str(localized_labels.get(locale) or "")
+                        if isinstance(localized_labels, dict)
+                        else ""
+                    )
                     document["metrics"][node.id] = (
-                        label if locale == "en-US" and label else display_name
+                        localized_label
+                        or (label if locale == "en-US" and label else display_name)
                     )
     tree_entries = [
         {"id": tree_id, "path": f"trees/{tree_id}.json"}

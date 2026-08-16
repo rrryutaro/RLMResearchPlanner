@@ -28257,7 +28257,7 @@
     {
       "id": "military_command",
       "titles": {
-        "ja-JP": "軍事司令",
+        "ja-JP": "軍事指令",
         "en-US": "Military Command"
       },
       "source_url": "https://lordsmobile.fandom.com/wiki/Military_Command",
@@ -51481,7 +51481,7 @@
     {
       "id": "wonder_battles",
       "titles": {
-        "ja-JP": "ワンダー戦争",
+        "ja-JP": "ワンダー",
         "en-US": "Wonder Battles"
       },
       "source_url": "https://lordsmobile.fandom.com/wiki/Wonder_Battles",
@@ -73529,13 +73529,13 @@
     {
       "id": "guild_duel",
       "titles": {
-        "ja-JP": "ギルド決闘",
+        "ja-JP": "ギルドデュエル",
         "en-US": "Guild Duel"
       },
       "source_url": "https://www.youtube.com/watch?v=QKP5dGy1IHs",
-      "verification_status": "structure_only_numeric_level_data_unavailable",
-      "scope": "tree_structure_reference_only",
-      "notes": "公開情報で全26ノードの配置、接続、最大レベル、効果を確認。英語・日本語名は表示用翻訳。各レベルの時間・資源・専用素材は、信頼できる公開数値表を確認できていないため未収録。",
+      "verification_status": "structure_verified_numeric_level_data_partial",
+      "scope": "tree_structure_and_selected_level_data",
+      "notes": "公開プレイ映像で全26ノードの配置、接続、最大レベル、効果を確認。英語・日本語名は映像内ポルトガル語名からの表示用翻訳。日本語ゲーム画面から確認できた一部レベルの暫定数値を保持。",
       "rows": [
         [
           null,
@@ -73729,83 +73729,43 @@
         ],
         [
           "Reward Incentive II",
-          "Army DEF II"
-        ],
-        [
-          "Reward Incentive II",
           "Army ATK II"
         ],
         [
-          "Reward Incentive II",
-          "Army HP II"
+          "Army ATK II",
+          "Army DEF II"
         ],
         [
-          "Army DEF II",
-          "Familiar Incentive"
+          "Army ATK II",
+          "Army HP II"
         ],
         [
           "Army ATK II",
           "Familiar Incentive"
         ],
         [
-          "Army HP II",
-          "Familiar Incentive"
-        ],
-        [
-          "Familiar Incentive",
-          "Army Colosseum DEF II"
-        ],
-        [
           "Familiar Incentive",
           "Army Colosseum ATK II"
         ],
         [
-          "Familiar Incentive",
+          "Army Colosseum ATK II",
+          "Army Colosseum DEF II"
+        ],
+        [
+          "Army Colosseum ATK II",
           "Army Colosseum HP II"
         ],
         [
-          "Army Colosseum DEF II",
-          "Army DEF III"
-        ],
-        [
-          "Army Colosseum DEF II",
-          "Army ATK III"
-        ],
-        [
-          "Army Colosseum DEF II",
-          "Army HP III"
-        ],
-        [
-          "Army Colosseum ATK II",
-          "Army DEF III"
-        ],
-        [
           "Army Colosseum ATK II",
           "Army ATK III"
         ],
         [
-          "Army Colosseum ATK II",
-          "Army HP III"
-        ],
-        [
-          "Army Colosseum HP II",
+          "Army ATK III",
           "Army DEF III"
         ],
         [
-          "Army Colosseum HP II",
-          "Army ATK III"
-        ],
-        [
-          "Army Colosseum HP II",
+          "Army ATK III",
           "Army HP III"
-        ],
-        [
-          "Army DEF III",
-          "Master Incentive"
-        ],
-        [
-          "Army DEF III",
-          "Crafting Incentive"
         ],
         [
           "Army ATK III",
@@ -73813,59 +73773,51 @@
         ],
         [
           "Army ATK III",
-          "Crafting Incentive"
-        ],
-        [
-          "Army HP III",
-          "Master Incentive"
-        ],
-        [
-          "Army HP III",
           "Crafting Incentive"
         ]
       ],
       "localized_names": {
         "Gathering Incentive": {
-          "ja-JP": "採取インセンティブ"
+          "ja-JP": "採取奨励"
         },
         "Hero Incentive": {
-          "ja-JP": "ヒーローインセンティブ"
+          "ja-JP": "ヒーロー奨励"
         },
         "Construction Incentive": {
-          "ja-JP": "建設インセンティブ"
+          "ja-JP": "建設奨励"
         },
         "Research Incentive": {
-          "ja-JP": "研究インセンティブ"
+          "ja-JP": "研究奨励"
         },
         "Training Incentive": {
-          "ja-JP": "訓練インセンティブ"
+          "ja-JP": "訓練奨励"
         },
         "Reward Incentive I": {
-          "ja-JP": "報酬インセンティブ I"
+          "ja-JP": "報酬奨励 I"
         },
         "Army Colosseum DEF I": {
-          "ja-JP": "軍隊コロシアム防御力 I"
+          "ja-JP": "コロシアム軍隊防御力 I"
         },
         "Army Colosseum ATK I": {
-          "ja-JP": "軍隊コロシアム攻撃力 I"
+          "ja-JP": "コロシアム軍隊攻撃力 I"
         },
         "Army Colosseum HP I": {
-          "ja-JP": "軍隊コロシアムHP I"
+          "ja-JP": "コロシアム軍隊HP I"
         },
         "Artifact Incentive": {
-          "ja-JP": "アーティファクトインセンティブ"
+          "ja-JP": "アーティファクト奨励"
         },
         "Speed-Up Incentive": {
-          "ja-JP": "加速インセンティブ"
+          "ja-JP": "スピードアップ奨励"
         },
         "Stage Incentive": {
-          "ja-JP": "冒険インセンティブ"
+          "ja-JP": "冒険奨励"
         },
         "Hunting Incentive": {
-          "ja-JP": "討伐インセンティブ"
+          "ja-JP": "魔獣討伐奨励"
         },
         "Reward Incentive II": {
-          "ja-JP": "報酬インセンティブ II"
+          "ja-JP": "報酬奨励 II"
         },
         "Army DEF II": {
           "ja-JP": "軍隊防御力 II"
@@ -73877,16 +73829,16 @@
           "ja-JP": "軍隊HP II"
         },
         "Familiar Incentive": {
-          "ja-JP": "召喚獣インセンティブ"
+          "ja-JP": "召喚獣奨励"
         },
         "Army Colosseum DEF II": {
-          "ja-JP": "軍隊コロシアム防御力 II"
+          "ja-JP": "コロシアム軍隊防御力 II"
         },
         "Army Colosseum ATK II": {
-          "ja-JP": "軍隊コロシアム攻撃力 II"
+          "ja-JP": "コロシアム軍隊攻撃力 II"
         },
         "Army Colosseum HP II": {
-          "ja-JP": "軍隊コロシアムHP II"
+          "ja-JP": "コロシアム軍隊HP II"
         },
         "Army DEF III": {
           "ja-JP": "軍隊防御力 III"
@@ -73898,10 +73850,10 @@
           "ja-JP": "軍隊HP III"
         },
         "Master Incentive": {
-          "ja-JP": "マスターインセンティブ"
+          "ja-JP": "奨励マスター"
         },
         "Crafting Incentive": {
-          "ja-JP": "製作インセンティブ"
+          "ja-JP": "錬成奨励"
         }
       },
       "max_levels": {
@@ -73933,8 +73885,8 @@
         "Crafting Incentive": 10
       },
       "effects": {
-        "Training Incentive": {
-          "label": "Training Guild Duel points",
+        "Familiar Incentive": {
+          "label": "Familiar Guild Duel points",
           "levels": {
             "1": "+5%",
             "2": "+10%",
@@ -73946,51 +73898,9 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
-          }
-        },
-        "Crafting Incentive": {
-          "label": "Crafting Guild Duel points",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
-          }
-        },
-        "Gathering Incentive": {
-          "label": "Gathering Guild Duel points",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
-          }
-        },
-        "Stage Incentive": {
-          "label": "Stage Guild Duel points",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "召喚獣デュエルポイント"
           }
         },
         "Research Incentive": {
@@ -74006,10 +73916,13 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "研究デュエルポイント"
           }
         },
-        "Hero Incentive": {
-          "label": "Hero Guild Duel points",
+        "Training Incentive": {
+          "label": "Training Guild Duel points",
           "levels": {
             "1": "+5%",
             "2": "+10%",
@@ -74021,36 +73934,9 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
-          }
-        },
-        "Construction Incentive": {
-          "label": "Construction Guild Duel points",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
-          }
-        },
-        "Master Incentive": {
-          "label": "Master Guild Duel points",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "訓練デュエルポイント"
           }
         },
         "Hunting Incentive": {
@@ -74066,10 +73952,13 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "行動力消費デュエルポイント"
           }
         },
-        "Speed-Up Incentive": {
-          "label": "Speed-Up Guild Duel points",
+        "Stage Incentive": {
+          "label": "Stage Guild Duel points",
           "levels": {
             "1": "+5%",
             "2": "+10%",
@@ -74081,6 +73970,63 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "スタミナ消費デュエルポイント"
+          }
+        },
+        "Gathering Incentive": {
+          "label": "Gathering Guild Duel points",
+          "levels": {
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "採取デュエルポイント"
+          }
+        },
+        "Construction Incentive": {
+          "label": "Construction Guild Duel points",
+          "levels": {
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "建設デュエルポイント"
+          }
+        },
+        "Master Incentive": {
+          "label": "Master Guild Duel points",
+          "levels": {
+            "1": "+10%",
+            "2": "+20%",
+            "3": "+30%",
+            "4": "+40%",
+            "5": "+50%",
+            "6": "+60%",
+            "7": "+70%",
+            "8": "+80%",
+            "9": "+90%",
+            "10": "+100%"
+          },
+          "localized_labels": {
+            "ja-JP": "すべてのデュエルポイント"
           }
         },
         "Artifact Incentive": {
@@ -74096,10 +74042,13 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "アーティファクトデュエルポイント"
           }
         },
-        "Familiar Incentive": {
-          "label": "Familiar Guild Duel points",
+        "Crafting Incentive": {
+          "label": "Crafting Guild Duel points",
           "levels": {
             "1": "+5%",
             "2": "+10%",
@@ -74111,10 +74060,13 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "錬成デュエルポイント"
           }
         },
-        "Army Colosseum HP II": {
-          "label": "Army Colosseum HP",
+        "Hero Incentive": {
+          "label": "Hero Guild Duel points",
           "levels": {
             "1": "+5%",
             "2": "+10%",
@@ -74126,10 +74078,13 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "ヒーローデュエルポイント"
           }
         },
-        "Army Colosseum DEF I": {
-          "label": "Army Colosseum DEF",
+        "Speed-Up Incentive": {
+          "label": "Speed-Up Guild Duel points",
           "levels": {
             "1": "+5%",
             "2": "+10%",
@@ -74141,51 +74096,9 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
-          }
-        },
-        "Army Colosseum HP I": {
-          "label": "Army Colosseum HP",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
-          }
-        },
-        "Army Colosseum DEF II": {
-          "label": "Army Colosseum DEF",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
-          }
-        },
-        "Army Colosseum ATK II": {
-          "label": "Army Colosseum ATK",
-          "levels": {
-            "1": "+5%",
-            "2": "+10%",
-            "3": "+15%",
-            "4": "+20%",
-            "5": "+25%",
-            "6": "+30%",
-            "7": "+35%",
-            "8": "+40%",
-            "9": "+45%",
-            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "スピードアップデュエルポイント"
           }
         },
         "Army Colosseum ATK I": {
@@ -74201,81 +74114,99 @@
             "8": "+40%",
             "9": "+45%",
             "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "コロシアム軍隊攻撃力"
           }
         },
-        "Army DEF III": {
-          "label": "Army DEF",
+        "Army Colosseum DEF II": {
+          "label": "Army Colosseum DEF",
           "levels": {
-            "1": "+1%",
-            "2": "+2%",
-            "3": "+3%",
-            "4": "+4%",
-            "5": "+5%",
-            "6": "+6%",
-            "7": "+7%",
-            "8": "+8%",
-            "9": "+9%",
-            "10": "+10%"
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "コロシアム軍隊防御力"
           }
         },
-        "Army HP II": {
-          "label": "Army HP",
+        "Army Colosseum HP I": {
+          "label": "Army Colosseum HP",
           "levels": {
-            "1": "+1%",
-            "2": "+2%",
-            "3": "+3%",
-            "4": "+4%",
-            "5": "+5%",
-            "6": "+6%",
-            "7": "+7%",
-            "8": "+8%",
-            "9": "+9%",
-            "10": "+10%"
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "コロシアム軍隊HP"
           }
         },
-        "Army ATK II": {
-          "label": "Army ATK",
+        "Army Colosseum HP II": {
+          "label": "Army Colosseum HP",
           "levels": {
-            "1": "+1%",
-            "2": "+2%",
-            "3": "+3%",
-            "4": "+4%",
-            "5": "+5%",
-            "6": "+6%",
-            "7": "+7%",
-            "8": "+8%",
-            "9": "+9%",
-            "10": "+10%"
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "コロシアム軍隊HP"
           }
         },
-        "Army DEF II": {
-          "label": "Army DEF",
+        "Army Colosseum ATK II": {
+          "label": "Army Colosseum ATK",
           "levels": {
-            "1": "+1%",
-            "2": "+2%",
-            "3": "+3%",
-            "4": "+4%",
-            "5": "+5%",
-            "6": "+6%",
-            "7": "+7%",
-            "8": "+8%",
-            "9": "+9%",
-            "10": "+10%"
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "コロシアム軍隊攻撃力"
           }
         },
-        "Army ATK III": {
-          "label": "Army ATK",
+        "Army Colosseum DEF I": {
+          "label": "Army Colosseum DEF",
           "levels": {
-            "1": "+1%",
-            "2": "+2%",
-            "3": "+3%",
-            "4": "+4%",
-            "5": "+5%",
-            "6": "+6%",
-            "7": "+7%",
-            "8": "+8%",
-            "9": "+9%",
-            "10": "+10%"
+            "1": "+5%",
+            "2": "+10%",
+            "3": "+15%",
+            "4": "+20%",
+            "5": "+25%",
+            "6": "+30%",
+            "7": "+35%",
+            "8": "+40%",
+            "9": "+45%",
+            "10": "+50%"
+          },
+          "localized_labels": {
+            "ja-JP": "コロシアム軍隊防御力"
           }
         },
         "Army HP III": {
@@ -74291,18 +74222,1154 @@
             "8": "+8%",
             "9": "+9%",
             "10": "+10%"
+          },
+          "localized_labels": {
+            "ja-JP": "軍隊HP"
+          }
+        },
+        "Army DEF III": {
+          "label": "Army DEF",
+          "levels": {
+            "1": "+1%",
+            "2": "+2%",
+            "3": "+3%",
+            "4": "+4%",
+            "5": "+5%",
+            "6": "+6%",
+            "7": "+7%",
+            "8": "+8%",
+            "9": "+9%",
+            "10": "+10%"
+          },
+          "localized_labels": {
+            "ja-JP": "軍隊防御力"
+          }
+        },
+        "Army DEF II": {
+          "label": "Army DEF",
+          "levels": {
+            "1": "+1%",
+            "2": "+2%",
+            "3": "+3%",
+            "4": "+4%",
+            "5": "+5%",
+            "6": "+6%",
+            "7": "+7%",
+            "8": "+8%",
+            "9": "+9%",
+            "10": "+10%"
+          },
+          "localized_labels": {
+            "ja-JP": "軍隊防御力"
+          }
+        },
+        "Army HP II": {
+          "label": "Army HP",
+          "levels": {
+            "1": "+1%",
+            "2": "+2%",
+            "3": "+3%",
+            "4": "+4%",
+            "5": "+5%",
+            "6": "+6%",
+            "7": "+7%",
+            "8": "+8%",
+            "9": "+9%",
+            "10": "+10%"
+          },
+          "localized_labels": {
+            "ja-JP": "軍隊HP"
+          }
+        },
+        "Army ATK III": {
+          "label": "Army ATK",
+          "levels": {
+            "1": "+1%",
+            "2": "+2%",
+            "3": "+3%",
+            "4": "+4%",
+            "5": "+5%",
+            "6": "+6%",
+            "7": "+7%",
+            "8": "+8%",
+            "9": "+9%",
+            "10": "+10%"
+          },
+          "localized_labels": {
+            "ja-JP": "軍隊攻撃力"
+          }
+        },
+        "Army ATK II": {
+          "label": "Army ATK",
+          "levels": {
+            "1": "+1%",
+            "2": "+2%",
+            "3": "+3%",
+            "4": "+4%",
+            "5": "+5%",
+            "6": "+6%",
+            "7": "+7%",
+            "8": "+8%",
+            "9": "+9%",
+            "10": "+10%"
+          },
+          "localized_labels": {
+            "ja-JP": "軍隊攻撃力"
           }
         },
         "Reward Incentive I": {
           "label": "Guild Duel reward boost",
           "levels": {
             "1": "Unlocked"
+          },
+          "localized_labels": {
+            "ja-JP": "中級ギルドデュエル報酬"
           }
         },
         "Reward Incentive II": {
           "label": "Guild Duel reward boost",
           "levels": {
             "1": "Unlocked"
+          },
+          "localized_labels": {
+            "ja-JP": "上級ギルドデュエル報酬"
+          }
+        }
+      },
+      "level_data": {
+        "Gathering Incentive": {
+          "1": {
+            "academy_level": null,
+            "base_time_seconds": 7745,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 78600,
+              "stone": 32600,
+              "timber": 39100,
+              "ore": 19600,
+              "gold": 32600,
+              "special": 10
+            },
+            "costs_verified": false,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_sibling_level_inference",
+            "checked_on": "2026-08-16",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ],
+            "verification_notes": "同じ前半層の研究奨励・訓練奨励Lv.1実測値と、対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 275000,
+              "stone": 114000,
+              "timber": 137000,
+              "ore": 68700,
+              "gold": 114000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Hero Incentive": {
+          "1": {
+            "academy_level": null,
+            "base_time_seconds": 7745,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 102000,
+              "stone": 25500,
+              "timber": 50900,
+              "ore": 42600,
+              "gold": 42600,
+              "special": 10
+            },
+            "costs_verified": false,
+            "requirements": [
+              {
+                "research": "Gathering Incentive",
+                "level": 1
+              }
+            ],
+            "buildings": {},
+            "verification_status": "provisional_sibling_level_inference",
+            "checked_on": "2026-08-16",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ],
+            "verification_notes": "同じ前半層の研究奨励・訓練奨励Lv.1実測値と、対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 357000,
+              "stone": 89400,
+              "timber": 178000,
+              "ore": 149000,
+              "gold": 149000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Construction Incentive": {
+          "1": {
+            "academy_level": null,
+            "base_time_seconds": 7745,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 102000,
+              "stone": 42600,
+              "timber": 50900,
+              "ore": 25500,
+              "gold": 42600,
+              "special": 10
+            },
+            "costs_verified": false,
+            "requirements": [
+              {
+                "research": "Gathering Incentive",
+                "level": 1
+              }
+            ],
+            "buildings": {},
+            "verification_status": "provisional_sibling_level_inference",
+            "checked_on": "2026-08-16",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ],
+            "verification_notes": "同じ前半層の研究奨励・訓練奨励Lv.1実測値と、対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 357000,
+              "stone": 149000,
+              "timber": 178000,
+              "ore": 89400,
+              "gold": 149000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Research Incentive": {
+          "1": {
+            "base_time_seconds": 7745,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 85100,
+              "stone": 42500,
+              "timber": 42500,
+              "ore": 42500,
+              "gold": 42500,
+              "special": 10
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Gathering Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+255.95%で00:36:16。逆算可能範囲7742～7745秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-11",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_11_01"
+            ]
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 298000,
+              "stone": 149000,
+              "timber": 149000,
+              "ore": 149000,
+              "gold": 149000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Training Incentive": {
+          "1": {
+            "base_time_seconds": 7745,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 85100,
+              "stone": 42500,
+              "timber": 42500,
+              "ore": 42500,
+              "gold": 42500,
+              "special": 10
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Gathering Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+255.95%で00:36:16。逆算可能範囲7742～7745秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-11",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_11_01"
+            ]
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 298000,
+              "stone": 149000,
+              "timber": 149000,
+              "ore": 149000,
+              "gold": 149000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Reward Incentive I": {
+          "1": {
+            "power": 33820,
+            "costs": {
+              "food": 6660000,
+              "stone": 3330000,
+              "timber": 3330000,
+              "ore": 3330000,
+              "gold": 3330000,
+              "special": 150
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Hero Incentive",
+                "level": 1
+              },
+              {
+                "research": "Construction Incentive",
+                "level": 1
+              },
+              {
+                "research": "Research Incentive",
+                "level": 1
+              },
+              {
+                "research": "Training Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面のため元時間と叡智の輪個数は未確認。資源のM表示は丸め値。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-11",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_11_01"
+            ]
+          }
+        },
+        "Army Colosseum DEF I": {
+          "1": {
+            "base_time_seconds": 171250,
+            "technolabe_count": 1,
+            "power": 15373,
+            "costs": {
+              "food": 133000,
+              "stone": 44500,
+              "timber": 66800,
+              "ore": 44500,
+              "gold": 55600,
+              "special": 50
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Reward Incentive I",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+274.85%で12:41:25。逆算可能範囲171247～171250秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army Colosseum ATK I": {
+          "1": {
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "power": null,
+            "costs": {
+              "special": 20
+            },
+            "costs_verified": false,
+            "requirements": [
+              {
+                "research": "Reward Incentive I",
+                "level": 1
+              }
+            ],
+            "buildings": {},
+            "verification_status": "provisional_public_total_inference",
+            "checked_on": "2026-08-15",
+            "source_urls": {
+              "costs": [
+                "https://neovis99.com/lords-mobile-capture-part151/"
+              ]
+            },
+            "verification_notes": "報酬奨励I取得後から報酬奨励IIまでのデュエルの書合計690個から20個と暫定推定。通常資源・時間・パワーは推定しない。"
+          },
+          "2": {
+            "base_time_seconds": 461770,
+            "technolabe_count": 1,
+            "power": 38431,
+            "costs": {
+              "food": 623000,
+              "stone": 194000,
+              "timber": 311000,
+              "ore": 116000,
+              "gold": 194000,
+              "special": 120
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で1d 10:13:08。逆算可能範囲461767～461770秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army Colosseum HP I": {
+          "1": {
+            "base_time_seconds": 171250,
+            "technolabe_count": 1,
+            "power": 15373,
+            "costs": {
+              "food": 133000,
+              "stone": 33400,
+              "timber": 55600,
+              "ore": 44500,
+              "gold": 55600,
+              "special": 50
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Reward Incentive I",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+274.85%で12:41:25。逆算可能範囲171247～171250秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Artifact Incentive": {
+          "1": {
+            "academy_level": null,
+            "base_time_seconds": 6372,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 144000,
+              "stone": 72000,
+              "timber": 86400,
+              "ore": 57600,
+              "gold": 72000,
+              "special": 20
+            },
+            "costs_verified": false,
+            "requirements": [
+              {
+                "research": "Army Colosseum DEF I",
+                "level": 1
+              },
+              {
+                "research": "Army Colosseum ATK I",
+                "level": 1
+              },
+              {
+                "research": "Army Colosseum HP I",
+                "level": 1
+              }
+            ],
+            "buildings": {},
+            "verification_status": "provisional_sibling_level_inference",
+            "checked_on": "2026-08-16",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_01",
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ],
+            "verification_notes": "同じ後半層のスピードアップ奨励・魔獣討伐奨励Lv.1実測値と、対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 504000,
+              "stone": 252000,
+              "timber": 302000,
+              "ore": 201000,
+              "gold": 252000,
+              "special": 40
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Speed-Up Incentive": {
+          "1": {
+            "base_time_seconds": 6372,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 172000,
+              "stone": 43200,
+              "timber": 86400,
+              "ore": 72000,
+              "gold": 72000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Artifact Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+278.85%で00:28:02。逆算可能範囲6369～6372秒の上限を採用。資源のK表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_01"
+            ]
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 605000,
+              "stone": 151000,
+              "timber": 302000,
+              "ore": 252000,
+              "gold": 252000,
+              "special": 40
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Stage Incentive": {
+          "1": {
+            "academy_level": null,
+            "base_time_seconds": 6372,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 115000,
+              "stone": 72000,
+              "timber": 43200,
+              "ore": 115000,
+              "gold": 72000,
+              "special": 20
+            },
+            "costs_verified": false,
+            "requirements": [
+              {
+                "research": "Artifact Incentive",
+                "level": 1
+              }
+            ],
+            "buildings": {},
+            "verification_status": "provisional_sibling_level_inference",
+            "checked_on": "2026-08-16",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_01",
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ],
+            "verification_notes": "同じ後半層のスピードアップ奨励・魔獣討伐奨励Lv.1実測値と、対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 403000,
+              "stone": 252000,
+              "timber": 151000,
+              "ore": 403000,
+              "gold": 252000,
+              "special": 40
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Hunting Incentive": {
+          "1": {
+            "base_time_seconds": 6372,
+            "technolabe_count": 1,
+            "power": 2306,
+            "costs": {
+              "food": 172000,
+              "stone": 72000,
+              "timber": 86400,
+              "ore": 43200,
+              "gold": 72000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Artifact Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+278.85%で00:28:02。逆算可能範囲6369～6372秒の上限を採用。資源のK表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_01"
+            ]
+          },
+          "2": {
+            "base_time_seconds": 35651,
+            "technolabe_count": 1,
+            "power": 4612,
+            "costs": {
+              "food": 605000,
+              "stone": 252000,
+              "timber": 302000,
+              "ore": 151000,
+              "gold": 252000,
+              "special": 40
+            },
+            "costs_verified": true,
+            "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。",
+            "academy_level": null,
+            "requirements": [],
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Reward Incentive II": {
+          "1": {
+            "base_time_seconds": 669731,
+            "technolabe_count": 1,
+            "power": 54957,
+            "costs": {
+              "food": 12000000,
+              "stone": 5000000,
+              "timber": 6000000,
+              "ore": 3000000,
+              "gold": 5000000,
+              "special": 550
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Speed-Up Incentive",
+                "level": 1
+              },
+              {
+                "research": "Stage Incentive",
+                "level": 1
+              },
+              {
+                "research": "Hunting Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "研究速度+278.85%で2d 01:06:20。逆算可能範囲669728～669731秒の上限を採用。資源のM表示は丸め値。",
+            "academy_level": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_01"
+            ]
+          }
+        },
+        "Army DEF II": {
+          "1": {
+            "power": 30745,
+            "costs": {
+              "food": 220000,
+              "stone": 91700,
+              "timber": 91700,
+              "ore": 91700,
+              "gold": 91700,
+              "special": 110
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army ATK II": {
+          "1": {
+            "power": 38432,
+            "costs": {
+              "food": 293000,
+              "stone": 91700,
+              "timber": 91700,
+              "ore": 91700,
+              "gold": 91700,
+              "special": 130
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Reward Incentive II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army HP II": {
+          "1": {
+            "power": 30745,
+            "costs": {
+              "food": 220000,
+              "stone": 91700,
+              "timber": 91700,
+              "ore": 91700,
+              "gold": 91700,
+              "special": 110
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Familiar Incentive": {
+          "1": {
+            "power": 2306,
+            "costs": {
+              "food": 366000,
+              "stone": 114000,
+              "timber": 68700,
+              "ore": 91700,
+              "gold": 114000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army Colosseum DEF II": {
+          "1": {
+            "power": 19216,
+            "costs": {
+              "food": 338000,
+              "stone": 112000,
+              "timber": 169000,
+              "ore": 112000,
+              "gold": 140000,
+              "special": 60
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army Colosseum ATK II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army Colosseum ATK II": {
+          "1": {
+            "power": 23059,
+            "costs": {
+              "food": 450000,
+              "stone": 140000,
+              "timber": 225000,
+              "ore": 84500,
+              "gold": 140000,
+              "special": 70
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Familiar Incentive",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army Colosseum HP II": {
+          "1": {
+            "power": 19216,
+            "costs": {
+              "food": 338000,
+              "stone": 84500,
+              "timber": 140000,
+              "ore": 112000,
+              "gold": 140000,
+              "special": 60
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army Colosseum ATK II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army DEF III": {
+          "1": {
+            "power": 38432,
+            "costs": {
+              "food": 408000,
+              "stone": 170000,
+              "timber": 170000,
+              "ore": 170000,
+              "gold": 170000,
+              "special": 130
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK III",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army ATK III": {
+          "1": {
+            "power": 46118,
+            "costs": {
+              "food": 545000,
+              "stone": 170000,
+              "timber": 170000,
+              "ore": 170000,
+              "gold": 170000,
+              "special": 150
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army Colosseum ATK II",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Army HP III": {
+          "1": {
+            "power": 38432,
+            "costs": {
+              "food": 408000,
+              "stone": 170000,
+              "timber": 170000,
+              "ore": 170000,
+              "gold": 170000,
+              "special": 130
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK III",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Master Incentive": {
+          "1": {
+            "power": 2306,
+            "costs": {
+              "food": 471000,
+              "stone": 117000,
+              "timber": 235000,
+              "ore": 196000,
+              "gold": 196000,
+              "special": 90
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK III",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
+          }
+        },
+        "Crafting Incentive": {
+          "1": {
+            "power": 2306,
+            "costs": {
+              "food": 471000,
+              "stone": 196000,
+              "timber": 235000,
+              "ore": 117000,
+              "gold": 196000,
+              "special": 20
+            },
+            "costs_verified": true,
+            "requirements": [
+              {
+                "research": "Army ATK III",
+                "level": 1
+              }
+            ],
+            "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。",
+            "academy_level": null,
+            "base_time_seconds": null,
+            "technolabe_count": null,
+            "buildings": {},
+            "verification_status": "provisional_game_capture_rounded",
+            "checked_on": "2026-08-15",
+            "evidence_ids": [
+              "evidence_guild_duel_levels_ja_jp_2026_08_15_02"
+            ]
           }
         }
       },
@@ -74353,6 +75420,12 @@
       "name": "BigSoneca Guild Duel gameplay video",
       "url": "https://www.youtube.com/watch?v=QKP5dGy1IHs",
       "scope": "Guild Duel tree structure, maximum levels, and effects only; no per-level time or cost values"
+    },
+    {
+      "name": "ねおブログ ギルドデュエル研究情報",
+      "url": "https://neovis99.com/lords-mobile-capture-part151/",
+      "scope": "報酬奨励I・IIまでに必要なデュエルの書の合計数",
+      "license": "Reference only; no redistribution license asserted"
     }
   ],
   "data_license": {

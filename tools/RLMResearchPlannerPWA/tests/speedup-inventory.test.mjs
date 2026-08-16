@@ -2,12 +2,30 @@ import assert from "node:assert/strict";
 import test from "node:test";
 
 import {
+  SPEEDUP_DURATION_GROUPS,
+  SPEEDUP_DURATION_SECONDS,
   addPaidItemsToInventory,
   deleteSpeedupInventoryEntry,
   recommendPaidOffers,
   saveSpeedupInventoryEntry,
+  speedupDurationGroup,
   speedupCoverage,
 } from "../src/speedup-inventory.js";
+
+test("speedup inventory exposes the fixed game duration presets", () => {
+  assert.deepEqual(SPEEDUP_DURATION_SECONDS, [
+    60, 180, 300, 600, 900, 1800, 3600, 10800, 28800, 54000,
+    86400, 259200, 604800, 2592000,
+  ]);
+  assert.deepEqual(SPEEDUP_DURATION_GROUPS, [
+    ["minutes", [60, 180, 300, 600, 900, 1800, 3600]],
+    ["hours", [10800, 28800, 54000, 86400]],
+    ["days", [259200, 604800, 2592000]],
+  ]);
+  assert.equal(speedupDurationGroup(3600), "minutes");
+  assert.equal(speedupDurationGroup(3601), "hours");
+  assert.equal(speedupDurationGroup(86401), "days");
+});
 
 test("research coverage uses only general and research speedups", () => {
   const result = speedupCoverage(15_000, [

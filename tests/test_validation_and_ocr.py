@@ -541,8 +541,11 @@ def test_observation_repository_loads_verified_partial_tree() -> None:
     if not directory.is_dir():
         pytest.skip("Private observation records are not included in public releases.")
     observations = JsonObservationRepository(directory).load_all()
-    assert len(observations) == 1
-    observation = observations[0]
+    observation = next(
+        item
+        for item in observations
+        if item.observation_id == "economy-tree-ja-JP-2026-08-06-01"
+    )
     assert observation.localized_title("ja-JP") == "経済（実画面確認・一部）"
     assert len(observation.nodes) == 6
     assert len(observation.edges) == 4

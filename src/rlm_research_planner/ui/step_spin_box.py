@@ -7,9 +7,7 @@ from PySide6.QtWidgets import QDoubleSpinBox, QSpinBox, QToolButton
 _BUTTON_BASE_STYLE = """
 QToolButton {
     min-width: 0px;
-    max-width: 16777215px;
     min-height: 0px;
-    max-height: 16777215px;
     padding: 0;
     margin: 0;
     border-radius: 0;

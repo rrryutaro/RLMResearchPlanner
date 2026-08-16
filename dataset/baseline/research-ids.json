@@ -2614,98 +2614,98 @@
     "category_id": "guild_duel",
     "en-US": "Gathering Incentive",
     "id": "guild_duel_gathering_incentive",
-    "ja-JP": "採取インセンティブ",
+    "ja-JP": "採取奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Hero Incentive",
     "id": "guild_duel_hero_incentive",
-    "ja-JP": "ヒーローインセンティブ",
+    "ja-JP": "ヒーロー奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Construction Incentive",
     "id": "guild_duel_construction_incentive",
-    "ja-JP": "建設インセンティブ",
+    "ja-JP": "建設奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Research Incentive",
     "id": "guild_duel_research_incentive",
-    "ja-JP": "研究インセンティブ",
+    "ja-JP": "研究奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Training Incentive",
     "id": "guild_duel_training_incentive",
-    "ja-JP": "訓練インセンティブ",
+    "ja-JP": "訓練奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Reward Incentive I",
     "id": "guild_duel_reward_incentive_i",
-    "ja-JP": "報酬インセンティブ I",
+    "ja-JP": "報酬奨励 I",
     "max_level": 1
   },
   {
     "category_id": "guild_duel",
     "en-US": "Army Colosseum DEF I",
     "id": "guild_duel_army_colosseum_def_i",
-    "ja-JP": "軍隊コロシアム防御力 I",
+    "ja-JP": "コロシアム軍隊防御力 I",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Army Colosseum ATK I",
     "id": "guild_duel_army_colosseum_atk_i",
-    "ja-JP": "軍隊コロシアム攻撃力 I",
+    "ja-JP": "コロシアム軍隊攻撃力 I",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Army Colosseum HP I",
     "id": "guild_duel_army_colosseum_hp_i",
-    "ja-JP": "軍隊コロシアムHP I",
+    "ja-JP": "コロシアム軍隊HP I",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Artifact Incentive",
     "id": "guild_duel_artifact_incentive",
-    "ja-JP": "アーティファクトインセンティブ",
+    "ja-JP": "アーティファクト奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Speed-Up Incentive",
     "id": "guild_duel_speed_up_incentive",
-    "ja-JP": "加速インセンティブ",
+    "ja-JP": "スピードアップ奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Stage Incentive",
     "id": "guild_duel_stage_incentive",
-    "ja-JP": "冒険インセンティブ",
+    "ja-JP": "冒険奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Hunting Incentive",
     "id": "guild_duel_hunting_incentive",
-    "ja-JP": "討伐インセンティブ",
+    "ja-JP": "魔獣討伐奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Reward Incentive II",
     "id": "guild_duel_reward_incentive_ii",
-    "ja-JP": "報酬インセンティブ II",
+    "ja-JP": "報酬奨励 II",
     "max_level": 1
   },
   {
@@ -2733,28 +2733,28 @@
     "category_id": "guild_duel",
     "en-US": "Familiar Incentive",
     "id": "guild_duel_familiar_incentive",
-    "ja-JP": "召喚獣インセンティブ",
+    "ja-JP": "召喚獣奨励",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Army Colosseum DEF II",
     "id": "guild_duel_army_colosseum_def_ii",
-    "ja-JP": "軍隊コロシアム防御力 II",
+    "ja-JP": "コロシアム軍隊防御力 II",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Army Colosseum ATK II",
     "id": "guild_duel_army_colosseum_atk_ii",
-    "ja-JP": "軍隊コロシアム攻撃力 II",
+    "ja-JP": "コロシアム軍隊攻撃力 II",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Army Colosseum HP II",
     "id": "guild_duel_army_colosseum_hp_ii",
-    "ja-JP": "軍隊コロシアムHP II",
+    "ja-JP": "コロシアム軍隊HP II",
     "max_level": 10
   },
   {
@@ -2782,14 +2782,14 @@
     "category_id": "guild_duel",
     "en-US": "Master Incentive",
     "id": "guild_duel_master_incentive",
-    "ja-JP": "マスターインセンティブ",
+    "ja-JP": "奨励マスター",
     "max_level": 10
   },
   {
     "category_id": "guild_duel",
     "en-US": "Crafting Incentive",
     "id": "guild_duel_crafting_incentive",
-    "ja-JP": "製作インセンティブ",
+    "ja-JP": "錬成奨励",
     "max_level": 10
   }
 ]

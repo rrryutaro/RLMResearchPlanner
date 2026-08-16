@@ -244,6 +244,9 @@ JAPANESE_NAME_OVERRIDES = {
 }
 
 GUILD_DUEL_VIDEO_URL = "https://www.youtube.com/watch?v=QKP5dGy1IHs"
+GUILD_DUEL_TOME_TOTALS_URL = (
+    "https://neovis99.com/lords-mobile-capture-part151/"
+)
 GUILD_DUEL_ROWS = [
     [None, None, None, "Gathering Incentive", None, None, None],
     [
@@ -315,32 +318,32 @@ GUILD_DUEL_ROWS = [
     ],
 ]
 GUILD_DUEL_JAPANESE_NAMES = {
-    "Gathering Incentive": "採取インセンティブ",
-    "Hero Incentive": "ヒーローインセンティブ",
-    "Construction Incentive": "建設インセンティブ",
-    "Research Incentive": "研究インセンティブ",
-    "Training Incentive": "訓練インセンティブ",
-    "Reward Incentive I": "報酬インセンティブ I",
-    "Army Colosseum DEF I": "軍隊コロシアム防御力 I",
-    "Army Colosseum ATK I": "軍隊コロシアム攻撃力 I",
-    "Army Colosseum HP I": "軍隊コロシアムHP I",
-    "Artifact Incentive": "アーティファクトインセンティブ",
-    "Speed-Up Incentive": "加速インセンティブ",
-    "Stage Incentive": "冒険インセンティブ",
-    "Hunting Incentive": "討伐インセンティブ",
-    "Reward Incentive II": "報酬インセンティブ II",
+    "Gathering Incentive": "採取奨励",
+    "Hero Incentive": "ヒーロー奨励",
+    "Construction Incentive": "建設奨励",
+    "Research Incentive": "研究奨励",
+    "Training Incentive": "訓練奨励",
+    "Reward Incentive I": "報酬奨励 I",
+    "Army Colosseum DEF I": "コロシアム軍隊防御力 I",
+    "Army Colosseum ATK I": "コロシアム軍隊攻撃力 I",
+    "Army Colosseum HP I": "コロシアム軍隊HP I",
+    "Artifact Incentive": "アーティファクト奨励",
+    "Speed-Up Incentive": "スピードアップ奨励",
+    "Stage Incentive": "冒険奨励",
+    "Hunting Incentive": "魔獣討伐奨励",
+    "Reward Incentive II": "報酬奨励 II",
     "Army DEF II": "軍隊防御力 II",
     "Army ATK II": "軍隊攻撃力 II",
     "Army HP II": "軍隊HP II",
-    "Familiar Incentive": "召喚獣インセンティブ",
-    "Army Colosseum DEF II": "軍隊コロシアム防御力 II",
-    "Army Colosseum ATK II": "軍隊コロシアム攻撃力 II",
-    "Army Colosseum HP II": "軍隊コロシアムHP II",
+    "Familiar Incentive": "召喚獣奨励",
+    "Army Colosseum DEF II": "コロシアム軍隊防御力 II",
+    "Army Colosseum ATK II": "コロシアム軍隊攻撃力 II",
+    "Army Colosseum HP II": "コロシアム軍隊HP II",
     "Army DEF III": "軍隊防御力 III",
     "Army ATK III": "軍隊攻撃力 III",
     "Army HP III": "軍隊HP III",
-    "Master Incentive": "マスターインセンティブ",
-    "Crafting Incentive": "製作インセンティブ",
+    "Master Incentive": "奨励マスター",
+    "Crafting Incentive": "錬成奨励",
 }
 
 
@@ -349,39 +352,223 @@ def _percentage_levels(step: int) -> dict[str, str]:
 
 
 def _guild_duel_edges() -> list[list[str]]:
-    groups = [
-        ["Gathering Incentive"],
-        [
+    return [
+        ["Gathering Incentive", research]
+        for research in (
             "Hero Incentive",
             "Construction Incentive",
             "Research Incentive",
             "Training Incentive",
-        ],
-        ["Reward Incentive I"],
-        [
+        )
+    ] + [
+        [research, "Reward Incentive I"]
+        for research in (
+            "Hero Incentive",
+            "Construction Incentive",
+            "Research Incentive",
+            "Training Incentive",
+        )
+    ] + [
+        ["Reward Incentive I", research]
+        for research in (
             "Army Colosseum DEF I",
             "Army Colosseum ATK I",
             "Army Colosseum HP I",
-        ],
-        ["Artifact Incentive"],
-        ["Speed-Up Incentive", "Stage Incentive", "Hunting Incentive"],
-        ["Reward Incentive II"],
-        ["Army DEF II", "Army ATK II", "Army HP II"],
-        ["Familiar Incentive"],
-        [
-            "Army Colosseum DEF II",
-            "Army Colosseum ATK II",
-            "Army Colosseum HP II",
-        ],
-        ["Army DEF III", "Army ATK III", "Army HP III"],
-        ["Master Incentive", "Crafting Incentive"],
+        )
+    ] + [
+        [research, "Artifact Incentive"]
+        for research in (
+            "Army Colosseum DEF I",
+            "Army Colosseum ATK I",
+            "Army Colosseum HP I",
+        )
+    ] + [
+        ["Artifact Incentive", research]
+        for research in (
+            "Speed-Up Incentive",
+            "Stage Incentive",
+            "Hunting Incentive",
+        )
+    ] + [
+        [research, "Reward Incentive II"]
+        for research in (
+            "Speed-Up Incentive",
+            "Stage Incentive",
+            "Hunting Incentive",
+        )
+    ] + [
+        ["Reward Incentive II", "Army ATK II"],
+        ["Army ATK II", "Army DEF II"],
+        ["Army ATK II", "Army HP II"],
+        ["Army ATK II", "Familiar Incentive"],
+        ["Familiar Incentive", "Army Colosseum ATK II"],
+        ["Army Colosseum ATK II", "Army Colosseum DEF II"],
+        ["Army Colosseum ATK II", "Army Colosseum HP II"],
+        ["Army Colosseum ATK II", "Army ATK III"],
+        ["Army ATK III", "Army DEF III"],
+        ["Army ATK III", "Army HP III"],
+        ["Army ATK III", "Master Incentive"],
+        ["Army ATK III", "Crafting Incentive"],
     ]
-    return [
-        [prerequisite, research]
-        for parents, children in zip(groups, groups[1:])
-        for prerequisite in parents
-        for research in children
-    ]
+
+
+def _apply_guild_duel_capture_observations(category: dict[str, object]) -> None:
+    observations_dir = (
+        Path(__file__).resolve().parents[1] / "data" / "research" / "observations"
+    )
+    level_data = category.setdefault("level_data", {})
+    if not isinstance(level_data, dict):
+        level_data = {}
+        category["level_data"] = level_data
+    for observation_path in sorted(observations_dir.glob("guild_duel_levels_*.json")):
+        observation = json.loads(observation_path.read_text(encoding="utf-8"))
+        evidence_id = str(observation.get("evidence_id", "")).strip()
+        checked_on = str(observation.get("captured_on", "")).strip()
+        for level in observation.get("levels", []):
+            research = str(level["research"])
+            level_number = str(int(level["level"]))
+            record = {key: value for key, value in level.items() if key not in {"research", "level"}}
+            record.setdefault("academy_level", None)
+            record.setdefault("base_time_seconds", None)
+            record.setdefault("technolabe_count", None)
+            record.setdefault("requirements", [])
+            record.setdefault("buildings", {})
+            record.setdefault("verification_status", "provisional_game_capture_rounded")
+            record.setdefault("checked_on", checked_on)
+            if evidence_id:
+                record.setdefault("evidence_ids", [evidence_id])
+            level_data.setdefault(research, {})[level_number] = record
+
+
+GUILD_DUEL_LEVEL_ONE_INFERENCES: dict[str, dict[str, object]] = {
+    "Gathering Incentive": {
+        "base_time_seconds": 7745,
+        "technolabe_count": 1,
+        "power": 2306,
+        "costs": {
+            "food": 78600,
+            "stone": 32600,
+            "timber": 39100,
+            "ore": 19600,
+            "gold": 32600,
+            "special": 10,
+        },
+        "evidence_ids": [
+            "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+        ],
+        "verification_notes": (
+            "同じ前半層の研究奨励・訓練奨励Lv.1実測値と、対象研究Lv.2実測値の"
+            "比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+        ),
+    },
+    "Hero Incentive": {
+        "base_time_seconds": 7745,
+        "technolabe_count": 1,
+        "power": 2306,
+        "costs": {
+            "food": 102000,
+            "stone": 25500,
+            "timber": 50900,
+            "ore": 42600,
+            "gold": 42600,
+            "special": 10,
+        },
+        "evidence_ids": [
+            "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+        ],
+        "verification_notes": (
+            "同じ前半層の研究奨励・訓練奨励Lv.1実測値と、対象研究Lv.2実測値の"
+            "比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+        ),
+    },
+    "Construction Incentive": {
+        "base_time_seconds": 7745,
+        "technolabe_count": 1,
+        "power": 2306,
+        "costs": {
+            "food": 102000,
+            "stone": 42600,
+            "timber": 50900,
+            "ore": 25500,
+            "gold": 42600,
+            "special": 10,
+        },
+        "evidence_ids": [
+            "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+        ],
+        "verification_notes": (
+            "同じ前半層の研究奨励・訓練奨励Lv.1実測値と、対象研究Lv.2実測値の"
+            "比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+        ),
+    },
+    "Artifact Incentive": {
+        "base_time_seconds": 6372,
+        "technolabe_count": 1,
+        "power": 2306,
+        "costs": {
+            "food": 144000,
+            "stone": 72000,
+            "timber": 86400,
+            "ore": 57600,
+            "gold": 72000,
+            "special": 20,
+        },
+        "evidence_ids": [
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_01",
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+        ],
+        "verification_notes": (
+            "同じ後半層のスピードアップ奨励・魔獣討伐奨励Lv.1実測値と、"
+            "対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+        ),
+    },
+    "Stage Incentive": {
+        "base_time_seconds": 6372,
+        "technolabe_count": 1,
+        "power": 2306,
+        "costs": {
+            "food": 115000,
+            "stone": 72000,
+            "timber": 43200,
+            "ore": 115000,
+            "gold": 72000,
+            "special": 20,
+        },
+        "evidence_ids": [
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_01",
+            "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+        ],
+        "verification_notes": (
+            "同じ後半層のスピードアップ奨励・魔獣討伐奨励Lv.1実測値と、"
+            "対象研究Lv.2実測値の比率から暫定推定。資源はゲーム内短縮表示相当の丸め値。"
+        ),
+    },
+}
+
+
+def _apply_guild_duel_level_one_inferences(category: dict[str, object]) -> None:
+    level_data = category.setdefault("level_data", {})
+    if not isinstance(level_data, dict):
+        level_data = {}
+        category["level_data"] = level_data
+    for research, inferred in GUILD_DUEL_LEVEL_ONE_INFERENCES.items():
+        levels = level_data.setdefault(research, {})
+        if not isinstance(levels, dict):
+            levels = {}
+            level_data[research] = levels
+        existing = levels.get("1", {})
+        record = dict(existing) if isinstance(existing, dict) else {}
+        record.update(inferred)
+        record.setdefault("academy_level", None)
+        record.setdefault("requirements", [])
+        record.setdefault("buildings", {})
+        record["costs_verified"] = False
+        record["verification_status"] = "provisional_sibling_level_inference"
+        record["checked_on"] = "2026-08-16"
+        levels["1"] = record
 
 
 def _apply_guild_duel_video_data(categories: list[dict[str, object]]) -> None:
@@ -426,6 +613,45 @@ def _apply_guild_duel_video_data(categories: list[dict[str, object]]) -> None:
             "label": "Guild Duel reward boost",
             "levels": {"1": "Unlocked"},
         }
+    effects["Research Incentive"]["label"] = "Research Guild Duel points"
+    japanese_effect_labels = {
+        "Gathering Incentive": "採取デュエルポイント",
+        "Hero Incentive": "ヒーローデュエルポイント",
+        "Construction Incentive": "建設デュエルポイント",
+        "Research Incentive": "研究デュエルポイント",
+        "Training Incentive": "訓練デュエルポイント",
+        "Army Colosseum DEF I": "コロシアム軍隊防御力",
+        "Army Colosseum ATK I": "コロシアム軍隊攻撃力",
+        "Army Colosseum HP I": "コロシアム軍隊HP",
+        "Artifact Incentive": "アーティファクトデュエルポイント",
+        "Speed-Up Incentive": "スピードアップデュエルポイント",
+        "Stage Incentive": "スタミナ消費デュエルポイント",
+        "Hunting Incentive": "行動力消費デュエルポイント",
+        "Army DEF II": "軍隊防御力",
+        "Army ATK II": "軍隊攻撃力",
+        "Army HP II": "軍隊HP",
+        "Familiar Incentive": "召喚獣デュエルポイント",
+        "Army Colosseum DEF II": "コロシアム軍隊防御力",
+        "Army Colosseum ATK II": "コロシアム軍隊攻撃力",
+        "Army Colosseum HP II": "コロシアム軍隊HP",
+        "Army DEF III": "軍隊防御力",
+        "Army ATK III": "軍隊攻撃力",
+        "Army HP III": "軍隊HP",
+        "Master Incentive": "すべてのデュエルポイント",
+        "Crafting Incentive": "錬成デュエルポイント",
+    }
+    for name, label in japanese_effect_labels.items():
+        effects[name]["localized_labels"] = {"ja-JP": label}
+    effects["Training Incentive"]["label"] = "Training Guild Duel points"
+    effects["Master Incentive"]["levels"] = _percentage_levels(10)
+    effects["Reward Incentive I"]["label"] = "Guild Duel reward boost"
+    effects["Reward Incentive I"]["localized_labels"] = {
+        "ja-JP": "中級ギルドデュエル報酬"
+    }
+    effects["Reward Incentive II"]["localized_labels"] = {
+        "ja-JP": "上級ギルドデュエル報酬"
+    }
+    category["titles"]["ja-JP"] = "ギルドデュエル"
     category["rows"] = GUILD_DUEL_ROWS
     category["localized_names"] = {
         name: {"ja-JP": translated}
@@ -436,13 +662,29 @@ def _apply_guild_duel_video_data(categories: list[dict[str, object]]) -> None:
     }
     category["effects"] = effects
     category["edges"] = _guild_duel_edges()
-    category["verification_status"] = "video_verified_layout_levels_effects"
-    category["scope"] = "full_tree_from_public_gameplay_video"
+    _apply_guild_duel_capture_observations(category)
+    _apply_guild_duel_level_one_inferences(category)
+    has_level_data = bool(category.get("level_data"))
+    category["verification_status"] = (
+        "structure_verified_numeric_level_data_partial"
+        if has_level_data
+        else "video_verified_layout_levels_effects"
+    )
+    category["scope"] = (
+        "tree_structure_and_selected_level_data"
+        if has_level_data
+        else "full_tree_from_public_gameplay_video"
+    )
     category["source_url"] = GUILD_DUEL_VIDEO_URL
     category["license_name"] = "Public gameplay reference (facts transcribed)"
     category["notes"] = (
         "公開プレイ映像で全26ノードの配置、接続、最大レベル、効果を確認。"
         "英語・日本語名は映像内ポルトガル語名からの表示用翻訳。"
+        + (
+            "日本語ゲーム画面から確認できた一部レベルの暫定数値を保持。"
+            if has_level_data
+            else ""
+        )
     )
 
 
@@ -1402,6 +1644,12 @@ def enrich_catalog(catalog: dict[str, object]) -> tuple[dict[str, object], dict[
             "name": "BigSoneca Guild Duel gameplay video",
             "url": GUILD_DUEL_VIDEO_URL,
             "scope": "Guild Duel tree layout, levels, and effects",
+        },
+        {
+            "name": "ねおブログ ギルドデュエル研究情報",
+            "url": GUILD_DUEL_TOME_TOTALS_URL,
+            "scope": "報酬奨励I・IIまでに必要なデュエルの書の合計数",
+            "license": "Reference only; no redistribution license asserted",
         },
     ]
     report = {

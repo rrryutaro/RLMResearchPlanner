@@ -9,8 +9,8 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.4-b1">
-    <title>RLM Research Planner v0.1.4</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.5-b2">
+    <title>RLM Research Planner v0.1.5</title>
   </head>
   <body>
     <header class="app-header">
@@ -18,7 +18,7 @@
         <p class="eyebrow" data-i18n="app.subtitle">Lords Mobile unofficial tool</p>
         <div class="app-title-line">
           <h1>RLM Research Planner</h1>
-          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.4</span>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.5</span>
         </div>
       </div>
       <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="Browser network status">Online</span>
@@ -90,15 +90,15 @@
               <option value="upgrade_defenses">上級防城</option>
               <option value="upgrade_military">上級軍事</option>
               <option value="army_leadership">軍隊戦術</option>
-              <option value="military_command">軍事司令</option>
+              <option value="military_command">軍事指令</option>
               <option value="familiars">召喚獣</option>
               <option value="familiar_battles">召喚獣の出陣</option>
               <option value="sigils">シギル</option>
-              <option value="wonder_battles">ワンダー戦争</option>
+              <option value="wonder_battles">ワンダー</option>
               <option value="gear">部隊武装</option>
               <option value="advanced_wonder_battles">上級ワンダー軍事</option>
               <option value="mana_awakening">マナ覚醒</option>
-              <option value="guild_duel">ギルド決闘</option>
+              <option value="guild_duel">ギルドデュエル</option>
           </select>
         </div>
         <div id="tree-viewport" class="tree-viewport" tabindex="0" aria-label="研究ツリー。ドラッグで移動、ピンチ操作で拡大縮小できます" data-i18n-aria="pwa.tree_viewport_aria">
@@ -257,32 +257,7 @@
             <p class="hint" data-i18n="player.research_speed_boost_hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
             </div>
           </details>
-          <details class="settings-card speedup-inventory-card" data-player-section="acceleration">
-            <summary data-i18n="player.speedup_inventory">所持スピードアップ</summary>
-            <div class="settings-card-body">
-              <p class="settings-description" data-i18n="player.speedup_inventory_hint">登録内容を一覧から選び、共通の入力欄で追加・編集します。</p>
-              <div id="speedup-inventory-list" class="speedup-inventory-list"></div>
-              <p id="speedup-inventory-empty" class="empty-state" data-i18n="player.speedup_empty">所持スピードアップは未登録です。</p>
-              <div id="speedup-inventory-editor" class="speedup-inventory-editor" hidden>
-                <strong id="speedup-inventory-editor-title" data-i18n="player.speedup_new">スピードアップを追加</strong>
-                <div class="speedup-inventory-fields">
-                  <label class="field speedup-kind-field"><span data-i18n="paid.kind">種類</span><select id="speedup-inventory-kind"></select></label>
-                  <label class="field"><span data-i18n="paid.duration">1個の時間</span><input id="speedup-inventory-duration" type="number" inputmode="numeric" min="1" value="1"></label>
-                  <label class="field"><span data-i18n="paid.unit">単位</span><select id="speedup-inventory-unit"></select></label>
-                  <label class="field"><span data-i18n="paid.quantity">個数</span><input id="speedup-inventory-quantity" type="number" inputmode="numeric" min="1" value="1"></label>
-                </div>
-                <div class="button-row compact-actions">
-                  <button id="speedup-inventory-save" class="primary" type="button" data-i18n="common.save">保存</button>
-                  <button id="speedup-inventory-cancel" type="button" data-i18n="common.cancel">キャンセル</button>
-                  <button id="speedup-inventory-delete" class="danger" type="button" data-i18n="player.speedup_delete">削除</button>
-                </div>
-              </div>
-              <div class="speedup-inventory-footer">
-                <button id="speedup-inventory-add" type="button" data-i18n="player.speedup_add">時短を追加</button>
-                <span id="speedup-inventory-summary" class="muted"></span>
-              </div>
-            </div>
-          </details>
+          <div id="speedup-inventory-groups" class="speedup-inventory-groups" data-player-section="acceleration"></div>
           <details class="settings-card" data-player-section="resources">
             <summary data-i18n="player.resources">所持資源</summary>
             <div class="settings-card-body">
@@ -520,6 +495,10 @@
             <p id="help-construction-body"></p>
           </article>
           <article>
+            <h3 data-i18n="help.player.title">プレイヤー設定</h3>
+            <p id="help-player-body"></p>
+          </article>
+          <article>
             <h3 data-i18n="help.paid.title">課金候補の比較</h3>
             <p data-i18n="help.paid.body">課金タブは入力・保存一覧・比較に分かれています。目的と内容を保存し、目的別の順位や換算設定を比較画面で確認できます。ジェム換算と素材ポイントは変更可能な比較基準で、ゲーム公式の現金価値ではありません。課金データだけを書き出して追加取り込みでき、PWA版はすべて手入力です。</p>
           </article>
@@ -601,7 +580,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.4-b1";
+      const startupVersion = "0.1.5-b2";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -614,8 +593,8 @@
       const startupLoadingMessage = document.getElementById("startup-loading-message");
       const mainElement = document.querySelector("main");
       const startupVersionLabel = isPreviewScope
-        ? "v0.1.4 Preview"
-        : "v0.1.4";
+        ? "v0.1.5 Preview"
+        : "v0.1.5";
       document.getElementById("header-version").textContent = startupVersionLabel;
       document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
       document.title = `RLM Research Planner ${startupVersionLabel}`;
@@ -703,6 +682,6 @@
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.4-b1"></script>
+    <script type="module" src="./src/app.js?v=0.1.5-b2"></script>
   </body>
 </html>

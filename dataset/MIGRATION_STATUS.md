@@ -1,6 +1,6 @@
 # Research dataset migration status
 
-Last verified: 2026-08-11
+Last verified: 2026-08-16
 
 ## Current boundary
 
@@ -25,7 +25,7 @@ interpretation of the generated data.
 
 - 16 research trees
 - 399 frozen research IDs
-- 3,143 level records
+- 3,179 level records
 - Japanese and English names for every tree and research ID
 - source and private-evidence metadata separated from facts
 - prerequisites, 631 legacy source edges, and display connections kept as
@@ -55,9 +55,11 @@ the converter changed those values.
 - Effects preserve the exact legacy display value with `parsed: false` and
   `display_fallback`. Metric parsing is deferred so conversion cannot silently
   change visible effects.
-- Guild Duel remains `structure_only` because the legacy catalog does not have
-  per-level time and cost data.
-- The single private economy capture is represented only by public-safe
+- Guild Duel retains complete tree structure and selected provisional Lv.1
+  records. Direct game captures, fact-specific public totals, and explicitly
+  labelled sibling-pattern estimates are tracked separately; fields without a
+  defensible observation or inference remain null.
+- Private economy and Guild Duel captures are represented only by public-safe
   metadata. No private path or screenshot is copied into the dataset.
 
 ## Repeatable check
@@ -78,7 +80,7 @@ The reviewed migration plan required the Phase 3 comparison to remain clean
 across at least two real legacy-catalog updates. This proved that the converter
 is maintainable rather than matching only one frozen catalog revision.
 
-Current gate count: **3 recorded post-baseline catalog updates; 2 required**.
+Current gate count: **7 recorded post-baseline catalog updates; 2 required**.
 The distinct catalog hashes and comparison summaries are recorded in
 `reports/catalog-update-gate.json`. Re-running the converter against the same
 catalog hash is not counted. Both recorded updates were intentional data or

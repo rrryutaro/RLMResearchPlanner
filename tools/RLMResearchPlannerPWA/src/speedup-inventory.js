@@ -1,8 +1,27 @@
-import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.4-b1";
+import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.5-b2";
 
 export const SPEEDUP_KINDS = [
   "general", "research", "training", "construction", "healing", "merging", "crafting",
 ];
+
+export const SPEEDUP_DURATION_SECONDS = [
+  60, 3 * 60, 5 * 60, 10 * 60, 15 * 60, 30 * 60, 60 * 60,
+  3 * 60 * 60, 8 * 60 * 60, 15 * 60 * 60, 24 * 60 * 60,
+  3 * 24 * 60 * 60, 7 * 24 * 60 * 60, 30 * 24 * 60 * 60,
+];
+
+export const SPEEDUP_DURATION_GROUPS = [
+  ["minutes", SPEEDUP_DURATION_SECONDS.slice(0, 7)],
+  ["hours", SPEEDUP_DURATION_SECONDS.slice(7, 11)],
+  ["days", SPEEDUP_DURATION_SECONDS.slice(11)],
+];
+
+export function speedupDurationGroup(durationSeconds) {
+  const seconds = Math.max(0, Math.trunc(Number(durationSeconds) || 0));
+  if (seconds <= 60 * 60) return "minutes";
+  if (seconds <= 24 * 60 * 60) return "hours";
+  return "days";
+}
 
 const integer = (value) => Math.max(0, Math.trunc(Number(value) || 0));
 

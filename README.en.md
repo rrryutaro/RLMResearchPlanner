@@ -4,7 +4,7 @@
 
 RLMResearchPlanner is an unofficial research and construction planner for *Lords Mobile*. It is available as a Windows desktop application and a browser-based mobile version. Both versions use the same research and building data and exchange compatible JSON files.
 
-The current public `v0.1.4` release is an alpha version. Its main features are usable, but its features, interface, and bundled data remain under active verification and improvement.
+The current public `v0.1.3` release is an alpha version. Its main features are usable, but its features, interface, and bundled data remain under active verification and improvement.
 
 This project is not affiliated with IGG or the game operator. Game names, trademarks, and other rights belong to their respective owners.
 
@@ -40,7 +40,7 @@ Backups, research directives, paid-offer comparisons, and translations have diff
 - OCR is an input aid and does not yet recognize every environment, screen, or research item reliably. OCR verification currently covers Japanese and English. Show the same research category in the game and the tool, and always verify recognized values.
 - Operation has been verified with game version `v2.200.309`; later game updates may change values or layouts.
 - Research time or resource values that cannot be confirmed from a published source remain explicitly unrecorded rather than being estimated.
-- The Guild Duel tree structure is included, but its level-by-level time, resource, and dedicated-material data is not yet recorded.
+- The Guild Duel tree structure is included. Level 1 for Research Incentive, Training Incentive, Reward Incentive I, Speed-Up Incentive, Hunting Incentive, and Reward Incentive II is provisionally recorded from rounded in-game displays and reverse-calculated times. Some intervening tome counts are provisional inferences from published totals; unconfirmed normal resources and times remain unavailable.
 - The unsigned Windows executable may trigger a Microsoft SmartScreen warning.
 
 ## Important notice and disclaimer

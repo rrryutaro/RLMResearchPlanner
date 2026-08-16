@@ -85,7 +85,7 @@ def test_executable_build_requires_the_exact_runtime_license_check() -> None:
     build_script = (PROJECT_ROOT / "build_exe.bat").read_text(encoding="utf-8")
 
     assert "check_release_licenses.py\" --final --exact-runtime" in build_script
-    assert "PYINSTALLER_CONFIG_DIR=%~dp0build\\PyInstallerCache" in build_script
+    assert "PYINSTALLER_CONFIG_DIR=%~dp0..\\..\\build\\PyInstallerCache" in build_script
     assert "scripts\\write_release_checksum.py" in build_script
 
 
