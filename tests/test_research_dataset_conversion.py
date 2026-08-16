@@ -211,6 +211,8 @@ def test_legacy_source_edges_and_guild_duel_license_are_preserved() -> None:
 
 
 def test_guild_duel_capture_is_private_evidence_for_provisional_level_data() -> None:
+    if not GUILD_DUEL_OBSERVATION_PATH.is_file():
+        pytest.skip("private Guild Duel observation is not included in public source")
     converter = _converter()
     generated = converter.build_generated_dataset()
     evidence_id = "evidence_guild_duel_levels_ja_jp_2026_08_11_01"
@@ -241,6 +243,8 @@ def test_guild_duel_capture_is_private_evidence_for_provisional_level_data() -> 
 
 
 def test_additional_guild_duel_capture_and_tome_inference_keep_provenance() -> None:
+    if not GUILD_DUEL_ADDITIONAL_OBSERVATION_PATH.is_file():
+        pytest.skip("private Guild Duel observation is not included in public source")
     converter = _converter()
     generated = converter.build_generated_dataset()
     evidence_id = "evidence_guild_duel_levels_ja_jp_2026_08_15_01"
