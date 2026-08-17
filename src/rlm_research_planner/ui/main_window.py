@@ -4237,8 +4237,9 @@ class MainWindow(QMainWindow):
         compact_rows = {key: index for index, key in enumerate(row_keys)}
         for research_id, required_level in result.required_levels.items():
             node = self._observed_nodes[research_id]
+            observation = self._node_observation[research_id]
             observation_index = observation_order.get(
-                self._node_observation[research_id].observation_id, 999
+                observation.observation_id, 999
             )
             current = self._tree_level_draft.get(research_id, 0)
             missing = max(0, required_level - current)
@@ -4260,6 +4261,8 @@ class MainWindow(QMainWindow):
                     layout_row=compact_rows[(observation_index, node.row)],
                     layout_column=node.column,
                     shortage_levels=missing,
+                    category_id=observation.category_id,
+                    category_name=self._category_name(observation),
                 )
             )
         self.plan_tree_view.set_research(
@@ -4267,6 +4270,7 @@ class MainWindow(QMainWindow):
             result.edges,
             result.target_research_id,
             self.t("plan.no_steps"),
+            cross_category_legend=self.t("plan.cross_category_legend"),
         )
         total_levels = sum(
             max(0, required - self._tree_level_draft.get(research_id, 0))

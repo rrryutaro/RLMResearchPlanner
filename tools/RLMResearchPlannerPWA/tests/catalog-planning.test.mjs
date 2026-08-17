@@ -63,7 +63,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.6");
+  assert.equal(publicVersion, "0.1.7");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -74,7 +74,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.6 Preview/u);
+  assert.match(indexHtml, new RegExp(`v${publicVersion.replaceAll(".", "\\.")} Preview`, "u"));
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -410,6 +410,10 @@ test("category selector has a static fallback before JavaScript starts", () => {
   assert.match(appSource, /"plan-row-effect", `\$\{t\("plan\.effect", "効果"\)\} \$\{effect\}`/);
   assert.match(indexHtml, /id="plan-steps-title"/);
   assert.match(appSource, /planRow\(step, \{ showCategory: false \}\)/);
+  assert.match(indexHtml, /id="plan-cross-category-legend"[^>]*data-i18n="plan\.cross_category_legend"/);
+  assert.match(appSource, /path\.classList\.add\("is-cross-category"\)/);
+  assert.match(appSource, /"plan-research-category", node\.categoryName/);
+  assert.match(stylesSource, /\.tree-lines path\.is-cross-category \{[^}]*stroke-dasharray:/);
   assert.match(appSource, /if \(showCategory\) main\.append\(create\("span", "plan-row-category"/);
   assert.match(stylesSource, /\.plan-row-effect \{[^}]*overflow-wrap: anywhere;[^}]*white-space: normal;/);
   assert.match(appSource, /"detail-item detail-effect"/);

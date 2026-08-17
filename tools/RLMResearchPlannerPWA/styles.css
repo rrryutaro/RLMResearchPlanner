@@ -88,6 +88,7 @@ h1 { flex: 0 1 auto; min-width: 0; margin-bottom: 0; overflow: hidden; font-size
 .tree-lines path { fill: none; stroke: #35505a; stroke-width: 3; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .tree-lines path.is-active { stroke: #dca51e; }
 .tree-lines path.is-inactive { stroke: #35505a; }
+.tree-lines path.is-cross-category { stroke: #55bfd4; stroke-width: 4; stroke-dasharray: 10 7; }
 .research-card { position: absolute; display: grid; grid-template-rows: 1fr auto auto auto; gap: calc(8px * var(--node-scale)); padding: calc(12px * var(--node-scale)); border: calc(2px * var(--node-scale)) solid #496a75; border-radius: calc(8px * var(--node-scale)); color: var(--text); background: linear-gradient(155deg, #173442, #0d202a); box-shadow: 0 calc(8px * var(--node-scale)) calc(20px * var(--node-scale)) rgba(0, 0, 0, .25); text-align: center; overflow: hidden; }
 .research-card:hover, .research-card:focus-visible { border-color: var(--accent-2); }
 .research-card.is-progress { border-color: var(--accent); background: linear-gradient(155deg, #4b3910, #1e261f); }
@@ -124,10 +125,12 @@ h1 { flex: 0 1 auto; min-width: 0; margin-bottom: 0; overflow: hidden; font-size
 .plan-tree-panel { margin-bottom: 18px; padding: 0; border: 1px solid #2c5360; border-radius: 12px; background: #0b202a; overflow: hidden; }
 .plan-tree-panel > summary { padding: 12px 14px; cursor: pointer; color: var(--text); font-weight: 800; }
 .plan-tree-panel > .muted { margin: 0; padding: 0 14px 10px; }
+.plan-cross-category-legend { margin: 0; padding: 0 14px 10px; color: #7fe3f2; font-size: .8rem; font-weight: 800; }
 .plan-tree-viewport { position: relative; width: 100%; height: min(54dvh, 520px); min-height: 300px; overflow: auto; border-top: 1px solid #244854; background-color: #07141c; background-image: linear-gradient(#102631 1px, transparent 1px), linear-gradient(90deg, #102631 1px, transparent 1px); background-size: 24px 24px; overscroll-behavior: contain; touch-action: pan-x pan-y; }
 .plan-tree-stage { position: relative; min-width: 100%; min-height: 100%; }
-.plan-research-card { grid-template-rows: 1fr auto auto auto auto; }
+.plan-research-card { grid-template-rows: auto 1fr auto auto auto auto; gap: calc(5px * var(--node-scale)); padding: calc(10px * var(--node-scale)); }
 .plan-research-card.is-target { z-index: 2; outline: calc(4px * var(--node-scale)) solid var(--selection); outline-offset: calc(2px * var(--node-scale)); }
+.plan-research-category { color: #7fe3f2; font-size: calc(12px * var(--node-scale)); font-weight: 800; line-height: 1; white-space: nowrap; }
 .plan-research-required { color: #f4d46a; font-size: calc(15px * var(--node-scale)); font-weight: 700; white-space: nowrap; }
 .plan-research-missing { color: #9edff2; font-size: calc(14px * var(--node-scale)); white-space: nowrap; }
 .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 8px; margin-bottom: 24px; }

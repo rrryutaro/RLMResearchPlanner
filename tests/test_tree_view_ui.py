@@ -243,6 +243,65 @@ def test_tree_connections_distinguish_unmet_and_unlocked_prerequisites() -> None
     assert edge.pen().color().name().upper() == "#F2B632"
 
 
+def test_cross_category_prerequisite_is_labeled_and_uses_a_dashed_edge() -> None:
+    _app = QApplication.instance() or QApplication([])
+    nodes = [
+        ResearchTreeNode(
+            research_id="economy_requirement",
+            name="保管庫管理",
+            current_level=7,
+            max_level=10,
+            status="不足",
+            recommendation="必要 Lv.10",
+            display_order=0,
+            layout_row=0,
+            layout_column=0,
+            category_id="economy",
+            category_name="経済",
+        ),
+        ResearchTreeNode(
+            research_id="military_requirement",
+            name="軍隊攻撃力Ⅰ",
+            current_level=9,
+            max_level=10,
+            status="不足",
+            recommendation="必要 Lv.10",
+            display_order=1,
+            layout_row=1,
+            layout_column=0,
+            category_id="military",
+            category_name="軍事",
+        ),
+    ]
+    view = ResearchTreeView()
+    view.set_research(
+        nodes,
+        [("economy_requirement", "military_requirement")],
+        cross_category_legend="点線：別分野からつながる前提研究",
+    )
+
+    cards = {
+        item.research_id: item
+        for item in view.scene().items()
+        if getattr(item, "research_id", "")
+    }
+    assert cards["economy_requirement"].category_item.toPlainText() == "経済"
+    assert cards["military_requirement"].category_item.toPlainText() == "軍事"
+    edge = next(
+        item for item in view.scene().items() if isinstance(item, QGraphicsPathItem)
+    )
+    assert edge.data(5) is True
+    assert edge.pen().style() == Qt.DashLine
+    assert edge.pen().color().name().upper() == "#55BFD4"
+    legend = next(
+        item
+        for item in view.scene().items()
+        if item.data(10) == "cross-category-legend"
+    )
+    assert legend.toPlainText() == "点線：別分野からつながる前提研究"
+    view.close()
+
+
 def test_tree_zoom_is_bounded() -> None:
     _app = QApplication.instance() or QApplication([])
     view = ResearchTreeView()

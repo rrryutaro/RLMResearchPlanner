@@ -9,8 +9,8 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.6-b1">
-    <title>RLM Research Planner v0.1.6</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.7-b1">
+    <title>RLM Research Planner v0.1.7</title>
   </head>
   <body>
     <header class="app-header">
@@ -18,7 +18,7 @@
         <p class="eyebrow" data-i18n="app.subtitle">Lords Mobile unofficial tool</p>
         <div class="app-title-line">
           <h1>RLM Research Planner</h1>
-          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.6</span>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.7</span>
         </div>
       </div>
       <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="Browser network status">Online</span>
@@ -148,7 +148,8 @@
             </div>
             <details id="plan-tree-panel" class="plan-tree-panel" open>
               <summary data-i18n="plan.dependency_tree">前提研究ツリー</summary>
-              <p class="muted" data-i18n="plan.dependency_tree_hint">目標までに不足している研究と接続だけを表示します。</p>
+              <p class="muted" data-i18n="plan.dependency_tree_hint">カード上部に研究分野を表示します。点線は別分野からつながる前提研究です。</p>
+              <p id="plan-cross-category-legend" class="plan-cross-category-legend" hidden data-i18n="plan.cross_category_legend">点線：別分野からつながる前提研究</p>
               <div id="plan-tree-viewport" class="plan-tree-viewport" tabindex="0">
                 <div id="plan-tree-stage" class="plan-tree-stage">
                   <svg id="plan-tree-lines" class="tree-lines" aria-hidden="true"></svg>
@@ -582,7 +583,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.6-b1";
+      const startupVersion = "0.1.7-b1";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -595,8 +596,8 @@
       const startupLoadingMessage = document.getElementById("startup-loading-message");
       const mainElement = document.querySelector("main");
       const startupVersionLabel = isPreviewScope
-        ? "v0.1.6 Preview"
-        : "v0.1.6";
+        ? "v0.1.7 Preview"
+        : "v0.1.7";
       document.getElementById("header-version").textContent = startupVersionLabel;
       document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
       document.title = `RLM Research Planner ${startupVersionLabel}`;
@@ -684,6 +685,6 @@
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.6-b1"></script>
+    <script type="module" src="./src/app.js?v=0.1.7-b1"></script>
   </body>
 </html>

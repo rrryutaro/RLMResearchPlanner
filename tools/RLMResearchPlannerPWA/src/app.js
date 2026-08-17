@@ -1,18 +1,18 @@
-import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.6-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.6-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.6-b1";
-import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.6-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.6-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.6-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.6-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.6-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.6-b1";
-import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.6-b1";
-import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.6-b1";
+import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.7-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.7-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.7-b1";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.7-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.7-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.7-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.7-b1";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.7-b1";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.7-b1";
+import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.7-b1";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.7-b1";
 
-const RELEASE_VERSION = "0.1.6";
+const RELEASE_VERSION = "0.1.7";
 const DEVELOPMENT_BUILD = 1;
-const ASSET_VERSION = "0.1.6-b1";
+const ASSET_VERSION = "0.1.7-b1";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const CARD_WIDTH = 250;
@@ -2340,6 +2340,8 @@ function renderPlanTree() {
   if (!currentPlan?.steps.length) {
     cards.replaceChildren();
     svg.replaceChildren();
+    const legend = byId("plan-cross-category-legend");
+    if (legend) legend.hidden = true;
     viewport.hidden = true;
     empty.hidden = false;
     return;
@@ -2349,6 +2351,7 @@ function renderPlanTree() {
     .map(([researchId, requiredLevel]) => ({ node: catalog.nodes.get(researchId), requiredLevel: Number(requiredLevel) }))
     .filter((item) => item.node);
   const categoryOrder = new Map(catalog.categories.map((category, index) => [category.id, index]));
+  const categoryById = new Map(catalog.categories.map((category) => [category.id, category]));
   const rowKeys = [...new Set(required.map(({ node }) => `${categoryOrder.get(node.categoryId) ?? 999}\0${node.row}`))]
     .sort((left, right) => {
       const [leftCategory, leftRow] = left.split("\0").map(Number);
@@ -2360,6 +2363,7 @@ function renderPlanTree() {
     ...node,
     row: compactRows.get(`${categoryOrder.get(node.categoryId) ?? 999}\0${node.row}`),
     requiredLevel,
+    categoryName: catalog.categoryTitle(categoryById.get(node.categoryId), state.locale),
   }));
   const layout = explicitTreeLayout(layoutNodes);
   const unscaledWidth = PADDING * 2 + layout.columnCount * CARD_WIDTH + Math.max(0, layout.columnCount - 1) * GAP_X;
@@ -2375,24 +2379,41 @@ function renderPlanTree() {
     width: CARD_WIDTH * scale,
     height: CARD_HEIGHT * scale,
   }]));
-  renderPlanTreeLines(currentPlan.edges || [], positions, width, height, scale);
+  renderPlanTreeLines(currentPlan.edges || [], positions, width, height, scale, categoryById);
   cards.replaceChildren(...layoutNodes.map((node) => renderPlanTreeCard(node, positions.get(node.id), scale)));
   viewport.hidden = false;
   empty.hidden = true;
 }
 
-function renderPlanTreeLines(edges, positions, width, height, scale) {
+function renderPlanTreeLines(edges, positions, width, height, scale, categoryById) {
   const svg = byId("plan-tree-lines");
   svg.setAttribute("viewBox", `0 0 ${width} ${height}`);
   svg.setAttribute("width", width);
   svg.setAttribute("height", height);
   const paths = [];
+  let hasCrossCategory = false;
   for (const [fromId, toId] of edges) {
     const from = positions.get(fromId);
     const to = positions.get(toId);
     if (!from || !to) continue;
     const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
     path.classList.add("is-inactive");
+    const fromNode = catalog.nodes.get(fromId);
+    const toNode = catalog.nodes.get(toId);
+    const crossCategory = Boolean(
+      fromNode?.categoryId
+      && toNode?.categoryId
+      && fromNode.categoryId !== toNode.categoryId
+    );
+    if (crossCategory) {
+      hasCrossCategory = true;
+      path.classList.add("is-cross-category");
+      const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+      const fromCategory = categoryById.get(fromNode.categoryId);
+      const toCategory = categoryById.get(toNode.categoryId);
+      title.textContent = `${catalog.categoryTitle(fromCategory, state.locale)} → ${catalog.categoryTitle(toCategory, state.locale)}`;
+      path.append(title);
+    }
     const x1 = from.x + from.width / 2;
     const y1 = from.y + from.height;
     const x2 = to.x + to.width / 2;
@@ -2402,6 +2423,8 @@ function renderPlanTreeLines(edges, positions, width, height, scale) {
     paths.push(path);
   }
   svg.replaceChildren(...paths);
+  const legend = byId("plan-cross-category-legend");
+  if (legend) legend.hidden = !hasCrossCategory;
 }
 
 function renderPlanTreeCard(node, position, scale) {
@@ -2416,6 +2439,7 @@ function renderPlanTreeCard(node, position, scale) {
   card.style.height = `${position.height}px`;
   card.style.setProperty("--node-scale", scale);
   if (node.id === currentPlan.targetId) card.classList.add("is-target");
+  const category = create("span", "plan-research-category", node.categoryName || "");
   const name = create("span", "research-name", catalog.nodeName(node, state.locale));
   const nameLength = [...name.textContent].reduce((sum, character) => sum + (character.charCodeAt(0) > 255 ? 1 : .58), 0);
   name.style.fontSize = `${Math.max(13, Math.min(25, 215 / Math.max(5, nameLength))) * scale}px`;
@@ -2424,6 +2448,7 @@ function renderPlanTreeCard(node, position, scale) {
   fill.style.width = `${node.maxLevel ? current / node.maxLevel * 100 : 0}%`;
   meter.append(fill);
   card.append(
+    category,
     name,
     meter,
     create("span", "research-level", `${current} / ${node.maxLevel}`),

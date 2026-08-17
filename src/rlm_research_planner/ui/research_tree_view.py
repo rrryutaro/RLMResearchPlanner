@@ -59,6 +59,8 @@ class ResearchTreeNode:
     layout_row: int | None = None
     layout_column: float | None = None
     shortage_levels: int = 0
+    category_id: str = ""
+    category_name: str = ""
 
 
 class _ResearchNodeItem(QGraphicsRectItem):
@@ -82,7 +84,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self._max_level = node.max_level
         self.setFlag(QGraphicsRectItem.ItemIsSelectable, True)
         self.setCursor(Qt.PointingHandCursor)
-        self.setToolTip(f"{node.name}\n{node.status}\n{node.recommendation}")
+        self.setToolTip(self._node_tooltip(node))
 
         if node.shortage_levels > 0:
             background = QColor("#48271D")
@@ -102,17 +104,32 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self.setBrush(background)
         self.setPen(QPen(border, 2.0))
 
+        category_font = QFont()
+        category_font.setPointSizeF(10.0)
+        category_font.setBold(True)
+        self.category_item = self._text_item(
+            node.category_name,
+            category_font,
+            QColor("#75D5E8"),
+            x=12.0,
+            y=4.0,
+            width=NODE_WIDTH - 24.0,
+            height=15.0,
+        )
+        self.category_item.setVisible(bool(node.category_name))
+
         title_font = QFont()
         title_font.setPointSizeF(26.0)
         title_font.setBold(True)
+        title_y, title_height = self._title_geometry(node)
         self.title_item = self._text_item(
             node.name,
             title_font,
             QColor("#FFFFFF"),
             x=12.0,
-            y=8.0,
+            y=title_y,
             width=NODE_WIDTH - 24.0,
-            height=43.0,
+            height=title_height,
         )
 
         self.divider = QGraphicsRectItem(
@@ -218,6 +235,9 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self.title_item.setDefaultTextColor(
             QColor("#F4F8F8" if mobile else "#FFFFFF")
         )
+        self.category_item.setDefaultTextColor(
+            QColor("#7FE3F2" if mobile else "#75D5E8")
+        )
         self.divider.setBrush(QColor("#2F5F6C" if mobile else "#496170"))
         self.meter_track.setPen(
             QPen(QColor("#5B7580" if mobile else "#71828C"), 1.0)
@@ -251,7 +271,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self._node = node
         self._current_level = 0 if node.current_level is None else node.current_level
         self._max_level = node.max_level
-        self.setToolTip(f"{node.name}\n{node.status}\n{node.recommendation}")
+        self.setToolTip(self._node_tooltip(node))
         progress = 0.0
         if (
             node.current_level is not None
@@ -274,16 +294,30 @@ class _ResearchNodeItem(QGraphicsRectItem):
         level_font.setBold(True)
         effect_font = QFont()
         effect_font.setPointSizeF(20.0)
+        category_font = QFont()
+        category_font.setPointSizeF(10.0)
+        category_font.setBold(True)
         current_level = "0" if node.current_level is None else str(node.current_level)
         maximum = "-" if node.max_level is None else str(node.max_level)
+        self.category_item.setVisible(bool(node.category_name))
+        self._fit_text_item(
+            self.category_item,
+            node.category_name,
+            category_font,
+            x=12.0,
+            y=4.0,
+            width=NODE_WIDTH - 24.0,
+            height=15.0,
+        )
+        title_y, title_height = self._title_geometry(node)
         self._fit_text_item(
             self.title_item,
             node.name,
             title_font,
             x=12.0,
-            y=8.0,
+            y=title_y,
             width=NODE_WIDTH - 24.0,
-            height=43.0,
+            height=title_height,
         )
         self._fit_text_item(
             self.level_item,
@@ -313,6 +347,20 @@ class _ResearchNodeItem(QGraphicsRectItem):
             height=48.0,
         )
         self.set_visual_style(self._visual_style)
+
+    @staticmethod
+    def _title_geometry(node: ResearchTreeNode) -> tuple[float, float]:
+        if node.category_name:
+            return 19.0, 35.0
+        return 8.0, 43.0
+
+    @staticmethod
+    def _node_tooltip(node: ResearchTreeNode) -> str:
+        lines = [node.name]
+        if node.category_name:
+            lines.append(node.category_name)
+        lines.extend((node.status, node.recommendation))
+        return "\n".join(lines)
 
     def paint(self, painter, option, widget=None) -> None:
         painter.save()
@@ -457,6 +505,7 @@ class ResearchTreeView(QGraphicsView):
         self._level_editor_commit = None
         self._node_items: dict[str, _ResearchNodeItem] = {}
         self._edge_pairs: set[tuple[str, str]] = set()
+        self._cross_category_pairs: set[tuple[str, str]] = set()
         self._edge_pair_paths: dict[tuple[str, str], QPainterPath] = {}
 
     @property
@@ -480,25 +529,44 @@ class ResearchTreeView(QGraphicsView):
                 if bool(item.data(4)) and not active:
                     item.setPen(Qt.NoPen)
                     continue
-                color = (
-                    "#F2B632"
-                    if active and self._visual_style == "mobile"
-                    else "#D2A51B"
-                    if active
-                    else "#35505A"
-                    if self._visual_style == "mobile"
-                    else "#46545D"
+                item.setPen(
+                    self._edge_pen(active, cross_category=bool(item.data(5)))
                 )
-                item.setPen(QPen(QColor(color), 2.5))
             elif isinstance(item, QGraphicsTextItem) and item.parentItem() is None:
-                item.setDefaultTextColor(
-                    QColor(
-                        "#A9C0C7"
-                        if self._visual_style == "mobile"
-                        else "#C9D4DA"
+                if item.data(10) == "cross-category-legend":
+                    item.setDefaultTextColor(
+                        QColor(
+                            "#7FE3F2"
+                            if self._visual_style == "mobile"
+                            else "#75D5E8"
+                        )
                     )
-                )
+                else:
+                    item.setDefaultTextColor(
+                        QColor(
+                            "#A9C0C7"
+                            if self._visual_style == "mobile"
+                            else "#C9D4DA"
+                        )
+                    )
         self.viewport().update()
+
+    def _edge_pen(self, active: bool, *, cross_category: bool = False) -> QPen:
+        if cross_category:
+            color = "#7FE3F2" if self._visual_style == "mobile" else "#55BFD4"
+            pen = QPen(QColor(color), 3.0)
+            pen.setStyle(Qt.DashLine)
+            return pen
+        color = (
+            "#F2B632"
+            if active and self._visual_style == "mobile"
+            else "#D2A51B"
+            if active
+            else "#35505A"
+            if self._visual_style == "mobile"
+            else "#46545D"
+        )
+        return QPen(QColor(color), 2.5)
 
     def drawBackground(self, painter, rect) -> None:
         mobile = self._visual_style == "mobile"
@@ -832,13 +900,25 @@ class ResearchTreeView(QGraphicsView):
         ] = (),
         active_edges: Iterable[tuple[str, str]] | None = None,
         preserve_explicit_columns: bool = False,
+        cross_category_legend: str = "",
     ) -> None:
         self._cancel_level_editor()
         self._reset_pointer_state()
         node_list = list(nodes)
         edge_list = list(prerequisite_edges)
+        by_id = {node.research_id: node for node in node_list}
         self._node_items = {}
         self._edge_pairs = set(edge_list)
+        self._cross_category_pairs = {
+            (prerequisite_id, research_id)
+            for prerequisite_id, research_id in edge_list
+            if prerequisite_id in by_id
+            and research_id in by_id
+            and by_id[prerequisite_id].category_id
+            and by_id[research_id].category_id
+            and by_id[prerequisite_id].category_id
+            != by_id[research_id].category_id
+        }
         self._edge_pair_paths = {}
         active_edge_set = set(edge_list if active_edges is None else active_edges)
         connection_group_list = [
@@ -942,13 +1022,6 @@ class ResearchTreeView(QGraphicsView):
                 if prerequisite_id in coordinates and research_id in coordinates
             ]
 
-        active_color = QColor(
-            "#F2B632" if self._visual_style == "mobile" else "#D2A51B"
-        )
-        inactive_color = QColor(
-            "#35505A" if self._visual_style == "mobile" else "#46545D"
-        )
-
         def add_edge_item(
             path: QPainterPath,
             *,
@@ -958,10 +1031,11 @@ class ResearchTreeView(QGraphicsView):
             z_value: float = -1.0,
             pair_overlay: bool = False,
             visible: bool = True,
+            cross_category: bool = False,
         ) -> None:
             edge = QGraphicsPathItem(path)
             edge.setPen(
-                QPen(active_color if active else inactive_color, 2.5)
+                self._edge_pen(active, cross_category=cross_category)
                 if visible
                 else Qt.NoPen
             )
@@ -970,6 +1044,9 @@ class ResearchTreeView(QGraphicsView):
             edge.setData(1, research)
             edge.setData(2, active and visible)
             edge.setData(4, pair_overlay)
+            edge.setData(5, cross_category)
+            if cross_category and cross_category_legend:
+                edge.setToolTip(cross_category_legend)
             self._scene.addItem(edge)
 
         edge_pair_set = set(edge_list)
@@ -1023,6 +1100,9 @@ class ResearchTreeView(QGraphicsView):
                         active=active_pairs == group_pairs,
                         prerequisites=prerequisites,
                         research=research,
+                        cross_category=bool(
+                            group_pairs & self._cross_category_pairs
+                        ),
                     )
                     continue
                 for prerequisite_id, research_id in sorted(group_pairs):
@@ -1044,6 +1124,7 @@ class ResearchTreeView(QGraphicsView):
                         active=pair in active_pairs,
                         prerequisites=(prerequisite_id,),
                         research=(research_id,),
+                        cross_category=pair in self._cross_category_pairs,
                     )
                 continue
             path = QPainterPath()
@@ -1066,6 +1147,7 @@ class ResearchTreeView(QGraphicsView):
                 active=all_active,
                 prerequisites=prerequisites,
                 research=research,
+                cross_category=bool(group_pairs & self._cross_category_pairs),
             )
             if len(group_pairs) > 1:
                 for prerequisite_id, research_id in sorted(group_pairs):
@@ -1088,9 +1170,27 @@ class ResearchTreeView(QGraphicsView):
                             research=(research_id,),
                             z_value=-0.9,
                             pair_overlay=True,
+                            cross_category=pair in self._cross_category_pairs,
                         )
 
-        by_id = {node.research_id: node for node in node_list}
+        if self._cross_category_pairs and cross_category_legend:
+            legend = QGraphicsTextItem(cross_category_legend)
+            legend.setData(10, "cross-category-legend")
+            legend.setDefaultTextColor(
+                QColor(
+                    "#7FE3F2"
+                    if self._visual_style == "mobile"
+                    else "#75D5E8"
+                )
+            )
+            legend_font = QFont()
+            legend_font.setPointSizeF(11.0)
+            legend_font.setBold(True)
+            legend.setFont(legend_font)
+            legend.setPos(SCENE_MARGIN, 12.0)
+            legend.setZValue(2.0)
+            self._scene.addItem(legend)
+
         for research_id, (x, y) in coordinates.items():
             item = _ResearchNodeItem(
                 by_id[research_id],
@@ -1121,12 +1221,6 @@ class ResearchTreeView(QGraphicsView):
             return False
         item.update_node(node)
         active_edge_set = set(active_edges)
-        active_color = QColor(
-            "#F2B632" if self._visual_style == "mobile" else "#D2A51B"
-        )
-        inactive_color = QColor(
-            "#35505A" if self._visual_style == "mobile" else "#46545D"
-        )
         for edge in tuple(self._scene.items()):
             if isinstance(edge, QGraphicsPathItem) and bool(edge.data(4)):
                 self._scene.removeItem(edge)
@@ -1150,7 +1244,9 @@ class ResearchTreeView(QGraphicsView):
                 }
             active_pairs = group_pairs & active_edge_set
             active = bool(group_pairs) and active_pairs == group_pairs
-            edge.setPen(QPen(active_color if active else inactive_color, 2.5))
+            edge.setPen(
+                self._edge_pen(active, cross_category=bool(edge.data(5)))
+            )
             edge.setData(2, active)
             if len(group_pairs) > 1 and not active:
                 for pair in active_pairs:
@@ -1159,12 +1255,19 @@ class ResearchTreeView(QGraphicsView):
                         overlays.append((pair, pair_path))
         for (prerequisite_id, research_id), path in overlays:
             overlay = QGraphicsPathItem(path)
-            overlay.setPen(QPen(active_color, 2.5))
             overlay.setZValue(-0.9)
             overlay.setData(0, (prerequisite_id,))
             overlay.setData(1, (research_id,))
             overlay.setData(2, True)
             overlay.setData(4, True)
+            cross_category = (
+                prerequisite_id,
+                research_id,
+            ) in self._cross_category_pairs
+            overlay.setData(5, cross_category)
+            overlay.setPen(
+                self._edge_pen(True, cross_category=cross_category)
+            )
             self._scene.addItem(overlay)
         self.viewport().update()
         return True
