@@ -1,0 +1,78 @@
+{
+  "observation_id": "economy-tree-ja-JP-2026-08-06-01",
+  "category_id": "economy",
+  "titles": {
+    "ja-JP": "経済（実画面確認・一部）",
+    "en-US": "Economy (observed partial tree)"
+  },
+  "locale": "ja-JP",
+  "source_type": "user_provided_game_capture",
+  "verification_status": "single_capture_verified",
+  "captured_on": "2026-08-06",
+  "game_version": "unknown",
+  "scope": "visible_portion_only",
+  "image_redistribution": false,
+  "notes": "画面内で確認できた研究名、最大レベル、接続関係だけを記録する。研究時間、資源、効果量、画面外の接続は未確認。プレイヤーの現在レベルは収録しない。",
+  "nodes": [
+    {
+      "id": "economy_construction_speed",
+      "name": "建設速度",
+      "max_level": 10,
+      "row": 0,
+      "column": 0
+    },
+    {
+      "id": "economy_food_harvest_1",
+      "name": "食糧収穫 I",
+      "max_level": 10,
+      "row": 0,
+      "column": 1
+    },
+    {
+      "id": "economy_vault_management",
+      "name": "保管庫管理",
+      "max_level": 10,
+      "row": 1,
+      "column": 0
+    },
+    {
+      "id": "economy_stone_harvest_1",
+      "name": "石材収穫 I",
+      "max_level": 10,
+      "row": 1,
+      "column": 1
+    },
+    {
+      "id": "economy_timber_harvest_1",
+      "name": "木材収穫 I",
+      "max_level": 10,
+      "row": 1,
+      "column": 2
+    },
+    {
+      "id": "economy_ore_harvest_1",
+      "name": "鉱石収穫 I",
+      "max_level": 10,
+      "row": 1,
+      "column": 3
+    }
+  ],
+  "edges": [
+    {
+      "prerequisite_id": "economy_construction_speed",
+      "research_id": "economy_vault_management"
+    },
+    {
+      "prerequisite_id": "economy_food_harvest_1",
+      "research_id": "economy_stone_harvest_1"
+    },
+    {
+      "prerequisite_id": "economy_food_harvest_1",
+      "research_id": "economy_timber_harvest_1"
+    },
+    {
+      "prerequisite_id": "economy_food_harvest_1",
+      "research_id": "economy_ore_harvest_1"
+    }
+  ]
+}

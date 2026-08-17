@@ -9,8 +9,8 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.5-b2">
-    <title>RLM Research Planner v0.1.5</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.6-b1">
+    <title>RLM Research Planner v0.1.6</title>
   </head>
   <body>
     <header class="app-header">
@@ -18,7 +18,7 @@
         <p class="eyebrow" data-i18n="app.subtitle">Lords Mobile unofficial tool</p>
         <div class="app-title-line">
           <h1>RLM Research Planner</h1>
-          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.5</span>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.6</span>
         </div>
       </div>
       <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="Browser network status">Online</span>
@@ -253,8 +253,10 @@
             <div class="form-grid">
               <label class="field"><span data-i18n="player.research_speed">研究速度 +%</span><input id="setting-speed" type="number" inputmode="decimal" min="0" step="0.01"></label>
               <label class="field"><span data-i18n="player.research_speed_boost">研究スピードアップ +%</span><input id="setting-boost" type="number" inputmode="decimal" min="0" step="1"></label>
+              <label class="field"><span data-i18n="player.event_research_discount">経済・軍事の期間限定割引</span><span class="number-with-unit"><input id="setting-event-research-discount" type="number" inputmode="decimal" min="0" max="100" step="0.1"><span>%</span></span></label>
             </div>
             <p class="hint" data-i18n="player.research_speed_boost_hint">研究スピードアップ x%を追加で使用する場合だけ入力します。研究速度に含めた場合は0にしてください。</p>
+            <p class="hint" data-i18n="player.event_research_discount_hint">「研究の飛躍」などで経済・軍事の研究時間と必要資源が30%減る場合は30を入力します。イベント終了後は0に戻してください。</p>
             </div>
           </details>
           <div id="speedup-inventory-groups" class="speedup-inventory-groups" data-player-section="acceleration"></div>
@@ -580,7 +582,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.5-b2";
+      const startupVersion = "0.1.6-b1";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -593,8 +595,8 @@
       const startupLoadingMessage = document.getElementById("startup-loading-message");
       const mainElement = document.querySelector("main");
       const startupVersionLabel = isPreviewScope
-        ? "v0.1.5 Preview"
-        : "v0.1.5";
+        ? "v0.1.6 Preview"
+        : "v0.1.6";
       document.getElementById("header-version").textContent = startupVersionLabel;
       document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
       document.title = `RLM Research Planner ${startupVersionLabel}`;
@@ -682,6 +684,6 @@
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.5-b2"></script>
+    <script type="module" src="./src/app.js?v=0.1.6-b1"></script>
   </body>
 </html>

@@ -1,0 +1,57 @@
+{
+  "observation_id": "guild-duel-levels-ja-JP-2026-08-11-01",
+  "category_id": "guild_duel",
+  "titles": {
+    "ja-JP": "ギルドデュエル（Lv.1表示値・一部）",
+    "en-US": "Guild Duel (partial level 1 observations)"
+  },
+  "locale": "ja-JP",
+  "source_type": "user_provided_game_capture",
+  "verification_status": "single_capture_provisional",
+  "captured_on": "2026-08-11",
+  "game_version": "unknown",
+  "scope": "研究奨励Lv.1、訓練奨励Lv.1、報酬奨励ⅠLv.1、および研究速度表示",
+  "image_redistribution": false,
+  "notes": "非公開のゲーム画面4枚から表示名、効果、パワー、資源、専用素材、前提表示、適用後時間を転記。K/M表記の資源量と研究速度表示からの逆算時間は丸め誤差を含む。画像自体、ローカルパス、プレイヤー情報はデータセットへ収録しない。",
+  "evidence_id": "evidence_guild_duel_levels_ja_jp_2026_08_11_01",
+  "levels": [
+    {
+      "research": "Research Incentive",
+      "level": 1,
+      "base_time_seconds": 7745,
+      "technolabe_count": 1,
+      "power": 2306,
+      "costs": {"food": 85100, "stone": 42500, "timber": 42500, "ore": 42500, "gold": 42500, "special": 10},
+      "costs_verified": true,
+      "requirements": [{"research": "Gathering Incentive", "level": 1}],
+      "verification_notes": "研究速度+255.95%で00:36:16。逆算可能範囲7742～7745秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Training Incentive",
+      "level": 1,
+      "base_time_seconds": 7745,
+      "technolabe_count": 1,
+      "power": 2306,
+      "costs": {"food": 85100, "stone": 42500, "timber": 42500, "ore": 42500, "gold": 42500, "special": 10},
+      "costs_verified": true,
+      "requirements": [{"research": "Gathering Incentive", "level": 1}],
+      "verification_notes": "研究速度+255.95%で00:36:16。逆算可能範囲7742～7745秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Reward Incentive I",
+      "level": 1,
+      "power": 33820,
+      "costs": {"food": 6660000, "stone": 3330000, "timber": 3330000, "ore": 3330000, "gold": 3330000, "special": 150},
+      "costs_verified": true,
+      "requirements": [
+        {"research": "Hero Incentive", "level": 1},
+        {"research": "Construction Incentive", "level": 1},
+        {"research": "Research Incentive", "level": 1},
+        {"research": "Training Incentive", "level": 1}
+      ],
+      "verification_notes": "ロック画面のため元時間と叡智の輪個数は未確認。資源のM表示は丸め値。"
+    }
+  ],
+  "nodes": [],
+  "edges": []
+}

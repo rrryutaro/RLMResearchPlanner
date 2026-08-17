@@ -1,6 +1,10 @@
-import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.5-b2";
+import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.6-b1";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
+export const EVENT_DISCOUNTABLE_RESEARCH_RESOURCE_KEYS = new Set([
+  "food", "stone", "timber", "ore", "gold",
+]);
+const EVENT_DISCOUNTABLE_RESEARCH_CATEGORY_IDS = new Set(["economy", "military"]);
 
 export function isTechnolabeRecommended(efficiencyPercent, thresholdPercent = 95) {
   if (efficiencyPercent == null) return false;
@@ -27,9 +31,28 @@ export function defaultTargetLevel(currentLevel, maxLevel) {
   return Math.min(maximum, current + 1);
 }
 
-export function adjustedTime(baseSeconds, settings) {
+export function researchEventDiscountPercent(settings, categoryId) {
+  if (!EVENT_DISCOUNTABLE_RESEARCH_CATEGORY_IDS.has(String(categoryId || ""))) return 0;
+  return Math.min(100, Math.max(0, Number(settings?.eventResearchDiscountPercent) || 0));
+}
+
+export function discountedResearchValue(value, settings, categoryId) {
+  const normalized = Math.max(0, Math.trunc(Number(value) || 0));
+  const discount = researchEventDiscountPercent(settings, categoryId);
+  return Math.floor(normalized * (100 - discount) / 100);
+}
+
+export function discountedResearchResourceValue(resourceId, value, settings, categoryId) {
+  if (!EVENT_DISCOUNTABLE_RESEARCH_RESOURCE_KEYS.has(String(resourceId || ""))) {
+    return Math.max(0, Math.trunc(Number(value) || 0));
+  }
+  return discountedResearchValue(value, settings, categoryId);
+}
+
+export function adjustedTime(baseSeconds, settings, categoryId = "") {
   const speed = Math.max(0, Number(settings.researchSpeedPercent) || 0) + Math.max(0, Number(settings.researchSpeedBoostPercent) || 0);
-  let remaining = Math.ceil(Math.max(0, Number(baseSeconds) || 0) / (1 + speed / 100));
+  const discountedBaseSeconds = discountedResearchValue(baseSeconds, settings, categoryId);
+  let remaining = Math.ceil(discountedBaseSeconds / (1 + speed / 100));
   remaining = Math.max(0, remaining - freeSecondsForVip(settings.vipLevel));
   return remaining;
 }
@@ -75,7 +98,7 @@ export function isNextLevelAvailable(node, state) {
 export function isInstantNextLevel(node, state) {
   if (!isNextLevelAvailable(node, state)) return false;
   const next = Number(state.researchLevels[node.id] || 0) + 1;
-  return adjustedTime(node.levels.get(next).baseTimeSeconds, state.settings) === 0;
+  return adjustedTime(node.levels.get(next).baseTimeSeconds, state.settings, node.categoryId) === 0;
 }
 
 export function shortestAvailable(catalog, state) {
@@ -249,7 +272,7 @@ export function researchLevelsAfterPlan(plan, currentLevels) {
 function stepFrom(node, level, data, settings) {
   const baseSeconds = data?.baseTimeSeconds == null ? null : Number(data.baseTimeSeconds);
   const technolabe = technolabeUsage(baseSeconds, data?.technolabeCount);
-  const adjustedSeconds = baseSeconds == null ? null : adjustedTime(baseSeconds, settings);
+  const adjustedSeconds = baseSeconds == null ? null : adjustedTime(baseSeconds, settings, node.categoryId);
   return {
     researchId: node.id,
     categoryId: node.categoryId,
@@ -259,7 +282,10 @@ function stepFrom(node, level, data, settings) {
     afterHelpSeconds: adjustedSeconds == null ? null : afterGuildHelps(adjustedSeconds, guildHelpCount(settings)),
     technolabeCount: technolabe.count,
     technolabeEfficiencyPercent: technolabe.efficiencyPercent,
-    costs: { ...(data?.costs || {}) },
+    costs: Object.fromEntries(Object.entries(data?.costs || {}).map(([key, value]) => [
+      key,
+      discountedResearchResourceValue(key, value, settings, node.categoryId),
+    ])),
     costsVerified: Boolean(data?.costsVerified),
   };
 }

@@ -1,18 +1,18 @@
-import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.5-b2";
-import { adjustedTime, createPlan, defaultTargetLevel, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.5-b2";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.5-b2";
-import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.5-b2";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.5-b2";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.5-b2";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.5-b2";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.5-b2";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.5-b2";
-import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.5-b2";
-import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.5-b2";
+import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.6-b1";
+import { adjustedTime, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.6-b1";
+import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.6-b1";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.6-b1";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.6-b1";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.6-b1";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.6-b1";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.6-b1";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.6-b1";
+import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.6-b1";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.6-b1";
 
-const RELEASE_VERSION = "0.1.5";
-const DEVELOPMENT_BUILD = 2;
-const ASSET_VERSION = "0.1.5-b2";
+const RELEASE_VERSION = "0.1.6";
+const DEVELOPMENT_BUILD = 1;
+const ASSET_VERSION = "0.1.6-b1";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const CARD_WIDTH = 250;
@@ -1508,7 +1508,7 @@ function renderNodeNextDetails(node, level) {
   }
   const grid = create("div", "detail-grid");
   const time = create("div", "detail-item");
-  time.append(create("span", "", t("plan.time", "研究時間")), create("strong", "", data.baseTimeSeconds == null ? t("common.unknown", "未収録") : formatDuration(adjustedTime(data.baseTimeSeconds, state.settings))));
+  time.append(create("span", "", t("plan.time", "研究時間")), create("strong", "", data.baseTimeSeconds == null ? t("common.unknown", "未収録") : formatDuration(adjustedTime(data.baseTimeSeconds, state.settings, node.categoryId))));
   const academy = Math.max(Number(data.academyLevel || 0), Number(data.buildings.academy || 0));
   const facility = create("div", "detail-item");
   const facilityParts = [];
@@ -1523,7 +1523,7 @@ function renderNodeNextDetails(node, level) {
   if (costs.length) {
     for (const key of costs) {
       const item = create("div", "detail-resource");
-      item.append(create("span", "", resourceName(key)), create("strong", "", formatResource(data.costs[key])));
+      item.append(create("span", "", resourceName(key)), create("strong", "", formatResource(discountedResearchResourceValue(key, data.costs[key], state.settings, node.categoryId))));
       resourceBox.append(item);
     }
   } else {
@@ -1545,7 +1545,7 @@ function bindSettings() {
   const inputs = {
     "setting-player-level": ["playerLevel", true], "setting-vip": ["vipLevel", true], "setting-castle": ["castleLevel", true], "setting-castle-mana": ["castleManaStage", true], "setting-academy": ["academyLevel", true],
     "setting-construction-speed": ["constructionSpeedPercent", false], "setting-construction-boost": ["constructionSpeedBoostPercent", false],
-    "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-helps": ["maxGuildHelps", true],
+    "setting-speed": ["researchSpeedPercent", false], "setting-boost": ["researchSpeedBoostPercent", false], "setting-event-research-discount": ["eventResearchDiscountPercent", false], "setting-helps": ["maxGuildHelps", true],
     "setting-technolabe-count": ["technolabeCount", true],
     "setting-technolabe-threshold": ["technolabeRecommendationThresholdPercent", false],
   };
@@ -1554,6 +1554,7 @@ function bindSettings() {
       state.settings[key] = Math.max(0, integer ? Math.trunc(Number(event.target.value) || 0) : Number(event.target.value) || 0);
       if (key === "playerLevel") state.settings[key] = Math.max(1, Math.min(60, state.settings[key]));
       if (key === "vipLevel") state.settings[key] = Math.max(1, Math.min(15, state.settings[key]));
+      if (key === "eventResearchDiscountPercent") state.settings[key] = Math.min(100, state.settings[key]);
       if (key === "castleLevel" || key === "academyLevel") state.settings[key] = Math.max(1, Math.min(25, state.settings[key]));
       if (key === "castleManaStage") state.settings[key] = state.settings.castleLevel === 25 ? Math.max(0, Math.min(5, state.settings[key])) : 0;
       if (key === "castleLevel") {
@@ -1612,6 +1613,7 @@ function populateSettings() {
   byId("setting-academy").value = state.settings.academyLevel;
   byId("setting-speed").value = state.settings.researchSpeedPercent;
   byId("setting-boost").value = state.settings.researchSpeedBoostPercent;
+  byId("setting-event-research-discount").value = state.settings.eventResearchDiscountPercent;
   byId("setting-technolabe-count").value = state.settings.technolabeCount;
   byId("setting-technolabe-threshold").value = state.settings.technolabeRecommendationThresholdPercent;
   updateGuildHelpLimit();

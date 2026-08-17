@@ -16,8 +16,8 @@ export function hasSavedState(storage = globalThis.localStorage, pathname = glob
   } catch { return false; }
 }
 export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
-import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.5-b2";
-import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.5-b2";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.6-b1";
+import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.6-b1";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
@@ -47,6 +47,7 @@ export function defaultState() {
       constructionSpeedBoostPercent: 0,
       researchSpeedPercent: 0,
       researchSpeedBoostPercent: 0,
+      eventResearchDiscountPercent: 0,
       maxGuildHelps: 0,
       speedupSeconds: 0,
       speedupInventory: [],
@@ -98,6 +99,16 @@ export function sanitizeState(value) {
   base.settings.constructionSpeedBoostPercent = Math.max(0, number(settings.constructionSpeedBoostPercent ?? settings.construction_speed_boost_percent));
   base.settings.researchSpeedPercent = Math.max(0, number(settings.researchSpeedPercent ?? settings.research_speed_percent));
   base.settings.researchSpeedBoostPercent = Math.max(0, number(settings.researchSpeedBoostPercent ?? settings.research_speed_boost_percent));
+  base.settings.eventResearchDiscountPercent = Math.min(
+    100,
+    Math.max(
+      0,
+      number(
+        settings.eventResearchDiscountPercent
+          ?? settings.event_research_discount_percent,
+      ),
+    ),
+  );
   base.settings.maxGuildHelps = Math.min(
     maxGuildHelpsForCastle(base.settings.castleLevel),
     Math.max(0, Math.trunc(number(settings.maxGuildHelps ?? settings.max_guild_helps))),
@@ -199,6 +210,10 @@ export function backupPayload(state) {
         construction_speed_boost_percent: state.settings.constructionSpeedBoostPercent,
         research_speed_percent: state.settings.researchSpeedPercent,
         research_speed_boost_percent: state.settings.researchSpeedBoostPercent,
+        event_research_discount_percent: Math.min(
+          100,
+          Math.max(0, Number(state.settings.eventResearchDiscountPercent) || 0),
+        ),
         free_speedup_seconds: freeSecondsForVip(state.settings.vipLevel),
         max_guild_helps: guildHelpCount(state.settings),
         speedup_seconds: normalizeSpeedupInventory(state.settings.speedupInventory)

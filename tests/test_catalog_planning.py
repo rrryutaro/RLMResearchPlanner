@@ -58,10 +58,12 @@ def _node(
     )
 
 
-def _planner(*nodes: ObservedResearchNode) -> CatalogResearchPlanner:
+def _planner(
+    *nodes: ObservedResearchNode, category_id: str = "test"
+) -> CatalogResearchPlanner:
     observation = ResearchTreeObservation(
         observation_id="test",
-        category_id="test",
+        category_id=category_id,
         titles={"en-US": "Test"},
         locale="en-US",
         source_type="test",
@@ -248,6 +250,56 @@ def test_catalog_plan_matches_game_time_after_free_speedup_deduction() -> None:
     assert len(result.steps) == 1
     assert result.steps[0].adjusted_time_seconds == 139_623
     assert result.total_adjusted_seconds == 139_623
+
+
+def test_catalog_plan_matches_research_breakthrough_event_screenshot() -> None:
+    target = _node(
+        "military_cavalry_defense_i",
+        8,
+        {
+            8: ObservedResearchLevel(
+                level=8,
+                academy_level=1,
+                base_time_seconds=2_166_780,
+                costs={"food": 1_228_207, "special": 10},
+                power=178_101,
+                requirements=(),
+                costs_verified=True,
+                verification_status="sourced",
+            )
+        },
+    )
+    state = PlayerState(
+        settings=PlayerSettings(
+            vip_level=11,
+            research_speed_percent=285.68,
+            event_research_discount_percent=30.0,
+        ),
+        research_levels={target.id: 7},
+    )
+
+    result = _planner(target, category_id="military").create_plan(
+        state, target.id, 8
+    )
+
+    assert len(result.steps) == 1
+    assert result.steps[0].base_time_seconds == 2_166_780
+    assert result.steps[0].adjusted_time_seconds == 387_266
+    assert result.steps[0].costs == {"food": 859_744, "special": 10}
+
+
+def test_event_discount_does_not_change_other_research_categories() -> None:
+    target = _node("monster_hunt_test", 1, {1: _level(1, seconds=100, food=100)})
+    state = PlayerState(
+        settings=PlayerSettings(event_research_discount_percent=30.0)
+    )
+
+    result = _planner(target, category_id="monster_hunt").create_plan(
+        state, target.id, 1
+    )
+
+    assert result.steps[0].adjusted_time_seconds == 0
+    assert result.steps[0].costs == {"food": 100}
 
 
 def test_catalog_plan_marks_unknown_values_without_treating_them_as_zero() -> None:

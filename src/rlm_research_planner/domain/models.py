@@ -152,6 +152,7 @@ class PlayerSettings:
     construction_speed_boost_percent: float = 0.0
     research_speed_percent: float = 0.0
     research_speed_boost_percent: float = 0.0
+    event_research_discount_percent: float = 0.0
     max_guild_helps: int = 0
     speedup_seconds: int = 0
     speedup_inventory: list[SpeedupInventoryItem] = field(default_factory=list)
@@ -174,6 +175,11 @@ class PlayerSettings:
         return max(0.0, float(self.research_speed_percent)) + max(
             0.0, float(self.research_speed_boost_percent)
         )
+
+    def research_event_discount_percent_for(self, category_id: str) -> float:
+        if category_id not in {"economy", "military"}:
+            return 0.0
+        return max(0.0, min(100.0, float(self.event_research_discount_percent)))
 
 
 MAX_GUILD_HELPS = 30

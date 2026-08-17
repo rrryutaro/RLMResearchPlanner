@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { currentEffect, loadJsonResource, normalizeCatalog } from "../src/catalog.js";
-import { TECHNOLABE_CAPACITY_SECONDS, adjustedTime, afterGuildHelps, createPlan, defaultTargetLevel, formatDuration, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "../src/planning.js";
+import { TECHNOLABE_CAPACITY_SECONDS, adjustedTime, afterGuildHelps, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "../src/planning.js";
 import { RESOURCE_KEYS, backupPayload, defaultState, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, playerStorageKey, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "../src/state.js";
 import { formatResourceAmount } from "../src/resource-format.js";
 import { compactExplicitRowSlots, explicitTreeLayout, visibleTreeLayout } from "../src/tree-layout.js";
@@ -63,7 +63,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.5");
+  assert.equal(publicVersion, "0.1.6");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -74,7 +74,7 @@ test("public version omits the internal asset build number", () => {
   assert.match(appSource, /classList\.toggle\("is-preview", IS_PREVIEW\)/);
   assert.match(appSource, /document\.title\s*=\s*`RLM Research Planner \$\{versionLabel\}`/);
   assert.match(appSource, /pwa\.preview_version/u);
-  assert.match(indexHtml, /v0\.1\.5 Preview/u);
+  assert.match(indexHtml, /v0\.1\.6 Preview/u);
   assert.match(indexHtml, new RegExp(`id="header-version"[^>]*data-i18n-title="pwa\\.version"[^>]*>v${publicVersion.replaceAll(".", "\\.")}<\\/span>`));
   assert.match(stylesSource, /\.app-version-badge\.is-preview/);
   assert.match(serviceWorkerSource, /rlm-research-planner-preview/);
@@ -454,6 +454,22 @@ test("research start time and maximum guild-help estimate stay separate", () => 
   assert.ok(afterGuildHelps(10000, 30) > 7300);
   assert.ok(afterGuildHelps(10000, 30) < 7500);
   assert.notEqual(afterGuildHelps(10000, 30), 7000);
+});
+
+test("limited Economy and Military event discount matches the game screenshot", () => {
+  const settings = defaultState().settings;
+  settings.vipLevel = 11;
+  settings.researchSpeedPercent = 285.68;
+  settings.eventResearchDiscountPercent = 30;
+  assert.equal(adjustedTime(2_166_780, settings, "military"), 387_266);
+  assert.equal(formatDuration(387_266), "4d 11:34:26");
+  assert.equal(discountedResearchResourceValue("food", 1_228_207, settings, "military"), 859_744);
+  assert.equal(discountedResearchResourceValue("special", 10, settings, "military"), 10);
+  assert.equal(adjustedTime(2_166_780, settings, "monster_hunt"), 555_808);
+
+  const restored = stateFromBackup(backupPayload({ ...defaultState(), settings }));
+  assert.equal(restored.settings.eventResearchDiscountPercent, 30);
+  assert.match(indexHtml, /id="setting-event-research-discount"[^>]*max="100"/u);
 });
 
 test("guild help input follows the Castle-level limit", () => {

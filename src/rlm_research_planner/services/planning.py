@@ -13,6 +13,8 @@ from rlm_research_planner.services.calculation import (
     RoundingMode,
     apply_free_speedup_time,
     apply_guild_helps,
+    apply_percentage_discount,
+    apply_research_event_resource_discount,
     apply_research_speed,
     free_speedup_seconds_for_vip,
 )
@@ -104,8 +106,16 @@ class ResearchPlanner:
                     continue
                 emitted.add(key)
                 level = self.master.level(research_id, level_number)
-                adjusted = apply_research_speed(
+                category_id = self._research[research_id].category_id
+                discount_percent = (
+                    state.settings.research_event_discount_percent_for(category_id)
+                )
+                discounted_base_seconds = apply_percentage_discount(
                     level.base_time_seconds,
+                    discount_percent,
+                )
+                adjusted = apply_research_speed(
+                    discounted_base_seconds,
                     state.settings.effective_research_speed_percent,
                     rounding,
                 )
@@ -125,7 +135,14 @@ class ResearchPlanner:
                     base_time_seconds=level.base_time_seconds,
                     adjusted_time_seconds=adjusted,
                     after_help_seconds=after_help,
-                    resources={key: int(level.resources.get(key, 0)) for key in RESOURCE_KEYS},
+                    resources={
+                        key: apply_research_event_resource_discount(
+                            key,
+                            int(level.resources.get(key, 0)),
+                            discount_percent,
+                        )
+                        for key in RESOURCE_KEYS
+                    },
                     power=level.power,
                     ancient_tomes=level.ancient_tomes,
                     verification_status=level.verification_status,

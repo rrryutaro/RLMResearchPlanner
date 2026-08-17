@@ -1,0 +1,58 @@
+{
+  "observation_id": "guild-duel-levels-ja-JP-2026-08-15-01",
+  "category_id": "guild_duel",
+  "titles": {
+    "ja-JP": "ギルドデュエル（Lv.1表示値・追加）",
+    "en-US": "Guild Duel (additional level 1 observations)"
+  },
+  "locale": "ja-JP",
+  "source_type": "user_provided_game_capture",
+  "verification_status": "single_capture_provisional",
+  "captured_on": "2026-08-15",
+  "game_version": "unknown",
+  "scope": "スピードアップ奨励Lv.1、魔獣討伐奨励Lv.1、報酬奨励II Lv.1、および研究速度表示",
+  "image_redistribution": false,
+  "notes": "非公開のゲーム画面3枚から表示値を転記。K/M表記は表示値を数値化し、元研究時間は表示研究速度から再現可能な整数秒範囲を逆算した。画像自体、ローカルパス、プレイヤー情報は収録しない。",
+  "evidence_id": "evidence_guild_duel_levels_ja_jp_2026_08_15_01",
+  "levels": [
+    {
+      "research": "Speed-Up Incentive",
+      "level": 1,
+      "base_time_seconds": 6372,
+      "technolabe_count": 1,
+      "power": 2306,
+      "costs": {"food": 172000, "stone": 43200, "timber": 86400, "ore": 72000, "gold": 72000, "special": 20},
+      "costs_verified": true,
+      "requirements": [{"research": "Artifact Incentive", "level": 1}],
+      "verification_notes": "研究速度+278.85%で00:28:02。逆算可能範囲6369～6372秒の上限を採用。資源のK表示は丸め値。"
+    },
+    {
+      "research": "Hunting Incentive",
+      "level": 1,
+      "base_time_seconds": 6372,
+      "technolabe_count": 1,
+      "power": 2306,
+      "costs": {"food": 172000, "stone": 72000, "timber": 86400, "ore": 43200, "gold": 72000, "special": 20},
+      "costs_verified": true,
+      "requirements": [{"research": "Artifact Incentive", "level": 1}],
+      "verification_notes": "研究速度+278.85%で00:28:02。逆算可能範囲6369～6372秒の上限を採用。資源のK表示は丸め値。"
+    },
+    {
+      "research": "Reward Incentive II",
+      "level": 1,
+      "base_time_seconds": 669731,
+      "technolabe_count": 1,
+      "power": 54957,
+      "costs": {"food": 12000000, "stone": 5000000, "timber": 6000000, "ore": 3000000, "gold": 5000000, "special": 550},
+      "costs_verified": true,
+      "requirements": [
+        {"research": "Speed-Up Incentive", "level": 1},
+        {"research": "Stage Incentive", "level": 1},
+        {"research": "Hunting Incentive", "level": 1}
+      ],
+      "verification_notes": "研究速度+278.85%で2d 01:06:20。逆算可能範囲669728～669731秒の上限を採用。資源のM表示は丸め値。"
+    }
+  ],
+  "nodes": [],
+  "edges": []
+}

@@ -11,6 +11,11 @@ class RoundingMode(str, Enum):
     NEAREST = "nearest"
 
 
+EVENT_DISCOUNTABLE_RESEARCH_RESOURCE_KEYS = frozenset(
+    {"food", "stone", "timber", "ore", "gold"}
+)
+
+
 ROUNDING_MAP = {
     RoundingMode.CEILING: ROUND_CEILING,
     RoundingMode.FLOOR: ROUND_FLOOR,
@@ -59,6 +64,35 @@ def apply_research_speed(
         raise ValueError("speed_percent must be non-negative")
     adjusted = Decimal(base_seconds) / (Decimal("1") + speed / Decimal("100"))
     return max(0, _round_seconds(adjusted, rounding))
+
+
+def apply_percentage_discount(
+    value: int,
+    discount_percent: float | Decimal,
+) -> int:
+    """Apply an in-game percentage cut before speed modifiers.
+
+    Event research discounts are shown as cuts to the original time and costs.
+    The game drops the fractional remainder before applying research speed.
+    """
+
+    if value < 0:
+        raise ValueError("value must be non-negative")
+    discount = Decimal(str(discount_percent))
+    if discount < 0 or discount > 100:
+        raise ValueError("discount_percent must be between 0 and 100")
+    remaining = Decimal(value) * (Decimal("1") - discount / Decimal("100"))
+    return max(0, _round_seconds(remaining, RoundingMode.FLOOR))
+
+
+def apply_research_event_resource_discount(
+    resource_id: str,
+    value: int,
+    discount_percent: float | Decimal,
+) -> int:
+    if resource_id not in EVENT_DISCOUNTABLE_RESEARCH_RESOURCE_KEYS:
+        return value
+    return apply_percentage_discount(value, discount_percent)
 
 
 def apply_free_speedup_time(

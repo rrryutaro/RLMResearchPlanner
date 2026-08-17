@@ -24,6 +24,7 @@ def test_player_state_round_trip_in_memory() -> None:
                 academy_level=24,
                 research_speed_percent=123.45,
                 research_speed_boost_percent=10.0,
+                event_research_discount_percent=30.0,
                 max_guild_helps=30,
                 speedup_seconds=3600,
                 technolabe_count=17,
@@ -60,6 +61,7 @@ def test_player_state_round_trip_in_memory() -> None:
         assert loaded.settings.player_level == 42
         assert loaded.settings.research_speed_percent == 123.45
         assert loaded.settings.research_speed_boost_percent == 10.0
+        assert loaded.settings.event_research_discount_percent == 30.0
         assert loaded.settings.effective_research_speed_percent == 133.45
         assert loaded.settings.vip_level == 11
         assert loaded.research_levels == {"econ_research_speed": 2}
@@ -97,6 +99,7 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
                 use_gems_for_speedups=True,
                 technolabe_count=23,
                 technolabe_recommendation_threshold_percent=97.5,
+                event_research_discount_percent=30.0,
             ),
             research_levels={"mil_infantry_attack": 1},
             plan_tasks=[
@@ -115,6 +118,7 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
         assert raw["schema_version"] == 1
         assert "play_style" not in raw["player"]["settings"]
         assert raw["player"]["settings"]["player_level"] == 37
+        assert raw["player"]["settings"]["event_research_discount_percent"] == 30.0
         assert raw["player"]["settings"]["speedup_inventory"] == [
             {"kind": "general", "duration_seconds": 3600, "quantity": 2},
             {"kind": "research", "duration_seconds": 1800, "quantity": 4},
@@ -131,6 +135,7 @@ def test_json_backup_payload_round_trip_without_filesystem() -> None:
         assert restored.settings.use_gems_for_speedups is True
         assert restored.settings.technolabe_recommendation_threshold_percent == 97.5
         assert restored.settings.technolabe_count == 23
+        assert restored.settings.event_research_discount_percent == 30.0
         assert restored.observed_stats == {"建設速度": "+299.75%"}
         assert restored.plan_tasks == [
             ResearchPlanTask(

@@ -2062,11 +2062,19 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
         assert (
             window.player_state.settings.research_speed_boost_percent == 10.0
         )
+        window.event_research_discount_spin.setValue(30.0)
+        assert (
+            window.player_state.settings.event_research_discount_percent == 30.0
+        )
         window.tree_save_levels_button.click()
         assert player_repository.load().settings.vip_level == 15
         assert (
             player_repository.load().settings.research_speed_boost_percent
             == 10.0
+        )
+        assert (
+            player_repository.load().settings.event_research_discount_percent
+            == 30.0
         )
         window.tabs.setCurrentIndex(6)
         window.language_combo.setCurrentIndex(

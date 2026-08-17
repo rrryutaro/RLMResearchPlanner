@@ -302,6 +302,13 @@ class PlayerRepository:
             research_speed_boost_percent=float(
                 values.get("research_speed_boost_percent", 0.0)
             ),
+            event_research_discount_percent=max(
+                0.0,
+                min(
+                    100.0,
+                    float(values.get("event_research_discount_percent", 0.0)),
+                ),
+            ),
             max_guild_helps=max(
                 0,
                 min(
@@ -413,6 +420,10 @@ class PlayerRepository:
             "research_speed_boost_percent": (
                 state.settings.research_speed_boost_percent
             ),
+            "event_research_discount_percent": max(
+                0.0,
+                min(100.0, state.settings.event_research_discount_percent),
+            ),
             "free_speedup_seconds": free_speedup_seconds_for_vip(
                 state.settings.vip_level
             ),
@@ -507,6 +518,13 @@ class PlayerRepository:
                     "research_speed_percent": state.settings.research_speed_percent,
                     "research_speed_boost_percent": (
                         state.settings.research_speed_boost_percent
+                    ),
+                    "event_research_discount_percent": max(
+                        0.0,
+                        min(
+                            100.0,
+                            state.settings.event_research_discount_percent,
+                        ),
                     ),
                     "free_speedup_seconds": free_speedup_seconds_for_vip(
                         state.settings.vip_level
@@ -632,6 +650,17 @@ class PlayerRepository:
             research_speed_percent=float(raw_settings["research_speed_percent"]),  # type: ignore[index]
             research_speed_boost_percent=float(
                 raw_settings.get("research_speed_boost_percent", 0.0)  # type: ignore[union-attr]
+            ),
+            event_research_discount_percent=max(
+                0.0,
+                min(
+                    100.0,
+                    float(
+                        raw_settings.get(  # type: ignore[union-attr]
+                            "event_research_discount_percent", 0.0
+                        )
+                    ),
+                ),
             ),
             max_guild_helps=max(
                 0,

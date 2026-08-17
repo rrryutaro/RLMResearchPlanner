@@ -14,6 +14,8 @@ from rlm_research_planner.services.calculation import (
     RoundingMode,
     apply_free_speedup_time,
     apply_guild_helps,
+    apply_percentage_discount,
+    apply_research_event_resource_discount,
     apply_research_speed,
     free_speedup_seconds_for_vip,
 )
@@ -95,6 +97,11 @@ class CatalogResearchPlanner:
         self._node_order = {
             node.id: (observation_index, node.row, node.column)
             for observation_index, observation in enumerate(observations)
+            for node in observation.nodes
+        }
+        self._node_categories = {
+            node.id: observation.category_id
+            for observation in observations
             for node in observation.nodes
         }
 
@@ -306,8 +313,8 @@ class CatalogResearchPlanner:
             )
         return order
 
-    @staticmethod
     def _create_step(
+        self,
         research_id: str,
         level_number: int,
         level_data: ObservedResearchLevel | None,
@@ -329,9 +336,16 @@ class CatalogResearchPlanner:
             )
         adjusted = None
         after_help = None
+        discount_percent = state.settings.research_event_discount_percent_for(
+            self._node_categories.get(research_id, "")
+        )
         if level_data.base_time_seconds is not None:
-            adjusted = apply_research_speed(
+            discounted_base_seconds = apply_percentage_discount(
                 level_data.base_time_seconds,
+                discount_percent,
+            )
+            adjusted = apply_research_speed(
+                discounted_base_seconds,
                 state.settings.effective_research_speed_percent,
                 rounding,
             )
@@ -354,7 +368,12 @@ class CatalogResearchPlanner:
             base_time_seconds=level_data.base_time_seconds,
             adjusted_time_seconds=adjusted,
             after_help_seconds=after_help,
-            costs=dict(level_data.costs),
+            costs={
+                key: apply_research_event_resource_discount(
+                    key, int(value), discount_percent
+                )
+                for key, value in level_data.costs.items()
+            },
             power=level_data.power,
             verification_status=level_data.verification_status,
             technolabe_count=technolabe_count,

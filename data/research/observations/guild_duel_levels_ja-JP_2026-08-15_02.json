@@ -1,0 +1,155 @@
+{
+  "observation_id": "guild-duel-levels-ja-JP-2026-08-15-02",
+  "evidence_id": "evidence_guild_duel_levels_ja_jp_2026_08_15_02",
+  "category_id": "guild_duel",
+  "titles": {
+    "ja-JP": "ギルドデュエル（Lv.1・Lv.2表示値追加）",
+    "en-US": "Guild Duel (additional level 1 and level 2 observations)"
+  },
+  "locale": "ja-JP",
+  "source_type": "user_provided_game_capture",
+  "verification_status": "single_capture_provisional",
+  "captured_on": "2026-08-15",
+  "game_version": "unknown",
+  "scope": "ギルドデュエル研究24レベル分の表示名、効果、パワー、資源、専用素材、前提条件、および表示されている研究時間",
+  "image_redistribution": false,
+  "notes": "非公開のゲーム画面25枚から表示値を転記。K/M表記は丸め値を数値化した。研究時間が表示された項目は研究速度+274.85%から元時間の整数秒範囲を逆算し、その上限を暫定値に採用した。ロック中で時間が表示されない項目は時間を推定しない。画像自体、ローカルパス、プレイヤー情報は収録しない。報酬奨励IIは既存観測とわずかな逆算差があるため、既存値を維持した。",
+  "levels": [
+    {
+      "research": "Gathering Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 275000, "stone": 114000, "timber": 137000, "ore": 68700, "gold": 114000, "special": 20}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Hero Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 357000, "stone": 89400, "timber": 178000, "ore": 149000, "gold": 149000, "special": 20}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Construction Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 357000, "stone": 149000, "timber": 178000, "ore": 89400, "gold": 149000, "special": 20}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Research Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 298000, "stone": 149000, "timber": 149000, "ore": 149000, "gold": 149000, "special": 20}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Training Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 298000, "stone": 149000, "timber": 149000, "ore": 149000, "gold": 149000, "special": 20}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Army Colosseum DEF I", "level": 1, "base_time_seconds": 171250, "technolabe_count": 1, "power": 15373,
+      "costs": {"food": 133000, "stone": 44500, "timber": 66800, "ore": 44500, "gold": 55600, "special": 50}, "costs_verified": true,
+      "requirements": [{"research": "Reward Incentive I", "level": 1}],
+      "verification_notes": "研究速度+274.85%で12:41:25。逆算可能範囲171247～171250秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Army Colosseum ATK I", "level": 2, "base_time_seconds": 461770, "technolabe_count": 1, "power": 38431,
+      "costs": {"food": 623000, "stone": 194000, "timber": 311000, "ore": 116000, "gold": 194000, "special": 120}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で1d 10:13:08。逆算可能範囲461767～461770秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Army Colosseum HP I", "level": 1, "base_time_seconds": 171250, "technolabe_count": 1, "power": 15373,
+      "costs": {"food": 133000, "stone": 33400, "timber": 55600, "ore": 44500, "gold": 55600, "special": 50}, "costs_verified": true,
+      "requirements": [{"research": "Reward Incentive I", "level": 1}],
+      "verification_notes": "研究速度+274.85%で12:41:25。逆算可能範囲171247～171250秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Artifact Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 504000, "stone": 252000, "timber": 302000, "ore": 201000, "gold": 252000, "special": 40}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Speed-Up Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 605000, "stone": 151000, "timber": 302000, "ore": 252000, "gold": 252000, "special": 40}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Stage Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 403000, "stone": 252000, "timber": 151000, "ore": 403000, "gold": 252000, "special": 40}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Hunting Incentive", "level": 2, "base_time_seconds": 35651, "technolabe_count": 1, "power": 4612,
+      "costs": {"food": 605000, "stone": 252000, "timber": 302000, "ore": 151000, "gold": 252000, "special": 40}, "costs_verified": true,
+      "verification_notes": "研究速度+274.85%で02:38:31。逆算可能範囲35649～35651秒の上限を採用。資源のK/M表示は丸め値。"
+    },
+    {
+      "research": "Army DEF II", "level": 1, "power": 30745,
+      "costs": {"food": 220000, "stone": 91700, "timber": 91700, "ore": 91700, "gold": 91700, "special": 110}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army ATK II", "level": 1, "power": 38432,
+      "costs": {"food": 293000, "stone": 91700, "timber": 91700, "ore": 91700, "gold": 91700, "special": 130}, "costs_verified": true,
+      "requirements": [{"research": "Reward Incentive II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army HP II", "level": 1, "power": 30745,
+      "costs": {"food": 220000, "stone": 91700, "timber": 91700, "ore": 91700, "gold": 91700, "special": 110}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Familiar Incentive", "level": 1, "power": 2306,
+      "costs": {"food": 366000, "stone": 114000, "timber": 68700, "ore": 91700, "gold": 114000, "special": 20}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army Colosseum DEF II", "level": 1, "power": 19216,
+      "costs": {"food": 338000, "stone": 112000, "timber": 169000, "ore": 112000, "gold": 140000, "special": 60}, "costs_verified": true,
+      "requirements": [{"research": "Army Colosseum ATK II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army Colosseum ATK II", "level": 1, "power": 23059,
+      "costs": {"food": 450000, "stone": 140000, "timber": 225000, "ore": 84500, "gold": 140000, "special": 70}, "costs_verified": true,
+      "requirements": [{"research": "Familiar Incentive", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army Colosseum HP II", "level": 1, "power": 19216,
+      "costs": {"food": 338000, "stone": 84500, "timber": 140000, "ore": 112000, "gold": 140000, "special": 60}, "costs_verified": true,
+      "requirements": [{"research": "Army Colosseum ATK II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army DEF III", "level": 1, "power": 38432,
+      "costs": {"food": 408000, "stone": 170000, "timber": 170000, "ore": 170000, "gold": 170000, "special": 130}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK III", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army ATK III", "level": 1, "power": 46118,
+      "costs": {"food": 545000, "stone": 170000, "timber": 170000, "ore": 170000, "gold": 170000, "special": 150}, "costs_verified": true,
+      "requirements": [{"research": "Army Colosseum ATK II", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Army HP III", "level": 1, "power": 38432,
+      "costs": {"food": 408000, "stone": 170000, "timber": 170000, "ore": 170000, "gold": 170000, "special": 130}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK III", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Master Incentive", "level": 1, "power": 2306,
+      "costs": {"food": 471000, "stone": 117000, "timber": 235000, "ore": 196000, "gold": 196000, "special": 90}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK III", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    },
+    {
+      "research": "Crafting Incentive", "level": 1, "power": 2306,
+      "costs": {"food": 471000, "stone": 196000, "timber": 235000, "ore": 117000, "gold": 196000, "special": 20}, "costs_verified": true,
+      "requirements": [{"research": "Army ATK III", "level": 1}],
+      "verification_notes": "ロック画面で資源、パワー、前提を確認。研究時間と叡智の輪個数は表示されていないため未確認。"
+    }
+  ],
+  "nodes": [],
+  "edges": []
+}

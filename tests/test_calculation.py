@@ -10,6 +10,8 @@ from rlm_research_planner.services.calculation import (
     VIP_FREE_SPEEDUP_MINUTES,
     apply_free_speedup_time,
     apply_guild_helps,
+    apply_percentage_discount,
+    apply_research_event_resource_discount,
     apply_research_speed,
     free_speedup_seconds_for_vip,
     format_duration,
@@ -35,6 +37,25 @@ def test_free_speedup_time_is_deducted_after_research_speed() -> None:
     adjusted = apply_research_speed(473_040, 224.84)
     assert adjusted == 145_623
     assert apply_free_speedup_time(adjusted, 100 * 60) == 139_623
+
+
+def test_event_discount_is_applied_before_research_speed_and_vip_time() -> None:
+    discounted = apply_percentage_discount(2_166_780, 30)
+    assert discounted == 1_516_746
+    adjusted = apply_research_speed(discounted, 285.68)
+    assert apply_free_speedup_time(adjusted, 100 * 60) == 387_266
+    assert format_duration(387_266) == "4d 11:34:26"
+
+
+def test_event_discount_only_changes_standard_research_resources() -> None:
+    assert apply_research_event_resource_discount("food", 1_228_207, 30) == 859_744
+    assert apply_research_event_resource_discount("special", 10, 30) == 10
+
+
+@pytest.mark.parametrize("discount", [-0.1, 100.1])
+def test_event_discount_rejects_invalid_percentages(discount: float) -> None:
+    with pytest.raises(ValueError):
+        apply_percentage_discount(100, discount)
 
 
 def test_free_speedup_time_does_not_produce_negative_time() -> None:

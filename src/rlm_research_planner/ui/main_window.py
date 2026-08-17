@@ -82,6 +82,8 @@ from rlm_research_planner.repositories.player_repository import PlayerRepository
 from rlm_research_planner.services.calculation import (
     apply_free_speedup_time,
     apply_guild_helps,
+    apply_percentage_discount,
+    apply_research_event_resource_discount,
     apply_research_speed,
     free_speedup_seconds_for_vip,
     format_duration,
@@ -1184,8 +1186,11 @@ class MainWindow(QMainWindow):
                         ):
                             result = False
                             break
+                        discounted_seconds = self._event_discounted_research_value(
+                            target_id, level_data.base_time_seconds
+                        )
                         adjusted_seconds = apply_research_speed(
-                            level_data.base_time_seconds,
+                            discounted_seconds,
                             self.player_state.settings.effective_research_speed_percent,
                         )
                         if adjusted_seconds > free_seconds:
@@ -1206,7 +1211,9 @@ class MainWindow(QMainWindow):
                             level_data.academy_level
                             > self.player_state.settings.academy_level
                             or apply_research_speed(
-                                level_data.base_time_seconds,
+                                self._event_discounted_research_value(
+                                    target_id, level_data.base_time_seconds
+                                ),
                                 self.player_state.settings.effective_research_speed_percent,
                             )
                             > free_seconds
@@ -1234,6 +1241,23 @@ class MainWindow(QMainWindow):
             return result
 
         return can_finish_through(research_id, current_level + 1)
+
+    def _research_category_id(self, research_id: str) -> str:
+        observation = self._node_observation.get(research_id)
+        if observation is not None:
+            return observation.category_id
+        research = self._research.get(research_id)
+        return research.category_id if research is not None else ""
+
+    def _event_discounted_research_value(
+        self, research_id: str, value: int
+    ) -> int:
+        discount_percent = (
+            self.player_state.settings.research_event_discount_percent_for(
+                self._research_category_id(research_id)
+            )
+        )
+        return apply_percentage_discount(value, discount_percent)
 
     def _refresh_tree_filter_results(self) -> None:
         if not hasattr(self, "tree_instant_finish_check"):
@@ -1716,8 +1740,16 @@ class MainWindow(QMainWindow):
             return
         next_level = current + 1
         level = self.master.level(research.id, next_level)
+        discount_percent = (
+            self.player_state.settings.research_event_discount_percent_for(
+                research.category_id
+            )
+        )
+        discounted_base_seconds = apply_percentage_discount(
+            level.base_time_seconds, discount_percent
+        )
         adjusted = apply_research_speed(
-            level.base_time_seconds,
+            discounted_base_seconds,
             self.player_state.settings.effective_research_speed_percent,
         )
         adjusted = apply_free_speedup_time(
@@ -1728,7 +1760,8 @@ class MainWindow(QMainWindow):
         )
         after_help = apply_guild_helps(adjusted, self.player_state.settings.max_guild_helps)
         resources = ", ".join(
-            f"{self._resource_label(key)} {level.resources.get(key, 0):,}"
+            f"{self._resource_label(key)} "
+            f"{apply_research_event_resource_discount(key, level.resources.get(key, 0), discount_percent):,}"
             for key in RESOURCE_KEYS
             if level.resources.get(key, 0)
         )
@@ -3052,6 +3085,16 @@ class MainWindow(QMainWindow):
         self.research_speed_boost_spin.setToolTip(
             self.t("player.research_speed_boost_hint")
         )
+        self.event_research_discount_spin = VisibleDoubleSpinBox(settings_panel)
+        self.event_research_discount_spin.setRange(0.0, 100.0)
+        self.event_research_discount_spin.setDecimals(1)
+        self.event_research_discount_spin.setSuffix(" %")
+        self.event_research_discount_spin.setValue(
+            self.player_state.settings.event_research_discount_percent
+        )
+        self.event_research_discount_spin.setToolTip(
+            self.t("player.event_research_discount_hint")
+        )
         guild_help_limit = max_guild_helps_for_castle(
             self.player_state.settings.castle_level
         )
@@ -3127,6 +3170,10 @@ class MainWindow(QMainWindow):
         research_form.addRow(
             self.t("player.research_speed_boost"),
             self.research_speed_boost_spin,
+        )
+        research_form.addRow(
+            self.t("player.event_research_discount"),
+            self.event_research_discount_spin,
         )
         settings_form.addRow(research_group)
 
@@ -3338,6 +3385,9 @@ class MainWindow(QMainWindow):
         self.academy_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_spin.valueChanged.connect(self._settings_changed)
         self.research_speed_boost_spin.valueChanged.connect(
+            self._settings_changed
+        )
+        self.event_research_discount_spin.valueChanged.connect(
             self._settings_changed
         )
         self.guild_help_spin.valueChanged.connect(self._settings_changed)
@@ -3598,6 +3648,9 @@ class MainWindow(QMainWindow):
         settings.research_speed_percent = self.research_speed_spin.value()
         settings.research_speed_boost_percent = (
             self.research_speed_boost_spin.value()
+        )
+        settings.event_research_discount_percent = (
+            self.event_research_discount_spin.value()
         )
         settings.max_guild_helps = min(
             self.guild_help_spin.value(), guild_help_limit
