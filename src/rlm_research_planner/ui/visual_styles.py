@@ -282,6 +282,35 @@ QLabel#speedupSectionTitle {
     background-color: transparent;
     font-weight: 700;
 }
+QToolButton#speedupOffersToggle {
+    min-height: 26px;
+    padding: 1px 5px;
+    border: 0;
+    color: #526B78;
+    background-color: transparent;
+    font-weight: 700;
+    text-align: left;
+}
+QToolButton#speedupOffersToggle:hover,
+QToolButton#speedupOffersToggle:checked {
+    color: #164E63;
+    background-color: #E4EEF2;
+}
+QScrollArea#speedupUsedItemsStrip,
+QWidget#speedupUsedItemsList {
+    border: 1px solid #A9BBC5;
+    border-radius: 6px;
+    color: #1D303A;
+    background-color: #FFFFFF;
+}
+QLabel#speedupUsedItemBadge {
+    padding: 3px 8px;
+    border: 1px solid #A9BBC5;
+    border-radius: 9px;
+    color: #164E63;
+    background-color: #E4EEF2;
+    font-weight: 700;
+}
 QFrame#speedupOfferCard {
     border: 1px solid #A9BBC5;
     border-left: 3px solid #C69016;
@@ -335,6 +364,41 @@ QLabel#speedupSectionTitle {
     color: #F4F8F8;
     background-color: transparent;
     font-weight: 700;
+}
+QToolButton#speedupOffersToggle {
+    min-height: 26px;
+    padding: 1px 5px;
+    border: 0;
+    color: #A9C5CE;
+    background-color: transparent;
+    font-weight: 700;
+    text-align: left;
+}
+QToolButton#speedupOffersToggle:hover,
+QToolButton#speedupOffersToggle:checked {
+    color: #07151D;
+    background-color: #F2B632;
+}
+QScrollArea#speedupUsedItemsStrip,
+QWidget#speedupUsedItemsList {
+    border: 1px solid #285363;
+    border-radius: 6px;
+    color: #F4F8F8;
+    background-color: #0B202A;
+}
+QLabel#speedupUsedItemBadge {
+    padding: 3px 8px;
+    border: 1px solid #326173;
+    border-radius: 9px;
+    color: #F4F8F8;
+    background-color: #153844;
+    font-weight: 700;
+}
+QFrame#speedupOfferCard {
+    border: 1px solid #326173;
+    border-left: 3px solid #F2B632;
+    border-radius: 6px;
+    background-color: #0B202A;
 }
 QLabel, QCheckBox {
     color: #F4F8F8;
@@ -410,8 +474,13 @@ def apply_window_visual_surface(
         palette.setColor(QPalette.ColorRole.Highlight, QColor("#F2B632"))
         palette.setColor(QPalette.ColorRole.HighlightedText, QColor("#07151D"))
 
-    window.setPalette(palette)
+    # Qt restores the palette that was active immediately before a style
+    # sheet was installed when that sheet is removed.  If the desktop
+    # palette is assigned first, clearing the mobile sheet restores the old
+    # mobile palette over it and leaves the window dark.  Clear/apply the
+    # sheet first, then make the selected palette authoritative.
     window.setStyleSheet(window_style_sheet(visual_style))
+    window.setPalette(palette)
     # Setting a style sheet can disable autoFillBackground on the receiver.
     # Re-enable it afterwards so the normal decorated window always owns an
     # opaque first surface even before child widgets paint.
@@ -432,6 +501,7 @@ def apply_dialog_visual_style(dialog: QWidget, visual_style: str) -> None:
     dialog.setProperty("visualStyle", visual_style)
     if visual_style != "mobile":
         dialog.setStyleSheet("")
+        dialog.setPalette(QPalette(QApplication.palette()))
         dialog.setAutoFillBackground(False)
         return
 

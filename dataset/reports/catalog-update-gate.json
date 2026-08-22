@@ -86,6 +86,18 @@
       "levels": 3179,
       "representative_plans": 16,
       "review_warnings": 180
+    },
+    {
+      "sequence": 8,
+      "catalog_sha256": "b6b2bb46ebfa1fa1b32d96d2390edc5fbcc5e25ae70c20328f78c6e1636ff1a2",
+      "summary": "Corrected four observed Japanese Army Leadership research names to match the current in-game labels.",
+      "comparison_status": "match",
+      "differences": 0,
+      "categories": 16,
+      "research": 399,
+      "levels": 3179,
+      "representative_plans": 16,
+      "review_warnings": 180
     }
   ]
 }

@@ -31,7 +31,7 @@
     "game_version": "unknown",
     "path": "tools/RLMResearchPlanner/data/research/catalog.json",
     "schema_version": 1,
-    "sha256": "9860f293870216de0eb99e13f35a12370f60e1c64e79e4ac8eff66f67efebfed"
+    "sha256": "b6b2bb46ebfa1fa1b32d96d2390edc5fbcc5e25ae70c20328f78c6e1636ff1a2"
   },
   "statistics": {
     "categories": 16,

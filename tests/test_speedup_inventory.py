@@ -152,7 +152,27 @@ def test_paid_offer_recommendation_repeats_offer_and_ranks_by_total_cost() -> No
     assert [item.offer_id for item in result] == ["cheap", "expensive"]
     assert result[0].purchases == 3
     assert result[0].total_diamond_cost == 300
+    assert result[0].applied_general_speedup_seconds == 10_800
+    assert result[0].applied_target_speedup_seconds == 0
     assert result[1].purchases == 2
+    assert result[1].applied_general_speedup_seconds == 0
+    assert result[1].applied_target_speedup_seconds == 10_800
+
+
+def test_paid_offer_recommendation_returns_every_applicable_saved_offer() -> None:
+    offers = [
+        PaidOffer(
+            str(index),
+            f"Pack {index}",
+            diamond_cost=index * 100,
+            items=(PaidItem("research", quantity=1, duration_seconds=3600),),
+        )
+        for index in range(1, 6)
+    ]
+
+    result = recommend_paid_offers(3600, offers, "research")
+
+    assert [item.offer_id for item in result] == ["1", "2", "3", "4", "5"]
 
 
 def test_paid_offer_recommendation_separates_speedups_gems_and_shortfall() -> None:

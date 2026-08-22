@@ -11,7 +11,6 @@ QToolButton {
     padding: 0;
     margin: 0;
     border-radius: 0;
-    font-size: 16px;
     font-weight: 900;
 }
 QToolButton[stepEdge="decrease"] {

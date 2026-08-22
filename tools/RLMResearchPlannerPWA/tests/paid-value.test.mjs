@@ -7,6 +7,7 @@ import {
   paidOfferExchangePayload,
   paidOffersFromExchangePayload,
   paidKindHasTime,
+  reorderPaidItems,
   summarizePaidOffer,
 } from "../src/paid-value.js";
 import { backupPayload, defaultState, stateFromBackup } from "../src/state.js";
@@ -42,6 +43,20 @@ test("paid value combines gems, speedups, and arbitrary items", () => {
   assert.equal(paidKindHasTime("merging"), true);
   assert.equal(paidKindHasTime("crafting"), true);
   assert.equal(paidKindHasTime("chest"), false);
+});
+
+test("paid item order moves one selected detail without changing its values", () => {
+  const source = [
+    { kind: "custom", name: "A", quantity: 1 },
+    { kind: "custom", name: "B", quantity: 2 },
+    { kind: "custom", name: "C", quantity: 3 },
+  ];
+  const moved = reorderPaidItems(source, 1, -1);
+  assert.equal(moved.moved, true);
+  assert.equal(moved.index, 0);
+  assert.deepEqual(moved.items.map((item) => item.name), ["B", "A", "C"]);
+  assert.deepEqual(source.map((item) => item.name), ["A", "B", "C"]);
+  assert.equal(reorderPaidItems(source, 0, -1).moved, false);
 });
 
 test("speed-up presets distinguish merging and Lunar Foundry crafting", () => {

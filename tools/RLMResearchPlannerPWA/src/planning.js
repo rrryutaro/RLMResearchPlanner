@@ -1,4 +1,4 @@
-import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.7-b1";
+import { RESOURCE_KEYS, freeSecondsForVip, guildHelpCount } from "./state.js?v=0.1.8-b11";
 
 export const TECHNOLABE_CAPACITY_SECONDS = 33 * 86400 + 3 * 3600 + 59 * 60;
 export const EVENT_DISCOUNTABLE_RESEARCH_RESOURCE_KEYS = new Set([

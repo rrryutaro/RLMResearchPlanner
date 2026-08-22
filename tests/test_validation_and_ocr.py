@@ -49,16 +49,50 @@ def test_visual_style_defaults_validates_and_persists(tmp_path: Path) -> None:
     repository = SettingsRepository(path)
     assert repository.load().visual_style == "desktop"
 
-    settings = AppSettings(visual_style="mobile", talent_auto_follow=False)
+    settings = AppSettings(
+        visual_style="mobile",
+        talent_auto_follow=False,
+        ui_font_size=17,
+        table_font_size=14,
+        tree_font_size=24,
+        help_font_size=19,
+    )
     repository.save(settings)
     assert repository.load().visual_style == "mobile"
     assert repository.load().talent_auto_follow is False
+    assert repository.load().ui_font_size == 17
+    assert repository.load().table_font_size == 14
+    assert repository.load().tree_font_size == 24
+    assert repository.load().help_font_size == 19
 
     raw = json.loads(path.read_text(encoding="utf-8"))
     raw["visual_style"] = "unsupported"
+    raw.pop("ui_font_size")
+    raw["speedup_font_size"] = 15
+    path.write_text(json.dumps(raw), encoding="utf-8")
+    assert repository.load().ui_font_size == 15
+
+    raw["ui_font_size"] = 99
+    raw["table_font_size"] = 99
+    raw["tree_font_size"] = 99
+    raw["help_font_size"] = 99
     path.write_text(json.dumps(raw), encoding="utf-8")
     assert repository.load().visual_style == "desktop"
     assert repository.load().talent_auto_follow is False
+    assert repository.load().ui_font_size == 72
+    assert repository.load().table_font_size == 72
+    assert repository.load().tree_font_size == 72
+    assert repository.load().help_font_size == 72
+
+    raw["ui_font_size"] = -99
+    raw["table_font_size"] = -99
+    raw["tree_font_size"] = -99
+    raw["help_font_size"] = -99
+    path.write_text(json.dumps(raw), encoding="utf-8")
+    assert repository.load().ui_font_size == 8
+    assert repository.load().table_font_size == 8
+    assert repository.load().tree_font_size == 8
+    assert repository.load().help_font_size == 8
 
 
 def test_localization_falls_back_to_english() -> None:

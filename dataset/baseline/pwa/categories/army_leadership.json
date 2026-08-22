@@ -1343,7 +1343,7 @@
       "max_level": 10,
       "names": {
         "en-US": "Bigger Infirmary I",
-        "ja-JP": "医療所容量I"
+        "ja-JP": "医療所拡張Ⅰ"
       },
       "row": 3
     },
@@ -1578,7 +1578,7 @@
       "max_level": 10,
       "names": {
         "en-US": "Gold Storage I",
-        "ja-JP": "ゴールド容量I"
+        "ja-JP": "ゴールド生産上限Ⅰ"
       },
       "row": 4
     },
@@ -1813,7 +1813,7 @@
       "max_level": 10,
       "names": {
         "en-US": "Max Deposit I",
-        "ja-JP": "ジェム投資額I"
+        "ja-JP": "ジェム投資額Ⅰ"
       },
       "row": 4
     },
@@ -2048,7 +2048,7 @@
       "max_level": 10,
       "names": {
         "en-US": "Gold Harvesting I",
-        "ja-JP": "ゴールド生産量I"
+        "ja-JP": "ゴールド生産量Ⅰ"
       },
       "row": 4
     },
@@ -4661,7 +4661,7 @@
   "platform": "pwa",
   "schema_version": 1,
   "scope": "all_names_layout_only",
-  "source_catalog_sha256": "9860f293870216de0eb99e13f35a12370f60e1c64e79e4ac8eff66f67efebfed",
+  "source_catalog_sha256": "b6b2bb46ebfa1fa1b32d96d2390edc5fbcc5e25ae70c20328f78c6e1636ff1a2",
   "titles": {
     "en-US": "Army Leadership",
     "ja-JP": "軍隊戦術"

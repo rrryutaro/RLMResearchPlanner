@@ -138,6 +138,17 @@ export function paidKindHasTime(kind) {
   return SPEEDUP_ITEM_KINDS.includes(kind);
 }
 
+export function reorderPaidItems(items, index, offset) {
+  const reordered = Array.isArray(items) ? [...items] : [];
+  const source = Math.trunc(Number(index));
+  const target = source + (Number(offset) < 0 ? -1 : 1);
+  if (source < 0 || source >= reordered.length || target < 0 || target >= reordered.length) {
+    return { items: reordered, index: source, moved: false };
+  }
+  [reordered[source], reordered[target]] = [reordered[target], reordered[source]];
+  return { items: reordered, index: target, moved: true };
+}
+
 export function defaultPointsEach(kind) {
   return DEFAULT_POINTS_EACH[kind] || 0;
 }

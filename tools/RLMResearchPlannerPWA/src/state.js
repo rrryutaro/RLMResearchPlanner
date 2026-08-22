@@ -1,5 +1,13 @@
 export const RESOURCE_KEYS = ["food", "stone", "timber", "ore", "gold", "gold_hammer", "war_tome", "steel_cuffs", "soul_crystal", "ancient_tomes", "lunite", "mana_ore", "special"];
 export const MAX_GUILD_HELPS = 30;
+export const FONT_SIZE_MIN = 8;
+export const FONT_SIZE_MAX = 72;
+export const DEFAULT_FONT_SIZES = Object.freeze({
+  ui: 16,
+  table: 16,
+  tree: 16,
+  help: 16,
+});
 const PRODUCTION_STORAGE_KEY = "rlm-research-planner-pwa.player.v1";
 const PREVIEW_STORAGE_KEY = "rlm-research-planner-preview.player.v1";
 
@@ -16,8 +24,8 @@ export function hasSavedState(storage = globalThis.localStorage, pathname = glob
   } catch { return false; }
 }
 export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
-import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.7-b1";
-import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.7-b1";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.8-b11";
+import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.8-b11";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));
@@ -35,6 +43,10 @@ export function defaultState() {
   return {
     schemaVersion: 1,
     locale: "",
+    uiFontSize: DEFAULT_FONT_SIZES.ui,
+    tableFontSize: DEFAULT_FONT_SIZES.table,
+    treeFontSize: DEFAULT_FONT_SIZES.tree,
+    helpFontSize: DEFAULT_FONT_SIZES.help,
     settings: {
       playerLevel: 60,
       vipLevel: 1,
@@ -86,6 +98,49 @@ export function sanitizeState(value) {
     const locale = String(source.locale || "").trim().replaceAll("_", "-");
     base.locale = /^[A-Za-z]{2,8}(?:-[A-Za-z0-9]{1,8})*$/.test(locale) ? locale : "";
   } catch { base.locale = ""; }
+  base.uiFontSize = Math.min(
+    FONT_SIZE_MAX,
+    Math.max(
+      FONT_SIZE_MIN,
+      Math.trunc(number(
+        source.uiFontSize
+          ?? source.ui_font_size
+          ?? source.speedupFontSize
+          ?? source.speedup_font_size,
+        DEFAULT_FONT_SIZES.ui,
+      )),
+    ),
+  );
+  base.helpFontSize = Math.min(
+    FONT_SIZE_MAX,
+    Math.max(
+      FONT_SIZE_MIN,
+      Math.trunc(number(
+        source.helpFontSize ?? source.help_font_size,
+        DEFAULT_FONT_SIZES.help,
+      )),
+    ),
+  );
+  base.tableFontSize = Math.min(
+    FONT_SIZE_MAX,
+    Math.max(
+      FONT_SIZE_MIN,
+      Math.trunc(number(
+        source.tableFontSize ?? source.table_font_size,
+        DEFAULT_FONT_SIZES.table,
+      )),
+    ),
+  );
+  base.treeFontSize = Math.min(
+    FONT_SIZE_MAX,
+    Math.max(
+      FONT_SIZE_MIN,
+      Math.trunc(number(
+        source.treeFontSize ?? source.tree_font_size,
+        DEFAULT_FONT_SIZES.tree,
+      )),
+    ),
+  );
   base.settings.playerLevel = Math.min(60, Math.max(1, Math.trunc(number(settings.playerLevel ?? settings.player_level, 60))));
   base.settings.vipLevel = Math.min(15, Math.max(1, Math.trunc(number(settings.vipLevel ?? settings.vip_level, 1))));
   base.settings.castleLevel = Math.min(25, Math.max(1, Math.trunc(number(settings.castleLevel ?? settings.castle_level, 1))));

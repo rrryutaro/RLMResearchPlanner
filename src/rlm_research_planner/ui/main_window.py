@@ -11,9 +11,8 @@ from difflib import SequenceMatcher
 from pathlib import Path
 from uuid import uuid4
 
-from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt
+from PySide6.QtCore import QByteArray, QBuffer, QIODevice, QRect, QSize, Qt, QTimer
 from PySide6.QtGui import (
-    QAction,
     QBrush,
     QCloseEvent,
     QColor,
@@ -44,7 +43,6 @@ from PySide6.QtWidgets import (
     QListWidgetItem,
     QLayout,
     QMainWindow,
-    QMenu,
     QMessageBox,
     QProgressBar,
     QPushButton,
@@ -184,6 +182,12 @@ from rlm_research_planner.services.window_capture import (
 )
 from rlm_research_planner.settings import (
     AppSettings,
+    DEFAULT_HELP_FONT_SIZE,
+    DEFAULT_TABLE_FONT_SIZE,
+    DEFAULT_TREE_FONT_SIZE,
+    DEFAULT_UI_FONT_SIZE,
+    FONT_SIZE_MAX,
+    FONT_SIZE_MIN,
     SettingsRepository,
     normalize_visual_style,
 )
@@ -305,10 +309,9 @@ class _AutoFitListWidget(QListWidget):
 class _SpeedupSimulationPanel(QWidget):
     """Structured speed-up summary shared by research and construction plans."""
 
-    def __init__(self, translate, on_gem_usage_changed, parent=None) -> None:
+    def __init__(self, translate, parent=None) -> None:
         super().__init__(parent)
         self._translate = translate
-        self._on_gem_usage_changed = on_gem_usage_changed
         self.setObjectName("speedupSimulationPanel")
 
         outer = QVBoxLayout(self)
@@ -334,18 +337,14 @@ class _SpeedupSimulationPanel(QWidget):
         self.content.setObjectName("speedupSimulationBody")
         content_layout = QVBoxLayout(self.content)
         content_layout.setContentsMargins(12, 10, 12, 12)
-        content_layout.setSpacing(9)
+        content_layout.setSpacing(5)
         self.content.setVisible(False)
         outer.addWidget(self.content)
 
-        header = QHBoxLayout()
         self.hint_label = QLabel(self.content)
         self.hint_label.setWordWrap(True)
-        header.addWidget(self.hint_label, 1)
-        self.gem_checkbox = QCheckBox(self.content)
-        self.gem_checkbox.toggled.connect(self._on_gem_usage_changed)
-        header.addWidget(self.gem_checkbox, 0, Qt.AlignTop)
-        content_layout.addLayout(header)
+        self.hint_label.setVisible(False)
+        content_layout.addWidget(self.hint_label)
 
         self.status_label = QLabel(self.content)
         self.status_label.setWordWrap(True)
@@ -358,62 +357,110 @@ class _SpeedupSimulationPanel(QWidget):
 
         self.owned_group = QFrame(self.content)
         self.owned_group.setObjectName("speedupOwnedGroup")
+        self.owned_group.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Fixed,
+        )
         owned_layout = QVBoxLayout(self.owned_group)
         owned_layout.setContentsMargins(9, 7, 9, 7)
-        owned_layout.setSpacing(4)
-        self.owned_title_label = QLabel(self.owned_group)
+        owned_layout.setSpacing(5)
+        owned_summary = QWidget(self.owned_group)
+        owned_summary_layout = QHBoxLayout(owned_summary)
+        owned_summary_layout.setContentsMargins(0, 0, 0, 0)
+        owned_summary_layout.setSpacing(12)
+        self.owned_title_label = QLabel(owned_summary)
         self.owned_title_label.setObjectName("speedupSectionTitle")
-        owned_layout.addWidget(self.owned_title_label)
-        owned_stats = QHBoxLayout()
-        owned_stats.setContentsMargins(0, 0, 0, 0)
-        owned_stats.setSpacing(14)
-        self.available_label = QLabel(self.owned_group)
-        self.applied_label = QLabel(self.owned_group)
-        owned_stats.addWidget(self.available_label)
-        owned_stats.addWidget(self.applied_label)
-        owned_stats.addStretch(1)
-        owned_layout.addLayout(owned_stats)
-        self.used_items_label = QLabel(self.owned_group)
-        self.used_items_label.setWordWrap(True)
-        self.surplus_label = QLabel(self.owned_group)
-        owned_layout.addWidget(self.used_items_label)
-        owned_layout.addWidget(self.surplus_label)
+        owned_summary_layout.addWidget(self.owned_title_label)
+        self.available_label = QLabel(owned_summary)
+        self.applied_label = QLabel(owned_summary)
+        self.surplus_label = QLabel(owned_summary)
+        owned_summary_layout.addWidget(self.available_label)
+        owned_summary_layout.addWidget(self.applied_label)
+        owned_summary_layout.addWidget(self.surplus_label)
+        owned_summary_layout.addStretch(1)
+        owned_layout.addWidget(owned_summary)
         allocation.addWidget(self.owned_group, 0, 0)
 
         self.remaining_group = QFrame(self.content)
         self.remaining_group.setObjectName("speedupRemainingGroup")
-        remaining_layout = QVBoxLayout(self.remaining_group)
+        self.remaining_group.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Fixed,
+        )
+        remaining_layout = QHBoxLayout(self.remaining_group)
         remaining_layout.setContentsMargins(9, 7, 9, 7)
-        remaining_layout.setSpacing(4)
+        remaining_layout.setSpacing(12)
         self.remaining_title_label = QLabel(self.remaining_group)
         self.remaining_title_label.setObjectName("speedupSectionTitle")
         remaining_layout.addWidget(self.remaining_title_label)
         self.remaining_label = QLabel(self.remaining_group)
-        self.remaining_label.setWordWrap(True)
         self.direct_gems_label = QLabel(self.remaining_group)
         self.direct_gems_label.setObjectName("speedupDirectGems")
-        self.direct_gems_label.setWordWrap(True)
         remaining_layout.addWidget(self.remaining_label)
         remaining_layout.addWidget(self.direct_gems_label)
+        remaining_layout.addStretch(1)
+
+        self.offers_toggle = QToolButton(self.remaining_group)
+        self.offers_toggle.setObjectName("speedupOffersToggle")
+        self.offers_toggle.setCheckable(True)
+        self.offers_toggle.setChecked(False)
+        self.offers_toggle.setArrowType(Qt.ArrowType.RightArrow)
+        self.offers_toggle.setToolButtonStyle(
+            Qt.ToolButtonStyle.ToolButtonTextBesideIcon
+        )
+        self.offers_toggle.toggled.connect(self._toggle_offers)
+        self.offers_toggle.setSizePolicy(
+            QSizePolicy.Policy.Minimum,
+            QSizePolicy.Policy.Fixed,
+        )
+        remaining_layout.addWidget(self.offers_toggle)
         allocation.addWidget(self.remaining_group, 0, 1)
         allocation.setColumnStretch(0, 1)
         allocation.setColumnStretch(1, 1)
         content_layout.addLayout(allocation)
 
+        self.used_items_strip = QScrollArea(self.owned_group)
+        self.used_items_strip.setObjectName("speedupUsedItemsStrip")
+        self.used_items_strip.setFrameShape(QFrame.Shape.NoFrame)
+        self.used_items_strip.setWidgetResizable(False)
+        self.used_items_strip.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+        self.used_items_strip.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
+        )
+        self.used_items_content = QWidget(self.used_items_strip)
+        self.used_items_content.setObjectName("speedupUsedItemsList")
+        self.used_items_layout = QHBoxLayout(self.used_items_content)
+        self.used_items_layout.setContentsMargins(6, 4, 6, 4)
+        self.used_items_layout.setSpacing(6)
+        self.used_item_badges: list[QLabel] = []
+        self.used_items_strip.setWidget(self.used_items_content)
+        self.used_items_strip.setVisible(False)
+        owned_layout.addWidget(self.used_items_strip)
+
         self.offers_group = QFrame(self.content)
         self.offers_group.setObjectName("speedupOffersGroup")
         offers_outer = QVBoxLayout(self.offers_group)
-        offers_outer.setContentsMargins(9, 7, 9, 9)
-        offers_outer.setSpacing(5)
+        offers_outer.setContentsMargins(6, 4, 6, 5)
+        offers_outer.setSpacing(3)
         self.offers_title_label = QLabel(self.offers_group)
         self.offers_title_label.setObjectName("speedupSectionTitle")
-        offers_outer.addWidget(self.offers_title_label)
+        self.offers_title_label.setVisible(False)
         self.offers_content = QWidget(self.offers_group)
-        self.offers_layout = QVBoxLayout(self.offers_content)
+        self.offers_layout = QGridLayout(self.offers_content)
         self.offers_layout.setContentsMargins(0, 0, 0, 0)
-        self.offers_layout.setSpacing(5)
+        self.offers_layout.setSpacing(3)
+        self.offers_layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
         offers_outer.addWidget(self.offers_content)
+        offers_outer.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
+        self.offers_group.setSizePolicy(
+            QSizePolicy.Policy.Expanding,
+            QSizePolicy.Policy.Minimum,
+        )
+        self.offers_group.setVisible(False)
         content_layout.addWidget(self.offers_group)
+        content_layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
 
     def _toggle_content(self, expanded: bool) -> None:
         self.toggle_button.setArrowType(
@@ -421,24 +468,44 @@ class _SpeedupSimulationPanel(QWidget):
         )
         self.content.setVisible(expanded)
 
-    def _refresh_common_text(self, use_gems: bool) -> None:
+    def _toggle_offers(self, expanded: bool) -> None:
+        self.offers_toggle.setArrowType(
+            Qt.ArrowType.DownArrow if expanded else Qt.ArrowType.RightArrow
+        )
+        self.offers_group.setVisible(expanded)
+
+    def _refresh_common_text(self) -> None:
         self.toggle_button.setText(
             self._translate("plan.speedup_simulation_title")
         )
-        self.hint_label.setText(self._translate("plan.speedup_simulation_hint"))
-        self.gem_checkbox.blockSignals(True)
-        self.gem_checkbox.setText(self._translate("plan.speedup_use_gems"))
-        self.gem_checkbox.setChecked(use_gems)
-        self.gem_checkbox.blockSignals(False)
+        hint = self._translate("plan.speedup_simulation_hint")
+        self.hint_label.setText(hint)
+        self.toggle_button.setToolTip(hint)
         self.owned_title_label.setText(
             self._translate("plan.speedup_owned_section")
         )
         self.remaining_title_label.setText(
             self._translate("plan.speedup_remaining_section")
         )
-        self.offers_title_label.setText(
-            self._translate("plan.speedup_purchase_options")
-        )
+
+    def _clear_used_items(self) -> None:
+        while self.used_items_layout.count():
+            item = self.used_items_layout.takeAt(0)
+            widget = item.widget()
+            if widget is not None:
+                widget.deleteLater()
+        self.used_item_badges.clear()
+
+    def _speedup_duration_label(self, seconds: int) -> str:
+        value = max(0, int(seconds))
+        for divisor, unit_key in (
+            (86_400, "paid.unit.days"),
+            (3_600, "paid.unit.hours"),
+            (60, "paid.unit.minutes"),
+        ):
+            if value and value % divisor == 0:
+                return f"{value // divisor:,}{self._translate(unit_key)}"
+        return f"{value:,}{self._translate('paid.unit.seconds')}"
 
     def _clear_offers(self) -> None:
         while self.offers_layout.count():
@@ -447,13 +514,15 @@ class _SpeedupSimulationPanel(QWidget):
             if widget is not None:
                 widget.deleteLater()
 
-    def show_unknown(self, use_gems: bool) -> None:
-        self._refresh_common_text(use_gems)
+    def show_unknown(self) -> None:
+        self._refresh_common_text()
         self._clear_offers()
         self.status_label.setText(self._translate("plan.speedup_unknown_time"))
         self.status_label.setVisible(True)
         self.owned_group.setVisible(False)
         self.remaining_group.setVisible(False)
+        self.used_items_strip.setVisible(False)
+        self.offers_toggle.setVisible(False)
         self.offers_group.setVisible(False)
         self.setVisible(True)
 
@@ -461,9 +530,8 @@ class _SpeedupSimulationPanel(QWidget):
         self,
         coverage: SpeedupCoverage,
         recommendations: tuple[PaidOfferRecommendation, ...],
-        use_gems: bool,
     ) -> None:
-        self._refresh_common_text(use_gems)
+        self._refresh_common_text()
         self.status_label.setVisible(False)
         self.owned_group.setVisible(True)
         self.remaining_group.setVisible(True)
@@ -480,17 +548,36 @@ class _SpeedupSimulationPanel(QWidget):
                 time=format_duration(coverage.applied_seconds),
             )
         )
-        used_items = " / ".join(
-            f"{self._translate(f'paid.kind.{item.kind}')} "
-            f"{format_duration(item.duration_seconds)} ×{item.quantity:,}"
-            for item in coverage.used_items
+        self._clear_used_items()
+        quantity_by_duration: dict[int, int] = {}
+        for item in coverage.used_items:
+            quantity_by_duration[item.duration_seconds] = (
+                quantity_by_duration.get(item.duration_seconds, 0)
+                + item.quantity
+            )
+        for duration_seconds, quantity in sorted(
+            quantity_by_duration.items(), reverse=True
+        ):
+            badge_text = self._translate(
+                "plan.speedup_used_item_compact",
+                duration=self._speedup_duration_label(duration_seconds),
+                quantity=f"{quantity:,}",
+            )
+            badge = QLabel(badge_text, self.used_items_content)
+            badge.setObjectName("speedupUsedItemBadge")
+            badge.setToolTip(
+                format_duration(duration_seconds * quantity)
+            )
+            self.used_items_layout.addWidget(badge)
+            self.used_item_badges.append(badge)
+        self.used_items_content.adjustSize()
+        strip_height = (
+            self.used_items_content.sizeHint().height()
+            + self.used_items_strip.horizontalScrollBar().sizeHint().height()
+            + 2
         )
-        self.used_items_label.setText(
-            self._translate("plan.speedup_used_items", items=used_items)
-            if used_items
-            else ""
-        )
-        self.used_items_label.setVisible(bool(used_items))
+        self.used_items_strip.setFixedHeight(max(36, strip_height))
+        self.used_items_strip.setVisible(bool(quantity_by_duration))
         self.surplus_label.setText(
             self._translate(
                 "plan.speedup_surplus",
@@ -515,30 +602,49 @@ class _SpeedupSimulationPanel(QWidget):
                 time=format_duration(coverage.remaining_seconds),
             )
         )
-        self.direct_gems_label.setVisible(
-            use_gems and coverage.remaining_seconds > 0
-        )
+        self.direct_gems_label.setVisible(coverage.remaining_seconds > 0)
 
         self._clear_offers()
-        self.offers_group.setVisible(coverage.remaining_seconds > 0)
+        self.offers_toggle.blockSignals(True)
+        self.offers_toggle.setChecked(False)
+        self.offers_toggle.blockSignals(False)
+        self.offers_toggle.setArrowType(Qt.ArrowType.RightArrow)
+        self.offers_toggle.setText(
+            self._translate(
+                "plan.speedup_purchase_options_count",
+                count=len(recommendations),
+            )
+        )
+        self.offers_toggle.setVisible(coverage.remaining_seconds > 0)
+        self.offers_group.setVisible(False)
         if coverage.remaining_seconds <= 0:
             self.setVisible(True)
             return
+        self.offers_title_label.setText(
+            self._translate("plan.speedup_offer_sort_order")
+        )
+        offer_tooltip = [self.offers_title_label.text()]
         if any(item.gems_used > 0 for item in recommendations):
-            basis = QLabel(self._translate("plan.speedup_gem_basis"), self.offers_group)
-            basis.setWordWrap(True)
-            self.offers_layout.addWidget(basis)
+            offer_tooltip.append(self._translate("plan.speedup_gem_basis"))
+        self.offers_toggle.setToolTip("\n".join(offer_tooltip))
+        offer_row = 0
         if not recommendations:
             empty = QLabel(self._translate("plan.speedup_no_offer"), self.offers_group)
             empty.setWordWrap(True)
-            self.offers_layout.addWidget(empty)
-        for recommendation in recommendations:
+            self.offers_layout.addWidget(empty, offer_row, 0, 1, 2)
+            offer_row += 1
+        for card_index, recommendation in enumerate(recommendations):
             card = QFrame(self.offers_group)
             card.setObjectName("speedupOfferCard")
             card.setFrameShape(QFrame.StyledPanel)
-            card_layout = QGridLayout(card)
-            card_layout.setContentsMargins(8, 5, 8, 5)
-            card_layout.setHorizontalSpacing(12)
+            card.setSizePolicy(
+                QSizePolicy.Policy.Expanding,
+                QSizePolicy.Policy.Fixed,
+            )
+            card_layout = QHBoxLayout(card)
+            card_layout.setContentsMargins(6, 1, 6, 1)
+            card_layout.setSpacing(7)
+            card_layout.setSizeConstraint(QLayout.SizeConstraint.SetMinimumSize)
             price = (
                 f"{recommendation.total_diamond_cost:,}"
                 if recommendation.total_diamond_cost is not None
@@ -556,22 +662,35 @@ class _SpeedupSimulationPanel(QWidget):
             title_font = QFont(title.font())
             title_font.setBold(True)
             title.setFont(title_font)
-            title.setWordWrap(False)
-            card_layout.addWidget(title, 0, 0)
-            column = 1
-            if recommendation.applied_speedup_seconds > 0:
-                speedups = QLabel(
+            title.setMinimumWidth(80)
+            title.setSizePolicy(
+                QSizePolicy.Policy.Ignored,
+                QSizePolicy.Policy.Preferred,
+            )
+            title.setToolTip(title.text())
+            card_layout.addWidget(title, 1)
+            if recommendation.applied_general_speedup_seconds > 0:
+                general_speedups = QLabel(
                     self._translate(
-                        "plan.speedup_offer_speedups",
+                        "plan.speedup_offer_general",
                         time=format_duration(
-                            recommendation.applied_speedup_seconds
+                            recommendation.applied_general_speedup_seconds
                         ),
                     ),
                     card,
                 )
-                speedups.setWordWrap(False)
-                card_layout.addWidget(speedups, 0, column)
-                column += 1
+                card_layout.addWidget(general_speedups)
+            if recommendation.applied_target_speedup_seconds > 0:
+                target_speedups = QLabel(
+                    self._translate(
+                        "plan.speedup_offer_target",
+                        time=format_duration(
+                            recommendation.applied_target_speedup_seconds
+                        ),
+                    ),
+                    card,
+                )
+                card_layout.addWidget(target_speedups)
             if recommendation.gems_used > 0:
                 gems = QLabel(
                     self._translate(
@@ -584,9 +703,7 @@ class _SpeedupSimulationPanel(QWidget):
                     ),
                     card,
                 )
-                gems.setWordWrap(False)
-                card_layout.addWidget(gems, 0, column)
-                column += 1
+                card_layout.addWidget(gems)
             remaining = QLabel(
                 self._translate(
                     "plan.speedup_offer_remaining",
@@ -594,12 +711,12 @@ class _SpeedupSimulationPanel(QWidget):
                 ),
                 card,
             )
-            remaining.setWordWrap(False)
-            card_layout.addWidget(remaining, 0, column)
-            card_layout.setColumnStretch(0, 2)
-            for index in range(1, column + 1):
-                card_layout.setColumnStretch(index, 1)
-            self.offers_layout.addWidget(card)
+            card_layout.addWidget(remaining)
+            self.offers_layout.addWidget(
+                card, offer_row + card_index, 0, 1, 2
+            )
+        self.offers_layout.setColumnStretch(0, 1)
+        self.offers_layout.setColumnStretch(1, 1)
         self.setVisible(True)
 
 
@@ -618,6 +735,22 @@ class MainWindow(QMainWindow):
     ) -> None:
         super().__init__()
         self.app_settings = app_settings
+        self._ui_font_size = max(
+            FONT_SIZE_MIN, min(FONT_SIZE_MAX, int(app_settings.ui_font_size))
+        )
+        self._table_font_size = max(
+            FONT_SIZE_MIN,
+            min(FONT_SIZE_MAX, int(app_settings.table_font_size)),
+        )
+        self._tree_font_size = max(
+            FONT_SIZE_MIN, min(FONT_SIZE_MAX, int(app_settings.tree_font_size))
+        )
+        self._help_font_size = max(
+            FONT_SIZE_MIN, min(FONT_SIZE_MAX, int(app_settings.help_font_size))
+        )
+        initial_font = QFont(self.font())
+        initial_font.setPointSize(self._ui_font_size)
+        self.setFont(initial_font)
         self.app_settings.visual_style = normalize_visual_style(
             self.app_settings.visual_style
         )
@@ -914,9 +1047,13 @@ class MainWindow(QMainWindow):
         self.tabs.addTab(self._build_player_tab(self.tabs), self.t("tab.player"))
         self.tabs.addTab(self._build_paid_tab(self.tabs), self.t("tab.paid"))
         self.tabs.addTab(self._build_ocr_tab(self.tabs), self.t("tab.ocr"))
+        self.tabs.addTab(
+            self._build_appearance_tab(self.tabs), self.t("tab.settings")
+        )
         self.tabs.addTab(self._build_help_tab(self.tabs), self.t("tab.help"))
         self.tabs.currentChanged.connect(self._tab_changed)
         layout.addWidget(self.tabs, 1)
+        self._apply_font_settings()
 
     def _build_tree_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
@@ -2380,6 +2517,12 @@ class MainWindow(QMainWindow):
         self.castle_selection_summary_label = QLabel(selection_group)
         self.castle_selection_summary_label.setObjectName("ConstructionSelection")
         self.castle_selection_summary_label.setAlignment(Qt.AlignCenter)
+        self.castle_selection_summary_label.setWordWrap(True)
+        self.castle_selection_summary_label.setMinimumWidth(0)
+        self.castle_selection_summary_label.setSizePolicy(
+            QSizePolicy.Policy.Ignored,
+            QSizePolicy.Policy.Preferred,
+        )
         controls.addWidget(self.castle_selection_summary_label, 0, 7)
         controls.setColumnStretch(7, 1)
 
@@ -2427,7 +2570,7 @@ class MainWindow(QMainWindow):
         levels_heading = QLabel(
             self.t("castle.facility_levels"), levels_panel
         )
-        levels_heading.setStyleSheet("font-weight:700;font-size:15px;")
+        levels_heading.setStyleSheet("font-weight:700;")
         levels_layout.addWidget(levels_heading)
         hint = QLabel(self.t("castle.facility_levels_hint"), levels_panel)
         hint.setWordWrap(True)
@@ -2493,14 +2636,13 @@ class MainWindow(QMainWindow):
         plan_layout = QVBoxLayout(plan_panel)
         plan_layout.setContentsMargins(6, 0, 0, 0)
         plan_heading = QLabel(self.t("castle.plan"), plan_panel)
-        plan_heading.setStyleSheet("font-weight:700;font-size:15px;")
+        plan_heading.setStyleSheet("font-weight:700;")
         plan_layout.addWidget(plan_heading)
         self.castle_plan_summary_label = QLabel(plan_panel)
         self.castle_plan_summary_label.setWordWrap(True)
         plan_layout.addWidget(self.castle_plan_summary_label)
         self.castle_speedup_panel = _SpeedupSimulationPanel(
             self.t,
-            self._speedup_gem_usage_changed,
             plan_panel,
         )
         self.castle_speedup_panel.setVisible(False)
@@ -2604,12 +2746,6 @@ class MainWindow(QMainWindow):
             target=self.castle_plan_target_spin.value(),
         )
         self.castle_selection_summary_label.setText(summary)
-        self.castle_selection_summary_label.setMinimumWidth(
-            self.castle_selection_summary_label.fontMetrics().horizontalAdvance(
-                summary
-            )
-            + 28
-        )
 
     def _castle_current_level_changed(self, value: int) -> None:
         building_id = self._construction_target_id()
@@ -2802,9 +2938,7 @@ class MainWindow(QMainWindow):
                 self.player_state.paid_offers,
                 target_kind,
                 task_seconds=coverage.remaining_task_seconds,
-                use_gems=(
-                    self.player_state.settings.use_gems_for_speedups
-                ),
+                use_gems=True,
             )
             if coverage.remaining_seconds > 0
             else ()
@@ -2812,7 +2946,6 @@ class MainWindow(QMainWindow):
         panel.show_result(
             coverage,
             recommendations,
-            self.player_state.settings.use_gems_for_speedups,
         )
 
     def _calculate_castle_plan(self, *_args: object) -> None:
@@ -3582,18 +3715,6 @@ class MainWindow(QMainWindow):
         self._calculate_plan()
         self._calculate_castle_plan()
 
-    def _speedup_gem_usage_changed(self, checked: bool) -> None:
-        if (
-            self.player_state.settings.use_gems_for_speedups
-            == bool(checked)
-        ):
-            return
-        self.player_state.settings.use_gems_for_speedups = bool(checked)
-        self._player_settings_dirty = True
-        self._update_player_save_button()
-        self._calculate_plan()
-        self._calculate_castle_plan()
-
     def _integer_spin(
         self,
         minimum: int,
@@ -3830,10 +3951,23 @@ class MainWindow(QMainWindow):
     def _build_plan_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
         layout = QVBoxLayout(page)
-        self.plan_toolbar = QWidget(page)
+        self.plan_toolbar_scroll = QScrollArea(page)
+        self.plan_toolbar_scroll.setObjectName("PlanToolbarScroll")
+        self.plan_toolbar_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        self.plan_toolbar_scroll.setWidgetResizable(False)
+        self.plan_toolbar_scroll.setVerticalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAlwaysOff
+        )
+        self.plan_toolbar_scroll.setHorizontalScrollBarPolicy(
+            Qt.ScrollBarPolicy.ScrollBarAsNeeded
+        )
+        self.plan_toolbar = QWidget()
         selection_controls = QHBoxLayout(self.plan_toolbar)
         selection_controls.setContentsMargins(0, 0, 0, 0)
-        selection_controls.addWidget(QLabel(self.t("plan.mode"), self.plan_toolbar))
+        selection_controls.setSpacing(6)
+        selection_controls.addWidget(
+            QLabel(self.t("plan.mode"), self.plan_toolbar)
+        )
         self.plan_mode_combo = QComboBox(page)
         self.plan_mode_combo.addItem(self.t("plan.mode.target"), "target")
         self.plan_mode_combo.addItem(self.t("plan.mode.shortest"), "shortest")
@@ -3847,6 +3981,12 @@ class MainWindow(QMainWindow):
         selection_controls.addWidget(self.plan_target_caption)
         self.plan_target_name_label = QLabel(self.t("plan.no_target"), page)
         self.plan_target_name_label.setObjectName("PlanTargetSelection")
+        self.plan_target_name_label.setMinimumWidth(100)
+        self.plan_target_name_label.setMaximumWidth(360)
+        self.plan_target_name_label.setSizePolicy(
+            QSizePolicy.Policy.Ignored,
+            QSizePolicy.Policy.Preferred,
+        )
         selection_controls.addWidget(self.plan_target_name_label, 1)
         self.plan_level_caption = QLabel(self.t("plan.target_level"), page)
         selection_controls.addWidget(self.plan_level_caption)
@@ -3930,7 +4070,6 @@ class MainWindow(QMainWindow):
         shortest_controls.addWidget(self.plan_shortest_next_button)
         selection_controls.addWidget(self.plan_shortest_controls, 1)
 
-        selection_controls.addStretch(1)
         self.plan_resource_mode_label = QLabel(
             self.t("plan.resource_display"), self.plan_toolbar
         )
@@ -3958,7 +4097,9 @@ class MainWindow(QMainWindow):
         )
         selection_controls.addWidget(self.plan_fit_button)
         selection_controls.addWidget(self.plan_reset_zoom_button)
-        layout.addWidget(self.plan_toolbar)
+        self.plan_toolbar_scroll.setWidget(self.plan_toolbar)
+        self._resize_plan_toolbar()
+        layout.addWidget(self.plan_toolbar_scroll)
 
         self.plan_splitter = QSplitter(Qt.Vertical, page)
         self.plan_tree_view = ResearchTreeView(self.plan_splitter)
@@ -3972,7 +4113,6 @@ class MainWindow(QMainWindow):
         details_layout.setContentsMargins(0, 6, 0, 0)
         self.plan_speedup_panel = _SpeedupSimulationPanel(
             self.t,
-            self._speedup_gem_usage_changed,
             details,
         )
         self.plan_speedup_panel.setVisible(False)
@@ -4063,10 +4203,12 @@ class MainWindow(QMainWindow):
             self.plan_mode_combo.blockSignals(False)
             self._update_plan_mode_visibility()
         observation = self._node_observation[research_id]
-        self.plan_target_name_label.setText(
+        target_name = (
             f"{self._category_name(observation)} / "
             f"{self._research_name(node.id)}"
         )
+        self.plan_target_name_label.setText(target_name)
+        self.plan_target_name_label.setToolTip(target_name)
         current = self._tree_level_draft.get(research_id, 0)
         self.plan_level_spin.blockSignals(True)
         self.plan_level_spin.setMaximum(node.max_level)
@@ -4074,6 +4216,21 @@ class MainWindow(QMainWindow):
         self.plan_level_spin.setEnabled(True)
         self.plan_level_spin.blockSignals(False)
         self._calculate_plan()
+
+    def _resize_plan_toolbar(self) -> None:
+        if not hasattr(self, "plan_toolbar_scroll"):
+            return
+        self.plan_toolbar.adjustSize()
+        toolbar_height = max(
+            self.plan_toolbar.sizeHint().height(),
+            self.plan_toolbar.minimumSizeHint().height(),
+        )
+        scrollbar_height = (
+            self.plan_toolbar_scroll.horizontalScrollBar().sizeHint().height()
+        )
+        total_height = toolbar_height + scrollbar_height + 2
+        self.plan_toolbar_scroll.setMinimumHeight(total_height)
+        self.plan_toolbar_scroll.setMaximumHeight(total_height)
 
     def _plan_mode_changed(self, *_args: object) -> None:
         if not hasattr(self, "plan_mode_combo"):
@@ -4102,6 +4259,7 @@ class MainWindow(QMainWindow):
             widget.setVisible(target_mode)
         self.plan_shortest_controls.setVisible(shortest_mode)
         self.plan_directive_panel.setVisible(tasks_mode)
+        self._resize_plan_toolbar()
         self.plan_splitter.setSizes([480, 300] if target_mode else [0, 780])
 
     def _shortest_plan_page_size_changed(self, *_args: object) -> None:
@@ -4186,9 +4344,7 @@ class MainWindow(QMainWindow):
 
     def _render_catalog_plan(self, result: CatalogPlanResult) -> None:
         if result.steps and result.unknown_time_steps:
-            self.plan_speedup_panel.show_unknown(
-                self.player_state.settings.use_gems_for_speedups
-            )
+            self.plan_speedup_panel.show_unknown()
         elif result.steps:
             self._show_speedup_plan(
                 self.plan_speedup_panel,
@@ -4300,6 +4456,7 @@ class MainWindow(QMainWindow):
                     result.total_technolabes,
                     result.technolabe_efficiency_percent,
                     result.unknown_technolabe_steps,
+                    include_owned=True,
                 )
                 + self._partial_note(result.unknown_technolabe_steps),
             ]
@@ -4792,6 +4949,8 @@ class MainWindow(QMainWindow):
         count: int | None,
         efficiency_percent: float | None,
         unknown_count: int = 0,
+        *,
+        include_owned: bool = False,
     ) -> str:
         if count is None:
             return self.t("common.unknown")
@@ -4811,12 +4970,14 @@ class MainWindow(QMainWindow):
                 "plan.technolabe_recommended",
                 detail=detail,
             )
-        return self.t(
-            "plan.technolabe_owned",
-            detail=detail,
+        if not include_owned:
+            return detail
+        owned = self.t(
+            "plan.technolabe_owned_summary",
             owned=max(0, int(self.player_state.settings.technolabe_count)),
             required=count,
         )
+        return f"{detail} ｜ {owned}"
 
     def _technolabe_recommended(
         self,
@@ -5079,6 +5240,18 @@ class MainWindow(QMainWindow):
             lambda: self._add_paid_row(focus=True)
         )
         controls.addWidget(self.paid_add_row_button)
+        self.paid_move_up_button = QPushButton(self.t("paid.move_up"), page)
+        self.paid_move_up_button.clicked.connect(
+            lambda: self._move_selected_paid_row(-1)
+        )
+        self.paid_move_up_button.setEnabled(False)
+        controls.addWidget(self.paid_move_up_button)
+        self.paid_move_down_button = QPushButton(self.t("paid.move_down"), page)
+        self.paid_move_down_button.clicked.connect(
+            lambda: self._move_selected_paid_row(1)
+        )
+        self.paid_move_down_button.setEnabled(False)
+        controls.addWidget(self.paid_move_down_button)
         delete_button = QPushButton(self.t("paid.delete_rows"), page)
         delete_button.clicked.connect(self._remove_selected_paid_rows)
         controls.addWidget(delete_button)
@@ -5179,6 +5352,9 @@ class MainWindow(QMainWindow):
         )
         self.paid_item_table.setSelectionBehavior(QTableWidget.SelectRows)
         self.paid_item_table.setSelectionMode(QTableWidget.ExtendedSelection)
+        self.paid_item_table.itemSelectionChanged.connect(
+            self._update_paid_move_buttons
+        )
         self.paid_item_table.verticalHeader().setMinimumSectionSize(34)
         self.paid_item_table.verticalHeader().setDefaultSectionSize(38)
         self.paid_item_table.horizontalHeader().setSectionResizeMode(
@@ -5269,11 +5445,20 @@ class MainWindow(QMainWindow):
         entry: SpeedupEntry | PaidItem | None = None,
         *,
         focus: bool = False,
+        duration_value: int | None = None,
+        duration_unit: str | None = None,
     ) -> None:
         row = self.paid_item_table.rowCount()
         self.paid_item_table.insertRow(row)
         kind = entry.kind if entry is not None else "general"
-        if isinstance(entry, SpeedupEntry) and (
+        if duration_value is not None and duration_unit in {
+            "seconds",
+            "minutes",
+            "hours",
+            "days",
+        }:
+            duration, unit = max(0, duration_value), duration_unit
+        elif isinstance(entry, SpeedupEntry) and (
             entry is not None
             and entry.duration_value is not None
             and entry.duration_unit
@@ -5340,15 +5525,27 @@ class MainWindow(QMainWindow):
         kind_combo.currentIndexChanged.connect(
             lambda _index, paid_row=row: self._update_paid_row_kind(paid_row)
         )
-        self._update_paid_row_kind(row)
+        # QTableWidget applies cell-widget visibility again during its deferred
+        # row layout. Reapply the kind-specific visibility after that pass too.
+        self._refresh_paid_row_kind_visibility()
+        QTimer.singleShot(0, self._refresh_paid_row_kind_visibility)
         self._update_paid_summary()
+        self._update_paid_move_buttons()
         if focus:
             self.paid_item_table.scrollToBottom()
             self.paid_item_table.setCurrentCell(row, 1)
             duration_spin.setFocus(Qt.OtherFocusReason)
             duration_spin.selectAll()
 
-    def _update_paid_row_kind(self, row: int) -> None:
+    def _refresh_paid_row_kind_visibility(self) -> None:
+        if not hasattr(self, "paid_item_table"):
+            return
+        for paid_row in range(self.paid_item_table.rowCount()):
+            self._update_paid_row_kind(paid_row, refresh_summary=False)
+
+    def _update_paid_row_kind(
+        self, row: int, *, refresh_summary: bool = True
+    ) -> None:
         kind_combo = self.paid_item_table.cellWidget(row, 0)
         duration_spin = self.paid_item_table.cellWidget(row, 1)
         unit_combo = self.paid_item_table.cellWidget(row, 2)
@@ -5376,7 +5573,86 @@ class MainWindow(QMainWindow):
         ):
             points_spin.setValue(default_points_each(kind))
         kind_combo.setProperty("lastPaidKind", kind)
+        if refresh_summary:
+            self._update_paid_summary()
+
+    def _paid_row_state(self, row: int) -> tuple[PaidItem, int, str] | None:
+        kind_combo = self.paid_item_table.cellWidget(row, 0)
+        duration_spin = self.paid_item_table.cellWidget(row, 1)
+        unit_combo = self.paid_item_table.cellWidget(row, 2)
+        quantity_spin = self.paid_item_table.cellWidget(row, 3)
+        name_edit = self.paid_item_table.cellWidget(row, 5)
+        gem_spin = self.paid_item_table.cellWidget(row, 6)
+        points_spin = self.paid_item_table.cellWidget(row, 7)
+        if not (
+            isinstance(kind_combo, QComboBox)
+            and isinstance(duration_spin, QSpinBox)
+            and isinstance(unit_combo, QComboBox)
+            and isinstance(quantity_spin, QSpinBox)
+            and isinstance(name_edit, QLineEdit)
+            and isinstance(gem_spin, VisibleDoubleSpinBox)
+            and isinstance(points_spin, VisibleDoubleSpinBox)
+        ):
+            return None
+        kind = str(kind_combo.currentData())
+        unit = str(unit_combo.currentData() or "hours")
+        duration_value = duration_spin.value()
+        duration_seconds = (
+            duration_value * self._paid_unit_seconds(unit)
+            if paid_kind_has_time(kind)
+            else 0
+        )
+        return (
+            PaidItem(
+                kind=kind,
+                name=name_edit.text().strip(),
+                quantity=quantity_spin.value(),
+                duration_seconds=duration_seconds,
+                gem_value_each=gem_spin.value(),
+                points_each=points_spin.value(),
+            ),
+            duration_value,
+            unit,
+        )
+
+    def _selected_paid_row(self) -> int:
+        rows = {index.row() for index in self.paid_item_table.selectedIndexes()}
+        return next(iter(rows)) if len(rows) == 1 else -1
+
+    def _update_paid_move_buttons(self) -> None:
+        if not hasattr(self, "paid_move_up_button"):
+            return
+        row = self._selected_paid_row()
+        row_count = self.paid_item_table.rowCount()
+        self.paid_move_up_button.setEnabled(row > 0)
+        self.paid_move_down_button.setEnabled(0 <= row < row_count - 1)
+
+    def _move_selected_paid_row(self, offset: int) -> None:
+        row = self._selected_paid_row()
+        target = row + (-1 if offset < 0 else 1)
+        if row < 0 or target < 0 or target >= self.paid_item_table.rowCount():
+            return
+        states = [
+            self._paid_row_state(index)
+            for index in range(self.paid_item_table.rowCount())
+        ]
+        if any(state is None for state in states):
+            return
+        states[row], states[target] = states[target], states[row]
+        self.paid_item_table.setRowCount(0)
+        for state in states:
+            if state is None:
+                continue
+            entry, duration_value, duration_unit = state
+            self._add_paid_row(
+                entry,
+                duration_value=duration_value,
+                duration_unit=duration_unit,
+            )
+        self.paid_item_table.selectRow(target)
+        self.paid_item_table.setCurrentCell(target, 0)
         self._update_paid_summary()
+        self._update_paid_move_buttons()
 
     def _remove_selected_paid_rows(self) -> None:
         rows = sorted(
@@ -5388,6 +5664,7 @@ class MainWindow(QMainWindow):
         if self.paid_item_table.rowCount() == 0:
             self._add_paid_row()
         self._update_paid_summary()
+        self._update_paid_move_buttons()
 
     def _clear_paid_rows(self) -> None:
         self.paid_item_table.setRowCount(0)
@@ -6026,47 +6303,27 @@ class MainWindow(QMainWindow):
         finally:
             self.paid_capture_button.setEnabled(True)
 
-    def _build_help_tab(self, parent: QWidget) -> QWidget:
+    def _build_appearance_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)
-        layout = QVBoxLayout(page)
-        settings = QHBoxLayout()
-        settings.addWidget(QLabel(self.t("language.label"), page))
-        self.language_combo = QComboBox(page)
-        for locale, name, _direction, custom in self.translator.available_locales():
-            label = f"{name} ({locale})" if custom else name
-            self.language_combo.addItem(label, locale)
-        index = self.language_combo.findData(self.translator.locale)
-        self.language_combo.setCurrentIndex(max(0, index))
-        self.language_combo.currentIndexChanged.connect(self._change_language)
-        settings.addWidget(self.language_combo)
-        self.language_pack_button = QPushButton(
-            self.t("language.pack_actions"), page
+        page_layout = QVBoxLayout(page)
+        settings_scroll = QScrollArea(page)
+        settings_scroll.setObjectName("AppearanceSettingsScroll")
+        settings_scroll.setWidgetResizable(True)
+        settings_scroll.setFrameShape(QFrame.NoFrame)
+        settings_scroll.setStyleSheet(
+            "QScrollArea#AppearanceSettingsScroll{border:0;background:transparent;}"
+            "QScrollArea#AppearanceSettingsScroll > QWidget > QWidget{"
+            "background:transparent;}"
         )
-        language_pack_menu = QMenu(self.language_pack_button)
-        export_action = QAction(self.t("language.pack_export"), page)
-        export_action.triggered.connect(self._export_language_pack_template)
-        language_pack_menu.addAction(export_action)
-        import_action = QAction(self.t("language.pack_import"), page)
-        import_action.triggered.connect(self._import_language_pack)
-        language_pack_menu.addAction(import_action)
-        self.language_pack_remove_action = QAction(
-            self.t("language.pack_remove"), page
-        )
-        self.language_pack_remove_action.triggered.connect(
-            self._remove_language_pack
-        )
-        selected_locale = str(self.language_combo.currentData() or "")
-        self.language_pack_remove_action.setEnabled(
-            any(
-                locale == selected_locale and custom
-                for locale, _name, _direction, custom in self.translator.available_locales()
-            )
-        )
-        language_pack_menu.addAction(self.language_pack_remove_action)
-        self.language_pack_button.setMenu(language_pack_menu)
-        settings.addWidget(self.language_pack_button)
-        settings.addWidget(QLabel(self.t("appearance.label"), page))
-        self.visual_style_combo = QComboBox(page)
+        content = QWidget(settings_scroll)
+        layout = QVBoxLayout(content)
+        display_group = QGroupBox(self.t("appearance.display_group"), content)
+        display_layout = QVBoxLayout(display_group)
+        form = QFormLayout()
+        form.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)
+        form.setRowWrapPolicy(QFormLayout.DontWrapRows)
+
+        self.visual_style_combo = QComboBox(display_group)
         self.visual_style_combo.addItem(
             self.t("appearance.desktop"), "desktop"
         )
@@ -6080,52 +6337,181 @@ class MainWindow(QMainWindow):
         self.visual_style_combo.currentIndexChanged.connect(
             self._change_visual_style
         )
-        settings.addWidget(self.visual_style_combo)
-        settings.addWidget(QLabel(self.t("help.font_size"), page))
-        self.help_font_spin = VisibleSpinBox(page)
-        self.help_font_spin.setRange(9, 24)
-        self.help_font_spin.setSuffix(" pt")
-        self.help_font_spin.setValue(self.app_settings.help_font_size)
-        self.help_font_spin.valueChanged.connect(self._change_help_font_size)
-        settings.addWidget(self.help_font_spin)
-        settings.addStretch(1)
-        self.help_version_label = QLabel(
-            self.t("app.version", version=version_string()), page
+        form.addRow(self.t("appearance.label"), self.visual_style_combo)
+
+        configurations = (
+            (
+                "ui_font_size_spin",
+                "appearance.ui_font_size",
+                self._ui_font_size,
+                "ui",
+            ),
+            (
+                "table_font_size_spin",
+                "appearance.table_font_size",
+                self._table_font_size,
+                "table",
+            ),
+            (
+                "tree_font_size_spin",
+                "appearance.tree_font_size",
+                self._tree_font_size,
+                "tree",
+            ),
+            (
+                "help_font_size_spin",
+                "appearance.help_font_size",
+                self._help_font_size,
+                "help",
+            ),
         )
-        settings.addWidget(self.help_version_label)
-        self.help_dataset_version_label = QLabel(
-            self.t("app.dataset_version", version=BUNDLED_DATASET_VERSION), page
+        self.font_reset_buttons: dict[str, QPushButton] = {}
+        for object_name, label_key, value, role in configurations:
+            spin = VisibleSpinBox(display_group)
+            spin.setObjectName(object_name)
+            spin.setRange(FONT_SIZE_MIN, FONT_SIZE_MAX)
+            spin.setSuffix(" pt")
+            spin.setValue(value)
+            spin.valueChanged.connect(
+                lambda new_value, font_role=role: self._change_font_size(
+                    font_role, new_value
+                )
+            )
+            setattr(self, object_name, spin)
+            editor = QWidget(display_group)
+            editor_layout = QHBoxLayout(editor)
+            editor_layout.setContentsMargins(0, 0, 0, 0)
+            editor_layout.setSpacing(6)
+            editor_layout.addWidget(spin)
+            reset_button = QPushButton(
+                self.t("appearance.reset_default"), editor
+            )
+            reset_button.clicked.connect(
+                lambda _checked=False, font_role=role: self._reset_font_size(
+                    font_role
+                )
+            )
+            editor_layout.addWidget(reset_button)
+            editor_layout.addStretch(1)
+            self.font_reset_buttons[role] = reset_button
+            form.addRow(self.t(label_key), editor)
+
+        display_layout.addLayout(form)
+        hint = QLabel(self.t("appearance.font_size_hint"), display_group)
+        hint.setWordWrap(True)
+        display_layout.addWidget(hint)
+        layout.addWidget(display_group)
+
+        language_group = QGroupBox(
+            self.t("appearance.language_group"), content
         )
-        settings.addWidget(self.help_dataset_version_label)
-        settings.addSpacing(12)
-        self.update_check_button = QPushButton(self.t("update.check"), page)
-        settings.addWidget(self.update_check_button)
+        language_layout = QVBoxLayout(language_group)
+        language_form = QFormLayout()
+        language_form.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)
+        self.language_combo = QComboBox(language_group)
+        for locale, name, _direction, custom in self.translator.available_locales():
+            label = f"{name} ({locale})" if custom else name
+            self.language_combo.addItem(label, locale)
+        index = self.language_combo.findData(self.translator.locale)
+        self.language_combo.setCurrentIndex(max(0, index))
+        self.language_combo.currentIndexChanged.connect(self._change_language)
+        language_form.addRow(self.t("language.label"), self.language_combo)
+        language_layout.addLayout(language_form)
+        language_description = QLabel(
+            self.t("language.pack_description"), language_group
+        )
+        language_description.setWordWrap(True)
+        language_layout.addWidget(language_description)
+        language_actions = QHBoxLayout()
+        self.language_pack_export_button = QPushButton(
+            self.t("language.pack_export"), language_group
+        )
+        self.language_pack_export_button.clicked.connect(
+            self._export_language_pack_template
+        )
+        language_actions.addWidget(self.language_pack_export_button)
+        self.language_pack_import_button = QPushButton(
+            self.t("language.pack_import"), language_group
+        )
+        self.language_pack_import_button.clicked.connect(
+            self._import_language_pack
+        )
+        language_actions.addWidget(self.language_pack_import_button)
+        self.language_pack_remove_button = QPushButton(
+            self.t("language.pack_remove"), language_group
+        )
+        self.language_pack_remove_button.clicked.connect(
+            self._remove_language_pack
+        )
+        selected_locale = str(self.language_combo.currentData() or "")
+        self.language_pack_remove_button.setEnabled(
+            any(
+                locale == selected_locale and custom
+                for locale, _name, _direction, custom in self.translator.available_locales()
+            )
+        )
+        language_actions.addWidget(self.language_pack_remove_button)
+        language_actions.addStretch(1)
+        language_layout.addLayout(language_actions)
+        layout.addWidget(language_group)
+
+        update_group = QGroupBox(self.t("appearance.update_group"), content)
+        update_layout = QHBoxLayout(update_group)
+        self.update_check_button = QPushButton(self.t("update.check"), update_group)
+        self.update_check_button.setSizePolicy(
+            QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed
+        )
+        update_layout.addWidget(self.update_check_button)
         self.update_startup_checkbox = QCheckBox(
-            self.t("update.check_on_startup_short"), page
+            self.t("update.check_on_startup_short"), update_group
         )
-        settings.addWidget(self.update_startup_checkbox)
+        update_layout.addWidget(self.update_startup_checkbox)
         self.update_releases_button = QPushButton(
-            self.t("update.open_releases"), page
+            self.t("update.open_releases"), update_group
+        )
+        self.update_releases_button.setSizePolicy(
+            QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed
         )
         self.update_releases_button.clicked.connect(
             lambda: self.update_controller.open_releases_page()
         )
-        settings.addWidget(self.update_releases_button)
-        self.update_status_label = QLabel(page)
+        update_layout.addWidget(self.update_releases_button)
+        self.update_status_label = QLabel(update_group)
         self.update_status_label.setMinimumWidth(0)
-        settings.addWidget(self.update_status_label, 1)
+        update_layout.addWidget(self.update_status_label, 1)
         self.update_controller.bind_help_controls(
             self.update_check_button,
             self.update_status_label,
             self.update_startup_checkbox,
         )
-        layout.addLayout(settings)
+        layout.addWidget(update_group)
 
+        information_group = QGroupBox(
+            self.t("appearance.information_group"), content
+        )
+        information_layout = QFormLayout(information_group)
+        self.settings_version_label = QLabel(version_string(), information_group)
+        information_layout.addRow(
+            self.t("appearance.app_version_label"), self.settings_version_label
+        )
+        self.settings_dataset_version_label = QLabel(
+            BUNDLED_DATASET_VERSION, information_group
+        )
+        information_layout.addRow(
+            self.t("appearance.dataset_version_label"),
+            self.settings_dataset_version_label,
+        )
+        layout.addWidget(information_group)
+        layout.addStretch(1)
+        settings_scroll.setWidget(content)
+        page_layout.addWidget(settings_scroll)
+        return page
+
+    def _build_help_tab(self, parent: QWidget) -> QWidget:
+        page = QWidget(parent)
+        layout = QVBoxLayout(page)
         self.help_browser = QTextBrowser(page)
         self.help_browser.setOpenExternalLinks(True)
-        self.help_browser.setStyleSheet(
-            f"font-size:{self.app_settings.help_font_size}pt;"
-        )
         sections = (
             ("help.required_setup.title", "help.required_setup.body_v003"),
             ("help.tree.title", "help.tree.body"),
@@ -6150,6 +6536,7 @@ class MainWindow(QMainWindow):
             body.append(f"<h2>{self.t(title_key)}</h2>")
             body.append(f"<p>{self.t(body_key)}</p>")
         self.help_browser.setHtml("".join(body))
+        self._apply_help_font_size()
         layout.addWidget(self.help_browser)
         return page
 
@@ -6207,7 +6594,6 @@ class MainWindow(QMainWindow):
                     border-radius: 0;
                     color: {foreground};
                     background-color: {button_surface};
-                    font-size: 17px;
                     font-weight: 800;
                 }}
                 QFrame#TalentPrioritySelector QPushButton:hover {{
@@ -6294,7 +6680,7 @@ class MainWindow(QMainWindow):
             f"padding:5px 12px;border:2px solid {selection_border};"
             f"border-radius:7px;color:{selection_foreground};"
             f"background-color:{selection_background};"
-            "font-weight:800;font-size:15px;"
+            "font-weight:800;"
         )
         for label_name in (
             "plan_target_name_label",
@@ -6314,13 +6700,122 @@ class MainWindow(QMainWindow):
         self._apply_visual_style()
         self.settings_repository.save(self.app_settings)
 
-    def _change_help_font_size(self, value: int) -> None:
-        self.app_settings.help_font_size = max(9, min(24, int(value)))
-        if hasattr(self, "help_browser"):
-            self.help_browser.setStyleSheet(
-                f"font-size:{self.app_settings.help_font_size}pt;"
-            )
+    def _change_font_size(self, role: str, value: int) -> None:
+        normalized = max(FONT_SIZE_MIN, min(FONT_SIZE_MAX, int(value)))
+        attribute_names = {
+            "ui": ("_ui_font_size", "ui_font_size"),
+            "table": ("_table_font_size", "table_font_size"),
+            "tree": ("_tree_font_size", "tree_font_size"),
+            "help": ("_help_font_size", "help_font_size"),
+        }
+        runtime_name, settings_name = attribute_names[role]
+        if getattr(self, runtime_name) == normalized:
+            return
+        setattr(self, runtime_name, normalized)
+        setattr(self.app_settings, settings_name, normalized)
+        self._apply_font_settings()
         self.settings_repository.save(self.app_settings)
+
+    def _reset_font_size(self, role: str) -> None:
+        defaults = {
+            "ui": DEFAULT_UI_FONT_SIZE,
+            "table": DEFAULT_TABLE_FONT_SIZE,
+            "tree": DEFAULT_TREE_FONT_SIZE,
+            "help": DEFAULT_HELP_FONT_SIZE,
+        }
+        attributes = {
+            "ui": ("_ui_font_size", "ui_font_size", self.ui_font_size_spin),
+            "table": (
+                "_table_font_size",
+                "table_font_size",
+                self.table_font_size_spin,
+            ),
+            "tree": (
+                "_tree_font_size",
+                "tree_font_size",
+                self.tree_font_size_spin,
+            ),
+            "help": (
+                "_help_font_size",
+                "help_font_size",
+                self.help_font_size_spin,
+            ),
+        }
+        value = defaults[role]
+        runtime_name, settings_name, spin = attributes[role]
+        setattr(self, runtime_name, value)
+        setattr(self.app_settings, settings_name, value)
+        spin.blockSignals(True)
+        spin.setValue(value)
+        spin.blockSignals(False)
+        self._apply_font_settings()
+        self.settings_repository.save(self.app_settings)
+
+    @staticmethod
+    def _font_with_size(source: QFont, point_size: int) -> QFont:
+        font = QFont(source)
+        font.setPointSize(point_size)
+        return font
+
+    def _apply_font_settings(self) -> None:
+        # The general UI size is inherited by ordinary controls only.  Data
+        # tables, tree cards and help content are then assigned their own
+        # independent settings instead of proportionally scaling every widget.
+        ui_font = self._font_with_size(self.font(), self._ui_font_size)
+        self.setFont(ui_font)
+        data_tables = self.findChildren(QTableWidget)
+        for widget in self.findChildren(QWidget):
+            if hasattr(self, "help_browser") and (
+                widget is self.help_browser
+                or self.help_browser.isAncestorOf(widget)
+            ):
+                continue
+            if any(table.isAncestorOf(widget) for table in data_tables):
+                continue
+            widget.setFont(self._font_with_size(widget.font(), self._ui_font_size))
+        self._apply_table_font_size()
+        for tree_view_name in ("tree_view", "plan_tree_view", "talent_tree_view"):
+            tree_view = getattr(self, tree_view_name, None)
+            if tree_view is not None and hasattr(tree_view, "set_font_size"):
+                tree_view.set_font_size(self._tree_font_size)
+        self._apply_help_font_size()
+        if hasattr(self, "tree_dataset_list"):
+            self.tree_dataset_list.fit_items()
+        self._resize_plan_toolbar()
+
+    def _apply_table_font_size(self) -> None:
+        for table in self.findChildren(QTableWidget):
+            table_font = self._font_with_size(table.font(), self._table_font_size)
+            table.setFont(table_font)
+            table.horizontalHeader().setFont(table_font)
+            table.verticalHeader().setFont(table_font)
+            for row in range(table.rowCount()):
+                for column in range(table.columnCount()):
+                    item = table.item(row, column)
+                    if item is not None:
+                        item.setFont(
+                            self._font_with_size(
+                                item.font(), self._table_font_size
+                            )
+                        )
+                    cell_widget = table.cellWidget(row, column)
+                    if cell_widget is not None:
+                        cell_widget.setFont(
+                            self._font_with_size(
+                                cell_widget.font(), self._table_font_size
+                            )
+                        )
+            table.resizeRowsToContents()
+
+    def _apply_help_font_size(self) -> None:
+        if not hasattr(self, "help_browser"):
+            return
+        font = QFont(self.help_browser.font())
+        font.setPointSize(self._help_font_size)
+        self.help_browser.setFont(font)
+        self.help_browser.document().setDefaultStyleSheet(
+            f"body {{ font-size: {self._help_font_size}pt; }}"
+        )
 
     def _build_ocr_tab(self, parent: QWidget) -> QWidget:
         page = QWidget(parent)

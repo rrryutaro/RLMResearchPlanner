@@ -9,8 +9,8 @@
     <link rel="license" href="https://github.com/rrryutaro/RLMResearchPlanner/blob/main/DATA_LICENSE.md" title="Data license and attribution">
     <link rel="manifest" href="./manifest.webmanifest">
     <link rel="icon" href="./icons/app-icon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="./styles.css?v=0.1.7-b1">
-    <title>RLM Research Planner v0.1.7</title>
+    <link rel="stylesheet" href="./styles.css?v=0.1.8-b11">
+    <title>RLM Research Planner v0.1.8</title>
   </head>
   <body>
     <header class="app-header">
@@ -18,10 +18,12 @@
         <p class="eyebrow" data-i18n="app.subtitle">Lords Mobile unofficial tool</p>
         <div class="app-title-line">
           <h1>RLM Research Planner</h1>
-          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.7</span>
+          <span id="header-version" class="app-version-badge" data-i18n-title="pwa.version" title="Version">v0.1.8</span>
         </div>
       </div>
-      <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="Browser network status">Online</span>
+      <div class="header-actions">
+        <span id="connection-status" class="status-pill" aria-live="polite" data-i18n="pwa.online" data-i18n-title="pwa.online_hint" title="Browser network status">Online</span>
+      </div>
     </header>
 
     <div class="tab-navigation">
@@ -32,6 +34,7 @@
         <button class="tab-button" data-tab="castle" type="button" data-i18n="tab.castle">建設</button>
         <button class="tab-button" data-tab="settings" type="button" data-i18n="tab.player">プレイヤー</button>
         <button class="tab-button" data-tab="paid" type="button" data-i18n="tab.paid">課金</button>
+        <button class="tab-button" data-tab="appearance" type="button" data-i18n="tab.settings">設定</button>
         <button class="tab-button" data-tab="help" type="button" data-i18n="tab.help">ヘルプ</button>
       </nav>
       <button id="tab-scroll-next" class="tab-scroll-button" type="button" aria-label="次のタブ" data-i18n-aria="pwa.next_tab" hidden>▶</button>
@@ -304,17 +307,6 @@
               </div>
             </div>
           </details>
-          <details class="settings-card backup-card language-pack-card">
-            <summary data-i18n="language.pack_title">翻訳ファイル</summary>
-            <div class="settings-card-body">
-              <p data-i18n="language.pack_description">英語を基準にしたひな形を書き出し、UI・研究名・施設名などを翻訳できます。同じJSONをPC版とモバイル版で使えます。空欄は英語で表示し、OCR言語は日本語・英語のままです。</p>
-              <div class="button-row">
-                <button id="export-language-template" class="primary" type="button" data-i18n="language.pack_export">翻訳ひな形を書き出す</button>
-                <label class="file-button"><span data-i18n="language.pack_import">翻訳ファイルを読み込む</span><input id="import-language-pack" type="file" accept="application/json,.json"></label>
-                <button id="remove-language-pack" type="button" data-i18n="language.pack_remove" disabled>追加翻訳を削除</button>
-              </div>
-            </div>
-          </details>
           <details class="settings-card backup-card">
             <summary data-i18n="pwa.backup_title">バックアップ</summary>
             <div class="settings-card-body">
@@ -458,6 +450,8 @@
                 <label class="field"><span data-i18n="paid.points_each">1個の追加ポイント</span><input id="paid-item-points" type="number" inputmode="decimal" min="0" step="0.01"></label>
               </div>
               <div class="button-row compact-actions">
+                <button id="paid-item-move-up" type="button" data-i18n="paid.move_up" hidden>上へ</button>
+                <button id="paid-item-move-down" type="button" data-i18n="paid.move_down" hidden>下へ</button>
                 <button id="paid-item-save" class="primary" type="button" data-i18n="common.save">保存</button>
                 <button id="paid-item-cancel" type="button" data-i18n="common.cancel">キャンセル</button>
                 <button id="paid-item-delete" class="danger" type="button" data-i18n="paid.delete_row">この行を削除</button>
@@ -471,11 +465,47 @@
         </article>
       </section>
 
+      <section id="tab-appearance" class="tab-panel" aria-labelledby="appearance-title">
+        <h2 id="appearance-title" class="sr-only" data-i18n="tab.settings">設定</h2>
+        <div class="appearance-settings-list">
+          <article class="settings-card appearance-settings-card">
+            <div class="settings-card-body">
+              <h3 data-i18n="appearance.display_group">表示</h3>
+              <p class="settings-description" data-i18n="appearance.font_size_hint">各領域は個別に設定されます。長い研究名はカード内に収まるよう自動調整されます。</p>
+              <div class="appearance-font-grid">
+                <div class="appearance-font-item"><label class="field"><span data-i18n="appearance.ui_font_size">操作UI</span><input type="number" inputmode="numeric" min="8" max="72" data-font-size-role="ui" aria-label="操作UI文字サイズ"></label><button type="button" data-reset-font-role="ui" data-i18n="appearance.reset_default">初期値</button></div>
+                <div class="appearance-font-item"><label class="field"><span data-i18n="appearance.table_font_size">一覧・表</span><input type="number" inputmode="numeric" min="8" max="72" data-font-size-role="table" aria-label="一覧と表の文字サイズ"></label><button type="button" data-reset-font-role="table" data-i18n="appearance.reset_default">初期値</button></div>
+                <div class="appearance-font-item"><label class="field"><span data-i18n="appearance.tree_font_size">研究ツリー</span><input type="number" inputmode="numeric" min="8" max="72" data-font-size-role="tree" aria-label="研究ツリー文字サイズ"></label><button type="button" data-reset-font-role="tree" data-i18n="appearance.reset_default">初期値</button></div>
+                <div class="appearance-font-item"><label class="field"><span data-i18n="appearance.help_font_size">ヘルプ</span><input type="number" inputmode="numeric" min="8" max="72" data-font-size-role="help" aria-label="ヘルプ文字サイズ"></label><button type="button" data-reset-font-role="help" data-i18n="appearance.reset_default">初期値</button></div>
+              </div>
+            </div>
+          </article>
+          <article class="settings-card appearance-settings-card language-pack-card">
+            <div class="settings-card-body">
+              <h3 data-i18n="appearance.language_group">言語・翻訳</h3>
+              <label class="field compact appearance-language-field"><span data-i18n="language.label">表示言語</span><select id="language-select"><option value="ja-JP">日本語</option><option value="en-US">English</option></select></label>
+              <p class="settings-description" data-i18n="language.pack_description">英語を基準にしたひな形を書き出し、UI・研究名・施設名などを翻訳できます。同じJSONをPC版とモバイル版で使えます。空欄は英語で表示し、OCR言語は日本語・英語のままです。</p>
+              <div class="button-row">
+                <button id="export-language-template" class="primary" type="button" data-i18n="language.pack_export">翻訳ひな形を書き出す</button>
+                <label class="file-button"><span data-i18n="language.pack_import">翻訳ファイルを読み込む</span><input id="import-language-pack" type="file" accept="application/json,.json"></label>
+                <button id="remove-language-pack" type="button" data-i18n="language.pack_remove" disabled>追加翻訳を削除</button>
+              </div>
+            </div>
+          </article>
+          <article class="settings-card appearance-settings-card">
+            <div class="settings-card-body">
+              <h3 data-i18n="appearance.information_group">情報</h3>
+              <dl class="appearance-information-list">
+                <div><dt data-i18n="appearance.app_version_label">アプリ</dt><dd id="app-version"></dd></div>
+                <div><dt data-i18n="appearance.dataset_version_label">研究データ</dt><dd id="dataset-version"></dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="tab-help" class="tab-panel" aria-labelledby="help-title">
         <h2 id="help-title" class="sr-only" data-i18n="tab.help">ヘルプ</h2>
-        <div class="help-toolbar">
-          <label class="field compact"><span data-i18n="language.label">表示言語</span><select id="language-select"><option value="ja-JP">日本語</option><option value="en-US">English</option></select></label>
-        </div>
         <div class="help-content">
           <article class="callout important">
             <h3 data-i18n="help.required_setup.title">最初に必ず設定してください</h3>
@@ -521,7 +551,6 @@
             <h3 data-i18n="help.data.title">収録データ</h3>
             <p id="catalog-data-status"></p>
             <p id="catalog-data-notes" class="hint"></p>
-            <p id="dataset-version">研究データ</p>
             <p data-i18n="pwa.game_version_note">動作確認済みゲームバージョンはv2.200.309です。これは必須バージョンではなく、以降のゲーム更新では研究データや画面表示が変わる可能性があります。</p>
           </article>
           <article>
@@ -536,7 +565,6 @@
             <h3 data-i18n="help.license.title">ライセンス・出典</h3>
             <p id="help-license-body"></p>
           </article>
-          <p class="version-line"><span data-i18n="pwa.version">バージョン</span> <span id="app-version"></span></p>
         </div>
       </section>
     </main>
@@ -583,7 +611,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script>
-      const startupVersion = "0.1.7-b1";
+      const startupVersion = "0.1.8-b11";
       const startupRecoveryKey = `rlm-research-planner-recovered-${startupVersion}`;
       const appRoot = new URL("./", location.href).href;
       const appScopePath = new URL(appRoot).pathname;
@@ -596,8 +624,8 @@
       const startupLoadingMessage = document.getElementById("startup-loading-message");
       const mainElement = document.querySelector("main");
       const startupVersionLabel = isPreviewScope
-        ? "v0.1.7 Preview"
-        : "v0.1.7";
+        ? "v0.1.8 Preview"
+        : "v0.1.8";
       document.getElementById("header-version").textContent = startupVersionLabel;
       document.getElementById("header-version").classList.toggle("is-preview", isPreviewScope);
       document.title = `RLM Research Planner ${startupVersionLabel}`;
@@ -685,6 +713,6 @@
         target.hidden = false;
       }
     </script>
-    <script type="module" src="./src/app.js?v=0.1.7-b1"></script>
+    <script type="module" src="./src/app.js?v=0.1.8-b11"></script>
   </body>
 </html>

@@ -1,18 +1,18 @@
-import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.7-b1";
-import { adjustedTime, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.7-b1";
-import { RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.7-b1";
-import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.7-b1";
-import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.7-b1";
-import { formatResourceAmount } from "./resource-format.js?v=0.1.7-b1";
-import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.7-b1";
-import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.7-b1";
-import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.7-b1";
-import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.7-b1";
-import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.7-b1";
+import { currentEffect, loadCatalog } from "./catalog.js?v=0.1.8-b11";
+import { adjustedTime, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isInstantNextLevel, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "./planning.js?v=0.1.8-b11";
+import { DEFAULT_FONT_SIZES, FONT_SIZE_MAX, FONT_SIZE_MIN, RESOURCE_KEYS, backupPayload, defaultState, freeSecondsForVip, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "./state.js?v=0.1.8-b11";
+import { explicitTreeLayout, visibleTreeLayout } from "./tree-layout.js?v=0.1.8-b11";
+import { clampTreeZoom, fitTreeZoom } from "./tree-zoom.js?v=0.1.8-b11";
+import { formatResourceAmount } from "./resource-format.js?v=0.1.8-b11";
+import { CASTLE_RESOURCE_KEYS, buildingLevelsAfterCastleStep, castleProgressLabel, createCastlePlan, loadCastleCatalog, minimumBuildingLevels } from "./castle-planning.js?v=0.1.8-b11";
+import { applyDocumentLanguage, installLanguagePack, languagePackTemplate, loadBundledLanguagePacks, loadLanguagePacks, packText, removeLanguagePack, resolveLanguagePack, selectPreferredLocale, translateStatic } from "./language-pack.js?v=0.1.8-b11";
+import { PAID_GOALS, PAID_ITEM_KINDS, defaultGemValueEach, defaultPointsEach, emptyPaidOffer, minimumGemsForSpeedupSeconds, paidKindHasTime, paidOfferExchangePayload, paidOffersFromExchangePayload, reorderPaidItems, sanitizePaidOffer, sortedPaidOffers, summarizePaidOffer } from "./paid-value.js?v=0.1.8-b11";
+import { SPEEDUP_DURATION_GROUPS, SPEEDUP_DURATION_SECONDS, SPEEDUP_KINDS, addPaidItemsToInventory, normalizeSpeedupInventory, recommendPaidOffers, speedupCoverage, speedupDurationGroup } from "./speedup-inventory.js?v=0.1.8-b11";
+import { allocateTalentPlan, expandTalentTargets, loadTalentCatalog, talentDirectiveFromPayload, talentDirectivePayload, talentLayoutColumns, talentPlayerLevelRequirement, talentPointsForPlayerLevel } from "./talent-planning.js?v=0.1.8-b11";
 
-const RELEASE_VERSION = "0.1.7";
-const DEVELOPMENT_BUILD = 1;
-const ASSET_VERSION = "0.1.7-b1";
+const RELEASE_VERSION = "0.1.8";
+const DEVELOPMENT_BUILD = 11;
+const ASSET_VERSION = "0.1.8-b11";
 const IS_PREVIEW = /\/preview(?:\/|$)/u.test(window.location.pathname);
 const APP_VERSION = RELEASE_VERSION;
 const CARD_WIDTH = 250;
@@ -32,6 +32,10 @@ let languagePacks = loadLanguagePacks();
 let activeLanguagePack = null;
 const hadSavedState = hasSavedState();
 let state = loadState();
+applyUiFontSize();
+applyTableFontSize();
+applyTreeFontSize();
+applyHelpFontSize();
 let selectedCategoryId = "";
 let selectedBulkCategoryId = "";
 let selectedNodeId = "";
@@ -63,6 +67,30 @@ const create = (tag, className = "", text = "") => {
   if (text !== "") { node.textContent = text; node.dir = "auto"; }
   return node;
 };
+
+function applyUiFontSize() {
+  const size = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.trunc(Number(state.uiFontSize) || DEFAULT_FONT_SIZES.ui)));
+  state.uiFontSize = size;
+  document.documentElement.style.setProperty("--ui-font-size", `${size}px`);
+}
+
+function applyTableFontSize() {
+  const size = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.trunc(Number(state.tableFontSize) || DEFAULT_FONT_SIZES.table)));
+  state.tableFontSize = size;
+  document.documentElement.style.setProperty("--table-font-size", `${size}px`);
+}
+
+function applyTreeFontSize() {
+  const size = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.trunc(Number(state.treeFontSize) || DEFAULT_FONT_SIZES.tree)));
+  state.treeFontSize = size;
+  document.documentElement.style.setProperty("--tree-font-size", `${size}px`);
+}
+
+function applyHelpFontSize() {
+  const size = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.trunc(Number(state.helpFontSize) || DEFAULT_FONT_SIZES.help)));
+  state.helpFontSize = size;
+  document.documentElement.style.setProperty("--help-font-size", `${size}px`);
+}
 
 function ensureTalentPlan() {
   if (!talentCatalog || state.talentPlan.length) return;
@@ -143,7 +171,7 @@ async function start() {
       ? t("pwa.preview_version", `v${APP_VERSION} Preview`, { version: APP_VERSION })
       : `v${APP_VERSION}`;
     byId("app-version").textContent = APP_VERSION;
-    byId("dataset-version").textContent = t("app.dataset_version", `研究データ ${catalog.datasetVersion}`, { version: catalog.datasetVersion });
+    byId("dataset-version").textContent = catalog.datasetVersion;
     byId("header-version").textContent = versionLabel;
     byId("header-version").classList.toggle("is-preview", IS_PREVIEW);
     document.title = `RLM Research Planner ${versionLabel}`;
@@ -504,74 +532,77 @@ function speedupSimulationParts(requiredSeconds, targetKind, taskSeconds = null)
   return {
     coverage,
     recommendations: coverage.remainingSeconds
-      ? recommendPaidOffers(coverage.remainingSeconds, state.paidOffers, targetKind, 3, {
+      ? recommendPaidOffers(coverage.remainingSeconds, state.paidOffers, targetKind, null, {
         taskSeconds: coverage.remainingTaskSeconds,
-        useGems: state.settings.useGemsForSpeedups,
+        useGems: true,
       })
       : [],
   };
 }
 
-function speedupUsageText(usedItems) {
-  return usedItems.map((item) => {
-    const [duration, unit] = paidDurationParts(item.durationSeconds);
-    return `${paidKindLabel(item.kind)} ${duration.toLocaleString(state.locale)}${t(`paid.unit.${unit}`, unit)}×${item.quantity.toLocaleString(state.locale)}`;
-  }).join(" / ");
+function speedupUsageTable(usedItems) {
+  const list = create("div", "speedup-used-items-list");
+  const quantities = new Map();
+  for (const item of usedItems) {
+    quantities.set(
+      item.durationSeconds,
+      (quantities.get(item.durationSeconds) || 0) + item.quantity,
+    );
+  }
+  for (const [durationSeconds, quantity] of [...quantities.entries()].sort((left, right) => right[0] - left[0])) {
+    const [duration, unit] = paidDurationParts(durationSeconds);
+    list.append(create("span", "speedup-used-item", t(
+      "plan.speedup_used_item_compact",
+      "{duration} ×{quantity}",
+      {
+        duration: `${duration.toLocaleString(state.locale)}${t(`paid.unit.${unit}`, unit)}`,
+        quantity: quantity.toLocaleString(state.locale),
+      },
+    )));
+  }
+  return list;
 }
 
 function renderSpeedupSimulation(target, requiredSeconds, targetKind, unknownTimeCount = 0, taskSeconds = null) {
   if (!target) return;
   const result = speedupSimulationParts(requiredSeconds, targetKind, taskSeconds);
   const disclosure = create("summary", "speedup-simulation-toggle", t("plan.speedup_simulation_title", "速度アップ充当シミュレーション"));
-  const hint = create("span", "speedup-simulation-hint", t("plan.speedup_simulation_hint", "不足時は［課金］タブの［保存済み］から、利用可能な時短を含む候補を最大3件表示します。"));
-  const gemOption = create("label", "speedup-gem-option");
-  const gemCheckbox = create("input");
-  gemCheckbox.type = "checkbox";
-  gemCheckbox.checked = state.settings.useGemsForSpeedups === true;
-  gemCheckbox.addEventListener("change", () => {
-    state.settings.useGemsForSpeedups = gemCheckbox.checked;
-    saveNow();
-    refreshCurrentPlan();
-    renderCastle();
-  });
-  gemOption.append(gemCheckbox, create("span", "", t("plan.speedup_use_gems", "課金候補の付属ジェムも時短に使用")));
+  disclosure.title = t("plan.speedup_simulation_hint", "各工程に収まる速度アップだけを個数単位で充当します。研究は汎用＋研究、建設は汎用＋建設を使用します。");
   if (unknownTimeCount > 0) {
     target.replaceChildren(
       disclosure,
-      hint,
-      gemOption,
       create("span", "speedup-remaining", t("plan.speedup_unknown_time", "研究時間が未収録のため計算できません")),
     );
     target.hidden = false;
     return;
   }
   const summary = create("section", "speedup-allocation-section speedup-owned-section");
-  summary.append(
+  const summaryLine = create("div", "speedup-allocation-line");
+  summaryLine.append(
     create("strong", "speedup-section-title", t("plan.speedup_owned_section", "所持スピードアップ")),
     create("span", "", t("plan.speedup_owned", "利用可能: {time}", { time: formatDuration(result.coverage.availableSeconds) })),
     create("span", "", t("plan.speedup_applied", "使用: {time}", { time: formatDuration(result.coverage.appliedSeconds) })),
   );
+  summary.append(summaryLine);
   if (result.coverage.usedItems.length) {
-    summary.append(create("span", "speedup-used-items", t(
-      "plan.speedup_used_items",
-      "使用内訳: {items}",
-      { items: speedupUsageText(result.coverage.usedItems) },
-    )));
+    summary.append(speedupUsageTable(result.coverage.usedItems));
   }
   if (result.coverage.surplusSeconds > 0) {
-    summary.append(create("span", "speedup-surplus", t("plan.speedup_surplus", "余り: {time}", { time: formatDuration(result.coverage.surplusSeconds) })));
+    summaryLine.append(create("span", "speedup-surplus", t("plan.speedup_surplus", "余り: {time}", { time: formatDuration(result.coverage.surplusSeconds) })));
   }
   const remaining = create("section", "speedup-allocation-section speedup-missing-section");
-  remaining.append(
+  const remainingLine = create("div", "speedup-allocation-line");
+  remainingLine.append(
     create("strong", "speedup-section-title", t("plan.speedup_remaining_section", "足りない短縮")),
     create("span", "speedup-remaining", t("plan.speedup_remaining", "不足: {time}", { time: formatDuration(result.coverage.remainingSeconds) })),
   );
-  if (state.settings.useGemsForSpeedups && result.coverage.remainingSeconds > 0) {
+  remaining.append(remainingLine);
+  if (result.coverage.remainingSeconds > 0) {
     const directGems = result.coverage.remainingTaskSeconds.reduce(
       (sum, seconds) => sum + minimumGemsForSpeedupSeconds(seconds).gems,
       0,
     );
-    remaining.append(create("span", "speedup-direct-gems", t(
+    remainingLine.append(create("span", "speedup-direct-gems", t(
       "plan.speedup_direct_gems",
       "ジェムで即時終了: {gems}ジェム（{time}短縮）",
       {
@@ -580,26 +611,47 @@ function renderSpeedupSimulation(target, requiredSeconds, targetKind, unknownTim
       },
     )));
   }
+  const offerToggle = create("button", "speedup-offers-toggle");
+  offerToggle.type = "button";
   const offerList = create("div", "speedup-offer-list");
+  offerList.hidden = true;
   if (result.coverage.remainingSeconds > 0) {
-    offerList.append(create("strong", "speedup-section-title", t("plan.speedup_purchase_options", "登録済み課金で補う場合")));
+    offerToggle.textContent = t(
+      "plan.speedup_purchase_options_count",
+      "登録済み課金候補（{count}件）",
+      { count: result.recommendations.length },
+    );
+    offerToggle.setAttribute("aria-expanded", "false");
+    const offerNotes = [t(
+      "plan.speedup_offer_sort_order",
+      "対象工程に使える登録済み課金をすべて、完了可否、必要ダイヤ、余り時間、購入回数の順で比較します。",
+    )];
     if (result.recommendations.some((offer) => offer.gemsUsed > 0)) {
-      offerList.append(create("span", "speedup-gem-basis", t("plan.speedup_gem_basis", "ジェムショップの定型スピードアップ価格で換算")));
+      offerNotes.push(t("plan.speedup_gem_basis", "ジェムショップの定型スピードアップ価格で換算"));
     }
+    offerToggle.title = offerNotes.join("\n");
     if (!result.recommendations.length) {
       offerList.append(create("span", "muted", t("plan.speedup_no_offer", "残りを補える課金登録なし")));
     } else {
+      const offerGrid = create("div", "speedup-offer-grid");
       for (const offer of result.recommendations) {
         const price = offer.totalDiamondCost === null
           ? t("common.unknown", "不明")
           : offer.totalDiamondCost.toLocaleString(state.locale);
         const card = create("article", "speedup-recommendation-card");
         const breakdown = create("div", "speedup-recommendation-breakdown");
-        if (offer.appliedSpeedupSeconds > 0) breakdown.append(
+        if (offer.appliedGeneralSpeedupSeconds > 0) breakdown.append(
           create("span", "speedup-breakdown-part", t(
-            "plan.speedup_offer_speedups",
-            "パック内の速度アップ: {time}",
-            { time: formatDuration(offer.appliedSpeedupSeconds) },
+            "plan.speedup_offer_general",
+            "汎用 {time}",
+            { time: formatDuration(offer.appliedGeneralSpeedupSeconds) },
+          )),
+        );
+        if (offer.appliedTargetSpeedupSeconds > 0) breakdown.append(
+          create("span", "speedup-breakdown-part", t(
+            "plan.speedup_offer_target",
+            "専用 {time}",
+            { time: formatDuration(offer.appliedTargetSpeedupSeconds) },
           )),
         );
         if (offer.gemsUsed > 0) breakdown.append(
@@ -628,12 +680,21 @@ function renderSpeedupSimulation(target, requiredSeconds, targetKind, unknownTim
           )),
           breakdown,
         );
-        offerList.append(card);
+        offerGrid.append(card);
       }
+      offerList.append(offerGrid);
     }
+    offerToggle.addEventListener("click", () => {
+      const expanded = offerToggle.getAttribute("aria-expanded") === "true";
+      offerToggle.setAttribute("aria-expanded", String(!expanded));
+      offerList.hidden = expanded;
+    });
+    remainingLine.append(offerToggle);
   }
-  const sections = [disclosure, hint, gemOption, summary, remaining];
-  if (result.coverage.remainingSeconds > 0) sections.push(offerList);
+  const allocation = create("div", "speedup-allocation-grid");
+  allocation.append(summary, remaining);
+  if (result.coverage.remainingSeconds > 0) allocation.append(offerList);
+  const sections = [disclosure, allocation];
   target.replaceChildren(...sections);
   target.hidden = requiredSeconds <= 0;
 }
@@ -645,6 +706,8 @@ function bindPaid() {
   byId("paid-item-save")?.addEventListener("click", savePaidItem);
   byId("paid-item-cancel")?.addEventListener("click", closePaidItemEditor);
   byId("paid-item-delete")?.addEventListener("click", deletePaidItem);
+  byId("paid-item-move-up")?.addEventListener("click", () => moveEditingPaidItem(-1));
+  byId("paid-item-move-down")?.addEventListener("click", () => moveEditingPaidItem(1));
   byId("paid-item-kind")?.addEventListener("change", () => refreshPaidItemEditorKind(true));
   byId("paid-save")?.addEventListener("click", savePaidOffer);
   byId("paid-delete")?.addEventListener("click", deletePaidOffer);
@@ -885,6 +948,14 @@ function refreshPaidItemEditorKind(applyDefaults = false) {
   byId("paid-item-unit-field").hidden = !hasTime;
 }
 
+function refreshPaidItemMoveButtons() {
+  const editing = paidItemEditingIndex >= 0 && paidItemEditingIndex < paidDraft.items.length;
+  const up = byId("paid-item-move-up");
+  const down = byId("paid-item-move-down");
+  if (up) { up.hidden = !editing; up.disabled = !editing || paidItemEditingIndex === 0; }
+  if (down) { down.hidden = !editing; down.disabled = !editing || paidItemEditingIndex >= paidDraft.items.length - 1; }
+}
+
 function openPaidItemEditor(index = -1) {
   const items = paidDraft.items || [];
   paidItemEditingIndex = Number.isInteger(index) && index >= 0 && index < items.length ? index : -1;
@@ -918,6 +989,7 @@ function openPaidItemEditor(index = -1) {
   byId("paid-item-delete").hidden = paidItemEditingIndex < 0;
   byId("paid-item-editor").hidden = false;
   refreshPaidItemEditorKind();
+  refreshPaidItemMoveButtons();
   renderPaidItems();
 }
 
@@ -953,6 +1025,15 @@ function deletePaidItem() {
   paidDraft.items.splice(paidItemEditingIndex, 1);
   closePaidItemEditor();
   renderPaidSummary();
+}
+
+function moveEditingPaidItem(offset) {
+  const result = reorderPaidItems(paidDraft.items, paidItemEditingIndex, offset);
+  if (!result.moved) return;
+  paidDraft.items = result.items;
+  paidItemEditingIndex = result.index;
+  renderPaidItems();
+  refreshPaidItemMoveButtons();
 }
 
 function paidItemListDetail(item) {
@@ -1589,6 +1670,33 @@ function bindSettings() {
   byId("bulk-category-select")?.addEventListener("change", (event) => { selectedBulkCategoryId = event.target.value; renderBulkLevels(); });
   byId("bulk-level-search")?.addEventListener("input", renderBulkLevels);
   byId("language-select").addEventListener("change", (event) => activateLanguage(event.target.value));
+  document.querySelectorAll("[data-font-size-role]").forEach((input) => {
+    input.addEventListener("input", () => {
+      const role = input.dataset.fontSizeRole;
+      const fallback = DEFAULT_FONT_SIZES[role] ?? DEFAULT_FONT_SIZES.ui;
+      const value = Math.min(FONT_SIZE_MAX, Math.max(FONT_SIZE_MIN, Math.trunc(Number(input.value) || fallback)));
+      if (role === "ui") { state.uiFontSize = value; applyUiFontSize(); }
+      else if (role === "table") { state.tableFontSize = value; applyTableFontSize(); }
+      else if (role === "tree") { state.treeFontSize = value; applyTreeFontSize(); renderTree(); refreshCurrentPlan(); renderTalent(); }
+      else if (role === "help") { state.helpFontSize = value; applyHelpFontSize(); }
+      input.value = String(value);
+      scheduleSave();
+    });
+  });
+  document.querySelectorAll("[data-reset-font-role]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const role = button.dataset.resetFontRole;
+      const value = DEFAULT_FONT_SIZES[role];
+      if (!Number.isFinite(value)) return;
+      if (role === "ui") { state.uiFontSize = value; applyUiFontSize(); }
+      else if (role === "table") { state.tableFontSize = value; applyTableFontSize(); }
+      else if (role === "tree") { state.treeFontSize = value; applyTreeFontSize(); renderTree(); refreshCurrentPlan(); renderTalent(); }
+      else if (role === "help") { state.helpFontSize = value; applyHelpFontSize(); }
+      const input = document.querySelector(`[data-font-size-role="${role}"]`);
+      if (input) input.value = String(value);
+      scheduleSave();
+    });
+  });
   byId("export-backup").addEventListener("click", exportBackup);
   byId("import-backup").addEventListener("change", importBackup);
   byId("export-directive").addEventListener("click", exportResearchDirective);
@@ -1598,7 +1706,17 @@ function bindSettings() {
   byId("remove-language-pack")?.addEventListener("click", removeCustomLanguagePack);
   byId("reset-player").addEventListener("click", () => {
     if (!window.confirm(t("pwa.clear_confirm", "プレイヤー設定と全研究レベルをクリアしますか？"))) return;
-    const locale = state.locale; state = defaultState(); state.locale = locale; ensureTalentPlan(); paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderTalent(); renderCastle(); renderPaid(); toast(t("pwa.cleared", "設定をクリアしました"));
+    const locale = state.locale;
+    const fontSizes = {
+      uiFontSize: state.uiFontSize,
+      tableFontSize: state.tableFontSize,
+      treeFontSize: state.treeFontSize,
+      helpFontSize: state.helpFontSize,
+    };
+    state = defaultState();
+    state.locale = locale;
+    Object.assign(state, fontSizes);
+    ensureTalentPlan(); paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; castleTargetManaStage = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderTalent(); renderCastle(); renderPaid(); toast(t("pwa.cleared", "設定をクリアしました"));
   });
 }
 
@@ -1618,6 +1736,15 @@ function populateSettings() {
   byId("setting-technolabe-threshold").value = state.settings.technolabeRecommendationThresholdPercent;
   updateGuildHelpLimit();
   byId("language-select").value = state.locale;
+  for (const [role, value] of Object.entries({
+    ui: state.uiFontSize,
+    table: state.tableFontSize,
+    tree: state.treeFontSize,
+    help: state.helpFontSize,
+  })) {
+    const input = document.querySelector(`[data-font-size-role="${role}"]`);
+    if (input) input.value = String(value);
+  }
   byId("resource-display-mode").value = state.settings.resourceDisplayMode;
   document.querySelectorAll("[data-resource]").forEach((input) => {
     const key = input.dataset.resource;
@@ -2042,7 +2169,13 @@ function exportBackup() {
 async function importBackup(event) {
   const file = event.target.files?.[0]; if (!file) return;
   try {
-    const imported = stateFromBackup(JSON.parse(await file.text())); imported.locale = state.locale; state = imported; ensureTalentPlan(); paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderTalent(); renderCastle(); renderPaid(); toast(t("player.backup_restored", "バックアップを読み込みました"));
+    const imported = stateFromBackup(JSON.parse(await file.text()));
+    imported.locale = state.locale;
+    imported.uiFontSize = state.uiFontSize;
+    imported.tableFontSize = state.tableFontSize;
+    imported.treeFontSize = state.treeFontSize;
+    imported.helpFontSize = state.helpFontSize;
+    state = imported; ensureTalentPlan(); paidEditingId = ""; paidItemEditingIndex = -1; paidDraft = emptyPaidOffer(); castleTargetLevel = 0; saveNow(); populateSettings(); renderCategoryOptions(); renderTree(true); currentPlan = null; renderPlan(); renderShortest(); renderTasks(); renderTalent(); renderCastle(); renderPaid(); toast(t("player.backup_restored", "バックアップを読み込みました"));
   } catch (error) { toast(error.message); }
   finally { event.target.value = ""; }
 }
@@ -2292,7 +2425,7 @@ function renderPlan() {
     ? `${t("plan.after_help", "ヘルプ後")} ${formatDuration(currentPlan.totals.afterHelpSeconds)}${partialTime}`
     : "";
   const wisdomSummary = byId("plan-wisdom-summary");
-  wisdomSummary.textContent = wisdomText(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe);
+  wisdomSummary.textContent = wisdomText(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe, true);
   wisdomSummary.classList.toggle("is-recommended", technolabeRecommended(currentPlan.totals.technolabeCount, currentPlan.totals.technolabeEfficiencyPercent, currentPlan.totals.unknownTechnolabe));
   const resources = Object.fromEntries(RESOURCE_KEYS.map((key) => [key, resourceName(key)]));
   const usedResources = RESOURCE_KEYS.filter((key) => Number(currentPlan.totals.costs[key] || 0) > 0);
@@ -2579,7 +2712,7 @@ function resourceDetails(costs, keys, costsVerified = true) {
   return details;
 }
 
-function wisdomText(count, efficiencyPercent, unknownCount = 0) {
+function wisdomText(count, efficiencyPercent, unknownCount = 0, includeOwned = false) {
   const label = t("plan.technolabe", "叡智の輪");
   if (count == null) return `${label} ${t("common.unknown", "未確認")}`;
   if (!count) return unknownCount ? t("pwa.wisdom_unknown_count", "{label} 未確認（{count}件）", { label, count: unknownCount }) : `${label} -`;
@@ -2587,11 +2720,13 @@ function wisdomText(count, efficiencyPercent, unknownCount = 0) {
   if (technolabeRecommended(count, efficiencyPercent, unknownCount)) {
     text = t("plan.technolabe_recommended", "★ 叡智の輪推奨 — {detail}", { detail: text });
   }
-  text = t("plan.technolabe_owned", "{detail}（所持 {owned} / 必要 {required}）", {
-    detail: text,
-    owned: Math.max(0, Math.trunc(Number(state.settings.technolabeCount) || 0)),
-    required: count,
-  });
+  if (includeOwned) {
+    const owned = t("plan.technolabe_owned_summary", "所持 {owned} / 必要 {required}", {
+      owned: Math.max(0, Math.trunc(Number(state.settings.technolabeCount) || 0)),
+      required: count,
+    });
+    text = `${text} ｜ ${owned}`;
+  }
   return unknownCount ? t("pwa.wisdom_with_unknown", "{text}（{count}件未確認）", { text, count: unknownCount }) : text;
 }
 

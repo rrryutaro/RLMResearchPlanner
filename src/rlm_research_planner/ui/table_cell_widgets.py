@@ -125,6 +125,9 @@ def set_table_cell_widget(
     """Insert an editor/action without allowing it to overlap adjacent rows."""
 
     visual_style = str(table.window().property("visualStyle") or "desktop")
+    widget.setFont(table.font())
+    for child in widget.findChildren(QWidget):
+        child.setFont(table.font())
     configure_table_cell_widget(widget, visual_style=visual_style)
     table.verticalHeader().setMinimumSectionSize(TABLE_CELL_ROW_HEIGHT)
     table.setRowHeight(row, TABLE_CELL_ROW_HEIGHT)

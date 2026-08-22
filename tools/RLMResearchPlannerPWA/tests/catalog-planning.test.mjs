@@ -5,7 +5,7 @@ import test from "node:test";
 import { fileURLToPath } from "node:url";
 import { currentEffect, loadJsonResource, normalizeCatalog } from "../src/catalog.js";
 import { TECHNOLABE_CAPACITY_SECONDS, adjustedTime, afterGuildHelps, createPlan, defaultTargetLevel, discountedResearchResourceValue, formatDuration, isResearchConnectionUnlocked, isTechnolabeRecommended, paginateItems, researchLevelsAfterPlan, shortestAvailable, technolabeUsage } from "../src/planning.js";
-import { RESOURCE_KEYS, backupPayload, defaultState, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, playerStorageKey, researchDirectiveFromPayload, researchDirectivePayload, saveState, stateFromBackup } from "../src/state.js";
+import { RESOURCE_KEYS, backupPayload, defaultState, guildHelpCount, hasSavedState, loadState, maxGuildHelpsForCastle, mergeResearchDirectiveTasks, playerStorageKey, researchDirectiveFromPayload, researchDirectivePayload, sanitizeState, saveState, stateFromBackup } from "../src/state.js";
 import { formatResourceAmount } from "../src/resource-format.js";
 import { compactExplicitRowSlots, explicitTreeLayout, visibleTreeLayout } from "../src/tree-layout.js";
 import { clampTreeZoom, fitTreeZoom } from "../src/tree-zoom.js";
@@ -59,11 +59,25 @@ const englishReadme = await readFile(desktopUrl("README.en.md"), "utf8");
 const securityPolicy = await readFile(desktopUrl("SECURITY.md"), "utf8");
 const languagePackSchema = JSON.parse(await readFile(desktopUrl("schemas/language-pack.schema.json"), "utf8"));
 
+test("Army Leadership Japanese names match the observed game labels", () => {
+  const expected = {
+    army_leadership_bigger_infirmary_i: "医療所拡張Ⅰ",
+    army_leadership_gold_storage_i: "ゴールド生産上限Ⅰ",
+    army_leadership_max_deposit_i: "ジェム投資額Ⅰ",
+    army_leadership_gold_harvesting_i: "ゴールド生産量Ⅰ",
+  };
+  for (const [researchId, label] of Object.entries(expected)) {
+    assert.equal(researchDocuments.locales["ja-JP"].research[researchId], label);
+    assert.equal(pwaLocale.research[researchId], label);
+    assert.equal(desktopLocale.research[researchId], label);
+  }
+});
+
 test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.7");
+  assert.equal(publicVersion, "0.1.8");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));
@@ -91,6 +105,10 @@ test("preview version and player data stay separate from production", () => {
   assert.notEqual(productionKey, previewKey);
   const production = defaultState();
   production.settings.vipLevel = 11;
+  production.uiFontSize = 19;
+  production.tableFontSize = 18;
+  production.treeFontSize = 17;
+  production.helpFontSize = 21;
   const values = new Map([[productionKey, JSON.stringify(production)]]);
   const storage = {
     getItem: (key) => values.get(key) || null,
@@ -99,6 +117,10 @@ test("preview version and player data stay separate from production", () => {
   assert.equal(hasSavedState(storage, "/RLMResearchPlanner/preview/"), true);
   const preview = loadState(storage, "/RLMResearchPlanner/preview/");
   assert.equal(preview.settings.vipLevel, 11);
+  assert.equal(preview.uiFontSize, 19);
+  assert.equal(preview.tableFontSize, 18);
+  assert.equal(preview.treeFontSize, 17);
+  assert.equal(preview.helpFontSize, 21);
   preview.settings.vipLevel = 12;
   saveState(preview, storage, "/RLMResearchPlanner/preview/");
   assert.equal(JSON.parse(values.get(productionKey)).settings.vipLevel, 11);
@@ -138,6 +160,11 @@ test("paid pack contents use a list and one shared add-edit form", () => {
   for (const id of ["kind", "name", "quantity", "duration", "unit", "gem-value", "points", "save", "cancel", "delete"]) {
     assert.equal([...indexHtml.matchAll(new RegExp(`id="paid-item-${id}"`, "gu"))].length, 1);
   }
+  for (const id of ["move-up", "move-down"]) {
+    assert.equal([...indexHtml.matchAll(new RegExp(`id="paid-item-${id}"`, "gu"))].length, 1);
+  }
+  assert.match(appSource, /moveEditingPaidItem\(-1\)/u);
+  assert.match(appSource, /moveEditingPaidItem\(1\)/u);
   assert.match(appSource, /function openPaidItemEditor\(index = -1\)/u);
   assert.match(appSource, /function savePaidItem\(\)/u);
   assert.match(appSource, /"speedup-inventory-row paid-item-summary-row"/u);
@@ -150,12 +177,85 @@ test("speed-up simulation separates owned use, gems, and remaining time", () => 
   assert.match(appSource, /speedup-owned-section/u);
   assert.match(appSource, /speedup-missing-section/u);
   assert.match(appSource, /plan\.speedup_direct_gems/u);
-  assert.match(appSource, /useGemsForSpeedups/u);
+  assert.match(appSource, /useGems:\s*true/u);
+  assert.doesNotMatch(appSource, /speedup-gem-option/u);
+  assert.doesNotMatch(appSource, /speedup-used-items-details/u);
+  assert.match(appSource, /speedup-used-items-list/u);
+  assert.match(appSource, /speedup-allocation-line/u);
+  assert.match(appSource, /summary\.append\(speedupUsageTable\(result\.coverage\.usedItems\)\)/u);
+  assert.doesNotMatch(appSource, /const hint = create\("span", "speedup-simulation-hint"/u);
+  assert.doesNotMatch(appSource, /const sections = \[disclosure, hint, allocation\]/u);
+  assert.match(appSource, /plan\.speedup_used_item_compact/u);
+  assert.match(appSource, /quantities\.set\(/u);
+  assert.doesNotMatch(appSource, /kind:\s*paidKindLabel\(item\.kind\)/u);
+  assert.doesNotMatch(appSource, /speedup-used-items-header/u);
+  assert.doesNotMatch(appSource, /speedup-offer-details/u);
+  assert.match(appSource, /remainingLine\.append\(offerToggle\)/u);
+  assert.match(appSource, /offerToggle\.setAttribute\("aria-expanded"/u);
+  assert.match(appSource, /recommendPaidOffers\(coverage\.remainingSeconds, state\.paidOffers, targetKind, null/u);
+  assert.match(appSource, /plan\.speedup_offer_sort_order/u);
+  assert.doesNotMatch(appSource, /最大3件/u);
+  assert.doesNotMatch(indexHtml, /class="font-size-control"/u);
+  assert.match(indexHtml, /data-tab="appearance"/u);
+  assert.match(indexHtml, /id="tab-appearance"/u);
+  for (const role of ["ui", "table", "tree", "help"]) {
+    assert.match(indexHtml, new RegExp(`data-font-size-role="${role}"`, "u"));
+  }
+  assert.equal([...indexHtml.matchAll(/data-reset-font-role=/gu)].length, 4);
+  assert.match(indexHtml, /min="8"[^>]*max="72"[^>]*data-font-size-role="ui"/u);
+  const headerHtml = indexHtml.match(/<header[\s\S]*?<\/header>/u)?.[0] || "";
+  assert.doesNotMatch(headerHtml, /data-font-size-role=/u);
+  assert.doesNotMatch(indexHtml, /class="help-toolbar"/u);
+  const appearanceStart = indexHtml.indexOf('id="tab-appearance"');
+  const helpStart = indexHtml.indexOf('id="tab-help"');
+  const appearanceHtml = indexHtml.slice(appearanceStart, helpStart);
+  assert.match(appearanceHtml, /id="language-select"/u);
+  assert.match(appearanceHtml, /id="export-language-template"/u);
+  assert.match(appearanceHtml, /id="app-version"/u);
+  assert.match(appearanceHtml, /id="dataset-version"/u);
+  const helpHtml = indexHtml.slice(helpStart);
+  assert.doesNotMatch(helpHtml, /id="app-version"/u);
+  assert.doesNotMatch(helpHtml, /id="dataset-version"/u);
+  assert.match(appSource, /data-reset-font-role/u);
   assert.match(appSource, /speedup-recommendation-breakdown/u);
-  assert.match(appSource, /plan\.speedup_offer_speedups/u);
+  assert.doesNotMatch(appSource, /offerList\.append\(create\("span", "speedup-offer-sort"/u);
+  assert.doesNotMatch(appSource, /plan\.speedup_offer_speedups/u);
+  assert.match(appSource, /plan\.speedup_offer_general/u);
+  assert.match(appSource, /plan\.speedup_offer_target/u);
   assert.match(appSource, /plan\.speedup_offer_gems/u);
   assert.match(appSource, /plan\.speedup_offer_remaining/u);
   assert.match(stylesSource, /\.speedup-breakdown-part/u);
+  assert.doesNotMatch(stylesSource, /\.speedup-breakdown-part[^}]*min-height/u);
+  assert.match(stylesSource, /font-size:\s*var\(--ui-font-size\)/u);
+  assert.match(stylesSource, /font-size:\s*var\(--table-font-size\)/u);
+  assert.match(stylesSource, /\.tab-button[^}]*var\(--ui-font-size\)/u);
+  assert.match(stylesSource, /\.field[^}]*var\(--ui-font-size\)/u);
+  assert.match(stylesSource, /\.plan-row-category[^}]*var\(--table-font-size\)/u);
+  assert.match(stylesSource, /\.paid-offer-card span[^}]*var\(--table-font-size\)/u);
+  assert.match(stylesSource, /var\(--tree-font-size\)/u);
+  assert.match(stylesSource, /\.help-content[^}]*font-size:\s*var\(--help-font-size\)/u);
+  assert.match(stylesSource, /\.speedup-used-items-list[^}]*flex-flow:\s*row nowrap/u);
+  assert.match(stylesSource, /\.speedup-used-items-list[^}]*overflow-x:\s*auto/u);
+  assert.doesNotMatch(stylesSource, /\.speedup-used-items-list[^}]*max-height/u);
+});
+
+test("legacy speed-up font setting migrates to the global UI font setting", () => {
+  const migrated = sanitizeState({ speedupFontSize: 19 });
+  assert.equal(migrated.uiFontSize, 19);
+  assert.equal("speedupFontSize" in migrated, false);
+});
+
+test("text sizes stay independent by display role", () => {
+  const state = sanitizeState({ uiFontSize: 60, tableFontSize: 48, treeFontSize: 36, helpFontSize: 30 });
+  assert.equal(state.uiFontSize, 60);
+  assert.equal(state.tableFontSize, 48);
+  assert.equal(state.treeFontSize, 36);
+  assert.equal(state.helpFontSize, 30);
+  const clamped = sanitizeState({ uiFontSize: 999, tableFontSize: 1, treeFontSize: 999, helpFontSize: 1 });
+  assert.equal(clamped.uiFontSize, 72);
+  assert.equal(clamped.tableFontSize, 8);
+  assert.equal(clamped.treeFontSize, 72);
+  assert.equal(clamped.helpFontSize, 8);
 });
 
 test("Japanese and English data-file and translation guides stay publishable", () => {
@@ -382,7 +482,7 @@ test("category selector has a static fallback before JavaScript starts", () => {
   const markup = indexHtml.match(/<select id="category-select"[^>]*>([\s\S]*?)<\/select>/)?.[1] || "";
   assert.equal([...markup.matchAll(/<option value=/g)].length, 16);
   assert.match(indexHtml, /id="category-drawer"/);
-  assert.equal([...indexHtml.matchAll(/<details class="settings-card/g)].length, 10);
+  assert.equal([...indexHtml.matchAll(/<details class="settings-card/g)].length, 9);
   assert.match(indexHtml, /data-tab="castle"[^>]*data-i18n="tab\.castle"[^>]*>建設<\/button>/);
   assert.match(indexHtml, /id="construction-target"/);
   assert.match(indexHtml, /id="construction-selection"/);
@@ -739,6 +839,8 @@ test("Technolabe recommendation uses the configured efficiency boundary", () => 
   assert.match(indexHtml, /id="technolabe-only"/u);
   assert.match(appSource, /plan\.technolabe_recommended/u);
   assert.match(stylesSource, /\.plan-row-wisdom\.is-recommended/u);
+  assert.match(appSource, /unknownTechnolabe, true\)/u);
+  assert.match(appSource, /function wisdomText\(count, efficiencyPercent, unknownCount = 0, includeOwned = false\)/u);
 });
 
 test("marking a target plan complete applies every prerequisite step", () => {

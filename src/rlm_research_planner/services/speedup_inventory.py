@@ -92,6 +92,8 @@ class PaidOfferRecommendation:
     gem_applied_seconds: int
     remaining_seconds: int
     excess_seconds: int
+    applied_general_speedup_seconds: int = 0
+    applied_target_speedup_seconds: int = 0
 
 
 def normalize_speedup_inventory(
@@ -463,7 +465,7 @@ def recommend_paid_offers(
     offers: Iterable[PaidOffer],
     target_kind: str,
     *,
-    limit: int = 3,
+    limit: int | None = None,
     task_seconds: Iterable[int] | None = None,
     use_gems: bool = False,
 ) -> tuple[PaidOfferRecommendation, ...]:
@@ -527,6 +529,16 @@ def recommend_paid_offers(
             coverage.remaining_seconds - gem_applied_seconds,
         )
         cost_each = max(0, int(offer.diamond_cost))
+        applied_general_seconds = sum(
+            item.duration_seconds * item.quantity
+            for item in coverage.used_items
+            if item.kind == "general"
+        )
+        applied_target_seconds = sum(
+            item.duration_seconds * item.quantity
+            for item in coverage.used_items
+            if item.kind == target_kind
+        )
         recommendations.append(
             PaidOfferRecommendation(
                 offer_id=offer.offer_id,
@@ -548,6 +560,8 @@ def recommend_paid_offers(
                     + sum(item.purchased_seconds for item in gem_purchases)
                     - gem_applied_seconds,
                 ),
+                applied_general_speedup_seconds=applied_general_seconds,
+                applied_target_speedup_seconds=applied_target_seconds,
             )
         )
     recommendations.sort(
@@ -560,4 +574,6 @@ def recommend_paid_offers(
             item.title.casefold(),
         )
     )
+    if limit is None:
+        return tuple(recommendations)
     return tuple(recommendations[: max(0, int(limit))])

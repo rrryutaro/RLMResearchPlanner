@@ -80,7 +80,7 @@ The reviewed migration plan required the Phase 3 comparison to remain clean
 across at least two real legacy-catalog updates. This proved that the converter
 is maintainable rather than matching only one frozen catalog revision.
 
-Current gate count: **7 recorded post-baseline catalog updates; 2 required**.
+Current gate count: **8 recorded post-baseline catalog updates; 2 required**.
 The distinct catalog hashes and comparison summaries are recorded in
 `reports/catalog-update-gate.json`. Re-running the converter against the same
 catalog hash is not counted. Both recorded updates were intentional data or

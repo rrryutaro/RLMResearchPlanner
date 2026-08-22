@@ -115,6 +115,20 @@ test("offer recommendation repeats offers and ranks known diamond cost", () => {
   assert.deepEqual(result.map((item) => item.offerId), ["cheap", "expensive"]);
   assert.equal(result[0].purchases, 3);
   assert.equal(result[0].totalDiamondCost, 300);
+  assert.equal(result[0].appliedGeneralSpeedupSeconds, 10_800);
+  assert.equal(result[0].appliedTargetSpeedupSeconds, 0);
+  assert.equal(result[1].appliedGeneralSpeedupSeconds, 0);
+  assert.equal(result[1].appliedTargetSpeedupSeconds, 10_800);
+});
+
+test("offer recommendation returns every applicable saved offer", () => {
+  const result = recommendPaidOffers(3600, Array.from({ length: 5 }, (_, index) => ({
+    offerId: String(index + 1),
+    title: `Pack ${index + 1}`,
+    diamondCost: (index + 1) * 100,
+    items: [{ kind: "research", durationSeconds: 3600, quantity: 1 }],
+  })), "research");
+  assert.deepEqual(result.map((item) => item.offerId), ["1", "2", "3", "4", "5"]);
 });
 
 test("offer recommendation separates pack speedups, included gems, and remaining time", () => {

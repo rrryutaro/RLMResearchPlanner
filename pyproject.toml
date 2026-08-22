@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "RLMResearchPlanner"
-version = "0.1.7"
+version = "0.1.8"
 description = "Unofficial multilingual research planner for Lords Mobile"
 readme = "README.md"
 license = { file = "LICENSE" }

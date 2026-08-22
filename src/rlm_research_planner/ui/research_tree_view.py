@@ -72,10 +72,12 @@ class _ResearchNodeItem(QGraphicsRectItem):
         activated_callback,
         level_editing_enabled: bool = False,
         visual_style: str = "desktop",
+        font_size: int = 20,
     ) -> None:
         super().__init__(0.0, 0.0, NODE_WIDTH, NODE_HEIGHT)
         self._node = node
         self._visual_style = "desktop"
+        self._font_size = max(14, min(28, int(font_size)))
         self.research_id = node.research_id
         self._selected_callback = selected_callback
         self._activated_callback = activated_callback
@@ -105,7 +107,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self.setPen(QPen(border, 2.0))
 
         category_font = QFont()
-        category_font.setPointSizeF(10.0)
+        category_font.setPointSizeF(self._scaled_point_size(10.0))
         category_font.setBold(True)
         self.category_item = self._text_item(
             node.category_name,
@@ -119,7 +121,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
         self.category_item.setVisible(bool(node.category_name))
 
         title_font = QFont()
-        title_font.setPointSizeF(26.0)
+        title_font.setPointSizeF(self._scaled_point_size(26.0))
         title_font.setBold(True)
         title_y, title_height = self._title_geometry(node)
         self.title_item = self._text_item(
@@ -172,7 +174,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
         current_level = "0" if node.current_level is None else str(node.current_level)
         maximum = "-" if node.max_level is None else str(node.max_level)
         level_font = QFont()
-        level_font.setPointSizeF(20.0)
+        level_font.setPointSizeF(self._scaled_point_size(20.0))
         level_font.setBold(True)
         self.level_item = self._text_item(
             f"{current_level} / {maximum}",
@@ -185,7 +187,7 @@ class _ResearchNodeItem(QGraphicsRectItem):
         )
 
         effect_font = QFont()
-        effect_font.setPointSizeF(20.0)
+        effect_font.setPointSizeF(self._scaled_point_size(20.0))
         self.current_effect_item = self._text_item(
             node.current_effect,
             effect_font,
@@ -287,15 +289,15 @@ class _ResearchNodeItem(QGraphicsRectItem):
             10.0,
         )
         title_font = QFont()
-        title_font.setPointSizeF(26.0)
+        title_font.setPointSizeF(self._scaled_point_size(26.0))
         title_font.setBold(True)
         level_font = QFont()
-        level_font.setPointSizeF(20.0)
+        level_font.setPointSizeF(self._scaled_point_size(20.0))
         level_font.setBold(True)
         effect_font = QFont()
-        effect_font.setPointSizeF(20.0)
+        effect_font.setPointSizeF(self._scaled_point_size(20.0))
         category_font = QFont()
-        category_font.setPointSizeF(10.0)
+        category_font.setPointSizeF(self._scaled_point_size(10.0))
         category_font.setBold(True)
         current_level = "0" if node.current_level is None else str(node.current_level)
         maximum = "-" if node.max_level is None else str(node.max_level)
@@ -347,6 +349,16 @@ class _ResearchNodeItem(QGraphicsRectItem):
             height=48.0,
         )
         self.set_visual_style(self._visual_style)
+
+    def set_font_size(self, font_size: int) -> None:
+        normalized = max(14, min(28, int(font_size)))
+        if normalized == self._font_size:
+            return
+        self._font_size = normalized
+        self.update_node(self._node)
+
+    def _scaled_point_size(self, base_size: float) -> float:
+        return base_size * self._font_size / 20.0
 
     @staticmethod
     def _title_geometry(node: ResearchTreeNode) -> tuple[float, float]:
@@ -494,6 +506,7 @@ class ResearchTreeView(QGraphicsView):
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.AnchorViewCenter)
         self._visual_style = "desktop"
+        self._font_size = 20
         self._zoom_factor = 1.0
         self._pointer_origin: QPoint | None = None
         self._pointer_last: QPoint | None = None
@@ -549,6 +562,23 @@ class ResearchTreeView(QGraphicsView):
                             else "#C9D4DA"
                         )
                     )
+        self.viewport().update()
+
+    def set_font_size(self, font_size: int) -> None:
+        self._font_size = max(14, min(28, int(font_size)))
+        for item in self._scene.items():
+            if isinstance(item, _ResearchNodeItem):
+                item.set_font_size(self._font_size)
+            elif isinstance(item, QGraphicsTextItem) and item.parentItem() is None:
+                font = QFont(item.font())
+                base_size = 11.0 if item.data(10) == "cross-category-legend" else 12.0
+                font.setPointSizeF(base_size * self._font_size / 20.0)
+                item.setFont(font)
+        self._scene.setSceneRect(
+            self._scene.itemsBoundingRect().adjusted(
+                -SCENE_MARGIN, -SCENE_MARGIN, SCENE_MARGIN, SCENE_MARGIN
+            )
+        )
         self.viewport().update()
 
     def _edge_pen(self, active: bool, *, cross_category: bool = False) -> QPen:
@@ -936,7 +966,7 @@ class ResearchTreeView(QGraphicsView):
                 )
             )
             message_font = QFont()
-            message_font.setPointSizeF(12.0)
+            message_font.setPointSizeF(12.0 * self._font_size / 20.0)
             message.setFont(message_font)
             message.setTextWidth(560.0)
             message.setPos(SCENE_MARGIN, SCENE_MARGIN)
@@ -1184,7 +1214,7 @@ class ResearchTreeView(QGraphicsView):
                 )
             )
             legend_font = QFont()
-            legend_font.setPointSizeF(11.0)
+            legend_font.setPointSizeF(11.0 * self._font_size / 20.0)
             legend_font.setBold(True)
             legend.setFont(legend_font)
             legend.setPos(SCENE_MARGIN, 12.0)
@@ -1198,6 +1228,7 @@ class ResearchTreeView(QGraphicsView):
                 activated_callback=self.researchActivated.emit,
                 level_editing_enabled=self._level_editing_enabled,
                 visual_style=self._visual_style,
+                font_size=self._font_size,
             )
             item.setPos(x, y)
             self._scene.addItem(item)

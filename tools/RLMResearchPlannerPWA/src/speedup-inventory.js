@@ -1,4 +1,4 @@
-import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.7-b1";
+import { minimumGemsForSpeedupSeconds } from "./paid-value.js?v=0.1.8-b11";
 
 export const SPEEDUP_KINDS = [
   "general", "research", "training", "construction", "healing", "merging", "crafting",
@@ -300,12 +300,12 @@ function minimumOfferPurchases(shortfall, secondsPerPurchase, gemsPerPurchase, c
   return low;
 }
 
-export function recommendPaidOffers(shortfallSeconds, offers, targetKind, limit = 3, options = {}) {
+export function recommendPaidOffers(shortfallSeconds, offers, targetKind, limit = null, options = {}) {
   const taskSeconds = normalizedTaskSeconds(shortfallSeconds, options.taskSeconds);
   const shortfall = taskSeconds.reduce((sum, value) => sum + value, 0);
   const useGems = options.useGems === true;
   if (!shortfall) return [];
-  return (Array.isArray(offers) ? offers : [])
+  const recommendations = (Array.isArray(offers) ? offers : [])
     .map((offer) => {
       const secondsPerPurchase = paidOfferSpeedupSeconds(offer, targetKind);
       const gemsPerPurchase = paidOfferGems(offer);
@@ -326,6 +326,12 @@ export function recommendPaidOffers(shortfallSeconds, offers, targetKind, limit 
           quantity: integer(item.quantity) * purchases,
         }));
       const coverage = speedupCoverage(shortfall, inventory, targetKind, taskSeconds);
+      const appliedGeneralSpeedupSeconds = coverage.usedItems
+        .filter((item) => item.kind === "general")
+        .reduce((sum, item) => sum + item.durationSeconds * item.quantity, 0);
+      const appliedTargetSpeedupSeconds = coverage.usedItems
+        .filter((item) => item.kind === targetKind)
+        .reduce((sum, item) => sum + item.durationSeconds * item.quantity, 0);
       const gemPurchases = coverage.remainingTaskSeconds.map(minimumGemsForSpeedupSeconds);
       const requiredGems = gemPurchases.reduce((sum, item) => sum + item.gems, 0);
       const canUseGems = useGems && coverage.remainingSeconds > 0 && availableGems >= requiredGems;
@@ -345,6 +351,8 @@ export function recommendPaidOffers(shortfallSeconds, offers, targetKind, limit 
         gemsPerPurchase,
         availableGems,
         appliedSpeedupSeconds: coverage.appliedSeconds,
+        appliedGeneralSpeedupSeconds,
+        appliedTargetSpeedupSeconds,
         gemsUsed,
         gemAppliedSeconds,
         remainingSeconds,
@@ -359,6 +367,8 @@ export function recommendPaidOffers(shortfallSeconds, offers, targetKind, limit 
       || (left.totalDiamondCost || 0) - (right.totalDiamondCost || 0)
       || left.excessSeconds - right.excessSeconds
       || left.purchases - right.purchases
-      || left.title.localeCompare(right.title))
-    .slice(0, Math.max(0, Math.trunc(limit)));
+      || left.title.localeCompare(right.title));
+  return limit === null || limit === undefined
+    ? recommendations
+    : recommendations.slice(0, Math.max(0, Math.trunc(limit)));
 }

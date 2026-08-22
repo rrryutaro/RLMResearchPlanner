@@ -182,7 +182,6 @@ def test_expanded_speedup_panel_keeps_titles_clear_and_compact() -> None:
 
     panel = main_window_module._SpeedupSimulationPanel(
         translate,
-        lambda _checked: None,
     )
     coverage = SpeedupCoverage(
         target_kind="research",
@@ -192,7 +191,18 @@ def test_expanded_speedup_panel_keeps_titles_clear_and_compact() -> None:
         remaining_seconds=14_000_000,
         surplus_seconds=0,
         remaining_task_seconds=(14_000_000,),
-        used_items=(),
+        used_items=tuple(
+            SpeedupInventoryItem("research", duration, quantity)
+            for duration, quantity in (
+                (24 * 3600, 60),
+                (15 * 3600, 1),
+                (8 * 3600, 40),
+                (3 * 3600, 428),
+                (3600, 961),
+                (30 * 60, 607),
+                (15 * 60, 357),
+            )
+        ),
     )
     recommendations = tuple(
         PaidOfferRecommendation(
@@ -210,30 +220,47 @@ def test_expanded_speedup_panel_keeps_titles_clear_and_compact() -> None:
             gem_applied_seconds=0,
             remaining_seconds=14_000_000 - index * 100_000,
             excess_seconds=0,
+            applied_general_speedup_seconds=(index * 100_000 if index == 1 else 0),
+            applied_target_speedup_seconds=(index * 100_000 if index != 1 else 0),
         )
-        for index in range(1, 4)
+        for index in range(1, 6)
     )
     panel.resize(1200, 360)
-    panel.show_result(coverage, recommendations, False)
+    panel.show_result(coverage, recommendations)
     panel.toggle_button.setChecked(True)
     panel.show()
     app.processEvents()
 
-    assert panel.owned_title_label.geometry().bottom() < (
-        panel.available_label.geometry().top()
+    assert not panel.hint_label.isVisible()
+    assert panel.toggle_button.toolTip()
+    assert panel.owned_title_label.geometry().right() < (
+        panel.available_label.geometry().left()
     )
-    assert panel.remaining_title_label.geometry().bottom() < (
-        panel.remaining_label.geometry().top()
+    assert panel.remaining_title_label.geometry().right() < (
+        panel.remaining_label.geometry().left()
     )
-    first_offer = panel.offers_layout.itemAt(0).widget()
+    assert not hasattr(panel, "gem_checkbox")
+    assert panel.direct_gems_label.isVisible()
+    assert panel.used_items_strip.isVisible()
+    assert panel.used_items_strip.parent() is panel.owned_group
+    assert len(panel.used_item_badges) == 7
+    assert all("paid.kind.research" not in badge.text() for badge in panel.used_item_badges)
+    assert all(
+        badge.text().startswith("plan.speedup_used_item_compact")
+        for badge in panel.used_item_badges
+    )
+    assert panel.used_items_strip.height() < 60
+    assert not hasattr(panel, "used_items_toggle")
+    assert not panel.offers_group.isVisible()
+    assert panel.offers_toggle.parent() is panel.remaining_group
+    panel.offers_toggle.click()
+    app.processEvents()
+    assert panel.offers_group.isVisible()
+    assert "5" in panel.offers_toggle.text()
+    assert "plan.speedup_offer_sort_order" in panel.offers_toggle.toolTip()
+    first_offer = panel.offers_layout.itemAtPosition(0, 0).widget()
     assert first_offer is not None
-    title_bottom = panel.offers_title_label.mapTo(
-        panel,
-        QPoint(0, panel.offers_title_label.height()),
-    ).y()
-    first_offer_top = first_offer.mapTo(panel, QPoint(0, 0)).y()
-    assert title_bottom <= first_offer_top
-    assert panel.sizeHint().height() <= 300
+    assert first_offer.height() < 42
     panel.close()
 
 
@@ -776,6 +803,11 @@ def test_plan_tab_shows_only_unmet_dependency_tree_and_totals() -> None:
         ):
             assert window.plan_table.isColumnHidden(headers.index(label))
         assert not window.plan_table.isColumnHidden(food_column)
+        window.player_state.settings.technolabe_count = 10
+        assert "所持" not in window._technolabe_text(2, 95.0)
+        assert "所持 10 / 必要 2" in window._technolabe_text(
+            2, 95.0, include_owned=True
+        )
         assert window.plan_table.isColumnHidden(4)
         assert window.guild_help_spin.maximum() == 6
         window.castle_spin.setValue(25)
@@ -1805,12 +1837,13 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
             app_settings=AppSettings(),
             translator=Translator(paths.translations, "ja-JP"),
         )
-        assert window.tabs.count() == 7
+        assert window.tabs.count() == 8
         assert window.tabs.tabText(2) == "建設"
         assert window.tabs.tabText(3) == "プレイヤー設定"
         assert window.tabs.tabText(4) == "課金"
         assert window.tabs.tabText(5) == "OCR入力"
-        assert window.tabs.tabText(6) == "ヘルプ"
+        assert window.tabs.tabText(6) == "設定"
+        assert window.tabs.tabText(7) == "ヘルプ"
         assert window.player_workspace_tabs.count() == 4
         assert [
             window.player_workspace_tabs.tabText(index)
@@ -1895,25 +1928,46 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
         window._talent_dirty = False
         assert window.windowTitle() == window.t("app.title")
         assert version_string() not in window.windowTitle()
+        assert window.tabs.widget(6).isAncestorOf(window.ui_font_size_spin)
+        assert window.tabs.widget(6).isAncestorOf(window.table_font_size_spin)
+        assert window.tabs.widget(6).isAncestorOf(window.tree_font_size_spin)
+        assert window.tabs.widget(6).isAncestorOf(window.help_font_size_spin)
+        assert set(window.font_reset_buttons) == {"ui", "table", "tree", "help"}
+        assert all(
+            window.tabs.widget(6).isAncestorOf(button)
+            for button in window.font_reset_buttons.values()
+        )
+        assert window.tabs.cornerWidget(Qt.Corner.TopRightCorner) is None
         assert window.tabs.widget(6).isAncestorOf(window.language_combo)
-        assert window.tabs.widget(6).isAncestorOf(window.language_pack_button)
+        assert window.tabs.widget(6).isAncestorOf(
+            window.language_pack_export_button
+        )
+        assert window.tabs.widget(6).isAncestorOf(
+            window.language_pack_import_button
+        )
+        assert window.tabs.widget(6).isAncestorOf(
+            window.language_pack_remove_button
+        )
         assert window.tabs.widget(6).isAncestorOf(window.visual_style_combo)
         assert window.tabs.widget(6).isAncestorOf(window.update_check_button)
-        assert window.tabs.widget(6).isAncestorOf(window.help_font_spin)
-        assert window.tabs.widget(6).isAncestorOf(window.help_dataset_version_label)
-        help_top_row = window.tabs.widget(6).layout().itemAt(0).layout()
-        assert help_top_row is not None
+        assert window.tabs.widget(6).isAncestorOf(window.settings_version_label)
+        assert window.tabs.widget(6).isAncestorOf(
+            window.settings_dataset_version_label
+        )
         assert all(
-            help_top_row.indexOf(widget) >= 0
+            not window.tabs.widget(7).isAncestorOf(widget)
             for widget in (
                 window.language_combo,
-                window.language_pack_button,
+                window.language_pack_export_button,
+                window.language_pack_import_button,
+                window.language_pack_remove_button,
                 window.visual_style_combo,
-                window.help_font_spin,
                 window.update_check_button,
                 window.update_startup_checkbox,
                 window.update_releases_button,
                 window.update_status_label,
+                window.settings_version_label,
+                window.settings_dataset_version_label,
             )
         )
         assert "docs/ja-JP/data-files.md" in window.help_browser.toHtml()
@@ -1925,44 +1979,86 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
         assert window.language_combo.width() <= (
             window.language_combo.sizeHint().width() + 4
         )
-        assert window.help_font_spin.width() <= (
-            window.help_font_spin.sizeHint().width() + 4
-        )
         assert window.update_check_button.width() <= (
             window.update_check_button.sizeHint().width() + 4
         )
-        assert (
-            window.help_version_label.geometry().left()
-            - window.help_font_spin.geometry().right()
-            > 100
-        )
         window.resize(980, 640)
         app.processEvents()
-        help_page = window.tabs.widget(6)
+        settings_page = window.tabs.widget(6)
         for widget in (
             window.language_combo,
-            window.language_pack_button,
+            window.language_pack_export_button,
+            window.language_pack_import_button,
+            window.language_pack_remove_button,
             window.visual_style_combo,
-            window.help_font_spin,
-            window.help_version_label,
-            window.help_dataset_version_label,
             window.update_check_button,
             window.update_startup_checkbox,
             window.update_releases_button,
         ):
-            right_edge = widget.mapTo(help_page, widget.rect().topLeft()).x()
-            right_edge += widget.width()
-            assert right_edge <= help_page.contentsRect().right() + 1
+            assert settings_page.isAncestorOf(widget)
         assert not any(
             group.title() == window.t("update.title")
-            for group in window.tabs.widget(6).findChildren(QGroupBox)
+            for group in window.tabs.widget(7).findChildren(QGroupBox)
         )
-        assert window.help_font_spin.value() == 12
-        window.help_font_spin.setValue(18)
+        assert window.ui_font_size_spin.value() == 11
+        assert window.table_font_size_spin.value() == 11
+        assert window.tree_font_size_spin.value() == 20
+        assert window.help_font_size_spin.value() == 12
+        assert window.help_browser.font().pointSize() == 12
+        original_tab_font_size = window.tabs.font().pointSizeF()
+        window.ui_font_size_spin.setValue(16)
+        assert window.app_settings.ui_font_size == 16
+        assert window.tabs.font().pointSizeF() > original_tab_font_size
+        assert window.plan_speedup_panel.font().pointSize() == 16
+        assert window.castle_speedup_panel.font().pointSize() == 16
+        assert window.plan_table.font().pointSize() == 11
+        assert window.help_browser.font().pointSize() == 12
+        window.table_font_size_spin.setValue(15)
+        assert window.app_settings.table_font_size == 15
+        assert window.plan_table.font().pointSize() == 15
+        window.tree_font_size_spin.setValue(24)
+        assert window.app_settings.tree_font_size == 24
+        assert window.tree_view._font_size == 24
+        assert window.plan_tree_view._font_size == 24
+        window.help_font_size_spin.setValue(18)
         assert window.app_settings.help_font_size == 18
-        assert "18pt" in window.help_browser.styleSheet()
+        assert window.help_browser.font().pointSize() == 18
+        assert window.tabs.font().pointSizeF() > original_tab_font_size
+        window.font_reset_buttons["ui"].click()
+        assert window.app_settings.ui_font_size == 11
+        assert window.app_settings.table_font_size == 15
+        assert window.app_settings.tree_font_size == 24
+        assert window.app_settings.help_font_size == 18
+        window.font_reset_buttons["table"].click()
+        window.font_reset_buttons["tree"].click()
+        window.font_reset_buttons["help"].click()
+        assert window.app_settings.table_font_size == 11
+        assert window.app_settings.tree_font_size == 20
+        assert window.app_settings.help_font_size == 12
+        assert window.ui_font_size_spin.value() == 11
+        assert window.table_font_size_spin.value() == 11
+        assert window.tree_font_size_spin.value() == 20
+        assert window.help_font_size_spin.value() == 12
         assert window.visual_style_combo.currentData() == "desktop"
         assert window.styleSheet() == ""
+        desktop_window_color = (
+            window.palette().color(QPalette.Window).name().upper()
+        )
+        desktop_text_color = (
+            window.palette().color(QPalette.WindowText).name().upper()
+        )
+        desktop_check_text_color = (
+            window.tree_instant_finish_check.palette()
+            .color(QPalette.WindowText)
+            .name()
+            .upper()
+        )
+        desktop_label_text_color = (
+            window.settings_version_label.palette()
+            .color(QPalette.WindowText)
+            .name()
+            .upper()
+        )
         window.visual_style_combo.setCurrentIndex(
             window.visual_style_combo.findData("mobile")
         )
@@ -1980,7 +2076,7 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
             == "#F4F8F8"
         )
         assert (
-            window.help_version_label.palette()
+            window.settings_version_label.palette()
             .color(QPalette.WindowText)
             .name()
             .upper()
@@ -2002,12 +2098,15 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
         assert window.update_status_label.text() == ""
         assert window.update_status_label.isHidden()
         assert any(
-            label.text() == window.t("app.version", version=version_string())
+            label.text() == version_string()
             and window.tabs.widget(6).isAncestorOf(label)
             for label in window.centralWidget().findChildren(QLabel)
         )
-        assert window.help_dataset_version_label.text() == window.t(
-            "app.dataset_version", version="0.1.0"
+        assert window.settings_dataset_version_label.text() == "0.1.0"
+        assert not any(
+            label.text() == version_string()
+            and window.tabs.widget(7).isAncestorOf(label)
+            for label in window.centralWidget().findChildren(QLabel)
         )
         assert not any(
             label.text() == window.t("app.title")
@@ -2076,17 +2175,49 @@ def test_help_tab_collects_usage_guidance_outside_work_tabs() -> None:
             player_repository.load().settings.event_research_discount_percent
             == 30.0
         )
-        window.tabs.setCurrentIndex(6)
+        window.tabs.setCurrentIndex(7)
         window.language_combo.setCurrentIndex(
             window.language_combo.findData("en-US")
         )
         app.processEvents()
         assert window.translator.locale == "en-US"
-        assert window.tabs.currentIndex() == 6
-        assert window.tabs.tabText(6) == "Help"
+        assert window.tabs.currentIndex() == 7
+        assert window.tabs.tabText(7) == "Help"
         assert window.windowTitle() == "RLM Research Planner"
         assert window.visual_style_combo.currentData() == "mobile"
         assert "#07151D" in window.styleSheet()
+        window.visual_style_combo.setCurrentIndex(
+            window.visual_style_combo.findData("desktop")
+        )
+        app.processEvents()
+        assert window.app_settings.visual_style == "desktop"
+        assert window.visual_style_combo.currentData() == "desktop"
+        assert window.styleSheet() == ""
+        assert window.tree_view.visual_style == "desktop"
+        assert window.plan_tree_view.visual_style == "desktop"
+        assert "#F2B632" not in window.tree_dataset_list.styleSheet()
+        assert (
+            window.palette().color(QPalette.Window).name().upper()
+            == desktop_window_color
+        )
+        assert (
+            window.palette().color(QPalette.WindowText).name().upper()
+            == desktop_text_color
+        )
+        assert (
+            window.tree_instant_finish_check.palette()
+            .color(QPalette.WindowText)
+            .name()
+            .upper()
+            == desktop_check_text_color
+        )
+        assert (
+            window.settings_version_label.palette()
+            .color(QPalette.WindowText)
+            .name()
+            .upper()
+            == desktop_label_text_color
+        )
         window.close()
     finally:
         player_repository.close()
@@ -2299,6 +2430,49 @@ def test_visible_spin_buttons_refresh_when_target_range_changes() -> None:
     spin.close()
 
 
+def test_plan_target_plus_button_is_not_covered_at_large_ui_font() -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    player_repository = PlayerRepository(":memory:")
+    window = MainWindow(
+        paths=paths,
+        master=JsonMasterRepository(paths.research_data).load(),
+        observations=JsonResearchCatalogRepository(
+            paths.research_catalog
+        ).load_all(),
+        player_repository=player_repository,
+        player_state=player_repository.load(),
+        settings_repository=SettingsRepository(None),
+        app_settings=AppSettings(visual_style="mobile", ui_font_size=16),
+        translator=Translator(paths.translations, "ja-JP"),
+    )
+    try:
+        window.resize(957, 488)
+        window.tabs.setCurrentIndex(1)
+        window._set_plan_target("army_leadership_more_gatherers")
+        window.show()
+        app.processEvents()
+
+        assert isinstance(window.plan_toolbar.layout(), QHBoxLayout)
+        increase = window.plan_level_spin._increase_button
+        hit_widget = QApplication.widgetAt(
+            increase.mapToGlobal(increase.rect().center())
+        )
+        assert hit_widget is increase
+        assert increase.isEnabled()
+        QTest.mouseClick(
+            hit_widget,
+            Qt.MouseButton.LeftButton,
+            pos=hit_widget.rect().center(),
+        )
+        app.processEvents()
+        assert window.plan_level_spin.value() == 2
+    finally:
+        window.close()
+        player_repository.close()
+
+
 def test_all_pc_tab_step_buttons_stay_inside_their_numeric_fields() -> None:
     app = QApplication.instance() or QApplication([])
     root = Path(__file__).resolve().parents[1]
@@ -2477,7 +2651,6 @@ def test_all_table_numeric_editors_use_inset_cell_layout() -> None:
         form_spins = [
             window.vip_level_spin,
             window.construction_speed_spin,
-            window.help_font_spin,
         ]
         assert all(not spin.property("tableCellEditor") for spin in form_spins)
     finally:
@@ -2666,11 +2839,9 @@ def test_castle_tab_plans_facilities_and_saves_construction_settings() -> None:
             window.castle_selection_summary_label.rect().topLeft(),
         ).x() + window.castle_selection_summary_label.width()
         assert summary_right <= castle_page.contentsRect().right() + 1
-        assert window.castle_selection_summary_label.width() >= (
-            window.castle_selection_summary_label.fontMetrics().horizontalAdvance(
-                window.castle_selection_summary_label.text()
-            )
-            + 20
+        assert window.castle_selection_summary_label.wordWrap() is True
+        assert window.castle_selection_summary_label.height() >= (
+            window.castle_selection_summary_label.fontMetrics().height()
         )
         window.tree_save_levels_button.click()
         window.close()
@@ -2765,6 +2936,65 @@ def test_paid_tab_manual_entries_calculate_total_and_time_per_diamond() -> None:
         assert isinstance(window.paid_item_table.cellWidget(0, 0), QComboBox)
         assert isinstance(window.paid_item_table.cellWidget(0, 1), QSpinBox)
         assert isinstance(window.paid_item_table.cellWidget(0, 3), QSpinBox)
+        window.close()
+    finally:
+        player_repository.close()
+
+
+def test_paid_item_rows_keep_timeless_fields_hidden_and_can_be_reordered() -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    master = JsonMasterRepository(paths.research_data).load()
+    catalog = JsonResearchCatalogRepository(paths.research_catalog).load_all()
+    player_repository = PlayerRepository(":memory:")
+    try:
+        window = MainWindow(
+            paths=paths,
+            master=master,
+            observations=catalog,
+            player_repository=player_repository,
+            player_state=player_repository.load(),
+            settings_repository=SettingsRepository(None),
+            app_settings=AppSettings(),
+            translator=Translator(paths.translations, "ja-JP"),
+        )
+        window.paid_item_table.setRowCount(0)
+        window._add_paid_row(
+            PaidItem(kind="custom", name="任意素材", quantity=2)
+        )
+        custom_duration = window.paid_item_table.cellWidget(0, 1)
+        custom_unit = window.paid_item_table.cellWidget(0, 2)
+        assert custom_duration is not None and custom_duration.isHidden()
+        assert custom_unit is not None and custom_unit.isHidden()
+
+        window._add_paid_row(
+            PaidItem(
+                kind="general",
+                name="汎用加速",
+                quantity=3,
+                duration_seconds=3600,
+            )
+        )
+        app.processEvents()
+        assert custom_duration.isHidden()
+        assert custom_unit.isHidden()
+
+        window.paid_item_table.selectRow(1)
+        app.processEvents()
+        assert window.paid_move_up_button.isEnabled()
+        assert not window.paid_move_down_button.isEnabled()
+        window.paid_move_up_button.click()
+        app.processEvents()
+
+        assert [
+            window.paid_item_table.cellWidget(row, 5).text()
+            for row in range(window.paid_item_table.rowCount())
+        ] == ["汎用加速", "任意素材"]
+        moved_custom_duration = window.paid_item_table.cellWidget(1, 1)
+        moved_custom_unit = window.paid_item_table.cellWidget(1, 2)
+        assert moved_custom_duration is not None and moved_custom_duration.isHidden()
+        assert moved_custom_unit is not None and moved_custom_unit.isHidden()
         window.close()
     finally:
         player_repository.close()
