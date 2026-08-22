@@ -24,8 +24,8 @@ export function hasSavedState(storage = globalThis.localStorage, pathname = glob
   } catch { return false; }
 }
 export const RESEARCH_DIRECTIVE_DOCUMENT_TYPE = "RLMResearchPlanner.research-directive";
-import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.8-b11";
-import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.8-b11";
+import { defaultPaidValuation, sanitizePaidOffer, sanitizePaidValuation } from "./paid-value.js?v=0.1.9-b1";
+import { normalizeSpeedupInventory } from "./speedup-inventory.js?v=0.1.9-b1";
 
 export function maxGuildHelpsForCastle(castleLevel) {
   const normalizedLevel = Math.min(25, Math.max(1, Math.trunc(number(castleLevel, 1))));

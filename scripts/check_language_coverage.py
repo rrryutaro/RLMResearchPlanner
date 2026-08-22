@@ -2,7 +2,11 @@ from __future__ import annotations
 
 import json
 import re
+import sys
 from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "src"))
 
 from rlm_research_planner.services.language_pack import (
     LANGUAGE_PACK_SECTIONS,
@@ -10,7 +14,6 @@ from rlm_research_planner.services.language_pack import (
 )
 
 
-ROOT = Path(__file__).resolve().parents[1]
 MONOREPO_PWA_ROOT = ROOT.parent / "RLMResearchPlannerPWA"
 PUBLIC_PWA_ROOT = ROOT / "tools" / "RLMResearchPlannerPWA"
 PWA_ROOT = (

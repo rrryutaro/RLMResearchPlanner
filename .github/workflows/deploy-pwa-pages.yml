@@ -29,6 +29,15 @@ jobs:
     steps:
       - name: Check out candidate
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 1
+
+      - name: Require the validated preview commit for production
+        if: github.ref_name == 'main'
+        shell: bash
+        run: |
+          git fetch origin pwa-preview --depth=1
+          test "$(git rev-parse HEAD)" = "$(git rev-parse FETCH_HEAD)"
 
       - name: Check out production for preview deployment
         if: github.ref_name == 'pwa-preview'
@@ -36,12 +45,6 @@ jobs:
         with:
           ref: main
           path: _production
-
-      - name: Verify candidate PWA
-        shell: bash
-        run: |
-          node --test tools/RLMResearchPlannerPWA/tests/*.test.mjs
-          node tools/RLMResearchPlannerPWA/scripts/check-release.mjs
 
       - name: Prepare production and preview paths
         shell: bash

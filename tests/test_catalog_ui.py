@@ -2473,6 +2473,73 @@ def test_plan_target_plus_button_is_not_covered_at_large_ui_font() -> None:
         player_repository.close()
 
 
+def test_plan_toolbar_surface_follows_mobile_and_desktop_themes() -> None:
+    app = QApplication.instance() or QApplication([])
+    root = Path(__file__).resolve().parents[1]
+    paths = AppPaths(tool_root=root, bundled_root=root)
+    player_repository = PlayerRepository(":memory:")
+    window = MainWindow(
+        paths=paths,
+        master=JsonMasterRepository(paths.research_data).load(),
+        observations=JsonResearchCatalogRepository(
+            paths.research_catalog
+        ).load_all(),
+        player_repository=player_repository,
+        player_state=player_repository.load(),
+        settings_repository=SettingsRepository(None),
+        app_settings=AppSettings(visual_style="desktop"),
+        translator=Translator(paths.translations, "ja-JP"),
+    )
+    try:
+        window.resize(1176, 500)
+        window.tabs.setCurrentIndex(1)
+        window.show()
+        app.processEvents()
+
+        viewport = window.plan_toolbar_scroll.viewport()
+        assert viewport.objectName() == "PlanToolbarViewport"
+        assert window.plan_toolbar.objectName() == "PlanToolbar"
+        desktop_image = viewport.grab().toImage()
+        desktop_background = desktop_image.pixelColor(
+            max(0, desktop_image.width() - 2),
+            max(0, desktop_image.height() - 2),
+        )
+        assert desktop_background.lightness() > 160
+
+        window.app_settings.visual_style = "mobile"
+        window._apply_visual_style()
+        app.processEvents()
+        mobile_image = viewport.grab().toImage()
+        mobile_background = mobile_image.pixelColor(
+            max(0, mobile_image.width() - 2),
+            max(0, mobile_image.height() - 2),
+        )
+        assert mobile_background.lightness() < 80
+        assert viewport.height() >= window.plan_toolbar.height()
+        for child in window.plan_toolbar.findChildren(
+            QWidget, options=Qt.FindChildOption.FindDirectChildrenOnly
+        ):
+            if child.isHidden():
+                continue
+            child_rect = QRect(child.mapTo(viewport, QPoint(0, 0)), child.size())
+            assert child_rect.top() >= 0
+            assert child_rect.bottom() < viewport.height()
+            assert child.height() >= child.sizeHint().height()
+
+        window.app_settings.visual_style = "desktop"
+        window._apply_visual_style()
+        app.processEvents()
+        restored_image = viewport.grab().toImage()
+        restored_background = restored_image.pixelColor(
+            max(0, restored_image.width() - 2),
+            max(0, restored_image.height() - 2),
+        )
+        assert restored_background.lightness() > 160
+    finally:
+        window.close()
+        player_repository.close()
+
+
 def test_all_pc_tab_step_buttons_stay_inside_their_numeric_fields() -> None:
     app = QApplication.instance() or QApplication([])
     root = Path(__file__).resolve().parents[1]

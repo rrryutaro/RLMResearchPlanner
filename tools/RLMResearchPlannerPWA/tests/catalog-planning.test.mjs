@@ -77,7 +77,7 @@ test("public version omits the internal asset build number", () => {
   const publicVersion = packageMetadata.version;
   const buildNumber = versionSource.match(/^__build__\s*=\s*(\d+)$/mu)?.[1];
   const assetVersion = `${publicVersion}-b${buildNumber}`;
-  assert.equal(publicVersion, "0.1.8");
+  assert.equal(publicVersion, "0.1.9");
   assert.doesNotMatch(publicVersion, /\+b\d+$/u);
   assert.match(versionSource, new RegExp(`__build__\\s*=\\s*${buildNumber}\\b`));
   assert.match(appSource, new RegExp(`RELEASE_VERSION\\s*=\\s*"${publicVersion.replaceAll(".", "\\.")}"`));

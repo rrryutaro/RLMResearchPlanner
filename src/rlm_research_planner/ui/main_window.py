@@ -3953,6 +3953,9 @@ class MainWindow(QMainWindow):
         layout = QVBoxLayout(page)
         self.plan_toolbar_scroll = QScrollArea(page)
         self.plan_toolbar_scroll.setObjectName("PlanToolbarScroll")
+        self.plan_toolbar_scroll.viewport().setObjectName(
+            "PlanToolbarViewport"
+        )
         self.plan_toolbar_scroll.setFrameShape(QFrame.Shape.NoFrame)
         self.plan_toolbar_scroll.setWidgetResizable(False)
         self.plan_toolbar_scroll.setVerticalScrollBarPolicy(
@@ -3961,7 +3964,8 @@ class MainWindow(QMainWindow):
         self.plan_toolbar_scroll.setHorizontalScrollBarPolicy(
             Qt.ScrollBarPolicy.ScrollBarAsNeeded
         )
-        self.plan_toolbar = QWidget()
+        self.plan_toolbar = QWidget(self.plan_toolbar_scroll)
+        self.plan_toolbar.setObjectName("PlanToolbar")
         selection_controls = QHBoxLayout(self.plan_toolbar)
         selection_controls.setContentsMargins(0, 0, 0, 0)
         selection_controls.setSpacing(6)
@@ -4217,20 +4221,77 @@ class MainWindow(QMainWindow):
         self.plan_level_spin.blockSignals(False)
         self._calculate_plan()
 
-    def _resize_plan_toolbar(self) -> None:
+    def _resize_plan_toolbar(self, *, schedule_follow_up: bool = True) -> None:
         if not hasattr(self, "plan_toolbar_scroll"):
             return
+        toolbar_layout = self.plan_toolbar.layout()
+        self.plan_toolbar.setMinimumHeight(0)
+        if toolbar_layout is not None:
+            toolbar_layout.invalidate()
+            toolbar_layout.activate()
         self.plan_toolbar.adjustSize()
+        visible_child_heights = [
+            max(
+                child.sizeHint().height(),
+                child.minimumSizeHint().height(),
+                child.minimumHeight(),
+            )
+            for child in self.plan_toolbar.findChildren(
+                QWidget,
+                options=Qt.FindChildOption.FindDirectChildrenOnly,
+            )
+            if not child.isHidden()
+        ]
+        layout_margins_height = 0
+        if toolbar_layout is not None:
+            margins = toolbar_layout.contentsMargins()
+            layout_margins_height = margins.top() + margins.bottom()
         toolbar_height = max(
             self.plan_toolbar.sizeHint().height(),
             self.plan_toolbar.minimumSizeHint().height(),
+            (
+                max(visible_child_heights, default=0)
+                + layout_margins_height
+            ),
         )
-        scrollbar_height = (
-            self.plan_toolbar_scroll.horizontalScrollBar().sizeHint().height()
+        self.plan_toolbar.setMinimumHeight(toolbar_height)
+        self.plan_toolbar.resize(
+            max(
+                self.plan_toolbar.width(),
+                self.plan_toolbar.sizeHint().width(),
+                self.plan_toolbar.minimumSizeHint().width(),
+            ),
+            toolbar_height,
         )
+        viewport_width = self.plan_toolbar_scroll.viewport().width()
+        needs_scrollbar = (
+            viewport_width > 0 and self.plan_toolbar.width() > viewport_width
+        )
+        scrollbar_height = 0
+        if needs_scrollbar:
+            scrollbar = self.plan_toolbar_scroll.horizontalScrollBar()
+            scrollbar_height = max(
+                scrollbar.height(),
+                scrollbar.sizeHint().height(),
+                scrollbar.minimumSizeHint().height(),
+            )
         total_height = toolbar_height + scrollbar_height + 2
         self.plan_toolbar_scroll.setMinimumHeight(total_height)
         self.plan_toolbar_scroll.setMaximumHeight(total_height)
+        if schedule_follow_up and not getattr(
+            self, "_plan_toolbar_resize_pending", False
+        ):
+            self._plan_toolbar_resize_pending = True
+            QTimer.singleShot(0, self._finish_plan_toolbar_resize)
+
+    def _finish_plan_toolbar_resize(self) -> None:
+        self._plan_toolbar_resize_pending = False
+        if not hasattr(self, "plan_toolbar_scroll"):
+            return
+        toolbar_layout = self.plan_toolbar.layout()
+        if toolbar_layout is not None:
+            toolbar_layout.activate()
+        self._resize_plan_toolbar(schedule_follow_up=False)
 
     def _plan_mode_changed(self, *_args: object) -> None:
         if not hasattr(self, "plan_mode_combo"):
@@ -6689,6 +6750,7 @@ class MainWindow(QMainWindow):
             label = getattr(self, label_name, None)
             if label is not None:
                 label.setStyleSheet(selection_style)
+        self._resize_plan_toolbar()
 
     def _change_visual_style(self) -> None:
         visual_style = normalize_visual_style(

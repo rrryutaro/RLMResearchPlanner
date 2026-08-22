@@ -26,6 +26,13 @@ QWidget#RlmRoot {
     background-color: #07151D;
     font-family: "Yu Gothic UI", "Noto Sans JP", sans-serif;
 }
+QScrollArea#PlanToolbarScroll,
+QWidget#PlanToolbarViewport,
+QWidget#PlanToolbar {
+    border: 0;
+    color: #F4F8F8;
+    background-color: #07151D;
+}
 QLabel, QCheckBox {
     color: #F4F8F8;
     background-color: transparent;
